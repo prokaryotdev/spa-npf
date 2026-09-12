@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { navigation } from "../content";
 import {
+  AccessibilityIcon,
   ChevronDown,
   CloseIcon,
   MenuIcon,
@@ -170,6 +171,15 @@ export default function Header() {
                 className="grid size-10 place-items-center rounded-full transition-colors hover:bg-black/5"
               >
                 <SearchIcon className="size-5" />
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                aria-label="Accessibility options"
+                className="grid size-10 place-items-center rounded-full transition-colors hover:bg-black/5"
+              >
+                <AccessibilityIcon className="size-5" />
               </button>
             </li>
             <li>

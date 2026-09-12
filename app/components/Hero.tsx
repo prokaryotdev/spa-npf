@@ -12,10 +12,12 @@ import {
 } from "./icons";
 
 const INTERVAL = 6000;
+const TICK = 100;
 
 export default function Hero() {
   const [index, setIndex] = useState(2);
   const [playing, setPlaying] = useState(true);
+  const [elapsed, setElapsed] = useState(0);
 
   const go = useCallback(
     (delta: number) =>
@@ -25,11 +27,15 @@ export default function Hero() {
 
   useEffect(() => {
     if (!playing) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reduce.matches) return;
-    const id = window.setInterval(() => go(1), INTERVAL);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const started = Date.now();
+    const id = window.setInterval(() => {
+      const done = Date.now() - started;
+      if (done >= INTERVAL) return go(1);
+      else setElapsed(done);
+    }, TICK);
     return () => window.clearInterval(id);
-  }, [playing, go]);
+  }, [playing, go, index]);
 
   const slide = heroSlides[index];
 
@@ -55,9 +61,9 @@ export default function Hero() {
       ))}
 
       {/* Top and bottom scrims keep the nav and the caption legible. */}
-      <span className="pointer-events-none absolute top-0 left-0 z-[1] h-[440px] w-full bg-gradient-to-b from-black/85 to-transparent" />
+      <span className="pointer-events-none absolute top-0 left-0 z-[1] h-[300px] w-full bg-gradient-to-b from-black/70 to-transparent" />
 
-      <div className="relative z-10 mt-auto w-full bg-[linear-gradient(359deg,#000_58%,transparent)] pt-24 pb-14 md:pb-6">
+      <div className="relative z-10 mt-auto w-full bg-[linear-gradient(0deg,#000_0%,#000_38%,rgba(0,0,0,0.6)_66%,transparent_100%)] pt-20 pb-14 md:pb-6 [@media(max-height:820px)]:pt-10">
         <div className="dp-container">
           <div className="mx-auto w-full max-w-[832px]">
             <div className="mb-6 min-h-[104px] text-center md:mb-8">
@@ -108,18 +114,47 @@ export default function Hero() {
                 <ChevronLeft className="size-5" />
               </button>
 
-              <button
-                type="button"
-                onClick={() => setPlaying((p) => !p)}
-                aria-label={playing ? "Pause slideshow" : "Play slideshow"}
-                className="hidden size-6 place-items-center rounded-full border-[3px] border-white text-white lg:grid"
-              >
-                {playing ? (
-                  <PauseIcon className="size-2.5" />
-                ) : (
-                  <PlayIcon className="size-2.5" />
-                )}
-              </button>
+              <div className="relative hidden size-6 lg:block">
+                <svg
+                  aria-hidden
+                  viewBox="0 0 36 36"
+                  className="size-full -rotate-90"
+                >
+                  <circle
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.3)"
+                    strokeWidth="3"
+                  />
+                  <circle
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeDasharray="100.5"
+                    strokeDashoffset={100.5 * (1 - elapsed / INTERVAL)}
+                    className="transition-[stroke-dashoffset] duration-100 ease-linear"
+                    pathLength={100.5}
+                  />
+                </svg>
+                <button
+                  type="button"
+                  onClick={() => setPlaying((p) => !p)}
+                  aria-label={playing ? "Pause slideshow" : "Play slideshow"}
+                  className="absolute inset-0 grid place-items-center text-white"
+                >
+                  {playing ? (
+                    <PauseIcon className="size-2.5" />
+                  ) : (
+                    <PlayIcon className="size-2.5" />
+                  )}
+                </button>
+              </div>
 
               <div className="flex items-center">
                 {heroSlides.map((s, i) => (

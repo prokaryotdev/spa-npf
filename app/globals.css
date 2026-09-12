@@ -149,3 +149,15 @@ html {
     opacity: 1;
   }
 }
+
+/* Per-letter heading entrance, used by the sea/land/sky chapter. */
+@keyframes letter-up {
+  from {
+    opacity: 0;
+    transform: translateY(110%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -125,6 +125,15 @@ export const SmileIcon = ({ className }: IconProps) => (
   </svg>
 );
 
+export const AccessibilityIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <circle cx="12" cy="4.4" r="1.7" />
+    <path d="M4.8 8.2a22 22 0 0 0 14.4 0" />
+    <path d="M12 8.6v5.2" />
+    <path d="m12 13.8-2.6 6.4M12 13.8l2.6 6.4" />
+  </svg>
+);
+
 export const socialIcons = {
   Facebook: (
     <path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.25-1.5 1.5-1.5h1.6V4.4a21 21 0 0 0-2.3-.12c-2.3 0-3.9 1.4-3.9 4v2.22H7.9v3h2.5V21Z" />

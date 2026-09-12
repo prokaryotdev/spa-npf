@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
@@ -14,6 +15,12 @@ const right = [
   { label: "Events", href: "/app/home/media/events", Icon: CalendarIcon },
   { label: "Customer Centers", href: "/app/home/customer-centers", Icon: PinIcon },
   { label: "Contact Us", href: "/app/home/contactus", Icon: PhoneIcon },
+];
+
+const partners = [
+  { label: "dubai.ae", src: "/img/dubaiae.svg", width: 64 },
+  { label: "Innovation", src: "/img/ai.svg", width: 32 },
+  { label: "Dubai Police AIX", src: "/img/dashboard/aix-logo1.png", width: 32 },
 ];
 
 /** Quick-access toolbar; rises once the hero is out of the way. */
@@ -69,6 +76,24 @@ export default function StickyBar() {
                     {label}
                   </span>
                 </Link>
+              ))}
+              {partners.map((partner) => (
+                <a
+                  key={partner.label}
+                  href="https://www.dubaipolice.gov.ae/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={partner.label}
+                  className="hidden min-w-[64px] items-center justify-center px-3 py-4 transition-colors hover:bg-black/[0.04] sm:inline-flex"
+                >
+                  <Image
+                    src={partner.src}
+                    alt={partner.label}
+                    width={partner.width}
+                    height={32}
+                    className="h-8 w-auto"
+                  />
+                </a>
               ))}
             </div>
           </div>

@@ -353,7 +353,7 @@ export const careers = [
     href: "https://www.dubaipolice.ac.ae/",
     bodyAfter:
       " and master the strategic vision, skills, and expertise needed to lead in law enforcement and safeguard the community.",
-    image: "/cms/images_479d38045b.jpg",
+    image: "/cms/Home/Innovation_2d3f3540e6.jpg",
   },
   {
     title: "Ready to join a force that inspires?",
@@ -362,7 +362,7 @@ export const careers = [
     linkLabel: "Join a team",
     href: "https://srs.dubaipolice.gov.ae/",
     bodyAfter: " dedicated to securing, connecting, and innovating.",
-    image: "/cms/World_Summit_Police_30fd9f4d13.jpg",
+    image: "/cms/positive_spirit_final_s_d8fef6b5f6.jpg",
   },
 ];
 
