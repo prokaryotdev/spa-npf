@@ -31,7 +31,7 @@ export default function Skyline() {
         <div className="absolute bottom-0 left-0 w-full">
           <h2
             id="finale"
-            className="absolute bottom-[41%] z-10 w-full text-center font-secondary text-[21vw] leading-[0.76] font-bold tracking-[-0.05em] uppercase md:text-[11vw]"
+            className="absolute bottom-[41%] z-10 w-full text-center font-secondary text-[16vw] leading-[0.82] font-bold tracking-[-0.08em] uppercase md:text-[11vw] md:leading-[0.76] md:tracking-[-0.05em]"
           >
             <span className="sr-only">Smart, Secure, Together</span>
             {[

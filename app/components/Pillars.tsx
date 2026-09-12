@@ -18,6 +18,17 @@ export default function Pillars() {
   const progress = useScrollProgress(section);
   const active = chapter(progress, pillars.length);
 
+  const portraits = pillars.map((pillar, i) => (
+    <span
+      key={pillar.portrait}
+      className={`absolute inset-[9%] overflow-hidden rounded-full transition-[opacity,filter,transform] duration-700 ease-[var(--ease-custom)] ${
+        i === active ? "scale-100 opacity-100 blur-0" : "scale-90 opacity-0 blur-sm"
+      }`}
+    >
+      <Image src={pillar.portrait} alt="" fill sizes="480px" className="object-contain" />
+    </span>
+  ));
+
   return (
     <section
       ref={section}
@@ -80,44 +91,28 @@ export default function Pillars() {
 
             <div className="order-1 lg:order-2 lg:col-span-5">
               <div className="relative mx-auto aspect-square w-full max-w-[520px]">
-                <Image
-                  src="/img/assets-home/static/ring12.svg"
-                  alt=""
-                  fill
-                  sizes="520px"
-                  style={{ transform: `rotate(${progress * 180 - 90}deg)` }}
-                  className="object-contain opacity-70"
-                />
-                {pillars.map((pillar, i) => (
-                  <span
-                    key={pillar.portrait}
-                    className={`absolute inset-[9%] overflow-hidden rounded-full transition-[opacity,filter,transform] duration-700 ease-[var(--ease-custom)] ${
-                      i === active
-                        ? "scale-100 opacity-100 blur-0"
-                        : "scale-90 opacity-0 blur-sm"
-                    }`}
-                  >
-                    <Image
-                      src={pillar.portrait}
-                      alt=""
-                      fill
-                      sizes="480px"
-                      className="object-contain"
-                    />
-                  </span>
-                ))}
-
+                <div className="relative aspect-square w-full">
+                  <Image
+                    src="/img/assets-home/static/ring12.svg"
+                    alt=""
+                    fill
+                    sizes="520px"
+                    style={{ transform: `rotate(${progress * 180 - 90}deg)` }}
+                    className="object-contain opacity-70"
+                  />
+                  {portraits}
+                </div>
                 {/* A diagonal white wash lifts the standing line off the portrait,
                     the same trick the original uses over this block. */}
                 <span
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(124deg,#ffffff_18%,rgba(255,255,255,0.75)_44%,transparent_68%)]"
+                  className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(124deg,#ffffff_18%,rgba(255,255,255,0.75)_44%,transparent_68%)] lg:block"
                 />
-                <div className="absolute top-1/2 left-0 max-w-[64%] -translate-y-1/2 ps-[6%] text-left">
-                  <p className="mb-3 font-secondary text-base leading-snug font-bold text-[#414651] md:text-2xl">
+                <div className="mt-6 text-center lg:absolute lg:top-1/2 lg:left-0 lg:mt-0 lg:max-w-[64%] lg:-translate-y-1/2 lg:ps-[6%] lg:text-left">
+                  <p className="mb-2 font-secondary text-base leading-snug font-bold text-[#414651] lg:mb-3 lg:text-2xl">
                     Together, We Build a Smart and Secure Dubai
                   </p>
-                  <p className="font-secondary text-xs font-bold text-[#313a35] md:text-base">
+                  <p className="font-secondary text-xs font-bold text-[#313a35] lg:text-base">
                     With you, For you. Protecting, Connecting, and Innovating.
                   </p>
                 </div>
