@@ -1,26 +1,151 @@
 @import "tailwindcss";
 
+@theme inline {
+  --font-primary: var(--font-dubai);
+  --font-secondary: var(--font-bukra);
+
+  --color-dp-green: #008755;
+  --color-dp-green-deep: #004a2e;
+  --color-dp-green-mid: #00925b;
+  --color-dp-green-ink: #006c44;
+  --color-dp-ink: #121212;
+  --color-dp-body: #4b4c4d;
+  --color-dp-muted: #58595a;
+  --color-dp-night: #091815;
+
+  --ease-custom: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-bob: bob 1.6s var(--ease-custom) infinite;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(7px);
+    }
+  }
+}
+
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --foreground: #121212;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-primary), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Browser surfaces themed from the palette rather than left at defaults. */
+::selection {
+  background: #bee5d8;
+  color: #004a2e;
+}
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 2px solid #00925b;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+html {
+  scrollbar-color: #9dc4b4 #eef4f1;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Matches the site's 85%-width inner container at xl and up. */
+.dp-container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  max-width: 1536px;
+}
+@media (min-width: 1280px) {
+  .dp-container {
+    width: 85%;
+    padding-inline: 0;
+  }
+}
+
+/* Horizontal card rails: native scroll-snap instead of a carousel library. */
+.dp-rail {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: #9dc4b4 #eef4f1;
+}
+.dp-rail > * {
+  scroll-snap-align: start;
+}
+
+/* Scroll-reveal via native scroll-driven animations. Browsers without
+   animation-timeline render the content in its final state instead. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal] {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 28%;
+    }
+  }
+}
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The pillar portraits hand off as the section crosses the viewport. Without
+   scroll-driven animation support all three simply stack and the last shows. */
+[data-portrait="1"] { z-index: 1; }
+[data-portrait="2"] { z-index: 2; }
+[data-portrait="3"] { z-index: 3; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-portrait="2"],
+    [data-portrait="3"] {
+      animation: portrait-in linear both;
+      animation-timeline: view();
+    }
+    [data-portrait="2"] {
+      animation-range: cover 26% cover 46%;
+    }
+    [data-portrait="3"] {
+      animation-range: cover 56% cover 76%;
+    }
+  }
+}
+
+@keyframes portrait-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
