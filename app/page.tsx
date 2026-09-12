@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import CardRail from "./components/CardRail";
 import Careers from "./components/Careers";
 import Domains from "./components/Domains";
 import Footer from "./components/Footer";
@@ -99,15 +100,25 @@ export default function Home() {
               responsive, smart, and always one step ahead.
             </p>
 
-            <div className="dp-rail mt-10 flex gap-6 overflow-x-auto pb-6 md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
+            <CardRail label="smart policing" className="mt-10 md:hidden">
+              {smartPolicing.map((card) => (
+                <InitiativeCard
+                  key={card.title}
+                  card={card}
+                  className="w-[84vw] max-w-[420px] shrink-0"
+                />
+              ))}
+            </CardRail>
+
+            <div className="mt-10 hidden grid-cols-2 gap-6 md:mt-32 md:grid md:gap-12">
               {smartPolicing.map((card, i) => (
                 <div
                   key={card.title}
                   data-reveal
                   style={{ "--reveal-delay": `${i * 110}ms` } as React.CSSProperties}
-                  className="w-[84vw] max-w-[420px] shrink-0 md:w-auto md:max-w-none"
+                  className={card.wide ? "col-span-2" : undefined}
                 >
-                  <InitiativeCard card={card} />
+                  <InitiativeCard card={card} shape={card.wide ? "wide" : "square"} />
                 </div>
               ))}
             </div>
@@ -147,15 +158,16 @@ export default function Home() {
               <ArrowRight className="size-5" />
             </Link>
 
-            <div className="dp-rail mt-10 flex gap-6 overflow-x-auto pb-6">
+            <CardRail label="SPS" className="mt-10 md:mt-20">
               {smartPoliceStations.map((card) => (
                 <InitiativeCard
                   key={card.title}
                   card={card}
-                  className="w-[84vw] max-w-[420px] shrink-0 md:w-[440px] md:max-w-none lg:w-[520px]"
+                  shape="tall"
+                  className="w-[84vw] max-w-[420px] shrink-0 md:w-[400px] md:max-w-none lg:w-[460px]"
                 />
               ))}
-            </div>
+            </CardRail>
           </div>
         </section>
 
@@ -182,13 +194,26 @@ export default function Home() {
               heritage, volunteer service, and dedicated support.
             </p>
 
-            <div className="dp-rail mt-10 flex gap-6 overflow-x-auto pb-6">
+            <CardRail label="community" className="mt-10 md:hidden">
               {community.map((card) => (
                 <InitiativeCard
                   key={card.title}
                   card={card}
-                  className="w-[84vw] max-w-[420px] shrink-0 md:w-[440px] md:max-w-none lg:w-[520px]"
+                  className="w-[84vw] max-w-[420px] shrink-0"
                 />
+              ))}
+            </CardRail>
+
+            <div className="mt-10 hidden grid-cols-2 gap-8 md:mt-32 md:grid">
+              {community.map((card, i) => (
+                <div
+                  key={card.title}
+                  data-reveal
+                  style={{ "--reveal-delay": `${(i % 2) * 110}ms` } as React.CSSProperties}
+                  className={card.wide ? "col-span-2" : undefined}
+                >
+                  <InitiativeCard card={card} shape={card.wide ? "wide" : "square"} />
+                </div>
               ))}
             </div>
           </div>

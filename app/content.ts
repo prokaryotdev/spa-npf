@@ -23,6 +23,8 @@ export type InitiativeCard = {
   tags: { label: string; icon?: string }[];
   more?: number;
   badge?: string;
+  /** Spans both columns of the desktop mosaic at a 1650/750 ratio. */
+  wide?: boolean;
   theme: CardTheme;
 };
 
@@ -199,6 +201,7 @@ export const smartPolicing: InitiativeCard[] = [
       { label: "Security and safety strategy", icon: "/cms/MOI_c3da982165.png" },
     ],
     more: 1,
+    wide: true,
     theme: theme("#042418", "#b0f6dc", "#54ecb3"),
   },
 ];
@@ -288,6 +291,7 @@ export const community: InitiativeCard[] = [
     logo: "/cms/icon_soul_01ee5459c0.png",
     tags: [{ label: "Initiative Results", icon: "/cms/c1_9ba2902a1d.png" }],
     more: 1,
+    wide: true,
     theme: theme("#17232C", "#d7e2ea", "#94b1c7"),
   },
   {
@@ -340,6 +344,7 @@ export const community: InitiativeCard[] = [
       { label: "WPS Awards 2026", icon: "/cms/announcement_01_9b8b72d1a1.svg" },
     ],
     more: 2,
+    wide: true,
     theme: theme("#17232C", "#d7e2ea", "#94b1c7"),
   },
 ];

@@ -8,11 +8,20 @@ import { ArrowRight } from "./icons";
  * the card's own ink colour, the initiative logo top-left, and the copy stacked
  * at the base. Shared by Smart Policing, Smart Police Stations and Community.
  */
+/** The three card ratios the site uses; mobile is always 330/530. */
+const shapes = {
+  square: "aspect-[330/530] md:aspect-[800/750]",
+  wide: "aspect-[330/530] md:aspect-[1650/750]",
+  tall: "aspect-[330/530] md:aspect-[640/890]",
+};
+
 export default function InitiativeCard({
   card,
+  shape = "square",
   className = "",
 }: {
   card: Card;
+  shape?: keyof typeof shapes;
   className?: string;
 }) {
   const { ink, tint, edge, shadow } = card.theme;
@@ -28,13 +37,17 @@ export default function InitiativeCard({
           boxShadow: `0 40px 30px -20px ${shadow}`,
         } as CSSProperties
       }
-      className={`group/card relative flex aspect-[330/530] flex-col justify-between overflow-hidden rounded-[32px] p-6 duration-500 ease-[var(--ease-custom)] md:aspect-[800/750] md:hover:-translate-y-2.5 lg:p-10 ${className}`}
+      className={`group/card relative flex ${shapes[shape]} flex-col justify-between overflow-hidden rounded-[32px] p-6 duration-500 ease-[var(--ease-custom)] md:hover:-translate-y-2.5 lg:p-10 ${className}`}
     >
       <Image
         src={card.image}
         alt=""
         fill
-        sizes="(max-width: 768px) 84vw, (max-width: 1280px) 46vw, 33vw"
+          sizes={
+          shape === "wide"
+            ? "(max-width: 768px) 84vw, 92vw"
+            : "(max-width: 768px) 84vw, 46vw"
+        }
         className="object-cover transition-transform duration-700 ease-[var(--ease-custom)] group-hover/card:scale-105"
       />
       <div aria-hidden className="absolute inset-0" style={{ background: scrim }} />
@@ -69,7 +82,7 @@ export default function InitiativeCard({
         </div>
       </div>
 
-      <div className="relative z-10">
+      <div className={`relative z-10 ${shape === "wide" ? "md:max-w-[52ch]" : ""}`}>
         <span
           className="mb-3 inline-block rounded-full border px-2 py-0.5 text-xs font-medium"
           style={{ background: tint, borderColor: edge, color: ink }}
