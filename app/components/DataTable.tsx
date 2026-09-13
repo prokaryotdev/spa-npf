@@ -25,12 +25,18 @@ export default function DataTable<T extends Record<string, unknown>>({
   columns,
   filterKey,
   caption,
+  minWidth = "640px",
 }: {
   rows: readonly T[];
   columns: Column<T>[];
   /** Column to offer as a category filter, when the data has one. */
   filterKey?: keyof T & string;
   caption: string;
+  /**
+   * Width below which the table scrolls sideways. Tables of short values can
+   * sit well under this and stay fully readable on a phone.
+   */
+  minWidth?: string;
 }) {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<{ key: string; dir: 1 | -1 } | null>(null);
@@ -131,7 +137,10 @@ export default function DataTable<T extends Record<string, unknown>>({
       </div>
 
       <div className="overflow-x-auto rounded-2xl ring-1 ring-black/5">
-        <table className="w-full min-w-[640px] border-collapse bg-white text-left">
+        <table
+          style={{ minWidth }}
+          className="w-full border-collapse bg-white text-left"
+        >
           <caption className="sr-only">{caption}</caption>
           <thead>
             <tr className="bg-[#F4F8F6]">

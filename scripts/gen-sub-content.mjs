@@ -26,6 +26,27 @@ function asset(url) {
   return "/cms/" + clean;
 }
 
+/** Location arrives as a JSON blob; only the address is worth showing. */
+const address = (value) => {
+  if (!value) return "";
+  try {
+    const parsed = typeof value === "string" ? JSON.parse(value) : value;
+    return (parsed?.address ?? "").toString().trim();
+  } catch {
+    return typeof value === "string" ? value.trim() : "";
+  }
+};
+
+/** Turns CMS enum values like safety_And_Security into readable labels. */
+const label = (value) =>
+  String(value ?? "")
+    .replace(/[_-]+/g, " ")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .split(/ +/)
+    .filter(Boolean)
+    .map((w) => w[0].toUpperCase() + w.slice(1))
+    .join(" ");
+
 const trim = (s, n = 260) => {
   if (!s) return "";
   const flat = String(s).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
@@ -102,8 +123,8 @@ const content = {
     summary: trim(e.shortDescription, 180),
     from: (e.fromDate || "").slice(0, 10),
     to: (e.toDate || "").slice(0, 10),
-    type: e.eventType || "",
-    location: trim(e.location, 90),
+    type: label(e.eventType),
+    location: trim(address(e.location), 90),
     image: asset(e.image?.url),
   })),
 
@@ -124,7 +145,7 @@ const content = {
   magazines: read("magazines.json").map((m) => ({
     title: m.title,
     issue: m.issueNumber ? String(m.issueNumber) : "",
-    kind: [m.type, m.subType].filter(Boolean).join(" · "),
+    kind: [m.type, m.subType].filter(Boolean).map(label).join(" · "),
     date: (m.date || "").slice(0, 10),
     summary: trim(m.description, 180),
     cover: asset(m.thumb?.url ?? m.media?.[0]?.url),

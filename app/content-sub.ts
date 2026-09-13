@@ -1911,8 +1911,8 @@ export const events = [
     "summary": "The largest international trade show for the automotive aftermarket industry in the MEA region",
     "from": "2025-12-09",
     "to": "2025-12-11",
-    "type": "Exhibitions and Conferences",
-    "location": "{\"latitude\":\"\",\"longitude\":\"\",\"address\":\"\"}",
+    "type": "Exhibitions And Conferences",
+    "location": "",
     "image": "/cms/events/3860_10_a15514ff4c.PNG"
   },
   {
@@ -1920,8 +1920,8 @@ export const events = [
     "summary": "54 Years, United in our Journey",
     "from": "2025-12-02",
     "to": "2025-12-02",
-    "type": "International Days and National Events",
-    "location": "{\"latitude\":\"\",\"longitude\":\"\",\"address\":\"\"}",
+    "type": "International Days And National Events",
+    "location": "",
     "image": "/cms/events/891_Untitled_design_cecb51b3e1.png"
   },
   {
@@ -1929,8 +1929,8 @@ export const events = [
     "summary": "30 November",
     "from": "2025-11-30",
     "to": "2025-11-30",
-    "type": "International Days and National Events",
-    "location": "{\"latitude\":\"\",\"longitude\":\"\",\"address\":\"\"}",
+    "type": "International Days And National Events",
+    "location": "",
     "image": "/cms/events/4615_523_b8c0630e93.jpeg"
   },
   {
@@ -1938,8 +1938,8 @@ export const events = [
     "summary": "ICOM 2025",
     "from": "2025-11-11",
     "to": "2025-11-14",
-    "type": "Exhibitions and Conferences",
-    "location": "{\"latitude\":\"\",\"longitude\":\"\",\"address\":\"\"}",
+    "type": "Exhibitions And Conferences",
+    "location": "",
     "image": "/cms/events/2142_11_ba2e1630ce.jpeg"
   },
   {
@@ -1947,8 +1947,8 @@ export const events = [
     "summary": "Where the Future of Aerospace Takes Flight",
     "from": "2025-11-17",
     "to": "2025-11-21",
-    "type": "Exhibitions and Conferences",
-    "location": "{\"latitude\":\"\",\"longitude\":\"\",\"address\":\"\"}",
+    "type": "Exhibitions And Conferences",
+    "location": "",
     "image": "/cms/events/5367_22_956e2d3319.jpeg"
   },
   {
@@ -1956,8 +1956,8 @@ export const events = [
     "summary": "Sharjah International Book Fair",
     "from": "2025-11-05",
     "to": "2025-11-16",
-    "type": "Exhibitions and Conferences",
-    "location": "{\"latitude\":\"\",\"longitude\":\"\",\"address\":\"\"}",
+    "type": "Exhibitions And Conferences",
+    "location": "",
     "image": "/cms/events/5948_41_0205bc9218.jpeg"
   },
   {
@@ -1965,8 +1965,8 @@ export const events = [
     "summary": "November 3",
     "from": "2025-11-03",
     "to": "2025-11-03",
-    "type": "International Days and National Events",
-    "location": "{\"latitude\":\"\",\"longitude\":\"\",\"address\":\"\"}",
+    "type": "International Days And National Events",
+    "location": "",
     "image": "/cms/events/827_a23_e26bc10ff1.jpg"
   },
   {
@@ -1975,7 +1975,7 @@ export const events = [
     "from": "2025-10-12",
     "to": "2025-10-12",
     "type": "Community Initiative",
-    "location": "{\"latitude\":\"\",\"longitude\":\"\",\"address\":\"\"}",
+    "location": "",
     "image": "/cms/events/4379_IMG_0276_32a739a4e6.jpg"
   },
   {
@@ -1983,8 +1983,8 @@ export const events = [
     "summary": "Prepare for five exhilarating days filled with conferences",
     "from": "2025-10-13",
     "to": "2025-10-17",
-    "type": "Exhibitions and Conferences",
-    "location": "{\"latitude\":\"\",\"longitude\":\"\",\"address\":\"\"}",
+    "type": "Exhibitions And Conferences",
+    "location": "",
     "image": "/cms/events/3733_55_c77d1717c4.png"
   },
   {
@@ -1992,8 +1992,8 @@ export const events = [
     "summary": "WHERE TALENTS MEET OPPORTUNITY",
     "from": "2025-09-23",
     "to": "2025-09-25",
-    "type": "Exhibitions and Conferences",
-    "location": "{\"latitude\":\"\",\"longitude\":\"\",\"address\":\"\"}",
+    "type": "Exhibitions And Conferences",
+    "location": "",
     "image": "/cms/events/3764_IMG_0242_913d5e2dc4.jpeg"
   },
   {
@@ -2002,7 +2002,7 @@ export const events = [
     "from": "2025-08-14",
     "to": "2025-08-17",
     "type": "Sports Activities",
-    "location": "{\"latitude\":\"\",\"longitude\":\"\",\"address\":\"\"}",
+    "location": "",
     "image": "/cms/events/7886_322_d44482f6cf.jpeg"
   },
   {
@@ -2010,8 +2010,8 @@ export const events = [
     "summary": "An aware family ... a safe community",
     "from": "2025-06-30",
     "to": "2025-07-02",
-    "type": "International Days and National Events",
-    "location": "{\"latitude\":\"\",\"longitude\":\"\",\"address\":\"\"}",
+    "type": "International Days And National Events",
+    "location": "",
     "image": "/cms/events/664_88_3fe732a0db.jpeg"
   }
 ];
@@ -2146,7 +2146,7 @@ export const magazines = [
   {
     "title": "THE SECURITY EQUATION",
     "issue": "",
-    "kind": "safety_And_Security",
+    "kind": "Safety And Security",
     "date": "2026-08-01",
     "summary": "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
     "cover": "/cms/SS_August2026_36625394ee.jpg",
@@ -2155,7 +2155,7 @@ export const magazines = [
   {
     "title": "Investing in Tomorrow",
     "issue": "",
-    "kind": "safety_And_Security",
+    "kind": "Safety And Security",
     "date": "2026-07-01",
     "summary": "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
     "cover": "/cms/SS_fe410c6f76.jpg",
@@ -2164,7 +2164,7 @@ export const magazines = [
   {
     "title": "70 Years of Excellence ",
     "issue": "",
-    "kind": "safety_And_Security",
+    "kind": "Safety And Security",
     "date": "2026-06-01",
     "summary": "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
     "cover": "/cms/SS_f9a22938a5.jpg",
@@ -2173,7 +2173,7 @@ export const magazines = [
   {
     "title": "70 Years of Enhancing Safety",
     "issue": "",
-    "kind": "amn_Magazine",
+    "kind": "Amn Magazine",
     "date": "2026-06-01",
     "summary": "Al Amn is a cultural and security rich monthly magazine published in Arabic by the Dubai Police Security Media Department.",
     "cover": "/cms/Al_Amn656_9596fa3fb3.jpg",
@@ -2182,7 +2182,7 @@ export const magazines = [
   {
     "title": "In Dubai, Life Blooms",
     "issue": "",
-    "kind": "khalid_Magazine",
+    "kind": "Khalid Magazine",
     "date": "2026-05-01",
     "summary": "An educational and safety-focused magazine for children, published by Dubai Police since 1992 to teach youngsters aged 5–15 about security, traffic awareness, and moral values.",
     "cover": "/cms/Khalid_May26_f1adc3753e.JPG",
@@ -2191,7 +2191,7 @@ export const magazines = [
   {
     "title": "Operation ‘Tri-Force Sentinel’",
     "issue": "",
-    "kind": "safety_And_Security",
+    "kind": "Safety And Security",
     "date": "2026-05-01",
     "summary": "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
     "cover": "/cms/May_292_1020e6ac76.jpg",
@@ -2200,7 +2200,7 @@ export const magazines = [
   {
     "title": "You're Ok when Your Security is",
     "issue": "",
-    "kind": "amn_Magazine",
+    "kind": "Amn Magazine",
     "date": "2026-04-01",
     "summary": "Al Amn is a cultural and security rich monthly magazine published in Arabic by the Dubai Police Security Media Department.",
     "cover": "/cms/April26_0da5bf8203.jpg",
@@ -2209,7 +2209,7 @@ export const magazines = [
   {
     "title": "The Land of Safety ",
     "issue": "",
-    "kind": "khalid_Magazine",
+    "kind": "Khalid Magazine",
     "date": "2026-04-01",
     "summary": "An educational and safety-focused magazine for children, published by Dubai Police since 1992 to teach youngsters aged 5–15 about security, traffic awareness, and moral values.",
     "cover": "/cms/Khalid_April26_c1766d0460.jpg",
@@ -2218,7 +2218,7 @@ export const magazines = [
   {
     "title": "Proud of UAE",
     "issue": "",
-    "kind": "safety_And_Security",
+    "kind": "Safety And Security",
     "date": "2026-04-01",
     "summary": "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
     "cover": "/cms/April26_54213dd893.jpg",
@@ -2227,7 +2227,7 @@ export const magazines = [
   {
     "title": "Thick Skin, Bitter Flesh",
     "issue": "",
-    "kind": "safety_And_Security",
+    "kind": "Safety And Security",
     "date": "2026-03-01",
     "summary": "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
     "cover": "/cms/Mar26_7c49a8ef6c.jpg",
@@ -2236,7 +2236,7 @@ export const magazines = [
   {
     "title": "UAE's Beating Heart",
     "issue": "",
-    "kind": "khalid_Magazine",
+    "kind": "Khalid Magazine",
     "date": "2026-03-01",
     "summary": "An educational and safety-focused magazine for children, published by Dubai Police since 1992 to teach youngsters aged 5–15 about security, traffic awareness, and moral values.",
     "cover": "/cms/May_316_57b8ad947f.jpg",
@@ -2245,7 +2245,7 @@ export const magazines = [
   {
     "title": "UAE Rescue Challenge 2026... Heroes in Action ",
     "issue": "",
-    "kind": "amn_Magazine",
+    "kind": "Amn Magazine",
     "date": "2026-03-01",
     "summary": "Al Amn is a cultural and security rich monthly magazine published in Arabic by the Dubai Police Security Media Department.",
     "cover": "/cms/March26_e34f4f1ebd.jpg",

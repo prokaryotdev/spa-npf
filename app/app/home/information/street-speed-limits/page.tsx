@@ -23,11 +23,12 @@ export default function SpeedLimitsPage() {
           </p>
           <DataTable
             caption="Street speed limits"
+            minWidth="340px"
             rows={data.rows}
             columns={[
               { key: "roadName", label: "Road" },
-              { key: "speed", label: "Speed limit (km/h)", numeric: true, width: "180px" },
-              { key: "radarControl", label: "Radar control (km/h)", numeric: true, width: "190px" },
+              { key: "speed", label: "Limit km/h", numeric: true, width: "110px" },
+              { key: "radarControl", label: "Radar km/h", numeric: true, width: "110px" },
             ]}
           />
         </div>
