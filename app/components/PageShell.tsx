@@ -122,3 +122,92 @@ export function LinkCard({
     </article>
   );
 }
+
+type LegalItem = {
+  type: string;
+  text?: string;
+  intro?: string;
+  items?: string[];
+  link?: { href: string; label: string };
+  afterText?: string;
+};
+
+/** The body shared by Privacy Policy, Terms and the Service Agreement. */
+export function LegalSections({
+  sections,
+}: {
+  sections: { title: string; content: LegalItem[] }[];
+}) {
+  return (
+    <section className="bg-white pb-24">
+      <div className="dp-container grid gap-10 lg:grid-cols-[260px_1fr] lg:gap-16">
+        <nav aria-label="On this page" className="lg:sticky lg:top-32 lg:self-start">
+          <h2 className="mb-3 font-secondary text-sm font-bold tracking-wide text-dp-muted uppercase">
+            On this page
+          </h2>
+          <ol className="space-y-2 text-sm">
+            {sections.map((s) => (
+              <li key={s.title}>
+                <a
+                  href={`#${slug(s.title)}`}
+                  className="text-dp-body transition-colors hover:text-dp-green"
+                >
+                  {s.title}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        <div className="max-w-[75ch]">
+          {sections.map((s) => (
+            <section key={s.title} className="mb-10 scroll-mt-32" id={slug(s.title)}>
+              <h2 className="mb-4 font-secondary text-2xl font-bold text-dp-green-deep">
+                {s.title}
+              </h2>
+              {s.content.map((item, i) =>
+                item.type === "list" ? (
+                  <div key={i}>
+                    {item.intro ? (
+                      <p className="mb-3 text-base leading-relaxed text-dp-body">
+                        {item.intro}
+                      </p>
+                    ) : null}
+                    <ul className="mb-4 space-y-2">
+                      {(item.items ?? []).map((li) => (
+                        <li
+                          key={li}
+                          className="relative pl-6 text-base leading-relaxed text-dp-body before:absolute before:top-[0.6em] before:left-0 before:size-2 before:rounded-full before:bg-dp-green"
+                        >
+                          {li}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <p key={i} className="mb-4 text-base leading-relaxed text-dp-body">
+                    {item.text}
+                    {item.link ? (
+                      <a
+                        href={item.link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-dp-green underline underline-offset-2"
+                      >
+                        {item.link.label}
+                      </a>
+                    ) : null}
+                    {item.afterText}
+                  </p>
+                ),
+              )}
+            </section>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const slug = (s: string) =>
+  s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
