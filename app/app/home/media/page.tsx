@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import CardRail from "../../../components/CardRail";
+import NewsCard from "../../../components/NewsCard";
 import { PageShell } from "../../../components/PageShell";
 import { ArrowRight, PlayIcon } from "../../../components/icons";
+import { news } from "../../../content-news";
 import { mediaHub } from "../../../content-pages";
 
 export const metadata: Metadata = {
@@ -134,31 +136,8 @@ export default function MediaPage() {
           </p>
 
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-            {mediaHub.news.items.map((item, i) => (
-              <article
-                key={item.title}
-                data-reveal
-                style={{ "--reveal-delay": `${(i % 3) * 90}ms` } as React.CSSProperties}
-                className="group/card"
-              >
-                <Link href="/app/home/media/news" className="block">
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl">
-                    <Image
-                      src={item.image}
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 92vw, 31vw"
-                      className="object-cover transition-transform duration-700 ease-[var(--ease-custom)] group-hover/card:scale-105"
-                    />
-                  </div>
-                  <time className="mt-4 block text-sm text-dp-muted">
-                    {item.date}
-                  </time>
-                  <h3 className="mt-1 font-secondary text-lg leading-snug font-bold text-dp-ink transition-colors group-hover/card:text-dp-green">
-                    {item.title}
-                  </h3>
-                </Link>
-              </article>
+            {news.slice(0, 3).map((item, i) => (
+              <NewsCard key={item.slug} item={item} index={i} />
             ))}
           </div>
         </div>

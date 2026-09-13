@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { heroSlides } from "../content";
 import {
@@ -78,13 +79,13 @@ export default function Hero() {
                 {slide.readMore ? (
                   <>
                     {" "}
-                    <button
-                      type="button"
+                    <Link
+                      href="/app/home/media/news"
                       className="underline underline-offset-4 transition-colors hover:text-[#8CD1B4]"
                     >
                       Read More
                       <span className="sr-only"> about dubai police campaign</span>
-                    </button>
+                    </Link>
                   </>
                 ) : null}
               </p>
@@ -92,12 +93,14 @@ export default function Hero() {
 
             <form
               role="search"
-              onSubmit={(e) => e.preventDefault()}
+              action="/app/search"
               className="mx-auto mb-8 hidden max-w-[656px] items-center gap-3 rounded-2xl bg-white px-4 lg:flex"
             >
               <SearchIcon className="size-6 shrink-0 text-dp-green-ink" />
               <input
                 id="homeServiceSearch"
+                name="q"
+                type="search"
                 className="w-full flex-grow py-5 text-sm text-dp-muted outline-none placeholder:text-dp-muted"
                 placeholder="Search for a service"
                 aria-label="Search services"

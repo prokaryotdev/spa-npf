@@ -99,10 +99,9 @@ export default function InitiativeCard({
         {card.tags.length || card.more ? (
           <div className="mt-3 flex flex-wrap items-center gap-2 md:mt-6">
             {card.tags.map((tag) => (
-              <button
+              <span
                 key={tag.label}
-                type="button"
-                className="inline-flex items-center rounded-full border border-neutral-400 bg-[#F9F9F9] px-3 py-3 font-secondary text-[10px] leading-tight font-bold text-[#4B4C4D] shadow-[0_4px_4px_rgba(0,0,0,0.25)] transition-colors hover:bg-[var(--tint)] hover:text-[var(--ink)] md:px-4 md:text-xs xl:px-6"
+                className="inline-flex items-center rounded-full border border-neutral-400 bg-[#F9F9F9] px-3 py-3 font-secondary text-[10px] leading-tight font-bold text-[#4B4C4D] shadow-[0_4px_4px_rgba(0,0,0,0.25)] md:px-4 md:text-xs xl:px-6"
               >
                 {tag.icon ? (
                   <span className="relative me-2 size-3.5 shrink-0 md:size-5">
@@ -116,15 +115,12 @@ export default function InitiativeCard({
                   </span>
                 ) : null}
                 {tag.label}
-              </button>
+              </span>
             ))}
             {card.more ? (
-              <button
-                type="button"
-                className="px-3 py-3 text-sm text-white underline-offset-4 hover:underline"
-              >
-                +{card.more} More
-              </button>
+              <span className="px-3 py-3 text-sm text-white/80">
+                +{card.more} more
+              </span>
             ) : null}
           </div>
         ) : null}

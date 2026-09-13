@@ -42,9 +42,9 @@ export default function Home() {
           <div className="dp-container">
             <div className="grid grid-cols-2 gap-2 pt-4 sm:grid-cols-3 lg:flex lg:pt-9">
               {quickServices.map((service) => (
-                <button
+                <Link
                   key={service.title}
-                  type="button"
+                  href="/app/services"
                   className="group h-full w-full grow rounded-xl bg-white p-3 pt-4 text-start duration-500 ease-[var(--ease-custom)] will-change-transform lg:h-[242px] lg:rounded-t-2xl lg:rounded-b-none lg:pb-20 md:hover:-translate-y-[30px]"
                 >
                   <span className="relative mx-auto mb-2 block aspect-square w-[60px]">
@@ -62,7 +62,7 @@ export default function Home() {
                   <span className="mx-auto block max-w-[210px] text-center text-sm text-dp-muted lg:text-base lg:leading-tight">
                     {service.body}
                   </span>
-                </button>
+                </Link>
               ))}
             </div>
           </div>

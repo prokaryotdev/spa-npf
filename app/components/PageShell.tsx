@@ -12,6 +12,7 @@ export function PageShell({
   trail = [],
   children,
   solidHeader = true,
+  titleSize = "display",
 }: {
   title: string;
   intro?: string;
@@ -19,6 +20,8 @@ export function PageShell({
   trail?: { label: string; href: string }[];
   children: React.ReactNode;
   solidHeader?: boolean;
+  /** Long headlines (a news article) need a smaller h1 than a section title. */
+  titleSize?: "display" | "article";
 }) {
   return (
     <>
@@ -47,13 +50,17 @@ export function PageShell({
                     <ChevronRight aria-hidden className="size-4 opacity-50" />
                   </li>
                 ))}
-                <li aria-current="page" className="font-medium text-dp-ink">
+                <li aria-current="page" className="max-w-[46ch] truncate font-medium text-dp-ink">
                   {title}
                 </li>
               </ol>
             </nav>
 
-            <h1 className="font-secondary text-4xl leading-[1.15] font-bold text-dp-green-deep lg:text-7xl">
+            <h1 className={`font-secondary leading-[1.15] font-bold text-dp-green-deep ${
+                titleSize === "article"
+                  ? "max-w-[22ch] text-3xl lg:text-5xl"
+                  : "text-4xl lg:text-7xl"
+              }`}>
               {title}
             </h1>
             {intro ? (

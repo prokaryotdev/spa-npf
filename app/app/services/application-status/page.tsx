@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageShell } from "../../../components/PageShell";
 import { ArrowRight, UserCircle } from "../../../components/icons";
 import { applicationStatus as svc } from "../../../content-pages";
@@ -99,17 +100,14 @@ export default function ApplicationStatusPage() {
                 </dd>
               </div>
             </dl>
-            <a
-              href="https://www.dubaipolice.gov.ae/app/services/application-status"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/app/signin"
               className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-dp-green px-6 py-3.5 font-medium text-white transition-colors hover:bg-dp-green-mid"
             >
               <UserCircle className="size-5" />
               {svc.signInLabel}
               <ArrowRight className="size-4" />
-              <span className="sr-only"> (opens in a new window)</span>
-            </a>
+            </Link>
           </aside>
         </div>
       </section>

@@ -24,6 +24,10 @@ const bukra = localFont({
 });
 
 export const metadata: Metadata = {
+  // Lets article pages emit absolute og:image URLs; override per deployment.
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dubaipolice.gov.ae",
+  ),
   title: "Dubai Police - Smart Secure Together",
   description:
     "Together for a safer Dubai tomorrow. Report, apply, inquire and pay, and request support from Dubai Police.",

@@ -56,9 +56,21 @@ body {
   outline-offset: 3px;
   border-radius: 4px;
 }
+/*
+ * No `scroll-behavior: smooth` on html: it stops the App Router from scrolling
+ * a new page to the top, so every client-side navigation lands mid-page.
+ * In-page anchors jump instead, which `scroll-mt-*` already accounts for.
+ */
 html {
   scrollbar-color: #9dc4b4 #eef4f1;
-  scroll-behavior: smooth;
+}
+/*
+ * Toggled by the header's accessibility button; every size in the app is in
+ * rem, so bumping the root scales the whole page. Kept at 112% because the
+ * desktop nav bar runs out of room above that.
+ */
+html.dp-large-text {
+  font-size: 112%;
 }
 @media (prefers-reduced-motion: reduce) {
   html {

@@ -24,6 +24,13 @@ const groups: { heading: string; links: Entry[] }[] = [
     heading: col.heading,
     links: col.links as Entry[],
   })),
+  {
+    heading: "Account",
+    links: [
+      { label: "Sign In", href: "/app/signin" },
+      { label: "Search", href: "/app/search" },
+    ],
+  },
   { heading: "Legal", links: legalLinks },
 ];
 

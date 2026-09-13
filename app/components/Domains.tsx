@@ -107,10 +107,8 @@ export default function Domains() {
                       className="animate-[reveal-up_0.7s_var(--ease-custom)_both]"
                       style={{ animationDelay: `${450 + c * 90}ms` }}
                     >
-                      <button
-                        type="button"
-                        className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-md transition-colors hover:bg-white/20"
-                      >
+                      {/* A label, not a control — nothing to click through to. */}
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-md">
                         <span className="relative size-5 shrink-0">
                           <Image
                             src={chip.icon}
@@ -121,7 +119,7 @@ export default function Domains() {
                           />
                         </span>
                         {chip.label}
-                      </button>
+                      </span>
                     </li>
                   ))}
                 </ul>

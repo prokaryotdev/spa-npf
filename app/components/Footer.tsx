@@ -15,6 +15,7 @@ const socials = ["Facebook", "Youtube", "Twitter", "Instagram"] as const;
 
 export default function Footer() {
   const [open, setOpen] = useState<string | null>(null);
+  const [subscribed, setSubscribed] = useState(false);
 
   return (
     <footer
@@ -124,7 +125,15 @@ export default function Footer() {
           <p className="mb-3">
             Stay updated with the latest news and announcements.
           </p>
-          <form className="mb-6" onSubmit={(e) => e.preventDefault()}>
+          {/* ponytail: no mailing-list backend, so this confirms and stops. */}
+          <form
+            className="mb-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+              setSubscribed(true);
+              e.currentTarget.reset();
+            }}
+          >
             <div className="relative w-full">
               <label htmlFor="subscribeEmail" className="sr-only">
                 Email Address
@@ -132,6 +141,7 @@ export default function Footer() {
               <input
                 id="subscribeEmail"
                 type="email"
+                required
                 placeholder="Email Address"
                 className="w-full rounded-lg border border-[#E4E2E6] bg-white px-4 py-3 pr-32 text-dp-ink placeholder:text-[#6b6b6b]"
               />
@@ -142,6 +152,9 @@ export default function Footer() {
                 Subscribe
               </button>
             </div>
+            <p aria-live="polite" className="mt-2 min-h-[1.25rem] text-sm text-dp-green-ink">
+              {subscribed ? "Thanks — you are on the list." : ""}
+            </p>
           </form>
           <div className="flex gap-6">
             {socials.map((name) => (

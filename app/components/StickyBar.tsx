@@ -14,7 +14,7 @@ import {
 const right = [
   { label: "Events", href: "/app/home/media/events", Icon: CalendarIcon },
   { label: "Customer Centers", href: "/app/home/customer-centers", Icon: PinIcon },
-  { label: "Contact Us", href: "/app/home/contactus", Icon: PhoneIcon },
+  { label: "Contact Us", href: "/app/home/contactUs", Icon: PhoneIcon },
 ];
 
 const partners = [
@@ -45,13 +45,15 @@ export default function StickyBar() {
         >
           <div className="flex justify-between">
             <div className="flex items-center">
-              <button
-                type="button"
-                aria-label="Happiness Meter"
+              <a
+                href="https://www.happinessmeter.ae/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Happiness Meter (opens in a new window)"
                 className="inline-flex min-w-[74px] items-center justify-center px-4 py-4 text-dp-green transition-colors hover:bg-black/[0.04]"
               >
                 <SmileIcon className="size-7 lg:size-8" />
-              </button>
+              </a>
               <Link
                 href="/app/services"
                 className="inline-flex min-w-[74px] items-center justify-center px-4 py-4 text-dp-green transition-colors hover:bg-black/[0.04]"

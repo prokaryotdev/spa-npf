@@ -20,7 +20,12 @@ import {
 export default function Header({ solid = false }: { solid?: boolean }) {
   const [atTop, setAtTop] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [bigText, setBigText] = useState(false);
   const scrolled = solid || !atTop;
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dp-large-text", bigText);
+  }, [bigText]);
 
   useEffect(() => {
     const onScroll = () => setAtTop(window.scrollY <= 80);
@@ -100,15 +105,15 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             </Link>
           </div>
 
-          <button
-            type="button"
+          <Link
+            href="/app/search"
             aria-label="Search"
             className={`grid size-11 place-items-center rounded-full transition-colors md:hidden ${
               scrolled ? "bg-black/5 text-dp-ink" : "bg-white/15 text-white"
             }`}
           >
             <SearchIcon className="size-5" />
-          </button>
+          </Link>
         </div>
 
         {/* Desktop nav bar */}
@@ -131,11 +136,11 @@ export default function Header({ solid = false }: { solid?: boolean }) {
               </button>
             </li>
             {navigation.map((item) => (
-              <li key={item.label} className="group relative px-4">
+              <li key={item.label} className="group relative px-3 xl:px-4">
                 <Link
                   href={item.href}
                   aria-haspopup={item.children ? "true" : undefined}
-                  className={`relative inline-flex items-center gap-1 py-4 text-base transition-colors duration-300 ${
+                  className={`relative inline-flex items-center gap-1 py-4 text-base whitespace-nowrap transition-colors duration-300 ${
                     scrolled ? "text-dp-ink" : "text-white"
                   } before:absolute before:bottom-0 before:left-0 before:h-1 before:w-full before:origin-left before:scale-x-0 before:rounded-t-full before:bg-dp-green before:transition-transform before:duration-300 group-hover:before:scale-x-100 motion-reduce:before:transition-none`}
                 >
@@ -170,19 +175,24 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             className={`flex items-center gap-2 ${scrolled ? "text-dp-ink" : "text-white"}`}
           >
             <li>
-              <button
-                type="button"
+              <Link
+                href="/app/search"
                 aria-label="Search"
                 className="grid size-10 place-items-center rounded-full transition-colors hover:bg-black/5"
               >
                 <SearchIcon className="size-5" />
-              </button>
+              </Link>
             </li>
             <li>
               <button
                 type="button"
-                aria-label="Accessibility options"
-                className="grid size-10 place-items-center rounded-full transition-colors hover:bg-black/5"
+                onClick={() => setBigText((v) => !v)}
+                aria-pressed={bigText}
+                aria-label="Larger text"
+                title="Larger text"
+                className={`grid size-10 place-items-center rounded-full transition-colors hover:bg-black/5 ${
+                  bigText ? "bg-dp-green text-white hover:bg-dp-green" : ""
+                }`}
               >
                 <AccessibilityIcon className="size-5" />
               </button>
@@ -198,13 +208,13 @@ export default function Header({ solid = false }: { solid?: boolean }) {
               </button>
             </li>
             <li>
-              <button
-                type="button"
+              <Link
+                href="/app/signin"
                 className="inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
               >
                 Sign In
                 <UserCircle className="size-[18px]" />
-              </button>
+              </Link>
             </li>
           </ul>
         </nav>
@@ -242,7 +252,8 @@ export default function Header({ solid = false }: { solid?: boolean }) {
               <CloseIcon className="size-5" />
             </button>
           </div>
-          <ul className="space-y-1">
+          {/* One handler for every link inside; clicks bubble up here. */}
+          <ul className="space-y-1" onClick={() => setMenuOpen(false)}>
             {navigation.map((item) => (
               <li key={item.label}>
                 <Link
@@ -270,14 +281,15 @@ export default function Header({ solid = false }: { solid?: boolean }) {
               </li>
             ))}
           </ul>
-          <button
-            type="button"
+          <Link
+            href="/app/signin"
             tabIndex={menuOpen ? 0 : -1}
+            onClick={() => setMenuOpen(false)}
             className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dp-green px-5 py-3 text-white transition-colors hover:bg-dp-green-mid"
           >
             Sign In
             <UserCircle className="size-[18px]" />
-          </button>
+          </Link>
         </div>
       </div>
     </header>

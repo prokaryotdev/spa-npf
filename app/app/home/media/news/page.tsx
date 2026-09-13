@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import NewsCard from "../../../../components/NewsCard";
 import { PageShell } from "../../../../components/PageShell";
-import { news } from "../../../../content-sub";
+import { news } from "../../../../content-news";
 
 export const metadata: Metadata = {
   title: "News | Dubai Police",
@@ -19,31 +19,7 @@ export default function NewsPage() {
       <section className="bg-white pb-24">
         <div className="dp-container grid gap-10 md:grid-cols-2 xl:grid-cols-3">
           {news.map((item, i) => (
-            <article
-              key={item.title}
-              data-reveal
-              style={{ "--reveal-delay": `${(i % 3) * 90}ms` } as React.CSSProperties}
-              className="group/card flex flex-col"
-            >
-              {item.image ? (
-                <div className="relative aspect-[16/10] overflow-hidden rounded-2xl">
-                  <Image
-                    src={item.image}
-                    alt=""
-                    fill
-                    sizes="(max-width: 768px) 92vw, 31vw"
-                    className="object-cover transition-transform duration-700 ease-[var(--ease-custom)] group-hover/card:scale-105"
-                  />
-                </div>
-              ) : null}
-              <time className="mt-4 text-sm text-dp-muted">{item.date}</time>
-              <h2 className="mt-1 font-secondary text-lg leading-snug font-bold text-dp-ink">
-                {item.title}
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-dp-body">
-                {item.summary}
-              </p>
-            </article>
+            <NewsCard key={item.slug} item={item} index={i} />
           ))}
         </div>
       </section>
