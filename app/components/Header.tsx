@@ -13,12 +13,17 @@ import {
   UserCircle,
 } from "./icons";
 
-export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
+/**
+ * `solid` is for pages that open on content rather than a dark hero, where the
+ * transparent-over-photo treatment would leave white text on white.
+ */
+export default function Header({ solid = false }: { solid?: boolean }) {
+  const [atTop, setAtTop] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const scrolled = solid || !atTop;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => setAtTop(window.scrollY <= 80);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -43,9 +48,9 @@ export default function Header() {
         {/* The logo band folds away once you scroll, leaving the nav pill. */}
         <div
           className={`flex items-center justify-between overflow-hidden transition-all duration-500 ease-[var(--ease-custom)] ${
-            scrolled
-              ? "pt-5 pb-2 md:h-0 md:-translate-y-3 md:py-0 md:opacity-0"
-              : "pt-5 pb-2 md:h-[74px] md:translate-y-0 md:opacity-100"
+            atTop
+              ? "pt-5 pb-2 md:h-[74px] md:translate-y-0 md:opacity-100"
+              : "pt-5 pb-2 md:h-0 md:-translate-y-3 md:py-0 md:opacity-0"
           }`}
         >
           <button
