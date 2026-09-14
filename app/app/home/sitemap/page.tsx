@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageShell } from "../../../components/PageShell";
 import { ArrowUpRight } from "../../../components/icons";
 import { footerColumns, legalLinks, navigation } from "../../../content";
+import { services } from "../../../content-services";
 
 export const metadata: Metadata = {
   title: "Sitemap | Dubai Police",
@@ -28,7 +29,18 @@ const groups: { heading: string; links: Entry[] }[] = [
     heading: "Account",
     links: [
       { label: "Sign In", href: "/app/signin" },
+      { label: "My Dubai Police", href: "/app/portal" },
       { label: "Search", href: "/app/search" },
+    ],
+  },
+  {
+    heading: `Services (${services.length})`,
+    links: [
+      { label: "All services", href: "/app/services" },
+      ...services.map((s) => ({
+        label: s.name,
+        href: `/app/services/${s.slug}`,
+      })),
     ],
   },
   { heading: "Legal", links: legalLinks },

@@ -1,16 +1,16 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { navigation } from "../content";
+import AccountLink from "./AccountLink";
+import ServiceSearch from "./ServiceSearch";
 import {
   AccessibilityIcon,
   ChevronDown,
   CloseIcon,
   MenuIcon,
   SearchIcon,
-  UserCircle,
 } from "./icons";
 import { useDialog } from "./useDialog";
 
@@ -21,6 +21,7 @@ import { useDialog } from "./useDialog";
 export default function Header({ solid = false }: { solid?: boolean }) {
   const [atTop, setAtTop] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [bigText, setBigText] = useState(false);
   const scrolled = solid || !atTop;
 
@@ -38,6 +39,8 @@ export default function Header({ solid = false }: { solid?: boolean }) {
   // showModal/close drive the drawer; the browser locks background scrolling.
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const menu = useDialog(menuOpen, closeMenu);
+  const closeSearch = useCallback(() => setSearchOpen(false), []);
+  const searchDialog = useDialog(searchOpen, closeSearch);
 
   return (
     <header
@@ -71,47 +74,35 @@ export default function Header({ solid = false }: { solid?: boolean }) {
           <div className="flex w-auto items-center gap-6 md:w-full md:justify-between">
             <Link
               href="/app/home"
-              aria-label="Dubai Government"
-              className="relative hidden h-[58px] w-[145px] md:block"
+              aria-label="Government of Dubai"
+              className={`hidden h-[58px] w-[145px] transition-colors duration-500 md:block ${
+                scrolled ? "text-dp-ink" : "text-white"
+              }`}
             >
-              <Image
-                src="/img/logo-gov-dubai.svg"
-                alt="Government of Dubai"
-                fill
-                sizes="145px"
-                className={`object-contain object-left transition-[filter] duration-500 ${
-                  scrolled ? "" : "brightness-0 invert"
-                }`}
-                priority
-              />
+              <span aria-hidden className="dp-logo dp-logo-gov" />
             </Link>
             <Link
               href="/app/home"
               aria-label="Dubai Police home"
-              className="relative h-9 w-[104px] md:h-11 md:w-[127px]"
+              className={`h-9 w-[104px] transition-colors duration-500 md:h-11 md:w-[127px] ${
+                scrolled ? "text-dp-green-deep" : "text-white"
+              }`}
             >
-              <Image
-                src="/img/logo-dubai-police.svg"
-                alt="Dubai Police"
-                fill
-                sizes="127px"
-                className={`object-contain transition-[filter] duration-500 ${
-                  scrolled ? "" : "brightness-0 invert"
-                }`}
-                priority
-              />
+              <span aria-hidden className="dp-logo dp-logo-police" />
             </Link>
           </div>
 
-          <Link
-            href="/app/search"
+          <button
+            type="button"
+            onClick={() => setSearchOpen(true)}
             aria-label="Search"
+            aria-expanded={searchOpen}
             className={`grid size-11 place-items-center rounded-full transition-colors md:hidden ${
               scrolled ? "bg-black/5 text-dp-ink" : "bg-white/15 text-white"
             }`}
           >
             <SearchIcon className="size-5" />
-          </Link>
+          </button>
         </div>
 
         {/* Desktop nav bar */}
@@ -173,13 +164,15 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             className={`flex items-center gap-2 ${scrolled ? "text-dp-ink" : "text-white"}`}
           >
             <li>
-              <Link
-                href="/app/search"
+              <button
+                type="button"
+                onClick={() => setSearchOpen(true)}
                 aria-label="Search"
+                aria-expanded={searchOpen}
                 className="grid size-10 place-items-center rounded-full transition-colors hover:bg-black/5"
               >
                 <SearchIcon className="size-5" />
-              </Link>
+              </button>
             </li>
             <li>
               <button
@@ -206,17 +199,45 @@ export default function Header({ solid = false }: { solid?: boolean }) {
               </button>
             </li>
             <li>
-              <Link
-                href="/app/signin"
-                className="inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium whitespace-nowrap text-white transition-colors hover:bg-dp-green-mid"
-              >
-                Sign In
-                <UserCircle className="size-[18px]" />
-              </Link>
+              <AccountLink />
             </li>
           </ul>
         </nav>
       </div>
+
+      {/*
+        Search overlay. The box needs room for its suggestion panel and the
+        page behind it is irrelevant while you are typing, so it opens as a
+        sheet under the header rather than expanding inside the nav bar.
+      */}
+      <dialog
+        ref={searchDialog}
+        aria-label="Search Dubai Police"
+        onClick={(e) => {
+          if (e.target === searchDialog.current) setSearchOpen(false);
+        }}
+        className="dp-search-sheet m-0 mt-0 w-full max-w-none bg-transparent p-4 pt-24 backdrop:bg-[rgba(4,20,14,0.6)] md:pt-28"
+      >
+        <div className="mx-auto w-full max-w-[680px]">
+          {/* Mounted only while open so autoFocus fires on every opening. */}
+          {searchOpen ? (
+            <ServiceSearch
+              variant="hero"
+              autoFocus
+              placeholder="Search for a service, news or page"
+              onNavigate={closeSearch}
+            />
+          ) : null}
+          <button
+            type="button"
+            onClick={() => setSearchOpen(false)}
+            className="mx-auto mt-4 flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm text-white backdrop-blur-sm transition-colors hover:bg-white/25"
+          >
+            <CloseIcon className="size-4" />
+            Close
+          </button>
+        </div>
+      </dialog>
 
       {/*
         Slide-out menu. A <dialog> so the browser handles Escape, the focus
@@ -272,14 +293,9 @@ export default function Header({ solid = false }: { solid?: boolean }) {
               </li>
             ))}
           </ul>
-          <Link
-            href="/app/signin"
-            onClick={() => setMenuOpen(false)}
-            className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dp-green px-5 py-3 text-white transition-colors hover:bg-dp-green-mid"
-          >
-            Sign In
-            <UserCircle className="size-[18px]" />
-          </Link>
+          <div className="mt-8">
+            <AccountLink block onNavigate={closeMenu} />
+          </div>
       </dialog>
     </header>
   );

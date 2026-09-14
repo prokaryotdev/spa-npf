@@ -121,26 +121,31 @@ export const quickServices = [
   {
     title: "Make a Report",
     body: "Report and submit your complaint directly",
+    href: "/app/services?package=Criminal+Reports+and+Complaints",
     icon: "/cms/homeServiceIcon/Reports_and_Complaints_Suite_2877ee8e89.svg",
   },
   {
     title: "Apply for a Certificate or Permit",
     body: "Access official Documents from Dubai Police quickly and securely",
+    href: "/app/services?package=Permits+and+Certificates",
     icon: "/cms/homeServiceIcon/Request_for_a_Certificate_or_Permit_f02f7b6956.svg",
   },
   {
     title: "Inquire & Pay",
     body: "Stay updated and settle your payments instantly",
+    href: "/app/services?package=Inquiries+and+Follow-up",
     icon: "/cms/homeServiceIcon/Inquire_and_Pay_2177158856.svg",
   },
   {
     title: "Request Support",
     body: "Request support on-site, digitally, in seamless steps",
+    href: "/app/services?package=Emergency+and+Response",
     icon: "/cms/homeServiceIcon/Request_Support_a63f371d92.svg",
   },
   {
     title: "Explore More Services",
     body: "Browse and discover more available police services",
+    href: "/app/services",
     icon: "/cms/more_12a8588c06.svg",
   },
 ];

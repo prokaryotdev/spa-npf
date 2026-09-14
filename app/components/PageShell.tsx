@@ -79,6 +79,24 @@ export function PageShell({
   );
 }
 
+/** A headed block of service facts. Shared by every service-detail page. */
+export function Panel({
+  heading,
+  children,
+}: {
+  heading: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section>
+      <h2 className="mb-4 font-secondary text-xl font-bold text-dp-green-deep md:text-2xl">
+        {heading}
+      </h2>
+      {children}
+    </section>
+  );
+}
+
 /**
  * The tile Open Data and Information are both built from: photo, title, a line
  * of explanation, and a link out.

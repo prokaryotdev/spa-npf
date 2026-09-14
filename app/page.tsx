@@ -44,7 +44,7 @@ export default function Home() {
               {quickServices.map((service) => (
                 <Link
                   key={service.title}
-                  href="/app/services"
+                  href={service.href}
                   className="group h-full w-full grow rounded-xl bg-white p-3 pt-4 text-start duration-500 ease-[var(--ease-custom)] will-change-transform lg:h-[242px] lg:rounded-t-2xl lg:rounded-b-none lg:pb-20 md:hover:-translate-y-[30px]"
                 >
                   <span className="relative mx-auto mb-2 block aspect-square w-[60px]">

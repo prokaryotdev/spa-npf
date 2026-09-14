@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageShell } from "../../components/PageShell";
-import { ArrowUpRight, SearchIcon } from "../../components/icons";
+import ServiceSearch from "../../components/ServiceSearch";
+import { ArrowUpRight } from "../../components/icons";
 import { search } from "../../search-index";
 
 export const metadata: Metadata = {
@@ -25,30 +26,14 @@ export default async function SearchPage({
     >
       <section className="bg-white pb-24">
         <div className="dp-container">
-          <form
-            role="search"
-            action="/app/search"
-            className="flex max-w-[680px] items-center gap-3 rounded-2xl bg-[#F4F8F6] px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-dp-green"
-          >
-            <SearchIcon aria-hidden className="size-6 shrink-0 text-dp-green-ink" />
-            <label htmlFor="q" className="sr-only">
-              Search Dubai Police
-            </label>
-            <input
-              id="q"
-              name="q"
-              type="search"
-              defaultValue={query}
+          <div className="max-w-[680px]">
+            <ServiceSearch
+              key={query}
+              variant="panel"
+              initialQuery={query}
               placeholder="Search for a service, news or page"
-              className="w-full flex-grow bg-transparent py-4 text-base text-dp-ink outline-none placeholder:text-dp-muted"
             />
-            <button
-              type="submit"
-              className="my-2 shrink-0 rounded-xl bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
-            >
-              Search
-            </button>
-          </form>
+          </div>
 
           {query ? (
             <p aria-live="polite" className="mt-6 text-sm text-dp-muted">

@@ -3,6 +3,7 @@ import { footerColumns, legalLinks, navigation } from "./content";
 import { photoAlbums } from "./content-albums";
 import { events } from "./content-events";
 import { news } from "./content-news";
+import { services } from "./content-services";
 
 const BASE = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dubaipolice.gov.ae"
@@ -16,7 +17,9 @@ const BASE = (
 export default function sitemap(): MetadataRoute.Sitemap {
   // /app/search is deliberately absent — robots.ts disallows it, since it is
   // a query-driven view of pages already listed here.
-  const paths = new Set<string>(["/", "/app/signin"]);
+  const paths = new Set<string>(["/", "/app/signin", "/app/services"]);
+  // The portal and the console are behind a sign-in and marked noindex.
+  for (const service of services) paths.add(`/app/services/${service.slug}`);
 
   for (const item of navigation) {
     paths.add(item.href);

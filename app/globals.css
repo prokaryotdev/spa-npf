@@ -193,3 +193,122 @@ html.dp-large-text {
     transform: none;
   }
 }
+
+/* The suggestion panel is the one authored moment in the search box: it lifts
+   and sharpens rather than sliding, so the row under the caret stays put. */
+@keyframes dp-suggest-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.985);
+    filter: blur(3px);
+  }
+}
+.dp-suggest {
+  animation: dp-suggest-in 0.24s var(--ease-custom);
+  transform-origin: top center;
+}
+.dp-suggest-up {
+  transform-origin: bottom center;
+  animation-name: dp-suggest-in-up;
+}
+@keyframes dp-suggest-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.985);
+    filter: blur(3px);
+  }
+}
+
+/* The header's search sheet is full-width and top-anchored, which the default
+   centred <dialog> box is not; its own backdrop is lighter than the drawer's
+   because the page behind stays part of the picture. */
+.dp-search-sheet {
+  max-height: 100dvh;
+  inset: 0;
+  border: 0;
+}
+.dp-search-sheet::backdrop {
+  background: rgba(4, 20, 14, 0.6);
+  backdrop-filter: blur(6px);
+}
+.dp-search-sheet[open] {
+  animation: dp-sheet-in 0.3s var(--ease-custom);
+}
+@keyframes dp-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+/*
+ * Operations console. The public site is a white page read in daylight; this
+ * is a screen an officer sits in front of for a whole shift, often at night,
+ * so it gets its own dark surface set rather than a dark variant of the site.
+ * Scoped to .dp-ops so nothing leaks into the site around it.
+ */
+.dp-ops {
+  --ops-bg: #08140f;
+  --ops-panel: #0e1f19;
+  --ops-raised: #142b23;
+  --ops-line: rgba(160, 220, 195, 0.14);
+  --ops-text: #e9f3ee;
+  --ops-dim: #93ab9f;
+  --ops-accent: #3ddc97;
+  color-scheme: dark;
+  background: var(--ops-bg);
+  color: var(--ops-text);
+  scrollbar-color: #2c4d40 #0e1f19;
+}
+.dp-ops ::selection {
+  background: #17503c;
+  color: #eafff5;
+}
+.dp-ops :where(a, button, input, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--ops-accent);
+  outline-offset: 2px;
+}
+/* The live queue's newest row arrives rather than appearing. */
+@keyframes dp-ops-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+    background-color: rgba(61, 220, 151, 0.14);
+  }
+}
+.dp-ops-row {
+  animation: dp-ops-row-in 0.5s var(--ease-custom);
+}
+/* Priority marker on a queue row: a dot, not a thick coloured border. */
+.dp-ops-dot {
+  box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 18%, transparent);
+}
+
+/*
+ * Both logo files are solid-white artwork, which is invisible on the white
+ * inner pages — they were only ever seen over the dark hero. Painting them as
+ * a mask instead of an <img> lets the same file take the ink colour of
+ * whatever it sits on, which a brightness/invert filter cannot do.
+ */
+.dp-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+.dp-logo-police {
+  mask-image: url("/img/logo-dubai-police.svg");
+  -webkit-mask-image: url("/img/logo-dubai-police.svg");
+}
+.dp-logo-gov {
+  mask-image: url("/img/logo-gov-dubai.svg");
+  -webkit-mask-image: url("/img/logo-gov-dubai.svg");
+  mask-position: left center;
+  -webkit-mask-position: left center;
+}

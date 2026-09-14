@@ -4,13 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { heroSlides } from "../content";
-import {
-  ChevronLeft,
-  ChevronRight,
-  PauseIcon,
-  PlayIcon,
-  SearchIcon,
-} from "./icons";
+import ServiceSearch from "./ServiceSearch";
+import { ChevronLeft, ChevronRight, PauseIcon, PlayIcon } from "./icons";
 
 const INTERVAL = 6000;
 const TICK = 100;
@@ -18,6 +13,9 @@ const TICK = 100;
 export default function Hero() {
   const [index, setIndex] = useState(2);
   const [playing, setPlaying] = useState(true);
+  // Held down while the search panel is open, without touching the visitor's
+  // own play/pause choice.
+  const [searching, setSearching] = useState(false);
   const [elapsed, setElapsed] = useState(0);
 
   const go = useCallback(
@@ -27,7 +25,7 @@ export default function Hero() {
   );
 
   useEffect(() => {
-    if (!playing) return;
+    if (!playing || searching) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const started = Date.now();
     const id = window.setInterval(() => {
@@ -36,7 +34,7 @@ export default function Hero() {
       else setElapsed(done);
     }, TICK);
     return () => window.clearInterval(id);
-  }, [playing, go, index]);
+  }, [playing, searching, go, index]);
 
   const slide = heroSlides[index];
 
@@ -91,21 +89,14 @@ export default function Hero() {
               </p>
             </div>
 
-            <form
-              role="search"
-              action="/app/search"
-              className="mx-auto mb-8 hidden max-w-[656px] items-center gap-3 rounded-2xl bg-white px-4 lg:flex"
-            >
-              <SearchIcon className="size-6 shrink-0 text-dp-green-ink" />
-              <input
-                id="homeServiceSearch"
-                name="q"
-                type="search"
-                className="w-full flex-grow py-5 text-sm text-dp-muted outline-none placeholder:text-dp-muted"
-                placeholder="Search for a service"
-                aria-label="Search services"
+            <div className="mx-auto mb-8 hidden max-w-[656px] lg:block">
+              <ServiceSearch
+                placement="up"
+                // Clear of the header band, which the hero cannot paint over.
+                clearance={150}
+                onOpenChange={setSearching}
               />
-            </form>
+            </div>
 
             <div className="mb-5 flex items-center justify-center gap-4">
               <button
