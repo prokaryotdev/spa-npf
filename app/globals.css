@@ -64,6 +64,11 @@ body {
 html {
   scrollbar-color: #9dc4b4 #eef4f1;
 }
+/* The photo lightbox leans on <dialog>; this is its backdrop. */
+dialog::backdrop {
+  background: rgba(4, 20, 14, 0.88);
+  backdrop-filter: blur(4px);
+}
 /*
  * Toggled by the header's accessibility button; every size in the app is in
  * rem, so bumping the root scales the whole page. Kept at 112% because the

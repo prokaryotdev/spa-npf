@@ -26,17 +26,6 @@ function asset(url) {
   return "/cms/" + clean;
 }
 
-/** Location arrives as a JSON blob; only the address is worth showing. */
-const address = (value) => {
-  if (!value) return "";
-  try {
-    const parsed = typeof value === "string" ? JSON.parse(value) : value;
-    return (parsed?.address ?? "").toString().trim();
-  } catch {
-    return typeof value === "string" ? value.trim() : "";
-  }
-};
-
 /** Turns CMS enum values like safety_And_Security into readable labels. */
 const label = (value) =>
   String(value ?? "")
@@ -111,29 +100,9 @@ const content = {
   speedLimits: openData("speedlimits.json"),
   sustainability: openData("sustainability.json"),
 
-  news: read("news.json").map((n) => ({
-    title: n.title,
-    summary: trim(n.description, 200),
-    date: (n.date || "").slice(0, 10),
-    image: asset(n.image?.url),
-  })),
-
-  events: read("events.json").map((e) => ({
-    title: e.title,
-    summary: trim(e.shortDescription, 180),
-    from: (e.fromDate || "").slice(0, 10),
-    to: (e.toDate || "").slice(0, 10),
-    type: label(e.eventType),
-    location: trim(address(e.location), 90),
-    image: asset(e.image?.url),
-  })),
-
-  photoAlbums: read("photos.json").map((a) => ({
-    title: a.title,
-    date: (a.date || "").slice(0, 10),
-    count: Array.isArray(a.media) ? a.media.length : 0,
-    cover: asset(a.media?.[0]?.url ?? a.thumb?.url),
-  })),
+  // News, events and photo albums are no longer built from captured payloads:
+  // their endpoints still answer, so scripts/gen-news.mjs and gen-media.mjs
+  // fetch them live and own app/content-news.ts, -events.ts and -albums.ts.
 
   videos: read("videos.json").map((v) => ({
     title: v.title,

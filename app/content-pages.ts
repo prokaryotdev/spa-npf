@@ -125,7 +125,7 @@ export const mediaHub = {
       title: "Arabian Travel Market",
       date: "13 Sep, 2026",
       status: "Upcoming" as const,
-      image: "/cms/events/9_991c7e17aa.png",
+      image: "/cms/events/9_991c7e17aa.jpg",
     },
     {
       title: "Dubai Mallathon",
@@ -137,7 +137,7 @@ export const mediaHub = {
       title: "Game Expo 2026",
       date: "03 Jun, 2026",
       status: "Expired" as const,
-      image: "/cms/events/GX_5f81069f3f.PNG",
+      image: "/cms/events/GX_5f81069f3f.jpg",
     },
     {
       title: "International Day of Yoga",
@@ -172,7 +172,7 @@ export const mediaHub = {
         title:
           "Dubai Police Identifies 100 Future Opportunities to Strengthen Security and Quality of Life",
         date: "Sep 12, 2026",
-        image: "/cms/news/medium_6876_13d253e78a.PNG",
+        image: "/cms/news/medium_6876_13d253e78a.jpg",
       },
       {
         title:
@@ -184,7 +184,7 @@ export const mediaHub = {
         title:
           "Dubai Confirms Security Readiness for Arab Media Summit and Arabian Travel Market 2026",
         date: "Sep 11, 2026",
-        image: "/cms/news/medium_757_6da8ac2c8e.PNG",
+        image: "/cms/news/medium_757_6da8ac2c8e.jpg",
       },
       {
         title:

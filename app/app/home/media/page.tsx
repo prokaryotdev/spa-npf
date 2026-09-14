@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import AlbumCard from "../../../components/AlbumCard";
 import CardRail from "../../../components/CardRail";
 import NewsCard from "../../../components/NewsCard";
 import { PageShell } from "../../../components/PageShell";
 import { ArrowRight, PlayIcon } from "../../../components/icons";
+import { photoAlbums } from "../../../content-albums";
+import { events } from "../../../content-events";
 import { news } from "../../../content-news";
 import { mediaHub } from "../../../content-pages";
 
@@ -71,42 +74,39 @@ export default function MediaPage() {
           </div>
 
           <CardRail label="event">
-            {mediaHub.events.map((event) => (
+            {events.slice(0, 6).map((event) => (
               <article
-                key={event.title}
-                className="w-[74vw] max-w-[320px] shrink-0 overflow-hidden rounded-2xl bg-white shadow-[0_20px_36px_-28px_rgba(0,60,40,0.6)] md:w-[300px]"
+                key={event.slug}
+                className="group/card w-[74vw] max-w-[320px] shrink-0 overflow-hidden rounded-2xl bg-white shadow-[0_20px_36px_-28px_rgba(0,60,40,0.6)] md:w-[300px]"
               >
-                <div className="relative aspect-[4/3]">
-                  <Image
-                    src={event.image}
-                    alt=""
-                    fill
-                    sizes="(max-width: 768px) 74vw, 300px"
-                    className="object-cover"
-                  />
-                  <span
-                    className={`absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-medium ${
-                      event.status === "Upcoming"
-                        ? "bg-[#e7f6f1] text-dp-green-ink"
-                        : "bg-[#f1f1f2] text-[#6b6b6b]"
-                    }`}
-                  >
-                    {event.status}
-                  </span>
-                </div>
-                <div className="flex flex-col gap-2 p-5">
-                  <h3 className="line-clamp-2 min-h-[3rem] font-secondary text-base font-bold text-dp-ink">
-                    {event.title}
-                  </h3>
-                  <time className="text-sm text-dp-muted">{event.date}</time>
-                  <Link
-                    href="/app/home/media/events"
-                    className="mt-1 inline-flex items-center gap-1.5 text-sm font-medium text-dp-green transition-colors hover:text-dp-green-deep"
-                  >
-                    View Details
-                    <ArrowRight className="size-4" />
-                  </Link>
-                </div>
+                <Link href={`/app/home/media/events/${event.slug}`}>
+                  <div className="relative aspect-[4/3] bg-[#F4F8F6]">
+                    {event.image ? (
+                      <Image
+                        src={event.image}
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 74vw, 300px"
+                        className="object-contain p-4"
+                      />
+                    ) : null}
+                    {event.type ? (
+                      <span className="absolute top-3 left-3 rounded-full bg-[#e7f6f1] px-3 py-1 text-xs font-medium text-dp-green-ink">
+                        {event.type}
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className="flex flex-col gap-2 p-5">
+                    <h3 className="line-clamp-2 min-h-[3rem] font-secondary text-base font-bold text-dp-ink transition-colors group-hover/card:text-dp-green">
+                      {event.title}
+                    </h3>
+                    <time className="text-sm text-dp-muted">{event.from}</time>
+                    <span className="mt-1 inline-flex items-center gap-1.5 text-sm font-medium text-dp-green">
+                      View Details
+                      <ArrowRight className="size-4" />
+                    </span>
+                  </div>
+                </Link>
               </article>
             ))}
           </CardRail>
@@ -191,33 +191,8 @@ export default function MediaPage() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            {mediaHub.photos.albums.map((album, i) => (
-              <article
-                key={album.title}
-                data-reveal
-                style={{ "--reveal-delay": `${i * 90}ms` } as React.CSSProperties}
-                className="group/card relative aspect-[4/3] overflow-hidden rounded-2xl"
-              >
-                <Image
-                  src={album.image}
-                  alt=""
-                  fill
-                  sizes="(max-width: 768px) 92vw, 31vw"
-                  className="object-cover transition-transform duration-700 ease-[var(--ease-custom)] group-hover/card:scale-105"
-                />
-                <span
-                  aria-hidden
-                  className="absolute inset-0 bg-[linear-gradient(180deg,transparent_40%,rgba(4,20,14,0.9))]"
-                />
-                <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                  <p className="text-xs text-white/80">
-                    <time>{album.date}</time> · {album.count} Photos
-                  </p>
-                  <h3 className="mt-1 font-secondary text-base leading-snug font-bold">
-                    {album.title}
-                  </h3>
-                </div>
-              </article>
+            {photoAlbums.slice(0, 3).map((album, i) => (
+              <AlbumCard key={album.slug} album={album} index={i} />
             ))}
           </div>
         </div>

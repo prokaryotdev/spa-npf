@@ -1,7 +1,9 @@
 import { footerColumns, legalLinks, navigation, quickServices } from "./content";
 import { news } from "./content-news";
 import { serviceCategories } from "./content-footer";
-import { events, magazines, photoAlbums, videos } from "./content-sub";
+import { photoAlbums } from "./content-albums";
+import { events } from "./content-events";
+import { magazines, videos } from "./content-sub";
 
 export type SearchHit = {
   title: string;
@@ -79,14 +81,14 @@ const entries: SearchHit[] = [
   ...events.map((e) => ({
     title: e.title,
     body: e.summary,
-    href: "/app/home/media/events",
+    href: `/app/home/media/events/${e.slug}`,
     section: "Events",
   })),
 
   ...photoAlbums.map((a) => ({
     title: a.title,
     body: `${a.count} photos`,
-    href: "/app/home/media/photo-gallery",
+    href: `/app/home/media/photo-gallery/${a.slug}`,
     section: "Photo Gallery",
   })),
 
