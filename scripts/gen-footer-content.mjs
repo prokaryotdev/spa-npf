@@ -114,10 +114,12 @@ const content = {
       title: contact.formsData.title,
       subTitle: contact.formsData.subTitle,
       description: contact.formsData.description,
+      // `f.icon` is dropped: it names files under /img/contactus that were
+      // never mirrored and that the origin now refuses to serve, so carrying
+      // the paths only produces broken images. FeedbackForm draws its own.
       kinds: contact.formsData.data.map((f) => ({
         title: f.title,
         description: f.description,
-        icon: f.icon,
       })),
     },
     leaders: contact.leadersData,

@@ -398,18 +398,15 @@ export const contactUs = {
     "kinds": [
       {
         "title": "Suggestion",
-        "description": "Your suggestion contributes to the ongoing improvement of our services.",
-        "icon": "/img/contactus/suggetion.svg"
+        "description": "Your suggestion contributes to the ongoing improvement of our services."
       },
       {
         "title": "Remark",
-        "description": "Share your appreciation for a Dubai Police Officer or team member who made a positive difference. Your words motivate us to do even better.",
-        "icon": "/img/contactus/remark.svg"
+        "description": "Share your appreciation for a Dubai Police Officer or team member who made a positive difference. Your words motivate us to do even better."
       },
       {
         "title": "Complaint",
-        "description": "Our IT support team is ready to help you resolve issues quickly and ensure your digital experience with Dubai Police runs smoothly.",
-        "icon": "/img/contactus/complaint.svg"
+        "description": "Our IT support team is ready to help you resolve issues quickly and ensure your digital experience with Dubai Police runs smoothly."
       }
     ]
   },

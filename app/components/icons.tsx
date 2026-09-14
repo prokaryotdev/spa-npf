@@ -125,6 +125,33 @@ export const SmileIcon = ({ className }: IconProps) => (
   </svg>
 );
 
+/*
+ * The three feedback kinds. The CMS names icon files under /img/contactus that
+ * were never mirrored and that the origin now refuses to serve, so they are
+ * drawn here with the rest of the set.
+ */
+export const IdeaIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M9.5 17.5h5" />
+    <path d="M10 20.5h4" />
+    <path d="M12 3.5a5.5 5.5 0 0 0-3.2 10 2.6 2.6 0 0 1 .9 1.7v.3h4.6v-.3a2.6 2.6 0 0 1 .9-1.7A5.5 5.5 0 0 0 12 3.5Z" />
+  </svg>
+);
+
+export const HeartIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M12 20s-7.2-4.4-7.2-9.2A3.8 3.8 0 0 1 12 8.3a3.8 3.8 0 0 1 7.2 2.5C19.2 15.6 12 20 12 20Z" />
+  </svg>
+);
+
+export const AlertIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M10.6 4.3 2.9 17.5a1.6 1.6 0 0 0 1.4 2.4h15.4a1.6 1.6 0 0 0 1.4-2.4L13.4 4.3a1.6 1.6 0 0 0-2.8 0Z" />
+    <path d="M12 9.5v4" />
+    <path d="M12 17h.01" />
+  </svg>
+);
+
 export const AccessibilityIcon = ({ className }: IconProps) => (
   <svg {...base} className={className}>
     <circle cx="12" cy="4.4" r="1.7" />

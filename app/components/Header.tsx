@@ -198,7 +198,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             <li>
               <button
                 type="button"
-                className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                className={`rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
                   scrolled ? "bg-black/[0.06]" : "bg-white/15 hover:bg-white/25"
                 }`}
               >
@@ -208,7 +208,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             <li>
               <Link
                 href="/app/signin"
-                className="inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
+                className="inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium whitespace-nowrap text-white transition-colors hover:bg-dp-green-mid"
               >
                 Sign In
                 <UserCircle className="size-[18px]" />

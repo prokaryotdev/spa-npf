@@ -1,11 +1,17 @@
 "use client";
 
-import Image from "next/image";
 import { useId, useState } from "react";
-import { ArrowRight } from "./icons";
+import { AlertIcon, ArrowRight, HeartIcon, IdeaIcon } from "./icons";
 
-type Kind = { title: string; description: string; icon?: string };
+type Kind = { title: string; description: string };
 type Errors = { name?: string; email?: string; message?: string };
+
+/** The CMS icon paths are dead, so map the kind to one of our own icons. */
+const ICONS: Record<string, (p: { className?: string }) => React.ReactElement> = {
+  Suggestion: IdeaIcon,
+  Remark: HeartIcon,
+  Complaint: AlertIcon,
+};
 
 /**
  * The three feedback kinds are one submission with a type on it, so they are a
@@ -82,6 +88,7 @@ export default function FeedbackForm({
         <div className="grid gap-4 md:grid-cols-3">
           {kinds.map((k) => {
             const active = kind === k.title;
+            const Icon = ICONS[k.title];
             return (
               <label
                 key={k.title}
@@ -100,9 +107,7 @@ export default function FeedbackForm({
                     onChange={() => setKind(k.title)}
                     className="size-4 accent-[#00925b]"
                   />
-                  {k.icon ? (
-                    <Image src={k.icon} alt="" width={28} height={28} className="size-7" />
-                  ) : null}
+                  {Icon ? <Icon className="size-7 shrink-0 text-dp-green" /> : null}
                   <span className="font-secondary text-lg font-bold text-dp-green-deep">
                     {k.title}
                   </span>
