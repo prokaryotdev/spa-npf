@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, CloseIcon } from "./icons";
+import { useDialog } from "./useDialog";
 
 /**
  * The album grid plus a full-size viewer. Built on <dialog>, so the browser
@@ -16,24 +17,15 @@ export default function PhotoLightbox({
   photos: readonly string[];
   title: string;
 }) {
-  const dialog = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState<number | null>(null);
+  const close = useCallback(() => setOpen(null), []);
+  const dialog = useDialog(open !== null, close);
 
   const step = useCallback(
     (delta: number) =>
       setOpen((i) => (i === null ? i : (i + delta + photos.length) % photos.length)),
     [photos.length],
   );
-
-  useEffect(() => {
-    const el = dialog.current;
-    if (!el) return;
-    if (open === null) {
-      if (el.open) el.close();
-      return;
-    }
-    if (!el.open) el.showModal();
-  }, [open]);
 
   useEffect(() => {
     if (open === null) return;
@@ -70,7 +62,6 @@ export default function PhotoLightbox({
 
       <dialog
         ref={dialog}
-        onClose={() => setOpen(null)}
         aria-label={title}
         className="m-auto max-h-none max-w-none bg-transparent p-0"
       >

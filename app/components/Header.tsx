@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { navigation } from "../content";
 import {
   AccessibilityIcon,
@@ -12,6 +12,7 @@ import {
   SearchIcon,
   UserCircle,
 } from "./icons";
+import { useDialog } from "./useDialog";
 
 /**
  * `solid` is for pages that open on content rather than a dark hero, where the
@@ -21,7 +22,6 @@ export default function Header({ solid = false }: { solid?: boolean }) {
   const [atTop, setAtTop] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [bigText, setBigText] = useState(false);
-  const menu = useRef<HTMLDialogElement>(null);
   const scrolled = solid || !atTop;
 
   useEffect(() => {
@@ -36,12 +36,8 @@ export default function Header({ solid = false }: { solid?: boolean }) {
   }, []);
 
   // showModal/close drive the drawer; the browser locks background scrolling.
-  useEffect(() => {
-    const el = menu.current;
-    if (!el) return;
-    if (menuOpen && !el.open) el.showModal();
-    if (!menuOpen && el.open) el.close();
-  }, [menuOpen]);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const menu = useDialog(menuOpen, closeMenu);
 
   return (
     <header
@@ -230,7 +226,6 @@ export default function Header({ solid = false }: { solid?: boolean }) {
       <dialog
         ref={menu}
         aria-label="Main menu"
-        onClose={() => setMenuOpen(false)}
         // A click that lands on the dialog itself landed on the backdrop.
         onClick={(e) => {
           if (e.target === menu.current) setMenuOpen(false);
