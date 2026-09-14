@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AlbumCard from "../../../../components/AlbumCard";
+import AlbumsList from "../../../../components/AlbumsList";
 import { PageShell } from "../../../../components/PageShell";
 import { photoAlbums } from "../../../../content-albums";
 
@@ -9,6 +9,11 @@ export const metadata: Metadata = {
     "Photo albums from Dubai Police ceremonies, exhibitions and community events.",
 };
 
+// Filtering happens in the browser, so only the tile fields cross over — the
+// 172 photo paths stay here rather than bloating the page payload.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- destructured to drop
+const tiles = photoAlbums.map(({ photos, ...tile }) => tile);
+
 export default function PhotoGalleryPage() {
   return (
     <PageShell
@@ -17,10 +22,8 @@ export default function PhotoGalleryPage() {
       trail={[{ label: "Media Hub", href: "/app/home/media" }]}
     >
       <section className="bg-white pb-24">
-        <div className="dp-container grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {photoAlbums.map((album, i) => (
-            <AlbumCard key={album.slug} album={album} index={i} />
-          ))}
+        <div className="dp-container">
+          <AlbumsList albums={tiles} />
         </div>
       </section>
     </PageShell>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { navigation } from "../content";
 import {
   AccessibilityIcon,
@@ -21,6 +21,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
   const [atTop, setAtTop] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [bigText, setBigText] = useState(false);
+  const menu = useRef<HTMLDialogElement>(null);
   const scrolled = solid || !atTop;
 
   useEffect(() => {
@@ -34,11 +35,12 @@ export default function Header({ solid = false }: { solid?: boolean }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // showModal/close drive the drawer; the browser locks background scrolling.
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    const el = menu.current;
+    if (!el) return;
+    if (menuOpen && !el.open) el.showModal();
+    if (!menuOpen && el.open) el.close();
   }, [menuOpen]);
 
   return (
@@ -220,24 +222,21 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         </nav>
       </div>
 
-      {/* Slide-out menu */}
-      <div
-        className={`fixed inset-0 z-50 transition-opacity duration-300 ${
-          menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
+      {/*
+        Slide-out menu. A <dialog> so the browser handles Escape, the focus
+        trap, the background scroll lock and keeping the contents out of the
+        tab order while closed — all of which this used to do by hand, badly.
+      */}
+      <dialog
+        ref={menu}
+        aria-label="Main menu"
+        onClose={() => setMenuOpen(false)}
+        // A click that lands on the dialog itself landed on the backdrop.
+        onClick={(e) => {
+          if (e.target === menu.current) setMenuOpen(false);
+        }}
+        className="dp-drawer m-0 h-[100dvh] max-h-none w-[min(420px,88vw)] max-w-none overflow-y-auto bg-white p-6 shadow-2xl"
       >
-        <button
-          type="button"
-          aria-label="Close menu"
-          tabIndex={menuOpen ? 0 : -1}
-          onClick={() => setMenuOpen(false)}
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-        />
-        <div
-          className={`absolute top-0 left-0 h-full w-[min(420px,88vw)] overflow-y-auto bg-white p-6 shadow-2xl transition-transform duration-500 ease-[var(--ease-custom)] ${
-            menuOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
-        >
           <div className="mb-8 flex items-center justify-between">
             <span className="font-secondary text-lg font-bold text-dp-green-deep">
               Main Menu
@@ -246,7 +245,6 @@ export default function Header({ solid = false }: { solid?: boolean }) {
               type="button"
               onClick={() => setMenuOpen(false)}
               aria-label="Close menu"
-              tabIndex={menuOpen ? 0 : -1}
               className="grid size-10 place-items-center rounded-full bg-black/5 text-dp-ink"
             >
               <CloseIcon className="size-5" />
@@ -258,7 +256,6 @@ export default function Header({ solid = false }: { solid?: boolean }) {
               <li key={item.label}>
                 <Link
                   href={item.href}
-                  tabIndex={menuOpen ? 0 : -1}
                   className="block rounded-lg px-3 py-3 text-lg text-dp-ink transition-colors hover:bg-[rgba(13,160,110,0.07)]"
                 >
                   {item.label}
@@ -269,7 +266,6 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                       <li key={child.label}>
                         <Link
                           href={child.href}
-                          tabIndex={menuOpen ? 0 : -1}
                           className="block rounded-lg px-3 py-2 text-dp-body transition-colors hover:text-dp-green"
                         >
                           {child.label}
@@ -283,15 +279,13 @@ export default function Header({ solid = false }: { solid?: boolean }) {
           </ul>
           <Link
             href="/app/signin"
-            tabIndex={menuOpen ? 0 : -1}
             onClick={() => setMenuOpen(false)}
             className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dp-green px-5 py-3 text-white transition-colors hover:bg-dp-green-mid"
           >
             Sign In
             <UserCircle className="size-[18px]" />
           </Link>
-        </div>
-      </div>
+      </dialog>
     </header>
   );
 }

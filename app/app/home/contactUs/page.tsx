@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import FeedbackForm from "../../../components/FeedbackForm";
 import { PageShell } from "../../../components/PageShell";
 import { ArrowRight, PhoneIcon } from "../../../components/icons";
 import { contactUs } from "../../../content-footer";
@@ -69,25 +70,10 @@ export default function ContactUsPage() {
             {contactUs.feedback.subTitle}
           </p>
 
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {contactUs.feedback.kinds.map((kind) => (
-              <div
-                key={kind.title}
-                className="rounded-3xl bg-white p-6 ring-1 ring-black/5"
-              >
-                <h3 className="font-secondary text-lg font-bold text-dp-green-deep">
-                  {kind.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-dp-body">
-                  {kind.description}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <p className="mt-6 rounded-2xl bg-[#FFF6E8] p-4 text-sm text-dp-body">
-            {contactUs.feedback.description}
-          </p>
+          <FeedbackForm
+            kinds={contactUs.feedback.kinds}
+            notice={contactUs.feedback.description}
+          />
         </div>
       </section>
 

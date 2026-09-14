@@ -2,12 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Album } from "../content-albums";
 
+/** The tile never touches the photo list, so lists can hand it a trimmed record. */
+export type AlbumCardItem = Omit<Album, "photos">;
+
 /** One clickable album tile — used by the gallery list and the Media Hub. */
 export default function AlbumCard({
   album,
   index = 0,
 }: {
-  album: Album;
+  album: AlbumCardItem;
   index?: number;
 }) {
   return (

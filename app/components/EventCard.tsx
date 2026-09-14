@@ -1,14 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { EventItem } from "../content-events";
+
 import { ArrowRight, PinIcon } from "./icons";
+
+/** The card never touches the body, so lists can hand it a trimmed record. */
+export type EventCardItem = Omit<EventItem, "body">;
 
 /** One clickable event teaser — used by the events list and the Media Hub. */
 export default function EventCard({
   event,
   index = 0,
 }: {
-  event: EventItem;
+  event: EventCardItem;
   index?: number;
 }) {
   return (
