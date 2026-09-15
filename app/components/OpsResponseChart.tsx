@@ -17,11 +17,11 @@ export default function OpsResponseChart() {
 
   return (
     <figure className="m-0">
-      <figcaption className="mb-1 font-secondary text-base font-bold">
-        Median response time
+      <figcaption className="sr-only">
+        Median response time over the last 12 hours, in minutes
       </figcaption>
       <p className="mb-5 text-xs text-[var(--ops-dim)]">
-        Last 12 hours, in minutes. Target {target} minutes.
+        Call to arrival, last 12 hours. Target {target} minutes.
       </p>
 
       <div className="relative h-40">
@@ -52,7 +52,7 @@ export default function OpsResponseChart() {
                   className="w-full rounded-t transition-opacity"
                   style={{
                     height: `${(point.minutes / peak) * 100}%`,
-                    background: over ? "#f0b354" : "var(--ops-accent)",
+                    background: over ? "var(--ops-p2)" : "var(--ops-accent)",
                     opacity: hover === null || hover === i ? 1 : 0.45,
                   }}
                 />

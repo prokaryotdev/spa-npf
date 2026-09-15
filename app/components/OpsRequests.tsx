@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
-import { OpsPanel } from "./OpsPieces";
+import { OpsButton, OpsPanel, Readout } from "./OpsPieces";
 import {
   advanceRequest,
   useStore,
@@ -16,8 +16,8 @@ const QUEUE: RequestStatus[] = ["Submitted", "In Review", "Action Needed"];
 const TONE: Record<RequestStatus, string> = {
   Submitted: "bg-[var(--ops-raised)] text-[var(--ops-dim)]",
   "In Review": "bg-[#0f2f45] text-[#a8d8f5]",
-  "Action Needed": "bg-[#3a2c0a] text-[#f0d79a]",
-  Completed: "bg-[#10392b] text-[#7cf0bd]",
+  "Action Needed": "bg-[#3b2c0b] text-[#f8d79a]",
+  Completed: "bg-[#0b3b2a] text-[#7fe7bb]",
   Rejected: "bg-[#3d1616] text-[#f5a8a8]",
 };
 
@@ -57,9 +57,37 @@ export default function OpsRequests() {
         <h1 className="font-secondary text-2xl font-bold">Service requests</h1>
         <p className="mt-1 text-sm text-[var(--ops-dim)]">
           Applications waiting on a decision. Anything you do here appears on
-          the applicant&rsquo;s own screen.
+          the applicant&rsquo;s own screen within the second.
         </p>
       </header>
+
+      <dl className="flex flex-wrap divide-x divide-[var(--ops-line)] rounded-xl border border-[var(--ops-line)] bg-[var(--ops-panel)] px-4 py-1">
+        <Readout
+          label="In the queue"
+          value={requests.filter((r) => QUEUE.includes(r.status)).length}
+          note="awaiting a decision"
+        />
+        <Readout
+          label="With the applicant"
+          value={requests.filter((r) => r.status === "Action Needed").length}
+          tone={
+            requests.some((r) => r.status === "Action Needed")
+              ? "var(--ops-p2)"
+              : undefined
+          }
+          note="we asked for more"
+        />
+        <Readout
+          label="Completed"
+          value={requests.filter((r) => r.status === "Completed").length}
+          note="issued"
+        />
+        <Readout
+          label="Rejected"
+          value={requests.filter((r) => r.status === "Rejected").length}
+          note="conditions not met"
+        />
+      </dl>
 
       <div className="flex flex-wrap items-center gap-2">
         <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 focus-within:border-[var(--ops-accent)]">
@@ -76,18 +104,13 @@ export default function OpsRequests() {
             className="w-full bg-transparent py-2 text-sm outline-none placeholder:text-[var(--ops-dim)]"
           />
         </div>
-        <button
-          type="button"
+        <OpsButton
+          tone={openOnly ? "brand" : "quiet"}
           aria-pressed={openOnly}
           onClick={() => setOpenOnly((v) => !v)}
-          className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-            openOnly
-              ? "bg-[var(--ops-accent)] text-[#062018]"
-              : "border border-[var(--ops-line)] bg-[var(--ops-panel)] text-[var(--ops-dim)] hover:text-[var(--ops-text)]"
-          }`}
         >
           Open only
-        </button>
+        </OpsButton>
       </div>
 
       <p aria-live="polite" className="text-xs text-[var(--ops-dim)]">
@@ -175,7 +198,7 @@ export default function OpsRequests() {
                     <button
                       type="submit"
                       disabled={!reason.trim()}
-                      className="rounded-lg bg-[var(--ops-accent)] px-3 py-2 text-sm font-medium text-[#062018] transition-opacity hover:opacity-90 disabled:opacity-40"
+className="rounded-lg bg-[var(--ops-brand)] px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--ops-brand-lift)] disabled:opacity-40"
                     >
                       Send to applicant
                     </button>
@@ -265,7 +288,7 @@ function Action({
       onClick={onClick}
       className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
         primary
-          ? "bg-[var(--ops-accent)] text-[#062018] hover:opacity-90"
+          ? "bg-[var(--ops-brand)] text-white hover:bg-[var(--ops-brand-lift)]"
           : "border border-[var(--ops-line)] text-[var(--ops-dim)] hover:bg-[var(--ops-raised)] hover:text-[var(--ops-text)]"
       }`}
     >

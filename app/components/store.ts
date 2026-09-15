@@ -1,8 +1,8 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { seedFines, seedNotices, seedRequests } from "../content-account";
-import { seedIncidents } from "../content-ops";
+import { seedIncidents, seedUnits } from "../content-ops";
 
 /**
  * The whole of the app's "backend": one object in localStorage, read through
@@ -66,17 +66,44 @@ export type Notice = {
 
 export type IncidentStatus = "New" | "Dispatched" | "On Scene" | "Closed";
 
+/**
+ * P1-P4 rather than words. Dispatch grades calls by number because it is the
+ * field read aloud over a radio, and "P1" cannot be misheard as "high" the
+ * way "critical" can. The words stay as the accessible label beside it.
+ */
+export type Priority = "P1" | "P2" | "P3" | "P4";
+
 export type Incident = {
   id: string;
   kind: string;
-  priority: "Critical" | "High" | "Medium" | "Low";
+  priority: Priority;
   area: string;
+  /** Call received. The clock every other timestamp is measured against. */
   reported: string;
+  /** Stamped as a unit is assigned, arrives, and clears. */
+  dispatched: string | null;
+  onScene: string | null;
+  closed: string | null;
   status: IncidentStatus;
   assignee: string | null;
   unit: string | null;
   summary: string;
   source: string;
+  /** What was written on the call, oldest first. */
+  log: { at: string; text: string }[];
+};
+
+export type UnitStatus = "Available" | "Assigned" | "On Scene" | "Unavailable";
+
+export type Unit = {
+  callsign: string;
+  division: string;
+  officer: string;
+  status: UnitStatus;
+  /** Last status change — the elapsed clock on the board counts from here. */
+  since: string;
+  incident: string | null;
+  area: string;
 };
 
 type State = {
@@ -85,6 +112,7 @@ type State = {
   fines: Fine[];
   notices: Notice[];
   incidents: Incident[];
+  units: Unit[];
 };
 
 const KEY = "dp:state";
@@ -94,7 +122,8 @@ const fresh = (): State => ({
   requests: seedRequests,
   fines: seedFines,
   notices: seedNotices,
-  incidents: seedIncidents,
+  incidents: seedIncidents(),
+  units: seedUnits(),
 });
 
 let state: State = fresh();
@@ -157,11 +186,18 @@ export function useStore(): State & { loaded: boolean } {
     () => state,
     () => server,
   );
-  const loaded = useSyncExternalStore(
-    subscribe,
-    () => true,
-    () => false,
-  );
+  /*
+   * A mount effect, not a second useSyncExternalStore reading `() => true`
+   * against `() => false`.
+   *
+   * That version asked React to notice, after hydration, that a constant had
+   * changed, and on a hard load of some routes it never did: `loaded` stayed
+   * false and the screen sat on its skeleton with no error anywhere to say
+   * why. An effect is not a guess about React's internals — it runs when the
+   * browser has taken the tree over, which is what this flag means.
+   */
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => setLoaded(true), []);
   return { ...snapshot, loaded };
 }
 
@@ -246,13 +282,123 @@ export function payFine(id: string) {
   });
 }
 
+/** Which unit status a call status implies, so the two boards never disagree. */
+const UNIT_FOR: Record<IncidentStatus, UnitStatus> = {
+  New: "Available",
+  Dispatched: "Assigned",
+  "On Scene": "On Scene",
+  Closed: "Available",
+};
+
+/**
+ * One write moves the call, stamps the timestamp that status earns, logs the
+ * line, and moves the unit's own status with it.
+ *
+ * Dispatch is not four independent fields an operator keeps in sync by hand —
+ * a unit showing Available while its call shows On Scene is how a second car
+ * gets sent to an incident that already has one.
+ */
 export function updateIncident(id: string, patch: Partial<Incident>) {
+  const at = now();
+  const before = state.incidents.find((i) => i.id === id);
+  if (!before) return;
+  const after: Incident = { ...before, ...patch };
+
+  if (patch.status && patch.status !== before.status) {
+    if (patch.status === "Dispatched") after.dispatched ??= at;
+    if (patch.status === "On Scene") {
+      after.dispatched ??= at;
+      after.onScene ??= at;
+    }
+    if (patch.status === "Closed") after.closed = at;
+    // Reopening a closed call clears the closing stamp, or its age freezes.
+    if (before.status === "Closed" && patch.status !== "Closed")
+      after.closed = null;
+    after.log = [
+      ...after.log,
+      { at, text: statusLine(patch.status, after.unit) },
+    ];
+  }
+
+  if (patch.unit !== undefined && patch.unit !== before.unit)
+    after.log = [
+      ...after.log,
+      { at, text: patch.unit ? `${patch.unit} assigned.` : "Unit stood down." },
+    ];
+
+  const touched = new Set([before.unit, after.unit].filter(Boolean));
+
   write({
     ...state,
-    incidents: state.incidents.map((i) =>
-      i.id === id ? { ...i, ...patch } : i,
+    incidents: state.incidents.map((i) => (i.id === id ? after : i)),
+    units: state.units.map((u) => {
+      if (!touched.has(u.callsign)) return u;
+      // The unit that just left the call goes back on the air.
+      if (u.callsign !== after.unit || after.status === "Closed")
+        return u.status === "Available" && !u.incident
+          ? u
+          : { ...u, status: "Available", incident: null, since: at };
+      const next = UNIT_FOR[after.status];
+      return u.status === next && u.incident === after.id
+        ? u
+        : { ...u, status: next, incident: after.id, since: at, area: after.area };
+    }),
+  });
+}
+
+function statusLine(status: IncidentStatus, unit: string | null) {
+  const on = unit ? ` — ${unit}` : "";
+  if (status === "Dispatched") return `Dispatched${on}.`;
+  if (status === "On Scene") return `Arrived on scene${on}.`;
+  if (status === "Closed") return `Call closed${on}.`;
+  return "Returned to the pending queue.";
+}
+
+/** A unit going off the air, or back on it, without a call being involved. */
+export function setUnitStatus(callsign: string, status: UnitStatus) {
+  const at = now();
+  write({
+    ...state,
+    units: state.units.map((u) =>
+      u.callsign === callsign
+        ? {
+            ...u,
+            status,
+            since: at,
+            incident: status === "Available" || status === "Unavailable" ? null : u.incident,
+          }
+        : u,
     ),
   });
+}
+
+/** A new call taken at the desk. Lands at the top of the pending queue. */
+export function logIncident(input: {
+  kind: string;
+  priority: Priority;
+  area: string;
+  summary: string;
+  source: string;
+}): Incident {
+  const at = now();
+  const n = Math.max(
+    4400,
+    ...state.incidents.map((i) => Number(i.id.split("-")[1]) || 0),
+  );
+  const created: Incident = {
+    id: `DXB-${n + 1}`,
+    ...input,
+    reported: at,
+    dispatched: null,
+    onScene: null,
+    closed: null,
+    status: "New",
+    assignee: null,
+    unit: null,
+    log: [{ at, text: `Call received via ${input.source}.` }],
+  };
+  write({ ...state, incidents: [created, ...state.incidents] });
+  return created;
 }
 
 /** Wipes the demo back to its seeded state, session included. */

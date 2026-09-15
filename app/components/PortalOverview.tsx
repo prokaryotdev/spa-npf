@@ -1,18 +1,30 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { markNoticesRead, useStore } from "./store";
 import { Card, Empty, StatusPill, aed, formatDate } from "./ui";
-import { services } from "../content-services";
 import { ArrowRight, BellIcon, ChevronRight } from "./icons";
 
-/** The seven the CMS marks for the signed-in landing grid, in its own order. */
-const shortcuts = services
-  .filter((s) => s.dashboardOrder)
-  .sort((a, b) => (a.dashboardOrder ?? 0) - (b.dashboardOrder ?? 0));
+/** Just enough of a service to draw a shortcut tile. */
+export type Shortcut = { slug: string; name: string; icon: string | null };
 
-export default function PortalOverview() {
+/**
+ * The shortcuts and the catalogue total arrive as props rather than from an
+ * import of content-services.
+ *
+ * That file is the whole service catalogue — every service on the site, with
+ * its copy. Importing it into a client component shipped all of it to the
+ * browser so this grid could draw seven tiles. The page above is a server
+ * component and already holds the catalogue, so it sends down the seven rows
+ * and the count, and none of the rest crosses the wire.
+ */
+export default function PortalOverview({
+  shortcuts,
+  serviceCount,
+}: {
+  shortcuts: Shortcut[];
+  serviceCount: number;
+}) {
   const { requests, fines, notices } = useStore();
 
   const open = requests.filter(
@@ -79,7 +91,7 @@ export default function PortalOverview() {
             href="/app/services"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-dp-green transition-colors hover:text-dp-green-deep"
           >
-            All {services.length} services
+            All {serviceCount} services
             <ArrowRight aria-hidden className="size-4" />
           </Link>
         }
@@ -91,8 +103,16 @@ export default function PortalOverview() {
                 href={`/app/services/${service.slug}`}
                 className="group/row flex items-center gap-3 rounded-2xl bg-[#F4F8F6] px-4 py-3 transition-colors hover:bg-[#dcefe7]"
               >
+                {/*
+                  A plain <img>, not next/image. These are 24px SVGs already
+                  sitting in public/ — there is nothing for the optimiser to
+                  resize or re-encode — and pulling next/image into this screen
+                  stopped it hydrating at all: the account stayed on its
+                  loading skeleton with no error to say why.
+                */}
                 {service.icon ? (
-                  <Image
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
                     src={service.icon}
                     alt=""
                     width={24}
