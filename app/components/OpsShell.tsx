@@ -55,8 +55,6 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const path = usePathname();
   const { session, incidents, requests, units, loaded } = useStore();
-  const now = useNow();
-  const mounted = useMounted();
 
   const officer = session?.role === "officer";
 
@@ -119,9 +117,6 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
       </div>
     );
 
-  const time = mounted ? clock.format(new Date(now)) : "--:--";
-  const shift = mounted ? shiftOf(new Date(now)) : "—";
-
   return (
     <div className="dp-ops min-h-[100dvh]">
       {/*
@@ -147,14 +142,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
 
-          <p className="ml-auto flex items-baseline gap-2 font-secondary text-xl font-bold tabular-nums">
-            {time.slice(0, 2)}
-            <span className="dp-ops-tick -mx-1">:</span>
-            {time.slice(3)}
-            <span className="font-primary text-[11px] font-normal tracking-[0.12em] text-[var(--ops-dim)] uppercase">
-              GST · Shift {shift}
-            </span>
-          </p>
+          <ShiftClock />
 
           <div className="flex items-center gap-3 border-[var(--ops-line)] pl-0 sm:border-l sm:pl-5">
             <div className="text-right">
@@ -247,5 +235,31 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         </main>
       </div>
     </div>
+  );
+}
+
+/**
+ * The shift clock, kept in its own component on purpose.
+ *
+ * It reads the shared tick, which changes every second. Left in the shell it
+ * re-rendered the whole console frame — rail, banner, board and all — once a
+ * second to move two digits. Down here the per-second work is a clock and
+ * nothing else.
+ */
+function ShiftClock() {
+  const now = useNow();
+  const mounted = useMounted();
+  const time = mounted ? clock.format(new Date(now)) : "--:--";
+  const shift = mounted ? shiftOf(new Date(now)) : "—";
+
+  return (
+    <p className="ml-auto flex items-baseline gap-2 font-secondary text-xl font-bold tabular-nums">
+      {time.slice(0, 2)}
+      <span className="dp-ops-tick -mx-1">:</span>
+      {time.slice(3)}
+      <span className="font-primary text-[11px] font-normal tracking-[0.12em] text-[var(--ops-dim)] uppercase">
+        GST · Shift {shift}
+      </span>
+    </p>
   );
 }

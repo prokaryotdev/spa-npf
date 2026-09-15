@@ -176,6 +176,31 @@ function subscribe(listener: () => void) {
 const server = fresh();
 
 /**
+ * False while the server renders and through hydration, true once the browser
+ * owns the tree. Anything that reads localStorage, formats a local time or
+ * runs a clock waits for this, or the two renders disagree.
+ *
+ * This was a `useSyncExternalStore` reading `() => true` against
+ * `() => false` twice over — once sharing the store's subscription, once with
+ * its own. Both left the flag stuck false on a hard load of some routes, and a
+ * screen that never learns the browser has arrived sits on its loading
+ * skeleton for good with nothing in the console to say why. Both failures were
+ * reproduced against a clean build and fixed by the line below.
+ *
+ * react-hooks/set-state-in-effect is aimed at effects that recompute state
+ * React could have derived while rendering. This one cannot be derived: the
+ * whole question is whether the render is the server's or the browser's, and
+ * a mount effect is the only thing that knows. It fires once per mount and
+ * never again.
+ */
+export function useHydrated() {
+  const [hydratedNow, setHydratedNow] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => setHydratedNow(true), []);
+  return hydratedNow;
+}
+
+/**
  * `loaded` is false for the first client render. The server rendered the
  * signed-out page, so a screen that flips on `session` has to wait for this
  * or React reports a hydration mismatch.
@@ -186,19 +211,7 @@ export function useStore(): State & { loaded: boolean } {
     () => state,
     () => server,
   );
-  /*
-   * A mount effect, not a second useSyncExternalStore reading `() => true`
-   * against `() => false`.
-   *
-   * That version asked React to notice, after hydration, that a constant had
-   * changed, and on a hard load of some routes it never did: `loaded` stayed
-   * false and the screen sat on its skeleton with no error anywhere to say
-   * why. An effect is not a guess about React's internals — it runs when the
-   * browser has taken the tree over, which is what this flag means.
-   */
-  const [loaded, setLoaded] = useState(false);
-  useEffect(() => setLoaded(true), []);
-  return { ...snapshot, loaded };
+  return { ...snapshot, loaded: useHydrated() };
 }
 
 const now = () => new Date().toISOString();

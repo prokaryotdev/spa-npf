@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 import { dispatchTarget } from "../content-ops";
+import { useHydrated } from "./store";
 import type { Incident, Priority, UnitStatus } from "./store";
 
 /* -------------------------------------------------------------------------
@@ -45,12 +46,11 @@ export function useNow() {
   );
 }
 
-/** True once the browser has taken over. Timers stay blank until then. */
-export function useMounted() {
-  const [m, setM] = useState(false);
-  useEffect(() => setM(true), []);
-  return m;
-}
+/**
+ * True once the browser has taken over; timers read `--:--` until then.
+ * Aliased so a console screen pulls its clock helpers from one file.
+ */
+export const useMounted = useHydrated;
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
