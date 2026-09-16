@@ -9,7 +9,8 @@ export const aboutUs = {
   heroCaption:
     "Dubai Police began its operations at Naif Fort with only 29 officers before relocating to its current headquarters in Al Tawar in 1973. Today, Dubai Police employ more than 32,000 highly qualified personnel operating through an extensive network of police stations across the emirate.",
   history: {
-    heading: "From humble beginnings to a global leader in policing innovation.",
+    heading:
+      "From humble beginnings to a global leader in policing innovation.",
     body: "We, Dubai Police, are proud to be a modern Arab police force of more than fifteen thousand highly specialised and trained personnel. We are also proud to be recognised as one of the leading security institutions locally, regionally, and globally.",
     image: "/img/history.jpg",
   },
@@ -109,7 +110,10 @@ export const mediaHub = {
       title: "Police Innovation and Leadership",
       image: "/cms/Home/Innovation_2d3f3540e6.jpg",
     },
-    { title: "Luxury Meets Readiness", image: "/cms/Home/Tesla_fdb5e10caf.jpg" },
+    {
+      title: "Luxury Meets Readiness",
+      image: "/cms/Home/Tesla_fdb5e10caf.jpg",
+    },
     {
       title: "70th Anniversary of Dubai Police",
       image:
@@ -232,7 +236,11 @@ export const applicationStatus = {
   body: "This service allows users to track the status of their application using the reference number.",
   signInLabel: "Sign in using UAE Pass",
   beneficiaries: ["Individuals"],
-  channels: ["Dubai Police App", "Dubai Police Website", "Smart Police Stations"],
+  channels: [
+    "Dubai Police App",
+    "Dubai Police Website",
+    "Smart Police Stations",
+  ],
   hours: [
     { label: "Digital Channels", value: "24/7" },
     { label: "Police Station", value: "7:30 - 22:00" },

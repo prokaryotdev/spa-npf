@@ -18,6 +18,7 @@ import {
   type UnitStatus,
 } from "./store";
 import { SearchIcon } from "./icons";
+import { useT } from "../i18n/client";
 
 const ORDER: Record<UnitStatus, number> = {
   Available: 0,
@@ -36,6 +37,7 @@ const ORDER: Record<UnitStatus, number> = {
  * on a P4 is the thing a supervisor is looking for.
  */
 export default function OpsUnits() {
+  const t = useT();
   const id = useId();
   const { units, incidents } = useStore();
   const now = useNow();
@@ -53,14 +55,17 @@ export default function OpsUnits() {
       .filter((u) => {
         if (division && u.division !== division) return false;
         if (!q) return true;
-        return `${u.callsign} ${u.officer} ${u.area}`.toLowerCase().includes(q);
+        return [u.callsign, u.officer, t(u.officer), u.area, t(u.area)]
+          .join(" ")
+          .toLowerCase()
+          .includes(q);
       })
       .sort(
         (a, b) =>
           ORDER[a.status] - ORDER[b.status] ||
           a.callsign.localeCompare(b.callsign),
       );
-  }, [units, query, division]);
+  }, [units, query, division, t]);
 
   const free = units.filter((u) => u.status === "Available");
   const committed = units.filter(
@@ -71,30 +76,35 @@ export default function OpsUnits() {
   return (
     <div className="space-y-5">
       <header>
-        <h1 className="font-secondary text-2xl font-bold">Units</h1>
+        <h1 className="font-secondary text-2xl font-bold">{t("Units")}</h1>
         <p className="mt-1 text-sm text-[var(--ops-dim)]">
-          Everyone on this shift and what they are on. The clock counts from
-          the last status change.
+          {t(
+            "Everyone on this shift and what they are on. The clock counts from the last status change.",
+          )}
         </p>
       </header>
 
       <dl className="flex flex-wrap divide-x divide-[var(--ops-line)] rounded-xl border border-[var(--ops-line)] bg-[var(--ops-panel)] px-4 py-1">
         <Readout
-          label="On duty"
+          label={t("On duty")}
           value={units.length}
-          note={`${divisions.length} divisions`}
+          note={t("{n} divisions", { n: divisions.length })}
         />
         <Readout
-          label="Available"
+          label={t("Available")}
           value={free.length}
           tone={free.length ? "var(--ops-accent)" : "var(--ops-p2)"}
-          note="on the air"
+          note={t("on the air")}
         />
-        <Readout label="Committed" value={committed.length} note="on a call" />
         <Readout
-          label="Off the air"
+          label={t("Committed")}
+          value={committed.length}
+          note={t("on a call")}
+        />
+        <Readout
+          label={t("Off the air")}
           value={off.length}
-          note="refuelling, training"
+          note={t("refuelling, training")}
         />
       </dl>
 
@@ -105,19 +115,19 @@ export default function OpsUnits() {
             className="size-4 shrink-0 text-[var(--ops-dim)]"
           />
           <label htmlFor={`${id}-q`} className="sr-only">
-            Filter units
+            {t("Filter units")}
           </label>
           <input
             id={`${id}-q`}
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Callsign, officer or area"
+            placeholder={t("Callsign, officer or area")}
             className="w-full bg-transparent py-2 text-sm outline-none placeholder:text-[var(--ops-dim)]"
           />
         </div>
         <label htmlFor={`${id}-div`} className="sr-only">
-          Division
+          {t("Division")}
         </label>
         <select
           id={`${id}-div`}
@@ -125,48 +135,52 @@ export default function OpsUnits() {
           onChange={(e) => setDivision(e.target.value)}
           className="rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 py-2 text-sm outline-none focus:border-[var(--ops-accent)]"
         >
-          <option value="">Every division</option>
+          <option value="">{t("Every division")}</option>
           {divisions.map((d) => (
             <option key={d} value={d}>
-              {d}
+              {t(d)}
             </option>
           ))}
         </select>
       </div>
 
       <p aria-live="polite" className="text-xs text-[var(--ops-dim)]">
-        {visible.length} of {units.length} units
+        {t("{shown} of {total} units", {
+          shown: visible.length,
+          total: units.length,
+        })}
       </p>
 
       <OpsPanel flush>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[760px] text-left text-sm">
+          <table className="w-full min-w-[760px] text-start text-sm">
             <caption className="sr-only">
-              Units on duty, with status, elapsed time in that status, and the
-              call they are assigned to
+              {t(
+                "Units on duty, with status, elapsed time in that status, and the call they are assigned to",
+              )}
             </caption>
             <thead className="text-[11px] tracking-[0.1em] text-[var(--ops-dim)] uppercase">
               <tr className="border-b border-[var(--ops-line)]">
-                <th scope="col" className="py-2.5 pr-3 pl-4 font-medium">
-                  Callsign
+                <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
+                  {t("Callsign")}
                 </th>
-                <th scope="col" className="py-2.5 pr-3 font-medium">
-                  Officer
+                <th scope="col" className="py-2.5 pe-3 font-medium">
+                  {t("Officer")}
                 </th>
-                <th scope="col" className="py-2.5 pr-3 font-medium">
-                  Status
+                <th scope="col" className="py-2.5 pe-3 font-medium">
+                  {t("Status")}
                 </th>
-                <th scope="col" className="py-2.5 pr-3 text-right font-medium">
-                  Elapsed
+                <th scope="col" className="py-2.5 pe-3 text-end font-medium">
+                  {t("Elapsed")}
                 </th>
-                <th scope="col" className="py-2.5 pr-3 font-medium">
-                  On call
+                <th scope="col" className="py-2.5 pe-3 font-medium">
+                  {t("On call")}
                 </th>
-                <th scope="col" className="py-2.5 pr-3 font-medium">
-                  Location
+                <th scope="col" className="py-2.5 pe-3 font-medium">
+                  {t("Location")}
                 </th>
-                <th scope="col" className="py-2.5 pr-4 text-right font-medium">
-                  Move to
+                <th scope="col" className="py-2.5 pe-4 text-end font-medium">
+                  {t("Move to")}
                 </th>
               </tr>
             </thead>
@@ -187,7 +201,7 @@ export default function OpsUnits() {
 
         {visible.length === 0 ? (
           <p className="px-4 py-12 text-center text-sm text-[var(--ops-dim)]">
-            No unit matches that filter.
+            {t("No unit matches that filter.")}
           </p>
         ) : null}
       </OpsPanel>
@@ -207,31 +221,32 @@ function Row({
   incident: ReturnType<typeof useStore>["incidents"][number] | null;
   now: number;
 }) {
-  const held = now
-    ? (now - new Date(unit.since).getTime()) / 60_000
-    : 0;
+  const t = useT();
+  const held = now ? (now - new Date(unit.since).getTime()) / 60_000 : 0;
   const stale = held > STALE_MINUTES && unit.status !== "Available";
 
   return (
     <tr className="border-b border-[var(--ops-line)] last:border-0 hover:bg-[var(--ops-raised)]/50">
-      <th scope="row" className="py-2.5 pr-3 pl-4 text-left">
-        <span className="font-secondary font-bold">{unit.callsign}</span>
+      <th scope="row" className="py-2.5 pe-3 ps-4 text-start">
+        <span className="font-secondary font-bold">{t(unit.callsign)}</span>
         <span className="block text-[11px] font-normal text-[var(--ops-dim)]">
-          {unit.division}
+          {t(unit.division)}
         </span>
       </th>
-      <td className="py-2.5 pr-3 text-[var(--ops-dim)]">{unit.officer}</td>
-      <td className="py-2.5 pr-3">
+      <td className="py-2.5 pe-3 text-[var(--ops-dim)]">{t(unit.officer)}</td>
+      <td className="py-2.5 pe-3">
         <UnitStatusTag status={unit.status} />
       </td>
       <td
-        className="py-2.5 pr-3 text-right font-medium"
+        className="py-2.5 pe-3 text-end font-medium"
         style={stale ? { color: "var(--ops-p2)" } : undefined}
       >
         <Elapsed from={unit.since} />
-        {stale ? <span className="sr-only"> — held over 45 minutes</span> : null}
+        {stale ? (
+          <span className="sr-only"> {t("— held over 45 minutes")}</span>
+        ) : null}
       </td>
-      <td className="py-2.5 pr-3">
+      <td className="py-2.5 pe-3">
         {incident ? (
           <span className="flex items-center gap-2 whitespace-nowrap">
             <PriorityTag priority={incident.priority} />
@@ -243,8 +258,10 @@ function Row({
           <span className="text-xs text-[var(--ops-dim)]">—</span>
         )}
       </td>
-      <td className="py-2.5 pr-3 text-xs text-[var(--ops-dim)]">{unit.area}</td>
-      <td className="py-2.5 pr-4 text-right">
+      <td className="py-2.5 pe-3 text-xs text-[var(--ops-dim)]">
+        {t(unit.area)}
+      </td>
+      <td className="py-2.5 pe-4 text-end">
         {/*
           A unit on a call is cleared from the call, not from here — clearing
           it here would leave the incident showing a unit that has gone.
@@ -253,12 +270,13 @@ function Row({
           <OpsButton
             onClick={() =>
               updateIncident(incident.id, {
-                status: incident.status === "Dispatched" ? "On Scene" : "Closed",
+                status:
+                  incident.status === "Dispatched" ? "On Scene" : "Closed",
               })
             }
             className="!px-2.5 !py-1 !text-xs"
           >
-            {incident.status === "Dispatched" ? "Arrived" : "Clear call"}
+            {incident.status === "Dispatched" ? t("Arrived") : t("Clear call")}
           </OpsButton>
         ) : (
           <OpsButton
@@ -271,7 +289,9 @@ function Row({
             }
             className="!px-2.5 !py-1 !text-xs"
           >
-            {unit.status === "Available" ? "Off the air" : "Back on the air"}
+            {unit.status === "Available"
+              ? t("Off the air")
+              : t("Back on the air")}
           </OpsButton>
         )}
       </td>

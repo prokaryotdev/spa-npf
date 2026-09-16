@@ -191,7 +191,10 @@ export const smartPolicing: InitiativeCard[] = [
     logo: "/cms/lost_Found_Home_7442753650.svg",
     logoIsWide: true,
     tags: [
-      { label: "Dubai Blockchain Strategy", icon: "/cms/image_76_199cff4ccb.svg" },
+      {
+        label: "Dubai Blockchain Strategy",
+        icon: "/cms/image_76_199cff4ccb.svg",
+      },
     ],
     more: 2,
     theme: theme("#241748", "#ebe6f7", "#ab99de"),
@@ -203,7 +206,10 @@ export const smartPolicing: InitiativeCard[] = [
     logo: "/cms/police_Eye_Home_a6e504a570.svg",
     logoIsWide: true,
     tags: [
-      { label: "Security and safety strategy", icon: "/cms/MOI_c3da982165.png" },
+      {
+        label: "Security and safety strategy",
+        icon: "/cms/MOI_c3da982165.png",
+      },
     ],
     more: 1,
     wide: true,
@@ -229,7 +235,10 @@ export const domains = [
     background: "/img/3d-static/car-bg.jpg",
     subject: "/img/3d-static/car.png",
     chips: [
-      { label: "Smart Home Security", icon: "/cms/icon_security_84e1e8baef.svg" },
+      {
+        label: "Smart Home Security",
+        icon: "/cms/icon_security_84e1e8baef.svg",
+      },
       { label: "On The Go", icon: "/cms/icon_car_eaa24290bd.svg" },
       { label: "Tourist Police", icon: "/cms/icon_tourist_a49d88a5f4.svg" },
     ],
@@ -305,7 +314,10 @@ export const community: InitiativeCard[] = [
     image: "/cms/Volutneer_86db1585d3.jpg",
     logo: "/cms/icon_volunteer_330f59b879.svg",
     tags: [
-      { label: "Explore Volunteer Opportunities", icon: "/cms/c7_322f5132d5.png" },
+      {
+        label: "Explore Volunteer Opportunities",
+        icon: "/cms/c7_322f5132d5.png",
+      },
     ],
     theme: theme("#005245", "#d1fff8", "#6bffe8"),
   },
@@ -335,7 +347,9 @@ export const community: InitiativeCard[] = [
     image: "/cms/p8_1ee31a74c5.webp",
     logo: "/cms/icon_museum_a5709a350d.png",
     badge: "Museum visit",
-    tags: [{ label: "Visit our virtual museum", icon: "/cms/c8_c4d2878b60.png" }],
+    tags: [
+      { label: "Visit our virtual museum", icon: "/cms/c8_c4d2878b60.png" },
+    ],
     theme: theme("#6A3D06", "#fef8f0", "#f9c990"),
   },
   {
@@ -415,7 +429,11 @@ export const footerColumns = [
       { label: "Media Hub", href: "/app/home/media" },
       { label: "Site Map", href: "/app/home/sitemap" },
       { label: "Initiative", href: "/app/home/initiative" },
-      { label: "Careers", href: "https://srs.dubaipolice.gov.ae/", external: true },
+      {
+        label: "Careers",
+        href: "https://srs.dubaipolice.gov.ae/",
+        external: true,
+      },
     ],
   },
   {
@@ -433,11 +451,27 @@ export const footerColumns = [
   {
     heading: "Friendly Websites",
     links: [
-      { label: "Esaad", href: "https://esaad.dubaipolice.gov.ae/", external: true },
+      {
+        label: "Esaad",
+        href: "https://esaad.dubaipolice.gov.ae/",
+        external: true,
+      },
       { label: "UAE Government", href: "https://u.ae/", external: true },
-      { label: "Digital Dubai", href: "https://www.digitaldubai.ae/", external: true },
-      { label: "Efaad", href: "https://efaad.dubaipolice.gov.ae/", external: true },
-      { label: "Innovation", href: "https://www.dubaipolice.gov.ae/", external: true },
+      {
+        label: "Digital Dubai",
+        href: "https://www.digitaldubai.ae/",
+        external: true,
+      },
+      {
+        label: "Efaad",
+        href: "https://efaad.dubaipolice.gov.ae/",
+        external: true,
+      },
+      {
+        label: "Innovation",
+        href: "https://www.dubaipolice.gov.ae/",
+        external: true,
+      },
       {
         label: "E-Police in Your Mobile",
         href: "https://www.dubaipolice.gov.ae/",
@@ -458,9 +492,18 @@ export const legalLinks = [
 ];
 
 export const appStores = [
-  { label: "App Store", icon: "/img/assets-home/static/home-apps/icon_appstore.svg" },
-  { label: "Google Play", icon: "/img/assets-home/static/home-apps/icon_playstore.svg" },
-  { label: "AppGallery", icon: "/img/assets-home/static/home-apps/icon_app.svg" },
+  {
+    label: "App Store",
+    icon: "/img/assets-home/static/home-apps/icon_appstore.svg",
+  },
+  {
+    label: "Google Play",
+    icon: "/img/assets-home/static/home-apps/icon_playstore.svg",
+  },
+  {
+    label: "AppGallery",
+    icon: "/img/assets-home/static/home-apps/icon_app.svg",
+  },
 ];
 
 export const storeBadges = [

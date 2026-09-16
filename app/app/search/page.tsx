@@ -4,25 +4,32 @@ import { PageShell } from "../../components/PageShell";
 import ServiceSearch from "../../components/ServiceSearch";
 import { ArrowUpRight } from "../../components/icons";
 import { search } from "../../search-index";
+import { getT, getLocalized } from "../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Search | Dubai Police",
-  description: "Search Dubai Police services, news, events and information.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Search | Dubai Police"),
+    description: t(
+      "Search Dubai Police services, news, events and information.",
+    ),
+  };
+}
 
 export default async function SearchPage({
   searchParams,
 }: {
   searchParams: Promise<{ q?: string }>;
 }) {
+  const t = await getT();
   const { q = "" } = await searchParams;
   const query = q.trim();
-  const results = search(query);
+  const results = await getLocalized(search(query));
 
   return (
     <PageShell
-      title="Search"
-      intro="Find a service, a news story, an event or a page."
+      title={t("Search")}
+      intro={t("Find a service, a news story, an event or a page.")}
     >
       <section className="bg-white pb-24">
         <div className="dp-container">
@@ -31,13 +38,15 @@ export default async function SearchPage({
               key={query}
               variant="panel"
               initialQuery={query}
-              placeholder="Search for a service, news or page"
+              placeholder={t("Search for a service, news or page")}
             />
           </div>
 
           {query ? (
             <p aria-live="polite" className="mt-6 text-sm text-dp-muted">
-              {results.length} result{results.length === 1 ? "" : "s"} for
+              {t(results.length === 1 ? "{n} result for" : "{n} results for", {
+                n: results.length,
+              })}
               {" “"}
               {query}
               {"”"}
@@ -46,12 +55,12 @@ export default async function SearchPage({
 
           {query && results.length === 0 ? (
             <p className="mt-8 max-w-[60ch] text-base text-dp-body">
-              Nothing matched. Try a shorter term, or browse the{" "}
+              {t("Nothing matched. Try a shorter term, or browse the")}{" "}
               <Link
                 href="/app/home/sitemap"
                 className="font-medium text-dp-green underline underline-offset-2"
               >
-                sitemap
+                {t("sitemap")}
               </Link>
               .
             </p>
@@ -67,14 +76,20 @@ export default async function SearchPage({
                   className="group/hit block py-5"
                 >
                   <span className="text-xs font-medium tracking-wide text-dp-muted uppercase">
-                    {hit.section}
+                    {t(hit.section)}
                   </span>
                   <span className="mt-1 flex items-start gap-1.5 font-secondary text-lg leading-snug font-bold text-dp-ink transition-colors group-hover/hit:text-dp-green">
                     {hit.title}
                     {hit.external ? (
                       <>
-                        <ArrowUpRight aria-hidden className="mt-1 size-4 shrink-0" />
-                        <span className="sr-only"> (opens in a new window)</span>
+                        <ArrowUpRight
+                          aria-hidden
+                          className="mt-1 size-4 shrink-0"
+                        />
+                        <span className="sr-only">
+                          {" "}
+                          {t("(opens in a new window)")}
+                        </span>
                       </>
                     ) : null}
                   </span>

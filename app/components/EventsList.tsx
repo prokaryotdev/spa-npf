@@ -3,8 +3,10 @@
 import { useMemo, useState } from "react";
 import EventCard, { type EventCardItem } from "./EventCard";
 import ListControls, { compare, type Sort } from "./ListControls";
+import { useT } from "../i18n/client";
 
 export default function EventsList({ events }: { events: EventCardItem[] }) {
+  const t = useT();
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<Sort>("newest");
   const [type, setType] = useState("");
@@ -49,7 +51,9 @@ export default function EventsList({ events }: { events: EventCardItem[] }) {
         </div>
       ) : (
         <p className="rounded-2xl bg-[#F4F8F6] p-8 text-base text-dp-body">
-          No events match that. Try a shorter search, or clear the type filter.
+          {t(
+            "No events match that. Try a shorter search, or clear the type filter.",
+          )}
         </p>
       )}
     </>

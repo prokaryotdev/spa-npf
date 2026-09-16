@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useT } from "../i18n/client";
 import {
   CalendarIcon,
   PhoneIcon,
@@ -13,7 +14,11 @@ import {
 
 const right = [
   { label: "Events", href: "/app/home/media/events", Icon: CalendarIcon },
-  { label: "Customer Centers", href: "/app/home/customer-centers", Icon: PinIcon },
+  {
+    label: "Customer Centers",
+    href: "/app/home/customer-centers",
+    Icon: PinIcon,
+  },
   { label: "Contact Us", href: "/app/home/contactUs", Icon: PhoneIcon },
 ];
 
@@ -25,6 +30,7 @@ const partners = [
 
 /** Quick-access toolbar; rises once the hero is out of the way. */
 export default function StickyBar() {
+  const t = useT();
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
@@ -38,7 +44,7 @@ export default function StickyBar() {
     <div className="pointer-events-none fixed bottom-0 left-0 z-50 w-full md:pb-5">
       <div className="dp-container">
         <nav
-          aria-label="Quick access toolbar"
+          aria-label={t("Quick access toolbar")}
           className={`pointer-events-auto overflow-hidden rounded-t-3xl border border-black/5 bg-white/90 shadow-[0_-8px_30px_-18px_rgba(0,60,40,0.5)] backdrop-blur-md transition-transform duration-500 ease-[var(--ease-custom)] md:rounded-full ${
             shown ? "translate-y-0" : "translate-y-[150%]"
           }`}
@@ -49,7 +55,7 @@ export default function StickyBar() {
                 href="https://www.happinessmeter.ae/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Happiness Meter (opens in a new window)"
+                aria-label={t("Happiness Meter (opens in a new window)")}
                 className="inline-flex min-w-[74px] items-center justify-center px-4 py-4 text-dp-green transition-colors hover:bg-black/[0.04]"
               >
                 <SmileIcon className="size-7 lg:size-8" />
@@ -60,7 +66,7 @@ export default function StickyBar() {
               >
                 <ServicesIcon className="size-6 lg:size-7" />
                 <span className="ms-2 hidden text-sm font-medium lg:block">
-                  Services
+                  {t("Services")}
                 </span>
               </Link>
             </div>
@@ -70,12 +76,12 @@ export default function StickyBar() {
                 <Link
                   key={label}
                   href={href}
-                  aria-label={label}
+                  aria-label={t(label)}
                   className="inline-flex min-w-[74px] items-center justify-center px-4 py-4 text-[#575757] transition-colors hover:bg-black/[0.04]"
                 >
                   <Icon className="size-6 lg:size-7" />
                   <span className="ms-2 hidden text-sm leading-none lg:block">
-                    {label}
+                    {t(label)}
                   </span>
                 </Link>
               ))}

@@ -5,21 +5,27 @@ import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
 import StickyBar from "../../../components/StickyBar";
 import { ArrowRight } from "../../../components/icons";
-import { aboutUs } from "../../../content-pages";
+import { aboutUs as aboutUsSource } from "../../../content-pages";
+import { getT, getLocalized } from "../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "About Us | Dubai Police",
-  description: aboutUs.heroCaption,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("About Us | Dubai Police"),
+    description: t(aboutUsSource.heroCaption),
+  };
+}
 
-export default function AboutUsPage() {
+export default async function AboutUsPage() {
+  const aboutUs = await getLocalized(aboutUsSource);
+  const t = await getT();
   return (
     <>
       {/* The hero here is pale, so the transparent treatment would wash out. */}
       <Header solid />
       <main id="main-content" tabIndex={-1} className="outline-none">
         {/* The title is set twice — filled behind the model, outlined in front —
-            which is how the original layers them. */}
+ which is how the original layers them. */}
         <section className="relative h-screen min-h-[660px] w-full overflow-hidden bg-[#EAF3EE]">
           <h1 className="pointer-events-none absolute top-[32%] left-0 z-10 w-full -translate-y-1/2 text-center font-secondary text-[15vw] leading-none font-bold text-[#00301F] sm:text-[110px] md:text-[150px] xl:text-[200px]">
             {aboutUs.title}
@@ -84,7 +90,7 @@ export default function AboutUsPage() {
             loop
             playsInline
             preload="none"
-            aria-label="Dubai Police through the years"
+            aria-label={t("Dubai Police through the years")}
           >
             <source src={aboutUs.journey.video} type="video/webm" />
           </video>
@@ -99,7 +105,9 @@ export default function AboutUsPage() {
                   key={line}
                   data-reveal
                   className="block"
-                  style={{ "--reveal-delay": `${i * 120}ms` } as React.CSSProperties}
+                  style={
+                    { "--reveal-delay": `${i * 120}ms` } as React.CSSProperties
+                  }
                 >
                   {line}
                 </span>
@@ -138,7 +146,9 @@ export default function AboutUsPage() {
                   <li
                     key={point}
                     data-reveal
-                    style={{ "--reveal-delay": `${i * 70}ms` } as React.CSSProperties}
+                    style={
+                      { "--reveal-delay": `${i * 70}ms` } as React.CSSProperties
+                    }
                     className="flex gap-4 border-b border-black/10 pb-6 last:border-0"
                   >
                     <span className="font-secondary text-lg font-bold text-dp-green tabular-nums">
@@ -161,7 +171,9 @@ export default function AboutUsPage() {
               <article
                 key={pillar.heading}
                 data-reveal
-                style={{ "--reveal-delay": `${i * 110}ms` } as React.CSSProperties}
+                style={
+                  { "--reveal-delay": `${i * 110}ms` } as React.CSSProperties
+                }
                 className="group/card relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-3xl p-8 text-white"
               >
                 <Image

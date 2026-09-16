@@ -2,19 +2,28 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PageShell } from "../../../../components/PageShell";
 import { PlayIcon } from "../../../../components/icons";
-import { videos } from "../../../../content-sub";
+import { videos as videosSource } from "../../../../content-sub";
+import { getT, getLocalized } from "../../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Video Gallery | Dubai Police",
-  description:
-    "Policing today, shaping tomorrow. Major operations, next-generation technologies, and moments from our community.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Video Gallery | Dubai Police"),
+    description: t(
+      "Policing today, shaping tomorrow. Major operations, next-generation technologies, and moments from our community.",
+    ),
+  };
+}
 
-export default function VideoGalleryPage() {
+export default async function VideoGalleryPage() {
+  const videos = await getLocalized(videosSource);
+  const t = await getT();
   return (
     <PageShell
-      title="Video Gallery"
-      intro="Policing today, shaping tomorrow. Explore major operations, next-generation technologies, and memorable moments from our community."
+      title={t("Video Gallery")}
+      intro={t(
+        "Policing today, shaping tomorrow. Explore major operations, next-generation technologies, and memorable moments from our community.",
+      )}
       trail={[{ label: "Media Hub", href: "/app/home/media" }]}
     >
       <section className="bg-white pb-24">
@@ -23,7 +32,9 @@ export default function VideoGalleryPage() {
             <article
               key={video.youtube || video.title}
               data-reveal
-              style={{ "--reveal-delay": `${(i % 3) * 90}ms` } as React.CSSProperties}
+              style={
+                { "--reveal-delay": `${(i % 3) * 90}ms` } as React.CSSProperties
+              }
             >
               <a
                 href={video.youtube}
@@ -57,7 +68,10 @@ export default function VideoGalleryPage() {
                 <h2 className="mt-1 font-secondary text-lg leading-snug font-bold text-dp-ink transition-colors group-hover/card:text-dp-green">
                   {video.title}
                 </h2>
-                <span className="sr-only"> (opens on YouTube in a new window)</span>
+                <span className="sr-only">
+                  {" "}
+                  {t("(opens on YouTube in a new window)")}
+                </span>
               </a>
             </article>
           ))}

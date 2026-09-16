@@ -3,15 +3,19 @@
 import { useMemo, useState } from "react";
 import AlbumCard, { type AlbumCardItem } from "./AlbumCard";
 import ListControls, { compare, type Sort } from "./ListControls";
+import { useT } from "../i18n/client";
 
 export default function AlbumsList({ albums }: { albums: AlbumCardItem[] }) {
+  const t = useT();
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<Sort>("newest");
 
   const shown = useMemo(() => {
     const q = query.trim().toLowerCase();
     return albums
-      .filter((a) => !q || `${a.title} ${a.description}`.toLowerCase().includes(q))
+      .filter(
+        (a) => !q || `${a.title} ${a.description}`.toLowerCase().includes(q),
+      )
       .sort(compare(sort, (a) => a.date));
   }, [albums, query, sort]);
 
@@ -35,7 +39,7 @@ export default function AlbumsList({ albums }: { albums: AlbumCardItem[] }) {
         </div>
       ) : (
         <p className="rounded-2xl bg-[#F4F8F6] p-8 text-base text-dp-body">
-          No albums match that. Try a shorter search.
+          {t("No albums match that. Try a shorter search.")}
         </p>
       )}
     </>

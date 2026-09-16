@@ -3,10 +3,12 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { useScrollProgress } from "./useScrollProgress";
+import { useT } from "../i18n/client";
 
 /** The closing shot: sky, city, boat, patrol car and drone all drift at their
- *  own rate as the section passes, the way the original parallaxes them. */
+ * own rate as the section passes, the way the original parallaxes them. */
 export default function Skyline() {
+  const t = useT();
   const section = useRef<HTMLElement>(null);
   const p = useScrollProgress(section);
 
@@ -33,7 +35,7 @@ export default function Skyline() {
             id="finale"
             className="absolute bottom-[41%] z-10 w-full text-center font-secondary text-[16vw] leading-[0.82] font-bold tracking-[-0.08em] uppercase md:text-[11vw] md:leading-[0.76] md:tracking-[-0.05em]"
           >
-            <span className="sr-only">Smart, Secure, Together</span>
+            <span className="sr-only">{t("Smart, Secure, Together")}</span>
             {[
               ["#B7FCDF", "#8CD1B4", "Smart"],
               ["#8CD1B4", "#478E70", "Secure"],
@@ -50,7 +52,7 @@ export default function Skyline() {
                     transform: `translateY(${Math.max(0, 1 - p * 3 + i * 0.16) * 100}%)`,
                   }}
                 >
-                  {word}
+                  {t(word)}
                 </span>
               </span>
             ))}

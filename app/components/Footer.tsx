@@ -4,16 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import {
-  emergencyNumbers,
-  footerColumns,
-  legalLinks,
-  storeBadges,
+  emergencyNumbers as emergencyNumbersSource,
+  footerColumns as footerColumnsSource,
+  legalLinks as legalLinksSource,
+  storeBadges as storeBadgesSource,
 } from "../content";
 import { ArrowUpRight, ChevronDown, PhoneIcon, SocialIcon } from "./icons";
+import { useT, useLocalized } from "../i18n/client";
 
 const socials = ["Facebook", "Youtube", "Twitter", "Instagram"] as const;
 
 export default function Footer() {
+  const emergencyNumbers = useLocalized(emergencyNumbersSource);
+  const footerColumns = useLocalized(footerColumnsSource);
+  const legalLinks = useLocalized(legalLinksSource);
+  const storeBadges = useLocalized(storeBadgesSource);
+  const t = useT();
   const [open, setOpen] = useState<string | null>(null);
   const [subscribed, setSubscribed] = useState(false);
 
@@ -33,7 +39,7 @@ export default function Footer() {
               <PhoneIcon className="size-12" />
             </span>
             <span className="max-w-[188px] text-center font-secondary text-3xl font-bold text-dp-ink md:text-left">
-              Emergency Numbers
+              {t("Emergency Numbers")}
             </span>
           </div>
 
@@ -67,7 +73,10 @@ export default function Footer() {
         {footerColumns.map((col) => {
           const isOpen = open === col.heading;
           return (
-            <div key={col.heading} className="border-b border-black/10 pb-4 md:border-none md:pb-0">
+            <div
+              key={col.heading}
+              className="border-b border-black/10 pb-4 md:border-none md:pb-0"
+            >
               <button
                 type="button"
                 onClick={() => setOpen(isOpen ? null : col.heading)}
@@ -83,14 +92,20 @@ export default function Footer() {
               </button>
               <ul
                 className={`space-y-3 overflow-hidden transition-all duration-300 md:max-h-full md:opacity-100 ${
-                  isOpen ? "max-h-[420px] pt-4 opacity-100" : "max-h-0 opacity-0"
+                  isOpen
+                    ? "max-h-[420px] pt-4 opacity-100"
+                    : "max-h-0 opacity-0"
                 }`}
               >
                 {col.links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      target={"external" in link && link.external ? "_blank" : undefined}
+                      target={
+                        "external" in link && link.external
+                          ? "_blank"
+                          : undefined
+                      }
                       rel={
                         "external" in link && link.external
                           ? "noopener noreferrer"
@@ -120,10 +135,10 @@ export default function Footer() {
             />
           </p>
           <h2 className="mb-6 font-medium text-dp-ink">
-            Subscribe to our Newsletter
+            {t("Subscribe to our Newsletter")}
           </h2>
           <p className="mb-3">
-            Stay updated with the latest news and announcements.
+            {t("Stay updated with the latest news and announcements.")}
           </p>
           {/* ponytail: no mailing-list backend, so this confirms and stops. */}
           <form
@@ -136,24 +151,27 @@ export default function Footer() {
           >
             <div className="relative w-full">
               <label htmlFor="subscribeEmail" className="sr-only">
-                Email Address
+                {t("Email Address")}
               </label>
               <input
                 id="subscribeEmail"
                 type="email"
                 required
-                placeholder="Email Address"
-                className="w-full rounded-lg border border-[#E4E2E6] bg-white px-4 py-3 pr-32 text-dp-ink placeholder:text-[#6b6b6b]"
+                placeholder={t("Email Address")}
+                className="w-full rounded-lg border border-[#E4E2E6] bg-white px-4 py-3 pe-32 text-dp-ink placeholder:text-[#6b6b6b]"
               />
               <button
                 type="submit"
-                className="absolute top-0 right-0 h-full rounded-lg bg-dp-green px-4 text-xl font-medium text-white transition-colors hover:bg-[#00a66f]"
+                className="absolute top-0 end-0 h-full rounded-lg bg-dp-green px-4 text-xl font-medium text-white transition-colors hover:bg-[#00a66f]"
               >
-                Subscribe
+                {t("Subscribe")}
               </button>
             </div>
-            <p aria-live="polite" className="mt-2 min-h-[1.25rem] text-sm text-dp-green-ink">
-              {subscribed ? "Thanks — you are on the list." : ""}
+            <p
+              aria-live="polite"
+              className="mt-2 min-h-[1.25rem] text-sm text-dp-green-ink"
+            >
+              {subscribed ? t("Thanks — you are on the list.") : ""}
             </p>
           </form>
           <div className="flex gap-6">
@@ -177,14 +195,15 @@ export default function Footer() {
         <hr className="mt-8 mb-6 border-black/10 md:mt-16" />
         <div className="flex flex-col justify-between gap-4 md:flex-row">
           <div className="w-full max-w-[536px]">
-            <p>© 2026 Dubai Police General HQ. All Rights Reserved</p>
+            <p>{t("© 2026 Dubai Police General HQ. All Rights Reserved")}</p>
             <p>
-              This site is monitored and maintained by Dubai Police.
+              {t("This site is monitored and maintained by Dubai Police.")}
               <br />
-              The site is best viewed using IE11 and above, Mozilla Firefox,
-              Safari and Chrome
+              {t(
+                "The site is best viewed using IE11 and above, Mozilla Firefox, Safari and Chrome",
+              )}
               <br />
-              Last modified Date: 11/09/2026
+              {t("Last modified Date: 11/09/2026")}
             </p>
           </div>
           <div className="flex flex-col md:items-end">

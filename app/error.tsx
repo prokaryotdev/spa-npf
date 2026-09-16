@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { ArrowRight } from "./components/icons";
+import { useT } from "./i18n/client";
 
 /**
  * Catches runtime errors below the root layout. Deliberately not built on
@@ -18,6 +19,7 @@ export default function Error({
   error: Error & { digest?: string };
   retry: () => void;
 }) {
+  const t = useT();
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -31,10 +33,10 @@ export default function Error({
 
           <div className="dp-container relative">
             <h1 className="font-secondary text-4xl leading-[1.15] font-bold text-dp-green-deep lg:text-7xl">
-              Something went wrong
+              {t("Something went wrong")}
             </h1>
             <p className="mt-5 max-w-[70ch] text-base text-neutral-700 md:text-xl">
-              This page failed to load. Trying again often clears it.
+              {t("This page failed to load. Trying again often clears it.")}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -43,21 +45,22 @@ export default function Error({
                 onClick={() => retry()}
                 className="inline-flex items-center gap-2 rounded-full bg-dp-green px-6 py-3 font-medium text-white transition-colors hover:bg-dp-green-mid"
               >
-                Try again
+                {t("Try again")}
                 <ArrowRight className="size-4" />
               </button>
               <Link
                 href="/"
                 className="inline-flex items-center rounded-full bg-[#F4F8F6] px-6 py-3 font-medium text-dp-green-ink ring-1 ring-black/5 transition-colors hover:bg-[#e7f6f1]"
               >
-                Back to home
+                {t("Back to home")}
               </Link>
             </div>
 
             {/* The only thing support can match against a server-side log. */}
             {error.digest ? (
               <p className="mt-8 text-sm text-dp-muted">
-                Reference: <span className="font-mono">{error.digest}</span>
+                {t("Reference:")}{" "}
+                <span className="font-mono">{error.digest}</span>
               </p>
             ) : null}
           </div>

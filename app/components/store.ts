@@ -27,11 +27,7 @@ export type Session = {
 };
 
 export type RequestStatus =
-  | "Submitted"
-  | "In Review"
-  | "Action Needed"
-  | "Completed"
-  | "Rejected";
+  "Submitted" | "In Review" | "Action Needed" | "Completed" | "Rejected";
 
 export type TrackedRequest = {
   id: string;
@@ -89,8 +85,13 @@ export type Incident = {
   unit: string | null;
   summary: string;
   source: string;
-  /** What was written on the call, oldest first. */
-  log: { at: string; text: string }[];
+  /**
+   * What was written on the call, oldest first. A line the system writes is
+   * stored as its English pattern plus the values that fill it, so the board
+   * can render it in either language; a line an operator typed is stored
+   * verbatim and shown as typed.
+   */
+  log: { at: string; text: string; vars?: Record<string, string> }[];
 };
 
 export type UnitStatus = "Available" | "Assigned" | "On Scene" | "Unavailable";
@@ -327,16 +328,15 @@ export function updateIncident(id: string, patch: Partial<Incident>) {
     // Reopening a closed call clears the closing stamp, or its age freezes.
     if (before.status === "Closed" && patch.status !== "Closed")
       after.closed = null;
-    after.log = [
-      ...after.log,
-      { at, text: statusLine(patch.status, after.unit) },
-    ];
+    after.log = [...after.log, { at, ...statusLine(patch.status, after.unit) }];
   }
 
   if (patch.unit !== undefined && patch.unit !== before.unit)
     after.log = [
       ...after.log,
-      { at, text: patch.unit ? `${patch.unit} assigned.` : "Unit stood down." },
+      patch.unit
+        ? { at, text: "{unit} assigned.", vars: { unit: patch.unit } }
+        : { at, text: "Unit stood down." },
     ];
 
   const touched = new Set([before.unit, after.unit].filter(Boolean));
@@ -354,17 +354,32 @@ export function updateIncident(id: string, patch: Partial<Incident>) {
       const next = UNIT_FOR[after.status];
       return u.status === next && u.incident === after.id
         ? u
-        : { ...u, status: next, incident: after.id, since: at, area: after.area };
+        : {
+            ...u,
+            status: next,
+            incident: after.id,
+            since: at,
+            area: after.area,
+          };
     }),
   });
 }
 
-function statusLine(status: IncidentStatus, unit: string | null) {
-  const on = unit ? ` — ${unit}` : "";
-  if (status === "Dispatched") return `Dispatched${on}.`;
-  if (status === "On Scene") return `Arrived on scene${on}.`;
-  if (status === "Closed") return `Call closed${on}.`;
-  return "Returned to the pending queue.";
+function statusLine(
+  status: IncidentStatus,
+  unit: string | null,
+): { text: string; vars?: Record<string, string> } {
+  const vars = unit ? { unit } : undefined;
+  if (status === "Dispatched")
+    return { text: unit ? "Dispatched — {unit}." : "Dispatched.", vars };
+  if (status === "On Scene")
+    return {
+      text: unit ? "Arrived on scene — {unit}." : "Arrived on scene.",
+      vars,
+    };
+  if (status === "Closed")
+    return { text: unit ? "Call closed — {unit}." : "Call closed.", vars };
+  return { text: "Returned to the pending queue." };
 }
 
 /** A unit going off the air, or back on it, without a call being involved. */
@@ -378,7 +393,10 @@ export function setUnitStatus(callsign: string, status: UnitStatus) {
             ...u,
             status,
             since: at,
-            incident: status === "Available" || status === "Unavailable" ? null : u.incident,
+            incident:
+              status === "Available" || status === "Unavailable"
+                ? null
+                : u.incident,
           }
         : u,
     ),
@@ -408,7 +426,13 @@ export function logIncident(input: {
     status: "New",
     assignee: null,
     unit: null,
-    log: [{ at, text: `Call received via ${input.source}.` }],
+    log: [
+      {
+        at,
+        text: "Call received via {source}.",
+        vars: { source: input.source },
+      },
+    ],
   };
   write({ ...state, incidents: [created, ...state.incidents] });
   return created;

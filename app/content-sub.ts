@@ -4,2241 +4,2394 @@
  */
 
 export const lawsLegislation = {
-  "title": "Laws & Legislation",
-  "description": "Dubai Police's Laws and Legal Frameworks",
-  "cover": "/cms/Laws_and_Legislation_jpg_641c959914.jpeg",
-  "updatedAt": "2026-01-05",
-  "rows": [
+  title: "Laws & Legislation",
+  description: "Dubai Police's Laws and Legal Frameworks",
+  cover: "/cms/Laws_and_Legislation_jpg_641c959914.jpeg",
+  updatedAt: "2026-01-05",
+  rows: [
     {
-      "legislationName": "Law No. (9) of 2023 regulating the operation of self-driving vehicles in the Emirate of Dubai",
-      "issueDate": "2023-04-06",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2703_Law_9_2023_cd2ba27c55.pdf",
-      "size": "504 KB"
+      legislationName:
+        "Law No. (9) of 2023 regulating the operation of self-driving vehicles in the Emirate of Dubai",
+      issueDate: "2023-04-06",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2703_Law_9_2023_cd2ba27c55.pdf",
+      size: "504 KB",
     },
     {
-      "legislationName": "Decision regarding the regulation of the use of bicycles in the Emirate of Dubai",
-      "issueDate": "2024-09-23",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3084_1_c84f3a134b.pdf",
-      "size": "182 KB"
+      legislationName:
+        "Decision regarding the regulation of the use of bicycles in the Emirate of Dubai",
+      issueDate: "2024-09-23",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3084_1_c84f3a134b.pdf",
+      size: "182 KB",
     },
     {
-      "legislationName": "Concerning Disposition of Lost and Abandoned Property in Dubai",
-      "issueDate": "2024-09-23",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1677_attchviewerservlet_6e009d92c0.pdf",
-      "size": "273 KB"
+      legislationName:
+        "Concerning Disposition of Lost and Abandoned Property in Dubai",
+      issueDate: "2024-09-23",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1677_attchviewerservlet_6e009d92c0.pdf",
+      size: "273 KB",
     },
     {
-      "legislationName": "Law No. (10) of 2023 amending some provisions of Law No. (4) of 2020 regulating drones in the Emirate of Dubai",
-      "issueDate": "2023-04-06",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/7547_Law_10_2023_c9c08ca8b9.pdf",
-      "size": "414 KB"
+      legislationName:
+        "Law No. (10) of 2023 amending some provisions of Law No. (4) of 2020 regulating drones in the Emirate of Dubai",
+      issueDate: "2023-04-06",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/7547_Law_10_2023_c9c08ca8b9.pdf",
+      size: "414 KB",
     },
     {
-      "legislationName": "Executive Council Decision No. (13) of 2022 regulating the use of bicycles in the Emirate of Dubai",
-      "issueDate": "2022-03-14",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4308_Exec_Dec_13_2022_cbdc6c4131.pdf",
-      "size": "379 KB"
+      legislationName:
+        "Executive Council Decision No. (13) of 2022 regulating the use of bicycles in the Emirate of Dubai",
+      issueDate: "2022-03-14",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4308_Exec_Dec_13_2022_cbdc6c4131.pdf",
+      size: "379 KB",
     },
     {
-      "legislationName": "Law No. (4) of 2022 regulating virtual assets in the Emirate of Dubai",
-      "issueDate": "2022-02-28",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4091_Law_4_2022_55751e239a.pdf",
-      "size": "393 KB"
+      legislationName:
+        "Law No. (4) of 2022 regulating virtual assets in the Emirate of Dubai",
+      issueDate: "2022-02-28",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4091_Law_4_2022_55751e239a.pdf",
+      size: "393 KB",
     },
     {
-      "legislationName": "Decree No. (4) of 2021 regarding the Supreme Committee for Emergency, Crisis and Disaster Management in the Emirate of Dubai",
-      "issueDate": "2021-01-26",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5208_Decree_4_2021_5f80228b05.pdf",
-      "size": "464 KB"
+      legislationName:
+        "Decree No. (4) of 2021 regarding the Supreme Committee for Emergency, Crisis and Disaster Management in the Emirate of Dubai",
+      issueDate: "2021-01-26",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5208_Decree_4_2021_5f80228b05.pdf",
+      size: "464 KB",
     },
     {
-      "legislationName": "Using Security Cameras",
-      "issueDate": "2020-11-04",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/7199_D8_A7_D8_B3_D8_AA_D8_AE_D8_AF_D8_A7_D9_85_2_B_D8_A7_D9_84_D9_83_D8_A7_D9_85_D9_8_A_D8_B1_D8_A7_D8_AA_2_B_D8_A7_D9_84_D8_A3_D9_85_D9_86_D9_8_A_D8_A9_11100d4698.pdf",
-      "size": "150 KB"
+      legislationName: "Using Security Cameras",
+      issueDate: "2020-11-04",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/7199_D8_A7_D8_B3_D8_AA_D8_AE_D8_AF_D8_A7_D9_85_2_B_D8_A7_D9_84_D9_83_D8_A7_D9_85_D9_8_A_D8_B1_D8_A7_D8_AA_2_B_D8_A7_D9_84_D8_A3_D9_85_D9_86_D9_8_A_D8_A9_11100d4698.pdf",
+      size: "150 KB",
     },
     {
-      "legislationName": "Law No. (4) of 2020 about Regulating drones in the Emirate of Dubai",
-      "issueDate": "2020-06-25",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9235_Law_4_2020_7b895c382e.pdf",
-      "size": "717 KB"
+      legislationName:
+        "Law No. (4) of 2020 about Regulating drones in the Emirate of Dubai",
+      issueDate: "2020-06-25",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9235_Law_4_2020_7b895c382e.pdf",
+      size: "717 KB",
     },
     {
-      "legislationName": "Executive council decision No (14) for year 2018 regarding official vacation in Emirate of Dubai",
-      "issueDate": "2019-07-11",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/392_official_2_Bvacation_2_Bin_2_B_Emirate_2_Bof_2_B_Dubai_165fd53119.pdf",
-      "size": "58 KB"
+      legislationName:
+        "Executive council decision No (14) for year 2018 regarding official vacation in Emirate of Dubai",
+      issueDate: "2019-07-11",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/392_official_2_Bvacation_2_Bin_2_B_Emirate_2_Bof_2_B_Dubai_165fd53119.pdf",
+      size: "58 KB",
     },
     {
-      "legislationName": "Law No (5) for year 2018 regarding organizing voluntary work in Dubai Emirate",
-      "issueDate": "2019-07-11",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1709_voluntary_2_Bwork_2_Bin_2_B_Dubai_2_B_Emirate_7591c958cd.pdf",
-      "size": "168 KB"
+      legislationName:
+        "Law No (5) for year 2018 regarding organizing voluntary work in Dubai Emirate",
+      issueDate: "2019-07-11",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1709_voluntary_2_Bwork_2_Bin_2_B_Dubai_2_B_Emirate_7591c958cd.pdf",
+      size: "168 KB",
     },
     {
-      "legislationName": "Ministers council decision No (52) for year 2018 related to executive by law for federal law no (3) for year 2016 regarding child rights (wadima)",
-      "issueDate": "2019-07-11",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6358_child_rights_3d40d26031.pdf",
-      "size": "2833 KB"
+      legislationName:
+        "Ministers council decision No (52) for year 2018 related to executive by law for federal law no (3) for year 2016 regarding child rights (wadima)",
+      issueDate: "2019-07-11",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6358_child_rights_3d40d26031.pdf",
+      size: "2833 KB",
     },
     {
-      "legislationName": "Law no(7) for year 2018to establish Emirates my country",
-      "issueDate": "2019-07-11",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4061_establish_2_B_Emirates_2b9e30004c.pdf",
-      "size": "146 KB"
+      legislationName:
+        "Law no(7) for year 2018to establish Emirates my country",
+      issueDate: "2019-07-11",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4061_establish_2_B_Emirates_2b9e30004c.pdf",
+      size: "146 KB",
     },
     {
-      "legislationName": "Law No( 1 ) regarding Knowledge Dirham",
-      "issueDate": "2019-07-11",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4948_Knowledge_2_B_Dirham_3f20479b91.pdf",
-      "size": "468 KB"
+      legislationName: "Law No( 1 ) regarding Knowledge Dirham",
+      issueDate: "2019-07-11",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4948_Knowledge_2_B_Dirham_3f20479b91.pdf",
+      size: "468 KB",
     },
     {
-      "legislationName": "Degree No (`17) for year 2018 regarding establishment of institution belong to Dubai health corporation and specify its powers",
-      "issueDate": "2019-07-11",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2442_Dubai_2_Bhealth_2_Bcorporation_2_Band_2_Bspecify_2_Bits_2_Bpowers_ff36a0e243.pdf",
-      "size": "118 KB"
+      legislationName:
+        "Degree No (`17) for year 2018 regarding establishment of institution belong to Dubai health corporation and specify its powers",
+      issueDate: "2019-07-11",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2442_Dubai_2_Bhealth_2_Bcorporation_2_Band_2_Bspecify_2_Bits_2_Bpowers_ff36a0e243.pdf",
+      size: "118 KB",
     },
     {
-      "legislationName": "Law No (4) for year 2018 to establish financial control system",
-      "issueDate": "2019-07-11",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/8653_appoint_2_Bhead_2_Bof_2_Bfinancial_2_Bcontrol_2_Bsystem_9b49a03f08.pdf",
-      "size": "52 KB"
+      legislationName:
+        "Law No (4) for year 2018 to establish financial control system",
+      issueDate: "2019-07-11",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/8653_appoint_2_Bhead_2_Bof_2_Bfinancial_2_Bcontrol_2_Bsystem_9b49a03f08.pdf",
+      size: "52 KB",
     },
     {
-      "legislationName": "Law NO (4) for year 2018 to form Board of directors for Dubai women and child care corporation",
-      "issueDate": "2019-07-04",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2990_Board_2_Bof_2_Bdirectors_2_Bfor_2_B_2_B_Dubai_2_Bwomen_2_Band_2_Bchild_5a3c64e4d5.pdf",
-      "size": "121 KB"
+      legislationName:
+        "Law NO (4) for year 2018 to form Board of directors for Dubai women and child care corporation",
+      issueDate: "2019-07-04",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2990_Board_2_Bof_2_Bdirectors_2_Bfor_2_B_2_B_Dubai_2_Bwomen_2_Band_2_Bchild_5a3c64e4d5.pdf",
+      size: "121 KB",
     },
     {
-      "legislationName": "Degree No (14)for year 2018 to appoint head of financial control system",
-      "issueDate": "2019-07-04",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2301_appoint_2_Bhead_2_Bof_2_Bfinancial_2_Bcontrol_2_Bsystem_0dd36998c8.pdf",
-      "size": "52 KB"
+      legislationName:
+        "Degree No (14)for year 2018 to appoint head of financial control system",
+      issueDate: "2019-07-04",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2301_appoint_2_Bhead_2_Bof_2_Bfinancial_2_Bcontrol_2_Bsystem_0dd36998c8.pdf",
+      size: "52 KB",
     },
     {
-      "legislationName": "Law No (6) for year 2018 regarding Dubai health corporation",
-      "issueDate": "2019-07-02",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/8079_Dubai_health_corporation_cfb424f954.pdf",
-      "size": "126 KB"
+      legislationName:
+        "Law No (6) for year 2018 regarding Dubai health corporation",
+      issueDate: "2019-07-02",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/8079_Dubai_health_corporation_cfb424f954.pdf",
+      size: "126 KB",
     },
     {
-      "legislationName": "Executive council decision No (3) for year 2019 regarding organizing of operational experiment of auto self-driving Vehicle",
-      "issueDate": "2019-06-30",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3121_organizing_2_Bof_2_Boperational_2_Bexperiment_2_Bof_2_Bauto_2_Bself_driving_2_B_Vehicle_49fb39940b.pdf",
-      "size": "130 KB"
+      legislationName:
+        "Executive council decision No (3) for year 2019 regarding organizing of operational experiment of auto self-driving Vehicle",
+      issueDate: "2019-06-30",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3121_organizing_2_Bof_2_Boperational_2_Bexperiment_2_Bof_2_Bauto_2_Bself_driving_2_B_Vehicle_49fb39940b.pdf",
+      size: "130 KB",
     },
     {
-      "legislationName": "Ministerial decision No (228) for year 2019 regarding powers delegation",
-      "issueDate": "2019-06-30",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9779_powers_2_Bdelegation_2b3aaab520.pdf",
-      "size": "1455 KB"
+      legislationName:
+        "Ministerial decision No (228) for year 2019 regarding powers delegation",
+      issueDate: "2019-06-30",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9779_powers_2_Bdelegation_2b3aaab520.pdf",
+      size: "1455 KB",
     },
     {
-      "legislationName": "Federal law No (12) for year 2018 regarding integrated management of wastes",
-      "issueDate": "2019-06-30",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3707_integrated_2_Bmanagement_2_Bof_2_Bwastes_667be6cdcf.pdf",
-      "size": "4645 KB"
+      legislationName:
+        "Federal law No (12) for year 2018 regarding integrated management of wastes",
+      issueDate: "2019-06-30",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3707_integrated_2_Bmanagement_2_Bof_2_Bwastes_667be6cdcf.pdf",
+      size: "4645 KB",
     },
     {
-      "legislationName": "قرار المجلس التنفيذي رقم ( 6 ) لسنة 2019 بتشكيل مجلس دبي للشباب",
-      "issueDate": "2019-06-30",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9409_Dubai_2_Byouth_2_Bformation_c1d8e4c7d7.pdf",
-      "size": "84 KB"
+      legislationName:
+        "قرار المجلس التنفيذي رقم ( 6 ) لسنة 2019 بتشكيل مجلس دبي للشباب",
+      issueDate: "2019-06-30",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9409_Dubai_2_Byouth_2_Bformation_c1d8e4c7d7.pdf",
+      size: "84 KB",
     },
     {
-      "legislationName": "Law no (2) regarding fee of innovation Dirham",
-      "issueDate": "2019-06-30",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5172_fee_2_Bof_2_Binnovation_2_B_Dirham_49a76be4cc.pdf",
-      "size": "546 KB"
+      legislationName: "Law no (2) regarding fee of innovation Dirham",
+      issueDate: "2019-06-30",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5172_fee_2_Bof_2_Binnovation_2_B_Dirham_49a76be4cc.pdf",
+      size: "546 KB",
     },
     {
-      "legislationName": "Executive council decision No (5) for year 2019 regarding Instalment of some fees, fines, for governmental institutions in Dubai emirate",
-      "issueDate": "2019-06-30",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5067_Instalment_2_Bof_2_Bsome_2_B_2_Bfees_2_C_2_Bfines_2_C_2_Bfor_2_Bgovernmental_2_Binstitutions_2_Bin_2_B_Dubai_2_Bemirate_c0d3e31cd6.pdf",
-      "size": "123 KB"
+      legislationName:
+        "Executive council decision No (5) for year 2019 regarding Instalment of some fees, fines, for governmental institutions in Dubai emirate",
+      issueDate: "2019-06-30",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5067_Instalment_2_Bof_2_Bsome_2_B_2_Bfees_2_C_2_Bfines_2_C_2_Bfor_2_Bgovernmental_2_Binstitutions_2_Bin_2_B_Dubai_2_Bemirate_c0d3e31cd6.pdf",
+      size: "123 KB",
     },
     {
-      "legislationName": "Executive council decision No(4) for year 2019 regarding approval of grievances, complains , punitive regulations",
-      "issueDate": "2019-06-30",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5400_approval_2_Bof_2_Bgrievances_2_C_2_Bcomplains_2_B_2_C_2_Bpunitive_2_Bregulations_1_4485c18eec.pdf",
-      "size": "293 KB"
+      legislationName:
+        "Executive council decision No(4) for year 2019 regarding approval of grievances, complains , punitive regulations",
+      issueDate: "2019-06-30",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5400_approval_2_Bof_2_Bgrievances_2_C_2_Bcomplains_2_B_2_C_2_Bpunitive_2_Bregulations_1_4485c18eec.pdf",
+      size: "293 KB",
     },
     {
-      "legislationName": "Regulation No(2) for year 2019 regarding executive secretariat of governmental initiatives",
-      "issueDate": "2019-06-30",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6876_executive_secretariat_of_governmental_initiatives_b0a81e0b85.pdf",
-      "size": "510 KB"
+      legislationName:
+        "Regulation No(2) for year 2019 regarding executive secretariat of governmental initiatives",
+      issueDate: "2019-06-30",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6876_executive_secretariat_of_governmental_initiatives_b0a81e0b85.pdf",
+      size: "510 KB",
     },
     {
-      "legislationName": "Degree NO (1) for year 2019 regarding companies constitution organizing by Governmental in institutions In Dubai emirate",
-      "issueDate": "2019-06-30",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1297_companies_2_Bconstitution_2_Borganizing_2c1b4a2cf1.pdf",
-      "size": "109 KB"
+      legislationName:
+        "Degree NO (1) for year 2019 regarding companies constitution organizing by Governmental in institutions In Dubai emirate",
+      issueDate: "2019-06-30",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1297_companies_2_Bconstitution_2_Borganizing_2c1b4a2cf1.pdf",
+      size: "109 KB",
     },
     {
-      "legislationName": "Administrative decision NO ( 986) for year 2018 to issue executive bylaws of executive council decision regarding Railways organization in Dubai Emirate",
-      "issueDate": "2019-06-30",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/227_Railways_2_Borganization_2_Bin_2_B_Dubai_2_B_Emirate_2fee1b290b.pdf",
-      "size": "712 KB"
+      legislationName:
+        "Administrative decision NO ( 986) for year 2018 to issue executive bylaws of executive council decision regarding Railways organization in Dubai Emirate",
+      issueDate: "2019-06-30",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/227_Railways_2_Borganization_2_Bin_2_B_Dubai_2_B_Emirate_2fee1b290b.pdf",
+      size: "712 KB",
     },
     {
-      "legislationName": "Degree NO (5) for year 2019 for Dubai sport council forming",
-      "issueDate": "2019-06-30",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/8183_Dubai_2_Bsport_2_Bcouncil_2_Bforming_2019_a2e65e9dd6.pdf",
-      "size": "105 KB"
+      legislationName:
+        "Degree NO (5) for year 2019 for Dubai sport council forming",
+      issueDate: "2019-06-30",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/8183_Dubai_2_Bsport_2_Bcouncil_2_Bforming_2019_a2e65e9dd6.pdf",
+      size: "105 KB",
     },
     {
-      "legislationName": "Degree NO ( 2) for year 2019 regarding classes ,allowances, wages, dependent allowances for Dubai government staff",
-      "issueDate": "2019-06-30",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3788_employee_allowances2019_b0ed2a6d87.pdf",
-      "size": "144 KB"
+      legislationName:
+        "Degree NO ( 2) for year 2019 regarding classes ,allowances, wages, dependent allowances for Dubai government staff",
+      issueDate: "2019-06-30",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3788_employee_allowances2019_b0ed2a6d87.pdf",
+      size: "144 KB",
     },
     {
-      "legislationName": "System No. 5 of Leaders&rsquo; Qualifying, within Dubai Police General HQ",
-      "issueDate": "2018-01-09",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5572_3_f3d82fe520.pdf",
-      "size": "224 KB"
+      legislationName:
+        "System No. 5 of Leaders&rsquo; Qualifying, within Dubai Police General HQ",
+      issueDate: "2018-01-09",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5572_3_f3d82fe520.pdf",
+      size: "224 KB",
     },
     {
-      "legislationName": "System No. 1/2015 regarding the Assigning of Cars to Personnel of Dubai Police General HQ",
-      "issueDate": "2018-01-08",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/306_8_592279e286.pdf",
-      "size": "1175 KB"
+      legislationName:
+        "System No. 1/2015 regarding the Assigning of Cars to Personnel of Dubai Police General HQ",
+      issueDate: "2018-01-08",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/306_8_592279e286.pdf",
+      size: "1175 KB",
     },
     {
-      "legislationName": "System No. 1/2012 regarding the Assigning of Cars to Civil Personnel of Dubai Police General HQ",
-      "issueDate": "2018-01-08",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3450_7_00cc1e86ca.pdf",
-      "size": "210 KB"
+      legislationName:
+        "System No. 1/2012 regarding the Assigning of Cars to Civil Personnel of Dubai Police General HQ",
+      issueDate: "2018-01-08",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3450_7_00cc1e86ca.pdf",
+      size: "210 KB",
     },
     {
-      "legislationName": "System No. 1/2013 regarding Partial Scholarship Leave, by means of own expense",
-      "issueDate": "2018-01-08",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1510_6_7173b17c28.pdf",
-      "size": "223 KB"
+      legislationName:
+        "System No. 1/2013 regarding Partial Scholarship Leave, by means of own expense",
+      issueDate: "2018-01-08",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1510_6_7173b17c28.pdf",
+      size: "223 KB",
     },
     {
-      "legislationName": "The Ranking System for local military personnel working for the Government of Dubai",
-      "issueDate": "2018-01-08",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5785_1_d2a9dcccd4.pdf",
-      "size": "77 KB"
+      legislationName:
+        "The Ranking System for local military personnel working for the Government of Dubai",
+      issueDate: "2018-01-08",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5785_1_d2a9dcccd4.pdf",
+      size: "77 KB",
     },
     {
-      "legislationName": "Law No. (21) for the year 2015, regarding legal fees, in Dubai courts",
-      "issueDate": "2016-02-22",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/7666_29_bba522f7fe.pdf",
-      "size": "3190 KB"
+      legislationName:
+        "Law No. (21) for the year 2015, regarding legal fees, in Dubai courts",
+      issueDate: "2016-02-22",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/7666_29_bba522f7fe.pdf",
+      size: "3190 KB",
     },
     {
-      "legislationName": "Executive Council Resolution No. 15 of 2013 on the regulation of Nature-of-Work Bonus, for the Government of Dubai Staff.",
-      "issueDate": "2016-02-16",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2351_28_df30794e3d.pdf",
-      "size": "825 KB"
+      legislationName:
+        "Executive Council Resolution No. 15 of 2013 on the regulation of Nature-of-Work Bonus, for the Government of Dubai Staff.",
+      issueDate: "2016-02-16",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2351_28_df30794e3d.pdf",
+      size: "825 KB",
     },
     {
-      "legislationName": "Decree No. (29) for the year 2015, for seizure/impounding of vehicles, in the Emirate of Dubai",
-      "issueDate": "2016-02-28",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6315_27_8646c33557.pdf",
-      "size": "240 KB"
+      legislationName:
+        "Decree No. (29) for the year 2015, for seizure/impounding of vehicles, in the Emirate of Dubai",
+      issueDate: "2016-02-28",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6315_27_8646c33557.pdf",
+      size: "240 KB",
     },
     {
-      "legislationName": "Law No. (23) for the year 2015, on the disposition of seized/impounded vehicles, in the Emirate of Dubai",
-      "issueDate": "2016-02-02",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5201_26_98bef0c53a.pdf",
-      "size": "237 KB"
+      legislationName:
+        "Law No. (23) for the year 2015, on the disposition of seized/impounded vehicles, in the Emirate of Dubai",
+      issueDate: "2016-02-02",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5201_26_98bef0c53a.pdf",
+      size: "237 KB",
     },
     {
-      "legislationName": "Law No. (22) for the year 2015, on the organization of the partnership between the public and private sectors, in the Emirate of Dubai",
-      "issueDate": "2016-02-28",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/8477_25_5faae85b4e.pdf",
-      "size": "515 KB"
+      legislationName:
+        "Law No. (22) for the year 2015, on the organization of the partnership between the public and private sectors, in the Emirate of Dubai",
+      issueDate: "2016-02-28",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/8477_25_5faae85b4e.pdf",
+      size: "515 KB",
     },
     {
-      "legislationName": "Executive Council Resolution No. (13) for the year 2015 On the framework of behavioral and technical competency for the staff of the Government of Dubai",
-      "issueDate": "2016-04-12",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/852_24_8b246e8441.pdf",
-      "size": "235 KB"
+      legislationName:
+        "Executive Council Resolution No. (13) for the year 2015 On the framework of behavioral and technical competency for the staff of the Government of Dubai",
+      issueDate: "2016-04-12",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/852_24_8b246e8441.pdf",
+      size: "235 KB",
     },
     {
-      "legislationName": "Ordinance No (7) for year 2015 regarding Security and safety of the airspace in the Emirate of Dubai",
-      "issueDate": "2015-05-14",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/646_23_bba8f09f1c.pdf",
-      "size": "329 KB"
+      legislationName:
+        "Ordinance No (7) for year 2015 regarding Security and safety of the airspace in the Emirate of Dubai",
+      issueDate: "2015-05-14",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/646_23_bba8f09f1c.pdf",
+      size: "329 KB",
     },
     {
-      "legislationName": "Executive Council resolution No (10) for year 2015 Regulate the use of bicycles in the Emirate of Dubai",
-      "issueDate": "2016-04-12",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9756_22_cdf5d1d65c.pdf",
-      "size": "235 KB"
+      legislationName:
+        "Executive Council resolution No (10) for year 2015 Regulate the use of bicycles in the Emirate of Dubai",
+      issueDate: "2016-04-12",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9756_22_cdf5d1d65c.pdf",
+      size: "235 KB",
     },
     {
-      "legislationName": "Executive Council resolution No (11) for year 2015 regarding Approval of vehicle inspection fees at Dubai Police",
-      "issueDate": "2016-04-12",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9478_21_077b8f60c6.pdf",
-      "size": "142 KB"
+      legislationName:
+        "Executive Council resolution No (11) for year 2015 regarding Approval of vehicle inspection fees at Dubai Police",
+      issueDate: "2016-04-12",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9478_21_077b8f60c6.pdf",
+      size: "142 KB",
     },
     {
-      "legislationName": "Ordinance No (5) for year 2015 regarding Disposing of found items and money left in the Emirate of Dubai",
-      "issueDate": "2015-05-14",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2472_20_7aee4ff915.pdf",
-      "size": "206 KB"
+      legislationName:
+        "Ordinance No (5) for year 2015 regarding Disposing of found items and money left in the Emirate of Dubai",
+      issueDate: "2015-05-14",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2472_20_7aee4ff915.pdf",
+      size: "206 KB",
     },
     {
-      "legislationName": "Installment of Traffic Fines for government establishments, in Dubai",
-      "issueDate": "2016-04-12",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/8346_19_3f1e6cc8d3.pdf",
-      "size": "271 KB"
+      legislationName:
+        "Installment of Traffic Fines for government establishments, in Dubai",
+      issueDate: "2016-04-12",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/8346_19_3f1e6cc8d3.pdf",
+      size: "271 KB",
     },
     {
-      "legislationName": "Ordinance No (2) for year 2015 regarding human resources management for executives of Dubai Emirate",
-      "issueDate": "2015-03-08",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/8347_18_8f5c1e229d.pdf",
-      "size": "239 KB"
+      legislationName:
+        "Ordinance No (2) for year 2015 regarding human resources management for executives of Dubai Emirate",
+      issueDate: "2015-03-08",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/8347_18_8f5c1e229d.pdf",
+      size: "239 KB",
     },
     {
-      "legislationName": "Ordinance No(4) for year 2015 for amendment of Ordinance No (21) for year 2008 regarding pensions and social securities for local military persons works in Dubai Emirate",
-      "issueDate": "2015-03-08",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4312_17_e3663ec921.pdf",
-      "size": "107 KB"
+      legislationName:
+        "Ordinance No(4) for year 2015 for amendment of Ordinance No (21) for year 2008 regarding pensions and social securities for local military persons works in Dubai Emirate",
+      issueDate: "2015-03-08",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4312_17_e3663ec921.pdf",
+      size: "107 KB",
     },
     {
-      "legislationName": "Decree No 49 for year 2013 to form preparatory committee for expo exhibition 2020",
-      "issueDate": "2014-11-11",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/338_16_5c6e06b695.pdf",
-      "size": "83 KB"
+      legislationName:
+        "Decree No 49 for year 2013 to form preparatory committee for expo exhibition 2020",
+      issueDate: "2014-11-11",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/338_16_5c6e06b695.pdf",
+      size: "83 KB",
     },
     {
-      "legislationName": "Ordinance No (10) for year 2010 to a mend some rules of ordinance No ( 34) for year 2008 regarding dealing with seized vehicles and bicycles",
-      "issueDate": "2013-08-27",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5175_15_3a6fcb2466.pdf",
-      "size": "244 KB"
+      legislationName:
+        "Ordinance No (10) for year 2010 to a mend some rules of ordinance No ( 34) for year 2008 regarding dealing with seized vehicles and bicycles",
+      issueDate: "2013-08-27",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5175_15_3a6fcb2466.pdf",
+      size: "244 KB",
     },
     {
-      "legislationName": "Ordinance No (8) for year 2010 regarding financial control department",
-      "issueDate": "2012-09-06",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3884_14_f1cc218b14.pdf",
-      "size": "3381 KB"
+      legislationName:
+        "Ordinance No (8) for year 2010 regarding financial control department",
+      issueDate: "2012-09-06",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3884_14_f1cc218b14.pdf",
+      size: "3381 KB",
     },
     {
-      "legislationName": "Ordinance No (35) for year 2009 regarding conducting public money of Dubai Emirate",
-      "issueDate": "2012-09-06",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6501_13_a4018b470a.pdf",
-      "size": "2819 KB"
+      legislationName:
+        "Ordinance No (35) for year 2009 regarding conducting public money of Dubai Emirate",
+      issueDate: "2012-09-06",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6501_13_a4018b470a.pdf",
+      size: "2819 KB",
     },
     {
-      "legislationName": "Ordinance No (7) for year 2008 regarding public debt procedures",
-      "issueDate": "2012-09-06",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4485_12_8a59699d91.pdf",
-      "size": "690 KB"
+      legislationName:
+        "Ordinance No (7) for year 2008 regarding public debt procedures",
+      issueDate: "2012-09-06",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4485_12_8a59699d91.pdf",
+      size: "690 KB",
     },
     {
-      "legislationName": "Ordinance No (16) for year 2009 regarding establishment of amicable settlement center for disputes",
-      "issueDate": "2012-09-06",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6349_11_0b1268f95b.pdf",
-      "size": "879 KB"
+      legislationName:
+        "Ordinance No (16) for year 2009 regarding establishment of amicable settlement center for disputes",
+      issueDate: "2012-09-06",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6349_11_0b1268f95b.pdf",
+      size: "879 KB",
     },
     {
-      "legislationName": "Ordinance No (5) for year 1995 regarding establishment of finance department",
-      "issueDate": "2012-09-06",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6460_10_56a1ba27ba.pdf",
-      "size": "432 KB"
+      legislationName:
+        "Ordinance No (5) for year 1995 regarding establishment of finance department",
+      issueDate: "2012-09-06",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6460_10_56a1ba27ba.pdf",
+      size: "432 KB",
     },
     {
-      "legislationName": "Ordinance No (1) for year 1995 regarding establishment of financial auditing department",
-      "issueDate": "2012-09-06",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9819_Ordinance_No_1_for_year_1995_regarding_establishment_of_financial_auditing_departme_747253a46d.pdf",
-      "size": "905 KB"
+      legislationName:
+        "Ordinance No (1) for year 1995 regarding establishment of financial auditing department",
+      issueDate: "2012-09-06",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9819_Ordinance_No_1_for_year_1995_regarding_establishment_of_financial_auditing_departme_747253a46d.pdf",
+      size: "905 KB",
     },
     {
-      "legislationName": "Ordinance No (5) for year 2007 to amend ordinance No (11) for year 2006 regarding establishment of Dubai corporation for Governmental Investment",
-      "issueDate": "2012-09-06",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6843_8_1_3e1e296247.pdf",
-      "size": "102 KB"
+      legislationName:
+        "Ordinance No (5) for year 2007 to amend ordinance No (11) for year 2006 regarding establishment of Dubai corporation for Governmental Investment",
+      issueDate: "2012-09-06",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6843_8_1_3e1e296247.pdf",
+      size: "102 KB",
     },
     {
-      "legislationName": "Ordinance No (11) for year 2006 regarding establishment of Dubai corporation for Governmental Investments",
-      "issueDate": "2012-09-06",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5206_8_89f5d43cc6.pdf",
-      "size": "631 KB"
+      legislationName:
+        "Ordinance No (11) for year 2006 regarding establishment of Dubai corporation for Governmental Investments",
+      issueDate: "2012-09-06",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5206_8_89f5d43cc6.pdf",
+      size: "631 KB",
     },
     {
-      "legislationName": "Ordinance No (3) for year 2003 regarding establishment of Dubai Emirate Executive council",
-      "issueDate": "2012-09-06",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/7075_5_1715eba073.pdf",
-      "size": "577 KB"
+      legislationName:
+        "Ordinance No (3) for year 2003 regarding establishment of Dubai Emirate Executive council",
+      issueDate: "2012-09-06",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/7075_5_1715eba073.pdf",
+      size: "577 KB",
     },
     {
-      "legislationName": "Administrative Decision No. (1) of 2016 regarding the requirements and controls for found items and abandoned funds in the Emirate of Dubai",
-      "issueDate": "2016-02-09",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1785_Admin_Dec_1_2016_8cf57cae66.pdf",
-      "size": "336 KB"
+      legislationName:
+        "Administrative Decision No. (1) of 2016 regarding the requirements and controls for found items and abandoned funds in the Emirate of Dubai",
+      issueDate: "2016-02-09",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1785_Admin_Dec_1_2016_8cf57cae66.pdf",
+      size: "336 KB",
     },
     {
-      "legislationName": "Law No. (23) of 2015 regarding the disposal of impounded vehicles in the Emirate of Dubai",
-      "issueDate": "2015-08-10",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5468_Law_23_2015_1f9682952d.pdf",
-      "size": "452 KB"
+      legislationName:
+        "Law No. (23) of 2015 regarding the disposal of impounded vehicles in the Emirate of Dubai",
+      issueDate: "2015-08-10",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5468_Law_23_2015_1f9682952d.pdf",
+      size: "452 KB",
     },
     {
-      "legislationName": "Decree No. (29) of 2015 regarding impounding vehicles in the Emirate of Dubai",
-      "issueDate": "2015-08-10",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5012_Decree_29_2015_1d94ac50cf.pdf",
-      "size": "384 KB"
+      legislationName:
+        "Decree No. (29) of 2015 regarding impounding vehicles in the Emirate of Dubai",
+      issueDate: "2015-08-10",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5012_Decree_29_2015_1d94ac50cf.pdf",
+      size: "384 KB",
     },
     {
-      "legislationName": "Law No. (5) of 2015 Concerning Disposal of Found Items and Abandoned Funds in the Emirate of Dubai",
-      "issueDate": "2015-04-11",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2403_Law_5_2015_210102e6d7.pdf",
-      "size": "332 KB"
+      legislationName:
+        "Law No. (5) of 2015 Concerning Disposal of Found Items and Abandoned Funds in the Emirate of Dubai",
+      issueDate: "2015-04-11",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/2403_Law_5_2015_210102e6d7.pdf",
+      size: "332 KB",
     },
     {
-      "legislationName": "Decree No. (9) of 2015 regulating the collection of donations in the Emirate of Dubai",
-      "issueDate": "2015-04-11",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1571_Decree_9_2015_5fa165e2e9.pdf",
-      "size": "236 KB"
+      legislationName:
+        "Decree No. (9) of 2015 regulating the collection of donations in the Emirate of Dubai",
+      issueDate: "2015-04-11",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1571_Decree_9_2015_5fa165e2e9.pdf",
+      size: "236 KB",
     },
     {
-      "legislationName": "Ministerial decision N0 24 for year 2013 regarding executive by laws of federal ordinance No 15 for year 2009 regarding tobacco combating",
-      "issueDate": "2014-02-23",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9058_Ministerial_decision_N0_24_for_year_2013_f9a705f3ff.pdf",
-      "size": "2499 KB"
+      legislationName:
+        "Ministerial decision N0 24 for year 2013 regarding executive by laws of federal ordinance No 15 for year 2009 regarding tobacco combating",
+      issueDate: "2014-02-23",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9058_Ministerial_decision_N0_24_for_year_2013_f9a705f3ff.pdf",
+      size: "2499 KB",
     },
     {
-      "legislationName": "Federal Ordinance NO (21) for year 1995 regarding traffic",
-      "issueDate": "2010-06-24",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6406_7_b7b7213a7a.pdf",
-      "size": "3902 KB"
+      legislationName:
+        "Federal Ordinance NO (21) for year 1995 regarding traffic",
+      issueDate: "2010-06-24",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6406_7_b7b7213a7a.pdf",
+      size: "3902 KB",
     },
     {
-      "legislationName": "Ordinance No. (21) of 2008 Regarding Pensions and Social Securities for Local Military Personnel Working in the Emirate of Dubai",
-      "issueDate": "2008-08-19",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6747_dubaipolice_gov_30359b8ed4.ae",
-      "size": "40 KB"
+      legislationName:
+        "Ordinance No. (21) of 2008 Regarding Pensions and Social Securities for Local Military Personnel Working in the Emirate of Dubai",
+      issueDate: "2008-08-19",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6747_dubaipolice_gov_30359b8ed4.ae",
+      size: "40 KB",
     },
     {
-      "legislationName": "Federal Ordinance No ( 12) for year 2007 for amendment some rules of Federal Ordinance No ( 21) regarding traffic",
-      "issueDate": "2007-08-19",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4416_7_1_605f267004.pdf",
-      "size": "1486 KB"
+      legislationName:
+        "Federal Ordinance No ( 12) for year 2007 for amendment some rules of Federal Ordinance No ( 21) regarding traffic",
+      issueDate: "2007-08-19",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/4416_7_1_605f267004.pdf",
+      size: "1486 KB",
     },
     {
-      "legislationName": "Federal Ordinance No ( 51) for year 2006 regarding combating trafficking in people crime",
-      "issueDate": "2006-11-09",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1889_9_57f2f12436.pdf",
-      "size": "1146 KB"
+      legislationName:
+        "Federal Ordinance No ( 51) for year 2006 regarding combating trafficking in people crime",
+      issueDate: "2006-11-09",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1889_9_57f2f12436.pdf",
+      size: "1146 KB",
     },
     {
-      "legislationName": "Federal Ordinance No (37) for year 2006 regarding private security companies",
-      "issueDate": "2006-10-11",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6357_8_1818f1a88d.pdf",
-      "size": "2614 KB"
+      legislationName:
+        "Federal Ordinance No (37) for year 2006 regarding private security companies",
+      issueDate: "2006-10-11",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6357_8_1818f1a88d.pdf",
+      size: "2614 KB",
     },
     {
-      "legislationName": "Ordinance No (18) for year 2006 regarding conducting and verification of public money",
-      "issueDate": "2006-07-02",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6486_4_84c98b96fd.pdf",
-      "size": "575 KB"
+      legislationName:
+        "Ordinance No (18) for year 2006 regarding conducting and verification of public money",
+      issueDate: "2006-07-02",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6486_4_84c98b96fd.pdf",
+      size: "575 KB",
     },
     {
-      "legislationName": "Ministerial decision No (120) for year 2003 to a mend executive bylaws No (471) for year 1995 of Federal Ordinance No ( 43) regarding organizing penal institutions",
-      "issueDate": "2003-03-08",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5545_2_2_1b78e65f58.pdf",
-      "size": "4943 KB"
+      legislationName:
+        "Ministerial decision No (120) for year 2003 to a mend executive bylaws No (471) for year 1995 of Federal Ordinance No ( 43) regarding organizing penal institutions",
+      issueDate: "2003-03-08",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5545_2_2_1b78e65f58.pdf",
+      size: "4943 KB",
     },
     {
-      "legislationName": "Ordinance No( 4) for year 1997 for amendment of ordinance No( 3) for year 1996 regarding Governmental cases",
-      "issueDate": "1997-03-22",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9845_3_1_42e2074ce8.pdf",
-      "size": "197 KB"
+      legislationName:
+        "Ordinance No( 4) for year 1997 for amendment of ordinance No( 3) for year 1996 regarding Governmental cases",
+      issueDate: "1997-03-22",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/9845_3_1_42e2074ce8.pdf",
+      size: "197 KB",
     },
     {
-      "legislationName": "Ordinance No ( 3) for year 1996 regarding Governmental cases",
-      "issueDate": "1996-12-15",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1602_3_40297c1b47.pdf",
-      "size": "178 KB"
+      legislationName:
+        "Ordinance No ( 3) for year 1996 regarding Governmental cases",
+      issueDate: "1996-12-15",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/1602_3_40297c1b47.pdf",
+      size: "178 KB",
     },
     {
-      "legislationName": "Ordinance No ( 7) for year 1995 regarding financial system of Dubai Governmental departments",
-      "issueDate": "1995-12-14",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5341_2_101bbbb251.pdf",
-      "size": "1298 KB"
+      legislationName:
+        "Ordinance No ( 7) for year 1995 regarding financial system of Dubai Governmental departments",
+      issueDate: "1995-12-14",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/5341_2_101bbbb251.pdf",
+      size: "1298 KB",
     },
     {
-      "legislationName": "Federal Ordinance no. (14) for Year 1995 regarding Combating Drugs and Mental Affects",
-      "issueDate": "1995-09-19",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3949_5_fa8fdfd649.pdf",
-      "size": "8431 KB"
+      legislationName:
+        "Federal Ordinance no. (14) for Year 1995 regarding Combating Drugs and Mental Affects",
+      issueDate: "1995-09-19",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3949_5_fa8fdfd649.pdf",
+      size: "8431 KB",
     },
     {
-      "legislationName": "Ministerial decision No (471) for Year 1995 for issuance executive bylaws of Federal law No (43) For Year 1992 regarding organizing penal institutions",
-      "issueDate": "1995-09-12",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3395_2_1_1f58088167.pdf",
-      "size": "511 KB"
+      legislationName:
+        "Ministerial decision No (471) for Year 1995 for issuance executive bylaws of Federal law No (43) For Year 1992 regarding organizing penal institutions",
+      issueDate: "1995-09-12",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/3395_2_1_1f58088167.pdf",
+      size: "511 KB",
     },
     {
-      "legislationName": "Federal Ordinance No(43) for year 1992 regarding organizing penal institutions",
-      "issueDate": "1992-09-12",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6318_974129_grar_471_1995_1e30f85c30.pdf",
-      "size": "511 KB"
-    }
-  ]
+      legislationName:
+        "Federal Ordinance No(43) for year 1992 regarding organizing penal institutions",
+      issueDate: "1992-09-12",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6318_974129_grar_471_1995_1e30f85c30.pdf",
+      size: "511 KB",
+    },
+  ],
 };
 
 export const blackPoints = {
-  "title": "Black Points of Traffic Violations",
-  "description": "Learn how black points and fines impact your traffic record",
-  "cover": "/cms/traficviolation_fb1c8ee904.png",
-  "updatedAt": "2026-01-04",
-  "rows": [
+  title: "Black Points of Traffic Violations",
+  description: "Learn how black points and fines impact your traffic record",
+  cover: "/cms/traficviolation_fb1c8ee904.png",
+  updatedAt: "2026-01-04",
+  rows: [
     {
-      "description": "Driving in a way that poses danger to drivers life or lives, and safety of others",
-      "fineAmount": "2000",
-      "blackPoints": 23,
-      "confiscationPeriod": "60 days",
-      "category": "Violations for Jeopardizing Road Users"
+      description:
+        "Driving in a way that poses danger to drivers life or lives, and safety of others",
+      fineAmount: "2000",
+      blackPoints: 23,
+      confiscationPeriod: "60 days",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Driving in a way that harms public or private properties.",
-      "fineAmount": "2000",
-      "blackPoints": 23,
-      "confiscationPeriod": "60 Days",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Driving in a way that harms public or private properties.",
+      fineAmount: "2000",
+      blackPoints: 23,
+      confiscationPeriod: "60 Days",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Driving under the influence of alcohol",
-      "fineAmount": "by court",
-      "blackPoints": 23,
-      "confiscationPeriod": "60 Days",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Driving under the influence of alcohol",
+      fineAmount: "by court",
+      blackPoints: 23,
+      confiscationPeriod: "60 Days",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Driving under the influence of narcotic, psychotropic or similar substances.",
-      "fineAmount": "Decided by court",
-      "confiscationPeriod": "60 Days",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description:
+        "Driving under the influence of narcotic, psychotropic or similar substances.",
+      fineAmount: "Decided by court",
+      confiscationPeriod: "60 Days",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Driving a vehicle without number plates",
-      "fineAmount": "3000",
-      "blackPoints": 23,
-      "confiscationPeriod": "90 Days",
-      "category": "Plates Violations"
+      description: "Driving a vehicle without number plates",
+      fineAmount: "3000",
+      blackPoints: 23,
+      confiscationPeriod: "90 Days",
+      category: "Plates Violations",
     },
     {
-      "description": "Driving a heavy vehicle in a way that poses danger to drivers life or lives and safety of others.",
-      "fineAmount": "3000 / Freezing the license for one year",
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description:
+        "Driving a heavy vehicle in a way that poses danger to drivers life or lives and safety of others.",
+      fineAmount: "3000 / Freezing the license for one year",
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Driving a heavy vehicle in a way that causes harm to public or private properties",
-      "fineAmount": "3000 / Freezing the license for one year",
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description:
+        "Driving a heavy vehicle in a way that causes harm to public or private properties",
+      fineAmount: "3000 / Freezing the license for one year",
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Jumping a red signal by heavy vehicles",
-      "fineAmount": "3000 / Freezing the license for one year",
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description: "Jumping a red signal by heavy vehicles",
+      fineAmount: "3000 / Freezing the license for one year",
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Heavy vehicle driver causing his or another vehicle to overturn.",
-      "fineAmount": "3000 / Freezing the license for one year",
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description:
+        "Heavy vehicle driver causing his or another vehicle to overturn.",
+      fineAmount: "3000 / Freezing the license for one year",
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Heavy vehicle not abiding by lane discipline.",
-      "fineAmount": "1500",
-      "blackPoints": 12,
-      "confiscationPeriod": "-",
-      "category": "Trucks and Heavy Vehicles Violations"
+      description: "Heavy vehicle not abiding by lane discipline.",
+      fineAmount: "1500",
+      blackPoints: 12,
+      confiscationPeriod: "-",
+      category: "Trucks and Heavy Vehicles Violations",
     },
     {
-      "description": "Loading a heavy vehicle in a way that poses danger to others",
-      "fineAmount": "2000",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Load Violations"
+      description:
+        "Loading a heavy vehicle in a way that poses danger to others",
+      fineAmount: "2000",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Load Violations",
     },
     {
-      "description": "Loading a heavy vehicle in a way that causes harm to the road",
-      "fineAmount": "2000",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Load Violations"
+      description:
+        "Loading a heavy vehicle in a way that causes harm to the road",
+      fineAmount: "2000",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Load Violations",
     },
     {
-      "description": "Heavy vehicle prohibited entry",
-      "fineAmount": "1000",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Trucks and Heavy Vehicles Violations"
+      description: "Heavy vehicle prohibited entry",
+      fineAmount: "1000",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Trucks and Heavy Vehicles Violations",
     },
     {
-      "description": "Falling or leaking of a heavy vehicles load.",
-      "fineAmount": "3000",
-      "blackPoints": 12,
-      "confiscationPeriod": "-",
-      "category": "Environment Violations"
+      description: "Falling or leaking of a heavy vehicles load.",
+      fineAmount: "3000",
+      blackPoints: 12,
+      confiscationPeriod: "-",
+      category: "Environment Violations",
     },
     {
-      "description": "Not fixing reflective stickers at the back of trucks and transport vehicles",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Trucks and Heavy Vehicles Violations",
-      "blackPoints": ""
+      description:
+        "Not fixing reflective stickers at the back of trucks and transport vehicles",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Trucks and Heavy Vehicles Violations",
+      blackPoints: "",
     },
     {
-      "description": "Operating industrial, construction and mechanical vehicles and tractors without permission from licensing authority",
-      "fineAmount": "1500",
-      "confiscationPeriod": "-",
-      "category": "Vehicles Registration and Traffic Permits Violations",
-      "blackPoints": ""
+      description:
+        "Operating industrial, construction and mechanical vehicles and tractors without permission from licensing authority",
+      fineAmount: "1500",
+      confiscationPeriod: "-",
+      category: "Vehicles Registration and Traffic Permits Violations",
+      blackPoints: "",
     },
     {
-      "description": "Failure to raise exhaust pipe in trucks",
-      "fineAmount": "1500",
-      "confiscationPeriod": "-",
-      "category": "Trucks and Heavy Vehicles Violations",
-      "blackPoints": ""
+      description: "Failure to raise exhaust pipe in trucks",
+      fineAmount: "1500",
+      confiscationPeriod: "-",
+      category: "Trucks and Heavy Vehicles Violations",
+      blackPoints: "",
     },
     {
-      "description": "Not covering trucks loads",
-      "fineAmount": "3000",
-      "confiscationPeriod": "-",
-      "category": "Load Violations",
-      "blackPoints": ""
+      description: "Not covering trucks loads",
+      fineAmount: "3000",
+      confiscationPeriod: "-",
+      category: "Load Violations",
+      blackPoints: "",
     },
     {
-      "description": "Failure to abide by loading or unloading regulations in designated areas",
-      "fineAmount": "1000",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Load Violations"
+      description:
+        "Failure to abide by loading or unloading regulations in designated areas",
+      fineAmount: "1000",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Load Violations",
     },
     {
-      "description": "Overtaking from a prohibited place by trucks.",
-      "fineAmount": "3000 / Freezing the license for one year",
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking",
-      "blackPoints": ""
+      description: "Overtaking from a prohibited place by trucks.",
+      fineAmount: "3000 / Freezing the license for one year",
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
+      blackPoints: "",
     },
     {
-      "description": "Driving a heavy vehicle that does not comply with security and safety standards.",
-      "fineAmount": "2000",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Trucks and Heavy Vehicles Violations"
+      description:
+        "Driving a heavy vehicle that does not comply with security and safety standards.",
+      fineAmount: "2000",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Trucks and Heavy Vehicles Violations",
     },
     {
-      "description": "Driving against traffic.",
-      "fineAmount": "600",
-      "blackPoints": 4,
-      "confiscationPeriod": "7 days",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Driving against traffic.",
+      fineAmount: "600",
+      blackPoints: 4,
+      confiscationPeriod: "7 days",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Entry from a prohibited place.",
-      "fineAmount": "1000",
-      "blackPoints": 8,
-      "confiscationPeriod": "-",
-      "category": "Violations Related to Non-Compliance with Traffic Policeman Instructions"
+      description: "Entry from a prohibited place.",
+      fineAmount: "1000",
+      blackPoints: 8,
+      confiscationPeriod: "-",
+      category:
+        "Violations Related to Non-Compliance with Traffic Policeman Instructions",
     },
     {
-      "description": "Driving a noisy vehicle",
-      "fineAmount": "2000",
-      "blackPoints": 12,
-      "confiscationPeriod": "-",
-      "category": "Environment Violations"
+      description: "Driving a noisy vehicle",
+      fineAmount: "2000",
+      blackPoints: 12,
+      confiscationPeriod: "-",
+      category: "Environment Violations",
     },
     {
-      "description": "Driving a vehicle that causes pollution",
-      "fineAmount": "1000",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Environment Violations"
+      description: "Driving a vehicle that causes pollution",
+      fineAmount: "1000",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Environment Violations",
     },
     {
-      "description": "Driving a vehicle without insurance.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "7 days",
-      "category": "Vehicles Registration and Traffic Permits Violations"
+      description: "Driving a vehicle without insurance.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "7 days",
+      category: "Vehicles Registration and Traffic Permits Violations",
     },
     {
-      "description": "Driving an unlicensed vehicle.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "7 days",
-      "category": "Vehicles Registration and Traffic Permits Violations"
+      description: "Driving an unlicensed vehicle.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "7 days",
+      category: "Vehicles Registration and Traffic Permits Violations",
     },
     {
-      "description": "Driving with a driving license issued by a foreign country except in permitted cases.",
-      "fineAmount": "100",
-      "confiscationPeriod": "-",
-      "category": "Violations Related to Driving License",
-      "blackPoints": ""
+      description:
+        "Driving with a driving license issued by a foreign country except in permitted cases.",
+      fineAmount: "100",
+      confiscationPeriod: "-",
+      category: "Violations Related to Driving License",
+      blackPoints: "",
     },
     {
-      "description": "Driving a vehicle on a different license",
-      "fineAmount": "400",
-      "blackPoints": 12,
-      "confiscationPeriod": "-",
-      "category": "Violations Related to Driving License"
+      description: "Driving a vehicle on a different license",
+      fineAmount: "400",
+      blackPoints: 12,
+      confiscationPeriod: "-",
+      category: "Violations Related to Driving License",
     },
     {
-      "description": "Driving a vehicle with an expired driving license.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "7 days",
-      "category": "Violations Related to Driving License"
+      description: "Driving a vehicle with an expired driving license.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "7 days",
+      category: "Violations Related to Driving License",
     },
     {
-      "description": "Driving a vehicle with an expired registration.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "7 days",
-      "category": "Violations Related to Driving License"
+      description: "Driving a vehicle with an expired registration.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "7 days",
+      category: "Violations Related to Driving License",
     },
     {
-      "description": "Driving a vehicle that does not comply with safety and security standards.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations",
-      "blackPoints": ""
+      description:
+        "Driving a vehicle that does not comply with safety and security standards.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
+      blackPoints: "",
     },
     {
-      "description": "Driving a vehicle that is unfit for driving.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations",
-      "blackPoints": ""
+      description: "Driving a vehicle that is unfit for driving.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
+      blackPoints: "",
     },
     {
-      "description": "Driving a vehicle with one number plate.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Plates Violations",
-      "blackPoints": ""
+      description: "Driving a vehicle with one number plate.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Plates Violations",
+      blackPoints: "",
     },
     {
-      "description": "Number plates with unclear numbers.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Plates Violations",
-      "blackPoints": ""
+      description: "Number plates with unclear numbers.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Plates Violations",
+      blackPoints: "",
     },
     {
-      "description": "Driving below the minimum speed set for the road (if any).",
-      "fineAmount": "400",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Speed Violation"
+      description: "Driving below the minimum speed set for the road (if any).",
+      fineAmount: "400",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Speed Violation",
     },
     {
-      "description": "Sudden swerving",
-      "fineAmount": "1000",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Sudden swerving",
+      fineAmount: "1000",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Reversing dangerously",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Reversing dangerously",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Using a hand held mobile phone while driving.",
-      "fineAmount": "800",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations Inside the Vehicle"
+      description: "Using a hand held mobile phone while driving.",
+      fineAmount: "800",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations Inside the Vehicle",
     },
     {
-      "description": "Any other distractions.",
-      "fineAmount": "800",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations Inside the Vehicle"
+      description: "Any other distractions.",
+      fineAmount: "800",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations Inside the Vehicle",
     },
     {
-      "description": "Jumping a red signal by light vehicles.",
-      "fineAmount": "1000",
-      "blackPoints": 12,
-      "confiscationPeriod": "30 days",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Jumping a red signal by light vehicles.",
+      fineAmount: "1000",
+      blackPoints: 12,
+      confiscationPeriod: "30 days",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Jumping a red signal by motorbikes.",
-      "fineAmount": "1000",
-      "blackPoints": 12,
-      "confiscationPeriod": "30 days",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Jumping a red signal by motorbikes.",
+      fineAmount: "1000",
+      blackPoints: 12,
+      confiscationPeriod: "30 days",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Exceeding maximum speed limit by more than 60km/h",
-      "fineAmount": "2000",
-      "blackPoints": 12,
-      "confiscationPeriod": "30 days",
-      "category": "Speed Violation"
+      description: "Exceeding maximum speed limit by more than 60km/h",
+      fineAmount: "2000",
+      blackPoints: 12,
+      confiscationPeriod: "30 days",
+      category: "Speed Violation",
     },
     {
-      "description": "Exceeding maximum speed limit by more than 80km/h",
-      "fineAmount": "2000",
-      "blackPoints": 12,
-      "confiscationPeriod": "30 days",
-      "category": "Speed Violation"
+      description: "Exceeding maximum speed limit by more than 80km/h",
+      fineAmount: "2000",
+      blackPoints: 12,
+      confiscationPeriod: "30 days",
+      category: "Speed Violation",
     },
     {
-      "description": "Exceeding maximum speed limit by not more than 60km/h",
-      "fineAmount": "1500",
-      "blackPoints": 6,
-      "confiscationPeriod": "15 days",
-      "category": "Speed Violation"
+      description: "Exceeding maximum speed limit by not more than 60km/h",
+      fineAmount: "1500",
+      blackPoints: 6,
+      confiscationPeriod: "15 days",
+      category: "Speed Violation",
     },
     {
-      "description": "Exceeding maximum speed limit by not more than 50km/h",
-      "fineAmount": "1000",
-      "confiscationPeriod": "-",
-      "category": "Speed Violation",
-      "blackPoints": ""
+      description: "Exceeding maximum speed limit by not more than 50km/h",
+      fineAmount: "1000",
+      confiscationPeriod: "-",
+      category: "Speed Violation",
+      blackPoints: "",
     },
     {
-      "description": "Exceeding maximum speed limit by not more than 40km/h",
-      "fineAmount": "700",
-      "confiscationPeriod": "-",
-      "category": "Speed Violation",
-      "blackPoints": ""
+      description: "Exceeding maximum speed limit by not more than 40km/h",
+      fineAmount: "700",
+      confiscationPeriod: "-",
+      category: "Speed Violation",
+      blackPoints: "",
     },
     {
-      "description": "Exceeding maximum speed limit by not more than 30km/h",
-      "fineAmount": "600",
-      "confiscationPeriod": "-",
-      "category": "Speed Violation",
-      "blackPoints": ""
+      description: "Exceeding maximum speed limit by not more than 30km/h",
+      fineAmount: "600",
+      confiscationPeriod: "-",
+      category: "Speed Violation",
+      blackPoints: "",
     },
     {
-      "description": "Exceeding maximum speed limit by not more than 20km/h",
-      "fineAmount": "300",
-      "confiscationPeriod": "-",
-      "category": "Speed Violation",
-      "blackPoints": ""
+      description: "Exceeding maximum speed limit by not more than 20km/h",
+      fineAmount: "300",
+      confiscationPeriod: "-",
+      category: "Speed Violation",
+      blackPoints: "",
     },
     {
-      "description": "Failure to follow traffic policeman instructions.",
-      "fineAmount": "400",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations Related to Non-Compliance with Traffic Policeman Instructions"
+      description: "Failure to follow traffic policeman instructions.",
+      fineAmount: "400",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category:
+        "Violations Related to Non-Compliance with Traffic Policeman Instructions",
     },
     {
-      "description": "Overtaking from hard shoulder.",
-      "fineAmount": "1000",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking"
+      description: "Overtaking from hard shoulder.",
+      fineAmount: "1000",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
     },
     {
-      "description": "Entering road dangerously",
-      "fineAmount": "600",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Entering road dangerously",
+      fineAmount: "600",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Overtaking in a prohibited place",
-      "fineAmount": "600",
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking",
-      "blackPoints": ""
+      description: "Overtaking in a prohibited place",
+      fineAmount: "600",
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
+      blackPoints: "",
     },
     {
-      "description": "Running a way from traffic policeman man (light vehicle)",
-      "fineAmount": "800",
-      "blackPoints": 12,
-      "confiscationPeriod": "30 days",
-      "category": "Violations Related to Non-Compliance with Traffic Policeman Instructions"
+      description: "Running a way from traffic policeman man (light vehicle)",
+      fineAmount: "800",
+      blackPoints: 12,
+      confiscationPeriod: "30 days",
+      category:
+        "Violations Related to Non-Compliance with Traffic Policeman Instructions",
     },
     {
-      "description": "Running away from a traffic policeman by ( heavy vehicle)",
-      "fineAmount": "1000",
-      "blackPoints": 16,
-      "confiscationPeriod": "30 days",
-      "category": "Violations Related to Non-Compliance with Traffic Policeman Instructions"
+      description: "Running away from a traffic policeman by ( heavy vehicle)",
+      fineAmount: "1000",
+      blackPoints: 16,
+      confiscationPeriod: "30 days",
+      category:
+        "Violations Related to Non-Compliance with Traffic Policeman Instructions",
     },
     {
-      "description": "Causing death of others",
-      "fineAmount": "by court",
-      "blackPoints": 23,
-      "confiscationPeriod": "60 days",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Causing death of others",
+      fineAmount: "by court",
+      blackPoints: 23,
+      confiscationPeriod: "60 days",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Causing a serious accident or injuries.",
-      "fineAmount": "by court",
-      "blackPoints": 23,
-      "confiscationPeriod": "30 days",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Causing a serious accident or injuries.",
+      fineAmount: "by court",
+      blackPoints: 23,
+      confiscationPeriod: "30 days",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Failure of a light vehicle driver to stop after causing a minor accident.",
-      "fineAmount": "500",
-      "blackPoints": 8,
-      "confiscationPeriod": "7 days",
-      "category": "Violations for Jeopardizing Road Users"
+      description:
+        "Failure of a light vehicle driver to stop after causing a minor accident.",
+      fineAmount: "500",
+      blackPoints: 8,
+      confiscationPeriod: "7 days",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Failure of a heavy vehicle driver to stop after causing a minor accident",
-      "fineAmount": "1000",
-      "blackPoints": 16,
-      "confiscationPeriod": "60 days",
-      "category": "Violations for Jeopardizing Road Users"
+      description:
+        "Failure of a heavy vehicle driver to stop after causing a minor accident",
+      fineAmount: "1000",
+      blackPoints: 16,
+      confiscationPeriod: "60 days",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Allowing children under 10 years old or under 145 CM to sit in front seats",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Violations Inside the Vehicle",
-      "blackPoints": ""
+      description:
+        "Allowing children under 10 years old or under 145 CM to sit in front seats",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Violations Inside the Vehicle",
+      blackPoints: "",
     },
     {
-      "description": "Failure to provide a child car seat for children under 4 years old.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Violations Inside the Vehicle",
-      "blackPoints": ""
+      description:
+        "Failure to provide a child car seat for children under 4 years old.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Violations Inside the Vehicle",
+      blackPoints: "",
     },
     {
-      "description": "Failure of driver to fasten seatbelt.",
-      "fineAmount": "400",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations Inside the Vehicle"
+      description: "Failure of driver to fasten seatbelt.",
+      fineAmount: "400",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations Inside the Vehicle",
     },
     {
-      "description": "Failure of passenger to fasten seatbelt",
-      "fineAmount": "400",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations Inside the Vehicle"
+      description: "Failure of passenger to fasten seatbelt",
+      fineAmount: "400",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations Inside the Vehicle",
     },
     {
-      "description": "Failure to leave safety distance",
-      "fineAmount": "400",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Failure to leave safety distance",
+      fineAmount: "400",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Entering road without making sure it is clear.",
-      "fineAmount": "400",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Entering road without making sure it is clear.",
+      fineAmount: "400",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Not giving way to emergency, police and public service vehicles or official convoys.",
-      "fineAmount": "3000",
-      "blackPoints": 6,
-      "confiscationPeriod": "30 days",
-      "category": "Violations Related to Pedestrians and Priority"
+      description:
+        "Not giving way to emergency, police and public service vehicles or official convoys.",
+      fineAmount: "3000",
+      blackPoints: 6,
+      confiscationPeriod: "30 days",
+      category: "Violations Related to Pedestrians and Priority",
     },
     {
-      "description": "Parking cars in front of fire hydrants.",
-      "fineAmount": "1000",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking"
+      description: "Parking cars in front of fire hydrants.",
+      fineAmount: "1000",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
     },
     {
-      "description": "Parking in spaces designated for people with special needs.",
-      "fineAmount": "1000",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking"
+      description:
+        "Parking in spaces designated for people with special needs.",
+      fineAmount: "1000",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
     },
     {
-      "description": "Stopping on the road for no reason.",
-      "fineAmount": "1000",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking"
+      description: "Stopping on the road for no reason.",
+      fineAmount: "1000",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
     },
     {
-      "description": "Stopping on the yellow box.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking",
-      "blackPoints": ""
+      description: "Stopping on the yellow box.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
+      blackPoints: "",
     },
     {
-      "description": "Parking on the left side of the road in prohibited places.",
-      "fineAmount": "1000",
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking",
-      "blackPoints": ""
+      description: "Parking on the left side of the road in prohibited places.",
+      fineAmount: "1000",
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
+      blackPoints: "",
     },
     {
-      "description": "Stopping at pedestrian crossings",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking",
-      "blackPoints": ""
+      description: "Stopping at pedestrian crossings",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
+      blackPoints: "",
     },
     {
-      "description": "Parking behind other cars and blocking their way.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking",
-      "blackPoints": ""
+      description: "Parking behind other cars and blocking their way.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
+      blackPoints: "",
     },
     {
-      "description": "Taxis which have designated pickup areas stopping in undesignated ones.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking"
+      description:
+        "Taxis which have designated pickup areas stopping in undesignated ones.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
     },
     {
-      "description": "Stopping the vehicle on a road junction or curve.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking",
-      "blackPoints": ""
+      description: "Stopping the vehicle on a road junction or curve.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
+      blackPoints: "",
     },
     {
-      "description": "Not securing vehicle while parked.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking",
-      "blackPoints": ""
+      description: "Not securing vehicle while parked.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
+      blackPoints: "",
     },
     {
-      "description": "Parking in a wrong way.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking",
-      "blackPoints": ""
+      description: "Parking in a wrong way.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
+      blackPoints: "",
     },
     {
-      "description": "Parking in a way that poses danger to passersby.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking",
-      "blackPoints": ""
+      description: "Parking in a way that poses danger to passersby.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
+      blackPoints: "",
     },
     {
-      "description": "Parking in a way that interrupts pedestrian movement.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking",
-      "blackPoints": ""
+      description: "Parking in a way that interrupts pedestrian movement.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
+      blackPoints: "",
     },
     {
-      "description": "parking on pavements",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Wrong Parking and Overtaking",
-      "blackPoints": ""
+      description: "parking on pavements",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Wrong Parking and Overtaking",
+      blackPoints: "",
     },
     {
-      "description": "Writing phrases or placing stickers on vehicle without permission.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations",
-      "blackPoints": ""
+      description:
+        "Writing phrases or placing stickers on vehicle without permission.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
+      blackPoints: "",
     },
     {
-      "description": "Exceeding permitted level of tinting.",
-      "fineAmount": "1500",
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations",
-      "blackPoints": ""
+      description: "Exceeding permitted level of tinting.",
+      fineAmount: "1500",
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
+      blackPoints: "",
     },
     {
-      "description": "Tinting a vehicle not allowed to be tinted.",
-      "fineAmount": "1500",
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations",
-      "blackPoints": ""
+      description: "Tinting a vehicle not allowed to be tinted.",
+      fineAmount: "1500",
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
+      blackPoints: "",
     },
     {
-      "description": "Not giving way to pedestrians on pedestrian crossings.",
-      "fineAmount": "500",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Violations Related to Pedestrians and Priority"
+      description: "Not giving way to pedestrians on pedestrian crossings.",
+      fineAmount: "500",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Violations Related to Pedestrians and Priority",
     },
     {
-      "description": "Failure to abide by traffic signs and instructions.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description: "Failure to abide by traffic signs and instructions.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Littering from vehicle window while driving.",
-      "fineAmount": "1000",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Environment Violations"
+      description: "Littering from vehicle window while driving.",
+      fineAmount: "1000",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Environment Violations",
     },
     {
-      "description": "Placing signs on the road in a way that causes harm to the road or interrupts traffic.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description:
+        "Placing signs on the road in a way that causes harm to the road or interrupts traffic.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Modifying engine or chassis without permission.",
-      "fineAmount": "1000",
-      "blackPoints": 12,
-      "confiscationPeriod": "30 days",
-      "category": "Violations in the Vehicle Installations"
+      description: "Modifying engine or chassis without permission.",
+      fineAmount: "1000",
+      blackPoints: 12,
+      confiscationPeriod: "30 days",
+      category: "Violations in the Vehicle Installations",
     },
     {
-      "description": "Rubbernecking and crowding at traffic accidents scenes.",
-      "fineAmount": "1000",
-      "confiscationPeriod": "",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description: "Rubbernecking and crowding at traffic accidents scenes.",
+      fineAmount: "1000",
+      confiscationPeriod: "",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Using vehicle for undesignated purpose.",
-      "fineAmount": "300",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Vehicles Registration and Traffic Permits Violations"
+      description: "Using vehicle for undesignated purpose.",
+      fineAmount: "300",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Vehicles Registration and Traffic Permits Violations",
     },
     {
-      "description": "Transporting passengers illegally.",
-      "fineAmount": "3000",
-      "blackPoints": 24,
-      "confiscationPeriod": "30 days",
-      "category": "Vehicles Registration and Traffic Permits Violations"
+      description: "Transporting passengers illegally.",
+      fineAmount: "3000",
+      blackPoints: 24,
+      confiscationPeriod: "30 days",
+      category: "Vehicles Registration and Traffic Permits Violations",
     },
     {
-      "description": "Transporting inflammable or hazardous materials without permission.",
-      "fineAmount": "3000",
-      "blackPoints": 24,
-      "confiscationPeriod": "30 days",
-      "category": "Vehicles Registration and Traffic Permits Violations"
+      description:
+        "Transporting inflammable or hazardous materials without permission.",
+      fineAmount: "3000",
+      blackPoints: 24,
+      confiscationPeriod: "30 days",
+      category: "Vehicles Registration and Traffic Permits Violations",
     },
     {
-      "description": "Transporting passengers in a vehicle that is not licensed for this purpose.",
-      "fineAmount": "1000",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Transport Vehicles Violations"
+      description:
+        "Transporting passengers in a vehicle that is not licensed for this purpose.",
+      fineAmount: "1000",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Transport Vehicles Violations",
     },
     {
-      "description": "Exceeding passenger limit by a passenger transport vehicle.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "7 days",
-      "category": "Transport Vehicles Violations"
+      description:
+        "Exceeding passenger limit by a passenger transport vehicle.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "7 days",
+      category: "Transport Vehicles Violations",
     },
     {
-      "description": "Failure to take road safety measures during vehicle breakdown.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description:
+        "Failure to take road safety measures during vehicle breakdown.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Failure of motorcyclist to wear helmet.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Failure of motorcyclist to wear helmet.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Failure of passenger to wear helmet.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description: "Failure of passenger to wear helmet.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Expired tires",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "7 days",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Expired tires",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "7 days",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Failure to use indicators when changing direction or turning.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description:
+        "Failure to use indicators when changing direction or turning.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Failure to give priority to vehicles coming from behind or the left side.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Violations Related to Pedestrians and Priority",
-      "blackPoints": ""
+      description:
+        "Failure to give priority to vehicles coming from behind or the left side.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Violations Related to Pedestrians and Priority",
+      blackPoints: "",
     },
     {
-      "description": "Failure to get the car tested after carrying out major modification to engine.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations",
-      "blackPoints": ""
+      description:
+        "Failure to get the car tested after carrying out major modification to engine.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
+      blackPoints: "",
     },
     {
-      "description": "Failure to get the car tested after carrying out major modification to chassis.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations",
-      "blackPoints": ""
+      description:
+        "Failure to get the car tested after carrying out major modification to chassis.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
+      blackPoints: "",
     },
     {
-      "description": "Failure of a light vehicle to abide by lane discipline.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description: "Failure of a light vehicle to abide by lane discipline.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Poor condition of car lights",
-      "fineAmount": "400",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations"
+      description: "Poor condition of car lights",
+      fineAmount: "400",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
     },
     {
-      "description": "Poor condition of indicators.",
-      "fineAmount": "400",
-      "blackPoints": 2,
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations"
+      description: "Poor condition of indicators.",
+      fineAmount: "400",
+      blackPoints: 2,
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
     },
     {
-      "description": "Poor condition of rear lights.",
-      "fineAmount": "400",
-      "blackPoints": 2,
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations"
+      description: "Poor condition of rear lights.",
+      fineAmount: "400",
+      blackPoints: 2,
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
     },
     {
-      "description": "Failure of pedestrians to abide by traffic signals.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Violations Related to Pedestrians and Priority",
-      "blackPoints": ""
+      description: "Failure of pedestrians to abide by traffic signals.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Violations Related to Pedestrians and Priority",
+      blackPoints: "",
     },
     {
-      "description": "Pedestrians crossing from undesignated areas.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Violations Related to Pedestrians and Priority",
-      "blackPoints": ""
+      description: "Pedestrians crossing from undesignated areas.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Violations Related to Pedestrians and Priority",
+      blackPoints: "",
     },
     {
-      "description": "Failure of a school bus driver to activate STOP SIGN or abide by traffic rules.",
-      "fineAmount": "500",
-      "blackPoints": 6,
-      "confiscationPeriod": "-",
-      "category": "Buses Violations and the STOP Sign"
+      description:
+        "Failure of a school bus driver to activate STOP SIGN or abide by traffic rules.",
+      fineAmount: "500",
+      blackPoints: 6,
+      confiscationPeriod: "-",
+      category: "Buses Violations and the STOP Sign",
     },
     {
-      "description": "Drivers failure to stop when school buss STOP SIGN is activated.",
-      "fineAmount": "1000",
-      "blackPoints": 10,
-      "confiscationPeriod": "-",
-      "category": "Buses Violations and the STOP Sign"
+      description:
+        "Drivers failure to stop when school buss STOP SIGN is activated.",
+      fineAmount: "1000",
+      blackPoints: 10,
+      confiscationPeriod: "-",
+      category: "Buses Violations and the STOP Sign",
     },
     {
-      "description": "Using three-wheel or more leisure bike on the road.",
-      "fineAmount": "3000",
-      "confiscationPeriod": "90 days",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description: "Using three-wheel or more leisure bike on the road.",
+      fineAmount: "3000",
+      confiscationPeriod: "90 days",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Driving on lanes designated for taxis and buses except in permitted cases.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Buses Violations and the STOP Sign",
-      "blackPoints": ""
+      description:
+        "Driving on lanes designated for taxis and buses except in permitted cases.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Buses Violations and the STOP Sign",
+      blackPoints: "",
     },
     {
-      "description": "Participating in a motorcade without permission except in permitted cases.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "15 days",
-      "category": "Vehicles Registration and Traffic Permits Violations"
+      description:
+        "Participating in a motorcade without permission except in permitted cases.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "15 days",
+      category: "Vehicles Registration and Traffic Permits Violations",
     },
     {
-      "description": "Changing vehicle color without permission.",
-      "fineAmount": "800",
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations",
-      "blackPoints": ""
+      description: "Changing vehicle color without permission.",
+      fineAmount: "800",
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
+      blackPoints: "",
     },
     {
-      "description": "Towing a car or a boat without permission.",
-      "fineAmount": "1000",
-      "confiscationPeriod": "-",
-      "category": "Load Violations",
-      "blackPoints": ""
+      description: "Towing a car or a boat without permission.",
+      fineAmount: "1000",
+      confiscationPeriod: "-",
+      category: "Load Violations",
+      blackPoints: "",
     },
     {
-      "description": "Failure to abide by safety and security standards in towing a car or a boat.",
-      "fineAmount": "1000",
-      "confiscationPeriod": "-",
-      "category": "Load Violations",
-      "blackPoints": ""
+      description:
+        "Failure to abide by safety and security standards in towing a car or a boat.",
+      fineAmount: "1000",
+      confiscationPeriod: "-",
+      category: "Load Violations",
+      blackPoints: "",
     },
     {
-      "description": "Poor condition of trailers rear or side lights.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations"
+      description: "Poor condition of trailers rear or side lights.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
     },
     {
-      "description": "Absence of trailers rear or side lights.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations in the Vehicle Installations"
+      description: "Absence of trailers rear or side lights.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations in the Vehicle Installations",
     },
     {
-      "description": "Interrupting traffic in any other way not specified in this table.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users",
-      "blackPoints": ""
+      description:
+        "Interrupting traffic in any other way not specified in this table.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
+      blackPoints: "",
     },
     {
-      "description": "Turning from undesignated areas.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Turning from undesignated areas.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Turning in a wrong way.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Turning in a wrong way.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Loading a light vehicle in a way that poses danger to others.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Load Violations"
+      description:
+        "Loading a light vehicle in a way that poses danger to others.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Load Violations",
     },
     {
-      "description": "Loading a light vehicle in a way that poses danger to the road.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Load Violations",
-      "blackPoints": ""
+      description:
+        "Loading a light vehicle in a way that poses danger to the road.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Load Violations",
+      blackPoints: "",
     },
     {
-      "description": "load or protruding load from a light vehicle without permission.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Load Violations"
+      description:
+        "load or protruding load from a light vehicle without permission.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Load Violations",
     },
     {
-      "description": "Dropping or spilling load from light vehicles",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Environment Violations",
-      "blackPoints": ""
+      description: "Dropping or spilling load from light vehicles",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Environment Violations",
+      blackPoints: "",
     },
     {
-      "description": "Illegal use of commercial number plates",
-      "fineAmount": "500",
-      "confiscationPeriod": "7 days",
-      "category": "Plates Violations",
-      "blackPoints": ""
+      description: "Illegal use of commercial number plates",
+      fineAmount: "500",
+      confiscationPeriod: "7 days",
+      category: "Plates Violations",
+      blackPoints: "",
     },
     {
-      "description": "Driving at night without lights.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Driving at night without lights.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Driving in a foggy weather without lights.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users"
+      description: "Driving in a foggy weather without lights.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Driving in a foggy weather in violation of concerned authorities instructions.",
-      "fineAmount": "500",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Violations for Jeopardizing Road Users"
+      description:
+        "Driving in a foggy weather in violation of concerned authorities instructions.",
+      fineAmount: "500",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Violations for Jeopardizing Road Users",
     },
     {
-      "description": "Using horn or car sound system in a disturbing way.",
-      "fineAmount": "400",
-      "blackPoints": 4,
-      "confiscationPeriod": "-",
-      "category": "Horn Violations"
+      description: "Using horn or car sound system in a disturbing way.",
+      fineAmount: "400",
+      blackPoints: 4,
+      confiscationPeriod: "-",
+      category: "Horn Violations",
     },
     {
-      "description": "Driving at residential areas, educational zones, hospitals in a way that endangers others lives.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Horn Violations",
-      "blackPoints": ""
+      description:
+        "Driving at residential areas, educational zones, hospitals in a way that endangers others lives.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Horn Violations",
+      blackPoints: "",
     },
     {
-      "description": "Not carrying vehicle registration card.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Violations Related to Driving License",
-      "blackPoints": ""
+      description: "Not carrying vehicle registration card.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Violations Related to Driving License",
+      blackPoints: "",
     },
     {
-      "description": "Using driving learning vehicles in prohibited times and areas.",
-      "fineAmount": "400",
-      "confiscationPeriod": "-",
-      "category": "Training Vehicles Violations",
-      "blackPoints": ""
+      description:
+        "Using driving learning vehicles in prohibited times and areas.",
+      fineAmount: "400",
+      confiscationPeriod: "-",
+      category: "Training Vehicles Violations",
+      blackPoints: "",
     },
     {
-      "description": "Teaching driving in a car that is not labelled as learning vehicle.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Training Vehicles Violations",
-      "blackPoints": ""
+      description:
+        "Teaching driving in a car that is not labelled as learning vehicle.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Training Vehicles Violations",
+      blackPoints: "",
     },
     {
-      "description": "Teaching driving in a car that is undesignated for this purpose without permission from the licensing authority.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Training Vehicles Violations",
-      "blackPoints": ""
+      description:
+        "Teaching driving in a car that is undesignated for this purpose without permission from the licensing authority.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Training Vehicles Violations",
+      blackPoints: "",
     },
     {
-      "description": "Teaching driving without a license.",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Training Vehicles Violations",
-      "blackPoints": ""
+      description: "Teaching driving without a license.",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Training Vehicles Violations",
+      blackPoints: "",
     },
     {
-      "description": "Not carrying Driving Learning permit while training.",
-      "fineAmount": "300",
-      "confiscationPeriod": "-",
-      "category": "Training Vehicles Violations",
-      "blackPoints": ""
+      description: "Not carrying Driving Learning permit while training.",
+      fineAmount: "300",
+      confiscationPeriod: "-",
+      category: "Training Vehicles Violations",
+      blackPoints: "",
     },
     {
-      "description": "Failure to hand over driving license when the maximum black points are accrued in the first traffic violation.",
-      "fineAmount": "1000",
-      "confiscationPeriod": "-",
-      "category": "Violations Related to Driving License",
-      "blackPoints": ""
+      description:
+        "Failure to hand over driving license when the maximum black points are accrued in the first traffic violation.",
+      fineAmount: "1000",
+      confiscationPeriod: "-",
+      category: "Violations Related to Driving License",
+      blackPoints: "",
     },
     {
-      "description": "Failure to hand over driving license when the maximum black points are accrued in the second traffic",
-      "fineAmount": "2000",
-      "confiscationPeriod": "-",
-      "category": "Violations Related to Driving License",
-      "blackPoints": ""
+      description:
+        "Failure to hand over driving license when the maximum black points are accrued in the second traffic",
+      fineAmount: "2000",
+      confiscationPeriod: "-",
+      category: "Violations Related to Driving License",
+      blackPoints: "",
     },
     {
-      "description": "Failure to hand over driving license when the maximum black points are accrued in the third traffic violation.",
-      "fineAmount": "3000",
-      "confiscationPeriod": "-",
-      "category": "Violations Related to Driving License",
-      "blackPoints": ""
+      description:
+        "Failure to hand over driving license when the maximum black points are accrued in the third traffic violation.",
+      fineAmount: "3000",
+      confiscationPeriod: "-",
+      category: "Violations Related to Driving License",
+      blackPoints: "",
     },
     {
-      "description": "Teaching driving without obtaining a permit from the licensing authority",
-      "fineAmount": "500",
-      "confiscationPeriod": "-",
-      "category": "Training Vehicles Violations",
-      "blackPoints": ""
+      description:
+        "Teaching driving without obtaining a permit from the licensing authority",
+      fineAmount: "500",
+      confiscationPeriod: "-",
+      category: "Training Vehicles Violations",
+      blackPoints: "",
     },
     {
-      "description": "Failure to receive the light vehicle after the expiry of the legal period for the vehicle reservation",
-      "fineAmount": "50 AED/Day. Max 3000 AED",
-      "confiscationPeriod": "-",
-      "category": "None",
-      "blackPoints": ""
+      description:
+        "Failure to receive the light vehicle after the expiry of the legal period for the vehicle reservation",
+      fineAmount: "50 AED/Day. Max 3000 AED",
+      confiscationPeriod: "-",
+      category: "None",
+      blackPoints: "",
     },
     {
-      "description": "Failure to receive the heavy vehicle after the expiry of the legal period for the vehicle reservation",
-      "fineAmount": "100 AED/Day. Max 3000 AED",
-      "confiscationPeriod": "-",
-      "category": "None",
-      "blackPoints": ""
-    }
-  ]
+      description:
+        "Failure to receive the heavy vehicle after the expiry of the legal period for the vehicle reservation",
+      fineAmount: "100 AED/Day. Max 3000 AED",
+      confiscationPeriod: "-",
+      category: "None",
+      blackPoints: "",
+    },
+  ],
 };
 
 export const speedLimits = {
-  "title": "Street Speed Limits",
-  "description": "Dubai applies specific speed limits across its roads to ensure safety and smooth traffic flow. These limits vary depending on the type of road and location",
-  "cover": "/cms/traficviolation_fb1c8ee904.png",
-  "updatedAt": "2026-01-04",
-  "rows": [
+  title: "Street Speed Limits",
+  description:
+    "Dubai applies specific speed limits across its roads to ensure safety and smooth traffic flow. These limits vary depending on the type of road and location",
+  cover: "/cms/traficviolation_fb1c8ee904.png",
+  updatedAt: "2026-01-04",
+  rows: [
     {
-      "roadName": "Al Nahda",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Al Nahda",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Damascus",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Damascus",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Al Quds",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Al Quds",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Tunisia",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Tunisia",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Sheik Khalifa",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Sheik Khalifa",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Amman",
-      "speed": "80/60",
-      "radarControl": "101/91"
+      roadName: "Amman",
+      speed: "80/60",
+      radarControl: "101/91",
     },
     {
-      "roadName": "Al Minaa",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Al Minaa",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Beirut",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Beirut",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Zaabeel second",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Zaabeel second",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Sheikh Zayed bin Hamdan Al Nahyan",
-      "speed": "100/90/80",
-      "radarControl": "121/111/101"
+      roadName: "Sheikh Zayed bin Hamdan Al Nahyan",
+      speed: "100/90/80",
+      radarControl: "121/111/101",
     },
     {
-      "roadName": "Airport Tunnel-Beirut",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Airport Tunnel-Beirut",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Tripoli",
-      "speed": "100/90",
-      "radarControl": "121/111"
+      roadName: "Tripoli",
+      speed: "100/90",
+      radarControl: "121/111",
     },
     {
-      "roadName": "Al Jumeira",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Al Jumeira",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Nad Al Shiba",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Nad Al Shiba",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Al Wasl",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Al Wasl",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Baghdad",
-      "speed": "80/70",
-      "radarControl": "101/91"
+      roadName: "Baghdad",
+      speed: "80/70",
+      radarControl: "101/91",
     },
     {
-      "roadName": "Um Al Sheef",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Um Al Sheef",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Al Manarah",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Al Manarah",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Al Athar",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Al Athar",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Al Thunaya",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Al Thunaya",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Al Hadeeqa",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Al Hadeeqa",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Al Seif",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Al Seif",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Al Orouba",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Al Orouba",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Towers",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Towers",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Muscat",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Muscat",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Al Khail",
-      "speed": "100",
-      "radarControl": "121"
+      roadName: "Al Khail",
+      speed: "100",
+      radarControl: "121",
     },
     {
-      "roadName": "Al Yalayes",
-      "speed": "120/100",
-      "radarControl": "141/121"
+      roadName: "Al Yalayes",
+      speed: "120/100",
+      radarControl: "141/121",
     },
     {
-      "roadName": "Al Aweer",
-      "speed": "100",
-      "radarControl": "121"
+      roadName: "Al Aweer",
+      speed: "100",
+      radarControl: "121",
     },
     {
-      "roadName": "Emirates",
-      "speed": "110",
-      "radarControl": "131"
+      roadName: "Emirates",
+      speed: "110",
+      radarControl: "131",
     },
     {
-      "roadName": "Mohammad Bin Zayed",
-      "speed": "110",
-      "radarControl": "131"
+      roadName: "Mohammad Bin Zayed",
+      speed: "110",
+      radarControl: "131",
     },
     {
-      "roadName": "Expo",
-      "speed": "100",
-      "radarControl": "121"
+      roadName: "Expo",
+      speed: "100",
+      radarControl: "121",
     },
     {
-      "roadName": "Al Ittihad",
-      "speed": "100/80",
-      "radarControl": "121/101"
+      roadName: "Al Ittihad",
+      speed: "100/80",
+      radarControl: "121/101",
     },
     {
-      "roadName": "Ras Al Khor",
-      "speed": "100",
-      "radarControl": "121"
+      roadName: "Ras Al Khor",
+      speed: "100",
+      radarControl: "121",
     },
     {
-      "roadName": "Sheikh Zayed",
-      "speed": "120/100",
-      "radarControl": "141/121"
+      roadName: "Sheikh Zayed",
+      speed: "120/100",
+      radarControl: "141/121",
     },
     {
-      "roadName": "Al Rabat",
-      "speed": "100",
-      "radarControl": "121"
+      roadName: "Al Rabat",
+      speed: "100",
+      radarControl: "121",
     },
     {
-      "roadName": "Al Khawaneej",
-      "speed": "100",
-      "radarControl": "121"
+      roadName: "Al Khawaneej",
+      speed: "100",
+      radarControl: "121",
     },
     {
-      "roadName": "Al Amardi",
-      "speed": "90/80/60",
-      "radarControl": "111/101/91"
+      roadName: "Al Amardi",
+      speed: "90/80/60",
+      radarControl: "111/101/91",
     },
     {
-      "roadName": "Sheikh Rashid",
-      "speed": "100",
-      "radarControl": "121"
+      roadName: "Sheikh Rashid",
+      speed: "100",
+      radarControl: "121",
     },
     {
-      "roadName": "Hatta Main",
-      "speed": "120/80",
-      "radarControl": "141/101"
+      roadName: "Hatta Main",
+      speed: "120/80",
+      radarControl: "141/101",
     },
     {
-      "roadName": "Al Khaleej",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Al Khaleej",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Airport",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Airport",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Nad Al Hamar",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Nad Al Hamar",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "King Salman Bin Abdulaziz (ASoufouh previous )",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "King Salman Bin Abdulaziz (ASoufouh previous )",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Al Soufouh 2",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Al Soufouh 2",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Oud Metha",
-      "speed": "80/60",
-      "radarControl": "101/91"
+      roadName: "Oud Metha",
+      speed: "80/60",
+      radarControl: "101/91",
     },
     {
-      "roadName": "Um Hurair",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Um Hurair",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Um Suqaim",
-      "speed": "90",
-      "radarControl": "111"
+      roadName: "Um Suqaim",
+      speed: "90",
+      radarControl: "111",
     },
     {
-      "roadName": "Al Mankhoul",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Al Mankhoul",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Al Manama",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Al Manama",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Al Maidan",
-      "speed": "100/80",
-      "radarControl": "121/101"
+      roadName: "Al Maidan",
+      speed: "100/80",
+      radarControl: "121/101",
     },
     {
-      "roadName": "Casablanca",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Casablanca",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Hessa",
-      "speed": "100/80",
-      "radarControl": "121/101"
+      roadName: "Hessa",
+      speed: "100/80",
+      radarControl: "121/101",
     },
     {
-      "roadName": "Al Mafraq",
-      "speed": "70",
-      "radarControl": "91"
+      roadName: "Al Mafraq",
+      speed: "70",
+      radarControl: "91",
     },
     {
-      "roadName": "Dubai Financial",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Dubai Financial",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Al Qudra",
-      "speed": "100",
-      "radarControl": "121"
+      roadName: "Al Qudra",
+      speed: "100",
+      radarControl: "121",
     },
     {
-      "roadName": "Algeria",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Algeria",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Tunisia",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Tunisia",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Dubai-Al Ain",
-      "speed": "120/100",
-      "radarControl": "141/121"
+      roadName: "Dubai-Al Ain",
+      speed: "120/100",
+      radarControl: "141/121",
     },
     {
-      "roadName": "Al Asayel",
-      "speed": "80/70",
-      "radarControl": "101/91"
+      roadName: "Al Asayel",
+      speed: "80/70",
+      radarControl: "101/91",
     },
     {
-      "roadName": "Al Jamayel",
-      "speed": "80",
-      "radarControl": "101"
+      roadName: "Al Jamayel",
+      speed: "80",
+      radarControl: "101",
     },
     {
-      "roadName": "Jumeira Palm",
-      "speed": "60",
-      "radarControl": "91"
+      roadName: "Jumeira Palm",
+      speed: "60",
+      radarControl: "91",
     },
     {
-      "roadName": "Seeh Shuaib",
-      "speed": "80",
-      "radarControl": "101"
-    }
-  ]
+      roadName: "Seeh Shuaib",
+      speed: "80",
+      radarControl: "101",
+    },
+  ],
 };
 
 export const sustainability = {
-  "title": "Best Practices in Sustainable Development",
-  "description": "Know more about how Dubai Police is driving innovation to achieve a sustainable future",
-  "cover": "/cms/sustainable_0a23cbe17a.png",
-  "updatedAt": "2026-03-10",
-  "rows": [
+  title: "Best Practices in Sustainable Development",
+  description:
+    "Know more about how Dubai Police is driving innovation to achieve a sustainable future",
+  cover: "/cms/sustainable_0a23cbe17a.png",
+  updatedAt: "2026-03-10",
+  rows: [
     {
-      "subject": "Sustainability Report for the Years 2020-2022",
-      "issueDate": "2024-11-14",
-      "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/EN_Sus_Report_7c1e71fa4b.pdf",
-      "size": "7110 KB"
-    }
-  ]
+      subject: "Sustainability Report for the Years 2020-2022",
+      issueDate: "2024-11-14",
+      file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/EN_Sus_Report_7c1e71fa4b.pdf",
+      size: "7110 KB",
+    },
+  ],
 };
 
 export const videos = [
   {
-    "title": "International Youth Day",
-    "date": "2026-08-19",
-    "youtube": "https://www.youtube.com/watch?v=VoMM4fUpnPs",
-    "id": "VoMM4fUpnPs"
+    title: "International Youth Day",
+    date: "2026-08-19",
+    youtube: "https://www.youtube.com/watch?v=VoMM4fUpnPs",
+    id: "VoMM4fUpnPs",
   },
   {
-    "title": "Your Safety, Our Commitment",
-    "date": "2026-06-21",
-    "youtube": "https://www.youtube.com/watch?v=IR7l7I5m1Gg",
-    "id": "IR7l7I5m1Gg"
+    title: "Your Safety, Our Commitment",
+    date: "2026-06-21",
+    youtube: "https://www.youtube.com/watch?v=IR7l7I5m1Gg",
+    id: "IR7l7I5m1Gg",
   },
   {
-    "title": "Defying the Impossible",
-    "date": "2026-05-16",
-    "youtube": "https://youtu.be/vdIvT9o5G8U?si=0OKXnAcxNaVd3MEK",
-    "id": ""
+    title: "Defying the Impossible",
+    date: "2026-05-16",
+    youtube: "https://youtu.be/vdIvT9o5G8U?si=0OKXnAcxNaVd3MEK",
+    id: "",
   },
   {
-    "title": "From Challenges to the Frontlines",
-    "date": "2025-03-26",
-    "youtube": "https://www.youtube.com/watch?v=yx9O22sXrBs",
-    "id": "yx9O22sXrBs"
+    title: "From Challenges to the Frontlines",
+    date: "2025-03-26",
+    youtube: "https://www.youtube.com/watch?v=yx9O22sXrBs",
+    id: "yx9O22sXrBs",
   },
   {
-    "title": "From the Skies to the Stars",
-    "date": "2024-12-14",
-    "youtube": "https: //youtu.be/93xscVT35yQ",
-    "id": ""
+    title: "From the Skies to the Stars",
+    date: "2024-12-14",
+    youtube: "https: //youtu.be/93xscVT35yQ",
+    id: "",
   },
   {
-    "title": "Netherlands inaugurates first SPS in UTRECHT with Emirati expertise",
-    "date": "2024-09-08",
-    "youtube": "https: //youtu.be/h65GWbvk0Dc",
-    "id": ""
+    title:
+      "Netherlands inaugurates first SPS in UTRECHT with Emirati expertise",
+    date: "2024-09-08",
+    youtube: "https: //youtu.be/h65GWbvk0Dc",
+    id: "",
   },
   {
-    "title": "A Hero s Sacrifice",
-    "date": "2024-06-29",
-    "youtube": "https: //youtu.be/utmIqYDZaIQ",
-    "id": ""
+    title: "A Hero s Sacrifice",
+    date: "2024-06-29",
+    youtube: "https: //youtu.be/utmIqYDZaIQ",
+    id: "",
   },
   {
-    "title": "Tourist Experience",
-    "date": "2024-03-25",
-    "youtube": "https: //youtu.be/bV7Ie6t_jac",
-    "id": ""
+    title: "Tourist Experience",
+    date: "2024-03-25",
+    youtube: "https: //youtu.be/bV7Ie6t_jac",
+    id: "",
   },
   {
-    "title": "Retirees: Renewed Giving Initiative",
-    "date": "2023-12-26",
-    "youtube": "https: //youtu.be/RuhQ_TttRQ4",
-    "id": ""
+    title: "Retirees: Renewed Giving Initiative",
+    date: "2023-12-26",
+    youtube: "https: //youtu.be/RuhQ_TttRQ4",
+    id: "",
   },
   {
-    "title": "Operation Monopoly",
-    "date": "2023-11-21",
-    "youtube": "https: //youtu.be/5niBNQSnfXE",
-    "id": ""
-  }
+    title: "Operation Monopoly",
+    date: "2023-11-21",
+    youtube: "https: //youtu.be/5niBNQSnfXE",
+    id: "",
+  },
 ];
 
 export const magazines = [
   {
-    "title": "THE SECURITY EQUATION",
-    "issue": "",
-    "kind": "Safety And Security",
-    "date": "2026-08-01",
-    "summary": "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
-    "cover": "/cms/SS_August2026_36625394ee.jpg",
-    "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/SS_August_583593af76.pdf"
+    title: "THE SECURITY EQUATION",
+    issue: "",
+    kind: "Safety And Security",
+    date: "2026-08-01",
+    summary:
+      "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
+    cover: "/cms/SS_August2026_36625394ee.jpg",
+    file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/SS_August_583593af76.pdf",
   },
   {
-    "title": "Investing in Tomorrow",
-    "issue": "",
-    "kind": "Safety And Security",
-    "date": "2026-07-01",
-    "summary": "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
-    "cover": "/cms/SS_fe410c6f76.jpg",
-    "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/SS_72026_bc145b75af.pdf"
+    title: "Investing in Tomorrow",
+    issue: "",
+    kind: "Safety And Security",
+    date: "2026-07-01",
+    summary:
+      "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
+    cover: "/cms/SS_fe410c6f76.jpg",
+    file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/SS_72026_bc145b75af.pdf",
   },
   {
-    "title": "70 Years of Excellence ",
-    "issue": "",
-    "kind": "Safety And Security",
-    "date": "2026-06-01",
-    "summary": "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
-    "cover": "/cms/SS_f9a22938a5.jpg",
-    "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6_june_5afcb2e46b.pdf"
+    title: "70 Years of Excellence ",
+    issue: "",
+    kind: "Safety And Security",
+    date: "2026-06-01",
+    summary:
+      "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
+    cover: "/cms/SS_f9a22938a5.jpg",
+    file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/6_june_5afcb2e46b.pdf",
   },
   {
-    "title": "70 Years of Enhancing Safety",
-    "issue": "",
-    "kind": "Amn Magazine",
-    "date": "2026-06-01",
-    "summary": "Al Amn is a cultural and security rich monthly magazine published in Arabic by the Dubai Police Security Media Department.",
-    "cover": "/cms/Al_Amn656_9596fa3fb3.jpg",
-    "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/ALAMN_656_96a16a5aea.pdf"
+    title: "70 Years of Enhancing Safety",
+    issue: "",
+    kind: "Amn Magazine",
+    date: "2026-06-01",
+    summary:
+      "Al Amn is a cultural and security rich monthly magazine published in Arabic by the Dubai Police Security Media Department.",
+    cover: "/cms/Al_Amn656_9596fa3fb3.jpg",
+    file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/ALAMN_656_96a16a5aea.pdf",
   },
   {
-    "title": "In Dubai, Life Blooms",
-    "issue": "",
-    "kind": "Khalid Magazine",
-    "date": "2026-05-01",
-    "summary": "An educational and safety-focused magazine for children, published by Dubai Police since 1992 to teach youngsters aged 5–15 about security, traffic awareness, and moral values.",
-    "cover": "/cms/Khalid_May26_f1adc3753e.JPG",
-    "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/Khalid_May_2026_8598767ee0.pdf"
+    title: "In Dubai, Life Blooms",
+    issue: "",
+    kind: "Khalid Magazine",
+    date: "2026-05-01",
+    summary:
+      "An educational and safety-focused magazine for children, published by Dubai Police since 1992 to teach youngsters aged 5–15 about security, traffic awareness, and moral values.",
+    cover: "/cms/Khalid_May26_f1adc3753e.JPG",
+    file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/Khalid_May_2026_8598767ee0.pdf",
   },
   {
-    "title": "Operation ‘Tri-Force Sentinel’",
-    "issue": "",
-    "kind": "Safety And Security",
-    "date": "2026-05-01",
-    "summary": "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
-    "cover": "/cms/May_292_1020e6ac76.jpg",
-    "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/SS_May26_c239119560.pdf"
+    title: "Operation ‘Tri-Force Sentinel’",
+    issue: "",
+    kind: "Safety And Security",
+    date: "2026-05-01",
+    summary:
+      "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
+    cover: "/cms/May_292_1020e6ac76.jpg",
+    file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/SS_May26_c239119560.pdf",
   },
   {
-    "title": "You're Ok when Your Security is",
-    "issue": "",
-    "kind": "Amn Magazine",
-    "date": "2026-04-01",
-    "summary": "Al Amn is a cultural and security rich monthly magazine published in Arabic by the Dubai Police Security Media Department.",
-    "cover": "/cms/April26_0da5bf8203.jpg",
-    "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/ALAMN_654_abryl_803ded1057.pdf"
+    title: "You're Ok when Your Security is",
+    issue: "",
+    kind: "Amn Magazine",
+    date: "2026-04-01",
+    summary:
+      "Al Amn is a cultural and security rich monthly magazine published in Arabic by the Dubai Police Security Media Department.",
+    cover: "/cms/April26_0da5bf8203.jpg",
+    file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/ALAMN_654_abryl_803ded1057.pdf",
   },
   {
-    "title": "The Land of Safety ",
-    "issue": "",
-    "kind": "Khalid Magazine",
-    "date": "2026-04-01",
-    "summary": "An educational and safety-focused magazine for children, published by Dubai Police since 1992 to teach youngsters aged 5–15 about security, traffic awareness, and moral values.",
-    "cover": "/cms/Khalid_April26_c1766d0460.jpg",
-    "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/K_April26_1345aa44dc.pdf"
+    title: "The Land of Safety ",
+    issue: "",
+    kind: "Khalid Magazine",
+    date: "2026-04-01",
+    summary:
+      "An educational and safety-focused magazine for children, published by Dubai Police since 1992 to teach youngsters aged 5–15 about security, traffic awareness, and moral values.",
+    cover: "/cms/Khalid_April26_c1766d0460.jpg",
+    file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/K_April26_1345aa44dc.pdf",
   },
   {
-    "title": "Proud of UAE",
-    "issue": "",
-    "kind": "Safety And Security",
-    "date": "2026-04-01",
-    "summary": "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
-    "cover": "/cms/April26_54213dd893.jpg",
-    "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/April_4_6d10b72077.pdf"
+    title: "Proud of UAE",
+    issue: "",
+    kind: "Safety And Security",
+    date: "2026-04-01",
+    summary:
+      "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
+    cover: "/cms/April26_54213dd893.jpg",
+    file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/April_4_6d10b72077.pdf",
   },
   {
-    "title": "Thick Skin, Bitter Flesh",
-    "issue": "",
-    "kind": "Safety And Security",
-    "date": "2026-03-01",
-    "summary": "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
-    "cover": "/cms/Mar26_7c49a8ef6c.jpg",
-    "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/March_3_7dbaf8c541.pdf"
+    title: "Thick Skin, Bitter Flesh",
+    issue: "",
+    kind: "Safety And Security",
+    date: "2026-03-01",
+    summary:
+      "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.",
+    cover: "/cms/Mar26_7c49a8ef6c.jpg",
+    file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/March_3_7dbaf8c541.pdf",
   },
   {
-    "title": "UAE's Beating Heart",
-    "issue": "",
-    "kind": "Khalid Magazine",
-    "date": "2026-03-01",
-    "summary": "An educational and safety-focused magazine for children, published by Dubai Police since 1992 to teach youngsters aged 5–15 about security, traffic awareness, and moral values.",
-    "cover": "/cms/May_316_57b8ad947f.jpg",
-    "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/Khalid_March_2026_lite_176fc4daae.pdf"
+    title: "UAE's Beating Heart",
+    issue: "",
+    kind: "Khalid Magazine",
+    date: "2026-03-01",
+    summary:
+      "An educational and safety-focused magazine for children, published by Dubai Police since 1992 to teach youngsters aged 5–15 about security, traffic awareness, and moral values.",
+    cover: "/cms/May_316_57b8ad947f.jpg",
+    file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/Khalid_March_2026_lite_176fc4daae.pdf",
   },
   {
-    "title": "UAE Rescue Challenge 2026... Heroes in Action ",
-    "issue": "",
-    "kind": "Amn Magazine",
-    "date": "2026-03-01",
-    "summary": "Al Amn is a cultural and security rich monthly magazine published in Arabic by the Dubai Police Security Media Department.",
-    "cover": "/cms/March26_e34f4f1ebd.jpg",
-    "file": "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/ALAMN_653_litemars_6c6b0427af.pdf"
-  }
+    title: "UAE Rescue Challenge 2026... Heroes in Action ",
+    issue: "",
+    kind: "Amn Magazine",
+    date: "2026-03-01",
+    summary:
+      "Al Amn is a cultural and security rich monthly magazine published in Arabic by the Dubai Police Security Media Department.",
+    cover: "/cms/March26_e34f4f1ebd.jpg",
+    file: "https://www.dubaipolice.gov.ae/dpcms/cmsUploads/ALAMN_653_litemars_6c6b0427af.pdf",
+  },
 ];
 
 export const orgStructure = {
-  "chief": {
-    "img": "/img/organization/chief.webp",
-    "name": "His Highness Sheikh Mohammed bin Rashid Al Maktoum",
-    "designation": "Vice President, Prime Minister and Ruler of Dubai"
+  chief: {
+    img: "/img/organization/chief.webp",
+    name: "His Highness Sheikh Mohammed bin Rashid Al Maktoum",
+    designation: "Vice President, Prime Minister and Ruler of Dubai",
   },
-  "title": "Organizational Structure",
-  "subTitle": "The Organizational Office of the General Command",
-  "commander": {
-    "img": "/img/organization/commander.webp",
-    "sub": [
+  title: "Organizational Structure",
+  subTitle: "The Organizational Office of the General Command",
+  commander: {
+    img: "/img/organization/commander.webp",
+    sub: [
       {
-        "img": "/img/organization/major-general-ahmed-zaal-bin-krishan-al-muhairi.webp",
-        "sub": [
+        img: "/img/organization/major-general-ahmed-zaal-bin-krishan-al-muhairi.webp",
+        sub: [
           {
-            "img": "/img/organization/1.png",
-            "name": "Major General Saif Mohammed Saif bin Abed",
-            "departments": [
+            img: "/img/organization/1.png",
+            name: "Major General Saif Mohammed Saif bin Abed",
+            departments: [
               {
-                "img": "/img/organization/general-department-of-excellence-and-leadership.svg",
-                "title": "General Department of Excellence and Leadership"
+                img: "/img/organization/general-department-of-excellence-and-leadership.svg",
+                title: "General Department of Excellence and Leadership",
               },
               {
-                "img": "/img/organization/general-department-of-human-rights.svg",
-                "title": "General Department of Human Rights"
+                img: "/img/organization/general-department-of-human-rights.svg",
+                title: "General Department of Human Rights",
               },
               {
-                "img": "/img/organization/future-foresight.svg",
-                "title": "Future Foresight"
+                img: "/img/organization/future-foresight.svg",
+                title: "Future Foresight",
               },
               {
-                "img": "/img/organization/institutional-development-office.svg",
-                "title": "Institutional Development Office"
-              }
+                img: "/img/organization/institutional-development-office.svg",
+                title: "Institutional Development Office",
+              },
             ],
-            "designation": "Assistant Commander-in-Chief for Excellence and Leadership Affairs"
+            designation:
+              "Assistant Commander-in-Chief for Excellence and Leadership Affairs",
           },
           {
-            "img": "/img/organization/2.png",
-            "name": "Major General Dr. Tariq Mohammed Noor Hussein Tehlak",
-            "departments": [
+            img: "/img/organization/2.png",
+            name: "Major General Dr. Tariq Mohammed Noor Hussein Tehlak",
+            departments: [
               {
-                "img": "/img/organization/protocol-and-ceremonies-department.svg",
-                "title": "Protocol and Ceremonies Department"
+                img: "/img/organization/protocol-and-ceremonies-department.svg",
+                title: "Protocol and Ceremonies Department",
               },
               {
-                "img": "/img/organization/general-department-of-community-happiness.svg",
-                "title": "General Department of Community Happiness"
+                img: "/img/organization/general-department-of-community-happiness.svg",
+                title: "General Department of Community Happiness",
               },
               {
-                "img": "/img/organization/general-department-of-logistic-support.svg",
-                "title": "General Department of Logistic Support"
+                img: "/img/organization/general-department-of-logistic-support.svg",
+                title: "General Department of Logistic Support",
               },
               {
-                "img": "/img/organization/institutional-development-office.svg",
-                "title": "Institutional Development Office"
-              }
+                img: "/img/organization/institutional-development-office.svg",
+                title: "Institutional Development Office",
+              },
             ],
-            "designation": "Assistant Commander-in-Chief for Community Happiness and Logistics Support Affairs"
+            designation:
+              "Assistant Commander-in-Chief for Community Happiness and Logistics Support Affairs",
           },
           {
-            "img": "/img/organization/3.png",
-            "name": "Major General Dr. Saleh Abdullah Murad Abdullah",
-            "departments": [
+            img: "/img/organization/3.png",
+            name: "Major General Dr. Saleh Abdullah Murad Abdullah",
+            departments: [
               {
-                "img": "/img/organization/general-department-of-administrative-affairs.svg",
-                "title": "General Department of Administrative Affairs"
+                img: "/img/organization/general-department-of-administrative-affairs.svg",
+                title: "General Department of Administrative Affairs",
               },
               {
-                "img": "/img/organization/general-department-of-human-resources.svg",
-                "title": "General Department of Human Resources"
+                img: "/img/organization/general-department-of-human-resources.svg",
+                title: "General Department of Human Resources",
               },
               {
-                "img": "/img/organization/general-administration-of-artificial-intelligence.svg",
-                "title": "General Administration of Artificial Intelligence"
+                img: "/img/organization/general-administration-of-artificial-intelligence.svg",
+                title: "General Administration of Artificial Intelligence",
               },
               {
-                "img": "/img/organization/general-department-of-finance.svg",
-                "title": "General Department of Finance"
+                img: "/img/organization/general-department-of-finance.svg",
+                title: "General Department of Finance",
               },
               {
-                "img": "/img/organization/dubai-police-health-center.svg",
-                "title": "Dubai Police Health Center"
+                img: "/img/organization/dubai-police-health-center.svg",
+                title: "Dubai Police Health Center",
               },
               {
-                "img": "/img/organization/quality-of-life-center.svg",
-                "title": "Quality of Life Center"
+                img: "/img/organization/quality-of-life-center.svg",
+                title: "Quality of Life Center",
               },
               {
-                "img": "/img/organization/institutional-development-office.svg",
-                "title": "Institutional Development Office"
+                img: "/img/organization/institutional-development-office.svg",
+                title: "Institutional Development Office",
               },
               {
-                "img": "/img/organization/financial-control-department.svg",
-                "title": "Financial Control Department"
-              }
+                img: "/img/organization/financial-control-department.svg",
+                title: "Financial Control Department",
+              },
             ],
-            "designation": "Assistant Commander-in-Chief for Administration Affairs"
+            designation:
+              "Assistant Commander-in-Chief for Administration Affairs",
           },
           {
-            "img": "/img/organization/4.png",
-            "name": "Brigadier Badran Saeed Saif Saeed Al Shamsi",
-            "departments": [
+            img: "/img/organization/4.png",
+            name: "Brigadier Badran Saeed Saif Saeed Al Shamsi",
+            departments: [
               {
-                "img": "/img/organization/the-general-department-of-training.svg",
-                "title": "The General Department of Training"
+                img: "/img/organization/the-general-department-of-training.svg",
+                title: "The General Department of Training",
               },
               {
-                "img": "/img/organization/dubai-police-academy.svg",
-                "title": "Dubai Police Academy"
+                img: "/img/organization/dubai-police-academy.svg",
+                title: "Dubai Police Academy",
               },
               {
-                "img": "/img/organization/hemaya-schools-for-education-office.svg",
-                "title": "Hemaya Schools for Education Office"
+                img: "/img/organization/hemaya-schools-for-education-office.svg",
+                title: "Hemaya Schools for Education Office",
               },
               {
-                "img": "/img/organization/institutional-development-office.svg",
-                "title": "Institutional Development Office"
-              }
+                img: "/img/organization/institutional-development-office.svg",
+                title: "Institutional Development Office",
+              },
             ],
-            "designation": "Assistant Commander-in-Chief for Academic Affairs and Training"
-          }
+            designation:
+              "Assistant Commander-in-Chief for Academic Affairs and Training",
+          },
         ],
-        "name": "Major General Dr. Ahmed Zaal bin Krishan Al Muhairi",
-        "designation": "Deputy Commander-in-Chief for Financial & Administrative Sector Affairs"
+        name: "Major General Dr. Ahmed Zaal bin Krishan Al Muhairi",
+        designation:
+          "Deputy Commander-in-Chief for Financial & Administrative Sector Affairs",
       },
       {
-        "img": "/img/organization/majorgeneralharebmohammedsaeedalshamsi.png",
-        "sub": [
+        img: "/img/organization/majorgeneralharebmohammedsaeedalshamsi.png",
+        sub: [
           {
-            "img": "/img/organization/5.png",
-            "name": "Major General Saif Meher Saeed Al Mazroui",
-            "departments": [
+            img: "/img/organization/5.png",
+            name: "Major General Saif Meher Saeed Al Mazroui",
+            departments: [
               {
-                "img": "/img/organization/general-department-of-organizations-establishments-and-emergency-security.svg",
-                "title": "General Department of Organizations, Establishments and Emergency Security"
+                img: "/img/organization/general-department-of-organizations-establishments-and-emergency-security.svg",
+                title:
+                  "General Department of Organizations, Establishments and Emergency Security",
               },
               {
-                "img": "/img/organization/general-department-of-traffic.svg",
-                "title": "General Department of Traffic"
+                img: "/img/organization/general-department-of-traffic.svg",
+                title: "General Department of Traffic",
               },
               {
-                "img": "/img/organization/general-department-of-operations.svg",
-                "title": "General Department of Operations"
+                img: "/img/organization/general-department-of-operations.svg",
+                title: "General Department of Operations",
               },
               {
-                "img": "/img/organization/general-department-of-transport-and-rescue.svg",
-                "title": "General Department of Transport and Rescue"
+                img: "/img/organization/general-department-of-transport-and-rescue.svg",
+                title: "General Department of Transport and Rescue",
               },
               {
-                "img": "/img/organization/resilience-department.svg",
-                "title": "Resilience Department"
+                img: "/img/organization/resilience-department.svg",
+                title: "Resilience Department",
               },
               {
-                "img": "/img/organization/institutional-development-office.svg",
-                "title": "Institutional Development Office"
-              }
+                img: "/img/organization/institutional-development-office.svg",
+                title: "Institutional Development Office",
+              },
             ],
-            "designation": "Assistant Commander-in-Chief for Operations Affairs"
+            designation: "Assistant Commander-in-Chief for Operations Affairs",
           },
           {
-            "img": "/img/organization/7.png",
-            "name": "Major General Marwan Abdul Karim Mohammed Abdul Karim Julfar",
-            "departments": [
+            img: "/img/organization/7.png",
+            name: "Major General Marwan Abdul Karim Mohammed Abdul Karim Julfar",
+            departments: [
               {
-                "img": "/img/organization/institutional-development-office.svg",
-                "title": "Institutional Development Office"
+                img: "/img/organization/institutional-development-office.svg",
+                title: "Institutional Development Office",
               },
               {
-                "img": "/img/organization/general-department-of-airports-security.svg",
-                "title": "General Department of Airports Security"
+                img: "/img/organization/general-department-of-airports-security.svg",
+                title: "General Department of Airports Security",
               },
               {
-                "img": "/img/organization/ports-police-station.svg",
-                "title": "Ports Police Station"
+                img: "/img/organization/ports-police-station.svg",
+                title: "Ports Police Station",
               },
               {
-                "img": "/img/organization/dubai-police-air-wing.svg",
-                "title": "Dubai Police Air Wing"
-              }
+                img: "/img/organization/dubai-police-air-wing.svg",
+                title: "Dubai Police Air Wing",
+              },
             ],
-            "designation": "Assistant Commander-in-Chief for Ports Affairs"
+            designation: "Assistant Commander-in-Chief for Ports Affairs",
           },
           {
-            "img": "/img/organization/6.png",
-            "name": "Major General Eid Mohammed Thani Harib",
-            "departments": [
+            img: "/img/organization/6.png",
+            name: "Major General Eid Mohammed Thani Harib",
+            departments: [
               {
-                "img": "/img/organization/general-department-for-anti-narcotics.svg",
-                "title": "General Department for Anti-Narcotics"
+                img: "/img/organization/general-department-for-anti-narcotics.svg",
+                title: "General Department for Anti-Narcotics",
               },
               {
-                "img": "/img/organization/general-department-of-punitive-and-correctional-establishments.svg",
-                "title": "General Department of Punitive and Correctional Establishments"
+                img: "/img/organization/general-department-of-punitive-and-correctional-establishments.svg",
+                title:
+                  "General Department of Punitive and Correctional Establishments",
               },
               {
-                "img": "/img/organization/general-department-of-criminal-investigations-and-investigations.svg",
-                "title": "General Department of Criminal Investigations"
+                img: "/img/organization/general-department-of-criminal-investigations-and-investigations.svg",
+                title: "General Department of Criminal Investigations",
               },
               {
-                "img": "/img/organization/police-stations.svg",
-                "title": "Police Stations"
+                img: "/img/organization/police-stations.svg",
+                title: "Police Stations",
               },
               {
-                "img": "/img/organization/institutional-development-office.svg",
-                "title": "Institutional Development Office"
+                img: "/img/organization/institutional-development-office.svg",
+                title: "Institutional Development Office",
               },
               {
-                "img": "/img/organization/office-of-institutional-development.svg",
-                "title": "Office of Institutional Development (Centers)"
-              }
+                img: "/img/organization/office-of-institutional-development.svg",
+                title: "Office of Institutional Development (Centers)",
+              },
             ],
-            "designation": "Assistant Commander-in-Chief for Criminal Investigation Affairs"
-          }
+            designation:
+              "Assistant Commander-in-Chief for Criminal Investigation Affairs",
+          },
         ],
-        "name": "Major General Hareb Mohammed Saeed Al Shamsi",
-        "designation": "Deputy Commander-in-Chief for Criminal Sector Affairs"
-      }
+        name: "Major General Hareb Mohammed Saeed Al Shamsi",
+        designation: "Deputy Commander-in-Chief for Criminal Sector Affairs",
+      },
     ],
-    "name": "His Excellency Lieutenant General Abdullah Khalifa Obaid Saqr Al Marri",
-    "departments": [
+    name: "His Excellency Lieutenant General Abdullah Khalifa Obaid Saqr Al Marri",
+    departments: [
       {
-        "img": "/img/organization/police-judiciary-council.svg",
-        "title": "Police Judiciary Council"
+        img: "/img/organization/police-judiciary-council.svg",
+        title: "Police Judiciary Council",
       },
       {
-        "img": "/img/organization/internal-audit-office.svg",
-        "title": "Internal Audit Office"
-      }
+        img: "/img/organization/internal-audit-office.svg",
+        title: "Internal Audit Office",
+      },
     ],
-    "designation": "Commander-in-Chief of Dubai Police"
+    designation: "Commander-in-Chief of Dubai Police",
   },
-  "deputyChief": {
-    "img": "/img/organization/deputy.webp",
-    "name": "His Excellency Lieutenant General Dhahi Khalfan Tamim",
-    "designation": "Deputy Chief of Police and Public Security in Dubai"
-  }
+  deputyChief: {
+    img: "/img/organization/deputy.webp",
+    name: "His Excellency Lieutenant General Dhahi Khalfan Tamim",
+    designation: "Deputy Chief of Police and Public Security in Dubai",
+  },
 };

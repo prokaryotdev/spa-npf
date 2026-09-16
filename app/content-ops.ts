@@ -192,19 +192,43 @@ export const seedIncidents = (): Incident[] =>
     dispatched: d === null ? null : minutesAgo(d),
     onScene: s === null ? null : minutesAgo(s),
     closed: c === null ? null : minutesAgo(c),
-    log: [
-      { at: minutesAgo(r), text: `Call received via ${rest.source}.` },
-      ...(d === null
-        ? []
-        : [{ at: minutesAgo(d), text: `Dispatched — ${rest.unit}.` }]),
-      ...(s === null
-        ? []
-        : [{ at: minutesAgo(s), text: `Arrived on scene — ${rest.unit}.` }]),
-      ...notes.map(([m, text]) => ({ at: minutesAgo(m), text })),
-      ...(c === null
-        ? []
-        : [{ at: minutesAgo(c), text: `Call closed — ${rest.unit}.` }]),
-    ].sort((a, b) => a.at.localeCompare(b.at)),
+    log: (
+      [
+        {
+          at: minutesAgo(r),
+          text: "Call received via {source}.",
+          vars: { source: rest.source },
+        },
+        ...(d === null
+          ? []
+          : [
+              {
+                at: minutesAgo(d),
+                text: "Dispatched — {unit}.",
+                vars: { unit: rest.unit ?? "" },
+              },
+            ]),
+        ...(s === null
+          ? []
+          : [
+              {
+                at: minutesAgo(s),
+                text: "Arrived on scene — {unit}.",
+                vars: { unit: rest.unit ?? "" },
+              },
+            ]),
+        ...notes.map(([m, text]) => ({ at: minutesAgo(m), text })),
+        ...(c === null
+          ? []
+          : [
+              {
+                at: minutesAgo(c),
+                text: "Call closed — {unit}.",
+                vars: { unit: rest.unit ?? "" },
+              },
+            ]),
+      ] as Incident["log"]
+    ).sort((a, b) => a.at.localeCompare(b.at)),
   }));
 
 type UnitSeed = Omit<Unit, "since"> & { sinceMins: number };

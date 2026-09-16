@@ -5,10 +5,11 @@ import { notFound } from "next/navigation";
 import NewsCard from "../../../../../components/NewsCard";
 import { PageShell } from "../../../../../components/PageShell";
 import { ArrowRight } from "../../../../../components/icons";
-import { news } from "../../../../../content-news";
+import { news as newsSource } from "../../../../../content-news";
+import { getT, getLocalized } from "../../../../../i18n/server";
 
 export function generateStaticParams() {
-  return news.map((item) => ({ slug: item.slug }));
+  return newsSource.map((item) => ({ slug: item.slug }));
 }
 
 export async function generateMetadata({
@@ -17,10 +18,12 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const item = news.find((n) => n.slug === slug);
-  if (!item) return { title: "News | Dubai Police" };
+  const t = await getT();
+  const source = newsSource.find((n) => n.slug === slug);
+  if (!source) return { title: t("News | Dubai Police") };
+  const item = await getLocalized(source);
   return {
-    title: `${item.title} | Dubai Police`,
+    title: t("{name} | Dubai Police", { name: item.title }),
     description: item.summary,
     openGraph: {
       title: item.title,
@@ -37,6 +40,8 @@ export default async function NewsArticlePage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const news = await getLocalized(newsSource);
+  const t = await getT();
   const { slug } = await params;
   const index = news.findIndex((n) => n.slug === slug);
   if (index === -1) notFound();
@@ -89,7 +94,7 @@ export default async function NewsArticlePage({
             href="/app/home/media/news"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
           >
-            All news
+            {t("All news")}
             <ArrowRight className="size-4" />
           </Link>
         </div>
@@ -102,7 +107,7 @@ export default async function NewsArticlePage({
               id="more-news"
               className="mb-8 font-secondary text-2xl font-bold text-dp-green-deep md:text-4xl"
             >
-              More news
+              {t("More news")}
             </h2>
             <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-3">
               {more.map((n, i) => (

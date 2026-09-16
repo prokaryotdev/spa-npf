@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { markNoticesRead, useStore } from "./store";
-import { Card, Empty, StatusPill, aed, formatDate } from "./ui";
+import { Card, Empty, StatusPill } from "./ui";
 import { ArrowRight, BellIcon, ChevronRight } from "./icons";
+import { useFormat, useT } from "../i18n/client";
 
 /** Just enough of a service to draw a shortcut tile. */
 export type Shortcut = { slug: string; name: string; icon: string | null };
@@ -25,6 +26,8 @@ export default function PortalOverview({
   shortcuts: Shortcut[];
   serviceCount: number;
 }) {
+  const t = useT();
+  const format = useFormat();
   const { requests, fines, notices } = useStore();
 
   const open = requests.filter(
@@ -41,8 +44,10 @@ export default function PortalOverview({
         <section className="rounded-3xl bg-[#FFF7E6] p-6">
           <h2 className="font-secondary text-lg font-bold text-[#6b4a00]">
             {needsYou.length === 1
-              ? "One request needs something from you"
-              : `${needsYou.length} requests need something from you`}
+              ? t("One request needs something from you")
+              : t("{n} requests need something from you", {
+                  n: needsYou.length,
+                })}
           </h2>
           <ul className="mt-4 space-y-3">
             {needsYou.map((request) => (
@@ -53,15 +58,18 @@ export default function PortalOverview({
                 >
                   <span className="min-w-0 flex-1">
                     <span className="block font-medium text-dp-ink">
-                      {request.service}
+                      {t(request.service)}
                     </span>
                     <span className="mt-0.5 block text-sm text-dp-body">
-                      {request.note ?? "Open the request to see what is needed."}
+                      {t(
+                        request.note ??
+                          "Open the request to see what is needed.",
+                      )}
                     </span>
                   </span>
                   <ChevronRight
                     aria-hidden
-                    className="mt-1 size-5 shrink-0 text-dp-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1"
+                    className="mt-1 size-5 shrink-0 text-dp-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1 rtl:group-hover/row:-translate-x-1"
                   />
                 </Link>
               </li>
@@ -71,27 +79,31 @@ export default function PortalOverview({
       ) : null}
 
       <dl className="grid gap-3 sm:grid-cols-3">
-        <Stat label="Open requests" value={String(open.length)} href="/app/portal/requests" />
         <Stat
-          label="Unpaid fines"
-          value={owed ? aed(owed) : "None"}
+          label={t("Open requests")}
+          value={String(open.length)}
+          href="/app/portal/requests"
+        />
+        <Stat
+          label={t("Unpaid fines")}
+          value={owed ? format.aed(owed) : t("None")}
           href="/app/portal/fines"
         />
         <Stat
-          label="Unread notices"
+          label={t("Unread notices")}
           value={String(unread.length)}
           href="#notices"
         />
       </dl>
 
       <Card
-        title="Start a service"
+        title={t("Start a service")}
         action={
           <Link
             href="/app/services"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-dp-green transition-colors hover:text-dp-green-deep"
           >
-            All {serviceCount} services
+            {t("All {n} services", { n: serviceCount })}
             <ArrowRight aria-hidden className="size-4" />
           </Link>
         }
@@ -121,11 +133,11 @@ export default function PortalOverview({
                   />
                 ) : null}
                 <span className="min-w-0 flex-1 truncate text-sm font-medium text-dp-ink">
-                  {service.name}
+                  {t(service.name)}
                 </span>
                 <ChevronRight
                   aria-hidden
-                  className="size-4 shrink-0 text-dp-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1"
+                  className="size-4 shrink-0 text-dp-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1 rtl:group-hover/row:-translate-x-1"
                 />
               </Link>
             </li>
@@ -134,13 +146,13 @@ export default function PortalOverview({
       </Card>
 
       <Card
-        title="Recent requests"
+        title={t("Recent requests")}
         action={
           <Link
             href="/app/portal/requests"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-dp-green transition-colors hover:text-dp-green-deep"
           >
-            See all
+            {t("See all")}
             <ArrowRight aria-hidden className="size-4" />
           </Link>
         }
@@ -154,10 +166,10 @@ export default function PortalOverview({
               >
                 <div className="min-w-0">
                   <p className="truncate font-medium text-dp-ink">
-                    {request.service}
+                    {t(request.service)}
                   </p>
                   <p className="mt-0.5 text-sm text-dp-muted">
-                    {request.id} · {formatDate(request.submitted)}
+                    {request.id} · {format.date(request.submitted)}
                   </p>
                 </div>
                 <StatusPill status={request.status} />
@@ -166,14 +178,16 @@ export default function PortalOverview({
           </ul>
         ) : (
           <Empty
-            title="No requests yet"
-            body="Anything you apply for shows up here with its reference number and status."
+            title={t("No requests yet")}
+            body={t(
+              "Anything you apply for shows up here with its reference number and status.",
+            )}
             action={
               <Link
                 href="/app/services"
                 className="inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
               >
-                Browse services
+                {t("Browse services")}
                 <ArrowRight aria-hidden className="size-4" />
               </Link>
             }
@@ -181,11 +195,14 @@ export default function PortalOverview({
         )}
       </Card>
 
-      <section id="notices" className="scroll-mt-32 rounded-3xl p-6 ring-1 ring-black/[0.07]">
+      <section
+        id="notices"
+        className="scroll-mt-32 rounded-3xl p-6 ring-1 ring-black/[0.07]"
+      >
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <h2 className="flex items-center gap-2 font-secondary text-lg font-bold text-dp-green-deep">
             <BellIcon aria-hidden className="size-5" />
-            Notices
+            {t("Notices")}
           </h2>
           {unread.length ? (
             <button
@@ -193,7 +210,7 @@ export default function PortalOverview({
               onClick={markNoticesRead}
               className="text-sm font-medium text-dp-green underline underline-offset-2 transition-colors hover:text-dp-green-deep"
             >
-              Mark all read
+              {t("Mark all read")}
             </button>
           ) : null}
         </div>
@@ -208,21 +225,25 @@ export default function PortalOverview({
                 }`}
               >
                 <p className="flex flex-wrap items-baseline justify-between gap-2">
-                  <span className="font-medium text-dp-ink">{notice.title}</span>
+                  <span className="font-medium text-dp-ink">
+                    {t(notice.title)}
+                  </span>
                   <span className="text-xs text-dp-muted">
-                    {formatDate(notice.at)}
+                    {format.date(notice.at)}
                   </span>
                 </p>
                 <p className="mt-1 text-sm leading-relaxed text-dp-body">
-                  {notice.body}
+                  {t(notice.body)}
                 </p>
               </li>
             ))}
           </ul>
         ) : (
           <Empty
-            title="Nothing to read"
-            body="Updates about your requests, fines and documents land here."
+            title={t("Nothing to read")}
+            body={t(
+              "Updates about your requests, fines and documents land here.",
+            )}
           />
         )}
       </section>

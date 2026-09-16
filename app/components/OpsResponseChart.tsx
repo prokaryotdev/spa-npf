@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { responseTrend } from "../content-ops";
+import { useT } from "../i18n/client";
 
 const peak = Math.max(...responseTrend.map((d) => d.minutes));
 const target = 5;
@@ -13,25 +14,28 @@ const target = 5;
  * on all twelve bars is noise.
  */
 export default function OpsResponseChart() {
+  const t = useT();
   const [hover, setHover] = useState<number | null>(null);
 
   return (
     <figure className="m-0">
       <figcaption className="sr-only">
-        Median response time over the last 12 hours, in minutes
+        {t("Median response time over the last 12 hours, in minutes")}
       </figcaption>
       <p className="mb-5 text-xs text-[var(--ops-dim)]">
-        Call to arrival, last 12 hours. Target {target} minutes.
+        {t("Call to arrival, last 12 hours. Target {n} minutes.", {
+          n: target,
+        })}
       </p>
 
       <div className="relative h-40">
         {/* Target line, drawn behind the bars and labelled at the end. */}
         <div
           aria-hidden
-          className="absolute right-0 left-0 border-t border-dashed border-[var(--ops-line)]"
+          className="absolute inset-x-0 border-t border-dashed border-[var(--ops-line)]"
           style={{ bottom: `${(target / peak) * 100}%` }}
         >
-          <span className="absolute -top-2 right-0 bg-[var(--ops-panel)] pl-2 text-[10px] text-[var(--ops-dim)] tabular-nums">
+          <span className="absolute -top-2 end-0 bg-[var(--ops-panel)] ps-2 text-[10px] text-[var(--ops-dim)] tabular-nums">
             {target}m
           </span>
         </div>
@@ -41,14 +45,20 @@ export default function OpsResponseChart() {
             const over = point.minutes > target;
             const show = hover === i || point.minutes === peak;
             return (
-              <li key={point.hour} className="relative flex h-full flex-1 items-end">
+              <li
+                key={point.hour}
+                className="relative flex h-full flex-1 items-end"
+              >
                 <button
                   type="button"
                   onMouseEnter={() => setHover(i)}
                   onMouseLeave={() => setHover((h) => (h === i ? null : h))}
                   onFocus={() => setHover(i)}
                   onBlur={() => setHover((h) => (h === i ? null : h))}
-                  aria-label={`${point.hour}:00 — ${point.minutes} minutes`}
+                  aria-label={t("{hour}:00 — {minutes} minutes", {
+                    hour: point.hour,
+                    minutes: point.minutes,
+                  })}
                   className="w-full rounded-t transition-opacity"
                   style={{
                     height: `${(point.minutes / peak) * 100}%`,
@@ -80,29 +90,34 @@ export default function OpsResponseChart() {
 
       <details className="mt-4">
         <summary className="cursor-pointer text-xs text-[var(--ops-dim)] transition-colors hover:text-[var(--ops-text)]">
-          Show the numbers
+          {t("Show the numbers")}
         </summary>
-        <table className="mt-3 w-full text-left text-xs">
+        <table className="mt-3 w-full text-start text-xs">
           <caption className="sr-only">
-            Median response time in minutes, by hour, over the last 12 hours
+            {t(
+              "Median response time in minutes, by hour, over the last 12 hours",
+            )}
           </caption>
           <thead className="text-[var(--ops-dim)]">
             <tr>
               <th scope="col" className="py-1 font-medium">
-                Hour
+                {t("Hour")}
               </th>
-              <th scope="col" className="py-1 text-right font-medium">
-                Minutes
+              <th scope="col" className="py-1 text-end font-medium">
+                {t("Minutes")}
               </th>
             </tr>
           </thead>
           <tbody>
             {responseTrend.map((point) => (
-              <tr key={point.hour} className="border-t border-[var(--ops-line)]">
+              <tr
+                key={point.hour}
+                className="border-t border-[var(--ops-line)]"
+              >
                 <th scope="row" className="py-1.5 font-normal tabular-nums">
                   {point.hour}:00
                 </th>
-                <td className="py-1.5 text-right tabular-nums">
+                <td className="py-1.5 text-end tabular-nums">
                   {point.minutes}
                 </td>
               </tr>

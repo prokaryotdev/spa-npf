@@ -4,8 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useId, useMemo, useState } from "react";
-import { services, serviceCategoryNames } from "../content-services";
+import {
+  services as servicesSource,
+  serviceCategoryNames as serviceCategoryNamesSource,
+} from "../content-services";
 import { ChevronRight, SearchIcon, ServicesIcon } from "./icons";
+import { useT, useLocalized } from "../i18n/client";
 
 const AUDIENCES = ["Individuals", "Visitors", "Business", "Students"];
 
@@ -17,6 +21,9 @@ const AUDIENCES = ["Individuals", "Visitors", "Business", "Students"];
  * down. Filtering runs on the array already in the bundle.
  */
 export default function ServiceCatalogue() {
+  const services = useLocalized(servicesSource);
+  const serviceCategoryNames = useLocalized(serviceCategoryNamesSource);
+  const t = useT();
   const id = useId();
   const params = useSearchParams();
   const router = useRouter();
@@ -38,11 +45,11 @@ export default function ServiceCatalogue() {
       if (audience && !s.audiences.includes(audience)) return false;
       if (popularOnly && !s.mostUsed) return false;
       if (!q) return true;
-      return `${s.name} ${s.description} ${s.category ?? ""}`
+      return `${s.name} ${t(s.name)} ${s.description} ${s.category ?? ""} ${t(s.category ?? "")}`
         .toLowerCase()
         .includes(q);
     });
-  }, [query, category, audience, popularOnly]);
+  }, [services, query, category, audience, popularOnly, t]);
 
   // Grouped while browsing, flat once a filter has already narrowed it down —
   // a single heading above a single list is noise.
@@ -52,11 +59,11 @@ export default function ServiceCatalogue() {
     const order = [...serviceCategoryNames, null];
     return order
       .map((name) => ({
-        name: name ?? "More services",
+        name: name ?? t("More services"),
         items: visible.filter((s) => s.category === name),
       }))
       .filter((section) => section.items.length);
-  }, [grouped, visible]);
+  }, [grouped, visible, serviceCategoryNames, t]);
 
   const filtered = Boolean(query.trim() || category || audience || popularOnly);
 
@@ -68,16 +75,19 @@ export default function ServiceCatalogue() {
             htmlFor={`${id}-q`}
             className="mb-1.5 block text-sm font-medium text-dp-ink"
           >
-            Search services
+            {t("Search services")}
           </label>
           <div className="flex h-[50px] items-center gap-3 rounded-xl bg-[#F4F8F6] px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-dp-green">
-            <SearchIcon aria-hidden className="size-5 shrink-0 text-dp-green-ink" />
+            <SearchIcon
+              aria-hidden
+              className="size-5 shrink-0 text-dp-green-ink"
+            />
             <input
               id={`${id}-q`}
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Certificate, fine, permit…"
+              placeholder={t("Certificate, fine, permit…")}
               className="w-full bg-transparent py-3 text-base text-dp-ink outline-none placeholder:text-dp-muted"
             />
           </div>
@@ -88,7 +98,7 @@ export default function ServiceCatalogue() {
             htmlFor={`${id}-cat`}
             className="mb-1.5 block text-sm font-medium text-dp-ink"
           >
-            Package
+            {t("Package")}
           </label>
           <select
             id={`${id}-cat`}
@@ -96,10 +106,10 @@ export default function ServiceCatalogue() {
             onChange={(e) => setCategory(e.target.value)}
             className="h-[50px] rounded-xl bg-[#F4F8F6] px-4 text-base text-dp-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-dp-green"
           >
-            <option value="">All packages</option>
+            <option value="">{t("All packages")}</option>
             {serviceCategoryNames.map((name) => (
               <option key={name} value={name}>
-                {name}
+                {t(name)}
               </option>
             ))}
           </select>
@@ -110,7 +120,7 @@ export default function ServiceCatalogue() {
             htmlFor={`${id}-aud`}
             className="mb-1.5 block text-sm font-medium text-dp-ink"
           >
-            I am
+            {t("I am")}
           </label>
           <select
             id={`${id}-aud`}
@@ -118,10 +128,10 @@ export default function ServiceCatalogue() {
             onChange={(e) => setAudience(e.target.value)}
             className="h-[50px] rounded-xl bg-[#F4F8F6] px-4 text-base text-dp-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-dp-green"
           >
-            <option value="">Anyone</option>
+            <option value="">{t("Anyone")}</option>
             {AUDIENCES.map((name) => (
               <option key={name} value={name}>
-                {name}
+                {t(name)}
               </option>
             ))}
           </select>
@@ -137,13 +147,16 @@ export default function ServiceCatalogue() {
               : "bg-[#F4F8F6] text-dp-ink ring-1 ring-black/5 hover:bg-[#e7f0ec]"
           }`}
         >
-          Most used
+          {t("Most used")}
         </button>
       </div>
 
       <div className="mb-6 flex flex-wrap items-center gap-4">
         <p aria-live="polite" className="text-sm text-dp-muted">
-          Showing {visible.length} of {services.length} services
+          {t("Showing {shown} of {total} services", {
+            shown: visible.length,
+            total: services.length,
+          })}
         </p>
         {filtered ? (
           <button
@@ -158,19 +171,19 @@ export default function ServiceCatalogue() {
             }}
             className="text-sm font-medium text-dp-green underline underline-offset-2 transition-colors hover:text-dp-green-deep"
           >
-            Clear filters
+            {t("Clear filters")}
           </button>
         ) : null}
       </div>
 
       {visible.length === 0 ? (
         <p className="rounded-2xl bg-[#F9F9F9] px-6 py-10 text-center text-base text-dp-body">
-          No service matches those filters. Try clearing one of them, or{" "}
+          {t("No service matches those filters. Try clearing one of them, or")}{" "}
           <Link
             href="/app/home/contactUs"
             className="font-medium text-dp-green underline underline-offset-2"
           >
-            contact us
+            {t("contact us")}
           </Link>
           .
         </p>
@@ -180,7 +193,7 @@ export default function ServiceCatalogue() {
         <section key={section.name || "all"} className="mb-10 last:mb-0">
           {section.name ? (
             <h2 className="mb-4 font-secondary text-xl font-bold text-dp-green-deep md:text-2xl">
-              {section.name}
+              {t(section.name)}
             </h2>
           ) : null}
           <ul className="grid gap-2 lg:grid-cols-2">
@@ -211,7 +224,7 @@ export default function ServiceCatalogue() {
                       </span>
                       {service.mostUsed ? (
                         <span className="rounded-full bg-[#e7f6f1] px-2 py-0.5 text-[11px] font-medium text-dp-green-ink">
-                          Most used
+                          {t("Most used")}
                         </span>
                       ) : null}
                     </span>
@@ -230,7 +243,9 @@ export default function ServiceCatalogue() {
                       {service.audiences.length ? (
                         <>
                           <span aria-hidden>·</span>
-                          <span>{service.audiences.join(", ")}</span>
+                          <span>
+                            {service.audiences.map((a) => t(a)).join("، ")}
+                          </span>
                         </>
                       ) : null}
                     </span>

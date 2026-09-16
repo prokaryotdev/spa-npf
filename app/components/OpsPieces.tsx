@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import { dispatchTarget } from "../content-ops";
+import { useT } from "../i18n/client";
 import { useHydrated } from "./store";
 import type { Incident, Priority, UnitStatus } from "./store";
 
@@ -129,12 +130,13 @@ export function OpsPanel({
   flush?: boolean;
   children: React.ReactNode;
 }) {
+  const t = useT();
   return (
     <section className="overflow-hidden rounded-xl border border-[var(--ops-line)] bg-[var(--ops-panel)]">
       {title ? (
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--ops-line)] px-4 py-3">
           <h2 className="flex items-baseline gap-2.5 font-secondary text-sm font-bold tracking-[0.09em] uppercase">
-            {title}
+            {t(title)}
             {count !== undefined ? (
               <span className="font-primary text-xs font-normal tracking-normal text-[var(--ops-dim)] normal-case tabular-nums">
                 {count}
@@ -173,16 +175,20 @@ export function PriorityTag({
   priority: Priority;
   withLabel?: boolean;
 }) {
+  const t = useT();
   const { token, label } = PRIORITY[priority];
   return (
     <span
       className="inline-flex shrink-0 items-center gap-2 text-xs font-bold whitespace-nowrap"
       style={{ color: token }}
     >
-      <span aria-hidden className="dp-ops-dot size-1.5 rounded-full bg-current" />
+      <span
+        aria-hidden
+        className="dp-ops-dot size-1.5 rounded-full bg-current"
+      />
       {priority}
       <span className={withLabel ? "font-medium opacity-80" : "sr-only"}>
-        {label}
+        {t(label)}
       </span>
     </span>
   );
@@ -204,11 +210,12 @@ const CALL_LABEL: Record<Incident["status"], string> = {
 };
 
 export function OpsStatus({ status }: { status: Incident["status"] }) {
+  const t = useT();
   return (
     <span
       className={`inline-flex shrink-0 items-center rounded px-2 py-0.5 text-xs font-medium whitespace-nowrap ${CALL_TONE[status]}`}
     >
-      {CALL_LABEL[status]}
+      {t(CALL_LABEL[status])}
     </span>
   );
 }
@@ -221,11 +228,12 @@ const UNIT_TONE: Record<UnitStatus, string> = {
 };
 
 export function UnitStatusTag({ status }: { status: UnitStatus }) {
+  const t = useT();
   return (
     <span
       className={`inline-flex shrink-0 items-center rounded px-2 py-0.5 text-xs font-medium whitespace-nowrap ${UNIT_TONE[status]}`}
     >
-      {status}
+      {t(status)}
     </span>
   );
 }
@@ -250,10 +258,11 @@ export function Readout({
   note?: string;
   tone?: string;
 }) {
+  const t = useT();
   return (
     <div className="px-4 py-3 first:pl-0 sm:px-5">
       <dt className="text-[11px] tracking-[0.12em] text-[var(--ops-dim)] uppercase">
-        {label}
+        {t(label)}
       </dt>
       <dd
         className="mt-1.5 font-secondary text-[26px] leading-none font-bold tabular-nums"
@@ -262,7 +271,7 @@ export function Readout({
         {value}
       </dd>
       {note ? (
-        <p className="mt-1.5 text-[11px] text-[var(--ops-dim)]">{note}</p>
+        <p className="mt-1.5 text-[11px] text-[var(--ops-dim)]">{t(note)}</p>
       ) : null}
     </div>
   );

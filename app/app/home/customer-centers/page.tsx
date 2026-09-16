@@ -2,29 +2,43 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PageShell } from "../../../components/PageShell";
 import { ArrowUpRight, PinIcon } from "../../../components/icons";
-import { customerCenters } from "../../../content-footer";
+import { customerCenters as customerCentersSource } from "../../../content-footer";
+import { getT, getLocalized } from "../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Customer Centers | Dubai Police",
-  description:
-    "Police stations and Smart Police Stations across Dubai, with addresses and opening hours.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Customer Centers | Dubai Police"),
+    description: t(
+      "Police stations and Smart Police Stations across Dubai, with addresses and opening hours.",
+    ),
+  };
+}
 
-export default function CustomerCentersPage() {
+export default async function CustomerCentersPage() {
+  const customerCenters = await getLocalized(customerCentersSource);
+  const t = await getT();
   const smart = customerCenters.filter(
     (c) => c.kind === "Smart Police Station",
   ).length;
 
   return (
     <PageShell
-      title="Customer Centers"
-      intro="Police stations and Smart Police Stations across Dubai, with addresses and opening hours."
+      title={t("Customer Centers")}
+      intro={t(
+        "Police stations and Smart Police Stations across Dubai, with addresses and opening hours.",
+      )}
     >
       <section className="bg-white pb-24">
         <div className="dp-container">
           <p className="mb-8 text-sm text-dp-muted">
-            {customerCenters.length} centers · {smart} of them self-service
-            Smart Police Stations
+            {t(
+              "{total} centers · {smart} of them self-service Smart Police Stations",
+              {
+                total: customerCenters.length,
+                smart,
+              },
+            )}
           </p>
 
           <ul className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -42,8 +56,8 @@ export default function CustomerCentersPage() {
                       sizes="(max-width: 768px) 92vw, 32vw"
                       className="object-cover"
                     />
-                    <span className="absolute top-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-dp-green-deep backdrop-blur">
-                      {center.kind}
+                    <span className="absolute top-3 start-3 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-dp-green-deep backdrop-blur">
+                      {t(center.kind)}
                     </span>
                   </div>
                 ) : null}
@@ -53,10 +67,15 @@ export default function CustomerCentersPage() {
                     {center.name}
                   </h2>
                   <p className="flex gap-2 text-sm leading-relaxed text-dp-body">
-                    <PinIcon aria-hidden className="mt-0.5 size-4 shrink-0 text-dp-green" />
+                    <PinIcon
+                      aria-hidden
+                      className="mt-0.5 size-4 shrink-0 text-dp-green"
+                    />
                     {center.address}
                   </p>
-                  <p className="text-sm text-dp-muted">Open: {center.timing}</p>
+                  <p className="text-sm text-dp-muted">
+                    {t("Open: {hours}", { hours: t(center.timing) })}
+                  </p>
                   {center.map ? (
                     <a
                       href={center.map}
@@ -64,9 +83,11 @@ export default function CustomerCentersPage() {
                       rel="noopener noreferrer"
                       className="mt-auto inline-flex items-center gap-1.5 self-start pt-2 text-sm font-medium text-dp-green transition-colors hover:text-dp-green-deep"
                     >
-                      Open in Maps
+                      {t("Open in Maps")}
                       <ArrowUpRight aria-hidden className="size-4" />
-                      <span className="sr-only">(opens in a new window)</span>
+                      <span className="sr-only">
+                        {t("(opens in a new window)")}
+                      </span>
                     </a>
                   ) : null}
                 </div>

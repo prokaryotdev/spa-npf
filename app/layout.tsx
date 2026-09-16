@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { LocaleProvider } from "./i18n/client";
+import { dirOf } from "./i18n/config";
+import { getLang, getT } from "./i18n/server";
 
 const dubai = localFont({
   variable: "--font-dubai",
@@ -23,31 +26,38 @@ const bukra = localFont({
   ],
 });
 
-export const metadata: Metadata = {
-  // Lets article pages emit absolute og:image URLs; override per deployment.
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dubaipolice.gov.ae",
-  ),
-  title: "Dubai Police - Smart Secure Together",
-  description:
-    "Together for a safer Dubai tomorrow. Report, apply, inquire and pay, and request support from Dubai Police.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    // Lets article pages emit absolute og:image URLs; override per deployment.
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dubaipolice.gov.ae",
+    ),
+    title: t("Dubai Police - Smart Secure Together"),
+    description: t(
+      "Together for a safer Dubai tomorrow. Report, apply, inquire and pay, and request support from Dubai Police.",
+    ),
+  };
+}
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const lang = await getLang();
+  const t = await getT();
+
   return (
     <html
-      lang="en"
-      dir="ltr"
+      lang={lang}
+      dir={dirOf(lang)}
       className={`${dubai.variable} ${bukra.variable} h-full`}
     >
       <body className="min-h-full overflow-x-hidden">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-dp-green-ink focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-dp-green-ink focus:shadow-lg"
         >
-          Skip to main content
+          {t("Skip to main content")}
         </a>
-        {children}
+        <LocaleProvider lang={lang}>{children}</LocaleProvider>
       </body>
     </html>
   );

@@ -11,6 +11,8 @@ import {
   type SuggestionGroup,
 } from "../search-index";
 import { ClockIcon, EnterKeyIcon, SearchIcon, ServicesIcon } from "./icons";
+import { useLang, useT } from "../i18n/client";
+import { localize } from "../i18n/localize";
 
 const RECENT_KEY = "dp:recent-searches";
 const RECENT_MAX = 5;
@@ -29,7 +31,7 @@ export default function ServiceSearch({
   clearance = 16,
   autoFocus = false,
   initialQuery = "",
-  placeholder = "Search for a service",
+  placeholder,
   onNavigate,
   onOpenChange,
 }: {
@@ -50,6 +52,7 @@ export default function ServiceSearch({
   autoFocus?: boolean;
   /** Seeds the box on /app/search so the query stays visible and editable. */
   initialQuery?: string;
+  /** Defaults to "Search for a service", translated. */
   placeholder?: string;
   /** Lets the header overlay close itself once a suggestion is taken. */
   onNavigate?: () => void;
@@ -60,6 +63,7 @@ export default function ServiceSearch({
    */
   onOpenChange?: (open: boolean) => void;
 }) {
+  const t = useT();
   const router = useRouter();
   const id = useId();
   const [query, setQuery] = useState(initialQuery);
@@ -90,12 +94,18 @@ export default function ServiceSearch({
   }
 
   const trimmed = query.trim();
+  const lang = useLang();
+  // The index itself stays English — it is keyed by slug and href — so the
+  // rows are translated on the way out rather than duplicated on the way in.
   const groups = useMemo<SuggestionGroup[]>(
     () =>
-      trimmed
-        ? suggest(trimmed)
-        : [{ section: "Most used services", hits: popularServices }],
-    [trimmed],
+      localize(
+        trimmed
+          ? suggest(trimmed)
+          : [{ section: "Most used services", hits: popularServices }],
+        lang,
+      ),
+    [trimmed, lang],
   );
 
   // One flat list behind the grouped rendering: arrow keys move through rows,
@@ -151,7 +161,10 @@ export default function ServiceSearch({
   }, [active]);
 
   function remember(term: string) {
-    const next = [term, ...recent.filter((r) => r !== term)].slice(0, RECENT_MAX);
+    const next = [term, ...recent.filter((r) => r !== term)].slice(
+      0,
+      RECENT_MAX,
+    );
     setRecent(next);
     try {
       localStorage.setItem(RECENT_KEY, JSON.stringify(next));
@@ -194,7 +207,8 @@ export default function ServiceSearch({
       setActive(to);
     };
     if (e.key === "ArrowDown") move(active + 1 >= rows.length ? 0 : active + 1);
-    else if (e.key === "ArrowUp") move(active <= 0 ? rows.length - 1 : active - 1);
+    else if (e.key === "ArrowUp")
+      move(active <= 0 ? rows.length - 1 : active - 1);
     else if (e.key === "Home" && open) move(0);
     else if (e.key === "End" && open) move(rows.length - 1);
   }
@@ -207,10 +221,10 @@ export default function ServiceSearch({
       <form
         role="search"
         onSubmit={submit}
-        className={`flex items-center gap-3 rounded-2xl px-4 transition-shadow ${
+        className={`flex items-center rounded-2xl ${
           hero
-            ? "bg-white shadow-[0_18px_44px_-24px_rgba(0,0,0,0.65)]"
-            : "bg-[#F4F8F6] ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-dp-green"
+            ? "gap-[11px] bg-white px-[11px]"
+            : "gap-3 bg-[#F4F8F6] px-4 ring-1 ring-black/5 transition-shadow focus-within:ring-2 focus-within:ring-dp-green"
         }`}
       >
         <SearchIcon aria-hidden className="size-6 shrink-0 text-dp-green-ink" />
@@ -228,13 +242,15 @@ export default function ServiceSearch({
           aria-activedescendant={
             open && active >= 0 ? `${id}-row-${active}` : undefined
           }
-          aria-label="Search Dubai Police services"
-          placeholder={placeholder}
+          aria-label={t("Search Dubai Police services")}
+          placeholder={placeholder ?? t("Search for a service")}
           onChange={(e) => retype(e.target.value)}
           onFocus={openPanel}
           onKeyDown={onKeyDown}
           className={`w-full flex-grow bg-transparent outline-none placeholder:text-dp-muted ${
-            hero ? "py-5 text-base text-dp-ink" : "py-4 text-base text-dp-ink"
+            hero
+              ? "py-5 text-sm text-dp-muted [@media(max-height:768px)]:py-3"
+              : "py-4 text-base text-dp-ink"
           }`}
         />
         {trimmed ? (
@@ -242,7 +258,7 @@ export default function ServiceSearch({
             type="submit"
             className="my-2 shrink-0 rounded-xl bg-dp-green px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
           >
-            Search
+            {t("Search")}
           </button>
         ) : null}
       </form>
@@ -251,23 +267,26 @@ export default function ServiceSearch({
         <div
           ref={list}
           style={{ maxHeight }}
-          className={`dp-suggest absolute right-0 left-0 z-50 overflow-y-auto rounded-2xl bg-white p-2 text-left shadow-[0_28px_60px_-24px_rgba(0,50,34,0.55)] ring-1 ring-black/10 ${
+          className={`dp-suggest absolute inset-x-0 z-50 overflow-y-auto rounded-2xl bg-white p-2 text-start shadow-[0_28px_60px_-24px_rgba(0,50,34,0.55)] ring-1 ring-black/10 ${
             placement === "up"
               ? "dp-suggest-up bottom-[calc(100%+8px)]"
               : "top-[calc(100%+8px)]"
           }`}
         >
-          <ul id={listId} role="listbox" aria-label="Suggestions">
+          <ul id={listId} role="listbox" aria-label={t("Suggestions")}>
             {groups.map((group) => (
               <li key={group.section} role="presentation">
                 <p className="px-3 pt-3 pb-1.5 text-xs font-medium tracking-[0.08em] text-dp-muted uppercase">
-                  {group.section}
+                  {t(group.section)}
                 </p>
                 <ul role="presentation">
                   {group.hits.map((hit) => {
                     const index = rows.indexOf(hit);
                     return (
-                      <li key={hit.section + hit.href + hit.title} role="presentation">
+                      <li
+                        key={hit.section + hit.href + hit.title}
+                        role="presentation"
+                      >
                         <Link
                           role="option"
                           id={`${id}-row-${index}`}
@@ -294,7 +313,9 @@ export default function ServiceSearch({
                           <span className="min-w-0 flex-1">
                             <span
                               className={`block truncate text-[15px] leading-snug font-medium ${
-                                index === active ? "text-dp-green-ink" : "text-dp-ink"
+                                index === active
+                                  ? "text-dp-green-ink"
+                                  : "text-dp-ink"
                               }`}
                             >
                               <Marked text={hit.title} query={trimmed} />
@@ -322,15 +343,15 @@ export default function ServiceSearch({
 
           {empty ? (
             <p className="px-3 py-6 text-center text-sm text-dp-body">
-              Nothing matches{" "}
-              <span className="font-medium text-dp-ink">“{trimmed}”</span>. Try a
-              shorter word, or{" "}
+              {t("Nothing matches")}{" "}
+              <span className="font-medium text-dp-ink">“{trimmed}”</span>
+              {t(". Try a shorter word, or")}{" "}
               <Link
                 href="/app/services"
                 onClick={() => setOpen(false)}
                 className="font-medium text-dp-green underline underline-offset-2"
               >
-                browse all services
+                {t("browse all services")}
               </Link>
               .
             </p>
@@ -340,7 +361,7 @@ export default function ServiceSearch({
             <div className="mt-1 border-t border-black/[0.07] pt-2">
               <div className="flex items-center justify-between px-3 pt-1 pb-1.5">
                 <p className="text-xs font-medium tracking-[0.08em] text-dp-muted uppercase">
-                  Recent
+                  {t("Recent")}
                 </p>
                 <button
                   type="button"
@@ -352,7 +373,7 @@ export default function ServiceSearch({
                   }}
                   className="text-xs text-dp-muted underline underline-offset-2 transition-colors hover:text-dp-green"
                 >
-                  Clear
+                  {t("Clear")}
                 </button>
               </div>
               <ul className="pb-1">
@@ -363,7 +384,10 @@ export default function ServiceSearch({
                       onClick={() => retype(term)}
                       className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-[15px] text-dp-body transition-colors hover:bg-black/[0.04]"
                     >
-                      <ClockIcon aria-hidden className="size-4 shrink-0 text-dp-muted" />
+                      <ClockIcon
+                        aria-hidden
+                        className="size-4 shrink-0 text-dp-muted"
+                      />
                       <span className="truncate">{term}</span>
                     </button>
                   </li>
@@ -380,8 +404,10 @@ export default function ServiceSearch({
                 className="flex w-full items-center gap-2 text-left text-[13px] text-dp-body transition-colors hover:text-dp-green"
               >
                 <EnterKeyIcon aria-hidden className="size-4 shrink-0" />
-                See all results for
-                <span className="truncate font-medium text-dp-ink">“{trimmed}”</span>
+                {t("See all results for")}
+                <span className="truncate font-medium text-dp-ink">
+                  “{trimmed}”
+                </span>
               </button>
             </div>
           ) : null}
@@ -390,7 +416,15 @@ export default function ServiceSearch({
 
       <p aria-live="polite" className="sr-only">
         {open && trimmed
-          ? `${rows.length} suggestion${rows.length === 1 ? "" : "s"} for ${trimmed}`
+          ? t(
+              rows.length === 1
+                ? "{n} suggestion for {q}"
+                : "{n} suggestions for {q}",
+              {
+                n: rows.length,
+                q: trimmed,
+              },
+            )
           : ""}
       </p>
     </div>
@@ -402,7 +436,13 @@ function Glyph({ hit }: { hit: SearchHit }) {
   if (hit.icon)
     return (
       <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-lg bg-[#F4F8F6]">
-        <Image src={hit.icon} alt="" width={20} height={20} className="size-5" />
+        <Image
+          src={hit.icon}
+          alt=""
+          width={20}
+          height={20}
+          className="size-5"
+        />
       </span>
     );
   return (

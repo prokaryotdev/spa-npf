@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useStore } from "./store";
 import { UserCircle } from "./icons";
+import { useT } from "../i18n/client";
 
 /**
  * The header's account control. Signed out it says Sign In; signed in it
@@ -17,6 +18,7 @@ export default function AccountLink({
   /** The drawer wants a full-width button, the nav bar a pill. */
   block?: boolean;
 }) {
+  const t = useT();
   const { session, loaded } = useStore();
 
   const shape = block
@@ -30,12 +32,14 @@ export default function AccountLink({
         onClick={onNavigate}
         className={`inline-flex items-center gap-2 rounded-full bg-dp-green font-medium whitespace-nowrap text-white transition-colors hover:bg-dp-green-mid ${shape}`}
       >
-        Sign In
+        {t("Sign In")}
         <UserCircle className="size-[18px]" />
       </Link>
     );
 
-  const first = session.name.split(" ")[0];
+  // The Arabic name has its own word order, so take the first word of
+  // whichever name is on screen.
+  const first = t(session.name).split(" ")[0];
 
   return (
     <Link
@@ -44,7 +48,7 @@ export default function AccountLink({
       className={`inline-flex items-center gap-2 rounded-full bg-dp-green font-medium whitespace-nowrap text-white transition-colors hover:bg-dp-green-mid ${shape}`}
     >
       <UserCircle className="size-[18px]" />
-      {session.role === "officer" ? "Console" : first}
+      {session.role === "officer" ? t("Console") : first}
     </Link>
   );
 }

@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
 import { LinkCard, PageShell } from "../../../components/PageShell";
-import { information } from "../../../content-pages";
+import { information as informationSource } from "../../../content-pages";
+import { getLocalized, getT } from "../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Information | Dubai Police",
-  description:
-    "Laws and legislation, traffic black points, street speed limits, and sustainable development practices.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Information | Dubai Police"),
+    description: t(
+      "Laws and legislation, traffic black points, street speed limits, and sustainable development practices.",
+    ),
+  };
+}
 
-export default function InformationPage() {
+export default async function InformationPage() {
+  const information = await getLocalized(informationSource);
   return (
     <PageShell title={information.title}>
       <section className="bg-white pb-24">

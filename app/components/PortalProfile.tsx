@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { signIn, useStore, type Session } from "./store";
 import { CheckCircle } from "./icons";
+import { useT } from "../i18n/client";
 
 type Errors = { email?: string; phone?: string };
 
@@ -11,6 +12,7 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE = /^(\+971|0)\s?5\d(\s?\d){7}$/;
 
 export default function PortalProfile() {
+  const t = useT();
   const { session } = useStore();
   const [errors, setErrors] = useState<Errors>({});
   const [saved, setSaved] = useState(false);
@@ -42,23 +44,29 @@ export default function PortalProfile() {
   return (
     <div className="max-w-[560px]">
       <h2 className="mb-6 font-secondary text-2xl font-bold text-dp-green-deep">
-        Profile
+        {t("Profile")}
       </h2>
 
       <dl className="mb-8 divide-y divide-black/[0.07] rounded-2xl bg-[#F9F9F9] px-5">
-        <Row label="Full name" value={session.name} />
-        <Row label="Emirates ID" value={session.emiratesId} />
-        {session.rank ? <Row label="Rank" value={session.rank} /> : null}
-        {session.station ? <Row label="Station" value={session.station} /> : null}
+        <Row label={t("Full name")} value={t(session.name)} />
+        <Row label={t("Emirates ID")} value={session.emiratesId} />
+        {session.rank ? (
+          <Row label={t("Rank")} value={t(session.rank)} />
+        ) : null}
+        {session.station ? (
+          <Row label={t("Station")} value={t(session.station)} />
+        ) : null}
       </dl>
       <p className="mb-8 -mt-6 text-sm text-dp-muted">
-        Name and Emirates ID come from UAE PASS and cannot be edited here.
+        {t(
+          "Name and Emirates ID come from UAE PASS and cannot be edited here.",
+        )}
       </p>
 
       <form noValidate onSubmit={onSubmit} className="flex flex-col gap-5">
         <Field
           id="email"
-          label="Email address"
+          label={t("Email address")}
           type="email"
           autoComplete="email"
           defaultValue={session.email}
@@ -66,7 +74,7 @@ export default function PortalProfile() {
         />
         <Field
           id="phone"
-          label="Mobile number"
+          label={t("Mobile number")}
           type="tel"
           autoComplete="tel"
           defaultValue={session.phone}
@@ -77,14 +85,14 @@ export default function PortalProfile() {
           type="submit"
           className="self-start rounded-full bg-dp-green px-6 py-3 font-medium text-white transition-colors hover:bg-dp-green-mid"
         >
-          Save changes
+          {t("Save changes")}
         </button>
 
         <p aria-live="polite" className="min-h-[1.5rem] text-sm">
           {saved ? (
             <span className="inline-flex items-center gap-2 text-dp-green-ink">
               <CheckCircle aria-hidden className="size-4" />
-              Saved. Updates about your requests go to these details.
+              {t("Saved. Updates about your requests go to these details.")}
             </span>
           ) : null}
         </p>
@@ -112,9 +120,13 @@ function Field({
   label: string;
   error?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>) {
+  const t = useT();
   return (
     <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-dp-ink">
+      <label
+        htmlFor={id}
+        className="mb-1.5 block text-sm font-medium text-dp-ink"
+      >
         {label}
       </label>
       <input
@@ -129,7 +141,7 @@ function Field({
       />
       {error ? (
         <p id={`${id}-error`} className="mt-1.5 text-sm text-red-700">
-          {error}
+          {t(error)}
         </p>
       ) : null}
     </div>

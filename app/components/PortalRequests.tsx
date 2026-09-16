@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useId, useMemo, useState } from "react";
 import { useStore, type RequestStatus } from "./store";
-import { Empty, StatusPill, formatDate, formatDateTime } from "./ui";
+import { Empty, StatusPill } from "./ui";
 import { ArrowRight, ChevronDown, SearchIcon } from "./icons";
+import { useFormat, useT } from "../i18n/client";
 
 const FILTERS: (RequestStatus | "All")[] = [
   "All",
@@ -15,6 +16,8 @@ const FILTERS: (RequestStatus | "All")[] = [
 ];
 
 export default function PortalRequests() {
+  const t = useT();
+  const format = useFormat();
   const id = useId();
   const { requests } = useStore();
   const [query, setQuery] = useState("");
@@ -26,14 +29,17 @@ export default function PortalRequests() {
     return requests.filter((r) => {
       if (status !== "All" && r.status !== status) return false;
       if (!q) return true;
-      return `${r.service} ${r.id}`.toLowerCase().includes(q);
+      return [r.service, t(r.service), r.id]
+        .join(" ")
+        .toLowerCase()
+        .includes(q);
     });
-  }, [requests, query, status]);
+  }, [requests, query, status, t]);
 
   return (
     <div>
       <h2 className="mb-6 font-secondary text-2xl font-bold text-dp-green-deep">
-        My Requests
+        {t("My Requests")}
       </h2>
 
       <div className="mb-6 flex flex-wrap items-end gap-4">
@@ -42,16 +48,19 @@ export default function PortalRequests() {
             htmlFor={`${id}-q`}
             className="mb-1.5 block text-sm font-medium text-dp-ink"
           >
-            Find a request
+            {t("Find a request")}
           </label>
           <div className="flex items-center gap-3 rounded-xl bg-[#F4F8F6] px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-dp-green">
-            <SearchIcon aria-hidden className="size-5 shrink-0 text-dp-green-ink" />
+            <SearchIcon
+              aria-hidden
+              className="size-5 shrink-0 text-dp-green-ink"
+            />
             <input
               id={`${id}-q`}
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Service name or reference"
+              placeholder={t("Service name or reference")}
               className="w-full bg-transparent py-3 text-base text-dp-ink outline-none placeholder:text-dp-muted"
             />
           </div>
@@ -61,7 +70,7 @@ export default function PortalRequests() {
             htmlFor={`${id}-s`}
             className="mb-1.5 block text-sm font-medium text-dp-ink"
           >
-            Status
+            {t("Status")}
           </label>
           <select
             id={`${id}-s`}
@@ -71,7 +80,7 @@ export default function PortalRequests() {
           >
             {FILTERS.map((f) => (
               <option key={f} value={f}>
-                {f}
+                {t(f)}
               </option>
             ))}
           </select>
@@ -79,16 +88,23 @@ export default function PortalRequests() {
       </div>
 
       <p aria-live="polite" className="mb-4 text-sm text-dp-muted">
-        Showing {visible.length} of {requests.length} requests
+        {t("Showing {shown} of {total} requests", {
+          shown: visible.length,
+          total: requests.length,
+        })}
       </p>
 
       {visible.length === 0 ? (
         <Empty
-          title={requests.length ? "Nothing matches" : "No requests yet"}
+          title={requests.length ? t("Nothing matches") : t("No requests yet")}
           body={
             requests.length
-              ? "Try clearing the status filter or searching for the reference number instead."
-              : "Anything you apply for shows up here with its reference number and its full history."
+              ? t(
+                  "Try clearing the status filter or searching for the reference number instead.",
+                )
+              : t(
+                  "Anything you apply for shows up here with its reference number and its full history.",
+                )
           }
           action={
             requests.length ? null : (
@@ -96,7 +112,7 @@ export default function PortalRequests() {
                 href="/app/services"
                 className="inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
               >
-                Browse services
+                {t("Browse services")}
                 <ArrowRight aria-hidden className="size-4" />
               </Link>
             )
@@ -118,15 +134,18 @@ export default function PortalRequests() {
                   aria-expanded={open}
                   aria-controls={`${id}-${request.id}`}
                   onClick={() => setOpenId(open ? null : request.id)}
-                  className="flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-[#F9F9F9]"
+                  className="flex w-full items-center gap-4 px-5 py-4 text-start transition-colors hover:bg-[#F9F9F9]"
                 >
                   <span className="min-w-0 flex-1">
                     <span className="block font-secondary text-base font-bold text-dp-ink">
-                      {request.service}
+                      {t(request.service)}
                     </span>
                     <span className="mt-0.5 block text-sm text-dp-muted">
-                      {request.id} · submitted {formatDate(request.submitted)} ·{" "}
-                      {request.fee}
+                      {t("{ref} · submitted {date} · {fee}", {
+                        ref: request.id,
+                        date: format.date(request.submitted),
+                        fee: t(request.fee),
+                      })}
                     </span>
                   </span>
                   <StatusPill status={request.status} />
@@ -146,15 +165,15 @@ export default function PortalRequests() {
                 >
                   {request.note ? (
                     <p className="mb-5 rounded-xl bg-[#FFF7E6] px-4 py-3 text-sm leading-relaxed text-[#6b4a00]">
-                      {request.note}
+                      {t(request.note)}
                     </p>
                   ) : null}
 
-                  <ol className="relative space-y-5 pl-6">
+                  <ol className="relative space-y-5 ps-6">
                     {/* The rail is drawn once behind the dots, not per row. */}
                     <span
                       aria-hidden
-                      className="absolute top-2 bottom-2 left-[5px] w-px bg-black/20"
+                      className="absolute top-2 bottom-2 start-[5px] w-px bg-black/20"
                     />
                     {request.timeline
                       .slice()
@@ -163,17 +182,19 @@ export default function PortalRequests() {
                         <li key={step.at + step.label} className="relative">
                           <span
                             aria-hidden
-                            className={`absolute top-1.5 -left-6 size-[11px] rounded-full ring-4 ring-white ${
+                            className={`absolute top-1.5 -start-6 size-[11px] rounded-full ring-4 ring-white ${
                               i === 0 ? "bg-dp-green" : "bg-black/20"
                             }`}
                           />
-                          <p className="font-medium text-dp-ink">{step.label}</p>
+                          <p className="font-medium text-dp-ink">
+                            {t(step.label)}
+                          </p>
                           <p className="mt-0.5 text-xs text-dp-muted tabular-nums">
-                            {formatDateTime(step.at)}
+                            {format.dateTime(step.at)}
                           </p>
                           {step.note ? (
                             <p className="mt-1 text-sm leading-relaxed text-dp-body">
-                              {step.note}
+                              {t(step.note)}
                             </p>
                           ) : null}
                         </li>
@@ -185,14 +206,14 @@ export default function PortalRequests() {
                       href={`/app/services/${request.slug}`}
                       className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-dp-ink ring-1 ring-black/10 transition-colors hover:bg-black/[0.04]"
                     >
-                      About this service
+                      {t("About this service")}
                       <ArrowRight aria-hidden className="size-4" />
                     </Link>
                     <Link
                       href="/app/home/contactUs"
                       className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-dp-ink ring-1 ring-black/10 transition-colors hover:bg-black/[0.04]"
                     >
-                      Ask about it
+                      {t("Ask about it")}
                     </Link>
                   </div>
                 </div>

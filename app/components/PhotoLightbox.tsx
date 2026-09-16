@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, CloseIcon } from "./icons";
 import { useDialog } from "./useDialog";
+import { useT } from "../i18n/client";
 
 /**
  * The album grid plus a full-size viewer. Built on <dialog>, so the browser
@@ -17,13 +18,16 @@ export default function PhotoLightbox({
   photos: readonly string[];
   title: string;
 }) {
+  const t = useT();
   const [open, setOpen] = useState<number | null>(null);
   const close = useCallback(() => setOpen(null), []);
   const dialog = useDialog(open !== null, close);
 
   const step = useCallback(
     (delta: number) =>
-      setOpen((i) => (i === null ? i : (i + delta + photos.length) % photos.length)),
+      setOpen((i) =>
+        i === null ? i : (i + delta + photos.length) % photos.length,
+      ),
     [photos.length],
   );
 
@@ -45,7 +49,10 @@ export default function PhotoLightbox({
             <button
               type="button"
               onClick={() => setOpen(i)}
-              aria-label={`Open photo ${i + 1} of ${photos.length}`}
+              aria-label={t("Open photo {n} of {total}", {
+                n: i + 1,
+                total: photos.length,
+              })}
               className="group/photo relative block aspect-[4/3] w-full overflow-hidden rounded-2xl bg-[#F4F8F6]"
             >
               <Image
@@ -82,7 +89,7 @@ export default function PhotoLightbox({
               <button
                 type="button"
                 onClick={() => step(-1)}
-                aria-label="Previous photo"
+                aria-label={t("Previous photo")}
                 className="grid size-11 place-items-center rounded-full bg-white/15 transition-colors hover:bg-white/25"
               >
                 <ChevronLeft className="size-5" />
@@ -93,7 +100,7 @@ export default function PhotoLightbox({
               <button
                 type="button"
                 onClick={() => step(1)}
-                aria-label="Next photo"
+                aria-label={t("Next photo")}
                 className="grid size-11 place-items-center rounded-full bg-white/15 transition-colors hover:bg-white/25"
               >
                 <ChevronRight className="size-5" />
@@ -103,8 +110,8 @@ export default function PhotoLightbox({
             <button
               type="button"
               onClick={() => setOpen(null)}
-              aria-label="Close"
-              className="absolute top-4 right-4 grid size-11 place-items-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25"
+              aria-label={t("Close")}
+              className="absolute top-4 end-4 grid size-11 place-items-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25"
             >
               <CloseIcon className="size-5" />
             </button>

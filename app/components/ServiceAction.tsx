@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { Service } from "../content-services";
 import { submitRequest, useStore } from "./store";
 import { ArrowRight, CheckCircle, UserCircle } from "./icons";
+import { useT } from "../i18n/client";
 
 /**
  * The button at the top of a service page. Signed out it hands over to
@@ -13,6 +14,7 @@ import { ArrowRight, CheckCircle, UserCircle } from "./icons";
  * wanted from the page.
  */
 export default function ServiceAction({ service }: { service: Service }) {
+  const t = useT();
   const { session, requests, loaded } = useStore();
   const [justFiled, setJustFiled] = useState<string | null>(null);
 
@@ -36,11 +38,15 @@ export default function ServiceAction({ service }: { service: Service }) {
           className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-dp-green px-6 py-3.5 font-medium text-white transition-colors hover:bg-dp-green-mid"
         >
           <UserCircle className="size-5" />
-          Sign in to {service.action.toLowerCase()}
+          {t("Sign in to {action}", {
+            action: t(service.action).toLowerCase(),
+          })}
           <ArrowRight className="size-4" />
         </Link>
         <p className="mt-3 text-center text-xs text-dp-muted">
-          Takes about {service.turnaround.toLowerCase()} once submitted
+          {t("Takes about {turnaround} once submitted", {
+            turnaround: t(service.turnaround).toLowerCase(),
+          })}
         </p>
       </>
     );
@@ -50,10 +56,10 @@ export default function ServiceAction({ service }: { service: Service }) {
       <div className="rounded-2xl bg-white p-5 text-center ring-1 ring-dp-green/25">
         <CheckCircle aria-hidden className="mx-auto size-8 text-dp-green" />
         <p className="mt-2 font-secondary text-base font-bold text-dp-green-deep">
-          Request opened
+          {t("Request opened")}
         </p>
         <p className="mt-1 text-sm text-dp-body">
-          Quote reference{" "}
+          {t("Quote reference")}{" "}
           <span className="font-secondary font-bold text-dp-ink">
             {justFiled}
           </span>
@@ -63,7 +69,7 @@ export default function ServiceAction({ service }: { service: Service }) {
           href="/app/portal/requests"
           className="mt-4 inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
         >
-          Track it
+          {t("Track it")}
           <ArrowRight className="size-4" />
         </Link>
       </div>
@@ -76,11 +82,13 @@ export default function ServiceAction({ service }: { service: Service }) {
           href="/app/portal/requests"
           className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-dp-green px-6 py-3.5 font-medium text-white transition-colors hover:bg-dp-green-mid"
         >
-          Open request {existing.id}
+          {t("Open request {ref}", { ref: existing.id })}
           <ArrowRight className="size-4" />
         </Link>
         <p className="mt-3 text-center text-xs text-dp-muted">
-          You already have this open — status: {existing.status.toLowerCase()}
+          {t("You already have this open — status: {status}", {
+            status: t(existing.status).toLowerCase(),
+          })}
         </p>
       </>
     );

@@ -2,6 +2,14 @@
 
 type IconProps = { className?: string };
 
+/**
+ * Arrows and chevrons that mean "onward" point the other way in Arabic, so the
+ * four directional glyphs carry .dp-flip and the stylesheet mirrors them under
+ * [dir="rtl"]. Icons that mean something absolute — download, expand, play —
+ * are deliberately not in this list.
+ */
+const flip = (className?: string) => `dp-flip ${className ?? ""}`;
+
 const base = {
   viewBox: "0 0 24 24",
   fill: "none",
@@ -26,26 +34,26 @@ export const ChevronDown = ({ className }: IconProps) => (
 );
 
 export const ChevronLeft = ({ className }: IconProps) => (
-  <svg {...base} className={className}>
+  <svg {...base} className={flip(className)}>
     <path d="M15 5 8 12l7 7" />
   </svg>
 );
 
 export const ChevronRight = ({ className }: IconProps) => (
-  <svg {...base} className={className}>
+  <svg {...base} className={flip(className)}>
     <path d="m9 5 7 7-7 7" />
   </svg>
 );
 
 export const ArrowRight = ({ className }: IconProps) => (
-  <svg {...base} className={className}>
+  <svg {...base} className={flip(className)}>
     <path d="M4.5 12h14" />
     <path d="m13 6.5 5.5 5.5L13 17.5" />
   </svg>
 );
 
 export const ArrowUpRight = ({ className }: IconProps) => (
-  <svg {...base} className={className}>
+  <svg {...base} className={flip(className)}>
     <path d="M7.5 16.5 16.5 7.5" />
     <path d="M9 7.5h7.5V15" />
   </svg>
@@ -75,14 +83,24 @@ export const CloseIcon = ({ className }: IconProps) => (
 );
 
 export const PauseIcon = ({ className }: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden
+    className={className}
+  >
     <rect x="7" y="5" width="3.5" height="14" rx="1.5" />
     <rect x="13.5" y="5" width="3.5" height="14" rx="1.5" />
   </svg>
 );
 
 export const PlayIcon = ({ className }: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden
+    className={className}
+  >
     <path d="M8 5.6a1 1 0 0 1 1.5-.9l8 6.4a1 1 0 0 1 0 1.8l-8 6.4a1 1 0 0 1-1.5-.9Z" />
   </svg>
 );
@@ -95,9 +113,16 @@ export const PhoneIcon = ({ className }: IconProps) => (
 
 /** Grid of nine dots — the site's "services" glyph. */
 export const ServicesIcon = ({ className }: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden
+    className={className}
+  >
     {[5, 12, 19].map((y) =>
-      [5, 12, 19].map((x) => <circle key={`${x}-${y}`} cx={x} cy={y} r="1.9" />),
+      [5, 12, 19].map((x) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r="1.9" />
+      )),
     )}
   </svg>
 );
@@ -183,7 +208,12 @@ export const SocialIcon = ({
   name: keyof typeof socialIcons;
   className?: string;
 }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden
+    className={className}
+  >
     {socialIcons[name]}
   </svg>
 );
@@ -291,5 +321,13 @@ export const LayersIcon = ({ className }: IconProps) => (
     <path d="m12 3.2 8.6 4.4-8.6 4.4-8.6-4.4Z" />
     <path d="m3.4 12.4 8.6 4.4 8.6-4.4" />
     <path d="m3.4 16.8 8.6 4.4 8.6-4.4" />
+  </svg>
+);
+
+export const GlobeIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M3.5 12h17" />
+    <path d="M12 3.5c2.2 2.3 3.3 5.1 3.3 8.5S14.2 18.2 12 20.5c-2.2-2.3-3.3-5.1-3.3-8.5S9.8 5.8 12 3.5Z" />
   </svg>
 );
