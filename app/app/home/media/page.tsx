@@ -6,17 +6,26 @@ import CardRail from "../../../components/CardRail";
 import NewsCard from "../../../components/NewsCard";
 import { PageShell } from "../../../components/PageShell";
 import { ArrowRight, PlayIcon } from "../../../components/icons";
-import { photoAlbums } from "../../../content-albums";
-import { events } from "../../../content-events";
-import { news } from "../../../content-news";
-import { mediaHub } from "../../../content-pages";
+import { photoAlbums as photoAlbumsSource } from "../../../content-albums";
+import { events as eventsSource } from "../../../content-events";
+import { news as newsSource } from "../../../content-news";
+import { mediaHub as mediaHubSource } from "../../../content-pages";
+import { getT, getLocalized } from "../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Media Hub | Dubai Police",
-  description: mediaHub.intro,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Media Hub | Dubai Police"),
+    description: t(mediaHubSource.intro),
+  };
+}
 
-export default function MediaPage() {
+export default async function MediaPage() {
+  const photoAlbums = await getLocalized(photoAlbumsSource);
+  const events = await getLocalized(eventsSource);
+  const news = await getLocalized(newsSource);
+  const mediaHub = await getLocalized(mediaHubSource);
+  const t = await getT();
   return (
     <PageShell title={mediaHub.title} intro={mediaHub.intro} trail={[]}>
       {/* Campaigns */}
@@ -26,9 +35,9 @@ export default function MediaPage() {
             id="campaigns"
             className="mb-8 font-secondary text-2xl font-bold text-dp-green-deep md:text-4xl"
           >
-            Campaigns
+            {t("Campaigns")}
           </h2>
-          <CardRail label="campaign">
+          <CardRail label={t("campaign")}>
             {mediaHub.campaigns.map((campaign) => (
               <article
                 key={campaign.title}
@@ -62,18 +71,18 @@ export default function MediaPage() {
               id="events"
               className="font-secondary text-2xl font-bold text-dp-green-deep md:text-4xl"
             >
-              Events
+              {t("Events")}
             </h2>
             <Link
               href="/app/home/media/events"
               className="inline-flex items-center gap-2 text-sm font-medium text-dp-green transition-colors hover:text-dp-green-deep"
             >
-              Explore All Events
+              {t("Explore All Events")}
               <ArrowRight className="size-4" />
             </Link>
           </div>
 
-          <CardRail label="event">
+          <CardRail label={t("event")}>
             {events.slice(0, 6).map((event) => (
               <article
                 key={event.slug}
@@ -91,8 +100,8 @@ export default function MediaPage() {
                       />
                     ) : null}
                     {event.type ? (
-                      <span className="absolute top-3 left-3 rounded-full bg-[#e7f6f1] px-3 py-1 text-xs font-medium text-dp-green-ink">
-                        {event.type}
+                      <span className="absolute top-3 start-3 rounded-full bg-[#e7f6f1] px-3 py-1 text-xs font-medium text-dp-green-ink">
+                        {t(event.type)}
                       </span>
                     ) : null}
                   </div>
@@ -102,7 +111,7 @@ export default function MediaPage() {
                     </h3>
                     <time className="text-sm text-dp-muted">{event.from}</time>
                     <span className="mt-1 inline-flex items-center gap-1.5 text-sm font-medium text-dp-green">
-                      View Details
+                      {t("View Details")}
                       <ArrowRight className="size-4" />
                     </span>
                   </div>
@@ -121,13 +130,13 @@ export default function MediaPage() {
               id="news"
               className="font-secondary text-2xl font-bold text-dp-green-deep md:text-4xl"
             >
-              News
+              {t("News")}
             </h2>
             <Link
               href="/app/home/media/news"
               className="inline-flex items-center gap-2 text-sm font-medium text-dp-green transition-colors hover:text-dp-green-deep"
             >
-              View All
+              {t("View All")}
               <ArrowRight className="size-4" />
             </Link>
           </div>

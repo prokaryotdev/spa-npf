@@ -25,6 +25,18 @@ assert.ok(suggest("permit").flatMap((g) => g.hits).length <= 8);
 // The empty state has something to show.
 assert.equal(popularServices.length, 5);
 
+// --- arabic --------------------------------------------------------------
+// The index is built from English content, so an Arabic query only works if
+// the dictionary is folded into the haystack. These break the moment the two
+// come apart.
+assert.equal(search("حسن السيرة")[0]?.title, "Police Clearance Certificate");
+assert.ok(search("شهادة").length > 0, "an Arabic query finds services");
+// A typist writes hamza and teh marbuta either way; both must land.
+const titles = (q) => search(q).map((h) => h.title);
+assert.deepEqual(titles("شهاده"), titles("شهادة"));
+assert.deepEqual(titles("الامن"), titles("الأمن"));
+assert.ok(titles("الأمن").length > 0, "the folded query still matches");
+
 // --- catalogue -----------------------------------------------------------
 const slugs = new Set(services.map((s) => s.slug));
 assert.equal(slugs.size, services.length, "service slugs must be unique");
@@ -36,7 +48,10 @@ for (const service of services) {
     assert.ok(slugs.has(related.slug), `dangling related: ${related.slug}`);
 }
 // Service hits link at the detail route, not the catalogue.
-assert.match(search("police clearance")[0].href, /^\/app\/services\/[a-z0-9-]+$/);
+assert.match(
+  search("police clearance")[0].href,
+  /^\/app\/services\/[a-z0-9-]+$/,
+);
 
 // --- seeds ---------------------------------------------------------------
 for (const request of seedRequests)

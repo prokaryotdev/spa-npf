@@ -1,19 +1,28 @@
 import type { Metadata } from "next";
 import NewsCard from "../../../../components/NewsCard";
 import { PageShell } from "../../../../components/PageShell";
-import { news } from "../../../../content-news";
+import { news as newsSource } from "../../../../content-news";
+import { getT, getLocalized } from "../../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "News | Dubai Police",
-  description:
-    "Keep informed! Browse our latest news, learn about ongoing initiatives, and see how innovation continues to drive our work.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("News | Dubai Police"),
+    description: t(
+      "Keep informed! Browse our latest news, learn about ongoing initiatives, and see how innovation continues to drive our work.",
+    ),
+  };
+}
 
-export default function NewsPage() {
+export default async function NewsPage() {
+  const news = await getLocalized(newsSource);
+  const t = await getT();
   return (
     <PageShell
-      title="News"
-      intro="Keep informed! Browse our latest news, learn about ongoing initiatives, and see how innovation continues to drive our work."
+      title={t("News")}
+      intro={t(
+        "Keep informed! Browse our latest news, learn about ongoing initiatives, and see how innovation continues to drive our work.",
+      )}
       trail={[{ label: "Media Hub", href: "/app/home/media" }]}
     >
       <section className="bg-white pb-24">

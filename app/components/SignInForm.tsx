@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { signIn, useStore, type Session } from "./store";
 import { AlertIcon, ArrowRight, ShieldIcon, UserCircle } from "./icons";
+import { useT } from "../i18n/client";
 
 type Errors = { emiratesId?: string; password?: string };
 
@@ -31,6 +32,7 @@ const OFFICER: Session = {
 const EID = /^784-?\d{4}-?\d{7}-?\d$/;
 
 export default function SignInForm() {
+  const t = useT();
   const router = useRouter();
   const params = useSearchParams();
   const { session, loaded } = useStore();
@@ -76,21 +78,21 @@ export default function SignInForm() {
       <p className="mb-8 flex items-start gap-3 rounded-2xl bg-[#FFF7E6] px-5 py-4 text-sm leading-relaxed text-[#6b4a00]">
         <AlertIcon aria-hidden className="mt-0.5 size-5 shrink-0" />
         <span>
-          This is a rebuild of the Dubai Police website, not the real one. There
-          is no account system behind it: signing in opens a sample account
-          stored in this browser, and anything you submit stays on this device.
-          Never enter a real Emirates ID or password here.
+          {t(
+            "This is a rebuild of the Dubai Police website, not the real one. There is no account system behind it: signing in opens a sample account stored in this browser, and anything you submit stays on this device. Never enter a real Emirates ID or password here.",
+          )}
         </span>
       </p>
 
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         <div>
           <h2 className="font-secondary text-2xl font-bold text-dp-green-deep">
-            Sign in with UAE PASS
+            {t("Sign in with UAE PASS")}
           </h2>
           <p className="mt-3 text-base leading-relaxed text-dp-body">
-            UAE PASS is the national digital identity, and the fastest way in —
-            no separate Dubai Police account needed.
+            {t(
+              "UAE PASS is the national digital identity, and the fastest way in — no separate Dubai Police account needed.",
+            )}
           </p>
           <button
             type="button"
@@ -98,27 +100,31 @@ export default function SignInForm() {
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-dp-green px-6 py-3 font-medium text-white transition-colors hover:bg-dp-green-mid"
           >
             <UserCircle aria-hidden className="size-5" />
-            Continue with UAE PASS
+            {t("Continue with UAE PASS")}
             <ArrowRight aria-hidden className="size-4" />
           </button>
           <p className="mt-3 text-sm text-dp-muted">
-            Opens the sample account for {CITIZEN.name}.
+            {t("Opens the sample account for {name}.", {
+              name: t(CITIZEN.name),
+            })}
           </p>
 
           <div className="mt-10 rounded-2xl bg-[#F4F8F6] px-5 py-4">
             <h3 className="flex items-center gap-2 font-secondary text-base font-bold text-dp-green-deep">
               <ShieldIcon aria-hidden className="size-5" />
-              Dubai Police personnel
+              {t("Dubai Police personnel")}
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-dp-body">
-              Officers reach the operations console with their force credentials.
+              {t(
+                "Officers reach the operations console with their force credentials.",
+              )}
             </p>
             <button
               type="button"
               onClick={() => enter(OFFICER)}
               className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-dp-green-ink ring-1 ring-dp-green/25 transition-colors hover:bg-[#e7f6f1]"
             >
-              Open the operations console
+              {t("Open the operations console")}
               <ArrowRight aria-hidden className="size-4" />
             </button>
           </div>
@@ -126,13 +132,17 @@ export default function SignInForm() {
 
         <div>
           <h2 className="font-secondary text-2xl font-bold text-dp-green-deep">
-            Or use your Dubai Police account
+            {t("Or use your Dubai Police account")}
           </h2>
 
-          <form noValidate onSubmit={onSubmit} className="mt-6 flex flex-col gap-5">
+          <form
+            noValidate
+            onSubmit={onSubmit}
+            className="mt-6 flex flex-col gap-5"
+          >
             <Field
               id="emiratesId"
-              label="Emirates ID number"
+              label={t("Emirates ID number")}
               placeholder="784-1989-1234567-1"
               autoComplete="username"
               inputMode="numeric"
@@ -140,7 +150,7 @@ export default function SignInForm() {
             />
             <Field
               id="password"
-              label="Password"
+              label={t("Password")}
               type="password"
               autoComplete="current-password"
               error={errors.password}
@@ -150,18 +160,18 @@ export default function SignInForm() {
               type="submit"
               className="rounded-full bg-dp-green px-6 py-3 font-medium text-white transition-colors hover:bg-dp-green-mid"
             >
-              Sign in
+              {t("Sign in")}
             </button>
 
             <p className="text-sm text-dp-muted">
-              No account yet? Every Dubai Police service is listed on the{" "}
+              {t("No account yet? Every Dubai Police service is listed on the")}{" "}
               <Link
                 href="/app/services"
                 className="font-medium text-dp-green underline underline-offset-2"
               >
-                services page
+                {t("services page")}
               </Link>
-              , and most can be started with UAE PASS alone.
+              {t(", and most can be started with UAE PASS alone.")}
             </p>
           </form>
         </div>
@@ -182,7 +192,10 @@ function Field({
 } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-dp-ink">
+      <label
+        htmlFor={id}
+        className="mb-1.5 block text-sm font-medium text-dp-ink"
+      >
         {label}
       </label>
       <input

@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import type { InitiativeCard as Card } from "../content";
 import { ArrowRight } from "./icons";
+import { useT } from "../i18n/client";
 
 /**
  * The site's one card shape: full-bleed photo, a triple gradient scrim driven by
@@ -24,6 +27,7 @@ export default function InitiativeCard({
   shape?: keyof typeof shapes;
   className?: string;
 }) {
+  const t = useT();
   const { ink, tint, edge, shadow } = card.theme;
   const scrim = `linear-gradient(180deg, ${ink}0d 58%, ${ink} 100%), linear-gradient(45deg, ${ink}05 74%, ${ink}bf 106%), linear-gradient(322deg, ${ink}05 63%, ${ink}bf 103%)`;
 
@@ -43,14 +47,18 @@ export default function InitiativeCard({
         src={card.image}
         alt=""
         fill
-          sizes={
+        sizes={
           shape === "wide"
             ? "(max-width: 768px) 84vw, 92vw"
             : "(max-width: 768px) 84vw, 46vw"
         }
         className="object-cover transition-transform duration-700 ease-[var(--ease-custom)] group-hover/card:scale-105"
       />
-      <div aria-hidden className="absolute inset-0" style={{ background: scrim }} />
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{ background: scrim }}
+      />
 
       <div className="relative z-10 mb-10 flex w-full items-start justify-between gap-4">
         <div
@@ -58,7 +66,7 @@ export default function InitiativeCard({
         >
           <Image
             src={card.logo}
-            alt={`${card.title} logo`}
+            alt={t("{name} logo", { name: card.title })}
             fill
             sizes="190px"
             className="object-contain object-left-top"
@@ -73,7 +81,7 @@ export default function InitiativeCard({
           ) : null}
           <span className="inline-flex items-center rounded-full bg-white p-0.5 text-black transition-all duration-500 ease-[var(--ease-custom)]">
             <span className="max-w-0 overflow-hidden text-sm font-semibold whitespace-nowrap transition-all duration-500 ease-[var(--ease-custom)] group-hover/card:max-w-[7.5rem] group-hover/card:ps-3">
-              More Details
+              {t("More Details")}
             </span>
             <span className="grid size-8 place-items-center rounded-full bg-white md:size-10">
               <ArrowRight className="size-[18px]" />
@@ -82,12 +90,14 @@ export default function InitiativeCard({
         </div>
       </div>
 
-      <div className={`relative z-10 ${shape === "wide" ? "md:max-w-[52ch]" : ""}`}>
+      <div
+        className={`relative z-10 ${shape === "wide" ? "md:max-w-[52ch]" : ""}`}
+      >
         <span
           className="mb-3 inline-block rounded-full border px-2 py-0.5 text-xs font-medium"
           style={{ background: tint, borderColor: edge, color: ink }}
         >
-          Initiative
+          {t("Initiative")}
         </span>
         <h3 className="mb-2 font-secondary text-xl leading-normal font-bold text-white md:text-2xl">
           {card.title}
@@ -114,12 +124,12 @@ export default function InitiativeCard({
                     />
                   </span>
                 ) : null}
-                {tag.label}
+                {t(tag.label)}
               </span>
             ))}
             {card.more ? (
               <span className="px-3 py-3 text-sm text-white/80">
-                +{card.more} more
+                {t("+{n} more", { n: card.more })}
               </span>
             ) : null}
           </div>

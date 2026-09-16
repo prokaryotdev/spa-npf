@@ -10,10 +10,11 @@ import {
   CalendarIcon,
   PinIcon,
 } from "../../../../../components/icons";
-import { events } from "../../../../../content-events";
+import { events as eventsSource } from "../../../../../content-events";
+import { getT, getLocalized } from "../../../../../i18n/server";
 
 export function generateStaticParams() {
-  return events.map((event) => ({ slug: event.slug }));
+  return eventsSource.map((event) => ({ slug: event.slug }));
 }
 
 export async function generateMetadata({
@@ -22,10 +23,12 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const event = events.find((e) => e.slug === slug);
-  if (!event) return { title: "Events | Dubai Police" };
+  const t = await getT();
+  const source = eventsSource.find((e) => e.slug === slug);
+  if (!source) return { title: t("Events | Dubai Police") };
+  const event = await getLocalized(source);
   return {
-    title: `${event.title} | Dubai Police`,
+    title: t("{name} | Dubai Police", { name: event.title }),
     description: event.summary,
     openGraph: {
       title: event.title,
@@ -40,6 +43,8 @@ export default async function EventPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const events = await getLocalized(eventsSource);
+  const t = await getT();
   const { slug } = await params;
   const event = events.find((e) => e.slug === slug);
   if (!event) notFound();
@@ -51,11 +56,11 @@ export default async function EventPage({
 
   /** Only the rows the CMS actually filled in are worth a line. */
   const facts = [
-    { label: "Dates", value: dates },
-    { label: "Type", value: event.type },
-    { label: "Location", value: event.location },
-    { label: "Price", value: event.price },
-    { label: "Contact", value: event.contact },
+    { label: t("Dates"), value: dates },
+    { label: t("Type"), value: t(event.type) },
+    { label: t("Location"), value: event.location },
+    { label: t("Price"), value: event.price },
+    { label: t("Contact"), value: event.contact },
   ].filter((f) => f.value);
 
   const more = events.filter((e) => e.slug !== slug).slice(0, 3);
@@ -100,7 +105,9 @@ export default async function EventPage({
                 ))
               ) : (
                 <p className="text-base leading-relaxed text-dp-body">
-                  No further description has been published for this event yet.
+                  {t(
+                    "No further description has been published for this event yet.",
+                  )}
                 </p>
               )}
             </div>
@@ -109,7 +116,7 @@ export default async function EventPage({
               href="/app/home/media/events"
               className="mt-4 inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
             >
-              All events
+              {t("All events")}
               <ArrowRight className="size-4" />
             </Link>
           </div>
@@ -117,7 +124,7 @@ export default async function EventPage({
           <aside className="order-1 h-fit rounded-3xl bg-[#F4F8F6] p-6 lg:order-2 lg:sticky lg:top-28">
             <h2 className="mb-4 flex items-center gap-2 font-secondary text-lg font-bold text-dp-green-deep">
               <CalendarIcon aria-hidden className="size-5" />
-              Event details
+              {t("Event details")}
             </h2>
             <dl className="divide-y divide-black/10">
               {facts.map((fact) => (
@@ -140,9 +147,9 @@ export default async function EventPage({
                 rel="noopener noreferrer"
                 className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dp-green px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
               >
-                Event website
+                {t("Event website")}
                 <ArrowUpRight aria-hidden className="size-4" />
-                <span className="sr-only"> (opens in a new window)</span>
+                <span className="sr-only"> {t("(opens in a new window)")}</span>
               </a>
             ) : null}
             {event.email ? (
@@ -164,7 +171,7 @@ export default async function EventPage({
               id="more-events"
               className="mb-8 font-secondary text-2xl font-bold text-dp-green-deep md:text-4xl"
             >
-              More events
+              {t("More events")}
             </h2>
             <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
               {more.map((e, i) => (

@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { pillars } from "../content";
+import { pillars as pillarsSource } from "../content";
 import { chapter, useScrollProgress } from "./useScrollProgress";
+import { useT, useLocalized } from "../i18n/client";
 
 const bloom =
   "pointer-events-none absolute rounded-full bg-[radial-gradient(#3cbd6b75_7%,#22c55e38_40%,#22c55e00_70%)]";
@@ -14,6 +15,8 @@ const bloom =
  * ring changes with them.
  */
 export default function Pillars() {
+  const pillars = useLocalized(pillarsSource);
+  const t = useT();
   const section = useRef<HTMLElement>(null);
   const progress = useScrollProgress(section);
   const active = chapter(progress, pillars.length);
@@ -22,10 +25,18 @@ export default function Pillars() {
     <span
       key={pillar.portrait}
       className={`absolute inset-[9%] overflow-hidden rounded-full transition-[opacity,filter,transform] duration-700 ease-[var(--ease-custom)] ${
-        i === active ? "scale-100 opacity-100 blur-0" : "scale-90 opacity-0 blur-sm"
+        i === active
+          ? "scale-100 opacity-100 blur-0"
+          : "scale-90 opacity-0 blur-sm"
       }`}
     >
-      <Image src={pillar.portrait} alt="" fill sizes="480px" className="object-contain" />
+      <Image
+        src={pillar.portrait}
+        alt=""
+        fill
+        sizes="480px"
+        className="object-contain"
+      />
     </span>
   ));
 
@@ -36,7 +47,7 @@ export default function Pillars() {
       className="relative h-[320vh] bg-white"
     >
       <h2 id="pillars" className="sr-only">
-        Smart, Secure, Together
+        {t("Smart, Secure, Together")}
       </h2>
 
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
@@ -48,7 +59,7 @@ export default function Pillars() {
         />
 
         {/* Chapter marker in the outer gutter, the way the original tracks place. */}
-        <ol className="pointer-events-none absolute top-1/2 left-6 hidden -translate-y-1/2 xl:block 2xl:left-10">
+        <ol className="pointer-events-none absolute top-1/2 start-6 hidden -translate-y-1/2 xl:block 2xl:start-10">
           {pillars.map((pillar, i) => (
             <li
               key={pillar.word}
@@ -103,17 +114,19 @@ export default function Pillars() {
                   {portraits}
                 </div>
                 {/* A diagonal white wash lifts the standing line off the portrait,
-                    the same trick the original uses over this block. */}
+ the same trick the original uses over this block. */}
                 <span
                   aria-hidden
                   className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(124deg,#ffffff_18%,rgba(255,255,255,0.75)_44%,transparent_68%)] lg:block"
                 />
-                <div className="mt-6 text-center lg:absolute lg:top-1/2 lg:left-0 lg:mt-0 lg:max-w-[64%] lg:-translate-y-1/2 lg:ps-[6%] lg:text-left">
+                <div className="mt-6 text-center lg:absolute lg:top-1/2 lg:start-0 lg:mt-0 lg:max-w-[64%] lg:-translate-y-1/2 lg:ps-[6%] lg:text-start">
                   <p className="mb-2 font-secondary text-base leading-snug font-bold text-[#414651] lg:mb-3 lg:text-2xl">
-                    Together, We Build a Smart and Secure Dubai
+                    {t("Together, We Build a Smart and Secure Dubai")}
                   </p>
                   <p className="font-secondary text-xs font-bold text-[#313a35] lg:text-base">
-                    With you, For you. Protecting, Connecting, and Innovating.
+                    {t(
+                      "With you, For you. Protecting, Connecting, and Innovating.",
+                    )}
                   </p>
                 </div>
               </div>

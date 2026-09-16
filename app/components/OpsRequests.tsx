@@ -8,8 +8,8 @@ import {
   type RequestStatus,
   type TrackedRequest,
 } from "./store";
-import { formatDate, formatDateTime } from "./ui";
 import { CheckIcon, CloseIcon, SearchIcon } from "./icons";
+import { useFormat, useT } from "../i18n/client";
 
 const QUEUE: RequestStatus[] = ["Submitted", "In Review", "Action Needed"];
 
@@ -27,6 +27,8 @@ const TONE: Record<RequestStatus, string> = {
  * at — same store, same timeline.
  */
 export default function OpsRequests() {
+  const t = useT();
+  const format = useFormat();
   const id = useId();
   const { requests } = useStore();
   const [query, setQuery] = useState("");
@@ -39,9 +41,12 @@ export default function OpsRequests() {
     return requests.filter((r) => {
       if (openOnly && !QUEUE.includes(r.status)) return false;
       if (!q) return true;
-      return `${r.id} ${r.service}`.toLowerCase().includes(q);
+      return [r.id, r.service, t(r.service)]
+        .join(" ")
+        .toLowerCase()
+        .includes(q);
     });
-  }, [requests, query, openOnly]);
+  }, [requests, query, openOnly, t]);
 
   function ask(request: TrackedRequest) {
     const note = reason.trim();
@@ -54,53 +59,59 @@ export default function OpsRequests() {
   return (
     <div className="space-y-5">
       <header>
-        <h1 className="font-secondary text-2xl font-bold">Service requests</h1>
+        <h1 className="font-secondary text-2xl font-bold">
+          {t("Service requests")}
+        </h1>
         <p className="mt-1 text-sm text-[var(--ops-dim)]">
-          Applications waiting on a decision. Anything you do here appears on
-          the applicant&rsquo;s own screen within the second.
+          {t(
+            "Applications waiting on a decision. Anything you do here appears on the applicant’s own screen within the second.",
+          )}
         </p>
       </header>
 
       <dl className="flex flex-wrap divide-x divide-[var(--ops-line)] rounded-xl border border-[var(--ops-line)] bg-[var(--ops-panel)] px-4 py-1">
         <Readout
-          label="In the queue"
+          label={t("In the queue")}
           value={requests.filter((r) => QUEUE.includes(r.status)).length}
-          note="awaiting a decision"
+          note={t("awaiting a decision")}
         />
         <Readout
-          label="With the applicant"
+          label={t("With the applicant")}
           value={requests.filter((r) => r.status === "Action Needed").length}
           tone={
             requests.some((r) => r.status === "Action Needed")
               ? "var(--ops-p2)"
               : undefined
           }
-          note="we asked for more"
+          note={t("we asked for more")}
         />
         <Readout
-          label="Completed"
+          label={t("Completed")}
           value={requests.filter((r) => r.status === "Completed").length}
-          note="issued"
+          note={t("issued")}
         />
         <Readout
-          label="Rejected"
+          label={t("Rejected")}
           value={requests.filter((r) => r.status === "Rejected").length}
-          note="conditions not met"
+          note={t("conditions not met")}
         />
       </dl>
 
       <div className="flex flex-wrap items-center gap-2">
         <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 focus-within:border-[var(--ops-accent)]">
-          <SearchIcon aria-hidden className="size-4 shrink-0 text-[var(--ops-dim)]" />
+          <SearchIcon
+            aria-hidden
+            className="size-4 shrink-0 text-[var(--ops-dim)]"
+          />
           <label htmlFor={`${id}-q`} className="sr-only">
-            Filter requests
+            {t("Filter requests")}
           </label>
           <input
             id={`${id}-q`}
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Reference or service"
+            placeholder={t("Reference or service")}
             className="w-full bg-transparent py-2 text-sm outline-none placeholder:text-[var(--ops-dim)]"
           />
         </div>
@@ -109,20 +120,23 @@ export default function OpsRequests() {
           aria-pressed={openOnly}
           onClick={() => setOpenOnly((v) => !v)}
         >
-          Open only
+          {t("Open only")}
         </OpsButton>
       </div>
 
       <p aria-live="polite" className="text-xs text-[var(--ops-dim)]">
-        {visible.length} of {requests.length} requests
+        {t("{shown} of {total} requests", {
+          shown: visible.length,
+          total: requests.length,
+        })}
       </p>
 
       {visible.length === 0 ? (
         <OpsPanel>
           <p className="py-10 text-center text-sm text-[var(--ops-dim)]">
             {openOnly
-              ? "Queue clear. Nothing is waiting on a decision."
-              : "No request matches that search."}
+              ? t("Queue clear. Nothing is waiting on a decision.")
+              : t("No request matches that search.")}
           </p>
         </OpsPanel>
       ) : null}
@@ -134,17 +148,21 @@ export default function OpsRequests() {
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="font-secondary text-base font-bold">
-                    {request.service}
+                    {t(request.service)}
                   </p>
                   <p className="mt-1 text-xs text-[var(--ops-dim)] tabular-nums">
-                    {request.id} · submitted {formatDate(request.submitted)} ·{" "}
-                    {request.fee} · via {request.channel}
+                    {t("{ref} · submitted {date} · {fee} · via {channel}", {
+                      ref: request.id,
+                      date: format.date(request.submitted),
+                      fee: t(request.fee),
+                      channel: t(request.channel),
+                    })}
                   </p>
                 </div>
                 <span
                   className={`shrink-0 rounded px-2 py-0.5 text-xs font-medium ${TONE[request.status]}`}
                 >
-                  {request.status}
+                  {t(request.status)}
                 </span>
               </div>
 
@@ -156,14 +174,14 @@ export default function OpsRequests() {
                   .map((step) => (
                     <li key={step.at + step.label} className="flex gap-3">
                       <span className="w-24 shrink-0 text-[var(--ops-dim)] tabular-nums">
-                        {formatDateTime(step.at)}
+                        {format.dateTime(step.at)}
                       </span>
                       <span className="min-w-0">
-                        <span className="font-medium">{step.label}</span>
+                        <span className="font-medium">{t(step.label)}</span>
                         {step.note ? (
                           <span className="text-[var(--ops-dim)]">
                             {" "}
-                            — {step.note}
+                            — {t(step.note)}
                           </span>
                         ) : null}
                       </span>
@@ -183,7 +201,7 @@ export default function OpsRequests() {
                     htmlFor={`${id}-reason-${request.id}`}
                     className="block text-xs text-[var(--ops-dim)]"
                   >
-                    What does the applicant need to do?
+                    {t("What does the applicant need to do?")}
                   </label>
                   <textarea
                     id={`${id}-reason-${request.id}`}
@@ -192,15 +210,17 @@ export default function OpsRequests() {
                     rows={2}
                     autoFocus
                     className="mt-2 w-full rounded-lg border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none focus:border-[var(--ops-accent)]"
-                    placeholder="Upload a clearer copy of the passport photo page."
+                    placeholder={t(
+                      "Upload a clearer copy of the passport photo page.",
+                    )}
                   />
                   <div className="mt-3 flex gap-2">
                     <button
                       type="submit"
                       disabled={!reason.trim()}
-className="rounded-lg bg-[var(--ops-brand)] px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--ops-brand-lift)] disabled:opacity-40"
+                      className="rounded-lg bg-[var(--ops-brand)] px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--ops-brand-lift)] disabled:opacity-40"
                     >
-                      Send to applicant
+                      {t("Send to applicant")}
                     </button>
                     <button
                       type="button"
@@ -211,7 +231,7 @@ className="rounded-lg bg-[var(--ops-brand)] px-3 py-2 text-sm font-medium text-w
                       className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--ops-line)] px-3 py-2 text-sm text-[var(--ops-dim)] transition-colors hover:text-[var(--ops-text)]"
                     >
                       <CloseIcon aria-hidden className="size-4" />
-                      Cancel
+                      {t("Cancel")}
                     </button>
                   </div>
                 </form>
@@ -227,7 +247,7 @@ className="rounded-lg bg-[var(--ops-brand)] px-3 py-2 text-sm font-medium text-w
                         )
                       }
                     >
-                      Start review
+                      {t("Start review")}
                     </Action>
                   ) : null}
                   {request.status !== "Completed" ? (
@@ -242,13 +262,13 @@ className="rounded-lg bg-[var(--ops-brand)] px-3 py-2 text-sm font-medium text-w
                       }
                     >
                       <CheckIcon aria-hidden className="size-4" />
-                      Approve
+                      {t("Approve")}
                     </Action>
                   ) : null}
                   {QUEUE.includes(request.status) ? (
                     <>
                       <Action onClick={() => setAsking(request.id)}>
-                        Ask for more
+                        {t("Ask for more")}
                       </Action>
                       <Action
                         onClick={() =>
@@ -259,7 +279,7 @@ className="rounded-lg bg-[var(--ops-brand)] px-3 py-2 text-sm font-medium text-w
                           )
                         }
                       >
-                        Reject
+                        {t("Reject")}
                       </Action>
                     </>
                   ) : null}

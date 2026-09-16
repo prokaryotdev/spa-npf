@@ -5,10 +5,11 @@ import AlbumCard from "../../../../../components/AlbumCard";
 import { PageShell } from "../../../../../components/PageShell";
 import PhotoLightbox from "../../../../../components/PhotoLightbox";
 import { ArrowRight } from "../../../../../components/icons";
-import { photoAlbums } from "../../../../../content-albums";
+import { photoAlbums as photoAlbumsSource } from "../../../../../content-albums";
+import { getT, getLocalized } from "../../../../../i18n/server";
 
 export function generateStaticParams() {
-  return photoAlbums.map((album) => ({ slug: album.slug }));
+  return photoAlbumsSource.map((album) => ({ slug: album.slug }));
 }
 
 export async function generateMetadata({
@@ -17,12 +18,15 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const album = photoAlbums.find((a) => a.slug === slug);
-  if (!album) return { title: "Photo Gallery | Dubai Police" };
+  const t = await getT();
+  const source = photoAlbumsSource.find((a) => a.slug === slug);
+  if (!source) return { title: t("Photo Gallery | Dubai Police") };
+  const album = await getLocalized(source);
   return {
-    title: `${album.title} | Dubai Police`,
+    title: t("{name} | Dubai Police", { name: album.title }),
     description:
-      album.description || `${album.count} photos from ${album.title}.`,
+      album.description ||
+      t("{n} photos from {name}.", { n: album.count, name: album.title }),
     openGraph: { title: album.title, images: [album.cover] },
   };
 }
@@ -32,6 +36,8 @@ export default async function AlbumPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const photoAlbums = await getLocalized(photoAlbumsSource);
+  const t = await getT();
   const { slug } = await params;
   const album = photoAlbums.find((a) => a.slug === slug);
   if (!album) notFound();
@@ -61,7 +67,7 @@ export default async function AlbumPage({
             href="/app/home/media/photo-gallery"
             className="mt-10 inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
           >
-            All albums
+            {t("All albums")}
             <ArrowRight className="size-4" />
           </Link>
         </div>
@@ -74,7 +80,7 @@ export default async function AlbumPage({
               id="more-albums"
               className="mb-8 font-secondary text-2xl font-bold text-dp-green-deep md:text-4xl"
             >
-              More albums
+              {t("More albums")}
             </h2>
             <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
               {more.map((a, i) => (

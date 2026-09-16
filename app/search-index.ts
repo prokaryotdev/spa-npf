@@ -1,4 +1,10 @@
-import { footerColumns, legalLinks, navigation, quickServices } from "./content";
+import { translate } from "./i18n/translate";
+import {
+  footerColumns,
+  legalLinks,
+  navigation,
+  quickServices,
+} from "./content";
 import { news } from "./content-news";
 import { photoAlbums } from "./content-albums";
 import { events } from "./content-events";
@@ -90,7 +96,7 @@ const entries: SearchHit[] = [
 
   ...photoAlbums.map((a) => ({
     title: a.title,
-    body: `${a.count} photos`,
+    body: "Photo album",
     href: `/app/home/media/photo-gallery/${a.slug}`,
     section: "Photo Gallery",
   })),
@@ -114,8 +120,60 @@ export const searchIndex = entries.filter(
   (hit) => hit.title && (hit.external || internal(hit.href)),
 );
 
-const terms = (query: string) =>
-  query.toLowerCase().split(/\s+/).filter(Boolean);
+/**
+ * One spelling per word. Arabic readers type the alef, hamza, teh marbuta and
+ * alef maksura interchangeably, and a police site cannot answer "no results"
+ * because someone wrote مرور with a different hamza; Latin accents fold the
+ * same way. Applied to both the query and the index, so they always meet.
+ */
+const fold = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize("NFKD")
+    // NFKD splits أ into alef plus a combining hamza, and é into e plus an
+    // acute; dropping every non-spacing mark folds both, along with harakat
+    // and shadda. Tatweel is a spacing character, so it goes separately.
+    .replace(/\p{Mn}/gu, "")
+    .replace(/ـ/g, "") // tatweel
+    .replace(/[آأإٱ]/g, "ا") // alef forms NFKD leaves alone
+    .replace(/ة/g, "ه") // teh marbuta -> heh
+    .replace(/ى/g, "ي") // alef maksura -> yeh
+    .replace(/ؤ/g, "و") // waw with hamza
+    .replace(/ئ/g, "ي") // yeh with hamza
+    .trim();
+
+/**
+ * Both languages are searched at once whichever one the site is showing. A
+ * resident who types "مرور" and a visitor who types "traffic" are looking for
+ * the same page, and neither should have to switch the interface first.
+ */
+type Indexed = {
+  hit: SearchHit;
+  titles: string[];
+  haystack: string;
+};
+
+const indexed: Indexed[] = searchIndex.map((hit) => {
+  const arTitle = translate("ar", hit.title);
+  const titles = [fold(hit.title)];
+  if (arTitle !== hit.title) titles.push(fold(arTitle));
+  return {
+    hit,
+    titles,
+    haystack: fold(
+      [
+        hit.title,
+        hit.body,
+        hit.section,
+        arTitle,
+        translate("ar", hit.body),
+        translate("ar", hit.section),
+      ].join(" "),
+    ),
+  };
+});
+
+const terms = (query: string) => fold(query).split(/\s+/).filter(Boolean);
 
 /**
  * Where a term lands decides the rank: the front of the title, the front of a
@@ -124,22 +182,25 @@ const terms = (query: string) =>
  * Certificate" purely by list order, which is the wrong answer to the most
  * common query on the site.
  */
-function score(hit: SearchHit, words: string[]): number {
-  const title = hit.title.toLowerCase();
-  const haystack = `${title} ${hit.body} ${hit.section}`.toLowerCase();
-  if (!words.every((t) => haystack.includes(t))) return 0;
+function score(entry: Indexed, words: string[]): number {
+  if (!words.every((t) => entry.haystack.includes(t))) return 0;
 
-  let total = hit.weight ?? 1;
-  if (title.startsWith(words.join(" "))) total += 100;
-
-  for (const word of words) {
-    if (title.startsWith(word)) total += 50;
-    else if (new RegExp(`\\b${escape(word)}`).test(title)) total += 30;
-    else if (title.includes(word)) total += 12;
-    else total += 3;
+  // Scored against whichever language's title matches better, so an Arabic
+  // query still earns the front-of-title bonuses.
+  let best = 0;
+  for (const title of entry.titles) {
+    let total = entry.hit.weight ?? 1;
+    if (title.startsWith(words.join(" "))) total += 100;
+    for (const word of words) {
+      if (title.startsWith(word)) total += 50;
+      else if (new RegExp(`\\b${escape(word)}`).test(title)) total += 30;
+      else if (title.includes(word)) total += 12;
+      else total += 3;
+    }
+    // A short title that matched is a tighter match than a long one.
+    best = Math.max(best, total + Math.max(0, 24 - title.length / 4));
   }
-  // A short title that matched is a tighter match than a long one.
-  return total + Math.max(0, 24 - title.length / 4);
+  return best;
 }
 
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -150,8 +211,8 @@ export function search(query: string): SearchHit[] {
   if (!words.length) return [];
 
   const seen = new Set<string>();
-  return searchIndex
-    .map((hit) => ({ hit, rank: score(hit, words) }))
+  return indexed
+    .map((entry) => ({ hit: entry.hit, rank: score(entry, words) }))
     .filter((r) => r.rank > 0)
     .sort((a, b) => b.rank - a.rank)
     .map((r) => r.hit)

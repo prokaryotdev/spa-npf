@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { payFine, useStore } from "./store";
-import { Empty, aed, formatDate } from "./ui";
+import { Empty } from "./ui";
 import { AlertIcon, CardIcon, CheckCircle } from "./icons";
+import { useFormat, useT } from "../i18n/client";
 
 /** Fines paid within 30 days of being issued are discounted by a quarter. */
 const DISCOUNT = 0.25;
@@ -19,6 +20,8 @@ const payable = (fine: { amount: number; issued: string }) =>
     : fine.amount;
 
 export default function PortalFines() {
+  const t = useT();
+  const format = useFormat();
   const { fines } = useStore();
   const [paying, setPaying] = useState<string | null>(null);
 
@@ -34,40 +37,48 @@ export default function PortalFines() {
   return (
     <div className="space-y-8">
       <h2 className="font-secondary text-2xl font-bold text-dp-green-deep">
-        Fines
+        {t("Fines")}
       </h2>
 
       {unpaid.length ? (
         <div className="rounded-3xl bg-[#F4F8F6] p-6">
           <dl className="flex flex-wrap gap-x-12 gap-y-4">
             <div>
-              <dt className="text-sm text-dp-body">Payable today</dt>
+              <dt className="text-sm text-dp-body">{t("Payable today")}</dt>
               <dd className="mt-1 font-secondary text-3xl font-bold text-dp-green-deep tabular-nums">
-                {aed(owed)}
+                {format.aed(owed)}
               </dd>
               {face > owed ? (
                 <dd className="mt-0.5 text-sm text-dp-muted tabular-nums">
-                  <s>{aed(face)}</s> before the early-payment discount
+                  <s>{format.aed(face)}</s>{" "}
+                  {t("before the early-payment discount")}
                 </dd>
               ) : null}
             </div>
             <div>
-              <dt className="text-sm text-dp-body">Black points at risk</dt>
+              <dt className="text-sm text-dp-body">
+                {t("Black points at risk")}
+              </dt>
               <dd className="mt-1 font-secondary text-3xl font-bold text-dp-green-deep tabular-nums">
                 {points}
               </dd>
             </div>
           </dl>
           <p className="mt-4 flex items-start gap-2 text-sm leading-relaxed text-dp-body">
-            <AlertIcon aria-hidden className="mt-0.5 size-4 shrink-0 text-[#8a5a00]" />
-            Paying within {DISCOUNT_DAYS} days of the issue date takes 25% off.
+            <AlertIcon
+              aria-hidden
+              className="mt-0.5 size-4 shrink-0 text-[#8a5a00]"
+            />
+            {t("Paying within {days} days of the issue date takes 25% off.", {
+              days: DISCOUNT_DAYS,
+            })}
           </p>
         </div>
       ) : null}
 
       <section>
         <h3 className="mb-4 font-secondary text-lg font-bold text-dp-ink">
-          Unpaid
+          {t("Unpaid")}
         </h3>
         {unpaid.length ? (
           <ul className="space-y-3">
@@ -82,25 +93,29 @@ export default function PortalFines() {
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div className="min-w-0 flex-1">
                       <p className="font-secondary text-base font-bold text-dp-ink">
-                        {fine.reason}
+                        {t(fine.reason)}
                       </p>
                       <p className="mt-1 text-sm text-dp-body">
-                        {fine.location}
+                        {t(fine.location)}
                       </p>
                       <p className="mt-1 text-sm text-dp-muted tabular-nums">
-                        {fine.id} · {formatDate(fine.issued)}
-                        {fine.points ? ` · ${fine.points} black points` : ""}
+                        {fine.id} · {format.date(fine.issued)}
+                        {fine.points
+                          ? ` · ${t("{n} black points", { n: fine.points })}`
+                          : ""}
                       </p>
                     </div>
 
-                    <div className="text-right">
+                    <div className="text-end">
                       <p className="font-secondary text-xl font-bold text-dp-ink tabular-nums">
-                        {aed(due)}
+                        {format.aed(due)}
                       </p>
                       {discounted ? (
                         <p className="mt-0.5 text-xs text-dp-green-ink tabular-nums">
-                          <s className="text-dp-muted">{aed(fine.amount)}</s> 25%
-                          off
+                          <s className="text-dp-muted">
+                            {format.aed(fine.amount)}
+                          </s>{" "}
+                          {t("25% off")}
                         </p>
                       ) : null}
                       <button
@@ -118,7 +133,7 @@ export default function PortalFines() {
                         className="mt-3 inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid disabled:cursor-wait disabled:opacity-70"
                       >
                         <CardIcon aria-hidden className="size-4" />
-                        {paying === fine.id ? "Paying…" : "Pay now"}
+                        {paying === fine.id ? t("Paying…") : t("Pay now")}
                       </button>
                     </div>
                   </div>
@@ -128,8 +143,8 @@ export default function PortalFines() {
           </ul>
         ) : (
           <Empty
-            title="Nothing outstanding"
-            body="No unpaid fines are recorded against this Emirates ID."
+            title={t("Nothing outstanding")}
+            body={t("No unpaid fines are recorded against this Emirates ID.")}
           />
         )}
       </section>
@@ -137,7 +152,7 @@ export default function PortalFines() {
       {paid.length ? (
         <section>
           <h3 className="mb-4 font-secondary text-lg font-bold text-dp-ink">
-            Paid
+            {t("Paid")}
           </h3>
           <ul className="divide-y divide-black/[0.07] rounded-2xl bg-[#F9F9F9] px-5">
             {paid.map((fine) => (
@@ -147,15 +162,15 @@ export default function PortalFines() {
               >
                 <div className="min-w-0">
                   <p className="truncate font-medium text-dp-ink">
-                    {fine.reason}
+                    {t(fine.reason)}
                   </p>
                   <p className="mt-0.5 text-sm text-dp-muted tabular-nums">
-                    {fine.id} · {formatDate(fine.issued)}
+                    {fine.id} · {format.date(fine.issued)}
                   </p>
                 </div>
                 <p className="flex items-center gap-2 text-sm font-medium text-dp-green-ink tabular-nums">
                   <CheckCircle aria-hidden className="size-4" />
-                  {aed(fine.amount)}
+                  {format.aed(fine.amount)}
                 </p>
               </li>
             ))}

@@ -27,11 +27,7 @@ export type Session = {
 };
 
 export type RequestStatus =
-  | "Submitted"
-  | "In Review"
-  | "Action Needed"
-  | "Completed"
-  | "Rejected";
+  "Submitted" | "In Review" | "Action Needed" | "Completed" | "Rejected";
 
 export type TrackedRequest = {
   id: string;
@@ -89,8 +85,13 @@ export type Incident = {
   unit: string | null;
   summary: string;
   source: string;
-  /** What was written on the call, oldest first. */
-  log: { at: string; text: string }[];
+  /**
+   * What was written on the call, oldest first. A line the system writes is
+   * stored as its English pattern plus the values that fill it, so the board
+   * can render it in either language; a line an operator typed is stored
+   * verbatim and shown as typed.
+   */
+  log: { at: string; text: string; vars?: Record<string, string> }[];
 };
 
 export type UnitStatus = "Available" | "Assigned" | "On Scene" | "Unavailable";
@@ -176,6 +177,31 @@ function subscribe(listener: () => void) {
 const server = fresh();
 
 /**
+ * False while the server renders and through hydration, true once the browser
+ * owns the tree. Anything that reads localStorage, formats a local time or
+ * runs a clock waits for this, or the two renders disagree.
+ *
+ * This was a `useSyncExternalStore` reading `() => true` against
+ * `() => false` twice over — once sharing the store's subscription, once with
+ * its own. Both left the flag stuck false on a hard load of some routes, and a
+ * screen that never learns the browser has arrived sits on its loading
+ * skeleton for good with nothing in the console to say why. Both failures were
+ * reproduced against a clean build and fixed by the line below.
+ *
+ * react-hooks/set-state-in-effect is aimed at effects that recompute state
+ * React could have derived while rendering. This one cannot be derived: the
+ * whole question is whether the render is the server's or the browser's, and
+ * a mount effect is the only thing that knows. It fires once per mount and
+ * never again.
+ */
+export function useHydrated() {
+  const [hydratedNow, setHydratedNow] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => setHydratedNow(true), []);
+  return hydratedNow;
+}
+
+/**
  * `loaded` is false for the first client render. The server rendered the
  * signed-out page, so a screen that flips on `session` has to wait for this
  * or React reports a hydration mismatch.
@@ -186,19 +212,7 @@ export function useStore(): State & { loaded: boolean } {
     () => state,
     () => server,
   );
-  /*
-   * A mount effect, not a second useSyncExternalStore reading `() => true`
-   * against `() => false`.
-   *
-   * That version asked React to notice, after hydration, that a constant had
-   * changed, and on a hard load of some routes it never did: `loaded` stayed
-   * false and the screen sat on its skeleton with no error anywhere to say
-   * why. An effect is not a guess about React's internals — it runs when the
-   * browser has taken the tree over, which is what this flag means.
-   */
-  const [loaded, setLoaded] = useState(false);
-  useEffect(() => setLoaded(true), []);
-  return { ...snapshot, loaded };
+  return { ...snapshot, loaded: useHydrated() };
 }
 
 const now = () => new Date().toISOString();
@@ -314,16 +328,15 @@ export function updateIncident(id: string, patch: Partial<Incident>) {
     // Reopening a closed call clears the closing stamp, or its age freezes.
     if (before.status === "Closed" && patch.status !== "Closed")
       after.closed = null;
-    after.log = [
-      ...after.log,
-      { at, text: statusLine(patch.status, after.unit) },
-    ];
+    after.log = [...after.log, { at, ...statusLine(patch.status, after.unit) }];
   }
 
   if (patch.unit !== undefined && patch.unit !== before.unit)
     after.log = [
       ...after.log,
-      { at, text: patch.unit ? `${patch.unit} assigned.` : "Unit stood down." },
+      patch.unit
+        ? { at, text: "{unit} assigned.", vars: { unit: patch.unit } }
+        : { at, text: "Unit stood down." },
     ];
 
   const touched = new Set([before.unit, after.unit].filter(Boolean));
@@ -341,17 +354,32 @@ export function updateIncident(id: string, patch: Partial<Incident>) {
       const next = UNIT_FOR[after.status];
       return u.status === next && u.incident === after.id
         ? u
-        : { ...u, status: next, incident: after.id, since: at, area: after.area };
+        : {
+            ...u,
+            status: next,
+            incident: after.id,
+            since: at,
+            area: after.area,
+          };
     }),
   });
 }
 
-function statusLine(status: IncidentStatus, unit: string | null) {
-  const on = unit ? ` — ${unit}` : "";
-  if (status === "Dispatched") return `Dispatched${on}.`;
-  if (status === "On Scene") return `Arrived on scene${on}.`;
-  if (status === "Closed") return `Call closed${on}.`;
-  return "Returned to the pending queue.";
+function statusLine(
+  status: IncidentStatus,
+  unit: string | null,
+): { text: string; vars?: Record<string, string> } {
+  const vars = unit ? { unit } : undefined;
+  if (status === "Dispatched")
+    return { text: unit ? "Dispatched — {unit}." : "Dispatched.", vars };
+  if (status === "On Scene")
+    return {
+      text: unit ? "Arrived on scene — {unit}." : "Arrived on scene.",
+      vars,
+    };
+  if (status === "Closed")
+    return { text: unit ? "Call closed — {unit}." : "Call closed.", vars };
+  return { text: "Returned to the pending queue." };
 }
 
 /** A unit going off the air, or back on it, without a call being involved. */
@@ -365,7 +393,10 @@ export function setUnitStatus(callsign: string, status: UnitStatus) {
             ...u,
             status,
             since: at,
-            incident: status === "Available" || status === "Unavailable" ? null : u.incident,
+            incident:
+              status === "Available" || status === "Unavailable"
+                ? null
+                : u.incident,
           }
         : u,
     ),
@@ -395,7 +426,13 @@ export function logIncident(input: {
     status: "New",
     assignee: null,
     unit: null,
-    log: [{ at, text: `Call received via ${input.source}.` }],
+    log: [
+      {
+        at,
+        text: "Call received via {source}.",
+        vars: { source: input.source },
+      },
+    ],
   };
   write({ ...state, incidents: [created, ...state.incidents] });
   return created;

@@ -3,16 +3,22 @@ import Link from "next/link";
 import FeedbackForm from "../../../components/FeedbackForm";
 import { PageShell } from "../../../components/PageShell";
 import { ArrowRight, PhoneIcon } from "../../../components/icons";
-import { contactUs } from "../../../content-footer";
+import { contactUs as contactUsSource } from "../../../content-footer";
+import { getT, getLocalized } from "../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Contact Us | Dubai Police",
-  description: contactUs.intro,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Contact Us | Dubai Police"),
+    description: t(contactUsSource.intro),
+  };
+}
 
-export default function ContactUsPage() {
+export default async function ContactUsPage() {
+  const contactUs = await getLocalized(contactUsSource);
+  const t = await getT();
   return (
-    <PageShell title="Contact Us" intro={contactUs.intro}>
+    <PageShell title={t("Contact Us")} intro={contactUs.intro}>
       <section className="bg-white pb-16">
         <div className="dp-container">
           <h2 className="font-secondary text-2xl font-bold text-dp-green-deep md:text-3xl">
@@ -41,7 +47,9 @@ export default function ContactUsPage() {
                   >
                     {line.number}
                   </a>
-                  <p className="mt-1 text-sm text-dp-body">{line.description}</p>
+                  <p className="mt-1 text-sm text-dp-body">
+                    {line.description}
+                  </p>
                 </div>
               </div>
             ))}
@@ -92,7 +100,7 @@ export default function ContactUsPage() {
             href="/app/services/leaders-at-your-service"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
           >
-            Leaders at Your Service
+            {t("Leaders at Your Service")}
             <ArrowRight className="size-4" />
           </Link>
         </div>

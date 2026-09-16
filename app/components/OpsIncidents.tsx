@@ -2,6 +2,8 @@
 
 import { useId, useMemo, useState } from "react";
 import { callSources, callTypes, dispatchTarget } from "../content-ops";
+import { useFormat, useT } from "../i18n/client";
+import type { T } from "../i18n/translate";
 import {
   Elapsed,
   OpsButton,
@@ -22,7 +24,6 @@ import {
   type Priority,
   type Unit,
 } from "./store";
-import { formatTime } from "./ui";
 import { CloseIcon, PlusIcon, SearchIcon } from "./icons";
 
 const STATUSES: IncidentStatus[] = ["New", "Dispatched", "On Scene", "Closed"];
@@ -35,6 +36,20 @@ const STATUS_LABEL: Record<IncidentStatus, string> = {
 const PRIORITIES: Priority[] = ["P1", "P2", "P3", "P4"];
 
 /**
+ * A log line the system wrote is a pattern plus its values; one an operator
+ * typed is stored as typed and has neither, so it comes back untouched.
+ */
+const logLine = (
+  t: T,
+  entry: { text: string; vars?: Record<string, string> },
+) =>
+  t(
+    entry.text,
+    entry.vars &&
+      Object.fromEntries(Object.entries(entry.vars).map(([k, v]) => [k, t(v)])),
+  );
+
+/**
  * The calls board: every call of the shift, and the panel where one is worked.
  *
  * The table leads with the grade and the clock rather than the reference
@@ -42,6 +57,7 @@ const PRIORITIES: Priority[] = ["P1", "P2", "P3", "P4"];
  * looking for the oldest P1 with nobody on it.
  */
 export default function OpsIncidents() {
+  const t = useT();
   const id = useId();
   const { incidents, units } = useStore();
   const now = useNow();
@@ -52,6 +68,10 @@ export default function OpsIncidents() {
   const [selected, setSelected] = useState<string | null>(null);
   const [taking, setTaking] = useState(false);
 
+  /**
+   * Both languages are searched: the board holds English reference data but
+   * an Arabic-speaking operator types the call type in Arabic.
+   */
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
     return incidents.filter((i) => {
@@ -59,11 +79,21 @@ export default function OpsIncidents() {
       if (priority && i.priority !== priority) return false;
       if (unassigned && i.unit) return false;
       if (!q) return true;
-      return `${i.id} ${i.kind} ${i.area} ${i.assignee ?? ""} ${i.unit ?? ""}`
+      return [
+        i.id,
+        i.kind,
+        t(i.kind),
+        i.area,
+        t(i.area),
+        i.assignee ?? "",
+        t(i.assignee ?? ""),
+        i.unit ?? "",
+      ]
+        .join(" ")
         .toLowerCase()
         .includes(q);
     });
-  }, [incidents, query, status, priority, unassigned]);
+  }, [incidents, query, status, priority, unassigned, t]);
 
   const open = incidents.find((i) => i.id === selected) ?? null;
 
@@ -71,15 +101,16 @@ export default function OpsIncidents() {
     <div className="space-y-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="font-secondary text-2xl font-bold">Calls</h1>
+          <h1 className="font-secondary text-2xl font-bold">{t("Calls")}</h1>
           <p className="mt-1 text-sm text-[var(--ops-dim)]">
-            Every call of the shift, newest first. Pick a row to dispatch it,
-            move it on, or write the log.
+            {t(
+              "Every call of the shift, newest first. Pick a row to dispatch it, move it on, or write the log.",
+            )}
           </p>
         </div>
         <OpsButton tone="brand" onClick={() => setTaking((v) => !v)}>
           <PlusIcon aria-hidden className="size-4" />
-          {taking ? "Cancel" : "Take a call"}
+          {taking ? t("Cancel") : t("Take a call")}
         </OpsButton>
       </div>
 
@@ -99,80 +130,84 @@ export default function OpsIncidents() {
             className="size-4 shrink-0 text-[var(--ops-dim)]"
           />
           <label htmlFor={`${id}-q`} className="sr-only">
-            Filter calls
+            {t("Filter calls")}
           </label>
           <input
             id={`${id}-q`}
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Reference, type, area, officer or callsign"
+            placeholder={t("Reference, type, area, officer or callsign")}
             className="w-full bg-transparent py-2 text-sm outline-none placeholder:text-[var(--ops-dim)]"
           />
         </div>
 
         <Filter
           id={`${id}-status`}
-          label="Status"
+          label={t("Status")}
           value={status}
           onChange={setStatus}
-          options={STATUSES.map((s) => [s, STATUS_LABEL[s]])}
-          all="Any status"
+          options={STATUSES.map((s) => [s, t(STATUS_LABEL[s])])}
+          all={t("Any status")}
         />
         <Filter
           id={`${id}-priority`}
-          label="Grade"
+          label={t("Grade")}
           value={priority}
           onChange={setPriority}
-          options={PRIORITIES.map((p) => [p, `${p} ${PRIORITY[p].label}`])}
-          all="Any grade"
+          options={PRIORITIES.map((p) => [p, `${p} ${t(PRIORITY[p].label)}`])}
+          all={t("Any grade")}
         />
         <OpsButton
           tone={unassigned ? "brand" : "quiet"}
           aria-pressed={unassigned}
           onClick={() => setUnassigned((v) => !v)}
         >
-          No unit
+          {t("No unit")}
         </OpsButton>
       </div>
 
       <p aria-live="polite" className="text-xs text-[var(--ops-dim)]">
-        {visible.length} of {incidents.length} calls
+        {t("{shown} of {total} calls", {
+          shown: visible.length,
+          total: incidents.length,
+        })}
       </p>
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_336px]">
         {/* min-w-0: without it the table's min-content width shoves the
-            detail panel off the page. */}
+ detail panel off the page. */}
         <div className="min-w-0">
           <OpsPanel flush>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[660px] text-left text-sm">
+              <table className="w-full min-w-[660px] text-start text-sm">
                 <caption className="sr-only">
-                  Calls, with grade, type, area, status, assigned unit and
-                  elapsed time
+                  {t(
+                    "Calls, with grade, type, area, status, assigned unit and elapsed time",
+                  )}
                 </caption>
                 <thead className="text-[11px] tracking-[0.1em] text-[var(--ops-dim)] uppercase">
                   <tr className="border-b border-[var(--ops-line)]">
-                    <th scope="col" className="py-2.5 pr-3 pl-4 font-medium">
-                      Grade
+                    <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
+                      {t("Grade")}
                     </th>
-                    <th scope="col" className="py-2.5 pr-3 font-medium">
-                      Ref
+                    <th scope="col" className="py-2.5 pe-3 font-medium">
+                      {t("Ref")}
                     </th>
-                    <th scope="col" className="py-2.5 pr-3 font-medium">
-                      Type / area
+                    <th scope="col" className="py-2.5 pe-3 font-medium">
+                      {t("Type / area")}
                     </th>
-                    <th scope="col" className="py-2.5 pr-3 font-medium">
-                      Status
+                    <th scope="col" className="py-2.5 pe-3 font-medium">
+                      {t("Status")}
                     </th>
-                    <th scope="col" className="py-2.5 pr-3 font-medium">
-                      Unit
+                    <th scope="col" className="py-2.5 pe-3 font-medium">
+                      {t("Unit")}
                     </th>
                     <th
                       scope="col"
-                      className="py-2.5 pr-4 text-right font-medium"
+                      className="py-2.5 pe-4 text-end font-medium"
                     >
-                      Elapsed
+                      {t("Elapsed")}
                     </th>
                   </tr>
                 </thead>
@@ -191,12 +226,12 @@ export default function OpsIncidents() {
                             : "hover:bg-[var(--ops-raised)]/60"
                         } ${late ? "dp-ops-overdue" : ""}`}
                       >
-                        <td className="py-2.5 pr-3 pl-4">
+                        <td className="py-2.5 pe-3 ps-4">
                           <PriorityTag priority={incident.priority} />
                         </td>
                         <th
                           scope="row"
-                          className="py-2.5 pr-3 text-left font-normal"
+                          className="py-2.5 pe-3 text-start font-normal"
                         >
                           <button
                             type="button"
@@ -209,23 +244,23 @@ export default function OpsIncidents() {
                             {incident.id}
                           </button>
                         </th>
-                        <td className="py-2.5 pr-3">
-                          {incident.kind}
+                        <td className="py-2.5 pe-3">
+                          {t(incident.kind)}
                           <span className="block text-xs text-[var(--ops-dim)]">
-                            {incident.area}
+                            {t(incident.area)}
                           </span>
                         </td>
-                        <td className="py-2.5 pr-3">
+                        <td className="py-2.5 pe-3">
                           <OpsStatus status={incident.status} />
                         </td>
-                        <td className="py-2.5 pr-3 text-xs">
+                        <td className="py-2.5 pe-3 text-xs">
                           {incident.unit ? (
                             <>
                               <span className="font-secondary font-bold">
-                                {incident.unit}
+                                {t(incident.unit)}
                               </span>
                               <span className="block text-[var(--ops-dim)]">
-                                {incident.assignee}
+                                {t(incident.assignee ?? "")}
                               </span>
                             </>
                           ) : (
@@ -233,12 +268,12 @@ export default function OpsIncidents() {
                               style={{ color: "var(--ops-p2)" }}
                               className="font-medium"
                             >
-                              No unit
+                              {t("No unit")}
                             </span>
                           )}
                         </td>
                         <td
-                          className="py-2.5 pr-4 text-right font-medium"
+                          className="py-2.5 pe-4 text-end font-medium"
                           style={late ? { color: "var(--ops-p1)" } : undefined}
                         >
                           <Elapsed
@@ -247,10 +282,12 @@ export default function OpsIncidents() {
                           />
                           <span className="block text-[11px] font-normal text-[var(--ops-dim)]">
                             {incident.closed
-                              ? "total"
+                              ? t("total")
                               : incident.status === "New"
-                                ? `of ${dispatchTarget[incident.priority]}m`
-                                : "since call"}
+                                ? t("of {n}m", {
+                                    n: dispatchTarget[incident.priority],
+                                  })
+                                : t("since call")}
                           </span>
                         </td>
                       </tr>
@@ -262,7 +299,7 @@ export default function OpsIncidents() {
 
             {visible.length === 0 ? (
               <p className="px-4 py-12 text-center text-sm text-[var(--ops-dim)]">
-                No call matches those filters.
+                {t("No call matches those filters.")}
               </p>
             ) : null}
           </OpsPanel>
@@ -276,9 +313,9 @@ export default function OpsIncidents() {
               onClose={() => setSelected(null)}
             />
           ) : (
-            <OpsPanel title="Call detail">
+            <OpsPanel title={t("Call detail")}>
               <p className="py-10 text-center text-sm text-[var(--ops-dim)]">
-                Pick a row to dispatch it, move it on, or read the log.
+                {t("Pick a row to dispatch it, move it on, or read the log.")}
               </p>
             </OpsPanel>
           )}
@@ -305,6 +342,8 @@ function Detail({
   units: Unit[];
   onClose: () => void;
 }) {
+  const t = useT();
+  const format = useFormat();
   const id = useId();
   const [note, setNote] = useState("");
   const free = units.filter(
@@ -319,7 +358,7 @@ function Detail({
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close call detail"
+          aria-label={t("Close call detail")}
           className="grid size-7 place-items-center rounded text-[var(--ops-dim)] transition-colors hover:bg-[var(--ops-raised)] hover:text-[var(--ops-text)]"
         >
           <CloseIcon className="size-4" />
@@ -332,10 +371,10 @@ function Detail({
       </div>
 
       <h3 className="mt-3 font-secondary text-base font-bold">
-        {incident.kind}
+        {t(incident.kind)}
       </h3>
-      <p className="mt-0.5 text-sm text-[var(--ops-dim)]">{incident.area}</p>
-      <p className="mt-3 text-sm leading-relaxed">{incident.summary}</p>
+      <p className="mt-0.5 text-sm text-[var(--ops-dim)]">{t(incident.area)}</p>
+      <p className="mt-3 text-sm leading-relaxed">{t(incident.summary)}</p>
 
       {/*
         The four stamps of a call, as a run of times with the gap between
@@ -347,13 +386,13 @@ function Detail({
       <div className="mt-4 space-y-2.5 border-t border-[var(--ops-line)] pt-4">
         <Assign
           id={`${id}-unit`}
-          label="Unit"
+          label={t("Unit")}
           value={incident.unit ?? ""}
           options={free.map((u) => [
             u.callsign,
-            `${u.callsign} · ${u.officer}`,
+            `${t(u.callsign)} · ${t(u.officer)}`,
           ])}
-          placeholder={free.length ? "Not dispatched" : "No unit free"}
+          placeholder={free.length ? t("Not dispatched") : t("No unit free")}
           onChange={(callsign) => {
             const unit = units.find((u) => u.callsign === callsign);
             updateIncident(incident.id, {
@@ -370,18 +409,18 @@ function Detail({
         />
         <Assign
           id={`${id}-status`}
-          label="Status"
+          label={t("Status")}
           value={incident.status}
-          options={STATUSES.map((s) => [s, STATUS_LABEL[s]])}
+          options={STATUSES.map((s) => [s, t(STATUS_LABEL[s])])}
           onChange={(s) =>
             updateIncident(incident.id, { status: s as IncidentStatus })
           }
         />
         <Assign
           id={`${id}-grade`}
-          label="Grade"
+          label={t("Grade")}
           value={incident.priority}
-          options={PRIORITIES.map((p) => [p, `${p} — ${PRIORITY[p].label}`])}
+          options={PRIORITIES.map((p) => [p, `${p} — ${t(PRIORITY[p].label)}`])}
           onChange={(p) =>
             updateIncident(incident.id, { priority: p as Priority })
           }
@@ -394,7 +433,7 @@ function Detail({
           onClick={() => updateIncident(incident.id, { status: next[0] })}
           className="mt-4 w-full justify-center"
         >
-          {next[1]}
+          {t(next[1])}
         </OpsButton>
       ) : null}
       {incident.status === "Closed" ? (
@@ -402,13 +441,13 @@ function Detail({
           onClick={() => updateIncident(incident.id, { status: "New" })}
           className="mt-4 w-full justify-center"
         >
-          Reopen call
+          {t("Reopen call")}
         </OpsButton>
       ) : null}
 
       <div className="mt-5 border-t border-[var(--ops-line)] pt-4">
         <p className="mb-3 text-[11px] tracking-[0.12em] text-[var(--ops-dim)] uppercase">
-          Log
+          {t("Log")}
         </p>
         <ol className="space-y-2 text-xs">
           {incident.log
@@ -420,9 +459,11 @@ function Detail({
                   dateTime={entry.at}
                   className="w-10 shrink-0 text-[var(--ops-dim)] tabular-nums"
                 >
-                  {formatTime(entry.at)}
+                  {format.time(entry.at)}
                 </time>
-                <span className="min-w-0 leading-relaxed">{entry.text}</span>
+                <span className="min-w-0 leading-relaxed">
+                  {logLine(t, entry)}
+                </span>
               </li>
             ))}
         </ol>
@@ -433,23 +474,20 @@ function Detail({
             const text = note.trim();
             if (!text) return;
             updateIncident(incident.id, {
-              log: [
-                ...incident.log,
-                { at: new Date().toISOString(), text },
-              ],
+              log: [...incident.log, { at: new Date().toISOString(), text }],
             });
             setNote("");
           }}
           className="mt-3 flex gap-2"
         >
           <label htmlFor={`${id}-note`} className="sr-only">
-            Add a line to the log for {incident.id}
+            {t("Add a line to the log for {ref}", { ref: incident.id })}
           </label>
           <input
             id={`${id}-note`}
             value={note}
             onChange={(e) => setNote(e.target.value)}
-            placeholder="Add to the log"
+            placeholder={t("Add to the log")}
             className="min-w-0 flex-1 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-xs outline-none placeholder:text-[var(--ops-dim)] focus:border-[var(--ops-accent)]"
           />
           <OpsButton
@@ -458,7 +496,7 @@ function Detail({
             disabled={!note.trim()}
             className="!px-3 !py-2 !text-xs"
           >
-            Add
+            {t("Add")}
           </OpsButton>
         </form>
       </div>
@@ -468,6 +506,8 @@ function Detail({
 
 /** Received → dispatched → on scene → closed, with the gap between each. */
 function Stamps({ incident }: { incident: Incident }) {
+  const t = useT();
+  const format = useFormat();
   const rows: [string, string | null, string | null][] = [
     ["Received", incident.reported, null],
     ["Dispatched", incident.dispatched, incident.reported],
@@ -482,19 +522,16 @@ function Stamps({ incident }: { incident: Incident }) {
           key={label}
           className="flex items-baseline justify-between gap-3 py-1"
         >
-          <span className={at ? "" : "text-[var(--ops-dim)]"}>{label}</span>
+          <span className={at ? "" : "text-[var(--ops-dim)]"}>{t(label)}</span>
           {at ? (
             <span className="flex items-baseline gap-2.5 tabular-nums">
               {from ? (
-                <span className="text-[var(--ops-accent)]">
-                  +
-                  {duration(
-                    new Date(at).getTime() - new Date(from).getTime(),
-                  )}
+                <span className="text-[var(--ops-accent)]" dir="ltr">
+                  +{duration(new Date(at).getTime() - new Date(from).getTime())}
                 </span>
               ) : null}
               <time dateTime={at} className="text-[var(--ops-dim)]">
-                {formatTime(at)}
+                {format.time(at)}
               </time>
             </span>
           ) : (
@@ -508,7 +545,10 @@ function Stamps({ incident }: { incident: Incident }) {
 
 /** The call-taking form. What the desk fills in while the caller is talking. */
 function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
+  const t = useT();
   const id = useId();
+  // State holds the English value the store records; only the option text is
+  // translated, so a call logged in Arabic still reads back in English.
   const [kind, setKind] = useState(callTypes[0]);
   const [priority, setPriority] = useState<Priority>("P3");
   const [area, setArea] = useState("");
@@ -518,7 +558,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
   const ready = area.trim() && summary.trim();
 
   return (
-    <OpsPanel title="Take a call">
+    <OpsPanel title={t("Take a call")}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -535,20 +575,22 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
         }}
         className="grid gap-3 sm:grid-cols-2"
       >
-        <Field id={`${id}-kind`} label="Call type">
+        <Field id={`${id}-kind`} label={t("Call type")}>
           <select
             id={`${id}-kind`}
             value={kind}
             onChange={(e) => setKind(e.target.value)}
             className={INPUT}
           >
-            {callTypes.map((t) => (
-              <option key={t}>{t}</option>
+            {callTypes.map((type) => (
+              <option key={type} value={type}>
+                {t(type)}
+              </option>
             ))}
           </select>
         </Field>
 
-        <Field id={`${id}-grade`} label="Grade">
+        <Field id={`${id}-grade`} label={t("Grade")}>
           <select
             id={`${id}-grade`}
             value={priority}
@@ -557,25 +599,25 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
           >
             {PRIORITIES.map((p) => (
               <option key={p} value={p}>
-                {p} — {PRIORITY[p].label} · dispatch within{" "}
-                {dispatchTarget[p]}m
+                {p} — {t(PRIORITY[p].label)} ·{" "}
+                {t("dispatch within {n}m", { n: dispatchTarget[p] })}
               </option>
             ))}
           </select>
         </Field>
 
-        <Field id={`${id}-area`} label="Area">
+        <Field id={`${id}-area`} label={t("Area")}>
           <input
             id={`${id}-area`}
             value={area}
             onChange={(e) => setArea(e.target.value)}
             required
-            placeholder="Al Barsha 1"
+            placeholder={t("Al Barsha 1")}
             className={INPUT}
           />
         </Field>
 
-        <Field id={`${id}-source`} label="Received via">
+        <Field id={`${id}-source`} label={t("Received via")}>
           <select
             id={`${id}-source`}
             value={source}
@@ -583,20 +625,24 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
             className={INPUT}
           >
             {callSources.map((s) => (
-              <option key={s}>{s}</option>
+              <option key={s} value={s}>
+                {t(s)}
+              </option>
             ))}
           </select>
         </Field>
 
         <div className="sm:col-span-2">
-          <Field id={`${id}-summary`} label="What was reported">
+          <Field id={`${id}-summary`} label={t("What was reported")}>
             <textarea
               id={`${id}-summary`}
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
               required
               rows={2}
-              placeholder="What the caller described, in their words where you can."
+              placeholder={t(
+                "What the caller described, in their words where you can.",
+              )}
               className={INPUT}
             />
           </Field>
@@ -604,7 +650,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
 
         <div className="sm:col-span-2">
           <OpsButton type="submit" tone="brand" disabled={!ready}>
-            Put it in the queue
+            {t("Put it in the queue")}
           </OpsButton>
         </div>
       </form>

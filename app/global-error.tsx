@@ -1,6 +1,7 @@
 "use client";
 
 import "./globals.css";
+import { useT } from "./i18n/client";
 
 /**
  * Replaces the root layout when the layout itself throws, so it owns its own
@@ -14,6 +15,7 @@ export default function GlobalError({
   error: Error & { digest?: string };
   retry: () => void;
 }) {
+  const t = useT();
   return (
     <html lang="en" dir="ltr">
       <body
@@ -28,7 +30,7 @@ export default function GlobalError({
           fontFamily: "system-ui, -apple-system, Segoe UI, sans-serif",
         }}
       >
-        <title>Something went wrong | Dubai Police</title>
+        <title>{t("Something went wrong | Dubai Police")}</title>
         <div style={{ maxWidth: "42rem" }}>
           <h1
             style={{
@@ -38,12 +40,25 @@ export default function GlobalError({
               color: "#0B3B2C",
             }}
           >
-            Something went wrong
+            {t("Something went wrong")}
           </h1>
-          <p style={{ marginTop: "1.25rem", fontSize: "1.125rem", color: "#4b5563" }}>
-            The site failed to load. Trying again often clears it.
+          <p
+            style={{
+              marginTop: "1.25rem",
+              fontSize: "1.125rem",
+              color: "#4b5563",
+            }}
+          >
+            {t("The site failed to load. Trying again often clears it.")}
           </p>
-          <div style={{ marginTop: "2rem", display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+          <div
+            style={{
+              marginTop: "2rem",
+              display: "flex",
+              gap: "0.75rem",
+              flexWrap: "wrap",
+            }}
+          >
             <button
               type="button"
               onClick={() => retry()}
@@ -58,10 +73,10 @@ export default function GlobalError({
                 padding: "0.75rem 1.5rem",
               }}
             >
-              Try again
+              {t("Try again")}
             </button>
             {/* A plain link on purpose: the root layout is what failed, so a
-                full page load is the recovery, not a client-side route. */}
+ full page load is the recovery, not a client-side route. */}
             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
               href="/"
@@ -74,12 +89,19 @@ export default function GlobalError({
                 textDecoration: "none",
               }}
             >
-              Back to home
+              {t("Back to home")}
             </a>
           </div>
           {error.digest ? (
-            <p style={{ marginTop: "2rem", fontSize: "0.875rem", color: "#6b7280" }}>
-              Reference: <span style={{ fontFamily: "monospace" }}>{error.digest}</span>
+            <p
+              style={{
+                marginTop: "2rem",
+                fontSize: "0.875rem",
+                color: "#6b7280",
+              }}
+            >
+              {t("Reference:")}{" "}
+              <span style={{ fontFamily: "monospace" }}>{error.digest}</span>
             </p>
           ) : null}
         </div>

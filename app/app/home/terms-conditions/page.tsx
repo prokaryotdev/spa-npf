@@ -1,18 +1,27 @@
 import type { Metadata } from "next";
 import { LegalSections, PageShell } from "../../../components/PageShell";
-import { termsConditions } from "../../../content-footer";
+import { termsConditions as termsConditionsSource } from "../../../content-footer";
+import { getT, getLocalized } from "../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Terms & Conditions | Dubai Police",
-  description:
-    "The terms that govern your use of the Dubai Police website and its electronic services.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Terms & Conditions | Dubai Police"),
+    description: t(
+      "The terms that govern your use of the Dubai Police website and its electronic services.",
+    ),
+  };
+}
 
-export default function TermsConditionsPage() {
+export default async function TermsConditionsPage() {
+  const termsConditions = await getLocalized(termsConditionsSource);
+  const t = await getT();
   return (
     <PageShell
       title={termsConditions.title}
-      intro="The terms that govern your use of the Dubai Police website and its electronic services."
+      intro={t(
+        "The terms that govern your use of the Dubai Police website and its electronic services.",
+      )}
     >
       <LegalSections sections={termsConditions.sections} />
     </PageShell>

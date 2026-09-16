@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-primary: var(--font-dubai);
-  --font-secondary: var(--font-bukra);
+  /*
+   * The two brand faces lead, then Arabic-capable fallbacks. Font fallback in
+   * CSS is per character, not per string, so an Arabic page picks up the next
+   * family in the stack for the glyphs Dubai/Bukra's web subsets do not carry
+   * while Latin digits and the odd English proper noun stay on brand.
+   */
+  --font-primary:
+    var(--font-dubai), "Dubai", "Noto Sans Arabic", "Segoe UI", Tahoma,
+    system-ui, sans-serif;
+  --font-secondary:
+    var(--font-bukra), "Dubai", "Noto Kufi Arabic", "Segoe UI", Tahoma,
+    system-ui, sans-serif;
 
   --color-dp-green: #008755;
   --color-dp-green-deep: #004a2e;
@@ -21,6 +31,11 @@
   @keyframes marquee {
     to {
       transform: translateX(-50%);
+    }
+  }
+  @keyframes marquee-rtl {
+    to {
+      transform: translateX(50%);
     }
   }
   @keyframes bob {
@@ -87,6 +102,16 @@ dialog::backdrop {
 }
 .dp-drawer[open] {
   animation: dp-drawer-in 0.45s var(--ease-custom);
+}
+/* A <dialog> with margin:0 already anchors to the inline-start edge, so in
+   Arabic the drawer lives on the right; only the entrance needs the mirror. */
+@keyframes dp-drawer-in-rtl {
+  from {
+    translate: 100% 0;
+  }
+}
+[dir="rtl"] .dp-drawer[open] {
+  animation-name: dp-drawer-in-rtl;
 }
 /*
  * Toggled by the header's accessibility button; every size in the app is in
@@ -157,9 +182,15 @@ html.dp-large-text {
 
 /* The pillar portraits hand off as the section crosses the viewport. Without
    scroll-driven animation support all three simply stack and the last shows. */
-[data-portrait="1"] { z-index: 1; }
-[data-portrait="2"] { z-index: 2; }
-[data-portrait="3"] { z-index: 3; }
+[data-portrait="1"] {
+  z-index: 1;
+}
+[data-portrait="2"] {
+  z-index: 2;
+}
+[data-portrait="3"] {
+  z-index: 3;
+}
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
@@ -357,4 +388,43 @@ html.dp-large-text {
   -webkit-mask-image: url("/img/logo-gov-dubai.svg");
   mask-position: left center;
   -webkit-mask-position: left center;
+}
+[dir="rtl"] .dp-logo-gov {
+  mask-position: right center;
+  -webkit-mask-position: right center;
+}
+
+/*
+ * Arabic has no capitals, so `uppercase` on a mixed heading only shouts at
+ * the Latin words inside it and leaves the Arabic untouched — an uneven,
+ * accidental emphasis. Tracking is a Latin device too: letters in Arabic
+ * join, and spacing them apart breaks the joins. Both are neutralised for
+ * the whole document rather than class by class.
+ */
+[dir="rtl"] .uppercase {
+  text-transform: none;
+}
+[dir="rtl"] [class*="tracking-"] {
+  letter-spacing: normal;
+}
+/* Arabic sits lower in its em box and needs more room between lines. */
+[dir="rtl"] body {
+  line-height: 1.75;
+}
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3 {
+  line-height: 1.4;
+}
+/*
+ * Directional marks the layout cannot fix. An arrow that means "forward"
+ * points the other way in Arabic; an arrow that means "download" or "expand"
+ * does not. Only the inline ones are flipped, by opt-in class.
+ */
+[dir="rtl"] .dp-flip {
+  transform: scaleX(-1);
+}
+/* A marquee reads the way the script does. */
+[dir="rtl"] .animate-marquee {
+  animation-name: marquee-rtl;
 }

@@ -11,19 +11,26 @@ import Pillars from "./components/Pillars";
 import Skyline from "./components/Skyline";
 import StickyBar from "./components/StickyBar";
 import { ArrowRight } from "./components/icons";
+import { getT, getLocalized } from "./i18n/server";
 import {
-  appStores,
-  community,
-  quickServices,
-  smartPoliceStations,
-  smartPolicing,
+  appStores as appStoresSource,
+  community as communitySource,
+  quickServices as quickServicesSource,
+  smartPoliceStations as smartPoliceStationsSource,
+  smartPolicing as smartPolicingSource,
 } from "./content";
 
 /** The soft green bloom that sits behind the light sections. */
 const bloom =
   "bg-[radial-gradient(#3cbd6b75_7%,#22c55e38_40%,#22c55e00_70%)] rounded-full pointer-events-none absolute";
 
-export default function Home() {
+export default async function Home() {
+  const appStores = await getLocalized(appStoresSource);
+  const community = await getLocalized(communitySource);
+  const quickServices = await getLocalized(quickServicesSource);
+  const smartPoliceStations = await getLocalized(smartPoliceStationsSource);
+  const smartPolicing = await getLocalized(smartPolicingSource);
+  const t = await getT();
   return (
     <>
       <Header />
@@ -37,7 +44,7 @@ export default function Home() {
           className="relative z-10 -mt-px bg-black pb-px"
         >
           <h2 id="quick-services" className="sr-only">
-            Popular services
+            {t("Popular services")}
           </h2>
           <div className="dp-container">
             <div className="grid grid-cols-2 gap-2 pt-4 sm:grid-cols-3 lg:flex lg:pt-9">
@@ -75,7 +82,9 @@ export default function Home() {
           aria-labelledby="smart-policing"
           className="relative overflow-hidden bg-white pt-[70px] pb-16 lg:py-[150px]"
         >
-          <div className={`${bloom} top-0 left-0 h-80 w-56 -translate-x-1/2 -translate-y-1/2 opacity-70 md:size-[1200px] md:opacity-60`} />
+          <div
+            className={`${bloom} top-0 left-0 h-80 w-56 -translate-x-1/2 -translate-y-1/2 opacity-70 md:size-[1200px] md:opacity-60`}
+          />
           <Image
             src="/img/assets-home/static/cloud.png"
             alt=""
@@ -90,17 +99,18 @@ export default function Home() {
               data-reveal
               className="mb-4 font-secondary text-4xl leading-[1.2] font-bold text-dp-green-deep md:max-w-[20ch] lg:mb-6 lg:text-7xl 2xl:text-8xl"
             >
-              Leading the Way in Smart Policing
+              {t("Leading the Way in Smart Policing")}
             </h2>
             <p
               data-reveal
               className="max-w-[568px] text-sm text-neutral-700 md:text-2xl"
             >
-              We harness intelligent technologies to keep public safety
-              responsive, smart, and always one step ahead.
+              {t(
+                "We harness intelligent technologies to keep public safety responsive, smart, and always one step ahead.",
+              )}
             </p>
 
-            <CardRail label="smart policing" className="mt-10 md:hidden">
+            <CardRail label={t("smart policing")} className="mt-10 md:hidden">
               {smartPolicing.map((card) => (
                 <InitiativeCard
                   key={card.title}
@@ -115,10 +125,15 @@ export default function Home() {
                 <div
                   key={card.title}
                   data-reveal
-                  style={{ "--reveal-delay": `${i * 110}ms` } as React.CSSProperties}
+                  style={
+                    { "--reveal-delay": `${i * 110}ms` } as React.CSSProperties
+                  }
                   className={card.wide ? "col-span-2" : undefined}
                 >
-                  <InitiativeCard card={card} shape={card.wide ? "wide" : "square"} />
+                  <InitiativeCard
+                    card={card}
+                    shape={card.wide ? "wide" : "square"}
+                  />
                 </div>
               ))}
             </div>
@@ -132,7 +147,9 @@ export default function Home() {
           aria-labelledby="sps"
           className="relative overflow-hidden bg-white pt-[70px] pb-16 lg:py-[150px]"
         >
-          <div className={`${bloom} top-0 right-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 opacity-70 md:size-[1200px] md:opacity-60`} />
+          <div
+            className={`${bloom} top-0 right-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 opacity-70 md:size-[1200px] md:opacity-60`}
+          />
 
           <div className="dp-container relative z-10">
             <h2
@@ -140,25 +157,26 @@ export default function Home() {
               data-reveal
               className="mb-4 font-secondary text-4xl leading-[1.2] font-bold text-dp-green-deep md:max-w-[20ch] lg:mb-6 lg:text-7xl 2xl:text-8xl"
             >
-              Smart Police Stations
+              {t("Smart Police Stations")}
             </h2>
             <p
               data-reveal
               className="max-w-[640px] text-sm text-neutral-700 md:text-2xl"
             >
-              Smart Police Stations (SPS): Smart, Practical, Secure, and around
-              the clock.
+              {t(
+                "Smart Police Stations (SPS): Smart, Practical, Secure, and around the clock.",
+              )}
             </p>
             <Link
               href="/app/home/aboutus"
               data-reveal
               className="mt-6 inline-flex items-center gap-2 rounded-full bg-dp-green px-6 py-3 font-medium text-white transition-colors hover:bg-dp-green-mid"
             >
-              Our Brand Story
+              {t("Our Brand Story")}
               <ArrowRight className="size-5" />
             </Link>
 
-            <CardRail label="SPS" className="mt-10 md:mt-20">
+            <CardRail label={t("SPS")} className="mt-10 md:mt-20">
               {smartPoliceStations.map((card) => (
                 <InitiativeCard
                   key={card.title}
@@ -176,7 +194,9 @@ export default function Home() {
           aria-labelledby="community"
           className="relative overflow-hidden bg-white pt-[70px] pb-16 lg:py-[150px]"
         >
-          <div className={`${bloom} bottom-0 left-0 h-80 w-56 -translate-x-1/2 translate-y-1/2 opacity-70 md:size-[1200px] md:opacity-60`} />
+          <div
+            className={`${bloom} bottom-0 left-0 h-80 w-56 -translate-x-1/2 translate-y-1/2 opacity-70 md:size-[1200px] md:opacity-60`}
+          />
 
           <div className="dp-container relative z-10">
             <h2
@@ -184,17 +204,18 @@ export default function Home() {
               data-reveal
               className="mb-4 font-secondary text-4xl leading-[1.2] font-bold text-dp-green-deep md:max-w-[16ch] lg:mb-6 lg:text-7xl 2xl:text-8xl"
             >
-              Shaping the Future, Side by Side
+              {t("Shaping the Future, Side by Side")}
             </h2>
             <p
               data-reveal
               className="max-w-[640px] text-sm text-neutral-700 md:text-2xl"
             >
-              Bringing communities together through education, cultural
-              heritage, volunteer service, and dedicated support.
+              {t(
+                "Bringing communities together through education, cultural heritage, volunteer service, and dedicated support.",
+              )}
             </p>
 
-            <CardRail label="community" className="mt-10 md:hidden">
+            <CardRail label={t("community")} className="mt-10 md:hidden">
               {community.map((card) => (
                 <InitiativeCard
                   key={card.title}
@@ -209,10 +230,17 @@ export default function Home() {
                 <div
                   key={card.title}
                   data-reveal
-                  style={{ "--reveal-delay": `${(i % 2) * 110}ms` } as React.CSSProperties}
+                  style={
+                    {
+                      "--reveal-delay": `${(i % 2) * 110}ms`,
+                    } as React.CSSProperties
+                  }
                   className={card.wide ? "col-span-2" : undefined}
                 >
-                  <InitiativeCard card={card} shape={card.wide ? "wide" : "square"} />
+                  <InitiativeCard
+                    card={card}
+                    shape={card.wide ? "wide" : "square"}
+                  />
                 </div>
               ))}
             </div>
@@ -258,25 +286,27 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative z-20 mt-10 max-w-[750px] md:absolute md:top-1/2 md:left-[6%] md:mt-0 md:-translate-y-1/2">
+            <div className="relative z-20 mt-10 max-w-[750px] md:absolute md:top-1/2 md:start-[6%] md:mt-0 md:-translate-y-1/2">
               <h2
                 id="media-hub"
                 data-reveal
                 className="mb-3 max-w-[14ch] font-secondary text-5xl font-bold sm:text-7xl md:mb-5 2xl:text-8xl"
               >
-                Dubai Police Media Hub
+                {t("Dubai Police Media Hub")}
               </h2>
               <p
                 data-reveal
                 className="mb-6 max-w-[500px] font-secondary text-base font-bold md:text-3xl"
               >
-                Explore Our News, Events, and Media Highlights in One Place.
+                {t(
+                  "Explore Our News, Events, and Media Highlights in One Place.",
+                )}
               </p>
               <Link
                 href="/app/home/media"
                 className="inline-flex items-center gap-2 rounded-full bg-dp-green px-6 py-3.5 font-medium text-white transition-colors hover:bg-dp-green-mid"
               >
-                Visit the Media Hub
+                {t("Visit the Media Hub")}
                 <ArrowRight className="size-5" />
               </Link>
             </div>
@@ -326,17 +356,17 @@ export default function Home() {
               data-reveal
               className="mx-auto max-w-[1100px] font-secondary text-3xl leading-tight font-bold lg:text-7xl"
             >
-              Download the Dubai Police App
+              {t("Download the Dubai Police App")}
             </h2>
             <p
               data-reveal
               className="mx-auto mt-4 max-w-5xl font-secondary text-lg font-bold md:mt-6 md:text-3xl"
             >
-              Services, updates, and alerts: right in your pocket.
+              {t("Services, updates, and alerts: right in your pocket.")}
             </p>
             <div data-reveal className="mt-10 lg:mt-16">
               <h3 className="mb-4 font-secondary text-sm font-bold md:text-3xl">
-                Available on
+                {t("Available on")}
               </h3>
               <ul className="flex flex-wrap justify-center gap-2 md:gap-3">
                 {appStores.map((store) => (

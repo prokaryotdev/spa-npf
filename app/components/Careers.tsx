@@ -2,14 +2,17 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { careers } from "../content";
+import { careers as careersSource } from "../content";
 import { chapter, useScrollProgress } from "./useScrollProgress";
+import { useT, useLocalized } from "../i18n/client";
 
 /**
  * Two recruitment panels scroll past a card pinned on the right, which slides
  * in from off-screen as the chapter opens.
  */
 export default function Careers() {
+  const careers = useLocalized(careersSource);
+  const t = useT();
   const section = useRef<HTMLElement>(null);
   const progress = useScrollProgress(section);
   const active = chapter(progress, careers.length);
@@ -22,7 +25,7 @@ export default function Careers() {
       className="relative bg-white"
     >
       <h2 id="careers" className="sr-only">
-        Careers at Dubai Police
+        {t("Careers at Dubai Police")}
       </h2>
 
       <div
@@ -36,21 +39,21 @@ export default function Careers() {
               className="px-6 font-secondary text-[18vw] leading-none font-bold text-transparent"
               style={{ WebkitTextStroke: "1px rgba(4,120,87,0.18)" }}
             >
-              Dubai Police · Dubai Police ·
+              {t("Dubai Police · Dubai Police ·")}
             </span>
           ))}
         </div>
       </div>
 
       {/* The pinned card, desktop only — on mobile each panel carries its own. */}
-      <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[46%] max-w-[600px] sm:block">
+      <div className="pointer-events-none absolute inset-y-0 end-0 hidden w-[46%] max-w-[600px] sm:block">
         <div
           className="sticky top-0 flex h-screen items-center"
           style={{
             transform: `translateX(${(1 - slideIn) * 100}%)`,
           }}
         >
-          <div className="relative aspect-[575/844] w-full overflow-hidden rounded-l-3xl bg-black md:rounded-l-[48px]">
+          <div className="relative aspect-[575/844] w-full overflow-hidden rounded-s-3xl bg-black md:rounded-s-[48px]">
             {careers.map((job, i) => (
               <Image
                 key={job.image}
@@ -109,7 +112,10 @@ export default function Careers() {
                   className="text-dp-green-deep underline underline-offset-4 transition-colors hover:text-dp-green"
                 >
                   {job.linkLabel}
-                  <span className="sr-only"> (opens in a new window)</span>
+                  <span className="sr-only">
+                    {" "}
+                    {t("(opens in a new window)")}
+                  </span>
                 </a>
                 {job.bodyAfter}
               </p>

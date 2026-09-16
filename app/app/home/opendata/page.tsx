@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
 import { LinkCard, PageShell } from "../../../components/PageShell";
-import { openData } from "../../../content-pages";
+import { openData as openDataSource } from "../../../content-pages";
+import { getLocalized, getT } from "../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Open Data | Dubai Police",
-  description:
-    "Official city data and statistics published by Dubai Police and Digital Dubai.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Open Data | Dubai Police"),
+    description: t(
+      "Official city data and statistics published by Dubai Police and Digital Dubai.",
+    ),
+  };
+}
 
-export default function OpenDataPage() {
+export default async function OpenDataPage() {
+  const openData = await getLocalized(openDataSource);
   return (
     <PageShell title={openData.title}>
       <section className="bg-white pb-24">

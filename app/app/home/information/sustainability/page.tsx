@@ -2,25 +2,34 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PageShell } from "../../../../components/PageShell";
 import { ArrowUpRight } from "../../../../components/icons";
-import { sustainability as data } from "../../../../content-sub";
+import { sustainability as dataSource } from "../../../../content-sub";
+import { getT, getLocalized } from "../../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Best Practices in Sustainable Development | Dubai Police",
-  description:
-    "Know more about how Dubai Police is driving innovation to achieve a sustainable future.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Best Practices in Sustainable Development | Dubai Police"),
+    description: t(
+      "Know more about how Dubai Police is driving innovation to achieve a sustainable future.",
+    ),
+  };
+}
 
-export default function SustainabilityPage() {
+export default async function SustainabilityPage() {
+  const data = await getLocalized(dataSource);
+  const t = await getT();
   return (
     <PageShell
       title={data.title}
-      intro="Know more about how Dubai Police is driving innovation to achieve a sustainable future."
+      intro={t(
+        "Know more about how Dubai Police is driving innovation to achieve a sustainable future.",
+      )}
       trail={[{ label: "Information", href: "/app/home/information" }]}
     >
       <section className="bg-white pb-24">
         <div className="dp-container">
           <p className="mb-6 text-sm text-dp-muted">
-            Page last updated: {data.updatedAt}
+            {t("Page last updated: {date}", { date: t(data.updatedAt) })}
           </p>
 
           <ul className="grid gap-6 md:grid-cols-2">
@@ -55,7 +64,9 @@ export default function SustainabilityPage() {
                     aria-hidden
                     className="size-5 shrink-0 self-center text-dp-green"
                   />
-                  <span className="sr-only">(opens in a new window)</span>
+                  <span className="sr-only">
+                    {t("(opens in a new window)")}
+                  </span>
                 </a>
               </li>
             ))}

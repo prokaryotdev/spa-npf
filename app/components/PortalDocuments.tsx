@@ -2,11 +2,15 @@
 
 import Link from "next/link";
 import { useStore } from "./store";
-import { Empty, formatDate } from "./ui";
-import { seedDocuments } from "../content-account";
+import { Empty } from "./ui";
+import { seedDocuments as seedDocumentsSource } from "../content-account";
 import { ArrowRight, DownloadIcon, FileIcon } from "./icons";
+import { useFormat, useLocalized, useT } from "../i18n/client";
 
 export default function PortalDocuments() {
+  const seedDocuments = useLocalized(seedDocumentsSource);
+  const t = useT();
+  const format = useFormat();
   const { requests } = useStore();
 
   // A document exists because a request finished. Anything completed after the
@@ -32,7 +36,7 @@ export default function PortalDocuments() {
   return (
     <div>
       <h2 className="mb-6 font-secondary text-2xl font-bold text-dp-green-deep">
-        Documents
+        {t("Documents")}
       </h2>
 
       {issued.length ? (
@@ -47,11 +51,16 @@ export default function PortalDocuments() {
               </span>
               <div className="min-w-0 flex-1">
                 <p className="font-secondary text-base font-bold text-dp-ink">
-                  {doc.name}
+                  {t(doc.name)}
                 </p>
                 <p className="mt-0.5 text-sm text-dp-muted tabular-nums">
-                  {doc.id} · issued {formatDate(doc.issued)}
-                  {doc.expires ? ` · valid to ${formatDate(doc.expires)}` : ""}
+                  {t("{ref} · issued {date}", {
+                    ref: doc.id,
+                    date: format.date(doc.issued),
+                  })}
+                  {doc.expires
+                    ? ` · ${t("valid to {date}", { date: format.date(doc.expires) })}`
+                    : ""}
                 </p>
               </div>
               {/* ponytail: no file to hand over in this build, so the control
@@ -59,25 +68,27 @@ export default function PortalDocuments() {
               <button
                 type="button"
                 disabled
-                title="Downloads are not available in this rebuild"
+                title={t("Downloads are not available in this rebuild")}
                 className="inline-flex shrink-0 cursor-not-allowed items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-dp-muted ring-1 ring-black/10"
               >
                 <DownloadIcon aria-hidden className="size-4" />
-                Download
+                {t("Download")}
               </button>
             </li>
           ))}
         </ul>
       ) : (
         <Empty
-          title="No documents yet"
-          body="Certificates, permits and receipts appear here as soon as a request is approved."
+          title={t("No documents yet")}
+          body={t(
+            "Certificates, permits and receipts appear here as soon as a request is approved.",
+          )}
           action={
             <Link
               href="/app/services"
               className="inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
             >
-              Browse services
+              {t("Browse services")}
               <ArrowRight aria-hidden className="size-4" />
             </Link>
           }

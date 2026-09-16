@@ -4,16 +4,20 @@ import { PageShell } from "../../../components/PageShell";
 import { ArrowUpRight } from "../../../components/icons";
 import { footerColumns, legalLinks, navigation } from "../../../content";
 import { services } from "../../../content-services";
+import { getLocalized, getT } from "../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Sitemap | Dubai Police",
-  description: "Every page on the Dubai Police website, in one list.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Sitemap | Dubai Police"),
+    description: t("Every page on the Dubai Police website, in one list."),
+  };
+}
 
 type Entry = { label: string; href: string; external?: boolean };
 
 /** The whole site is already described by the header and footer link data. */
-const groups: { heading: string; links: Entry[] }[] = [
+const groupsSource: { heading: string; count?: number; links: Entry[] }[] = [
   {
     heading: "Main navigation",
     links: navigation.flatMap((item) => [
@@ -34,7 +38,8 @@ const groups: { heading: string; links: Entry[] }[] = [
     ],
   },
   {
-    heading: `Services (${services.length})`,
+    heading: "Services",
+    count: services.length,
     links: [
       { label: "All services", href: "/app/services" },
       ...services.map((s) => ({
@@ -46,18 +51,21 @@ const groups: { heading: string; links: Entry[] }[] = [
   { heading: "Legal", links: legalLinks },
 ];
 
-export default function SitemapPage() {
+export default async function SitemapPage() {
+  const t = await getT();
+  const groups = await getLocalized(groupsSource);
   return (
     <PageShell
-      title="Sitemap"
-      intro="Every page on the Dubai Police website, in one list."
+      title={t("Sitemap")}
+      intro={t("Every page on the Dubai Police website, in one list.")}
     >
       <section className="bg-white pb-24">
         <div className="dp-container grid gap-10 md:grid-cols-2 xl:grid-cols-3">
-          {groups.map((group) => (
-            <div key={group.heading}>
+          {groups.map((group, i) => (
+            <div key={i}>
               <h2 className="mb-4 border-b border-black/10 pb-3 font-secondary text-lg font-bold text-dp-green-deep">
-                {group.heading}
+                {t(group.heading)}
+                {group.count ? ` (${group.count})` : null}
               </h2>
               <ul className="space-y-2.5">
                 {/* Sub-links repeat the parent label in a couple of places, so key on the href too. */}
@@ -74,7 +82,7 @@ export default function SitemapPage() {
                         <>
                           <ArrowUpRight aria-hidden className="size-4" />
                           <span className="sr-only">
-                            (opens in a new window)
+                            {t("(opens in a new window)")}
                           </span>
                         </>
                       ) : null}

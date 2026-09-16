@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ChevronDown, ChevronLeft, ChevronRight, SearchIcon } from "./icons";
+import { useT } from "../i18n/client";
 
 export type Column<T> = {
   key: keyof T & string;
@@ -38,6 +39,7 @@ export default function DataTable<T extends Record<string, unknown>>({
    */
   minWidth?: string;
 }) {
+  const t = useT();
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<{ key: string; dir: 1 | -1 } | null>(null);
   const [group, setGroup] = useState("All");
@@ -59,9 +61,11 @@ export default function DataTable<T extends Record<string, unknown>>({
       if (filterKey && group !== "All" && String(row[filterKey]) !== group)
         return false;
       if (!q) return true;
-      return columns.some((c) =>
-        String(row[c.key] ?? "").toLowerCase().includes(q),
-      );
+      // Both languages, so an Arabic reader can search the table they see.
+      return columns.some((c) => {
+        const value = String(row[c.key] ?? "");
+        return `${value} ${t(value)}`.toLowerCase().includes(q);
+      });
     });
     if (sort) {
       const col = columns.find((c) => c.key === sort.key);
@@ -75,7 +79,7 @@ export default function DataTable<T extends Record<string, unknown>>({
       });
     }
     return out;
-  }, [rows, columns, query, sort, group, filterKey]);
+  }, [rows, columns, query, sort, group, filterKey, t]);
 
   const pages = Math.max(1, Math.ceil(visible.length / PAGE));
   const current = Math.min(page, pages - 1);
@@ -89,7 +93,7 @@ export default function DataTable<T extends Record<string, unknown>>({
         <div className="relative flex-1 min-w-[220px]">
           <SearchIcon
             aria-hidden
-            className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-dp-muted"
+            className="pointer-events-none absolute top-1/2 start-4 size-5 -translate-y-1/2 text-dp-muted"
           />
           <input
             type="search"
@@ -98,16 +102,16 @@ export default function DataTable<T extends Record<string, unknown>>({
               setQuery(e.target.value);
               reset();
             }}
-            placeholder="Search"
-            aria-label={`Search ${caption}`}
-            className="w-full rounded-full border border-[#E4E2E6] bg-white py-3 pr-4 pl-12 text-sm text-dp-ink outline-none placeholder:text-dp-muted focus:border-dp-green"
+            placeholder={t("Search")}
+            aria-label={t("Search {what}", { what: t(caption) })}
+            className="w-full rounded-full border border-[#E4E2E6] bg-white py-3 pe-4 ps-12 text-sm text-dp-ink outline-none placeholder:text-dp-muted focus:border-dp-green"
           />
         </div>
 
         {groups.length > 1 ? (
           <div className="relative">
             <label htmlFor="tableGroup" className="sr-only">
-              Filter by category
+              {t("Filter by category")}
             </label>
             <select
               id="tableGroup"
@@ -116,35 +120,41 @@ export default function DataTable<T extends Record<string, unknown>>({
                 setGroup(e.target.value);
                 reset();
               }}
-              className="appearance-none rounded-full border border-[#E4E2E6] bg-white py-3 pr-10 pl-5 text-sm text-dp-ink outline-none focus:border-dp-green"
+              className="appearance-none rounded-full border border-[#E4E2E6] bg-white py-3 pe-10 ps-5 text-sm text-dp-ink outline-none focus:border-dp-green"
             >
               {groups.map((g) => (
                 <option key={g} value={g}>
-                  {g === "All" ? "All categories" : g}
+                  {g === "All" ? t("All categories") : t(g)}
                 </option>
               ))}
             </select>
             <ChevronDown
               aria-hidden
-              className="pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2 text-dp-muted"
+              className="pointer-events-none absolute top-1/2 end-4 size-4 -translate-y-1/2 text-dp-muted"
             />
           </div>
         ) : null}
 
         <p className="text-sm text-dp-muted" aria-live="polite">
-          {visible.length} of {rows.length}
+          {t("{shown} of {total}", {
+            shown: visible.length,
+            total: rows.length,
+          })}
         </p>
       </div>
 
       <div className="overflow-x-auto rounded-2xl ring-1 ring-black/5">
         <table
           style={{ minWidth }}
-          className="w-full border-collapse bg-white text-left"
+          className="w-full border-collapse bg-white text-start"
         >
-          <caption className="sr-only">{caption}</caption>
+          <caption className="sr-only">{t(caption)}</caption>
           <thead>
             <tr className="bg-[#F4F8F6]">
-              <th scope="col" className="px-4 py-4 text-sm font-medium text-dp-body">
+              <th
+                scope="col"
+                className="px-4 py-4 text-sm font-medium text-dp-body"
+              >
                 #
               </th>
               {columns.map((col) => {
@@ -161,7 +171,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                         : "none"
                     }
                     style={col.width ? { width: col.width } : undefined}
-                    className={`px-4 py-4 text-sm font-medium text-dp-body ${col.numeric ? "text-right" : ""}`}
+                    className={`px-4 py-4 text-sm font-medium text-dp-body ${col.numeric ? "text-end" : ""}`}
                   >
                     <button
                       type="button"
@@ -175,7 +185,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                       }}
                       className="inline-flex items-center gap-1.5 transition-colors hover:text-dp-green"
                     >
-                      {col.label}
+                      {t(col.label)}
                       <ChevronDown
                         aria-hidden
                         className={`size-4 transition-transform ${
@@ -203,11 +213,13 @@ export default function DataTable<T extends Record<string, unknown>>({
                 </td>
                 {columns.map((col) => {
                   const value = String(row[col.key] ?? "—");
-                  const href = col.linkKey ? (row[col.linkKey] as string) : null;
+                  const href = col.linkKey
+                    ? (row[col.linkKey] as string)
+                    : null;
                   return (
                     <td
                       key={col.key}
-                      className={`px-4 py-4 text-sm text-dp-ink ${col.numeric ? "text-right tabular-nums" : ""}`}
+                      className={`px-4 py-4 text-sm text-dp-ink ${col.numeric ? "text-end tabular-nums" : ""}`}
                     >
                       {href ? (
                         <a
@@ -216,11 +228,14 @@ export default function DataTable<T extends Record<string, unknown>>({
                           rel="noopener noreferrer"
                           className="text-dp-green underline-offset-4 transition-colors hover:text-dp-green-deep hover:underline"
                         >
-                          {value}
-                          <span className="sr-only"> (opens in a new window)</span>
+                          {t(value)}
+                          <span className="sr-only">
+                            {" "}
+                            {t("(opens in a new window)")}
+                          </span>
                         </a>
                       ) : (
-                        value
+                        t(value)
                       )}
                     </td>
                   );
@@ -244,13 +259,13 @@ export default function DataTable<T extends Record<string, unknown>>({
       {pages > 1 ? (
         <div className="mt-6 flex items-center justify-end gap-2">
           <span className="me-2 text-sm text-dp-muted">
-            Page {current + 1} of {pages}
+            {t("Page {page} of {pages}", { page: current + 1, pages })}
           </span>
           <button
             type="button"
             onClick={() => setPage(current - 1)}
             disabled={current === 0}
-            aria-label="Previous page"
+            aria-label={t("Previous page")}
             className="grid size-11 place-items-center rounded-[32px] bg-[#EBEBEC] text-[#4B4C4D] transition-all hover:bg-[#4A445914] active:rounded-xl disabled:pointer-events-none disabled:opacity-40"
           >
             <ChevronLeft className="size-5" />
@@ -259,7 +274,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             type="button"
             onClick={() => setPage(current + 1)}
             disabled={current >= pages - 1}
-            aria-label="Next page"
+            aria-label={t("Next page")}
             className="grid size-11 place-items-center rounded-[32px] bg-[#EBEBEC] text-[#4B4C4D] transition-all hover:bg-[#4A445914] active:rounded-xl disabled:pointer-events-none disabled:opacity-40"
           >
             <ChevronRight className="size-5" />

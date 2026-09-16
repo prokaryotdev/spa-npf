@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { Album } from "../content-albums";
+import { useT } from "../i18n/client";
 
 /** The tile never touches the photo list, so lists can hand it a trimmed record. */
 export type AlbumCardItem = Omit<Album, "photos">;
@@ -13,10 +16,13 @@ export default function AlbumCard({
   album: AlbumCardItem;
   index?: number;
 }) {
+  const t = useT();
   return (
     <article
       data-reveal
-      style={{ "--reveal-delay": `${(index % 3) * 90}ms` } as React.CSSProperties}
+      style={
+        { "--reveal-delay": `${(index % 3) * 90}ms` } as React.CSSProperties
+      }
       className="group/card"
     >
       <Link
@@ -36,7 +42,7 @@ export default function AlbumCard({
         />
         <span className="absolute inset-x-0 bottom-0 block p-5 text-white">
           <span className="block text-xs text-white/80">
-            <time>{album.date}</time> · {album.count} Photos
+            <time>{t(album.date)}</time> · {t("{n} Photos", { n: album.count })}
           </span>
           <span className="mt-1 block font-secondary text-base leading-snug font-bold">
             {album.title}

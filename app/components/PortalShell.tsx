@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import { resetDemo, signOut, useStore } from "./store";
+import { useT } from "../i18n/client";
 import {
   AlertIcon,
   CardIcon,
@@ -29,7 +30,12 @@ const TABS = [
  * The frame around every portal screen: the guard, the rail and the account
  * strip. Screens below it can assume there is a session.
  */
-export default function PortalShell({ children }: { children: React.ReactNode }) {
+export default function PortalShell({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const t = useT();
   const router = useRouter();
   const path = usePathname();
   const { session, requests, fines, loaded } = useStore();
@@ -58,12 +64,12 @@ export default function PortalShell({ children }: { children: React.ReactNode })
               <>
                 <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
                   <div>
-                    <p className="text-sm text-dp-muted">Signed in as</p>
+                    <p className="text-sm text-dp-muted">{t("Signed in as")}</p>
                     <h1 className="mt-1 font-secondary text-3xl leading-tight font-bold text-dp-green-deep lg:text-5xl">
-                      {session.name}
+                      {t(session.name)}
                     </h1>
                     <p className="mt-2 text-sm text-dp-body">
-                      Emirates ID {session.emiratesId}
+                      {t("Emirates ID {id}", { id: session.emiratesId })}
                     </p>
                   </div>
                   <div className="flex flex-wrap items-center gap-3">
@@ -72,7 +78,7 @@ export default function PortalShell({ children }: { children: React.ReactNode })
                       className="inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
                     >
                       <PlusIcon aria-hidden className="size-4" />
-                      New request
+                      {t("New request")}
                     </Link>
                     <button
                       type="button"
@@ -83,7 +89,7 @@ export default function PortalShell({ children }: { children: React.ReactNode })
                       className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-dp-ink ring-1 ring-black/10 transition-colors hover:bg-black/[0.04]"
                     >
                       <SignOutIcon aria-hidden className="size-4" />
-                      Sign out
+                      {t("Sign out")}
                     </button>
                   </div>
                 </div>
@@ -91,21 +97,25 @@ export default function PortalShell({ children }: { children: React.ReactNode })
                 <p className="mb-8 flex items-start gap-3 rounded-2xl bg-[#FFF7E6] px-5 py-4 text-sm leading-relaxed text-[#6b4a00]">
                   <AlertIcon aria-hidden className="mt-0.5 size-5 shrink-0" />
                   <span>
-                    Sample account. The requests, fines and documents below are
-                    illustrative and live only in this browser.{" "}
+                    {t(
+                      "Sample account. The requests, fines and documents below are illustrative and live only in this browser.",
+                    )}{" "}
                     <button
                       type="button"
                       onClick={resetDemo}
                       className="font-medium underline underline-offset-2"
                     >
-                      Reset the demo data
+                      {t("Reset the demo data")}
                     </button>
                     .
                   </span>
                 </p>
 
                 <div className="grid gap-8 lg:grid-cols-[240px_1fr] lg:gap-12">
-                  <nav aria-label="Account" className="lg:sticky lg:top-28 lg:self-start">
+                  <nav
+                    aria-label={t("Account")}
+                    className="lg:sticky lg:top-28 lg:self-start"
+                  >
                     <ul className="-mx-1 flex gap-1 overflow-x-auto pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:pb-0">
                       {TABS.map(({ href, label, Icon }) => {
                         const active =
@@ -124,9 +134,9 @@ export default function PortalShell({ children }: { children: React.ReactNode })
                               }`}
                             >
                               <Icon className="size-[18px] shrink-0" />
-                              {label}
+                              {t(label)}
                               {counts[href] ? (
-                                <span className="ml-auto rounded-full bg-dp-green px-2 py-0.5 text-[11px] font-medium text-white tabular-nums">
+                                <span className="ms-auto rounded-full bg-dp-green px-2 py-0.5 text-[11px] font-medium text-white tabular-nums">
                                   {counts[href]}
                                 </span>
                               ) : null}
@@ -151,6 +161,7 @@ export default function PortalShell({ children }: { children: React.ReactNode })
 
 /** Shown while storage is read, and for the blink before the guard redirects. */
 function Loading() {
+  const t = useT();
   return (
     <div aria-hidden className="animate-pulse">
       <div className="h-4 w-24 rounded bg-black/[0.06]" />
@@ -163,7 +174,7 @@ function Loading() {
         </div>
         <div className="h-64 rounded-3xl bg-black/[0.04]" />
       </div>
-      <span className="sr-only">Loading your account</span>
+      <span className="sr-only">{t("Loading your account")}</span>
     </div>
   );
 }

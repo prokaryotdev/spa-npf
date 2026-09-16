@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageShell } from "../../../../components/PageShell";
-import { orgStructure as org } from "../../../../content-sub";
+import { orgStructure as orgSource } from "../../../../content-sub";
+import { getT, getLocalized } from "../../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Organizational Structure | Dubai Police",
-  description: org.subTitle,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Organizational Structure | Dubai Police"),
+    description: t(orgSource.subTitle),
+  };
+}
 
 type Person = {
   img?: string;
@@ -89,7 +93,9 @@ function Departments({
   );
 }
 
-export default function OrgStructurePage() {
+export default async function OrgStructurePage() {
+  const org = await getLocalized(orgSource);
+  const t = await getT();
   const commander = org.commander as Person;
 
   return (
@@ -111,7 +117,7 @@ export default function OrgStructurePage() {
           {commander.departments?.length ? (
             <div className="mb-16">
               <h2 className="mb-4 font-secondary text-xl font-bold text-dp-green-deep">
-                Reporting to the Commander-in-Chief
+                {t("Reporting to the Commander-in-Chief")}
               </h2>
               <div className="max-w-2xl">
                 <Departments departments={commander.departments} />

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "./icons";
+import { useT } from "../i18n/client";
 
 /**
  * A scroll-snapped card rail with the site's paired arrow controls, which
@@ -19,6 +20,7 @@ export default function CardRail({
   className?: string;
   showControls?: boolean;
 }) {
+  const t = useT();
   const rail = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
@@ -63,7 +65,7 @@ export default function CardRail({
             type="button"
             onClick={() => nudge(-1)}
             disabled={atStart}
-            aria-label={`Show previous ${label} item`}
+            aria-label={t("Show previous {label} item", { label })}
             className={arrow}
           >
             <ChevronLeft className="size-5" />
@@ -72,7 +74,7 @@ export default function CardRail({
             type="button"
             onClick={() => nudge(1)}
             disabled={atEnd}
-            aria-label={`Show next ${label} item`}
+            aria-label={t("Show next {label} item", { label })}
             className={arrow}
           >
             <ChevronRight className="size-5" />

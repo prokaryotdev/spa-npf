@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
 import { PageShell } from "../../../components/PageShell";
 import { CalendarIcon } from "../../../components/icons";
-import { initiativePeriods } from "../../../content-footer";
+import { initiativePeriods as initiativePeriodsSource } from "../../../content-footer";
+import { getT, getLocalized } from "../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Initiative | Dubai Police",
-  description:
-    "The Initiatives and Projects Stars voting rounds run by the General Department of Excellence and Pioneering.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Initiative | Dubai Police"),
+    description: t(
+      "The Initiatives and Projects Stars voting rounds run by the General Department of Excellence and Pioneering.",
+    ),
+  };
+}
 
 /** Dates arrive as dd-mm-yyyy, which Date cannot parse on its own. */
 const pretty = (d: string) => {
@@ -19,19 +24,23 @@ const pretty = (d: string) => {
   });
 };
 
-export default function InitiativePage() {
+export default async function InitiativePage() {
+  const initiativePeriods = await getLocalized(initiativePeriodsSource);
+  const t = await getT();
   const [current, ...past] = initiativePeriods;
 
   return (
     <PageShell
-      title="Initiative"
-      intro="Every year Dubai Police opens a vote on the initiatives and projects that most improved a service or a process."
+      title={t("Initiative")}
+      intro={t(
+        "Every year Dubai Police opens a vote on the initiatives and projects that most improved a service or a process.",
+      )}
     >
       <section className="bg-white pb-24">
         <div className="dp-container">
           <article className="rounded-3xl bg-[#F4F8F6] p-8 md:p-12">
             <p className="font-secondary text-sm font-bold tracking-wide text-dp-green uppercase">
-              Current round
+              {t("Current round")}
             </p>
             <h2 className="mt-2 font-secondary text-2xl font-bold text-dp-green-deep md:text-4xl">
               {current.title}
@@ -46,7 +55,7 @@ export default function InitiativePage() {
           </article>
 
           <h2 className="mt-14 mb-6 font-secondary text-xl font-bold text-dp-green-deep">
-            Previous rounds
+            {t("Previous rounds")}
           </h2>
           <ul className="grid gap-6 md:grid-cols-2">
             {past.map((period) => (

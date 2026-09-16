@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import PortalRequests from "../../../components/PortalRequests";
+import { getT } from "../../../i18n/server";
 
-export const metadata: Metadata = { title: "My Requests | My Dubai Police" };
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return { title: t("My Requests | My Dubai Police") };
+}
 
 export default function RequestsPage() {
   return <PortalRequests />;

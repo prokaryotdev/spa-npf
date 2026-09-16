@@ -2,19 +2,28 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PageShell } from "../../../../components/PageShell";
 import { ArrowUpRight } from "../../../../components/icons";
-import { magazines } from "../../../../content-sub";
+import { magazines as magazinesSource } from "../../../../content-sub";
+import { getT, getLocalized } from "../../../../i18n/server";
 
-export const metadata: Metadata = {
-  title: "Magazine | Dubai Police",
-  description:
-    "Dubai Police publications: achievements, innovations and initiatives in safety, security and community engagement.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT();
+  return {
+    title: t("Magazine | Dubai Police"),
+    description: t(
+      "Dubai Police publications: achievements, innovations and initiatives in safety, security and community engagement.",
+    ),
+  };
+}
 
-export default function MagazinePage() {
+export default async function MagazinePage() {
+  const magazines = await getLocalized(magazinesSource);
+  const t = await getT();
   return (
     <PageShell
-      title="Magazine"
-      intro="Dubai Police publications, issue by issue — achievements, innovations and initiatives in safety, security and community engagement."
+      title={t("Magazine")}
+      intro={t(
+        "Dubai Police publications, issue by issue — achievements, innovations and initiatives in safety, security and community engagement.",
+      )}
       trail={[{ label: "Media Hub", href: "/app/home/media" }]}
     >
       <section className="bg-white pb-24">
@@ -23,7 +32,9 @@ export default function MagazinePage() {
             <article
               key={`${issue.title}-${issue.date}`}
               data-reveal
-              style={{ "--reveal-delay": `${(i % 4) * 80}ms` } as React.CSSProperties}
+              style={
+                { "--reveal-delay": `${(i % 4) * 80}ms` } as React.CSSProperties
+              }
             >
               <a
                 href={issue.file ?? "#"}
@@ -49,11 +60,14 @@ export default function MagazinePage() {
                 <h2 className="mt-1 inline-flex items-start gap-1.5 font-secondary text-base leading-snug font-bold text-dp-ink transition-colors group-hover/card:text-dp-green">
                   {issue.title}
                   {issue.file ? (
-                    <ArrowUpRight aria-hidden className="mt-0.5 size-4 shrink-0" />
+                    <ArrowUpRight
+                      aria-hidden
+                      className="mt-0.5 size-4 shrink-0"
+                    />
                   ) : null}
                 </h2>
                 {issue.kind ? (
-                  <p className="mt-1 text-xs text-dp-muted">{issue.kind}</p>
+                  <p className="mt-1 text-xs text-dp-muted">{t(issue.kind)}</p>
                 ) : null}
               </a>
             </article>

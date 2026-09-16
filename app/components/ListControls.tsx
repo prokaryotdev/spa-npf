@@ -2,6 +2,7 @@
 
 import { useId } from "react";
 import { SearchIcon } from "./icons";
+import { useT } from "../i18n/client";
 
 export type Sort = "newest" | "oldest" | "az";
 
@@ -36,6 +37,7 @@ export default function ListControls({
   shown: number;
   total: number;
 }) {
+  const t = useT();
   const id = useId();
 
   return (
@@ -46,16 +48,19 @@ export default function ListControls({
             htmlFor={`${id}-q`}
             className="mb-1.5 block text-sm font-medium text-dp-ink"
           >
-            Search {noun}
+            {t("Search {noun}", { noun: t(noun) })}
           </label>
           <div className="flex items-center gap-3 rounded-xl bg-[#F4F8F6] px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-dp-green">
-            <SearchIcon aria-hidden className="size-5 shrink-0 text-dp-green-ink" />
+            <SearchIcon
+              aria-hidden
+              className="size-5 shrink-0 text-dp-green-ink"
+            />
             <input
               id={`${id}-q`}
               type="search"
               value={query}
               onChange={(e) => onQuery(e.target.value)}
-              placeholder={`Filter by name`}
+              placeholder={t("Filter by name")}
               className="w-full bg-transparent py-3 text-base text-dp-ink outline-none placeholder:text-dp-muted"
             />
           </div>
@@ -67,7 +72,7 @@ export default function ListControls({
               htmlFor={`${id}-cat`}
               className="mb-1.5 block text-sm font-medium text-dp-ink"
             >
-              Type
+              {t("Type")}
             </label>
             <select
               id={`${id}-cat`}
@@ -75,10 +80,10 @@ export default function ListControls({
               onChange={(e) => onCategory(e.target.value)}
               className="rounded-xl bg-[#F4F8F6] px-4 py-3 text-base text-dp-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-dp-green"
             >
-              <option value="">All types</option>
+              <option value="">{t("All types")}</option>
               {categories.map((c) => (
                 <option key={c} value={c}>
-                  {c}
+                  {t(c)}
                 </option>
               ))}
             </select>
@@ -90,7 +95,7 @@ export default function ListControls({
             htmlFor={`${id}-sort`}
             className="mb-1.5 block text-sm font-medium text-dp-ink"
           >
-            Sort by
+            {t("Sort by")}
           </label>
           <select
             id={`${id}-sort`}
@@ -100,7 +105,7 @@ export default function ListControls({
           >
             {SORTS.map((s) => (
               <option key={s.value} value={s.value}>
-                {s.label}
+                {t(s.label)}
               </option>
             ))}
           </select>
@@ -108,7 +113,11 @@ export default function ListControls({
       </div>
 
       <p aria-live="polite" className="mt-4 text-sm text-dp-muted">
-        Showing {shown} of {total} {noun}
+        {t("Showing {shown} of {total} {noun}", {
+          shown,
+          total,
+          noun: t(noun),
+        })}
       </p>
     </div>
   );

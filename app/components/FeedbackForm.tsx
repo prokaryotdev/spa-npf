@@ -2,16 +2,18 @@
 
 import { useId, useState } from "react";
 import { AlertIcon, ArrowRight, HeartIcon, IdeaIcon } from "./icons";
+import { useT } from "../i18n/client";
 
 type Kind = { title: string; description: string };
 type Errors = { name?: string; email?: string; message?: string };
 
 /** The CMS icon paths are dead, so map the kind to one of our own icons. */
-const ICONS: Record<string, (p: { className?: string }) => React.ReactElement> = {
-  Suggestion: IdeaIcon,
-  Remark: HeartIcon,
-  Complaint: AlertIcon,
-};
+const ICONS: Record<string, (p: { className?: string }) => React.ReactElement> =
+  {
+    Suggestion: IdeaIcon,
+    Remark: HeartIcon,
+    Complaint: AlertIcon,
+  };
 
 /**
  * The three feedback kinds are one submission with a type on it, so they are a
@@ -27,6 +29,7 @@ export default function FeedbackForm({
   kinds: readonly Kind[];
   notice: string;
 }) {
+  const t = useT();
   const id = useId();
   const [kind, setKind] = useState(kinds[0]?.title ?? "");
   const [errors, setErrors] = useState<Errors>({});
@@ -56,23 +59,23 @@ export default function FeedbackForm({
 
   if (sent) {
     return (
-      <div
-        role="status"
-        className="mt-8 rounded-3xl bg-[#e7f6f1] p-8 md:p-10"
-      >
+      <div role="status" className="mt-8 rounded-3xl bg-[#e7f6f1] p-8 md:p-10">
         <h3 className="font-secondary text-xl font-bold text-dp-green-deep">
-          Thank you — your {kind.toLowerCase()} has been recorded
+          {t("Thank you — your {kind} has been recorded", {
+            kind: t(kind).toLowerCase(),
+          })}
         </h3>
         <p className="mt-2 max-w-[60ch] text-base text-dp-body">
-          A member of the team will be in touch by email. Reference numbers are
-          issued once the service is connected.
+          {t(
+            "A member of the team will be in touch by email. Reference numbers are issued once the service is connected.",
+          )}
         </p>
         <button
           type="button"
           onClick={() => setSent(false)}
           className="mt-5 inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
         >
-          Send another
+          {t("Send another")}
           <ArrowRight className="size-4" />
         </button>
       </div>
@@ -83,7 +86,7 @@ export default function FeedbackForm({
     <form noValidate onSubmit={onSubmit} className="mt-8">
       <fieldset className="border-0 p-0">
         <legend className="mb-4 font-secondary text-lg font-bold text-dp-green-deep">
-          What would you like to share?
+          {t("What would you like to share?")}
         </legend>
         <div className="grid gap-4 md:grid-cols-3">
           {kinds.map((k) => {
@@ -107,7 +110,9 @@ export default function FeedbackForm({
                     onChange={() => setKind(k.title)}
                     className="size-4 accent-[#00925b]"
                   />
-                  {Icon ? <Icon className="size-7 shrink-0 text-dp-green" /> : null}
+                  {Icon ? (
+                    <Icon className="size-7 shrink-0 text-dp-green" />
+                  ) : null}
                   <span className="font-secondary text-lg font-bold text-dp-green-deep">
                     {k.title}
                   </span>
@@ -125,7 +130,7 @@ export default function FeedbackForm({
         <Field
           id={`${id}-name`}
           name="name"
-          label="Your name"
+          label={t("Your name")}
           autoComplete="name"
           error={errors.name}
         />
@@ -133,7 +138,7 @@ export default function FeedbackForm({
           id={`${id}-email`}
           name="email"
           type="email"
-          label="Email address"
+          label={t("Email address")}
           autoComplete="email"
           error={errors.email}
         />
@@ -141,7 +146,7 @@ export default function FeedbackForm({
           id={`${id}-phone`}
           name="phone"
           type="tel"
-          label="Phone number (optional)"
+          label={t("Phone number (optional)")}
           autoComplete="tel"
           className="md:col-span-2"
         />
@@ -151,20 +156,25 @@ export default function FeedbackForm({
             htmlFor={`${id}-message`}
             className="mb-1.5 block text-sm font-medium text-dp-ink"
           >
-            Your {kind.toLowerCase()}
+            {t("Your {kind}", { kind: t(kind).toLowerCase() })}
           </label>
           <textarea
             id={`${id}-message`}
             name="message"
             rows={6}
             aria-invalid={errors.message ? true : undefined}
-            aria-describedby={errors.message ? `${id}-message-error` : undefined}
+            aria-describedby={
+              errors.message ? `${id}-message-error` : undefined
+            }
             className={`w-full rounded-lg border bg-white px-4 py-3 text-dp-ink outline-none focus:ring-2 focus:ring-dp-green ${
               errors.message ? "border-red-600" : "border-[#E4E2E6]"
             }`}
           />
           {errors.message ? (
-            <p id={`${id}-message-error`} className="mt-1.5 text-sm text-red-700">
+            <p
+              id={`${id}-message-error`}
+              className="mt-1.5 text-sm text-red-700"
+            >
               {errors.message}
             </p>
           ) : null}
@@ -179,7 +189,7 @@ export default function FeedbackForm({
         type="submit"
         className="mt-6 inline-flex items-center gap-2 rounded-full bg-dp-green px-6 py-3 font-medium text-white transition-colors hover:bg-dp-green-mid"
       >
-        Send
+        {t("Send")}
         <ArrowRight className="size-4" />
       </button>
     </form>
@@ -205,7 +215,10 @@ function Field({
 }) {
   return (
     <div className={className}>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-dp-ink">
+      <label
+        htmlFor={id}
+        className="mb-1.5 block text-sm font-medium text-dp-ink"
+      >
         {label}
       </label>
       <input

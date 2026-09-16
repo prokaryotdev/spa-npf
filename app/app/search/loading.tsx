@@ -1,18 +1,20 @@
 import { PageShell } from "../../components/PageShell";
+import { getT } from "../../i18n/server";
 
 /**
  * Search is the one route rendered on demand, so it is the one route that can
  * show a gap. The skeleton mirrors the real layout: search box, then results.
  */
-export default function SearchLoading() {
+export default async function SearchLoading() {
+  const t = await getT();
   return (
     <PageShell
-      title="Search"
-      intro="Find a service, a news story, an event or a page."
+      title={t("Search")}
+      intro={t("Find a service, a news story, an event or a page.")}
     >
       <section className="bg-white pb-24" aria-busy="true" aria-live="polite">
         <div className="dp-container">
-          <span className="sr-only">Searching…</span>
+          <span className="sr-only">{t("Searching…")}</span>
           <div className="h-[68px] max-w-[680px] animate-pulse rounded-2xl bg-[#F4F8F6]" />
           <ul className="mt-8 max-w-[80ch] divide-y divide-black/10">
             {[0, 1, 2, 3, 4].map((i) => (

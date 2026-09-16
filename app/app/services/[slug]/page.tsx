@@ -12,10 +12,11 @@ import {
   PhoneIcon,
   ServicesIcon,
 } from "../../../components/icons";
-import { services } from "../../../content-services";
+import { services as servicesSource } from "../../../content-services";
+import { getT, getLocalized } from "../../../i18n/server";
 
 export function generateStaticParams() {
-  return services.map((service) => ({ slug: service.slug }));
+  return servicesSource.map((service) => ({ slug: service.slug }));
 }
 
 export async function generateMetadata({
@@ -24,11 +25,15 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = services.find((s) => s.slug === slug);
-  if (!service) return { title: "Service not found | Dubai Police" };
+  const t = await getT();
+  const source = servicesSource.find((s) => s.slug === slug);
+  if (!source) return { title: t("Service not found | Dubai Police") };
+  const service = await getLocalized(source);
   return {
-    title: `${service.name} | Dubai Police`,
-    description: service.description || `${service.name} from Dubai Police.`,
+    title: t("{name} | Dubai Police", { name: service.name }),
+    description:
+      service.description ||
+      t("{name} from Dubai Police.", { name: service.name }),
   };
 }
 
@@ -37,6 +42,8 @@ export default async function ServicePage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const services = await getLocalized(servicesSource);
+  const t = await getT();
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
@@ -64,7 +71,7 @@ export default async function ServicePage({
         <div className="dp-container grid gap-10 lg:grid-cols-[1fr_360px] lg:gap-14">
           <div className="order-2 space-y-10 lg:order-1">
             {service.documents.length ? (
-              <Panel heading="What you need">
+              <Panel heading={t("What you need")}>
                 <ul className="space-y-4">
                   {service.documents.map((doc) => (
                     <li
@@ -79,11 +86,11 @@ export default async function ServicePage({
                         {doc.label}
                       </p>
                       {doc.items.length ? (
-                        <ul className="mt-3 ml-8 grid gap-1.5 sm:grid-cols-2">
+                        <ul className="mt-3 ms-8 grid gap-1.5 sm:grid-cols-2">
                           {doc.items.map((item) => (
                             <li
                               key={item}
-                              className="relative pl-5 text-sm text-dp-body before:absolute before:top-[0.55em] before:left-0 before:size-1.5 before:rounded-full before:bg-dp-green"
+                              className="relative ps-5 text-sm text-dp-body before:absolute before:top-[0.55em] before:start-0 before:size-1.5 before:rounded-full before:bg-dp-green"
                             >
                               {item}
                             </li>
@@ -97,7 +104,7 @@ export default async function ServicePage({
             ) : null}
 
             {service.fees.length ? (
-              <Panel heading="Fees">
+              <Panel heading={t("Fees")}>
                 <dl className="divide-y divide-black/10 rounded-2xl bg-[#F9F9F9] px-5">
                   {service.fees.map((fee) => (
                     <div
@@ -111,7 +118,9 @@ export default async function ServicePage({
                     </div>
                   ))}
                   <div className="flex items-center justify-between gap-4 py-4">
-                    <dt className="text-sm font-medium text-dp-ink">Total</dt>
+                    <dt className="text-sm font-medium text-dp-ink">
+                      {t("Total")}
+                    </dt>
                     <dd className="font-secondary text-base font-bold text-dp-green-ink tabular-nums">
                       {service.feeSummary}
                     </dd>
@@ -134,7 +143,7 @@ export default async function ServicePage({
             ) : null}
 
             {service.terms.length ? (
-              <Panel heading="Terms and conditions">
+              <Panel heading={t("Terms and conditions")}>
                 <ul className="space-y-3">
                   {service.terms.map((term) => (
                     <li
@@ -153,7 +162,7 @@ export default async function ServicePage({
             ) : null}
 
             {service.delivery ? (
-              <Panel heading="How you receive it">
+              <Panel heading={t("How you receive it")}>
                 <div className="space-y-3 rounded-2xl bg-[#F9F9F9] px-5 py-4">
                   {splitDelivery(service.delivery).map((part) => (
                     <p
@@ -173,7 +182,7 @@ export default async function ServicePage({
             ) : null}
 
             {service.beneficiaries.length ? (
-              <Panel heading="Who it is for">
+              <Panel heading={t("Who it is for")}>
                 <ul className="flex flex-wrap gap-2">
                   {service.beneficiaries.map((who) => (
                     <li
@@ -188,7 +197,7 @@ export default async function ServicePage({
             ) : null}
 
             {service.channels.length ? (
-              <Panel heading="Where to use it">
+              <Panel heading={t("Where to use it")}>
                 <ul className="grid gap-3 sm:grid-cols-2">
                   {service.channels.map((channel) => (
                     <li
@@ -207,7 +216,7 @@ export default async function ServicePage({
             ) : null}
 
             {service.hours.length ? (
-              <Panel heading="Working hours">
+              <Panel heading={t("Working hours")}>
                 <dl className="divide-y divide-black/10 rounded-2xl bg-[#F9F9F9] px-5">
                   {service.hours.map((hour) => (
                     <div
@@ -225,7 +234,7 @@ export default async function ServicePage({
             ) : null}
 
             {related.length ? (
-              <Panel heading="Related services">
+              <Panel heading={t("Related services")}>
                 <ul className="grid gap-3 sm:grid-cols-2">
                   {related.map((item) => (
                     <li key={item.slug}>
@@ -258,13 +267,13 @@ export default async function ServicePage({
 
               <dl className="mb-6 grid grid-cols-2 gap-4">
                 <div>
-                  <dt className="text-xs text-dp-muted">Fees</dt>
+                  <dt className="text-xs text-dp-muted">{t("Fees")}</dt>
                   <dd className="font-secondary text-base font-bold text-dp-ink">
                     {service.feeSummary}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-dp-muted">Duration</dt>
+                  <dt className="text-xs text-dp-muted">{t("Duration")}</dt>
                   <dd className="font-secondary text-base font-bold text-dp-ink">
                     {service.turnaround}
                   </dd>
@@ -275,7 +284,7 @@ export default async function ServicePage({
 
               {service.uaePassOnly ? (
                 <p className="mt-3 text-center text-xs text-dp-muted">
-                  UAE PASS sign-in required
+                  {t("UAE PASS sign-in required")}
                 </p>
               ) : null}
             </div>
@@ -284,7 +293,7 @@ export default async function ServicePage({
               <div className="mt-6 rounded-3xl px-6 py-5 ring-1 ring-black/10">
                 <h2 className="mb-3 flex items-center gap-2 font-secondary text-sm font-bold tracking-wide text-dp-muted uppercase">
                   <PhoneIcon aria-hidden className="size-4" />
-                  Need help
+                  {t("Need help")}
                 </h2>
                 <ul className="space-y-2 text-sm text-dp-body">
                   {service.contacts.map((contact) => (
@@ -296,7 +305,9 @@ export default async function ServicePage({
 
             <p className="mt-6 flex items-center gap-2 px-1 text-xs text-dp-muted">
               <ClockIcon aria-hidden className="size-4 shrink-0" />
-              Processed in {service.turnaround.toLowerCase()}
+              {t("Processed in {turnaround}", {
+                turnaround: t(service.turnaround).toLowerCase(),
+              })}
             </p>
           </aside>
         </div>
