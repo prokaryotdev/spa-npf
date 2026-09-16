@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { requireBackend } from "../../backend";
 import { PageShell } from "../../components/PageShell";
 import SignInForm from "../../components/SignInForm";
 import { getT } from "../../i18n/server";
@@ -15,6 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SignInPage() {
+  requireBackend();
   const t = await getT();
   return (
     <PageShell
