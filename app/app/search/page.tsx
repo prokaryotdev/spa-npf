@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "../../i18n/Link";
 import { PageShell } from "../../components/PageShell";
 import ServiceSearch from "../../components/ServiceSearch";
 import { ArrowUpRight } from "../../components/icons";

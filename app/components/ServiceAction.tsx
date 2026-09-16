@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "../i18n/Link";
 import { useState } from "react";
 import type { Service } from "../content-services";
 import { submitRequest, useStore } from "./store";

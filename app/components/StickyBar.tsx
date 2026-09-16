@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "../i18n/Link";
 import { useEffect, useState } from "react";
 import { useT } from "../i18n/client";
 import {

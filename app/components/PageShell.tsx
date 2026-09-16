@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "../i18n/Link";
 import Footer from "./Footer";
 import Header from "./Header";
 import StickyBar from "./StickyBar";

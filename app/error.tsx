@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "./i18n/Link";
 import { useEffect } from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";

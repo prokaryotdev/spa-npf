@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "../i18n/Link";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "../i18n/Link";
 import { useEffect, useState } from "react";
 import { signIn, useStore, type Session } from "./store";
 import { ArrowRight, ShieldIcon, UserCircle } from "./icons";

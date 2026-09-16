@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "../i18n/Link";
 import { markNoticesRead, useStore } from "./store";
 import { Card, Empty, StatusPill } from "./ui";
 import { ArrowRight, BellIcon, ChevronRight } from "./icons";

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "../i18n/Link";
 import { useId, useMemo, useState } from "react";
 import {
   advanceRequest,

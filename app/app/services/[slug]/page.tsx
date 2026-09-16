@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "../../../i18n/Link";
 import { notFound } from "next/navigation";
 import { PageShell, Panel } from "../../../components/PageShell";
 import ServiceAction from "../../../components/ServiceAction";

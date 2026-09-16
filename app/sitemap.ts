@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 import { footerColumns, legalLinks, navigation } from "./content";
+import { LANGS } from "./i18n/config";
+import { localePath } from "./i18n/path";
 import { services } from "./content-services";
 
 const BASE = (
@@ -28,11 +30,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       if (!("external" in link && link.external)) paths.add(link.href);
   for (const link of legalLinks) paths.add(link.href);
 
+  // Both languages, each entry naming the other, because a page a crawler
+  // cannot reach in Arabic is a page Arabic readers cannot find.
   return [...paths]
     .filter((p) => p.startsWith("/"))
-    .map((path) => ({
-      url: path === "/" ? BASE : BASE + path,
-      changeFrequency: "weekly" as const,
-      priority: path === "/" ? 1 : 0.8,
-    }));
+    .flatMap((path) =>
+      LANGS.map((lang) => ({
+        url: BASE + localePath(path, lang),
+        changeFrequency: "weekly" as const,
+        priority: path === "/" ? 1 : 0.8,
+        alternates: {
+          languages: Object.fromEntries(
+            LANGS.map((l) => [l, BASE + localePath(path, l)]),
+          ),
+        },
+      })),
+    );
 }

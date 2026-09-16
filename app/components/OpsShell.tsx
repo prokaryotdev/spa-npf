@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import Link from "../i18n/Link";
+import { usePathname } from "next/navigation";
+import { useRouter } from "../i18n/Link";
 import { useEffect } from "react";
 import LanguageSwitch from "./LanguageSwitch";
 import { resetDemo, signOut, useStore } from "./store";

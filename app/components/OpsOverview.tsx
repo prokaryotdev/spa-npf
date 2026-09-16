@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "../i18n/Link";
 import { useId } from "react";
 import { dispatchTarget } from "../content-ops";
 import OpsResponseChart from "./OpsResponseChart";
