@@ -37,41 +37,12 @@ const theme = (ink: string, tint: string, edge: string): CardTheme => ({
 
 export const navigation = [
   { label: "Home", href: "/app/home" },
-  {
-    label: "About Us",
-    href: "/app/home/aboutus",
-    children: [
-      {
-        label: "Organisational Structure",
-        href: "/app/home/aboutus/organisational-structure",
-      },
-    ],
-  },
-  {
-    label: "Open Data",
-    href: "/app/home/opendata",
-    children: [{ label: "Data Dubai", href: "/app/home/opendata" }],
-  },
+  { label: "Services", href: "/app/services" },
   { label: "Application Status", href: "/app/services/application-status" },
-  {
-    label: "Media",
-    href: "/app/home/media",
-    children: [
-      { label: "News", href: "/app/home/media/news" },
-      { label: "Events", href: "/app/home/media/events" },
-      { label: "Photo Gallery", href: "/app/home/media/photo-gallery" },
-      { label: "Video Gallery", href: "/app/home/media/video-gallery" },
-      { label: "Magazine", href: "/app/home/media/magazine" },
-    ],
-  },
   {
     label: "Information",
     href: "/app/home/information",
     children: [
-      {
-        label: "Best Practices in Sustainable Development",
-        href: "/app/home/information/sustainability",
-      },
       {
         label: "Laws and Legislation",
         href: "/app/home/information/laws-legislation",
@@ -108,7 +79,6 @@ export const heroSlides = [
     title: "Police Innovation and Leadership",
     subtitle: "Be one of the leaders shaping the future of smart and",
     image: "/cms/Home/Innovation_2d3f3540e6.jpg",
-    readMore: true,
   },
   {
     title: "Luxury Meets Readiness",
@@ -368,28 +338,6 @@ export const community: InitiativeCard[] = [
   },
 ];
 
-export const careers = [
-  {
-    title: "Answer the Call. Join the Force.",
-    lead: "",
-    bodyBefore: "Join the ",
-    linkLabel: "Dubai Police Academy",
-    href: "https://www.dubaipolice.ac.ae/",
-    bodyAfter:
-      " and master the strategic vision, skills, and expertise needed to lead in law enforcement and safeguard the community.",
-    image: "/cms/Home/Innovation_2d3f3540e6.jpg",
-  },
-  {
-    title: "Ready to join a force that inspires?",
-    lead: "Bring your skills to Dubai Police and help us set new standards in community safety.",
-    bodyBefore: "",
-    linkLabel: "Join a team",
-    href: "https://srs.dubaipolice.gov.ae/",
-    bodyAfter: " dedicated to securing, connecting, and innovating.",
-    image: "/cms/positive_spirit_final_s_d8fef6b5f6.jpg",
-  },
-];
-
 export const emergencyNumbers = [
   {
     label: "Police",
@@ -423,17 +371,10 @@ export const footerColumns = [
   {
     heading: "Quick links",
     links: [
-      { label: "About us", href: "/app/home/aboutus" },
-      { label: "Open Data", href: "/app/home/opendata" },
+      { label: "All Services", href: "/app/services" },
+      { label: "Application Status", href: "/app/services/application-status" },
       { label: "Information", href: "/app/home/information" },
-      { label: "Media Hub", href: "/app/home/media" },
-      { label: "Site Map", href: "/app/home/sitemap" },
-      { label: "Initiative", href: "/app/home/initiative" },
-      {
-        label: "Careers",
-        href: "https://srs.dubaipolice.gov.ae/",
-        external: true,
-      },
+      { label: "My Account", href: "/app/portal" },
     ],
   },
   {
@@ -441,10 +382,23 @@ export const footerColumns = [
     links: [
       { label: "Contact us", href: "/app/home/contactUs" },
       { label: "Customer Centers", href: "/app/home/customer-centers" },
-      { label: "Events", href: "/app/home/media/events" },
+      { label: "Site Map", href: "/app/home/sitemap" },
+    ],
+  },
+  {
+    heading: "Traffic",
+    links: [
       {
-        label: "Leaders at Your Service",
-        href: "/app/services/leaders-at-your-service",
+        label: "Laws and Legislation",
+        href: "/app/home/information/laws-legislation",
+      },
+      {
+        label: "Black Points of Traffic Violations",
+        href: "/app/home/information/view-black-points-traffic-violations",
+      },
+      {
+        label: "Street Speed Limits",
+        href: "/app/home/information/street-speed-limits",
       },
     ],
   },
@@ -465,16 +419,6 @@ export const footerColumns = [
       {
         label: "Efaad",
         href: "https://efaad.dubaipolice.gov.ae/",
-        external: true,
-      },
-      {
-        label: "Innovation",
-        href: "https://www.dubaipolice.gov.ae/",
-        external: true,
-      },
-      {
-        label: "E-Police in Your Mobile",
-        href: "https://www.dubaipolice.gov.ae/",
         external: true,
       },
     ],

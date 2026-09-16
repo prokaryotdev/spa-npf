@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const elsewhere = [
   { label: "Services", href: "/app/services" },
-  { label: "News", href: "/app/home/media/news" },
+  { label: "Information", href: "/app/home/information" },
   { label: "Contact Us", href: "/app/home/contactUs" },
   { label: "Sitemap", href: "/app/home/sitemap" },
 ];

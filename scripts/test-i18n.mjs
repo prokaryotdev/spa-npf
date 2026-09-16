@@ -16,19 +16,13 @@ import { arHome } from "../app/i18n/ar-home.ts";
 import { arServices } from "../app/i18n/ar-services.ts";
 import { arPages } from "../app/i18n/ar-pages.ts";
 import { arLegal } from "../app/i18n/ar-legal.ts";
-import { arMedia } from "../app/i18n/ar-media.ts";
-import { arNews } from "../app/i18n/ar-news.ts";
-import { arEvents } from "../app/i18n/ar-events.ts";
 import { arAccount } from "../app/i18n/ar-account.ts";
 import { arOps } from "../app/i18n/ar-ops.ts";
 
 const CONTENT = [
   "content.ts",
   "content-account.ts",
-  "content-albums.ts",
-  "content-events.ts",
   "content-footer.ts",
-  "content-news.ts",
   "content-ops.ts",
   "content-pages.ts",
   "content-services.ts",
@@ -129,9 +123,6 @@ const parts = {
   arServices,
   arPages,
   arLegal,
-  arMedia,
-  arNews,
-  arEvents,
   arAccount,
   arOps,
 };

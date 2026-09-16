@@ -3,9 +3,6 @@ import { arLegal } from "./ar-legal";
 import { arHome } from "./ar-home";
 import { arServices } from "./ar-services";
 import { arPages } from "./ar-pages";
-import { arMedia } from "./ar-media";
-import { arEvents } from "./ar-events";
-import { arNews } from "./ar-news";
 import { arAccount } from "./ar-account";
 import { arOps } from "./ar-ops";
 
@@ -21,9 +18,6 @@ export const dictionary: Record<string, string> = {
   ...arServices,
   ...arPages,
   ...arLegal,
-  ...arMedia,
-  ...arNews,
-  ...arEvents,
   ...arAccount,
   ...arOps,
 };

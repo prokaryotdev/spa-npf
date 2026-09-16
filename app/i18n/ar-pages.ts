@@ -24,44 +24,7 @@ export const arPages: Record<string, string> = {
     "تعرّف على أثر النقاط السوداء والغرامات على سجلك المروري",
 
   // --- table captions and column headings ----------------------------------
-  "Laws and legislation": "القوانين والتشريعات",
-  "Street speed limits": "الحدود القصوى للسرعة على الطرق",
-  "Traffic violations, fines and black points":
-    "المخالفات المرورية والغرامات والنقاط السوداء",
-  Legislation: "التشريع",
-  "Issue date": "تاريخ الإصدار",
-  "File size": "حجم الملف",
-  Road: "الطريق",
-  "Limit km/h": "الحد الأقصى كم/س",
-  "Radar km/h": "الضبط الراداري كم/س",
-  Violation: "المخالفة",
-  "Fine (AED)": "الغرامة (درهم)",
-  "Black points": "النقاط السوداء",
-  Confiscation: "الحجز",
   Information: "معلومات",
-
-  // --- black points: categories --------------------------------------------
-  "Buses Violations and the STOP Sign": "مخالفات الحافلات وعلامة قف",
-  "Environment Violations": "المخالفات البيئية",
-  "Horn Violations": "مخالفات المنبه",
-  "Load Violations": "مخالفات الحمولة",
-  "Plates Violations": "مخالفات اللوحات",
-  "Speed Violation": "مخالفات السرعة",
-  "Training Vehicles Violations": "مخالفات مركبات التدريب",
-  "Transport Vehicles Violations": "مخالفات مركبات النقل",
-  "Trucks and Heavy Vehicles Violations": "مخالفات الشاحنات والمركبات الثقيلة",
-  "Vehicles Registration and Traffic Permits Violations":
-    "مخالفات تسجيل المركبات والتصاريح المرورية",
-  "Violations for Jeopardizing Road Users":
-    "مخالفات تعريض مستخدمي الطريق للخطر",
-  "Violations in the Vehicle Installations": "مخالفات تجهيزات المركبة",
-  "Violations Inside the Vehicle": "المخالفات داخل المركبة",
-  "Violations Related to Driving License": "المخالفات المتعلقة برخصة القيادة",
-  "Violations Related to Pedestrians and Priority":
-    "المخالفات المتعلقة بالمشاة والأولوية",
-  "Wrong Parking and Overtaking": "الوقوف الخاطئ والتجاوز",
-  "Violations Related to Non-Compliance with Traffic Policeman Instructions":
-    "المخالفات المتعلقة بعدم الامتثال لتعليمات رجل المرور",
 
   // --- black points: violations --------------------------------------------
   "Causing death of others": "التسبب في وفاة شخص آخر",
@@ -515,89 +478,6 @@ export const arPages: Record<string, string> = {
     "المرسوم رقم (4) لسنة 1997 بتعديل المرسوم رقم (3) لسنة 1996 بشأن القضايا الحكومية",
 
   // --- organisational structure --------------------------------------------
-  "His Highness Sheikh Mohammed bin Rashid Al Maktoum":
-    "صاحب السمو الشيخ محمد بن راشد آل مكتوم",
-  "Vice President, Prime Minister and Ruler of Dubai":
-    "نائب رئيس الدولة رئيس مجلس الوزراء حاكم دبي",
-  "His Excellency Lieutenant General Abdullah Khalifa Obaid Saqr Al Marri":
-    "سعادة الفريق عبدالله خليفة عبيد صقر المري",
-  "Commander-in-Chief of Dubai Police": "القائد العام لشرطة دبي",
-  "His Excellency Lieutenant General Dhahi Khalfan Tamim":
-    "سعادة الفريق ضاحي خلفان تميم",
-  "Deputy Chief of Police and Public Security in Dubai":
-    "نائب رئيس الشرطة والأمن العام في دبي",
-  "Reporting to the Commander-in-Chief": "يتبع القائد العام",
-  "Major General Dr. Ahmed Zaal bin Krishan Al Muhairi":
-    "اللواء الدكتور أحمد زعل بن كريشان المهيري",
-  "Major General Dr. Saleh Abdullah Murad Abdullah":
-    "اللواء الدكتور صالح عبدالله مراد عبدالله",
-  "Major General Dr. Tariq Mohammed Noor Hussein Tehlak":
-    "اللواء الدكتور طارق محمد نور حسين طحلك",
-  "Major General Eid Mohammed Thani Harib": "اللواء عيد محمد ثاني حارب",
-  "Major General Hareb Mohammed Saeed Al Shamsi":
-    "اللواء حارب محمد سعيد الشامسي",
-  "Major General Marwan Abdul Karim Mohammed Abdul Karim Julfar":
-    "اللواء مروان عبدالكريم محمد عبدالكريم جلفار",
-  "Major General Saif Meher Saeed Al Mazroui": "اللواء سيف مهير سعيد المزروعي",
-  "Major General Saif Mohammed Saif bin Abed": "اللواء سيف محمد سيف بن عابد",
-  "Brigadier Badran Saeed Saif Saeed Al Shamsi":
-    "العميد بدران سعيد سيف سعيد الشامسي",
-  "Deputy Commander-in-Chief for Criminal Sector Affairs":
-    "نائب القائد العام لشؤون القطاع الجنائي",
-  "Deputy Commander-in-Chief for Financial & Administrative Sector Affairs":
-    "نائب القائد العام لشؤون القطاع المالي والإداري",
-  "Assistant Commander-in-Chief for Academic Affairs and Training":
-    "مساعد القائد العام لشؤون الأكاديمية والتدريب",
-  "Assistant Commander-in-Chief for Administration Affairs":
-    "مساعد القائد العام لشؤون الإدارة",
-  "Assistant Commander-in-Chief for Community Happiness and Logistics Support Affairs":
-    "مساعد القائد العام لشؤون سعادة المجتمع والدعم اللوجستي",
-  "Assistant Commander-in-Chief for Criminal Investigation Affairs":
-    "مساعد القائد العام لشؤون البحث الجنائي",
-  "Assistant Commander-in-Chief for Excellence and Leadership Affairs":
-    "مساعد القائد العام لشؤون التميز والريادة",
-  "Assistant Commander-in-Chief for Operations Affairs":
-    "مساعد القائد العام لشؤون العمليات",
-  "Assistant Commander-in-Chief for Ports Affairs":
-    "مساعد القائد العام لشؤون المنافذ",
-  "General Administration of Artificial Intelligence":
-    "الإدارة العامة للذكاء الاصطناعي",
-  "General Department for Anti-Narcotics": "الإدارة العامة لمكافحة المخدرات",
-  "General Department of Administrative Affairs":
-    "الإدارة العامة للشؤون الإدارية",
-  "General Department of Airports Security": "الإدارة العامة لأمن المطارات",
-  "General Department of Community Happiness": "الإدارة العامة لسعادة المجتمع",
-  "General Department of Criminal Investigations":
-    "الإدارة العامة للتحريات والمباحث الجنائية",
-  "General Department of Excellence and Leadership":
-    "الإدارة العامة للتميز والريادة",
-  "General Department of Finance": "الإدارة العامة للشؤون المالية",
-  "General Department of Human Resources": "الإدارة العامة للموارد البشرية",
-  "General Department of Human Rights": "الإدارة العامة لحقوق الإنسان",
-  "General Department of Logistic Support": "الإدارة العامة للدعم اللوجستي",
-  "General Department of Operations": "الإدارة العامة للعمليات",
-  "General Department of Organizations, Establishments and Emergency Security":
-    "الإدارة العامة لأمن المنشآت والمرافق والطوارئ",
-  "General Department of Punitive and Correctional Establishments":
-    "الإدارة العامة للمنشآت العقابية والإصلاحية",
-  "General Department of Traffic": "الإدارة العامة للمرور",
-  "General Department of Transport and Rescue": "الإدارة العامة للنقل والإنقاذ",
-  "The General Department of Training": "الإدارة العامة للتدريب",
-  "The Organizational Office of the General Command":
-    "المكتب التنظيمي للقيادة العامة",
-  "Office of Institutional Development (Centers)":
-    "مكتب التطوير المؤسسي (المراكز)",
-  "Institutional Development Office": "مكتب التطوير المؤسسي",
-  "Internal Audit Office": "مكتب التدقيق الداخلي",
-  "Financial Control Department": "إدارة الرقابة المالية",
-  "Protocol and Ceremonies Department": "إدارة المراسم والتشريفات",
-  "Resilience Department": "إدارة المرونة",
-  "Future Foresight": "استشراف المستقبل",
-  "Quality of Life Center": "مركز جودة الحياة",
-  "Police Judiciary Council": "مجلس القضاء الشرطي",
-  "Dubai Police Health Center": "المركز الصحي لشرطة دبي",
-  "Dubai Police Air Wing": "جناح الطيران بشرطة دبي",
-  "Hemaya Schools for Education Office": "مكتب مدارس حماية التعليمية",
   "to be added": "يُضاف لاحقًا",
 
   // --- customer centres ----------------------------------------------------
@@ -761,109 +641,41 @@ export const arPages: Record<string, string> = {
   "5 Working Days": "5 أيام عمل",
   Individuals: "الأفراد",
   "Business Sector": "قطاع الأعمال",
-  "Call Center 901": "مركز الاتصال 901",
-  "Dubai Police Email": "البريد الإلكتروني لشرطة دبي",
-  "Dubai Police Live Chat": "المحادثة المباشرة مع شرطة دبي",
   "Documents relevant to the inquiry or remark":
     "المستندات المتعلقة بالاستفسار أو الملاحظة",
 
-  // --- initiative voting ---------------------------------------------------
-  "Initiatives and projects stars for 2024":
-    "نجوم المبادرات والمشاريع لعام 2024",
-  "Initiatives and projects stars for 2025":
-    "نجوم المبادرات والمشاريع لعام 2025",
-  "Initiatives and projects stars for 2026":
-    "نجوم المبادرات والمشاريع لعام 2026",
-  "Dubai Police General Command, represented by the General Department of Excellence and Pioneering – Initiatives and Projects Department, announces voting for the best initiatives and projects of 2026, featuring outstanding contributions from departments, police stations, and administrative formations in developing key police services and processes.":
-    "تعلن القيادة العامة لشرطة دبي، ممثلةً بالإدارة العامة للتميز والريادة – إدارة المبادرات والمشاريع، عن فتح باب التصويت على أفضل المبادرات والمشاريع لعام 2026، والتي تضم إسهامات متميزة من الإدارات ومراكز الشرطة والتشكيلات الإدارية في تطوير الخدمات والإجراءات الشرطية الرئيسية.",
-  "Dubai Police, through the General Department of Excellence and Leadership, announces the opening of voting for the best initiatives and projects of 2025. Teams from general departments, police stations, and administrative units are competing with initiatives that improved key services or processes. The top-voted entity will be honored under the Commander-in-Chief’s Award for its exceptional contributions to institutional performance.":
-    "تعلن شرطة دبي، عبر الإدارة العامة للتميز والريادة، عن فتح باب التصويت على أفضل المبادرات والمشاريع لعام 2025. وتتنافس فرق من الإدارات العامة ومراكز الشرطة والوحدات الإدارية بمبادرات طوّرت خدمات أو إجراءات رئيسية. وسيُكرَّم الفائز بأعلى الأصوات ضمن جائزة القائد العام تقديرًا لإسهاماته الاستثنائية في الأداء المؤسسي.",
-  "Dubai Police Head Quarters represented by the General Department of Excellence and Pioneering (Initiatives and Projects Department), announces the opening of voting for members of the force on the initiatives and projects that the teams of the general departments, police stations and participating councils worked on to develop a main service/process, where the entity that obtained the highest result in the voting will be honored within the categories of His Excellency the Commander-in-Chief’s":
-    "تعلن القيادة العامة لشرطة دبي، ممثلةً بالإدارة العامة للتميز والريادة (إدارة المبادرات والمشاريع)، عن فتح باب التصويت أمام منتسبي القيادة على المبادرات والمشاريع التي عملت عليها فرق الإدارات العامة ومراكز الشرطة والمجالس المشاركة لتطوير خدمة أو إجراء رئيسي، حيث تُكرَّم الجهة الحاصلة على أعلى نتيجة في التصويت ضمن فئات جائزة سعادة القائد العام",
-
   // --- service packages ----------------------------------------------------
   "Report Criminal Complaint": "الإبلاغ عن شكوى جنائية",
-  "All smart reporting services under the same bundle":
-    "جميع خدمات الإبلاغ الذكية في باقة واحدة",
   "Request a Certificate": "طلب شهادة",
-  "Apply and obtain any certificate approved by Dubai Police easily.":
-    "تقدّم بطلبك واحصل على أي شهادة معتمدة من شرطة دبي بسهولة.",
   "Request a Permit": "طلب تصريح",
-  "Get any permit through the diverse permits bundle.":
-    "احصل على أي تصريح من خلال باقة التصاريح المتنوعة.",
   "Traffic Services": "الخدمات المرورية",
-  "Everything related to traffic services, including fine inquiry and payment.":
-    "كل ما يتعلق بالخدمات المرورية، بما في ذلك الاستعلام عن المخالفات وسدادها.",
   "Pay Traffic Fines": "سداد المخالفات المرورية",
   "Report a Vehicle or Driver": "الإبلاغ عن مركبة أو سائق",
   "Support and Emergency Response": "الدعم والاستجابة للطوارئ",
   "Request to Contact The Police": "طلب التواصل مع الشرطة",
   "On-Site Police Support": "الدعم الشرطي في الموقع",
   "Business and Corporates": "الأعمال والشركات",
-  "Comprehensive E-service for applications status, Reports, and inquiries":
-    "خدمة إلكترونية شاملة لحالة الطلبات والبلاغات والاستفسارات",
   "Bounce Cheque Report for Banks": "بلاغ الشيكات المرتجعة للبنوك",
   "Registration of law firms": "تسجيل مكاتب المحاماة",
   "Diplomatic Affairs Services": "خدمات الشؤون الدبلوماسية",
   "Suppliers Services": "خدمات الموردين",
-  "Enjoy exploring a variety of smart and essential community services. ":
-    "استمتع باستكشاف مجموعة متنوعة من الخدمات المجتمعية الذكية والأساسية. ",
-  "Explore Hemaya's services with our intuitive guide.":
-    "استكشف خدمات حماية عبر دليلنا السهل.",
   "Sport Facilities Booking": "حجز المرافق الرياضية",
   "Request a Lecture or Training Course": "طلب محاضرة أو دورة تدريبية",
   "DP Personnel Welfare and Support": "رعاية ودعم منتسبي شرطة دبي",
   "Apply for a Job": "التقديم على وظيفة",
-  "Faris ": "فارس ",
-
-  // --- event types and magazine titles -------------------------------------
-  "Exhibitions And Conferences": "المعارض والمؤتمرات",
-  "Sports Activities": "الأنشطة الرياضية",
-  "Community Initiative": "المبادرات المجتمعية",
-  "International Days And National Events":
-    "الأيام العالمية والمناسبات الوطنية",
-  "Safety And Security": "الأمن والسلامة",
-  "Amn Magazine": "مجلة الأمن",
-  "Khalid Magazine": "مجلة خالد",
-  OCEC: "مركز عمليات الجرائم الاقتصادية",
-
-  // --- magazines and videos ------------------------------------------------
-  "A flagship publication by Dubai Police showcasing the latest achievements, innovations, and initiatives in safety, security, and community engagement.":
-    "إصدار رئيسي من شرطة دبي يستعرض أحدث الإنجازات والابتكارات والمبادرات في السلامة والأمن والتواصل المجتمعي.",
-  "Al Amn is a cultural and security rich monthly magazine published in Arabic by the Dubai Police Security Media Department.":
-    "«الأمن» مجلة شهرية ثقافية وأمنية ثرية تصدر بالعربية عن إدارة الإعلام الأمني بشرطة دبي.",
-  "An educational and safety-focused magazine for children, published by Dubai Police since 1992 to teach youngsters aged 5–15 about security, traffic awareness, and moral values.":
-    "مجلة تعليمية موجهة للأطفال تركز على السلامة، تصدرها شرطة دبي منذ عام 1992 لتعليم الأطفال من 5 إلى 15 عامًا الأمن والوعي المروري والقيم الأخلاقية.",
-  "70 Years of Enhancing Safety": "70 عامًا من تعزيز السلامة",
-  "70 Years of Excellence ": "70 عامًا من التميز ",
-  "In Dubai, Life Blooms": "في دبي تزدهر الحياة",
-  "Investing in Tomorrow": "الاستثمار في الغد",
-  "Operation ‘Tri-Force Sentinel’": "عملية «حارس القوى الثلاث»",
-  "Proud of UAE": "فخورون بالإمارات",
-  "The Land of Safety ": "أرض الأمان ",
-  "THE SECURITY EQUATION": "معادلة الأمن",
-  "Thick Skin, Bitter Flesh": "قشرة صلبة ولبّ مرّ",
-  "UAE Rescue Challenge 2026... Heroes in Action ":
-    "تحدي الإمارات للإنقاذ 2026... أبطال في الميدان ",
-  "UAE's Beating Heart": "قلب الإمارات النابض",
-  "You're Ok when Your Security is": "أنت بخير عندما يكون أمنك بخير",
-  "A Hero s Sacrifice": "تضحية بطل",
-  "Defying the Impossible": "تحدي المستحيل",
-  "From Challenges to the Frontlines": "من التحديات إلى الخطوط الأمامية",
-  "From the Skies to the Stars": "من السماء إلى النجوم",
-  "International Youth Day": "اليوم العالمي للشباب",
-  "Netherlands inaugurates first SPS in UTRECHT with Emirati expertise":
-    "هولندا تفتتح أول مركز شرطة ذكي في أوترخت بخبرات إماراتية",
-  "Operation Monopoly": "عملية مونوبولي",
-  "Retirees: Renewed Giving Initiative": "المتقاعدون: مبادرة العطاء المتجدد",
-  "Tourist Experience": "تجربة السائح",
-  "Your Safety, Our Commitment": "سلامتك التزامنا",
-  "Know more about how Dubai Police is driving innovation to achieve a sustainable future":
-    "اعرف المزيد عن كيفية قيادة شرطة دبي للابتكار من أجل مستقبل مستدام",
-  "Sustainability Report for the Years 2020-2022":
-    "تقرير الاستدامة للأعوام 2020-2022",
 
   // --- privacy (payment section, lives with the footer content) -----------
   "Dubai Police Website encompasses a range of services and transactions that allow you to pay transaction fees electronically by entering credit card data in Dubai Police Payment Screen where credit card data are not stored in our databases, to ensure that the credit card is not used, by anyone else.":
     "يضم موقع شرطة دبي مجموعة من الخدمات والمعاملات التي تتيح لك سداد رسوم المعاملات إلكترونيًا بإدخال بيانات بطاقة الائتمان في شاشة الدفع الخاصة بشرطة دبي، حيث لا تُخزَّن بيانات البطاقة في قواعد بياناتنا ضمانًا لعدم استخدامها من قِبل أي شخص آخر.",
+  // --- laws & legislation (kept when the media dictionaries went) --------
+  "Using Security Cameras": "استخدام كاميرات المراقبة",
+  "Regulation No(2) for year 2019 regarding executive secretariat of governmental initiatives": "اللائحة رقم (2) لسنة 2019 بشأن الأمانة التنفيذية للمبادرات الحكومية",
+  "System No. 5 of Leaders&rsquo; Qualifying, within Dubai Police General HQ": "النظام رقم 5 بشأن تأهيل القيادات في القيادة العامة لشرطة دبي",
+  "System No. 1/2015 regarding the Assigning of Cars to Personnel of Dubai Police General HQ": "النظام رقم 1/2015 بشأن تخصيص المركبات لمنتسبي القيادة العامة لشرطة دبي",
+  "System No. 1/2012 regarding the Assigning of Cars to Civil Personnel of Dubai Police General HQ": "النظام رقم 1/2012 بشأن تخصيص المركبات للموظفين المدنيين في القيادة العامة لشرطة دبي",
+  "System No. 1/2013 regarding Partial Scholarship Leave, by means of own expense": "النظام رقم 1/2013 بشأن إجازة التفرغ الدراسي الجزئي على النفقة الخاصة",
+  "The Ranking System for local military personnel working for the Government of Dubai": "نظام الرتب للعسكريين المحليين العاملين لدى حكومة دبي",
+  "Ordinance No(4) for year 2015 for amendment of Ordinance No (21) for year 2008 regarding pensions and social securities for local military persons works in Dubai Emirate": "المرسوم رقم (4) لسنة 2015 بتعديل المرسوم رقم (21) لسنة 2008 بشأن المعاشات والتأمينات الاجتماعية للعسكريين المحليين العاملين في إمارة دبي",
+  "Ordinance No. (21) of 2008 Regarding Pensions and Social Securities for Local Military Personnel Working in the Emirate of Dubai": "المرسوم رقم (21) لسنة 2008 بشأن المعاشات والتأمينات الاجتماعية للعسكريين المحليين العاملين في إمارة دبي",
+  "Page last updated: {date}": "آخر تحديث للصفحة: {date}",
 };

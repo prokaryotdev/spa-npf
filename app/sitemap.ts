@@ -1,8 +1,5 @@
 import type { MetadataRoute } from "next";
 import { footerColumns, legalLinks, navigation } from "./content";
-import { photoAlbums } from "./content-albums";
-import { events } from "./content-events";
-import { news } from "./content-news";
 import { services } from "./content-services";
 
 const BASE = (
@@ -10,9 +7,9 @@ const BASE = (
 ).replace(/\/$/, "");
 
 /**
- * Every static route the header and footer already describe, plus the three
- * generated collections. Built from the same data the pages render, so it
- * cannot drift out of sync with them.
+ * Every static route the header and footer already describe, plus the
+ * generated service catalogue. Built from the same data the pages render, so
+ * it cannot drift out of sync with them.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   // /app/search is deliberately absent — robots.ts disallows it, since it is
@@ -31,35 +28,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       if (!("external" in link && link.external)) paths.add(link.href);
   for (const link of legalLinks) paths.add(link.href);
 
-  const dated: MetadataRoute.Sitemap = [
-    ...news.map((n) => ({
-      url: `${BASE}/app/home/media/news/${n.slug}`,
-      lastModified: n.date || undefined,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    })),
-    ...events.map((e) => ({
-      url: `${BASE}/app/home/media/events/${e.slug}`,
-      lastModified: e.from || undefined,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    })),
-    ...photoAlbums.map((a) => ({
-      url: `${BASE}/app/home/media/photo-gallery/${a.slug}`,
-      lastModified: a.date || undefined,
-      changeFrequency: "yearly" as const,
-      priority: 0.5,
-    })),
-  ];
-
-  return [
-    ...[...paths]
-      .filter((p) => p.startsWith("/"))
-      .map((path) => ({
-        url: path === "/" ? BASE : BASE + path,
-        changeFrequency: "weekly" as const,
-        priority: path === "/" ? 1 : 0.8,
-      })),
-    ...dated,
-  ];
+  return [...paths]
+    .filter((p) => p.startsWith("/"))
+    .map((path) => ({
+      url: path === "/" ? BASE : BASE + path,
+      changeFrequency: "weekly" as const,
+      priority: path === "/" ? 1 : 0.8,
+    }));
 }

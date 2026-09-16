@@ -26,16 +26,6 @@ function asset(url) {
   return "/cms/" + clean;
 }
 
-/** Turns CMS enum values like safety_And_Security into readable labels. */
-const label = (value) =>
-  String(value ?? "")
-    .replace(/[_-]+/g, " ")
-    .replace(/([a-z])([A-Z])/g, "$1 $2")
-    .split(/ +/)
-    .filter(Boolean)
-    .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(" ");
-
 const trim = (s, n = 260) => {
   if (!s) return "";
   const flat = String(s).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
@@ -70,58 +60,10 @@ function openData(file) {
   };
 }
 
-/**
- * Org-chart art ships with spaces in its filenames; next/image answers 400 for
- * those, so the files are slugified on disk and the paths rewritten to match.
- */
-function slugPaths(node) {
-  if (Array.isArray(node)) return node.map(slugPaths);
-  if (!node || typeof node !== "object") return node;
-  const out = {};
-  for (const [k, v] of Object.entries(node)) {
-    out[k] =
-      typeof v === "string" && v.startsWith("/img/organization/")
-        ? v.replace(/[^/]+$/, (file) => {
-            const i = file.lastIndexOf(".");
-            const base = file.slice(0, i).normalize("NFKD");
-            return (
-              base.replace(/[^A-Za-z0-9]+/g, "-").replace(/^-+|-+$/g, "").toLowerCase() +
-              file.slice(i).toLowerCase()
-            );
-          })
-        : slugPaths(v);
-  }
-  return out;
-}
-
 const content = {
   lawsLegislation: openData("laws.json"),
   blackPoints: openData("blackpoints.json"),
   speedLimits: openData("speedlimits.json"),
-  sustainability: openData("sustainability.json"),
-
-  // News, events and photo albums are no longer built from captured payloads:
-  // their endpoints still answer, so scripts/gen-news.mjs and gen-media.mjs
-  // fetch them live and own app/content-news.ts, -events.ts and -albums.ts.
-
-  videos: read("videos.json").map((v) => ({
-    title: v.title,
-    date: (v.date || "").slice(0, 10),
-    youtube: v.youtubeLink || "",
-    id: (v.youtubeLink || "").split(/[?&]v=/)[1]?.split("&")[0] ?? "",
-  })),
-
-  magazines: read("magazines.json").map((m) => ({
-    title: m.title,
-    issue: m.issueNumber ? String(m.issueNumber) : "",
-    kind: [m.type, m.subType].filter(Boolean).map(label).join(" · "),
-    date: (m.date || "").slice(0, 10),
-    summary: trim(m.description, 180),
-    cover: asset(m.thumb?.url ?? m.media?.[0]?.url),
-    file: m.media?.[0]?.url ? asset(m.media[0].url) : null,
-  })),
-
-  orgStructure: slugPaths(read("orgstructure.json")[0].data),
 };
 
 const banner = `/**

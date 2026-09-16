@@ -294,7 +294,6 @@ export const arServices: Record<string, string> = {
   "AED 10": "10 دراهم",
   "AED 20": "20 درهمًا",
   "AED 25": "25 درهمًا",
-  "AED 30": "30 درهمًا",
   "AED 40": "40 درهمًا",
   "AED 45": "45 درهمًا",
   "AED 50": "50 درهمًا",
@@ -709,7 +708,6 @@ export const arServices: Record<string, string> = {
     "يحتاج الزائر إلى إثبات صلة القرابة بالموقوف إذا كانت القضية متعلقة بالمخدرات",
   "Lawyers can visit inmates on Thursday’s mornings of each week, through (virtual meeting) based on prior request and approval":
     "يمكن للمحامين زيارة النزلاء صباح كل خميس عبر (لقاء افتراضي) بناءً على طلب وموافقة مسبقين",
-  "Visit a Detainee or Inmate": "زيارة موقوف أو نزيل",
   "Visit the nearest competent police station to where the cheque was received":
     "زيارة أقرب مركز شرطة مختص بمكان استلام الشيك",
   "Visit/select the relevant police station based on the location of the incident":

@@ -58,8 +58,6 @@ export const arHome: Record<string, string> = {
   "Smart Police Stations": "مراكز الشرطة الذكية",
   "Smart Police Stations (SPS): Smart, Practical, Secure, and around the clock.":
     "مراكز الشرطة الذكية: ذكية، عملية، آمنة، وعلى مدار الساعة.",
-  "Our Brand Story": "قصة علامتنا",
-  SPS: "مراكز الشرطة الذكية",
   "Original SPS": "المركز الذكي الأصلي",
   "An innovative, self-service station providing secure and efficient policing round the clock, prioritising privacy and convenience for all.":
     "مركز مبتكر ذاتي الخدمة يقدم خدمات شرطية آمنة وفعالة على مدار الساعة، مع إعطاء الأولوية للخصوصية والراحة للجميع.",
@@ -133,20 +131,6 @@ export const arHome: Record<string, string> = {
     "توفر وحدات الطائرات دون طيار حماية مستمرة من الأعلى، وتصون سلامتك بأعلى معايير الأمن.",
   "Drone Box": "صندوق الطائرات دون طيار",
 
-  // --- careers -------------------------------------------------------------
-  "Answer the Call. Join the Force.": "لبِّ النداء. انضم إلى القوة.",
-  "Join the ": "انضم إلى ",
-  "Dubai Police Academy": "أكاديمية شرطة دبي",
-  " and master the strategic vision, skills, and expertise needed to lead in law enforcement and safeguard the community.":
-    " واكتسب الرؤية الاستراتيجية والمهارات والخبرات اللازمة للقيادة في إنفاذ القانون وحماية المجتمع.",
-  "Ready to join a force that inspires?":
-    "هل أنت مستعد للانضمام إلى قوة مُلهمة؟",
-  "Bring your skills to Dubai Police and help us set new standards in community safety.":
-    "احضر بمهاراتك إلى شرطة دبي وساعدنا في وضع معايير جديدة لسلامة المجتمع.",
-  "Join a team": "انضم إلى فريق",
-  " dedicated to securing, connecting, and innovating.":
-    " مكرّس للأمن والتواصل والابتكار.",
-
   // --- emergency numbers ---------------------------------------------------
   Police: "الشرطة",
   "For emergencies only": "للطوارئ فقط",
@@ -156,18 +140,8 @@ export const arHome: Record<string, string> = {
   "Civil Defence": "الدفاع المدني",
 
   // --- navigation and footer ----------------------------------------------
-  "About Us": "من نحن",
-  "About us": "من نحن",
-  "Organisational Structure": "الهيكل التنظيمي",
-  "Organizational Structure": "الهيكل التنظيمي",
-  "Open Data": "البيانات المفتوحة",
-  "Data Dubai": "بيانات دبي",
   "Application Status": "حالة الطلب",
-  Media: "الإعلام",
-  "Media Hub": "المركز الإعلامي",
   Information: "معلومات",
-  "Best Practices in Sustainable Development":
-    "أفضل الممارسات في التنمية المستدامة",
   "Laws and Legislation": "القوانين والتشريعات",
   "Laws & Legislation": "القوانين والتشريعات",
   "View the Black Points of Traffic Violations":
@@ -184,7 +158,6 @@ export const arHome: Record<string, string> = {
   "Quick links": "روابط سريعة",
   "Site Map": "خريطة الموقع",
   Initiative: "المبادرة",
-  Careers: "الوظائف",
   Support: "الدعم",
   "Contact us": "اتصل بنا",
   "Leaders at Your Service": "القادة في خدمتكم",
@@ -193,8 +166,6 @@ export const arHome: Record<string, string> = {
   "UAE Government": "حكومة الإمارات",
   "Digital Dubai": "دبي الرقمية",
   Efaad: "إفادة",
-  Innovation: "الابتكار",
-  "E-Police in Your Mobile": "الشرطة الإلكترونية في هاتفك",
   "Privacy Policy": "سياسة الخصوصية",
   "Terms & Conditions": "الشروط والأحكام",
   "Customer Service Agreement": "اتفاقية خدمة العملاء",
@@ -203,48 +174,13 @@ export const arHome: Record<string, string> = {
   AppGallery: "آب جاليري",
   "App Gallery": "آب جاليري",
 
-  // --- about us ------------------------------------------------------------
-  "Dubai Police began its operations at Naif Fort with only 29 officers before relocating to its current headquarters in Al Tawar in 1973. Today, Dubai Police employ more than 32,000 highly qualified personnel operating through an extensive network of police stations across the emirate.":
-    "بدأت شرطة دبي عملها في حصن نايف بـ29 فردًا فقط قبل أن تنتقل إلى مقرها الحالي في الطوار عام 1973. واليوم يعمل في شرطة دبي أكثر من 32,000 منتسب مؤهل عبر شبكة واسعة من مراكز الشرطة في أنحاء الإمارة.",
-  "From humble beginnings to a global leader in policing innovation.":
-    "من بدايات متواضعة إلى ريادة عالمية في الابتكار الشرطي.",
-  "We, Dubai Police, are proud to be a modern Arab police force of more than fifteen thousand highly specialised and trained personnel. We are also proud to be recognised as one of the leading security institutions locally, regionally, and globally.":
-    "نفخر في شرطة دبي بأننا جهاز شرطي عربي حديث يضم أكثر من خمسة عشر ألف منتسب على درجة عالية من التخصص والتدريب، كما نفخر بأن نكون من المؤسسات الأمنية الرائدة محليًا وإقليميًا وعالميًا.",
-  "A journey": "رحلة",
-  "of innovation, excellence,": "من الابتكار والتميز،",
-  "and community trust.": "وثقة المجتمع.",
-  "Our Strategy": "استراتيجيتنا",
-  "Building strategic partnerships at local and international levels to enhance joint efforts in combating crime.":
-    "بناء شراكات استراتيجية على المستويين المحلي والدولي لتعزيز الجهود المشتركة في مكافحة الجريمة.",
-  "Advancing digital transformation to deliver smart, proactive, and highly efficient services aligned with the best global practices and standards.":
-    "المضي في التحول الرقمي لتقديم خدمات ذكية واستباقية عالية الكفاءة تواكب أفضل الممارسات والمعايير العالمية.",
-  "Developing highly skilled national security personnel capable of reinforcing Dubai’s reputation for effective crisis and disaster response.":
-    "إعداد كوادر أمنية وطنية عالية المهارة قادرة على ترسيخ سمعة دبي في الاستجابة الفعالة للأزمات والكوارث.",
-  "Formulating progressive policies and legislation that reinforce the foundations of security and safety for a stable and prosperous society.":
-    "صياغة سياسات وتشريعات متقدمة ترسّخ أسس الأمن والسلامة لمجتمع مستقر ومزدهر.",
-  "Establishing an innovative security model driven by artificial intelligence tools to maintain public safety and social well-being.":
-    "إرساء نموذج أمني مبتكر مدفوع بأدوات الذكاء الاصطناعي للحفاظ على السلامة العامة والرفاه المجتمعي.",
-  "Implementing effective governance frameworks that promote transparency, efficiency, and institutional excellence.":
-    "تطبيق أطر حوكمة فاعلة تعزز الشفافية والكفاءة والتميز المؤسسي.",
-  Vision: "الرؤية",
-  "Police Pioneering for a Safe City": "ريادة شرطية لمدينة آمنة",
-  Mission: "الرسالة",
-  "We strive to make Dubai the city of security & sustainable safety through providing innovative smart service, global institutional excellence in an environment that promotes innovation and creativity aiming for community happiness":
-    "نسعى لجعل دبي مدينة الأمن والسلامة المستدامة عبر تقديم خدمات ذكية مبتكرة وتميز مؤسسي عالمي في بيئة تحفّز الابتكار والإبداع بهدف إسعاد المجتمع",
-  Values: "القيم",
-  "Positivity, Objectivity, Justice, Transparency, Teamwork":
-    "الإيجابية، الموضوعية، العدالة، الشفافية، العمل بروح الفريق",
-
   // --- application status --------------------------------------------------
   Instant: "فوري",
   "This service allows users to track the status of their application using the reference number.":
     "تتيح هذه الخدمة للمتعاملين تتبع حالة طلباتهم باستخدام الرقم المرجعي.",
-  "Sign in using UAE Pass": "سجّل الدخول بالهوية الرقمية UAE PASS",
   "Digital Channels": "القنوات الرقمية",
-  "Police Station": "مركز الشرطة",
   Email: "البريد الإلكتروني",
   "P.O. Box": "صندوق البريد",
-  "1493 Dubai - United Arab Emirates": "1493 دبي - الإمارات العربية المتحدة",
 
   // --- information hub -----------------------------------------------------
   "Our Laws and Legal Frameworks": "قوانيننا وأطرنا القانونية",
@@ -254,41 +190,5 @@ export const arHome: Record<string, string> = {
     "تعرّف على أثر النقاط السوداء والغرامات على سجلك المروري.",
   "Dubai applies specific speed limits across its roads to ensure safety and smooth traffic flow. These limits vary depending on the type of road and location":
     "تطبّق دبي حدودًا قصوى محددة للسرعة على طرقها لضمان السلامة وانسيابية الحركة المرورية، وتختلف هذه الحدود حسب نوع الطريق والموقع",
-  "Know more about how Dubai Police is driving innovation to achieve a sustainable future.":
-    "اعرف المزيد عن كيفية قيادة شرطة دبي للابتكار من أجل مستقبل مستدام.",
-  "Find official city-data and statistics to track key indicators that shape decisions, drive innovation, and build a smarter future for everyone.":
-    "اطّلع على بيانات المدينة وإحصاءاتها الرسمية لتتبع المؤشرات الرئيسية التي تصنع القرار وتدفع الابتكار وتبني مستقبلًا أذكى للجميع.",
 
-  // --- media hub -----------------------------------------------------------
-  "Stay up to date! Whether you are seeking the latest news or simply browsing our events and features, the Media Hub provides the resources necessary to keep you informed and involved.":
-    "ابقَ على اطلاع! سواء كنت تبحث عن آخر الأخبار أو تتصفح فعالياتنا وموادنا، يوفر المركز الإعلامي ما تحتاجه لتبقى مطّلعًا ومشاركًا.",
-  "Keep informed! Browse our latest news, learn about ongoing initiatives, and see how innovation continues to drive our work.":
-    "ابقَ مطّلعًا! تصفّح آخر أخبارنا، وتعرّف على المبادرات الجارية، وشاهد كيف يواصل الابتكار دفع عملنا.",
-  "Explore Our News, Events, and Media Highlights in One Place.":
-    "استعرض أخبارنا وفعالياتنا وأبرز موادنا الإعلامية في مكان واحد.",
-  "Policing today, shaping tomorrow. View our video gallery to explore major operations, next-generation technologies, and memorable moments from our community.":
-    "شرطة اليوم، صُنّاع الغد. شاهد معرض الفيديو لاستعراض العمليات الكبرى وتقنيات الجيل القادم واللحظات التي لا تُنسى من مجتمعنا.",
-  "Explore All Videos": "استعرض جميع مقاطع الفيديو",
-  Photos: "الصور",
-  "Explore All Photos": "استعرض جميع الصور",
-  "Dubai Police Surpasses Resource Rationalisation Target with 99.6% Budget Compliance":
-    "شرطة دبي تتجاوز مستهدف ترشيد الموارد بالتزام بالميزانية بنسبة 99.6%",
-  "Discover How Dubai Police Makes Your Dubai Visit Safer and Smarter at ATM 2026":
-    "اكتشف كيف تجعل شرطة دبي زيارتك للمدينة أكثر أمانًا وذكاءً في سوق السفر العربي 2026",
-  "Dubai Police Identifies 100 Future Opportunities to Strengthen Security and Quality of Life":
-    "شرطة دبي تحدد 100 فرصة مستقبلية لتعزيز الأمن وجودة الحياة",
-  "Dubai Police Signs Agreement to Advance Autonomous Marine Systems and Innovation":
-    "شرطة دبي توقّع اتفاقية لتطوير الأنظمة البحرية ذاتية القيادة والابتكار",
-  "Dubai Confirms Security Readiness for Arab Media Summit and Arabian Travel Market 2026":
-    "دبي تؤكد جاهزيتها الأمنية لقمة الإعلام العربي وسوق السفر العربي 2026",
-  "Beyond the Uniform: Dubai Police Celebrates Women Balancing Careers and Motherhood":
-    "ما وراء الزي: شرطة دبي تحتفي بالمرأة التي توازن بين العمل والأمومة",
-  "13 Sep, 2026": "13 سبتمبر 2026",
-  "15 Jun, 2026": "15 يونيو 2026",
-  "03 Jun, 2026": "03 يونيو 2026",
-  "24 Jun, 2023": "24 يونيو 2023",
-  "21 Jun, 2023": "21 يونيو 2023",
-  "Sep 13, 2026": "13 سبتمبر 2026",
-  "Sep 12, 2026": "12 سبتمبر 2026",
-  "Sep 11, 2026": "11 سبتمبر 2026",
 };

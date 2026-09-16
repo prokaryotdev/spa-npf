@@ -12,11 +12,7 @@ export const arOps: Record<string, string> = {
   "Command board": "لوحة القيادة",
   "Status board": "لوحة الحالة",
   "GST · Shift {shift}": "بتوقيت الإمارات · الوردية {shift}",
-  A: "أ",
-  B: "ب",
-  C: "ج",
   "End shift": "إنهاء الوردية",
-  Board: "اللوحة",
   Calls: "البلاغات",
   Units: "الوحدات",
   "Service requests": "طلبات الخدمة",
@@ -42,9 +38,6 @@ export const arOps: Record<string, string> = {
   "In the queue": "في قائمة الانتظار",
   "With the applicant": "لدى مقدّم الطلب",
   Pending: "قيد الانتظار",
-  "En route": "في الطريق",
-  "On scene": "في الموقع",
-  Closed: "مغلقة",
   "unassigned calls": "بلاغات دون وحدة",
   "queue clear": "لا يوجد انتظار",
   "dispatch now": "أرسل الآن",
@@ -56,7 +49,6 @@ export const arOps: Record<string, string> = {
   "refuelling, training": "تزوّد بالوقود، تدريب",
   "awaiting a decision": "بانتظار قرار",
   "we asked for more": "طلبنا مستندات إضافية",
-  issued: "تم الإصدار",
   "conditions not met": "لم تُستوفَ الشروط",
   "{n} calls closed": "{n} بلاغًا مغلقًا",
   "{n} divisions": "{n} أقسام",
@@ -117,7 +109,6 @@ export const arOps: Record<string, string> = {
   Area: "المنطقة",
   "Call type": "نوع البلاغ",
   Status: "الحالة",
-  total: "الإجمالي",
   "since call": "منذ البلاغ",
   "of {n}m": "من أصل {n} د",
   "over {span}": "تجاوز {span}",
@@ -126,8 +117,6 @@ export const arOps: Record<string, string> = {
   "Add to the log": "أضف إلى السجل",
   "Add a line to the log for {ref}": "أضف سطرًا إلى سجل البلاغ {ref}",
   "Reopen call": "إعادة فتح البلاغ",
-  "Mark on scene": "تسجيل الوصول للموقع",
-  "Close call": "إغلاق البلاغ",
   "Clear call": "إنهاء البلاغ",
   Arrived: "وصلت",
   "Put it in the queue": "أدرجه في قائمة الانتظار",
@@ -142,41 +131,7 @@ export const arOps: Record<string, string> = {
   "Units on duty, with status, elapsed time in that status, and the call they are assigned to":
     "الوحدات في الخدمة، مع الحالة والزمن المنقضي فيها والبلاغ المكلّفة به",
 
-  // --- call stamps and log lines ------------------------------------------
-  Received: "تم الاستلام",
-  Dispatched: "تم الإرسال",
-  "Call received via {source}.": "ورد البلاغ عبر {source}.",
-  "Dispatched — {unit}.": "تم الإرسال — {unit}.",
-  "Dispatched.": "تم الإرسال.",
-  "Arrived on scene — {unit}.": "الوصول إلى الموقع — {unit}.",
-  "Arrived on scene.": "الوصول إلى الموقع.",
-  "Call closed — {unit}.": "أُغلق البلاغ — {unit}.",
-  "Call closed.": "أُغلق البلاغ.",
-  "{unit} assigned.": "تم تكليف {unit}.",
-  "Unit stood down.": "تم إعفاء الوحدة.",
-  "Returned to the pending queue.": "أُعيد إلى قائمة الانتظار.",
-  "Caller still on the line. Ambulance notified.":
-    "المتصل لا يزال على الخط. تم إبلاغ الإسعاف.",
-  "Two further callers reporting the same collision.":
-    "متصلان إضافيان يبلّغان عن الحادث نفسه.",
-  "Store manager pulling camera footage for the last hour.":
-    "مدير المتجر يستخرج تسجيلات الكاميرا لآخر ساعة.",
-  "Last known location traced to Al Nahda Pond Park.":
-    "تم تتبّع آخر موقع معروف إلى حديقة بحيرة النهدة.",
-  "Complainant asked to preserve the original email headers.":
-    "طُلب من المشتكي الاحتفاظ بترويسات البريد الإلكتروني الأصلية.",
-  "Fourth report from this address this month.":
-    "رابع بلاغ من هذا العنوان هذا الشهر.",
-  "Reunited with the mother at the information desk.":
-    "تم تسليم الطفل لوالدته عند مكتب الاستعلامات.",
-  "Referred to the cybercrime investigation desk.":
-    "أُحيل إلى مكتب التحقيق في الجرائم الإلكترونية.",
-
   // --- call grades and types ----------------------------------------------
-  Immediate: "فوري",
-  Urgent: "عاجل",
-  Routine: "اعتيادي",
-  Scheduled: "مجدول",
   "Road traffic collision": "حادث مروري",
   Assault: "اعتداء",
   Theft: "سرقة",
@@ -194,60 +149,8 @@ export const arOps: Record<string, string> = {
   "Website report": "بلاغ عبر الموقع",
   eCrime: "الجرائم الإلكترونية",
 
-  // --- call summaries ------------------------------------------------------
-  "Two parties in a physical altercation outside a retail unit. Caller reports one party holding a bottle.":
-    "مشاجرة بالأيدي بين طرفين أمام محل تجاري. يفيد المتصل بأن أحد الطرفين يحمل زجاجة.",
-  "Three vehicles, second lane blocked. No injuries reported. RTA notified for the lane closure.":
-    "ثلاث مركبات، المسار الثاني مغلق. لا إصابات. تم إبلاغ هيئة الطرق والمواصلات بإغلاق المسار.",
-  "Handbag taken from a parked vehicle. CCTV available on site.":
-    "سرقة حقيبة يد من مركبة متوقفة. تتوفر كاميرات مراقبة في الموقع.",
-  "Adult missing since the previous evening. Family at the address, enquiries ongoing.":
-    "شخص بالغ مفقود منذ مساء أمس. الأسرة في العنوان، والتحريات جارية.",
-  "Vehicle parked across a loading bay for six hours.":
-    "مركبة متوقفة أمام منطقة تحميل منذ ست ساعات.",
-  "Supplier invoice interception at a freight company.":
-    "اعتراض فاتورة مورّد لدى شركة شحن.",
-  "Repeat complaint about late construction work.":
-    "شكوى متكررة بشأن أعمال إنشائية متأخرة.",
-  "Child reunited with family after fourteen minutes.":
-    "تم تسليم الطفل لذويه بعد أربع عشرة دقيقة.",
-  "Goods recovered, complainant declined to press charges.":
-    "استُرجعت البضاعة، وامتنع المشتكي عن تحريك الشكوى.",
-  "Recreational craft towed in after engine failure.":
-    "قطر قارب نزهة بعد تعطل المحرك.",
-  "Minor collision cleared through the self-report service.":
-    "حادث بسيط أُنهي عبر خدمة الإبلاغ الذاتي.",
-  "Work-visa scam reported by three complainants in one week.":
-    "احتيال بتأشيرات عمل أبلغ عنه ثلاثة مشتكين خلال أسبوع.",
-
-  // --- areas ---------------------------------------------------------------
-  "Sheikh Zayed Road, Interchange 3": "شارع الشيخ زايد، التقاطع الثالث",
-  "Deira, Al Rigga": "ديرة، الرقة",
-  "Al Nahda 2": "النهدة 2",
-  "Al Quoz Industrial 3": "القوز الصناعية 3",
-  "Jebel Ali": "جبل علي",
-  "Jumeirah 2": "جميرا 2",
-  "Dubai Mall, Lower Ground": "دبي مول، الطابق الأرضي السفلي",
-  "Mirdif City Centre": "سيتي سنتر مردف",
-  "Dubai Creek Harbour": "مرسى خور دبي",
-  "Al Khail Road, near Al Quoz": "شارع الخيل، قرب القوز",
-  "Business Bay": "الخليج التجاري",
-  Mirdif: "مردف",
-  "Al Barsha": "البرشاء",
-  "Downtown Dubai": "وسط مدينة دبي",
-  "Al Rashidiya — refuelling": "الراشدية — تزوّد بالوقود",
-  "Al Quoz": "القوز",
-  "Sheikh Zayed Road": "شارع الشيخ زايد",
-  "Dubai Creek": "خور دبي",
-  "Al Minhad — standby": "المنهاد — استعداد",
-  "Al Qusais — training": "القصيص — تدريب",
-
   // --- divisions and officers ---------------------------------------------
-  Patrol: "الدوريات",
   Traffic: "المرور",
-  Marine: "البحري",
-  "Air Wing": "الجناح الجوي",
-  K9: "الكلاب البوليسية",
   "e-Crime": "الجرائم الإلكترونية",
   "Cpl. H. Suleiman": "عريف ح. سليمان",
   "Cpl. F. Darwish": "عريف ف. درويش",
@@ -273,9 +176,6 @@ export const arOps: Record<string, string> = {
   "Ask for more": "طلب مستندات إضافية",
   "Send to applicant": "إرسال إلى مقدّم الطلب",
   "What does the applicant need to do?": "ما المطلوب من مقدّم الطلب؟",
-  "Picked up for review.": "تم استلامه للمراجعة.",
-  "Approved and issued.": "تم الاعتماد والإصدار.",
-  "Did not meet the service conditions.": "لم يستوفِ شروط الخدمة.",
 
   // --- response chart ------------------------------------------------------
   "Median response time over the last 12 hours, in minutes":
@@ -287,4 +187,17 @@ export const arOps: Record<string, string> = {
   "{hour}:00 — {minutes} minutes": "{hour}:00 — {minutes} دقيقة",
   Hour: "الساعة",
   Minutes: "الدقائق",
+  // --- unit callsigns (kept when the media dictionaries went) -------------
+  "Patrol 04": "دورية 04",
+  "Patrol 09": "دورية 09",
+  "Patrol 12": "دورية 12",
+  "Patrol 17": "دورية 17",
+  "Patrol 21": "دورية 21",
+  "Patrol 26": "دورية 26",
+  "Traffic 07": "مرور 07",
+  "Traffic 11": "مرور 11",
+  "Marine 02": "بحري 02",
+  "Air Wing 01": "جوي 01",
+  "K9 03": "كلاب بوليسية 03",
+  "e-Crime 01": "جرائم إلكترونية 01",
 };

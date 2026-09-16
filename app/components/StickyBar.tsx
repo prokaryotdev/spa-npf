@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useT } from "../i18n/client";
 import {
-  CalendarIcon,
   PhoneIcon,
   PinIcon,
   ServicesIcon,
@@ -13,7 +12,6 @@ import {
 } from "./icons";
 
 const right = [
-  { label: "Events", href: "/app/home/media/events", Icon: CalendarIcon },
   {
     label: "Customer Centers",
     href: "/app/home/customer-centers",

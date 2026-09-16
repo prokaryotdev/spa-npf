@@ -44,7 +44,6 @@ export const arAccount: Record<string, string> = {
   Profile: "الملف الشخصي",
   Documents: "المستندات",
   Fines: "المخالفات",
-  Requests: "الطلبات",
   Notices: "الإشعارات",
   "Public site": "الموقع العام",
   "Dubai Police personnel": "منتسبو شرطة دبي",
@@ -82,19 +81,12 @@ export const arAccount: Record<string, string> = {
   Rank: "الرتبة",
 
   // --- the two demo accounts ----------------------------------------------
-  "Khalid Al Mansoori": "خالد المنصوري",
-  "Lt. Noura Bin Haider": "ملازم نورة بن حيدر",
-  Lieutenant: "ملازم",
-  "Al Barsha Police Station": "مركز شرطة البرشاء",
   // Earlier builds of the demo stored this station; a browser that still has
   // that session should not suddenly read half in English.
-  "Bur Dubai Control": "غرفة عمليات بر دبي",
 
   // --- statuses ------------------------------------------------------------
   Submitted: "تم الإرسال",
-  "In Review": "قيد المراجعة",
   "In review": "قيد المراجعة",
-  "Action Needed": "مطلوب إجراء",
   "Action needed": "مطلوب إجراء",
   Completed: "مكتملة",
   Rejected: "مرفوضة",
@@ -146,7 +138,6 @@ export const arAccount: Record<string, string> = {
   "Tell us what you have done, or what you are sending.":
     "أخبرنا بما قمت به، أو بما سترسله.",
   "Send reply": "إرسال الرد",
-  "Reply sent": "تم إرسال الرد",
   "AED 120": "120 درهمًا",
   "AED 220": "220 درهمًا",
 };
