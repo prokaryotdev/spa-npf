@@ -293,13 +293,19 @@ export function submitRequest(input: {
 }
 
 /**
- * The officer side of a request. Moving it also writes the timeline entry the
- * citizen reads on their own screen, so the two views never disagree.
+ * Moving a request, from either side. The officer decides one; the applicant
+ * answers an "Action Needed" by sending it back to review. Either way the same
+ * timeline entry is written, so the two screens never disagree.
+ *
+ * `label` names that entry when the status alone would misread it: an
+ * applicant's reply is a move to "In Review", but a history line reading
+ * "In Review" makes it look like the officer picked it up again.
  */
 export function advanceRequest(
   id: string,
   status: RequestStatus,
   note?: string,
+  label: string = status,
 ) {
   const at = now();
   write({
@@ -311,7 +317,7 @@ export function advanceRequest(
             status,
             updated: at,
             note: status === "Action Needed" ? note : undefined,
-            timeline: [...r.timeline, { at, label: status, note }],
+            timeline: [...r.timeline, { at, label, note }],
           }
         : r,
     ),

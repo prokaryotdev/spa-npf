@@ -72,6 +72,27 @@ assert.equal(
   "another tab's work must not sign this one out",
 );
 
+// --- the applicant answers, and the request goes back to the officer -----
+// "Action Needed" parks a request on the citizen's screen. If replying does
+// not clear the note and move it back into the queue, it parks there for good.
+advanceRequest(filed.id, "Action Needed", "Send a clearer passport copy.");
+assert.equal(
+  shared().requests.find((r) => r.id === filed.id).note,
+  "Send a clearer passport copy.",
+  "the ask is the note the applicant reads",
+);
+
+advanceRequest(filed.id, "In Review", "Uploaded a new copy.", "Reply sent");
+const answered = shared().requests.find((r) => r.id === filed.id);
+assert.equal(answered.status, "In Review", "replying returns it to the queue");
+assert.equal(answered.note, undefined, "and clears the ask it answered");
+assert.deepEqual(
+  answered.timeline.at(-1).label,
+  "Reply sent",
+  "the history says the applicant moved it, not the officer",
+);
+assert.equal(answered.timeline.at(-1).note, "Uploaded a new copy.");
+
 // --- and signing out here leaves the shared work standing ---------------
 advanceRequest(filed.id, "Completed");
 signOut();

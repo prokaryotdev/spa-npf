@@ -142,6 +142,11 @@ export const arAccount: Record<string, string> = {
   "Dubai Police App": "تطبيق شرطة دبي",
   "Dubai Police Website": "موقع شرطة دبي",
   "Received via": "تم الاستلام عبر",
+  "Your reply": "ردّك",
+  "Tell us what you have done, or what you are sending.":
+    "أخبرنا بما قمت به، أو بما سترسله.",
+  "Send reply": "إرسال الرد",
+  "Reply sent": "تم إرسال الرد",
   "AED 120": "120 درهمًا",
   "AED 220": "220 درهمًا",
 };

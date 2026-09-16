@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { useId, useMemo, useState } from "react";
-import { useStore, type RequestStatus } from "./store";
+import {
+  advanceRequest,
+  useStore,
+  type RequestStatus,
+  type TrackedRequest,
+} from "./store";
 import { Empty, StatusPill } from "./ui";
 import { ArrowRight, ChevronDown, SearchIcon } from "./icons";
 import { useFormat, useT } from "../i18n/client";
@@ -164,9 +169,13 @@ export default function PortalRequests() {
                   className="border-t border-black/[0.07] px-5 py-5"
                 >
                   {request.note ? (
-                    <p className="mb-5 rounded-xl bg-[#FFF7E6] px-4 py-3 text-sm leading-relaxed text-[#6b4a00]">
+                    <p className="mb-4 rounded-xl bg-[#FFF7E6] px-4 py-3 text-sm leading-relaxed text-[#6b4a00]">
                       {t(request.note)}
                     </p>
+                  ) : null}
+
+                  {request.status === "Action Needed" ? (
+                    <Reply request={request} />
                   ) : null}
 
                   <ol className="relative space-y-5 ps-6">
@@ -223,5 +232,55 @@ export default function PortalRequests() {
         })}
       </ul>
     </div>
+  );
+}
+
+/**
+ * The other half of "Action Needed". Dubai Police asks the applicant for
+ * something; without this the applicant reads the request and has nowhere to
+ * put the answer, so the request sits in the officer's queue for good.
+ *
+ * Sending it moves the request back to "In Review" — which is what answering
+ * means — and the reply lands on the officer's own feed as it is typed.
+ */
+function Reply({ request }: { request: TrackedRequest }) {
+  const t = useT();
+  const id = useId();
+  const [text, setText] = useState("");
+
+  return (
+    <form
+      className="mb-5"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const reply = text.trim();
+        if (!reply) return;
+        advanceRequest(request.id, "In Review", reply, "Reply sent");
+        setText("");
+      }}
+    >
+      <label
+        htmlFor={`${id}-reply`}
+        className="mb-1.5 block text-sm font-medium text-dp-ink"
+      >
+        {t("Your reply")}
+      </label>
+      <textarea
+        id={`${id}-reply`}
+        rows={3}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder={t("Tell us what you have done, or what you are sending.")}
+        className="w-full rounded-xl border border-[#E4E2E6] bg-white px-4 py-3 text-base leading-relaxed text-dp-ink outline-none placeholder:text-dp-muted focus:ring-2 focus:ring-dp-green"
+      />
+      <button
+        type="submit"
+        disabled={!text.trim()}
+        className="mt-3 inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid disabled:cursor-not-allowed disabled:opacity-40"
+      >
+        {t("Send reply")}
+        <ArrowRight aria-hidden className="size-4" />
+      </button>
+    </form>
   );
 }
