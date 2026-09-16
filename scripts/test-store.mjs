@@ -31,7 +31,7 @@ const { signIn, submitRequest, advanceRequest, signOut, subscribe } =
 // a screen mounts, so the test has to mount one.
 subscribe(() => {});
 
-const shared = () => JSON.parse(localStorage.getItem("dp:state") ?? "{}");
+const shared = () => JSON.parse(localStorage.getItem("dp:state:v2") ?? "{}");
 const session = () => JSON.parse(sessionStorage.getItem("dp:session") ?? "null");
 
 // --- the session is this tab's, and nobody else's ------------------------
@@ -63,8 +63,8 @@ const theirs = shared();
 theirs.requests = theirs.requests.map((r) =>
   r.id === filed.id ? { ...r, status: "In Review" } : r,
 );
-localStorage.setItem("dp:state", JSON.stringify(theirs));
-for (const fn of handlers) fn({ key: "dp:state" });
+localStorage.setItem("dp:state:v2", JSON.stringify(theirs));
+for (const fn of handlers) fn({ key: "dp:state:v2" });
 
 assert.equal(
   session().emiratesId,

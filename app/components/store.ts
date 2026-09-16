@@ -116,7 +116,10 @@ type State = {
   units: Unit[];
 };
 
-const KEY = "dp:state";
+// Versioned: the shape changed (word priorities became P1-P4) and an old blob
+// crashes the board. Bump on any breaking change to Shared — seed data makes
+// a migration pointless.
+const KEY = "dp:state:v2";
 /**
  * The work lives in localStorage; who is signed in lives in sessionStorage.
  *
