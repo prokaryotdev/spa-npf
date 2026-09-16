@@ -1,7 +1,9 @@
 "use client";
 
 import "./globals.css";
+import { useEffect } from "react";
 import { useT } from "./i18n/client";
+import { reportError } from "./report-error";
 
 /**
  * Replaces the root layout when the layout itself throws, so it owns its own
@@ -16,6 +18,11 @@ export default function GlobalError({
   retry: () => void;
 }) {
   const t = useT();
+  // The layout itself threw, so this is the more serious of the two.
+  useEffect(() => {
+    console.error(error);
+    reportError(error, "global-error-boundary");
+  }, [error]);
   return (
     <html lang="en" dir="ltr">
       <body

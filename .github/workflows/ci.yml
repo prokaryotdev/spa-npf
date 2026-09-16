@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+# A second push to the same branch makes the first run pointless.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Next 16 asks for >=20.9; 22 is the LTS line.
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      # Search ranking, catalogue slug references, Arabic coverage, the two
+      # store sessions, and every /img and /cms path having a file behind it.
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      # Deleting a page leaves its strings and its art behind, and both sweeps
+      # are quiet when there is nothing to remove. Reporting the count here is
+      # what turns "someone should run these" into something a reviewer sees.
+      - name: Report dead translations and orphaned assets
+        if: always()
+        run: |
+          node --import ./scripts/ts-resolve.mjs scripts/prune-i18n.mjs
+          node scripts/prune-assets.mjs

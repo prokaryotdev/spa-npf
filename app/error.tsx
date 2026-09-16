@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { ArrowRight } from "./components/icons";
 import { useT } from "./i18n/client";
+import { reportError } from "./report-error";
 
 /**
  * Catches runtime errors below the root layout. Deliberately not built on
@@ -22,6 +23,7 @@ export default function Error({
   const t = useT();
   useEffect(() => {
     console.error(error);
+    reportError(error, "error-boundary");
   }, [error]);
 
   return (
