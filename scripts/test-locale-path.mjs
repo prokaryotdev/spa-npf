@@ -51,6 +51,33 @@ for (const href of ["/api/report-error", "/sitemap.xml", "/robots.txt", "/_next/
   assert.equal(localePath(href, "ar"), href, `should not touch ${href}`);
 }
 
+// Static files are not pages. Redirecting /img/logo.svg to /en/img/logo.svg
+// broke the CSS logo masks and made the image optimiser fetch a redirect
+// instead of an SVG and answer 400. A hand-written list of filenames had
+// missed the whole of public/, so the rule is now "the last segment has an
+// extension".
+for (const href of [
+  "/img/logo-gov-dubai.svg",
+  "/cms/dp-service-icons/Cardiac_Support_3d22628230.svg",
+  "/cms/Innovation_2d3f3540e6.jpg",
+  "/fonts/DubaiRegular.woff2",
+  "/opengraph-image.png",
+  "/_next/static/chunks/main.js",
+]) {
+  assert.equal(isReserved(href), true, href + " should be reserved");
+  assert.equal(localePath(href, "ar"), href, "should not touch " + href);
+}
+
+// Pages still take a prefix, including slugs full of hyphens.
+for (const href of [
+  "/app/services/police-clearance-certificate",
+  "/app/home/contactUs",
+  "/app/home/information/view-black-points-traffic-violations",
+]) {
+  assert.equal(isReserved(href), false, href + " is a page");
+  assert.equal(localePath(href, "ar"), "/ar" + href);
+}
+
 // --- pickLang -------------------------------------------------------------
 // The visitor's own choice beats everything.
 assert.equal(pickLang("ar", "en-GB,en;q=0.9"), "ar");

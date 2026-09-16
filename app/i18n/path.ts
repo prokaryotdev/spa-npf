@@ -11,8 +11,17 @@ import { DEFAULT_LANG, LANGS, isLang, type Lang } from "./config";
  * the way in, i18n/Link.tsx puts it back on every link on the way out.
  */
 
-/** Paths that are not pages and must never carry a locale. */
-const RESERVED = /^\/(?:api|_next|sitemap\.xml|robots\.txt|favicon\.ico|opengraph-image)/;
+/**
+ * Paths that are not pages and must never carry a locale: the API, the
+ * framework's own routes, and anything whose last segment has an extension.
+ *
+ * That last clause is the one that matters. Listing filenames by hand missed
+ * the whole of public/ — every /img and /cms asset was being redirected to
+ * /en/img/…, which broke the logo masks in CSS and made the image optimiser
+ * fetch a redirect instead of an SVG and answer 400. No page route on this
+ * site has a dot in its final segment, and every static file does.
+ */
+const RESERVED = /^\/(?:api|_next)(?:\/|$)|\/[^/]*\.[^/]+$/;
 
 export const isReserved = (pathname: string) => RESERVED.test(pathname);
 

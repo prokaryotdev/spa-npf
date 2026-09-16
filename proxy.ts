@@ -15,7 +15,7 @@ import { isReserved, localePath, pickLang, stripLocale } from "./app/i18n/path";
  * language is redirected to the one it should have, which leaves exactly one
  * address per page per language for a crawler to find.
  */
-function cspFor(nonce: string) {
+function cspFor(nonce: string, secure: boolean) {
   const isDev = process.env.NODE_ENV === "development";
   return [
     "default-src 'self'",
@@ -33,12 +33,19 @@ function cspFor(nonce: string) {
     "base-uri 'self'",
     "form-action 'self'",
     "frame-ancestors 'none'",
-    "upgrade-insecure-requests",
+    ...(secure ? ["upgrade-insecure-requests"] : []),
   ].join("; ");
 }
 
 export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
+  // upgrade-insecure-requests rewrites every http subresource to https. On a
+  // real deployment that is what you want; over plain http it turns the CSS
+  // logo masks into SSL errors, so it is emitted only when the request that
+  // arrived was itself secure.
+  const secure =
+    request.nextUrl.protocol === "https:" ||
+    request.headers.get("x-forwarded-proto") === "https";
 
   // The API, the sitemap and the static files are not pages and have no
   // language; they skip the locale work and take the headers as they are.
@@ -61,7 +68,7 @@ export function proxy(request: NextRequest) {
     }
 
     const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
-    const csp = cspFor(nonce);
+    const csp = cspFor(nonce, secure);
 
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set("x-nonce", nonce);
@@ -90,7 +97,7 @@ export function proxy(request: NextRequest) {
   }
 
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
-  const csp = cspFor(nonce);
+  const csp = cspFor(nonce, secure);
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-nonce", nonce);
   requestHeaders.set("Content-Security-Policy", csp);
@@ -101,15 +108,12 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    {
-      // Static assets and the image optimiser serve no HTML, so they need no
-      // policy; a prefetch reuses the document's own nonce rather than minting
-      // one that the eventual render would not match.
-      source: "/((?!_next/static|_next/image|favicon.ico).*)",
-      missing: [
-        { type: "header", key: "next-router-prefetch" },
-        { type: "header", key: "purpose", value: "prefetch" },
-      ],
-    },
+    // Static assets and the image optimiser serve no HTML and need no policy.
+    //
+    // Prefetches are NOT excluded here, though the Next CSP guide excludes
+    // them. That guide's proxy only mints nonces; this one also routes, and a
+    // prefetch of /ar/app/services needs the same rewrite a navigation does —
+    // excluded, every <Link> prefetch 404s and the console fills up.
+    "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
 };
