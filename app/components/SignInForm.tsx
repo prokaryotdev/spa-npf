@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { signIn, useStore, type Session } from "./store";
-import { AlertIcon, ArrowRight, ShieldIcon, UserCircle } from "./icons";
+import { ArrowRight, ShieldIcon, UserCircle } from "./icons";
 import { useT } from "../i18n/client";
 
 type Errors = { emiratesId?: string; password?: string };
@@ -75,15 +75,6 @@ export default function SignInForm() {
 
   return (
     <div className="max-w-[900px]">
-      <p className="mb-8 flex items-start gap-3 rounded-2xl bg-[#FFF7E6] px-5 py-4 text-sm leading-relaxed text-[#6b4a00]">
-        <AlertIcon aria-hidden className="mt-0.5 size-5 shrink-0" />
-        <span>
-          {t(
-            "This is a rebuild of the Dubai Police website, not the real one. There is no account system behind it: signing in opens a sample account stored in this browser, and anything you submit stays on this device. Never enter a real Emirates ID or password here.",
-          )}
-        </span>
-      </p>
-
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         <div>
           <h2 className="font-secondary text-2xl font-bold text-dp-green-deep">

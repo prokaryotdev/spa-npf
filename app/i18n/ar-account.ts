@@ -30,8 +30,6 @@ export const arAccount: Record<string, string> = {
   "I am": "أنا",
   "Sign in to track your requests, settle fines and reach personalised services.":
     "سجّل الدخول لمتابعة طلباتك وسداد مخالفاتك والوصول إلى خدمات مخصّصة لك.",
-  "This is a rebuild of the Dubai Police website, not the real one. There is no account system behind it: signing in opens a sample account stored in this browser, and anything you submit stays on this device. Never enter a real Emirates ID or password here.":
-    "هذه نسخة تجريبية من موقع شرطة دبي وليست الموقع الرسمي. لا يوجد نظام حسابات خلفها: تسجيل الدخول يفتح حسابًا تجريبيًا محفوظًا في هذا المتصفح، وكل ما ترسله يبقى على هذا الجهاز. لا تُدخل هنا رقم هوية إماراتية أو كلمة مرور حقيقية أبدًا.",
   "Name and Emirates ID come from UAE PASS and cannot be edited here.":
     "الاسم ورقم الهوية الإماراتية يأتيان من الهوية الرقمية UAE PASS ولا يمكن تعديلهما هنا.",
   "Reset the demo": "إعادة ضبط النسخة التجريبية",
