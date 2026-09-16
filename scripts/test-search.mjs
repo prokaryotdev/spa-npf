@@ -53,6 +53,29 @@ assert.match(
   /^\/app\/services\/[a-z0-9-]+$/,
 );
 
+// --- fees ----------------------------------------------------------------
+// The summary is generated arithmetic, so it is the one field on a service
+// that can be quietly, enormously wrong. One CMS row reads "AED 300 or $ 88";
+// stripping every non-digit from it made 30088, which summed into a 30,508
+// dirham police clearance certificate on the catalogue card.
+const pcc = services.find((s) => s.slug === "police-clearance-certificate");
+assert.equal(pcc.feeSummary, "From AED 120", "cheapest tier plus the dirhams");
+for (const service of services) {
+  if (service.feeSummary === "Free of Charge") continue;
+  assert.match(
+    service.feeSummary,
+    /^(From )?AED \d+(\.\d+)?$/,
+    `bad fee summary on ${service.slug}: ${service.feeSummary}`,
+  );
+  // No Dubai Police service costs five figures. A summary that says so is a
+  // parse failure, not a price.
+  const amount = Number(service.feeSummary.match(/\d+(\.\d+)?/)[0]);
+  assert.ok(amount < 10000, `implausible fee on ${service.slug}: ${amount}`);
+  // Every row the summary was built from has to be legible on its own too.
+  for (const fee of service.fees)
+    assert.ok(fee.value.trim(), `empty fee row on ${service.slug}`);
+}
+
 // --- seeds ---------------------------------------------------------------
 for (const request of seedRequests)
   assert.ok(slugs.has(request.slug), `seed request slug: ${request.slug}`);

@@ -3,7 +3,12 @@
  * pulled live from the site's own CMS. Run from the repo root and commit what
  * it produces:
  *   node scripts/gen-services.mjs
+ *   npx prettier@3 --write app/content-services.ts
  *   node scripts/fetch-assets.mjs scripts/service-images.txt
+ *
+ * The prettier line is not optional. This file writes JSON.stringify output —
+ * quoted keys, different wrapping — so skipping it turns a four-line fee
+ * change into a seven-thousand-line diff that hides it.
  *
  * The catalogue is one POST away, but every service's detail sits in a
  * `dPServiceOptions` array of differently-shaped components, and the booleans
@@ -127,21 +132,50 @@ const catalogue = services
     if (seen.has(slug)) slug = `${slug}-${s.serviceKey ?? s.id}`;
     seen.add(slug);
 
-    // Fee values arrive inconsistently: "800", "AED 100", "100 AED". Parse the
-    // number out so the total is arithmetic rather than string concatenation,
-    // and re-format every row the same way.
+    // Fee values arrive inconsistently: "800", "AED 100", "100 AED". Take the
+    // first number so the total is arithmetic rather than string
+    // concatenation, and re-format the row only when that number is the whole
+    // of it. One row reads "AED 300 or $ 88" — stripping every non-digit from
+    // that produced 30088, which summed into a 30,508 dirham clearance
+    // certificate on the catalogue. A row that carries more than its own
+    // number keeps its own words.
     const feeOptions = (fees.options ?? [])
       .filter((f) => f.label && f.value)
       .map((f) => {
-        const amount = Number(String(f.value).replace(/[^\d.]/g, ""));
+        const raw = String(f.value).trim();
+        const amount = Number(/\d+(?:\.\d+)?/.exec(raw)?.[0]);
         const ok = Number.isFinite(amount) && amount > 0;
+        const plain = ok && raw.replace(/aed|[^\d.]/gi, "") === String(amount);
         return {
           label: f.label.trim().replace(/\s+/g, " "),
-          value: ok ? `AED ${amount}` : String(f.value).trim(),
+          value: plain ? `AED ${amount}` : raw,
           amount: ok ? amount : 0,
         };
       });
-    const feeTotal = feeOptions.reduce((sum, f) => sum + f.amount, 0);
+
+    /**
+     * Not every row is something everyone pays, so the summary is not the sum
+     * of all of them.
+     *
+     * The knowledge and innovation dirhams are statutory and always due. A row
+     * whose label says "additional" or "if" is conditional, so it is left out.
+     * Whatever is left is the service's own fee — and where there is more than
+     * one of those they are alternatives, not additions: a clearance
+     * certificate costs a citizen 100 or a resident 200, never 300. The
+     * cheapest one is the floor, which is why the answer is a "from".
+     */
+    const dirhams = feeOptions.filter((f) =>
+      /knowledge|innovation/i.test(f.label),
+    );
+    const base = feeOptions.filter(
+      (f) => !dirhams.includes(f) && !/\badditional\b|\bif\b/i.test(f.label),
+    );
+    const feeTotal =
+      dirhams.reduce((sum, f) => sum + f.amount, 0) +
+      (base.length ? Math.min(...base.map((f) => f.amount)) : 0);
+    // "From" the moment a cheaper tier was chosen or a conditional row dropped.
+    const feeFrom =
+      base.length > 1 || base.length + dirhams.length < feeOptions.length;
 
     return {
       slug,
@@ -164,7 +198,10 @@ const catalogue = services
 
       fees: feeOptions.map(({ label, value }) => ({ label, value })),
       // "Free of Charge" is not a row in the CMS — it is the absence of rows.
-      feeSummary: feeTotal > 0 ? `AED ${feeTotal}` : "Free of Charge",
+      feeSummary:
+        feeTotal > 0
+          ? `${feeFrom ? "From " : ""}AED ${feeTotal}`
+          : "Free of Charge",
       payment: flagsOn(opt(s, "payment-methods"), [
         "id",
         "__component",

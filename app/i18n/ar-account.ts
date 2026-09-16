@@ -74,7 +74,7 @@ export const arAccount: Record<string, string> = {
   "before the early-payment discount": "قبل خصم السداد المبكر",
   "25% off": "خصم 25%",
   "Free of Charge": "مجانًا",
-  Total: "الإجمالي",
+  Payable: "المبلغ المستحق",
   Paid: "مسددة",
   Unpaid: "غير مسددة",
   Issued: "تاريخ الإصدار",
