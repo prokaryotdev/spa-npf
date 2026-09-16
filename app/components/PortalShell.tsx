@@ -40,10 +40,17 @@ export default function PortalShell({
   const path = usePathname();
   const { session, requests, fines, loaded } = useStore();
 
+  // An officer account has no citizen record behind it — no fines, no
+  // documents, no requests of their own — so landing here is a misrouted link
+  // rather than a permissions wall, and the console is where they meant to go.
+  const citizen = session?.role === "citizen";
+
   useEffect(() => {
-    if (loaded && !session)
+    if (!loaded) return;
+    if (!session)
       router.replace(`/app/signin?next=${encodeURIComponent(path)}`);
-  }, [loaded, session, router, path]);
+    else if (!citizen) router.replace("/app/police");
+  }, [loaded, session, citizen, router, path]);
 
   const counts: Record<string, number> = {
     "/app/portal/requests": requests.filter(
@@ -58,7 +65,7 @@ export default function PortalShell({
       <main id="main-content" tabIndex={-1} className="outline-none">
         <div className="min-h-[60vh] bg-white pt-32 pb-24 md:pt-40">
           <div className="dp-container">
-            {!loaded || !session ? (
+            {!loaded || !session || !citizen ? (
               <Loading />
             ) : (
               <>

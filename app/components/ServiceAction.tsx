@@ -112,9 +112,9 @@ export default function ServiceAction({ service }: { service: Service }) {
         <ArrowRight className="size-4" />
       </button>
       <p className="mt-3 text-center text-xs text-dp-muted">
-        {service.feeSummary === "Free of Charge"
-          ? "No fee"
-          : `${service.feeSummary} payable on approval`}{" "}
+        {service.feeSummary === t("Free of Charge")
+          ? t("No fee")
+          : t("{fee} payable on approval", { fee: service.feeSummary })}{" "}
         · {service.turnaround}
       </p>
     </>

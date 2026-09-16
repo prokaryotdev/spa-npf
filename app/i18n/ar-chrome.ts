@@ -204,6 +204,8 @@ export const arChrome: Record<string, string> = {
   "Takes about {turnaround} once submitted":
     "تستغرق نحو {turnaround} بعد التقديم",
   "Sign in to {action}": "سجّل الدخول لـ{action}",
+  "No fee": "بدون رسوم",
+  "{fee} payable on approval": "{fee} تُدفع عند الموافقة",
   "Open request {ref}": "فتح الطلب {ref}",
   "You already have this open — status: {status}":
     "لديك هذا الطلب مفتوحًا بالفعل — الحالة: {status}",
