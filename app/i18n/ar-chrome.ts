@@ -273,4 +273,22 @@ export const arChrome: Record<string, string> = {
   "All {n} Dubai Police services, with the fee, the turnaround and who each one is for.": "جميع خدمات شرطة دبي البالغ عددها {n}، مع الرسوم ومدة الإنجاز والفئة المستفيدة من كل خدمة.",
   "All Services": "جميع الخدمات",
   "My Account": "حسابي",
+
+  // --- list controls and site map ----------------------------------------
+  "Newest first": "الأحدث أولاً",
+  "Oldest first": "الأقدم أولاً",
+  "A – Z": "أ – ي",
+  "Main navigation": "التنقل الرئيسي",
+  "All services": "جميع الخدمات",
+  "Legal": "الشؤون القانونية",
+
+  // --- result counts -----------------------------------------------------
+  "{n} result for": "{n} نتيجة عن",
+  "{n} results for": "{n} نتائج عن",
+  "{n} suggestion for {q}": "{n} اقتراح عن {q}",
+  "{n} suggestions for {q}": "{n} اقتراحات عن {q}",
+
+  // --- partner logos ------------------------------------------------------
+  "Innovation": "الابتكار",
+  "Dubai Police AIX": "شرطة دبي AIX",
 };

@@ -138,4 +138,8 @@ export const arAccount: Record<string, string> = {
   "Send reply": "إرسال الرد",
   "AED 120": "120 درهمًا",
   "AED 220": "220 درهمًا",
+
+  // --- request status --------------------------------------------------
+  "In Review": "قيد المراجعة",
+  "Action Needed": "يتطلب إجراءً",
 };

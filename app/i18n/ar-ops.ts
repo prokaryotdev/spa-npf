@@ -200,4 +200,10 @@ export const arOps: Record<string, string> = {
   "Air Wing 01": "جوي 01",
   "K9 03": "كلاب بوليسية 03",
   "e-Crime 01": "جرائم إلكترونية 01",
+
+  // --- incident priority -----------------------------------------------
+  "Immediate": "فوري",
+  "Urgent": "عاجل",
+  "Routine": "اعتيادي",
+  "Scheduled": "مجدول",
 };

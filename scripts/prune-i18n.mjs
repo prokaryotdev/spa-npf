@@ -9,62 +9,12 @@
 import fs from "node:fs";
 import path from "node:path";
 
+import { collectWanted } from "./wanted-strings.mjs";
+
 const apply = process.argv.includes("--apply");
 const APP = new URL("../app/", import.meta.url).href;
 
-/** Mirrors app/i18n/localize.ts and scripts/test-i18n.mjs. Keep them in step. */
-const SKIP = new Set([
-  "slug", "id", "icon", "href", "src", "image", "img", "logo", "cover",
-  "file", "url", "email", "website", "color", "theme", "background",
-  "status", "priority", "kind", "type", "category", "section", "role",
-  "callsign",
-]);
-
-const isCopy = (s) => {
-  const v = s.trim();
-  if (v.length < 2 || !/\p{L}/u.test(v)) return false;
-  if (/^[/#]/.test(v) || /^https?:|^mailto:|^tel:/.test(v)) return false;
-  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return false;
-  if (/^\d{4}-\d{2}-\d{2}/.test(v)) return false;
-  if (/^[a-z0-9]+([-_.][a-z0-9]+)*$/.test(v)) return false;
-  if (/^[A-Z]{1,4}[-\d]*$/.test(v)) return false;
-  if (/^\p{Script=Arabic}/u.test(v)) return false;
-  if (/^[\d.,]+\s*(KB|MB|GB|km\/h|km|m|cm|AED)$/i.test(v)) return false;
-  return true;
-};
-
-const wanted = new Set();
-function collect(value) {
-  if (typeof value === "string") {
-    if (isCopy(value)) wanted.add(value);
-    return;
-  }
-  if (!value || typeof value !== "object") return;
-  if (Array.isArray(value)) return value.forEach(collect);
-  for (const [key, v] of Object.entries(value)) if (!SKIP.has(key)) collect(v);
-}
-
-for (const file of fs.readdirSync("app").filter((f) => /^content.*\.ts$/.test(f))) {
-  const loaded = await import(`${APP}${file}`);
-  for (const value of Object.values(loaded))
-    if (typeof value !== "function") collect(value);
-}
-
-// t("…") keys written straight into the components.
-const sources = [];
-(function walk(dir) {
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const p = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      if (entry.name !== "fonts" && entry.name !== "i18n") walk(p);
-    } else if (/\.tsx?$/.test(entry.name)) sources.push(p);
-  }
-})("app");
-for (const file of sources)
-  for (const m of fs.readFileSync(file, "utf8").matchAll(/\bt\(\s*"((?:[^"\\]|\\.)*)"/g)) {
-    const key = JSON.parse(`"${m[1]}"`);
-    if (isCopy(key)) wanted.add(key);
-  }
+const wanted = new Set((await collectWanted()).keys());
 
 /** One `"key": "value",` entry, in either quote style, value possibly wrapped. */
 const ENTRY =

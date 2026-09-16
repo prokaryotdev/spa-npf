@@ -678,4 +678,45 @@ export const arPages: Record<string, string> = {
   "Ordinance No(4) for year 2015 for amendment of Ordinance No (21) for year 2008 regarding pensions and social securities for local military persons works in Dubai Emirate": "المرسوم رقم (4) لسنة 2015 بتعديل المرسوم رقم (21) لسنة 2008 بشأن المعاشات والتأمينات الاجتماعية للعسكريين المحليين العاملين في إمارة دبي",
   "Ordinance No. (21) of 2008 Regarding Pensions and Social Securities for Local Military Personnel Working in the Emirate of Dubai": "المرسوم رقم (21) لسنة 2008 بشأن المعاشات والتأمينات الاجتماعية للعسكريين المحليين العاملين في إمارة دبي",
   "Page last updated: {date}": "آخر تحديث للصفحة: {date}",
+
+  // --- customer centres ---------------------------------------------------
+  "Police Station": "مركز شرطة",
+
+  // --- laws and legislation table ------------------------------------------
+  "Laws and legislation": "القوانين والتشريعات",
+  "Legislation": "التشريع",
+  "Issue date": "تاريخ الإصدار",
+  "File size": "حجم الملف",
+
+  // --- street speed limits table --------------------------------------------
+  "Street speed limits": "حدود السرعة على الطرق",
+  "Road": "الطريق",
+  "Limit km/h": "الحد كم/س",
+  "Radar km/h": "الرادار كم/س",
+
+  // --- black points table ----------------------------------------------------
+  "Traffic violations, fines and black points": "المخالفات المرورية والغرامات والنقاط السوداء",
+  "Violation": "المخالفة",
+  "Fine (AED)": "الغرامة (درهم)",
+  "Black points": "النقاط السوداء",
+  "Confiscation": "الحجز",
+
+  // --- black point categories -------------------------------------------------
+  "Speed Violation": "مخالفة السرعة",
+  "Horn Violations": "مخالفات التنبيه",
+  "Load Violations": "مخالفات الحمولة",
+  "Plates Violations": "مخالفات اللوحات",
+  "Environment Violations": "المخالفات البيئية",
+  "Violations Inside the Vehicle": "المخالفات داخل المركبة",
+  "Violations in the Vehicle Installations": "مخالفات تجهيزات المركبة",
+  "Transport Vehicles Violations": "مخالفات مركبات النقل",
+  "Training Vehicles Violations": "مخالفات مركبات التدريب",
+  "Trucks and Heavy Vehicles Violations": "مخالفات الشاحنات والمركبات الثقيلة",
+  "Buses Violations and the STOP Sign": "مخالفات الحافلات وإشارة قف",
+  "Wrong Parking and Overtaking": "الوقوف الخاطئ والتجاوز",
+  "Violations Related to Driving License": "المخالفات المتعلقة برخصة القيادة",
+  "Violations Related to Pedestrians and Priority": "المخالفات المتعلقة بالمشاة وأولوية المرور",
+  "Violations Related to Non-Compliance with Traffic Policeman Instructions": "المخالفات المتعلقة بعدم الالتزام بتعليمات رجل المرور",
+  "Violations for Jeopardizing Road Users": "مخالفات تعريض مستخدمي الطريق للخطر",
+  "Vehicles Registration and Traffic Permits Violations": "مخالفات تسجيل المركبات وتصاريح المرور",
 };

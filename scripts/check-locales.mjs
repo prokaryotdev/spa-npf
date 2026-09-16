@@ -75,6 +75,7 @@ const ALLOWED = [
   "Rabdan",
   "PhD",
   "CID",
+  "OCEC",
   "GDRFA",
   "YGPLP",
   "PIL",
