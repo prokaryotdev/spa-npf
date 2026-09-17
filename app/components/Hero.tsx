@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import { heroSlides as heroSlidesSource } from "../content";
 import ServiceSearch from "./ServiceSearch";
 import { ChevronLeft, ChevronRight, PauseIcon, PlayIcon } from "./icons";
@@ -9,11 +9,49 @@ import { useT, useLocalized } from "../i18n/client";
 
 const INTERVAL = 6000;
 const TICK = 100;
+/** The slide the carousel opens on. */
+const FIRST = 2;
+
+/**
+ * Which slide is showing, and which slides exist in the DOM at all.
+ *
+ * All five used to render at once, and because each is absolutely positioned
+ * across the whole viewport the browser counts every one as visible — so
+ * next/image's laziness never applied and the homepage opened by fetching
+ * 1.1MB of photographs in order to show one of them.
+ *
+ * The two facts live in one reducer because they change together and must not
+ * disagree: a slide is added the moment it becomes current, and never removed,
+ * because the slide being left still has to fade out.
+ */
+type State = { index: number; shown: number[] };
+type Action =
+  | { type: "go"; delta: number; count: number }
+  | { type: "to"; index: number }
+  /** The slide after the current one, fetched ahead of the crossfade. */
+  | { type: "preload"; index: number };
+
+function reducer(state: State, action: Action): State {
+  const index =
+    action.type === "go"
+      ? (state.index + action.delta + action.count) % action.count
+      : action.type === "to"
+        ? action.index
+        : state.index;
+  const add = action.type === "preload" ? action.index : index;
+  const shown = state.shown.includes(add) ? state.shown : [...state.shown, add];
+  return index === state.index && shown === state.shown
+    ? state
+    : { index, shown };
+}
 
 export default function Hero() {
   const heroSlides = useLocalized(heroSlidesSource);
   const t = useT();
-  const [index, setIndex] = useState(2);
+  const [{ index, shown }, dispatch] = useReducer(reducer, {
+    index: FIRST,
+    shown: [FIRST],
+  });
   const [playing, setPlaying] = useState(true);
   // Held down while the search panel is open, without touching the visitor's
   // own play/pause choice.
@@ -22,7 +60,7 @@ export default function Hero() {
 
   const go = useCallback(
     (delta: number) =>
-      setIndex((i) => (i + delta + heroSlides.length) % heroSlides.length),
+      dispatch({ type: "go", delta, count: heroSlides.length }),
     [heroSlides.length],
   );
 
@@ -38,28 +76,43 @@ export default function Hero() {
     return () => window.clearInterval(id);
   }, [playing, searching, go, index]);
 
+  // A beat later rather than alongside, so the second photograph does not
+  // compete with the first paint. The interval is six seconds, which leaves
+  // four and a half to have it ready for the crossfade.
+  const next = (index + 1) % heroSlides.length;
+  useEffect(() => {
+    if (shown.includes(next)) return;
+    const id = window.setTimeout(
+      () => dispatch({ type: "preload", index: next }),
+      1500,
+    );
+    return () => window.clearTimeout(id);
+  }, [next, shown]);
+
   const slide = heroSlides[index];
 
   return (
     <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-black">
-      {heroSlides.map((s, i) => (
-        <div
-          key={s.image}
-          aria-hidden={i !== index}
-          className={`absolute inset-0 transition-opacity duration-[1200ms] ease-[var(--ease-custom)] ${
-            i === index ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <Image
-            src={s.image}
-            alt=""
-            fill
-            sizes="100vw"
-            priority={i === 2}
-            className="object-cover"
-          />
-        </div>
-      ))}
+      {heroSlides.map((s, i) =>
+        !shown.includes(i) ? null : (
+          <div
+            key={s.image}
+            aria-hidden={i !== index}
+            className={`absolute inset-0 transition-opacity duration-[1200ms] ease-[var(--ease-custom)] ${
+              i === index ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <Image
+              src={s.image}
+              alt=""
+              fill
+              sizes="100vw"
+              priority={i === FIRST}
+              className="object-cover"
+            />
+          </div>
+        ),
+      )}
 
       {/* Top and bottom scrims keep the nav and the caption legible. */}
       <span className="pointer-events-none absolute top-0 left-0 z-[1] h-[500px] w-full bg-gradient-to-b from-black to-[#032e1d00]" />
@@ -147,7 +200,7 @@ export default function Hero() {
                   <button
                     key={s.image}
                     type="button"
-                    onClick={() => setIndex(i)}
+                    onClick={() => dispatch({ type: "to", index: i })}
                     aria-label={t("Go to slide {n}", { n: i + 1 })}
                     aria-current={i === index}
                     className="p-2.5"
