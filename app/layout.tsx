@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { OrganisationLd } from "./components/StructuredData";
 import { LocaleProvider } from "./i18n/client";
 import { dirOf } from "./i18n/config";
 import { getLang, getPathname, getT } from "./i18n/server";
@@ -27,6 +28,20 @@ const bukra = localFont({
     { path: "./fonts/BukraBold.woff2", weight: "700", style: "normal" },
   ],
 });
+
+/**
+ * Paints the phone browsers own chrome in the brand green instead of framing
+ * the page in white, and keeps the page readable when the OS is in dark mode
+ * rather than letting it invert a light design.
+ *
+ * There is no web app manifest yet, deliberately: an installable icon needs a
+ * square version of the force crest, and the only artwork in the repo is the
+ * wide wordmark used as a CSS mask. Guessing at it is not mine to do.
+ */
+export const viewport: Viewport = {
+  themeColor: "#008755",
+  colorScheme: "light",
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
@@ -68,6 +83,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         >
           {t("Skip to main content")}
         </a>
+        <OrganisationLd lang={lang} />
         <LocaleProvider lang={lang}>{children}</LocaleProvider>
       </body>
     </html>

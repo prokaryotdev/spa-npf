@@ -10,7 +10,7 @@ import {
   storeBadges as storeBadgesSource,
 } from "../content";
 import { ArrowUpRight, ChevronDown, PhoneIcon, SocialIcon } from "./icons";
-import { useT, useLocalized } from "../i18n/client";
+import { useT, useLocalized, useFormat } from "../i18n/client";
 
 const socials = ["Facebook", "Youtube", "Twitter", "Instagram"] as const;
 
@@ -18,6 +18,7 @@ export default function Footer() {
   const emergencyNumbers = useLocalized(emergencyNumbersSource);
   const footerColumns = useLocalized(footerColumnsSource);
   const legalLinks = useLocalized(legalLinksSource);
+  const format = useFormat();
   const storeBadges = useLocalized(storeBadgesSource);
   const t = useT();
   const [open, setOpen] = useState<string | null>(null);
@@ -195,15 +196,24 @@ export default function Footer() {
         <hr className="mt-8 mb-6 border-black/10 md:mt-16" />
         <div className="flex flex-col justify-between gap-4 md:flex-row">
           <div className="w-full max-w-[536px]">
-            <p>{t("© 2026 Dubai Police General HQ. All Rights Reserved")}</p>
+            <p>
+              {t("© {year} Dubai Police General HQ. All Rights Reserved", {
+                year: process.env.NEXT_PUBLIC_BUILD_YEAR ?? "",
+              })}
+            </p>
             <p>
               {t("This site is monitored and maintained by Dubai Police.")}
               <br />
+              {/* The line this replaces named IE11 first. Microsoft retired it
+                  in 2022, and this site uses CSS it could never have rendered,
+                  so the advice was both stale and wrong. */}
               {t(
-                "The site is best viewed using IE11 and above, Mozilla Firefox, Safari and Chrome",
+                "The site is best viewed in a current version of Chrome, Safari, Edge or Firefox",
               )}
               <br />
-              {t("Last modified Date: 11/09/2026")}
+              {t("Last modified Date: {date}", {
+                date: format.date(process.env.NEXT_PUBLIC_BUILD_DATE ?? ""),
+              })}
             </p>
           </div>
           <div className="flex flex-col md:items-end">

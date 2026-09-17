@@ -56,13 +56,8 @@ export const arChrome: Record<string, string> = {
   "Email Address": "البريد الإلكتروني",
   Subscribe: "اشتراك",
   "Thanks — you are on the list.": "شكرًا لك — تم تسجيلك في القائمة.",
-  "© 2026 Dubai Police General HQ. All Rights Reserved":
-    "© 2026 القيادة العامة لشرطة دبي. جميع الحقوق محفوظة",
   "This site is monitored and maintained by Dubai Police.":
     "تتم مراقبة هذا الموقع وصيانته من قِبل شرطة دبي.",
-  "The site is best viewed using IE11 and above, Mozilla Firefox, Safari and Chrome":
-    "يُفضَّل تصفّح الموقع باستخدام إنترنت إكسبلورر 11 فأحدث، أو موزيلا فايرفوكس، أو سفاري، أو كروم",
-  "Last modified Date: 11/09/2026": "تاريخ آخر تحديث: 11/09/2026",
   "Quick access toolbar": "شريط الوصول السريع",
   "Happiness Meter (opens in a new window)":
     "مؤشر السعادة (يفتح في نافذة جديدة)",
@@ -291,4 +286,11 @@ export const arChrome: Record<string, string> = {
   // --- partner logos ------------------------------------------------------
   "Innovation": "الابتكار",
   "Dubai Police AIX": "شرطة دبي AIX",
+  // --- footer, stamped at build ------------------------------------------
+  "© {year} Dubai Police General HQ. All Rights Reserved":
+    "© {year} القيادة العامة لشرطة دبي. جميع الحقوق محفوظة",
+  "The site is best viewed in a current version of Chrome, Safari, Edge or Firefox":
+    "يُفضَّل تصفح الموقع بأحدث إصدار من كروم أو سفاري أو إيدج أو فايرفوكس",
+  "Last modified Date: {date}": "تاريخ آخر تحديث: {date}",
+  "Loading…": "جارٍ التحميل…",
 };

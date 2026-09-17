@@ -13,10 +13,20 @@ import { expect, test, type Page } from "@playwright/test";
  * arrive here, which makes this the cheapest guard against the two mistakes
  * the proxy rewrite and the nonce are most likely to cause.
  */
+/**
+ * Safari refuses a prefetch that gets redirected while carrying next/link own
+ * RSC headers, and proxy.ts rewriting the locale prefix is what makes Next
+ * answer those prefetches with a 307. The page itself is unaffected — every
+ * navigation works in every engine — so the speculative fetch simply does not
+ * happen there. Ignored by exact shape, not by wildcard, so a genuinely new
+ * failed request still fails the test.
+ */
+const KNOWN = /Fetch API cannot load .*_rsc=.* due to access control checks/;
+
 function watchConsole(page: Page) {
   const errors: string[] = [];
   page.on("console", (m) => {
-    if (m.type() === "error") errors.push(m.text());
+    if (m.type() === "error" && !KNOWN.test(m.text())) errors.push(m.text());
   });
   page.on("pageerror", (e) => errors.push(String(e)));
   return errors;

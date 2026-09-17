@@ -4,6 +4,15 @@ import { getT } from "../../i18n/server";
 /**
  * Search is the one route rendered on demand, so it is the one route that can
  * show a gap. The skeleton mirrors the real layout: search box, then results.
+ *
+ * It is also the only loading.tsx on the site, and that is not an oversight.
+ * Adding a generic one for the other twenty-two routes was tried at the app
+ * root and at two segment depths; each placement made Next emit an extra async
+ * bootstrap script with no nonce, which strict-dynamic then refused, and the
+ * page lost a chunk. This file happens not to, because its route already sits
+ * behind a Suspense boundary for useSearchParams. A skeleton is not worth
+ * weakening the policy for, so the rest of the site has none until the
+ * framework nonces that script.
  */
 export default async function SearchLoading() {
   const t = await getT();
