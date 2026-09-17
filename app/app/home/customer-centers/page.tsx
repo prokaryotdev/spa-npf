@@ -81,7 +81,7 @@ export default async function CustomerCentersPage() {
                       href={center.map}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-auto inline-flex items-center gap-1.5 self-start pt-2 text-sm font-medium text-dp-green transition-colors hover:text-dp-green-deep"
+                      className="mt-auto inline-flex items-center gap-1.5 self-start pt-2 text-sm font-medium text-dp-green-ink transition-colors hover:text-dp-green-deep"
                     >
                       {t("Open in Maps")}
                       <ArrowUpRight aria-hidden className="size-4" />

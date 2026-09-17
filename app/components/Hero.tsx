@@ -101,7 +101,7 @@ export default function Hero() {
                 type="button"
                 onClick={() => go(-1)}
                 aria-label={t("Previous slide")}
-                className="grid h-8 w-5 place-items-center text-white transition-opacity hover:opacity-70"
+                className="grid size-11 place-items-center text-white transition-opacity hover:opacity-70"
               >
                 <ChevronLeft className="size-5" />
               </button>
@@ -165,7 +165,7 @@ export default function Hero() {
                 type="button"
                 onClick={() => go(1)}
                 aria-label={t("Next slide")}
-                className="grid h-8 w-5 place-items-center text-white transition-opacity hover:opacity-70"
+                className="grid size-11 place-items-center text-white transition-opacity hover:opacity-70"
               >
                 <ChevronRight className="size-5" />
               </button>

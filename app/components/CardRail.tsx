@@ -54,7 +54,14 @@ export default function CardRail({
       <div
         ref={rail}
         onScroll={sync}
-        className="dp-rail -mx-4 flex gap-6 overflow-x-auto px-4 pb-6"
+        // A horizontally scrolling region has to be reachable, or its cards
+        // are unreadable to anyone not using a mouse. tabIndex makes it a stop
+        // and the arrow keys then scroll it; the group role and the label say
+        // what was just focused.
+        tabIndex={0}
+        role="group"
+        aria-label={label}
+        className="dp-rail -mx-4 flex gap-6 overflow-x-auto px-4 pb-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dp-green"
       >
         {children}
       </div>

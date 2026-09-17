@@ -12,8 +12,6 @@ const PORT = 3210;
  */
 export default defineConfig({
   testDir: "./e2e",
-  // Every test asserts on a clean console, so a leak between them would be
-  // read as a failure in the wrong place.
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
@@ -27,10 +25,38 @@ export default defineConfig({
 
   projects: [
     {
+      // The journeys, plus the accessibility scan, which is engine-independent.
       name: "chromium",
       // The full browser rather than the headless shell: it is what a visitor
       // actually runs, and the shell is a separate download CI would repeat.
       use: { ...devices["Desktop Chrome"], channel: "chromium" },
+      testIgnore: /responsive\.spec\.ts/,
+    },
+    {
+      // Safari's engine. A large share of UAE traffic is iPhone, and WebKit is
+      // the engine most likely to differ on mask-image, `gap`, and anything
+      // right-to-left — none of which Chromium would have shown us.
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
+      testMatch: /smoke\.spec\.ts/,
+    },
+    {
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
+      testMatch: /smoke\.spec\.ts/,
+    },
+    {
+      // Every screenshot taken while building this site was desktop width.
+      name: "mobile-android",
+      // Same channel as the desktop project: the default headless shell is a
+      // second download, and CI should not fetch two Chromiums.
+      use: { ...devices["Pixel 5"], channel: "chromium" },
+      testMatch: /responsive\.spec\.ts/,
+    },
+    {
+      name: "mobile-ios",
+      use: { ...devices["iPhone 13"] },
+      testMatch: /responsive\.spec\.ts/,
     },
   ],
 

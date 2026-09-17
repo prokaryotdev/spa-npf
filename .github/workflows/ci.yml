@@ -38,10 +38,14 @@ jobs:
       # The only check that opens a page and clicks. It builds and starts the
       # app itself (see playwright.config.ts), so it runs after the build step
       # above has already proved the build is sound.
-      - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium
+      # Three engines, because Chromium alone would have told us nothing about
+      # Safari — and iPhone is a large share of the audience this site serves.
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium webkit firefox
 
-      - name: End-to-end
+      # Journeys on three desktop engines, the responsive checks on two phones,
+      # and a WCAG 2.1 AA scan of nine page shapes in both languages.
+      - name: End-to-end, accessibility and responsive
         run: npm run test:e2e
 
       - name: Keep the trace of a failed run

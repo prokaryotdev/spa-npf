@@ -101,7 +101,7 @@ export default function PortalOverview({
         action={
           <Link
             href="/app/services"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-dp-green transition-colors hover:text-dp-green-deep"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-dp-green-ink transition-colors hover:text-dp-green-deep"
           >
             {t("All {n} services", { n: serviceCount })}
             <ArrowRight aria-hidden className="size-4" />
@@ -150,7 +150,7 @@ export default function PortalOverview({
         action={
           <Link
             href="/app/portal/requests"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-dp-green transition-colors hover:text-dp-green-deep"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-dp-green-ink transition-colors hover:text-dp-green-deep"
           >
             {t("See all")}
             <ArrowRight aria-hidden className="size-4" />

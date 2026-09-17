@@ -87,7 +87,7 @@ export default async function ContactUsPage() {
 
       <section className="bg-white pb-24">
         <div className="dp-container rounded-3xl bg-[#F4F8F6] p-8 md:p-12">
-          <p className="font-secondary text-sm font-bold tracking-wide text-dp-green uppercase">
+          <p className="font-secondary text-sm font-bold tracking-wide text-dp-green-ink uppercase">
             {contactUs.leaders.title}
           </p>
           <h2 className="mt-2 font-secondary text-2xl font-bold text-dp-green-deep md:text-3xl">
