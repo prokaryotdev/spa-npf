@@ -1,16 +1,24 @@
 "use client";
 
-import { useFormStatus } from "react-dom";
-import { setLanguage } from "../i18n/actions";
+import { usePathname } from "next/navigation";
 import { LANG_LABEL, LANG_SWITCH_LABEL } from "../i18n/config";
 import { useLang } from "../i18n/client";
+import { localePath } from "../i18n/path";
 import { GlobeIcon } from "./icons";
 
 /**
  * The control names the language it takes you to, written in that language's
  * own script — the one label a reader of either language can find without
- * reading the other. It posts to a server action, so it works before
- * hydration and with scripting off.
+ * reading the other.
+ *
+ * A plain link now the language lives in the URL, which is simpler than the
+ * server action it replaced and still works with scripting off. It also gives
+ * the reader something to copy: the address in the bar is this page, in this
+ * language.
+ *
+ * `usePathname` reports the rewritten path on the server and the prefixed one
+ * in the browser; `localePath` strips either before prefixing, so both render
+ * the same href and hydration has nothing to correct.
  */
 export default function LanguageSwitch({
   className = "",
@@ -22,50 +30,24 @@ export default function LanguageSwitch({
   block?: boolean;
 }) {
   const lang = useLang();
+  const pathname = usePathname();
   const next = lang === "en" ? "ar" : "en";
 
   return (
-    <form action={setLanguage} className={block ? "w-full" : "contents"}>
-      <input type="hidden" name="lang" value={next} />
-      <Button
-        className={className}
-        block={block}
-        next={next}
-        label={LANG_SWITCH_LABEL[lang]}
-      />
-    </form>
-  );
-}
-
-function Button({
-  className,
-  block,
-  next,
-  label,
-}: {
-  className: string;
-  block: boolean;
-  next: string;
-  label: string;
-}) {
-  // Disabled while the action is in flight: the whole page re-renders on the
-  // server afterwards, and a second click would queue a second render.
-  const { pending } = useFormStatus();
-  return (
-    <button
-      type="submit"
-      disabled={pending}
+    <a
+      href={localePath(pathname, next)}
       lang={next}
+      hrefLang={next}
       // The reader of the current language needs to know what this does, and
-      // the button's own text is in the other script.
+      // the link's own text is in the other script.
       aria-label={next === "ar" ? "التبديل إلى العربية" : "Switch to English"}
-      title={LANG_LABEL[next as "en" | "ar"]}
-      className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors disabled:opacity-60 ${
+      title={LANG_LABEL[next]}
+      className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
         block ? "w-full" : ""
       } ${className}`}
     >
       <GlobeIcon className="size-4 shrink-0 opacity-80" />
-      <span>{label}</span>
-    </button>
+      <span>{LANG_SWITCH_LABEL[lang]}</span>
+    </a>
   );
 }

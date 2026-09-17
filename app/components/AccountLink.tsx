@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "../i18n/Link";
 import { useStore } from "./store";
 import { UserCircle } from "./icons";
 import { useT } from "../i18n/client";

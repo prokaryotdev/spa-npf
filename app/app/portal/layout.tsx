@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { requireBackend } from "../../backend";
 import PortalShell from "../../components/PortalShell";
 import { getT } from "../../i18n/server";
 
@@ -14,5 +15,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function PortalLayout({ children }: LayoutProps<"/app/portal">) {
+  requireBackend();
   return <PortalShell>{children}</PortalShell>;
 }

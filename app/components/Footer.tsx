@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "../i18n/Link";
 import { useState } from "react";
 import {
   emergencyNumbers as emergencyNumbersSource,

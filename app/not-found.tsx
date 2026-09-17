@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "./i18n/Link";
 import { PageShell } from "./components/PageShell";
 import { ArrowRight } from "./components/icons";
 import { getT } from "./i18n/server";
@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const elsewhere = [
   { label: "Services", href: "/app/services" },
-  { label: "News", href: "/app/home/media/news" },
+  { label: "Information", href: "/app/home/information" },
   { label: "Contact Us", href: "/app/home/contactUs" },
   { label: "Sitemap", href: "/app/home/sitemap" },
 ];

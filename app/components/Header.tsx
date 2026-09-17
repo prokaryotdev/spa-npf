@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "../i18n/Link";
 import { useCallback, useEffect, useState } from "react";
 import { navigation as navigationSource } from "../content";
 import { useT, useLocalized } from "../i18n/client";

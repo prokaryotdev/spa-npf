@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "../i18n/Link";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "../i18n/Link";
 import { useId, useMemo, useState } from "react";
 import {
   services as servicesSource,

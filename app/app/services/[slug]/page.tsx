@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "../../../i18n/Link";
 import { notFound } from "next/navigation";
 import { PageShell, Panel } from "../../../components/PageShell";
 import ServiceAction from "../../../components/ServiceAction";
@@ -118,8 +118,12 @@ export default async function ServicePage({
                     </div>
                   ))}
                   <div className="flex items-center justify-between gap-4 py-4">
+                    {/* Not "Total": where the rows above are tiers or carry an
+                        "if", the summary is the cheapest real price, not their
+                        sum, and a total that reads "From AED 120" is a
+                        contradiction. */}
                     <dt className="text-sm font-medium text-dp-ink">
-                      {t("Total")}
+                      {t("Payable")}
                     </dt>
                     <dd className="font-secondary text-base font-bold text-dp-green-ink tabular-nums">
                       {service.feeSummary}

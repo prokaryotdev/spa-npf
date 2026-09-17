@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Link from "../i18n/Link";
+import { useRouter } from "../i18n/Link";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   popularServices,

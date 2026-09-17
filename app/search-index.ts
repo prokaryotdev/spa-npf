@@ -5,10 +5,6 @@ import {
   navigation,
   quickServices,
 } from "./content";
-import { news } from "./content-news";
-import { photoAlbums } from "./content-albums";
-import { events } from "./content-events";
-import { magazines, videos } from "./content-sub";
 import { services } from "./content-services";
 
 export type SearchHit = {
@@ -55,6 +51,7 @@ const entries: SearchHit[] = [
     })),
   ),
 
+
   ...legalLinks.map((l) => ({
     title: l.label,
     body: "",
@@ -80,40 +77,6 @@ const entries: SearchHit[] = [
     weight: s.mostUsed ? 6 : 4,
   })),
 
-  ...news.map((n) => ({
-    title: n.title,
-    body: n.summary,
-    href: `/app/home/media/news/${n.slug}`,
-    section: "News",
-  })),
-
-  ...events.map((e) => ({
-    title: e.title,
-    body: e.summary,
-    href: `/app/home/media/events/${e.slug}`,
-    section: "Events",
-  })),
-
-  ...photoAlbums.map((a) => ({
-    title: a.title,
-    body: "Photo album",
-    href: `/app/home/media/photo-gallery/${a.slug}`,
-    section: "Photo Gallery",
-  })),
-
-  ...videos.map((v) => ({
-    title: v.title,
-    body: "",
-    href: "/app/home/media/video-gallery",
-    section: "Video Gallery",
-  })),
-
-  ...magazines.map((m) => ({
-    title: m.title,
-    body: m.kind ?? "",
-    href: "/app/home/media/magazine",
-    section: "Magazine",
-  })),
 ];
 
 export const searchIndex = entries.filter(

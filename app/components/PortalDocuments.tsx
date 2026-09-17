@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "../i18n/Link";
 import { useStore } from "./store";
 import { Empty } from "./ui";
 import { seedDocuments as seedDocumentsSource } from "../content-account";

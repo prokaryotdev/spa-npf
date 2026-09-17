@@ -30,8 +30,6 @@ export const arAccount: Record<string, string> = {
   "I am": "أنا",
   "Sign in to track your requests, settle fines and reach personalised services.":
     "سجّل الدخول لمتابعة طلباتك وسداد مخالفاتك والوصول إلى خدمات مخصّصة لك.",
-  "This is a rebuild of the Dubai Police website, not the real one. There is no account system behind it: signing in opens a sample account stored in this browser, and anything you submit stays on this device. Never enter a real Emirates ID or password here.":
-    "هذه نسخة تجريبية من موقع شرطة دبي وليست الموقع الرسمي. لا يوجد نظام حسابات خلفها: تسجيل الدخول يفتح حسابًا تجريبيًا محفوظًا في هذا المتصفح، وكل ما ترسله يبقى على هذا الجهاز. لا تُدخل هنا رقم هوية إماراتية أو كلمة مرور حقيقية أبدًا.",
   "Name and Emirates ID come from UAE PASS and cannot be edited here.":
     "الاسم ورقم الهوية الإماراتية يأتيان من الهوية الرقمية UAE PASS ولا يمكن تعديلهما هنا.",
   "Reset the demo": "إعادة ضبط النسخة التجريبية",
@@ -44,7 +42,6 @@ export const arAccount: Record<string, string> = {
   Profile: "الملف الشخصي",
   Documents: "المستندات",
   Fines: "المخالفات",
-  Requests: "الطلبات",
   Notices: "الإشعارات",
   "Public site": "الموقع العام",
   "Dubai Police personnel": "منتسبو شرطة دبي",
@@ -74,7 +71,7 @@ export const arAccount: Record<string, string> = {
   "before the early-payment discount": "قبل خصم السداد المبكر",
   "25% off": "خصم 25%",
   "Free of Charge": "مجانًا",
-  Total: "الإجمالي",
+  Payable: "المبلغ المستحق",
   Paid: "مسددة",
   Unpaid: "غير مسددة",
   Issued: "تاريخ الإصدار",
@@ -82,19 +79,12 @@ export const arAccount: Record<string, string> = {
   Rank: "الرتبة",
 
   // --- the two demo accounts ----------------------------------------------
-  "Khalid Al Mansoori": "خالد المنصوري",
-  "Lt. Noura Bin Haider": "ملازم نورة بن حيدر",
-  Lieutenant: "ملازم",
-  "Al Barsha Police Station": "مركز شرطة البرشاء",
   // Earlier builds of the demo stored this station; a browser that still has
   // that session should not suddenly read half in English.
-  "Bur Dubai Control": "غرفة عمليات بر دبي",
 
   // --- statuses ------------------------------------------------------------
   Submitted: "تم الإرسال",
-  "In Review": "قيد المراجعة",
   "In review": "قيد المراجعة",
-  "Action Needed": "مطلوب إجراء",
   "Action needed": "مطلوب إجراء",
   Completed: "مكتملة",
   Rejected: "مرفوضة",
@@ -142,6 +132,14 @@ export const arAccount: Record<string, string> = {
   "Dubai Police App": "تطبيق شرطة دبي",
   "Dubai Police Website": "موقع شرطة دبي",
   "Received via": "تم الاستلام عبر",
+  "Your reply": "ردّك",
+  "Tell us what you have done, or what you are sending.":
+    "أخبرنا بما قمت به، أو بما سترسله.",
+  "Send reply": "إرسال الرد",
   "AED 120": "120 درهمًا",
   "AED 220": "220 درهمًا",
+
+  // --- request status --------------------------------------------------
+  "In Review": "قيد المراجعة",
+  "Action Needed": "يتطلب إجراءً",
 };

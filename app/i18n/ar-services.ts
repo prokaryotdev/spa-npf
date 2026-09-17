@@ -294,22 +294,23 @@ export const arServices: Record<string, string> = {
   "AED 10": "10 دراهم",
   "AED 20": "20 درهمًا",
   "AED 25": "25 درهمًا",
-  "AED 30": "30 درهمًا",
   "AED 40": "40 درهمًا",
   "AED 45": "45 درهمًا",
   "AED 50": "50 درهمًا",
   "AED 60": "60 درهمًا",
   "AED 75": "75 درهمًا",
   "AED 100": "100 درهم",
-  "AED 170": "170 درهمًا",
-  "AED 195": "195 درهمًا",
   "AED 200": "200 درهم",
   "AED 500": "500 درهم",
   "AED 520": "520 درهمًا",
   "AED 800": "800 درهم",
   "AED 820": "820 درهمًا",
-  "AED 30088": "30088 درهمًا",
-  "AED 30508": "30508 دراهم",
+  // The one fee row the CMS quotes in two currencies.
+  "AED 300 or $ 88": "300 درهم أو 88 دولارًا",
+  // Where the rows are tiers or conditional, the summary is a floor.
+  "From AED 20": "من 20 درهمًا",
+  "From AED 95": "من 95 درهمًا",
+  "From AED 120": "من 120 درهمًا",
   "Certificate Fees": "رسوم الشهادة",
   "Certificate fee if requested": "رسوم الشهادة عند طلبها",
   "Service Fees": "رسوم الخدمة",
@@ -707,7 +708,6 @@ export const arServices: Record<string, string> = {
     "يحتاج الزائر إلى إثبات صلة القرابة بالموقوف إذا كانت القضية متعلقة بالمخدرات",
   "Lawyers can visit inmates on Thursday’s mornings of each week, through (virtual meeting) based on prior request and approval":
     "يمكن للمحامين زيارة النزلاء صباح كل خميس عبر (لقاء افتراضي) بناءً على طلب وموافقة مسبقين",
-  "Visit a Detainee or Inmate": "زيارة موقوف أو نزيل",
   "Visit the nearest competent police station to where the cheque was received":
     "زيارة أقرب مركز شرطة مختص بمكان استلام الشيك",
   "Visit/select the relevant police station based on the location of the incident":

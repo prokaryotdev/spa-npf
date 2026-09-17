@@ -3,7 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { LocaleProvider } from "./i18n/client";
 import { dirOf } from "./i18n/config";
-import { getLang, getT } from "./i18n/server";
+import { getLang, getPathname, getT } from "./i18n/server";
+import { LANGS } from "./i18n/config";
+import { localePath } from "./i18n/path";
 
 const dubai = localFont({
   variable: "--font-dubai",
@@ -28,11 +30,20 @@ const bukra = localFont({
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
+  const path = await getPathname();
   return {
     // Lets article pages emit absolute og:image URLs; override per deployment.
     metadataBase: new URL(
       process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dubaipolice.gov.ae",
     ),
+    // One address per page per language, each naming the other. Without
+    // these a crawler has no way to learn the Arabic page exists.
+    alternates: {
+      canonical: localePath(path, await getLang()),
+      languages: Object.fromEntries(
+        LANGS.map((l) => [l, localePath(path, l)]),
+      ),
+    },
     title: t("Dubai Police - Smart Secure Together"),
     description: t(
       "Together for a safer Dubai tomorrow. Report, apply, inquire and pay, and request support from Dubai Police.",

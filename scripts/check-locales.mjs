@@ -1,7 +1,9 @@
 /**
  * Walks every route in both languages against a running server and reports
  * anything that would show a reader the wrong language. Needs `npm run dev`
- * (or `next start`) up, so it is not part of `npm test`:
+ * (or `next start`) up, so it is not part of `npm test`. Start that server
+ * with API_URL set, or app/backend.ts will 404 sign-in, the portal and the
+ * console and the sweep will report fourteen routes it cannot reach:
  *   node scripts/check-locales.mjs [baseUrl]
  *
  * It reports:
@@ -13,25 +15,13 @@ const BASE = process.argv[2] ?? "http://localhost:3111";
 
 const ROUTES = [
   "/",
-  "/app/home/aboutus",
-  "/app/home/aboutus/organisational-structure",
   "/app/home/contactUs",
   "/app/home/customer-centers",
   "/app/home/customer-service-agreement",
   "/app/home/information",
   "/app/home/information/laws-legislation",
   "/app/home/information/street-speed-limits",
-  "/app/home/information/sustainability",
   "/app/home/information/view-black-points-traffic-violations",
-  "/app/home/initiative",
-  "/app/home/media",
-  "/app/home/media/events",
-  "/app/home/media/events/dubai-airshow-2025",
-  "/app/home/media/magazine",
-  "/app/home/media/news",
-  "/app/home/media/photo-gallery",
-  "/app/home/media/video-gallery",
-  "/app/home/opendata",
   "/app/home/privacy-policy",
   "/app/home/sitemap",
   "/app/home/terms-conditions",
@@ -41,6 +31,10 @@ const ROUTES = [
   "/app/signin",
   "/app/portal",
   "/app/police",
+  "/app/portal/fines",
+  "/app/portal/requests",
+  "/app/police/incidents",
+  "/app/police/units",
   "/no-such-page",
 ];
 
@@ -81,6 +75,7 @@ const ALLOWED = [
   "Rabdan",
   "PhD",
   "CID",
+  "OCEC",
   "GDRFA",
   "YGPLP",
   "PIL",
@@ -96,10 +91,10 @@ const stripTags = (html) =>
 let bad = 0;
 for (const route of ROUTES) {
   for (const lang of ["en", "ar"]) {
-    const res = await fetch(BASE + route, {
-      headers: { cookie: `dp-lang=${lang}` },
-      redirect: "follow",
-    });
+    // Locale is the first path segment now, not a cookie, so the address
+    // itself is what is being checked.
+    const url = BASE + (route === "/" ? `/${lang}` : `/${lang}${route}`);
+    const res = await fetch(url, { redirect: "follow" });
     const html = await res.text();
     const ok =
       res.status === 200 || (route === "/no-such-page" && res.status === 404);
@@ -137,38 +132,59 @@ const fail = (msg) => {
   console.log(`\n✗ ${msg}`);
 };
 
-for (const [route, lang] of [
-  ["/ar", "ar"],
-  ["/en", "en"],
+// A URL naming no language must land on the one address it has, and must
+// never be talked into leaving the site on the way — an open redirect on a
+// police domain is a phishing gift.
+for (const [from, expect] of [
+  ["/", "/en"],
+  ["/app/services", "/en/app/services"],
+  ["//evil.example.com", null],
+  ["/app/services?q=x", "/en/app/services?q=x"],
 ]) {
-  const res = await fetch(BASE + route, { redirect: "manual" });
-  if (res.status !== 307) fail(`${route} should redirect, got ${res.status}`);
-  if (!new RegExp(`dp-lang=${lang}`).test(res.headers.get("set-cookie") ?? ""))
-    fail(`${route} should set dp-lang=${lang}`);
+  const res = await fetch(BASE + from, {
+    redirect: "manual",
+    headers: { "accept-language": "en" },
+  });
+  const location = res.headers.get("location");
+  if (!location) {
+    if (expect) fail(`${from} should redirect, got ${res.status}`);
+    continue;
+  }
+  const target = new URL(location, BASE);
+  if (target.origin !== new URL(BASE).origin)
+    fail(`${from} redirected off-site to ${location}`);
+  else if (expect && target.pathname + target.search !== expect)
+    fail(`${from} should go to ${expect}, went to ${target.pathname}`);
 }
 
-// An open redirect on a police domain is a phishing gift: ?to= stays same-site.
-const away = await fetch(`${BASE}/ar?to=https://example.com/steal`, {
-  redirect: "manual",
-});
-if (!(away.headers.get("location") ?? "").endsWith("/"))
-  fail("/ar?to= must not leave the site");
-const deep = await fetch(`${BASE}/ar?to=/app/services`, { redirect: "manual" });
-if (!(deep.headers.get("location") ?? "").endsWith("/app/services"))
-  fail("/ar?to=/app/services should be honoured");
+// A prefixed address serves the page itself rather than bouncing again.
+for (const lang of ["en", "ar"]) {
+  const res = await fetch(`${BASE}/${lang}/app/services`, {
+    redirect: "manual",
+  });
+  if (res.status !== 200) fail(`/${lang}/app/services should serve, got ${res.status}`);
+}
 
-// The switcher has to offer the other language, and post rather than link, so
-// it still works before hydration.
+// The switcher has to offer the other language, as a real link, so it works
+// before hydration and gives the reader an address to copy.
 for (const [lang, offers] of [
   ["en", "ar"],
   ["ar", "en"],
 ]) {
-  const html = await (
-    await fetch(BASE + "/", { headers: { cookie: `dp-lang=${lang}` } })
-  ).text();
-  if (!html.includes(`name="lang" value="${offers}"`))
-    fail(`the ${lang} page should offer ${offers}`);
-  if (!/method="POST"/.test(html)) fail(`the ${lang} switcher should post`);
+  const html = await (await fetch(`${BASE}/${lang}/app/services`)).text();
+  if (!html.includes(`href="/${offers}/app/services"`))
+    fail(`the ${lang} page should link to /${offers}/app/services`);
+}
+
+// Each page must name both of its addresses, or a crawler never learns the
+// other language exists.
+for (const lang of ["en", "ar"]) {
+  const html = await (await fetch(`${BASE}/${lang}/app/services`)).text();
+  for (const other of ["en", "ar"])
+    if (!new RegExp(`hreflang="${other}"[^>]*/${other}/app/services`, "i").test(html))
+      fail(`the ${lang} page is missing its ${other} hreflang`);
+  if (!new RegExp(`rel="canonical"[^>]*/${lang}/app/services`).test(html))
+    fail(`the ${lang} page is missing its canonical`);
 }
 
 console.log(

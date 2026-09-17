@@ -1,7 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "./i18n/Link";
 import CardRail from "./components/CardRail";
-import Careers from "./components/Careers";
 import Domains from "./components/Domains";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -10,7 +9,6 @@ import InitiativeCard from "./components/InitiativeCard";
 import Pillars from "./components/Pillars";
 import Skyline from "./components/Skyline";
 import StickyBar from "./components/StickyBar";
-import { ArrowRight } from "./components/icons";
 import { getT, getLocalized } from "./i18n/server";
 import {
   appStores as appStoresSource,
@@ -167,15 +165,6 @@ export default async function Home() {
                 "Smart Police Stations (SPS): Smart, Practical, Secure, and around the clock.",
               )}
             </p>
-            <Link
-              href="/app/home/aboutus"
-              data-reveal
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-dp-green px-6 py-3 font-medium text-white transition-colors hover:bg-dp-green-mid"
-            >
-              {t("Our Brand Story")}
-              <ArrowRight className="size-5" />
-            </Link>
-
             <CardRail label={t("SPS")} className="mt-10 md:mt-20">
               {smartPoliceStations.map((card) => (
                 <InitiativeCard
@@ -246,74 +235,6 @@ export default async function Home() {
             </div>
           </div>
         </section>
-
-        {/* Media Hub */}
-        <section
-          aria-labelledby="media-hub"
-          className="relative flex min-h-screen items-center overflow-hidden bg-gradient-to-t from-[#0C1814] to-[#1E312A] py-24 text-white md:py-[150px]"
-        >
-          <div className="dp-container relative">
-            <div className="relative mx-auto max-w-[900px]">
-              <Image
-                src="/img/assets-home/static/home-media/shape-img.svg"
-                alt=""
-                width={380}
-                height={380}
-                data-reveal
-                className="absolute -top-[28%] -left-[26%] z-10 w-[50%] md:w-[35%]"
-              />
-              <Image
-                src="/img/assets-home/static/home-media/shape-play.svg"
-                alt=""
-                width={380}
-                height={380}
-                data-reveal
-                className="absolute -right-[15%] -bottom-[30%] z-10 w-[50%] md:w-[35%]"
-              />
-              <div
-                data-reveal
-                className="relative aspect-[326/367] overflow-hidden rounded-3xl md:aspect-[1085/642]"
-              >
-                <Image
-                  src="/cms/70_years_of_Dubai_Police_Visual_V1_Website_V1_d1499023bc.jpeg"
-                  alt="Dubai Police media coverage"
-                  fill
-                  sizes="900px"
-                  className="object-cover"
-                />
-                <span className="absolute inset-0 bg-gradient-to-b from-zinc-900/30 to-neutral-950" />
-                <span className="absolute inset-0 hidden bg-[linear-gradient(100deg,rgba(9,24,21,0.95)_0%,rgba(9,24,21,0.7)_40%,transparent_72%)] md:block" />
-              </div>
-            </div>
-
-            <div className="relative z-20 mt-10 max-w-[750px] md:absolute md:top-1/2 md:start-[6%] md:mt-0 md:-translate-y-1/2">
-              <h2
-                id="media-hub"
-                data-reveal
-                className="mb-3 max-w-[14ch] font-secondary text-5xl font-bold sm:text-7xl md:mb-5 2xl:text-8xl"
-              >
-                {t("Dubai Police Media Hub")}
-              </h2>
-              <p
-                data-reveal
-                className="mb-6 max-w-[500px] font-secondary text-base font-bold md:text-3xl"
-              >
-                {t(
-                  "Explore Our News, Events, and Media Highlights in One Place.",
-                )}
-              </p>
-              <Link
-                href="/app/home/media"
-                className="inline-flex items-center gap-2 rounded-full bg-dp-green px-6 py-3.5 font-medium text-white transition-colors hover:bg-dp-green-mid"
-              >
-                {t("Visit the Media Hub")}
-                <ArrowRight className="size-5" />
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <Careers />
 
         {/* App download */}
         <section

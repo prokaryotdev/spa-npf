@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { heroSlides as heroSlidesSource } from "../content";
 import ServiceSearch from "./ServiceSearch";
@@ -85,21 +84,6 @@ export default function Hero() {
                 className="text-sm text-white lg:text-2xl [@media(max-height:768px)]:text-sm"
               >
                 {slide.subtitle}
-                {slide.readMore ? (
-                  <>
-                    {" "}
-                    <Link
-                      href="/app/home/media/news"
-                      className="underline underline-offset-4 transition-colors hover:text-[#8CD1B4]"
-                    >
-                      {t("Read More")}
-                      <span className="sr-only">
-                        {" "}
-                        {t("about dubai police campaign")}
-                      </span>
-                    </Link>
-                  </>
-                ) : null}
               </p>
             </div>
 

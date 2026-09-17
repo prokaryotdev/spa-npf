@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { requireBackend } from "../../backend";
 import OpsShell from "../../components/OpsShell";
 import { getT } from "../../i18n/server";
 
@@ -12,5 +13,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function PoliceLayout({ children }: LayoutProps<"/app/police">) {
+  requireBackend();
   return <OpsShell>{children}</OpsShell>;
 }

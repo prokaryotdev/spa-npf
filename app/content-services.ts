@@ -2150,7 +2150,7 @@ export const services: Service[] = [
       },
       {
         label: "from Outside the UAE",
-        value: "AED 30088",
+        value: "AED 300 or $ 88",
       },
       {
         label: "Knowledge and Innovation Dirhams",
@@ -2161,7 +2161,7 @@ export const services: Service[] = [
         value: "AED 100",
       },
     ],
-    feeSummary: "AED 30508",
+    feeSummary: "From AED 120",
     payment: ["Debit Card", "Credit Card", "Apple Pay", "Cash"],
     documents: [
       {
@@ -2638,7 +2638,7 @@ export const services: Service[] = [
         value: "AED 100",
       },
     ],
-    feeSummary: "AED 170",
+    feeSummary: "From AED 20",
     payment: ["Debit Card", "Credit Card", "Apple Pay", "Cash"],
     documents: [
       {
@@ -3823,7 +3823,7 @@ export const services: Service[] = [
         value: "AED 100",
       },
     ],
-    feeSummary: "AED 195",
+    feeSummary: "From AED 95",
     payment: ["Debit Card", "Credit Card", "Apple Pay"],
     documents: [],
     beneficiaries: ["Individuals", "Business Sector", "Governmental Entities"],

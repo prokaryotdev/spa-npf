@@ -116,10 +116,27 @@ type State = {
   units: Unit[];
 };
 
-const KEY = "dp:state";
+// Versioned: the shape changed (word priorities became P1-P4) and an old blob
+// crashes the board. Bump on any breaking change to Shared — seed data makes
+// a migration pointless.
+const KEY = "dp:state:v2";
+/**
+ * The work lives in localStorage; who is signed in lives in sessionStorage.
+ *
+ * Both sides of the house read one store, so a request a citizen opens lands
+ * on the officer's queue as it is written. Keeping the session in that shared
+ * blob as well meant the second sign-in evicted the first, which made the one
+ * thing worth showing — both screens live, side by side — impossible to show.
+ * sessionStorage is per-tab by definition, so the tabs now disagree about who
+ * is signed in and agree about everything else, which is exactly the split
+ * the demo needs.
+ */
+const SESSION_KEY = "dp:session";
 
-const fresh = (): State => ({
-  session: null,
+/** Everything the tabs share. The session is deliberately not in here. */
+type Shared = Omit<State, "session">;
+
+const freshShared = (): Shared => ({
   requests: seedRequests,
   fines: seedFines,
   notices: seedNotices,
@@ -127,41 +144,63 @@ const fresh = (): State => ({
   units: seedUnits(),
 });
 
+const fresh = (): State => ({ session: null, ...freshShared() });
+
 let state: State = fresh();
 let hydrated = false;
 const listeners = new Set<() => void>();
 
-function read(): State {
+function readShared(): Shared {
   try {
     const raw = localStorage.getItem(KEY);
-    if (!raw) return fresh();
+    if (!raw) return freshShared();
     const saved = JSON.parse(raw);
     // Seeded collections are merged in, not trusted from storage wholesale: a
     // build that adds a new seed row should show it to someone who signed in
     // last week, and a half-written value should not blank the screen.
-    return { ...fresh(), ...saved };
+    return { ...freshShared(), ...saved };
   } catch {
-    return fresh();
+    return freshShared();
   }
 }
 
+function readSession(): Session | null {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    return raw ? (JSON.parse(raw) as Session) : null;
+  } catch {
+    return null;
+  }
+}
+
+// `session` is spread last on purpose: a blob written by an older build still
+// carries one, and this tab's own session has to win over it.
+const read = (): State => ({ ...readShared(), session: readSession() });
+
 function write(next: State) {
+  const { session, ...shared } = next;
   state = next;
   try {
-    localStorage.setItem(KEY, JSON.stringify(next));
+    localStorage.setItem(KEY, JSON.stringify(shared));
+    if (session) sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    else sessionStorage.removeItem(SESSION_KEY);
   } catch {
     // Private browsing: the session still works, it just will not survive.
   }
   for (const listener of listeners) listener();
 }
 
-function subscribe(listener: () => void) {
+// Exported for the check in scripts/test-store.mjs, which has no React to
+// mount and so needs the store's own subscribe to hydrate it.
+export function subscribe(listener: () => void) {
   if (!hydrated) {
     hydrated = true;
     state = read();
   }
   listeners.add(listener);
-  // Another tab signing out should sign this one out too.
+  // Work done in another tab, arriving here. Re-reading is safe now that the
+  // session is per-tab: only the shared half can have changed, and the half
+  // this tab owns is read back from its own sessionStorage.
   const onStorage = (e: StorageEvent) => {
     if (e.key !== KEY) return;
     state = read();
@@ -257,13 +296,19 @@ export function submitRequest(input: {
 }
 
 /**
- * The officer side of a request. Moving it also writes the timeline entry the
- * citizen reads on their own screen, so the two views never disagree.
+ * Moving a request, from either side. The officer decides one; the applicant
+ * answers an "Action Needed" by sending it back to review. Either way the same
+ * timeline entry is written, so the two screens never disagree.
+ *
+ * `label` names that entry when the status alone would misread it: an
+ * applicant's reply is a move to "In Review", but a history line reading
+ * "In Review" makes it look like the officer picked it up again.
  */
 export function advanceRequest(
   id: string,
   status: RequestStatus,
   note?: string,
+  label: string = status,
 ) {
   const at = now();
   write({
@@ -275,7 +320,7 @@ export function advanceRequest(
             status,
             updated: at,
             note: status === "Action Needed" ? note : undefined,
-            timeline: [...r.timeline, { at, label: status, note }],
+            timeline: [...r.timeline, { at, label, note }],
           }
         : r,
     ),
@@ -442,6 +487,7 @@ export function logIncident(input: {
 export function resetDemo() {
   try {
     localStorage.removeItem(KEY);
+    sessionStorage.removeItem(SESSION_KEY);
   } catch {}
   write(fresh());
 }
