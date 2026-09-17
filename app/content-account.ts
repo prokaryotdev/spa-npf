@@ -1,7 +1,7 @@
 import type { Fine, Notice, TrackedRequest } from "./components/store";
 
 /**
- * Sample rows for the signed-in portal. Nothing here came from Dubai Police —
+ * Sample rows for the signed-in portal. Nothing here came from Nigeria Police Force —
  * there is no account API behind this build, so the screens are seeded with
  * illustrative records and say so on the page.
  *
@@ -11,24 +11,24 @@ import type { Fine, Notice, TrackedRequest } from "./components/store";
 
 export const seedRequests: TrackedRequest[] = [
   {
-    id: "DP-2026-4417",
+    id: "NPF-2026-4417",
     slug: "police-clearance-certificate",
     service: "Police Clearance Certificate",
     status: "In Review",
     submitted: "2026-09-08T09:12:00.000Z",
     updated: "2026-09-11T14:40:00.000Z",
-    fee: "AED 220",
-    channel: "Dubai Police Website",
+    fee: "₦88,000",
+    channel: "Nigeria Police Force Website",
     timeline: [
       {
         at: "2026-09-08T09:12:00.000Z",
         label: "Submitted",
-        note: "Received by Dubai Police.",
+        note: "Received by Nigeria Police Force.",
       },
       {
         at: "2026-09-09T08:05:00.000Z",
         label: "Documents verified",
-        note: "Emirates ID and passport copy accepted.",
+        note: "NIN and passport copy accepted.",
       },
       {
         at: "2026-09-11T14:40:00.000Z",
@@ -38,14 +38,14 @@ export const seedRequests: TrackedRequest[] = [
     ],
   },
   {
-    id: "DP-2026-4102",
+    id: "NPF-2026-4102",
     slug: "hqvisit",
     service: "HQ Entry Permit",
     status: "Action Needed",
     submitted: "2026-09-02T11:30:00.000Z",
     updated: "2026-09-05T10:15:00.000Z",
     fee: "Free of Charge",
-    channel: "Dubai Police App",
+    channel: "Nigeria Police Force App",
     note: "The visit date you chose is a public holiday. Pick another date.",
     timeline: [
       { at: "2026-09-02T11:30:00.000Z", label: "Submitted" },
@@ -57,20 +57,20 @@ export const seedRequests: TrackedRequest[] = [
     ],
   },
   {
-    id: "DP-2026-3866",
+    id: "NPF-2026-3866",
     slug: "report-lost-item",
     service: "Report Lost Item",
     status: "Completed",
     submitted: "2026-08-19T16:45:00.000Z",
     updated: "2026-08-24T12:00:00.000Z",
     fee: "Free of Charge",
-    channel: "Dubai Police Website",
+    channel: "Nigeria Police Force Website",
     timeline: [
       { at: "2026-08-19T16:45:00.000Z", label: "Submitted" },
       {
         at: "2026-08-21T09:20:00.000Z",
         label: "Matched",
-        note: "A matching item was handed in at Bur Dubai station.",
+        note: "A matching item was handed in at Asokoro station.",
       },
       {
         at: "2026-08-24T12:00:00.000Z",
@@ -80,14 +80,14 @@ export const seedRequests: TrackedRequest[] = [
     ],
   },
   {
-    id: "DP-2026-3401",
+    id: "NPF-2026-3401",
     slug: "traffic-status-certificate",
     service: "Traffic Status Certificate",
     status: "Completed",
     submitted: "2026-07-30T07:10:00.000Z",
     updated: "2026-07-30T07:12:00.000Z",
-    fee: "AED 120",
-    channel: "Smart Police Station",
+    fee: "₦48,000",
+    channel: "Divisional Police Station",
     timeline: [
       { at: "2026-07-30T07:10:00.000Z", label: "Submitted" },
       {
@@ -105,16 +105,16 @@ export const seedFines: Fine[] = [
     reason: "Exceeding the speed limit by 20 km/h",
     amount: 300,
     issued: "2026-09-06T18:22:00.000Z",
-    location: "Sheikh Zayed Road, before Interchange 3",
+    location: "Nnamdi Azikiwe Expressway, before Junction 3",
     points: 0,
     paid: false,
   },
   {
     id: "TF-87003",
-    reason: "Parking in a space reserved for people of determination",
+    reason: "Parking in a space reserved for persons with disabilities",
     amount: 1000,
     issued: "2026-08-28T13:05:00.000Z",
-    location: "Al Barsha 1",
+    location: "Wuse 1",
     points: 6,
     paid: false,
   },
@@ -123,7 +123,7 @@ export const seedFines: Fine[] = [
     reason: "Using a mobile phone while driving",
     amount: 800,
     issued: "2026-07-14T08:41:00.000Z",
-    location: "Al Khail Road",
+    location: "Outer Southern Expressway",
     points: 4,
     paid: true,
   },
@@ -133,7 +133,7 @@ export const seedNotices: Notice[] = [
   {
     id: "N-9001",
     title: "Your Police Clearance Certificate moved to review",
-    body: "Request DP-2026-4417 is with the Criminal Records department. No action is needed from you.",
+    body: "Request NPF-2026-4417 is with the Criminal Records department. No action is needed from you.",
     at: "2026-09-11T14:40:00.000Z",
     read: false,
   },
@@ -147,7 +147,7 @@ export const seedNotices: Notice[] = [
   {
     id: "N-8994",
     title: "New fine recorded",
-    body: "Fine TF-88214 was issued on Sheikh Zayed Road. Paying within 30 days gets a 25% discount.",
+    body: "Fine TF-88214 was issued on Nnamdi Azikiwe Expressway. Paying within 30 days gets a 25% discount.",
     at: "2026-09-06T18:30:00.000Z",
     read: true,
   },
@@ -160,13 +160,13 @@ export const seedDocuments = [
     name: "Traffic Status Certificate",
     issued: "2026-07-30T07:12:00.000Z",
     expires: "2027-07-30T00:00:00.000Z",
-    request: "DP-2026-3401",
+    request: "NPF-2026-3401",
   },
   {
     id: "DOC-4288",
     name: "Lost Item Report — receipt",
     issued: "2026-08-24T12:00:00.000Z",
     expires: null,
-    request: "DP-2026-3866",
+    request: "NPF-2026-3866",
   },
 ];

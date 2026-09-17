@@ -15,7 +15,7 @@ import path from "node:path";
 const mapFile = process.argv[2];
 if (!mapFile) throw new Error("pass a tab-separated map file");
 
-const BASE = "https://www.dubaipolice.gov.ae";
+const BASE = "https://fct.npf.gov.ng";
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const isHtml = (buf) =>
   buf.subarray(0, 400).toString("latin1").trimStart().toLowerCase().startsWith("<!doctype") ||

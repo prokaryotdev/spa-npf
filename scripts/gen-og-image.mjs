@@ -33,7 +33,7 @@ const background = Buffer.from(`
 // The logo is dark artwork. Negating it just shifts the hue, so paint solid
 // white through the logo's own alpha instead: `blend: "in"` keeps the white
 // only where the artwork is opaque.
-const shape = await sharp(fs.readFileSync("public/img/Dubai-Police.svg"))
+const shape = await sharp(fs.readFileSync("public/img/Abuja-Police.svg"))
   .resize({ width: 620, fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
   .toBuffer();
 const { width, height } = await sharp(shape).metadata();

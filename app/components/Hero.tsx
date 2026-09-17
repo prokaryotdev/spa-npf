@@ -115,7 +115,7 @@ export default function Hero() {
       )}
 
       {/* Top and bottom scrims keep the nav and the caption legible. */}
-      <span className="pointer-events-none absolute top-0 left-0 z-[1] h-[500px] w-full bg-gradient-to-b from-black to-[#032e1d00]" />
+      <span className="pointer-events-none absolute top-0 left-0 z-[1] h-[500px] w-full bg-gradient-to-b from-black to-[#05122E00]" />
 
       {/* Dims and blurs the slideshow while the search panel is open. */}
       <div
@@ -125,8 +125,8 @@ export default function Hero() {
         }`}
       />
 
-      <div className="relative z-10 mt-[calc(100vh-550px)] w-full bg-gradient-to-b from-[#032e1d00] to-black pt-10 pb-16 md:mt-auto md:pb-6">
-        <div className="dp-container">
+      <div className="relative z-10 mt-[calc(100vh-550px)] w-full bg-gradient-to-b from-[#05122E00] to-black pt-10 pb-16 md:mt-auto md:pb-6">
+        <div className="npf-container">
           <div className="mx-auto w-full max-w-[832px]">
             <div className="mb-4 min-h-[60px] text-center md:mb-8 lg:[@media(min-height:769px)]:min-h-[80px]">
               <h1 className="mb-2 text-2xl font-semibold text-white lg:text-4xl [@media(max-height:768px)]:text-2xl">
@@ -207,7 +207,7 @@ export default function Hero() {
                   >
                     <span
                       className={`block size-1.5 rounded-full transition-all duration-300 ease-out ${
-                        i === index ? "scale-125 bg-white" : "bg-white/50"
+                        i === index ? "scale-125 bg-npf-gold-soft" : "bg-white/50"
                       }`}
                     />
                   </button>

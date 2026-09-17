@@ -16,10 +16,10 @@ export default function Skyline() {
     <section
       ref={section}
       aria-labelledby="finale"
-      className="relative h-[200vh] bg-[#081e16] text-white"
+      className="relative h-[200vh] bg-[#081426] text-white"
     >
       <div className="sticky top-0 h-screen overflow-hidden">
-        <div className="absolute top-0 left-0 h-[82%] w-full bg-[#081612]">
+        <div className="absolute top-0 left-0 h-[82%] w-full bg-[#070D1A]">
           <Image
             src="/img/assets-home/static/smart/Sky-2.jpg"
             alt=""
@@ -35,11 +35,11 @@ export default function Skyline() {
             id="finale"
             className="absolute bottom-[41%] z-10 w-full text-center font-secondary text-[16vw] leading-[0.82] font-bold tracking-[-0.08em] uppercase md:text-[11vw] md:leading-[0.76] md:tracking-[-0.05em]"
           >
-            <span className="sr-only">{t("Smart, Secure, Together")}</span>
+            <span className="sr-only">{t("Safe, Secure, Together")}</span>
             {[
-              ["#B7FCDF", "#8CD1B4", "Smart"],
-              ["#8CD1B4", "#478E70", "Secure"],
-              ["#478E70", "#196042", "Together"],
+              ["#CDE0FB", "#A3BFE4", "Safe"],
+              ["#A3BFE4", "#4F7CB8", "Secure"],
+              ["#4F7CB8", "#1B3A66", "Together"],
             ].map(([from, to, word], i) => (
               <span key={word} aria-hidden className="block overflow-hidden">
                 <span
@@ -74,7 +74,7 @@ export default function Skyline() {
           <div className="relative aspect-[3840/3096] w-full sm:aspect-[3840/1446]">
             <Image
               src="/img/dashboard/CItyBGFinal.png"
-              alt="The Dubai skyline at dusk"
+              alt="The city skyline at dusk"
               fill
               sizes="100vw"
               className="object-cover"

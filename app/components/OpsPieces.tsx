@@ -184,7 +184,7 @@ export function PriorityTag({
     >
       <span
         aria-hidden
-        className="dp-ops-dot size-1.5 rounded-full bg-current"
+        className="npf-ops-dot size-1.5 rounded-full bg-current"
       />
       {priority}
       <span className={withLabel ? "font-medium opacity-80" : "sr-only"}>
@@ -196,7 +196,7 @@ export function PriorityTag({
 
 const CALL_TONE: Record<Incident["status"], string> = {
   New: "bg-[#3b2c0b] text-[#f8d79a]",
-  Dispatched: "bg-[#0f2f45] text-[#a8d8f5]",
+  Dispatched: "bg-[#2A1B4D] text-[#C3B0F5]",
   "On Scene": "bg-[#0b3b2a] text-[#7fe7bb]",
   Closed: "bg-[var(--ops-raised)] text-[var(--ops-dim)]",
 };
@@ -223,7 +223,7 @@ export function OpsStatus({ status }: { status: Incident["status"] }) {
 const UNIT_TONE: Record<UnitStatus, string> = {
   Available: "bg-[#0b3b2a] text-[#7fe7bb]",
   Assigned: "bg-[#3b2c0b] text-[#f8d79a]",
-  "On Scene": "bg-[#0f2f45] text-[#a8d8f5]",
+  "On Scene": "bg-[#2A1B4D] text-[#C3B0F5]",
   Unavailable: "bg-[var(--ops-raised)] text-[var(--ops-dim)]",
 };
 

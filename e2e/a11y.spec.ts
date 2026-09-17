@@ -18,7 +18,7 @@ const PAGES = [
   ["the homepage", "/"],
   ["the service catalogue", "/app/services"],
   ["a service", "/app/services/police-clearance-certificate"],
-  ["a data table", "/app/home/information/view-black-points-traffic-violations"],
+  ["a data table", "/app/home/information/traffic-offences-and-penalties"],
   ["a legal document", "/app/home/privacy-policy"],
   ["search results", "/app/search?q=certificate"],
   ["sign in", "/app/signin"],
@@ -53,7 +53,7 @@ const describe = (results: Awaited<ReturnType<typeof scan>>) =>
     )
     .join("\n");
 
-for (const lang of ["en", "ar"] as const) {
+for (const lang of ["en", "ha"] as const) {
   test.describe(`accessibility (${lang})`, () => {
     for (const [name, path] of PAGES) {
       test(`${name} has no WCAG violations`, async ({ page }) => {

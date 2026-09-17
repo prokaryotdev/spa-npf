@@ -61,7 +61,7 @@ export default function DataTable<T extends Record<string, unknown>>({
       if (filterKey && group !== "All" && String(row[filterKey]) !== group)
         return false;
       if (!q) return true;
-      // Both languages, so an Arabic reader can search the table they see.
+      // Both languages, so an Hausa reader can search the table they see.
       return columns.some((c) => {
         const value = String(row[c.key] ?? "");
         return `${value} ${t(value)}`.toLowerCase().includes(q);
@@ -93,7 +93,7 @@ export default function DataTable<T extends Record<string, unknown>>({
         <div className="relative flex-1 min-w-[220px]">
           <SearchIcon
             aria-hidden
-            className="pointer-events-none absolute top-1/2 start-4 size-5 -translate-y-1/2 text-dp-muted"
+            className="pointer-events-none absolute top-1/2 start-4 size-5 -translate-y-1/2 text-npf-muted"
           />
           <input
             type="search"
@@ -104,7 +104,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             }}
             placeholder={t("Search")}
             aria-label={t("Search {what}", { what: t(caption) })}
-            className="w-full rounded-full border border-[#E4E2E6] bg-white py-3 pe-4 ps-12 text-sm text-dp-ink outline-none placeholder:text-dp-muted focus:border-dp-green"
+            className="w-full rounded-full border border-[#E4E2E6] bg-white py-3 pe-4 ps-12 text-sm text-npf-ink outline-none placeholder:text-npf-muted focus:border-npf-blue"
           />
         </div>
 
@@ -120,7 +120,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                 setGroup(e.target.value);
                 reset();
               }}
-              className="appearance-none rounded-full border border-[#E4E2E6] bg-white py-3 pe-10 ps-5 text-sm text-dp-ink outline-none focus:border-dp-green"
+              className="appearance-none rounded-full border border-[#E4E2E6] bg-white py-3 pe-10 ps-5 text-sm text-npf-ink outline-none focus:border-npf-blue"
             >
               {groups.map((g) => (
                 <option key={g} value={g}>
@@ -130,12 +130,12 @@ export default function DataTable<T extends Record<string, unknown>>({
             </select>
             <ChevronDown
               aria-hidden
-              className="pointer-events-none absolute top-1/2 end-4 size-4 -translate-y-1/2 text-dp-muted"
+              className="pointer-events-none absolute top-1/2 end-4 size-4 -translate-y-1/2 text-npf-muted"
             />
           </div>
         ) : null}
 
-        <p className="text-sm text-dp-muted" aria-live="polite">
+        <p className="text-sm text-npf-muted" aria-live="polite">
           {t("{shown} of {total}", {
             shown: visible.length,
             total: rows.length,
@@ -150,10 +150,10 @@ export default function DataTable<T extends Record<string, unknown>>({
         >
           <caption className="sr-only">{t(caption)}</caption>
           <thead>
-            <tr className="bg-[#F4F8F6]">
+            <tr className="bg-[#F4F6FA]">
               <th
                 scope="col"
-                className="px-4 py-4 text-sm font-medium text-dp-body"
+                className="px-4 py-4 text-sm font-medium text-npf-body"
               >
                 #
               </th>
@@ -171,7 +171,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                         : "none"
                     }
                     style={col.width ? { width: col.width } : undefined}
-                    className={`px-4 py-4 text-sm font-medium text-dp-body ${col.numeric ? "text-end" : ""}`}
+                    className={`px-4 py-4 text-sm font-medium text-npf-body ${col.numeric ? "text-end" : ""}`}
                   >
                     <button
                       type="button"
@@ -183,7 +183,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                         );
                         reset();
                       }}
-                      className="inline-flex items-center gap-1.5 transition-colors hover:text-dp-green"
+                      className="inline-flex items-center gap-1.5 transition-colors hover:text-npf-blue"
                     >
                       {t(col.label)}
                       <ChevronDown
@@ -191,8 +191,8 @@ export default function DataTable<T extends Record<string, unknown>>({
                         className={`size-4 transition-transform ${
                           active
                             ? sort.dir === -1
-                              ? "rotate-180 text-dp-green"
-                              : "text-dp-green"
+                              ? "rotate-180 text-npf-blue"
+                              : "text-npf-blue"
                             : "opacity-35"
                         }`}
                       />
@@ -206,9 +206,9 @@ export default function DataTable<T extends Record<string, unknown>>({
             {slice.map((row, i) => (
               <tr
                 key={current * PAGE + i}
-                className="border-t border-black/5 align-top transition-colors hover:bg-[#F9FBFA]"
+                className="border-t border-black/5 align-top transition-colors hover:bg-[#F9FAFC]"
               >
-                <td className="px-4 py-4 text-sm text-dp-muted tabular-nums">
+                <td className="px-4 py-4 text-sm text-npf-muted tabular-nums">
                   {current * PAGE + i + 1}
                 </td>
                 {columns.map((col) => {
@@ -219,14 +219,14 @@ export default function DataTable<T extends Record<string, unknown>>({
                   return (
                     <td
                       key={col.key}
-                      className={`px-4 py-4 text-sm text-dp-ink ${col.numeric ? "text-end tabular-nums" : ""}`}
+                      className={`px-4 py-4 text-sm text-npf-ink ${col.numeric ? "text-end tabular-nums" : ""}`}
                     >
                       {href ? (
                         <a
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-dp-green underline-offset-4 transition-colors hover:text-dp-green-deep hover:underline"
+                          className="text-npf-blue underline-offset-4 transition-colors hover:text-npf-blue-deep hover:underline"
                         >
                           {t(value)}
                           <span className="sr-only">
@@ -246,7 +246,7 @@ export default function DataTable<T extends Record<string, unknown>>({
               <tr>
                 <td
                   colSpan={columns.length + 1}
-                  className="px-4 py-16 text-center text-sm text-dp-muted"
+                  className="px-4 py-16 text-center text-sm text-npf-muted"
                 >
                   Nothing matches “{query}”.
                 </td>
@@ -258,7 +258,7 @@ export default function DataTable<T extends Record<string, unknown>>({
 
       {pages > 1 ? (
         <div className="mt-6 flex items-center justify-end gap-2">
-          <span className="me-2 text-sm text-dp-muted">
+          <span className="me-2 text-sm text-npf-muted">
             {t("Page {page} of {pages}", { page: current + 1, pages })}
           </span>
           <button
@@ -266,7 +266,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             onClick={() => setPage(current - 1)}
             disabled={current === 0}
             aria-label={t("Previous page")}
-            className="grid size-11 place-items-center rounded-[32px] bg-[#EBEBEC] text-[#4B4C4D] transition-all hover:bg-[#4A445914] active:rounded-xl disabled:pointer-events-none disabled:opacity-40"
+            className="grid size-11 place-items-center rounded-[32px] bg-[#EBEBEC] text-[#474B52] transition-all hover:bg-[#4A445914] active:rounded-xl disabled:pointer-events-none disabled:opacity-40"
           >
             <ChevronLeft className="size-5" />
           </button>
@@ -275,7 +275,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             onClick={() => setPage(current + 1)}
             disabled={current >= pages - 1}
             aria-label={t("Next page")}
-            className="grid size-11 place-items-center rounded-[32px] bg-[#EBEBEC] text-[#4B4C4D] transition-all hover:bg-[#4A445914] active:rounded-xl disabled:pointer-events-none disabled:opacity-40"
+            className="grid size-11 place-items-center rounded-[32px] bg-[#EBEBEC] text-[#474B52] transition-all hover:bg-[#4A445914] active:rounded-xl disabled:pointer-events-none disabled:opacity-40"
           >
             <ChevronRight className="size-5" />
           </button>

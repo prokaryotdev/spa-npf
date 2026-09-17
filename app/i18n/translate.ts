@@ -1,5 +1,5 @@
 import type { Lang } from "./config";
-import { dictionary } from "./ar";
+import { dictionary } from "./ha";
 
 /**
  * The dictionary is keyed by the English source string, not by an invented
@@ -32,6 +32,6 @@ export const translator =
   (text, vars) =>
     translate(lang, text, vars);
 
-/** True when the string has no Arabic entry. Used by the coverage test. */
+/** True when the string has no Hausa entry. Used by the coverage test. */
 export const isTranslated = (text: string) =>
   Object.prototype.hasOwnProperty.call(dictionary, text.trim());

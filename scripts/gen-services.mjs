@@ -1,5 +1,5 @@
 /**
- * Writes app/content-services.ts — the full Dubai Police service catalogue,
+ * Writes app/content-services.ts — the full Nigeria Police Force service catalogue,
  * pulled live from the site's own CMS. Run from the repo root and commit what
  * it produces:
  *   node scripts/gen-services.mjs
@@ -17,7 +17,7 @@
  */
 import fs from "node:fs";
 
-const BASE = "https://www.dubaipolice.gov.ae";
+const BASE = "https://fct.npf.gov.ng";
 const images = new Set();
 
 async function cms(path, params = {}) {
@@ -55,15 +55,15 @@ const label = (v) =>
 
 /** Field names label() cannot rescue; two of them are misspelt in the CMS. */
 const renamed = {
-  dubaipoliceEmail: "Email",
-  dubaiPoliceLiveCaht: "Live Chat",
+  abujapoliceEmail: "Email",
+  abujaPoliceLiveCaht: "Live Chat",
   callCenter901: "Call Centre 901",
   poBox: "P.O. Box",
-  sps: "Smart Police Stations",
+  sps: "Divisional Police Stations",
   nonIslamicHousesOfworship_churches: "Non-Islamic Houses of Worship",
-  personnelOfantiDrugAgencies: "Anti-Drug Agency Personnel",
+  personnelOfantiDrugAgencies: "NDLEA Personnel",
   applePay: "Apple Pay",
-  dubaiNow: "DubaiNow",
+  abujaNow: "Rescue Me app",
   walkinMachine: "Walk-in Machine",
   drivethruMachine: "Drive-thru Machine",
 };
@@ -85,7 +85,7 @@ const slugify = (s) =>
 
 /**
  * The slug inside a CMS service URL, or null. Some rows point at an absolute
- * URL on another Dubai Police host (the SRS portal, for one); taking the tail
+ * URL on another Nigeria Police Force host (the SRS portal, for one); taking the tail
  * of those produced a "slug" containing "https://", which is not a route.
  */
 const internalSlug = (url) => {
@@ -125,17 +125,17 @@ const catalogue = services
     const hours = opt(s, "working-hours");
 
     // Two services share a name, 27 ship no URL at all, and a handful point at
-    // an absolute URL on another Dubai Police host. A stable unique slug is
+    // an absolute URL on another Nigeria Police Force host. A stable unique slug is
     // what the detail route is keyed on, so it is derived here rather than
     // recomputed (and collided) at render time.
     let slug = internalSlug(s.url) ?? slugify(s.name);
     if (seen.has(slug)) slug = `${slug}-${s.serviceKey ?? s.id}`;
     seen.add(slug);
 
-    // Fee values arrive inconsistently: "800", "AED 100", "100 AED". Take the
+    // Fee values arrive inconsistently: "800", "₦40,000", "100 ₦". Take the
     // first number so the total is arithmetic rather than string
     // concatenation, and re-format the row only when that number is the whole
-    // of it. One row reads "AED 300 or $ 88" — stripping every non-digit from
+    // of it. One row reads "₦120,000" — stripping every non-digit from
     // that produced 30088, which summed into a 30,508 dirham clearance
     // certificate on the catalogue. A row that carries more than its own
     // number keeps its own words.
@@ -145,10 +145,10 @@ const catalogue = services
         const raw = String(f.value).trim();
         const amount = Number(/\d+(?:\.\d+)?/.exec(raw)?.[0]);
         const ok = Number.isFinite(amount) && amount > 0;
-        const plain = ok && raw.replace(/aed|[^\d.]/gi, "") === String(amount);
+        const plain = ok && raw.replace(/₦|naira|[^\d.]/gi, "") === String(amount);
         return {
           label: f.label.trim().replace(/\s+/g, " "),
-          value: plain ? `AED ${amount}` : raw,
+          value: plain ? `₦ ${amount}` : raw,
           amount: ok ? amount : 0,
         };
       });
@@ -194,13 +194,13 @@ const catalogue = services
       mostUsed: Boolean(s.mostUsed),
       // The CMS drives a signed-in landing grid off this; 1-based, sparse.
       dashboardOrder: s.dashboardOrder ?? null,
-      uaePassOnly: Boolean(s.uaePassLogin),
+      ninAuthOnly: Boolean(s.uaePassLogin),
 
       fees: feeOptions.map(({ label, value }) => ({ label, value })),
       // "Free of Charge" is not a row in the CMS — it is the absence of rows.
       feeSummary:
         feeTotal > 0
-          ? `${feeFrom ? "From " : ""}AED ${feeTotal}`
+          ? `${feeFrom ? "From " : ""}₦ ${feeTotal}`
           : "Free of Charge",
       payment: flagsOn(opt(s, "payment-methods"), [
         "id",
@@ -223,7 +223,7 @@ const catalogue = services
 
       hours: [
         ["Digital Channels", hours.digitalChannels],
-        ["Smart Police Stations", hours.sps],
+        ["Divisional Police Stations", hours.sps],
         ["Police Stations", hours.policeStations],
         ["Other", hours.others],
       ]
@@ -264,7 +264,7 @@ export type Service = {
   audiences: string[];
   mostUsed: boolean;
   dashboardOrder: number | null;
-  uaePassOnly: boolean;
+  ninAuthOnly: boolean;
   fees: { label: string; value: string }[];
   feeSummary: string;
   payment: string[];

@@ -84,31 +84,44 @@ export const searchIndex = entries.filter(
 );
 
 /**
- * One spelling per word. Arabic readers type the alef, hamza, teh marbuta and
- * alef maksura interchangeably, and a police site cannot answer "no results"
- * because someone wrote مرور with a different hamza; Latin accents fold the
- * same way. Applied to both the query and the index, so they always meet.
+ * One spelling per word.
+ *
+ * Hausa is written with four hooked letters — ɓ ɗ ƙ ƴ — and an apostrophe for
+ * the glottal stop, none of which are on the keyboard most people search
+ * from. They type "kasa" for "ƙasa" and "yan sanda" for "'yan sanda", and a
+ * police site cannot answer "no results" because of a hook. The hooks fold to
+ * their plain letters, the apostrophes drop, and Latin accents fold with
+ * them. Applied to both the query and the index, so they always meet.
  */
+const HOOKED: Record<string, string> = {
+  "ɓ": "b",
+  "ɗ": "d",
+  "ƙ": "k",
+  "ƴ": "y",
+  "Ɓ": "b",
+  "Ɗ": "d",
+  "Ƙ": "k",
+  "Ƴ": "y",
+};
+
 const fold = (s: string) =>
   s
+    .replace(/[ɓɗƙƴƁƊƘƳ]/g, (c) => HOOKED[c])
     .toLowerCase()
     .normalize("NFKD")
-    // NFKD splits أ into alef plus a combining hamza, and é into e plus an
-    // acute; dropping every non-spacing mark folds both, along with harakat
-    // and shadda. Tatweel is a spacing character, so it goes separately.
+    // NFKD splits é into e plus an acute and à into a plus a grave; dropping
+    // every non-spacing mark folds both, along with the tone marks Hausa
+    // dictionaries write and ordinary typing leaves off.
     .replace(/\p{Mn}/gu, "")
-    .replace(/ـ/g, "") // tatweel
-    .replace(/[آأإٱ]/g, "ا") // alef forms NFKD leaves alone
-    .replace(/ة/g, "ه") // teh marbuta -> heh
-    .replace(/ى/g, "ي") // alef maksura -> yeh
-    .replace(/ؤ/g, "و") // waw with hamza
-    .replace(/ئ/g, "ي") // yeh with hamza
+    // The glottal stop, in every quote character a keyboard might produce.
+    .replace(/['‘’ʼʻ]/g, "")
     .trim();
 
 /**
  * Both languages are searched at once whichever one the site is showing. A
- * resident who types "مرور" and a visitor who types "traffic" are looking for
- * the same page, and neither should have to switch the interface first.
+ * resident who types "takardar shaida" and a visitor who types "certificate"
+ * are looking for the same page, and neither should have to switch the
+ * interface first.
  */
 type Indexed = {
   hit: SearchHit;
@@ -117,9 +130,9 @@ type Indexed = {
 };
 
 const indexed: Indexed[] = searchIndex.map((hit) => {
-  const arTitle = translate("ar", hit.title);
+  const haTitle = translate("ha", hit.title);
   const titles = [fold(hit.title)];
-  if (arTitle !== hit.title) titles.push(fold(arTitle));
+  if (haTitle !== hit.title) titles.push(fold(haTitle));
   return {
     hit,
     titles,
@@ -128,9 +141,9 @@ const indexed: Indexed[] = searchIndex.map((hit) => {
         hit.title,
         hit.body,
         hit.section,
-        arTitle,
-        translate("ar", hit.body),
-        translate("ar", hit.section),
+        haTitle,
+        translate("ha", hit.body),
+        translate("ha", hit.section),
       ].join(" "),
     ),
   };
@@ -141,14 +154,14 @@ const terms = (query: string) => fold(query).split(/\s+/).filter(Boolean);
 /**
  * Where a term lands decides the rank: the front of the title, the front of a
  * word inside it, anywhere in the title, or only in the body. Without that,
- * "police" put "Dubai Police Museum Visit Permit" above "Police Clearance
+ * "police" put "Nigeria Police Force Museum Visit Permit" above "Police Clearance
  * Certificate" purely by list order, which is the wrong answer to the most
  * common query on the site.
  */
 function score(entry: Indexed, words: string[]): number {
   if (!words.every((t) => entry.haystack.includes(t))) return 0;
 
-  // Scored against whichever language's title matches better, so an Arabic
+  // Scored against whichever language's title matches better, so an Hausa
   // query still earns the front-of-title bonuses.
   let best = 0;
   for (const title of entry.titles) {

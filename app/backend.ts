@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 /**
  * Refuses to serve the signed-in half of the site until an API exists.
  *
- * app/components/store.ts is still the whole backend: any Emirates ID of the
+ * app/components/store.ts is still the whole backend: any NIN of the
  * right shape opens the same sample account, out of localStorage. That is fine
  * on a laptop and fine in a demo, and not fine on a public URL, where a
  * stranger would be shown a stranger's name, fines and requests with nothing

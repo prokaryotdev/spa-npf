@@ -8,9 +8,9 @@ import { getT } from "../../i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
   return {
-    title: t("Sign In | Dubai Police"),
+    title: t("Sign In | Nigeria Police Force"),
     description: t(
-      "Sign in with UAE PASS or your Dubai Police account to track applications and use personalised services.",
+      "Sign in with NINAuth or your Nigeria Police Force account to track applications and use personalised services.",
     ),
   };
 }
@@ -26,7 +26,7 @@ export default async function SignInPage() {
       )}
     >
       <section className="bg-white pb-24">
-        <div className="dp-container">
+        <div className="npf-container">
           {/* The form reads ?next= to send you back where you came from, and
  useSearchParams needs a boundary for the page to stay static. */}
           <Suspense fallback={<FormSkeleton />}>

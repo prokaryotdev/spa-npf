@@ -14,6 +14,7 @@ import {
   MenuIcon,
   SearchIcon,
 } from "./icons";
+import { GovernmentWordmark, PoliceWordmark } from "./Wordmark";
 import { useDialog } from "./useDialog";
 
 /**
@@ -30,7 +31,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
   const scrolled = solid || !atTop;
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dp-large-text", bigText);
+    document.documentElement.classList.toggle("npf-large-text", bigText);
   }, [bigText]);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
           : "bg-gradient-to-b from-black/70 to-transparent"
       }`}
     >
-      <div className="dp-container">
+      <div className="npf-container">
         {/* The logo band folds away once you scroll, leaving the nav pill. */}
         <div
           className={`flex items-center justify-between overflow-hidden transition-all duration-500 ease-[var(--ease-custom)] ${
@@ -69,7 +70,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             aria-label={t("Open menu")}
             aria-expanded={menuOpen}
             className={`grid size-11 place-items-center rounded-full transition-colors md:hidden ${
-              scrolled ? "bg-black/5 text-dp-ink" : "bg-white/15 text-white"
+              scrolled ? "bg-black/5 text-npf-ink" : "bg-white/15 text-white"
             }`}
           >
             <MenuIcon className="size-5" />
@@ -78,21 +79,21 @@ export default function Header({ solid = false }: { solid?: boolean }) {
           <div className="flex w-auto items-center gap-6 md:w-full md:justify-between">
             <Link
               href="/app/home"
-              aria-label={t("Government of Dubai")}
-              className={`hidden h-[58px] w-[145px] transition-colors duration-500 md:block ${
-                scrolled ? "text-dp-ink" : "text-white"
+              aria-label={t("Federal Republic of Nigeria")}
+              className={`hidden h-[58px] transition-colors duration-500 md:block ${
+                scrolled ? "text-npf-ink" : "text-white"
               }`}
             >
-              <span aria-hidden className="dp-logo dp-logo-gov" />
+              <GovernmentWordmark className="h-full w-auto" />
             </Link>
             <Link
               href="/app/home"
-              aria-label={t("Dubai Police home")}
-              className={`h-9 w-[104px] transition-colors duration-500 md:h-11 md:w-[127px] ${
-                scrolled ? "text-dp-green-deep" : "text-white"
+              aria-label={t("Nigeria Police Force home")}
+              className={`h-9 transition-colors duration-500 md:h-11 ${
+                scrolled ? "text-npf-blue-deep" : "text-white"
               }`}
             >
-              <span aria-hidden className="dp-logo dp-logo-police" />
+              <PoliceWordmark className="h-full w-auto" />
             </Link>
           </div>
 
@@ -102,7 +103,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             aria-label={t("Search")}
             aria-expanded={searchOpen}
             className={`grid size-11 place-items-center rounded-full transition-colors md:hidden ${
-              scrolled ? "bg-black/5 text-dp-ink" : "bg-white/15 text-white"
+              scrolled ? "bg-black/5 text-npf-ink" : "bg-white/15 text-white"
             }`}
           >
             <SearchIcon className="size-5" />
@@ -123,7 +124,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                 onClick={() => setMenuOpen(true)}
                 aria-label={t("Open menu")}
                 aria-expanded={menuOpen}
-                className={scrolled ? "text-dp-ink" : "text-white"}
+                className={scrolled ? "text-npf-ink" : "text-white"}
               >
                 <MenuIcon className="size-[18px]" />
               </button>
@@ -134,8 +135,10 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                   href={item.href}
                   aria-haspopup={item.children ? "true" : undefined}
                   className={`relative inline-flex items-center gap-1 py-4 text-base whitespace-nowrap transition-colors duration-300 ${
-                    scrolled ? "text-dp-ink" : "text-white"
-                  } before:absolute before:bottom-0 before:start-0 before:h-1 before:w-full before:origin-left before:scale-x-0 before:rounded-t-full before:bg-dp-green before:transition-transform before:duration-300 group-hover:before:scale-x-100 rtl:before:origin-right motion-reduce:before:transition-none`}
+                    scrolled
+                      ? "text-npf-ink before:bg-npf-gold"
+                      : "text-white before:bg-npf-gold-soft"
+                  } before:absolute before:bottom-0 before:start-0 before:h-1 before:w-full before:origin-left before:scale-x-0 before:rounded-t-full before:transition-transform before:duration-300 group-hover:before:scale-x-100 motion-reduce:before:transition-none`}
                 >
                   {t(item.label)}
                   {item.children ? (
@@ -152,7 +155,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                         <Link
                           role="menuitem"
                           href={child.href}
-                          className="block rounded-lg px-4 py-2.5 text-dp-ink transition-colors hover:bg-[rgba(13,160,110,0.07)]"
+                          className="block rounded-lg px-4 py-2.5 text-npf-ink transition-colors hover:bg-[rgba(13,160,110,0.07)]"
                         >
                           {t(child.label)}
                         </Link>
@@ -165,7 +168,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
           </ul>
 
           <ul
-            className={`flex items-center gap-2 ${scrolled ? "text-dp-ink" : "text-white"}`}
+            className={`flex items-center gap-2 ${scrolled ? "text-npf-ink" : "text-white"}`}
           >
             <li>
               <button
@@ -186,7 +189,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                 aria-label={t("Larger text")}
                 title={t("Larger text")}
                 className={`grid size-10 place-items-center rounded-full transition-colors hover:bg-black/5 ${
-                  bigText ? "bg-dp-green text-white hover:bg-dp-green" : ""
+                  bigText ? "bg-npf-blue text-white hover:bg-npf-blue" : ""
                 }`}
               >
                 <AccessibilityIcon className="size-5" />
@@ -215,11 +218,11 @@ export default function Header({ solid = false }: { solid?: boolean }) {
       */}
       <dialog
         ref={searchDialog}
-        aria-label={t("Search Dubai Police")}
+        aria-label={t("Search Nigeria Police Force")}
         onClick={(e) => {
           if (e.target === searchDialog.current) setSearchOpen(false);
         }}
-        className="dp-search-sheet m-0 mt-0 w-full max-w-none bg-transparent p-4 pt-24 backdrop:bg-[rgba(4,20,14,0.6)] md:pt-28"
+        className="npf-search-sheet m-0 mt-0 w-full max-w-none bg-transparent p-4 pt-24 backdrop:bg-[rgba(4,20,14,0.6)] md:pt-28"
       >
         <div className="mx-auto w-full max-w-[680px]">
           {/* Mounted only while open so autoFocus fires on every opening. */}
@@ -254,17 +257,17 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         onClick={(e) => {
           if (e.target === menu.current) setMenuOpen(false);
         }}
-        className="dp-drawer m-0 h-[100dvh] max-h-none w-[min(420px,88vw)] max-w-none overflow-y-auto bg-white p-6 shadow-2xl"
+        className="npf-drawer m-0 h-[100dvh] max-h-none w-[min(420px,88vw)] max-w-none overflow-y-auto bg-white p-6 shadow-2xl"
       >
         <div className="mb-8 flex items-center justify-between">
-          <span className="font-secondary text-lg font-bold text-dp-green-deep">
+          <span className="font-secondary text-lg font-bold text-npf-blue-deep">
             {t("Main Menu")}
           </span>
           <button
             type="button"
             onClick={() => setMenuOpen(false)}
             aria-label={t("Close menu")}
-            className="grid size-10 place-items-center rounded-full bg-black/5 text-dp-ink"
+            className="grid size-10 place-items-center rounded-full bg-black/5 text-npf-ink"
           >
             <CloseIcon className="size-5" />
           </button>
@@ -275,7 +278,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             <li key={item.label}>
               <Link
                 href={item.href}
-                className="block rounded-lg px-3 py-3 text-lg text-dp-ink transition-colors hover:bg-[rgba(13,160,110,0.07)]"
+                className="block rounded-lg px-3 py-3 text-lg text-npf-ink transition-colors hover:bg-[rgba(13,160,110,0.07)]"
               >
                 {t(item.label)}
               </Link>
@@ -285,7 +288,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                     <li key={child.label}>
                       <Link
                         href={child.href}
-                        className="block rounded-lg px-3 py-2 text-dp-body transition-colors hover:text-dp-green"
+                        className="block rounded-lg px-3 py-2 text-npf-body transition-colors hover:text-npf-blue"
                       >
                         {t(child.label)}
                       </Link>
@@ -301,7 +304,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
           {/* The drawer is the only place a phone can reach the switch. */}
           <LanguageSwitch
             block
-            className="border border-black/10 py-3 text-dp-ink hover:bg-black/[0.04]"
+            className="border border-black/10 py-3 text-npf-ink hover:bg-black/[0.04]"
           />
         </div>
       </dialog>

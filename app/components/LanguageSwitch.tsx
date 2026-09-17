@@ -31,7 +31,7 @@ export default function LanguageSwitch({
 }) {
   const lang = useLang();
   const pathname = usePathname();
-  const next = lang === "en" ? "ar" : "en";
+  const next = lang === "en" ? "ha" : "en";
 
   return (
     <a
@@ -40,7 +40,7 @@ export default function LanguageSwitch({
       hrefLang={next}
       // The reader of the current language needs to know what this does, and
       // the link's own text is in the other script.
-      aria-label={next === "ar" ? "التبديل إلى العربية" : "Switch to English"}
+      aria-label={next === "ha" ? "Sauya zuwa Hausa" : "Switch to English"}
       title={LANG_LABEL[next]}
       className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
         block ? "w-full" : ""

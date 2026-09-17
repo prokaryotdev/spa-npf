@@ -6,9 +6,9 @@ import { getT, getLocalized } from "../../../i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
   return {
-    title: t("Customer Service Agreement | Dubai Police"),
+    title: t("Customer Service Agreement | Nigeria Police Force"),
     description: t(
-      "What you can expect from Dubai Police at every counter, and what we ask of you in return.",
+      "What you can expect from Nigeria Police Force at every counter, and what we ask of you in return.",
     ),
   };
 }
@@ -22,7 +22,7 @@ export default async function CustomerServiceAgreementPage() {
     <PageShell
       title={customerServiceAgreement.title}
       intro={t(
-        "What you can expect from Dubai Police at every counter, and what we ask of you in return.",
+        "What you can expect from Nigeria Police Force at every counter, and what we ask of you in return.",
       )}
     >
       <LegalSections sections={customerServiceAgreement.sections} />

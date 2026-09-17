@@ -8,7 +8,7 @@ import { getT } from "../../../../i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
   return {
-    title: t("Laws & Legislation | Dubai Police"),
+    title: t("Laws & Legislation | Nigeria Police Force"),
     description: t(dataSource.description),
   };
 }
@@ -23,8 +23,8 @@ export default async function LawsPage() {
       trail={[{ label: "Information", href: "/app/home/information" }]}
     >
       <section className="bg-white pb-24">
-        <div className="dp-container">
-          <p className="mb-6 text-sm text-dp-muted">
+        <div className="npf-container">
+          <p className="mb-6 text-sm text-npf-muted">
             {t("Page last updated: {date}", { date: t(data.updatedAt) })}
           </p>
           <DataTable

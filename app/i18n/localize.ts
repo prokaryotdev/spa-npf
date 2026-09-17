@@ -15,7 +15,7 @@ import { translate } from "./translate";
 /**
  * Keys whose value is an identifier the code compares against, not copy the
  * reader sees. Translating one of these would silently break a lookup — an
- * Arabic `status` finds no row in the status-colour table. Where such a value
+ * Hausa `status` finds no row in the status-colour table. Where such a value
  * is also displayed, the display site calls t() on it explicitly.
  */
 const SKIP = new Set([

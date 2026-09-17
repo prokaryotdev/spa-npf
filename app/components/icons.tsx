@@ -2,14 +2,6 @@
 
 type IconProps = { className?: string };
 
-/**
- * Arrows and chevrons that mean "onward" point the other way in Arabic, so the
- * four directional glyphs carry .dp-flip and the stylesheet mirrors them under
- * [dir="rtl"]. Icons that mean something absolute — download, expand, play —
- * are deliberately not in this list.
- */
-const flip = (className?: string) => `dp-flip ${className ?? ""}`;
-
 const base = {
   viewBox: "0 0 24 24",
   fill: "none",
@@ -34,26 +26,26 @@ export const ChevronDown = ({ className }: IconProps) => (
 );
 
 export const ChevronLeft = ({ className }: IconProps) => (
-  <svg {...base} className={flip(className)}>
+  <svg {...base} className={className}>
     <path d="M15 5 8 12l7 7" />
   </svg>
 );
 
 export const ChevronRight = ({ className }: IconProps) => (
-  <svg {...base} className={flip(className)}>
+  <svg {...base} className={className}>
     <path d="m9 5 7 7-7 7" />
   </svg>
 );
 
 export const ArrowRight = ({ className }: IconProps) => (
-  <svg {...base} className={flip(className)}>
+  <svg {...base} className={className}>
     <path d="M4.5 12h14" />
     <path d="m13 6.5 5.5 5.5L13 17.5" />
   </svg>
 );
 
 export const ArrowUpRight = ({ className }: IconProps) => (
-  <svg {...base} className={flip(className)}>
+  <svg {...base} className={className}>
     <path d="M7.5 16.5 16.5 7.5" />
     <path d="M9 7.5h7.5V15" />
   </svg>

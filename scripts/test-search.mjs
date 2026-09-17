@@ -25,17 +25,22 @@ assert.ok(suggest("permit").flatMap((g) => g.hits).length <= 8);
 // The empty state has something to show.
 assert.equal(popularServices.length, 5);
 
-// --- arabic --------------------------------------------------------------
-// The index is built from English content, so an Arabic query only works if
-// the dictionary is folded into the haystack. These break the moment the two
-// come apart.
-assert.equal(search("حسن السيرة")[0]?.title, "Police Clearance Certificate");
-assert.ok(search("شهادة").length > 0, "an Arabic query finds services");
-// A typist writes hamza and teh marbuta either way; both must land.
+// --- hausa --------------------------------------------------------------
+// The index is built from English content, so a Hausa query only works if the
+// dictionary is folded into the haystack. These break the moment the two come
+// apart.
+assert.equal(
+  search("takardar shaidar tsabtar rikodi")[0]?.title,
+  "Police Clearance Certificate",
+);
+assert.ok(search("takardar shaida").length > 0, "a Hausa query finds services");
+
+// Nobody has ɓ ɗ ƙ on their keyboard, so the hooked spelling and the plain
+// one have to return the same list — in both directions.
 const titles = (q) => search(q).map((h) => h.title);
-assert.deepEqual(titles("شهاده"), titles("شهادة"));
-assert.deepEqual(titles("الامن"), titles("الأمن"));
-assert.ok(titles("الأمن").length > 0, "the folded query still matches");
+assert.deepEqual(titles("bukatu"), titles("buƙatu"));
+assert.deepEqual(titles("'yan sanda"), titles("yan sanda"));
+assert.ok(titles("buƙatu").length > 0, "the folded query still matches");
 
 // --- catalogue -----------------------------------------------------------
 const slugs = new Set(services.map((s) => s.slug));
@@ -55,22 +60,23 @@ assert.match(
 
 // --- fees ----------------------------------------------------------------
 // The summary is generated arithmetic, so it is the one field on a service
-// that can be quietly, enormously wrong. One CMS row reads "AED 300 or $ 88";
-// stripping every non-digit from it made 30088, which summed into a 30,508
-// dirham police clearance certificate on the catalogue card.
+// that can be quietly, enormously wrong. One row reads "₦120,000"; stripping
+// every non-digit from it made 120000, which summed into a ₦168,000 police
+// clearance certificate on the catalogue card.
 const pcc = services.find((s) => s.slug === "police-clearance-certificate");
-assert.equal(pcc.feeSummary, "From AED 120", "cheapest tier plus the dirhams");
+assert.equal(pcc.feeSummary, "From ₦48,000", "cheapest tier plus the levies");
+const naira = (s) => Number(s.replace(/[^\d.]/g, ""));
 for (const service of services) {
   if (service.feeSummary === "Free of Charge") continue;
   assert.match(
     service.feeSummary,
-    /^(From )?AED \d+(\.\d+)?$/,
+    /^(From )?₦\d{1,3}(,\d{3})*(\.\d+)?$/,
     `bad fee summary on ${service.slug}: ${service.feeSummary}`,
   );
-  // No Dubai Police service costs five figures. A summary that says so is a
-  // parse failure, not a price.
-  const amount = Number(service.feeSummary.match(/\d+(\.\d+)?/)[0]);
-  assert.ok(amount < 10000, `implausible fee on ${service.slug}: ${amount}`);
+  // No Nigeria Police Force service costs seven figures. A summary that says
+  // so is a parse failure, not a price.
+  const amount = naira(service.feeSummary);
+  assert.ok(amount < 1_000_000, `implausible fee on ${service.slug}: ${amount}`);
   // Every row the summary was built from has to be legible on its own too.
   for (const fee of service.fees)
     assert.ok(fee.value.trim(), `empty fee row on ${service.slug}`);

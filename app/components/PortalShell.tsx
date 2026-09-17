@@ -65,25 +65,25 @@ export default function PortalShell({
       <Header solid />
       <main id="main-content" tabIndex={-1} className="outline-none">
         <div className="min-h-[60vh] bg-white pt-32 pb-24 md:pt-40">
-          <div className="dp-container">
+          <div className="npf-container">
             {!loaded || !session || !citizen ? (
               <Loading />
             ) : (
               <>
                 <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
                   <div>
-                    <p className="text-sm text-dp-muted">{t("Signed in as")}</p>
-                    <h1 className="mt-1 font-secondary text-3xl leading-tight font-bold text-dp-green-deep lg:text-5xl">
+                    <p className="text-sm text-npf-muted">{t("Signed in as")}</p>
+                    <h1 className="mt-1 font-secondary text-3xl leading-tight font-bold text-npf-blue-deep lg:text-5xl">
                       {t(session.name)}
                     </h1>
-                    <p className="mt-2 text-sm text-dp-body">
-                      {t("Emirates ID {id}", { id: session.emiratesId })}
+                    <p className="mt-2 text-sm text-npf-body">
+                      {t("NIN {id}", { id: session.nin })}
                     </p>
                   </div>
                   <div className="flex flex-wrap items-center gap-3">
                     <Link
                       href="/app/services"
-                      className="inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
+                      className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
                     >
                       <PlusIcon aria-hidden className="size-4" />
                       {t("New request")}
@@ -94,7 +94,7 @@ export default function PortalShell({
                         signOut();
                         router.push("/app/home");
                       }}
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-dp-ink ring-1 ring-black/10 transition-colors hover:bg-black/[0.04]"
+                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-black/10 transition-colors hover:bg-black/[0.04]"
                     >
                       <SignOutIcon aria-hidden className="size-4" />
                       {t("Sign out")}
@@ -137,14 +137,14 @@ export default function PortalShell({
                               aria-current={active ? "page" : undefined}
                               className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm whitespace-nowrap transition-colors ${
                                 active
-                                  ? "bg-[#e7f6f1] font-medium text-dp-green-ink"
-                                  : "text-dp-body hover:bg-black/[0.04]"
+                                  ? "bg-[#E8EEF8] font-medium text-npf-blue-ink"
+                                  : "text-npf-body hover:bg-black/[0.04]"
                               }`}
                             >
                               <Icon className="size-[18px] shrink-0" />
                               {t(label)}
                               {counts[href] ? (
-                                <span className="ms-auto rounded-full bg-dp-green px-2 py-0.5 text-[11px] font-medium text-white tabular-nums">
+                                <span className="ms-auto rounded-full bg-npf-blue px-2 py-0.5 text-[11px] font-medium text-white tabular-nums">
                                   {counts[href]}
                                 </span>
                               ) : null}

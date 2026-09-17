@@ -6,7 +6,7 @@ import { getT } from "./i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
-  return { title: t("Page not found | Dubai Police") };
+  return { title: t("Page not found | Nigeria Police Force") };
 }
 
 const elsewhere = [
@@ -24,10 +24,10 @@ export default async function NotFound() {
       intro={t("That page has moved or never existed. Here is the way back.")}
     >
       <section className="bg-white pb-24">
-        <div className="dp-container flex flex-wrap gap-3">
+        <div className="npf-container flex flex-wrap gap-3">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-full bg-dp-green px-6 py-3 font-medium text-white transition-colors hover:bg-dp-green-mid"
+            className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-colors hover:bg-npf-blue-mid"
           >
             {t("Back to home")}
             <ArrowRight className="size-4" />
@@ -36,7 +36,7 @@ export default async function NotFound() {
             <Link
               key={link.href}
               href={link.href}
-              className="inline-flex items-center rounded-full bg-[#F4F8F6] px-6 py-3 font-medium text-dp-green-ink ring-1 ring-black/5 transition-colors hover:bg-[#e7f6f1]"
+              className="inline-flex items-center rounded-full bg-[#F4F6FA] px-6 py-3 font-medium text-npf-blue-ink ring-1 ring-black/5 transition-colors hover:bg-[#E8EEF8]"
             >
               {t(link.label)}
             </Link>

@@ -13,11 +13,11 @@ const PAGES = [
   ["the homepage", "/"],
   ["the service catalogue", "/app/services"],
   ["a service", "/app/services/police-clearance-certificate"],
-  ["a data table", "/app/home/information/street-speed-limits"],
+  ["a data table", "/app/home/information/road-speed-limits"],
   ["sign in", "/app/signin"],
 ] as const;
 
-for (const lang of ["en", "ar"] as const) {
+for (const lang of ["en", "ha"] as const) {
   for (const [name, path] of PAGES) {
     test(`${name} does not scroll sideways (${lang})`, async ({ page }) => {
       await page.goto(`/${lang}${path === "/" ? "" : path}`);

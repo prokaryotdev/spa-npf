@@ -46,14 +46,14 @@ export default function ListControls({
         <div className="min-w-[240px] flex-1">
           <label
             htmlFor={`${id}-q`}
-            className="mb-1.5 block text-sm font-medium text-dp-ink"
+            className="mb-1.5 block text-sm font-medium text-npf-ink"
           >
             {t("Search {noun}", { noun: t(noun) })}
           </label>
-          <div className="flex items-center gap-3 rounded-xl bg-[#F4F8F6] px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-dp-green">
+          <div className="flex items-center gap-3 rounded-xl bg-[#F4F6FA] px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-npf-blue">
             <SearchIcon
               aria-hidden
-              className="size-5 shrink-0 text-dp-green-ink"
+              className="size-5 shrink-0 text-npf-blue-ink"
             />
             <input
               id={`${id}-q`}
@@ -61,7 +61,7 @@ export default function ListControls({
               value={query}
               onChange={(e) => onQuery(e.target.value)}
               placeholder={t("Filter by name")}
-              className="w-full bg-transparent py-3 text-base text-dp-ink outline-none placeholder:text-dp-muted"
+              className="w-full bg-transparent py-3 text-base text-npf-ink outline-none placeholder:text-npf-muted"
             />
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function ListControls({
           <div>
             <label
               htmlFor={`${id}-cat`}
-              className="mb-1.5 block text-sm font-medium text-dp-ink"
+              className="mb-1.5 block text-sm font-medium text-npf-ink"
             >
               {t("Type")}
             </label>
@@ -78,7 +78,7 @@ export default function ListControls({
               id={`${id}-cat`}
               value={category}
               onChange={(e) => onCategory(e.target.value)}
-              className="rounded-xl bg-[#F4F8F6] px-4 py-3 text-base text-dp-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-dp-green"
+              className="rounded-xl bg-[#F4F6FA] px-4 py-3 text-base text-npf-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-npf-blue"
             >
               <option value="">{t("All types")}</option>
               {categories.map((c) => (
@@ -93,7 +93,7 @@ export default function ListControls({
         <div>
           <label
             htmlFor={`${id}-sort`}
-            className="mb-1.5 block text-sm font-medium text-dp-ink"
+            className="mb-1.5 block text-sm font-medium text-npf-ink"
           >
             {t("Sort by")}
           </label>
@@ -101,7 +101,7 @@ export default function ListControls({
             id={`${id}-sort`}
             value={sort}
             onChange={(e) => onSort(e.target.value as Sort)}
-            className="rounded-xl bg-[#F4F8F6] px-4 py-3 text-base text-dp-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-dp-green"
+            className="rounded-xl bg-[#F4F6FA] px-4 py-3 text-base text-npf-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-npf-blue"
           >
             {SORTS.map((s) => (
               <option key={s.value} value={s.value}>
@@ -112,7 +112,7 @@ export default function ListControls({
         </div>
       </div>
 
-      <p aria-live="polite" className="mt-4 text-sm text-dp-muted">
+      <p aria-live="polite" className="mt-4 text-sm text-npf-muted">
         {t("Showing {shown} of {total} {noun}", {
           shown,
           total,

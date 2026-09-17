@@ -4,26 +4,24 @@ import Image from "next/image";
 import { useRef } from "react";
 import { domains as domainsSource } from "../content";
 import { chapter, useScrollProgress } from "./useScrollProgress";
-import { useLang, useLocalized, useT } from "../i18n/client";
+import { useLocalized, useT } from "../i18n/client";
 
 /**
- * The original animates these headings letter by letter; so does this one —
- * in Latin. Arabic letters join, and putting each one in its own box breaks
- * every ligature and leaves a row of isolated forms, so Arabic staggers by
- * word instead. Same entrance, script the reader recognises.
+ * The headings animate letter by letter. Both languages are written in Latin
+ * letters that stand alone, so one pass serves English and Hausa alike —
+ * including the hooked letters, which are single characters, not pairs.
  */
 function LetterStagger({ text }: { text: string }) {
-  const joined = useLang() === "ar";
   let n = 0;
   return (
     <span aria-hidden className="flex flex-wrap">
       {text.split(" ").map((word, w) => (
         <span key={w} className="me-[0.22em] flex overflow-hidden py-[0.06em]">
-          {(joined ? [word] : [...word]).map((piece, i) => (
+          {[...word].map((piece, i) => (
             <span
               key={i}
               className="inline-block animate-[letter-up_0.75s_var(--ease-custom)_both]"
-              style={{ animationDelay: `${n++ * (joined ? 90 : 38)}ms` }}
+              style={{ animationDelay: `${n++ * 38}ms` }}
             >
               {piece}
             </span>
@@ -91,7 +89,7 @@ export default function Domains() {
           </div>
         ))}
 
-        <div className="dp-container relative flex h-full items-center">
+        <div className="npf-container relative flex h-full items-center">
           {domains.map((domain, i) =>
             i === active ? (
               <div key={domain.id} className="max-w-[620px]">

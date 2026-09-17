@@ -30,14 +30,14 @@ export default function AccountLink({
       <Link
         href="/app/signin"
         onClick={onNavigate}
-        className={`inline-flex items-center gap-2 rounded-full bg-dp-green font-medium whitespace-nowrap text-white transition-colors hover:bg-dp-green-mid ${shape}`}
+        className={`inline-flex items-center gap-2 rounded-full bg-npf-blue font-medium whitespace-nowrap text-white transition-colors hover:bg-npf-blue-mid ${shape}`}
       >
         {t("Sign In")}
         <UserCircle className="size-[18px]" />
       </Link>
     );
 
-  // The Arabic name has its own word order, so take the first word of
+  // The Hausa name has its own word order, so take the first word of
   // whichever name is on screen.
   const first = t(session.name).split(" ")[0];
 
@@ -45,7 +45,7 @@ export default function AccountLink({
     <Link
       href={session.role === "officer" ? "/app/police" : "/app/portal"}
       onClick={onNavigate}
-      className={`inline-flex items-center gap-2 rounded-full bg-dp-green font-medium whitespace-nowrap text-white transition-colors hover:bg-dp-green-mid ${shape}`}
+      className={`inline-flex items-center gap-2 rounded-full bg-npf-blue font-medium whitespace-nowrap text-white transition-colors hover:bg-npf-blue-mid ${shape}`}
     >
       <UserCircle className="size-[18px]" />
       {session.role === "officer" ? t("Console") : first}

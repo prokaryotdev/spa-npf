@@ -47,7 +47,7 @@ export default function CardRail({
   };
 
   const arrow =
-    "grid size-11 place-items-center rounded-[32px] bg-[#EBEBEC] text-[#4B4C4D] transition-all duration-300 ease-[var(--ease-custom)] hover:bg-[#4A445914] active:rounded-xl disabled:pointer-events-none disabled:opacity-40 md:size-14";
+    "grid size-11 place-items-center rounded-[32px] bg-[#EBEBEC] text-[#474B52] transition-all duration-300 ease-[var(--ease-custom)] hover:bg-[#4A445914] active:rounded-xl disabled:pointer-events-none disabled:opacity-40 md:size-14";
 
   return (
     <div className={className}>
@@ -61,7 +61,7 @@ export default function CardRail({
         tabIndex={0}
         role="group"
         aria-label={label}
-        className="dp-rail -mx-4 flex gap-6 overflow-x-auto px-4 pb-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dp-green"
+        className="npf-rail -mx-4 flex gap-6 overflow-x-auto px-4 pb-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue"
       >
         {children}
       </div>

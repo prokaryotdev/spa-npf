@@ -8,9 +8,9 @@ import { getT, getLocalized } from "../../../i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
   return {
-    title: t("Customer Centers | Dubai Police"),
+    title: t("Customer Centers | Nigeria Police Force"),
     description: t(
-      "Police stations and Smart Police Stations across Dubai, with addresses and opening hours.",
+      "Area Commands and Divisional Headquarters across the Federal Capital Territory, with addresses and opening hours.",
     ),
   };
 }
@@ -18,25 +18,26 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function CustomerCentersPage() {
   const customerCenters = await getLocalized(customerCentersSource);
   const t = await getT();
-  const smart = customerCenters.filter(
-    (c) => c.kind === "Smart Police Station",
+  const commands = customerCenters.filter(
+    (c) => c.kind === "Area Command",
   ).length;
 
   return (
     <PageShell
       title={t("Customer Centers")}
       intro={t(
-        "Police stations and Smart Police Stations across Dubai, with addresses and opening hours.",
+        "Area Commands and Divisional Headquarters across the Federal Capital Territory, with addresses and opening hours.",
       )}
     >
       <section className="bg-white pb-24">
-        <div className="dp-container">
-          <p className="mb-8 text-sm text-dp-muted">
+        <div className="npf-container">
+          <p className="mb-8 text-sm text-npf-muted">
             {t(
-              "{total} centers · {smart} of them self-service Smart Police Stations",
+              "{total} stations · {commands} Area Commands and {divisions} Divisional Headquarters",
               {
                 total: customerCenters.length,
-                smart,
+                commands,
+                divisions: customerCenters.length - commands,
               },
             )}
           </p>
@@ -56,24 +57,26 @@ export default async function CustomerCentersPage() {
                       sizes="(max-width: 768px) 92vw, 32vw"
                       className="object-cover"
                     />
-                    <span className="absolute top-3 start-3 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-dp-green-deep backdrop-blur">
+                    <span className="absolute top-3 start-3 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-npf-blue-deep backdrop-blur">
                       {t(center.kind)}
                     </span>
                   </div>
                 ) : null}
 
                 <div className="flex flex-1 flex-col gap-2 p-5">
-                  <h2 className="font-secondary text-lg font-bold text-dp-green-deep">
+                  <h2 className="font-secondary text-lg font-bold text-npf-blue-deep">
                     {center.name}
                   </h2>
-                  <p className="flex gap-2 text-sm leading-relaxed text-dp-body">
+                  <p className="flex gap-2 text-sm leading-relaxed text-npf-body">
                     <PinIcon
                       aria-hidden
-                      className="mt-0.5 size-4 shrink-0 text-dp-green"
+                      className="mt-0.5 size-4 shrink-0 text-npf-blue"
                     />
                     {center.address}
                   </p>
-                  <p className="text-sm text-dp-muted">
+                  <p className="text-sm text-npf-muted">
+                    {t("{council} Area Council", { council: t(center.area) })}
+                    {" · "}
                     {t("Open: {hours}", { hours: t(center.timing) })}
                   </p>
                   {center.map ? (
@@ -81,7 +84,7 @@ export default async function CustomerCentersPage() {
                       href={center.map}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-auto inline-flex items-center gap-1.5 self-start pt-2 text-sm font-medium text-dp-green-ink transition-colors hover:text-dp-green-deep"
+                      className="mt-auto inline-flex items-center gap-1.5 self-start pt-2 text-sm font-medium text-npf-blue-ink transition-colors hover:text-npf-blue-deep"
                     >
                       {t("Open in Maps")}
                       <ArrowUpRight aria-hidden className="size-4" />

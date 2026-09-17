@@ -1,6 +1,6 @@
 /**
- * Content and asset paths lifted verbatim from the live Dubai Police homepage.
- * Card palettes are the per-card CSS custom properties the original ships.
+ * Content for the Nigeria Police Force, Federal Capital Territory Command.
+ * Card palettes are the per-card CSS custom properties each card ships.
  */
 
 export type CardTheme = {
@@ -48,12 +48,12 @@ export const navigation = [
         href: "/app/home/information/laws-legislation",
       },
       {
-        label: "View the Black Points of Traffic Violations",
-        href: "/app/home/information/view-black-points-traffic-violations",
+        label: "Traffic Offences and Penalties",
+        href: "/app/home/information/traffic-offences-and-penalties",
       },
       {
-        label: "Street Speed Limits",
-        href: "/app/home/information/street-speed-limits",
+        label: "Road Speed Limits",
+        href: "/app/home/information/road-speed-limits",
       },
     ],
   },
@@ -61,28 +61,28 @@ export const navigation = [
 
 export const heroSlides = [
   {
-    title: "Arabian Travel Market Exhibition",
+    title: "Police Week in the Federal Capital Territory",
     subtitle: "Visit Us",
     image: "/cms/Website_Banner_d3a5662877.jpg",
   },
   {
-    title: "70th Anniversary of Dubai Police",
+    title: "96 Years of the Nigeria Police Force",
     subtitle: "",
-    image: "/cms/70_years_of_Dubai_Police_Visual_V1_Website_V1_d1499023bc.jpeg",
+    image: "/cms/96_years_of_the_Force_d1499023bc.jpeg",
   },
   {
-    title: "SMART SECURE TOGETHER",
-    subtitle: "Together for a safer Dubai tomorrow",
+    title: "SAFE SECURE TOGETHER",
+    subtitle: "Together for a safer Abuja tomorrow",
     image: "/cms/slide2_642a5cdf68.jpg",
   },
   {
     title: "Police Innovation and Leadership",
-    subtitle: "Be one of the leaders shaping the future of smart and",
+    subtitle: "Be one of the officers shaping the future of policing in Nigeria",
     image: "/cms/Home/Innovation_2d3f3540e6.jpg",
   },
   {
-    title: "Luxury Meets Readiness",
-    subtitle: "Dubai Police Adds Tesla Cyber-truck to Its Fleet of Sm",
+    title: "Ready on Every Road",
+    subtitle: "The FCT Command adds new patrol vehicles to its fleet",
     image: "/cms/Home/Tesla_fdb5e10caf.jpg",
   },
 ];
@@ -90,13 +90,13 @@ export const heroSlides = [
 export const quickServices = [
   {
     title: "Make a Report",
-    body: "Report and submit your complaint directly",
+    body: "Report a crime or submit your complaint directly",
     href: "/app/services?package=Criminal+Reports+and+Complaints",
     icon: "/cms/homeServiceIcon/Reports_and_Complaints_Suite_2877ee8e89.svg",
   },
   {
     title: "Apply for a Certificate or Permit",
-    body: "Access official Documents from Dubai Police quickly and securely",
+    body: "Access official documents from the Nigeria Police Force quickly and securely",
     href: "/app/services?package=Permits+and+Certificates",
     icon: "/cms/homeServiceIcon/Request_for_a_Certificate_or_Permit_f02f7b6956.svg",
   },
@@ -122,8 +122,8 @@ export const quickServices = [
 
 export const pillars = [
   {
-    word: "Smart",
-    line: "Your Safety; Powered by Smart Solutions.",
+    word: "Safe",
+    line: "Your Safety; Backed by Every Officer on Duty.",
     portrait: "/cms/Together_face_5c5243f7c9.png",
   },
   {
@@ -140,29 +140,29 @@ export const pillars = [
 
 export const smartPolicing: InitiativeCard[] = [
   {
-    title: "e-Crime",
-    body: "e-Crime supports digital well-being by implementing strategies that ensure a resilient and safe community",
+    title: "Cybercrime Reporting",
+    body: "The National Cybercrime Centre receives reports of online fraud, blackmail and identity theft, and works to keep the community safe online",
     image: "/cms/e_Crime_92e4e26ff1.jpg",
     logo: "/cms/dp-service-icons/e_Crime_Home_0a7aa4d040.svg",
     logoIsWide: true,
     tags: [
       {
-        label: "Dubai Quality of Life Strategy",
+        label: "Cybercrimes Act 2015",
         icon: "/cms/image_75_eebd215202.svg",
       },
     ],
     more: 1,
-    theme: theme("#0C2218", "#c3ead8", "#77cfa7"),
+    theme: theme("#0B1526", "#CCDCF2", "#93B9E8"),
   },
   {
     title: "Lost & Found",
-    body: "A paperless and a secure way to find what matters, Lost & Found service offers an eco-friendly and reliable approach",
+    body: "A paperless and secure way to find what matters, the Lost & Found desk offers a simple and reliable way to report and recover property",
     image: "/cms/lost_and_found_a80bed6743.jpg",
     logo: "/cms/lost_Found_Home_7442753650.svg",
     logoIsWide: true,
     tags: [
       {
-        label: "Dubai Blockchain Strategy",
+        label: "Federal Capital Territory Digital Services",
         icon: "/cms/image_76_199cff4ccb.svg",
       },
     ],
@@ -170,29 +170,29 @@ export const smartPolicing: InitiativeCard[] = [
     theme: theme("#241748", "#ebe6f7", "#ab99de"),
   },
   {
-    title: "Police Eye",
-    body: "We strive to build a proactive and secure community, reflecting the UAE’s vision of global leadership in safety and security",
+    title: "Rescue Me",
+    body: "We strive to build a proactive and secure community, reflecting the commitment of the Force to the safety and security of every resident",
     image: "/cms/Home/Police_Eye_s_0f82177537.jpg",
     logo: "/cms/police_Eye_Home_a6e504a570.svg",
     logoIsWide: true,
     tags: [
       {
-        label: "Security and safety strategy",
+        label: "National Security Strategy",
         icon: "/cms/MOI_c3da982165.png",
       },
     ],
     more: 1,
     wide: true,
-    theme: theme("#042418", "#b0f6dc", "#54ecb3"),
+    theme: theme("#050F22", "#C4D8F8", "#7FB4FF"),
   },
 ];
 
 export const domains = [
   {
     id: "shore",
-    title: "Along the Shores",
+    title: "On the Water",
     lead: "Wherever you are, your safety is assured.",
-    body: "Our coastline, airspace, and land are protected by an integrated system of smart solutions, advanced technologies, and innovative services.",
+    body: "The Marine Police patrol Jabi Lake, the Lower Usuma Dam and the rivers around the Territory, so work and leisure on the water stay safe.",
     background: "/img/3d-static/boat-bg.jpg",
     subject: "/img/3d-static/boat.png",
     chips: [{ label: "Sail Safely", icon: "/cms/icon_boat_3777bd658e.svg" }],
@@ -201,12 +201,12 @@ export const domains = [
     id: "ground",
     title: "On the Ground",
     lead: "",
-    body: "Our patrols, officers, and specialised units are always nearby, ready to assist whenever you need us.",
+    body: "Our patrols, officers and specialised units are always nearby, ready to assist whenever you need us.",
     background: "/img/3d-static/car-bg.jpg",
     subject: "/img/3d-static/car.png",
     chips: [
       {
-        label: "Smart Home Security",
+        label: "Neighbourhood Security",
         icon: "/cms/icon_security_84e1e8baef.svg",
       },
       { label: "On The Go", icon: "/cms/icon_car_eaa24290bd.svg" },
@@ -217,49 +217,49 @@ export const domains = [
     id: "sky",
     title: "From the Sky",
     lead: "",
-    body: "Our drone units provide continuous protection from above, preserving your safety through the highest standards of security.",
+    body: "The Police Air Wing and our drone units watch over the Territory from above, holding the highest standards of security.",
     background: "/img/3d-static/drone-bg.jpg",
     subject: "/img/3d-static/drone.png",
-    chips: [{ label: "Drone Box", icon: "/cms/icon_oyoon_af076eac61.svg" }],
+    chips: [{ label: "Air Wing", icon: "/cms/icon_oyoon_af076eac61.svg" }],
   },
 ];
 
 export const smartPoliceStations: InitiativeCard[] = [
   {
-    title: "Original SPS",
-    body: "An innovative, self-service station providing secure and efficient policing round the clock, prioritising privacy and convenience for all.",
+    title: "Command Headquarters",
+    body: "The seat of the Federal Capital Territory Police Command at Garki, where the Commissioner of Police and the departments of the Command coordinate policing across the whole Territory.",
     image: "/cms/Home/sps_original_53cd588de6.jpg",
     logo: "/cms/sps_7ff02ae72b.svg",
     tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
     theme: theme("#4D0D0D", "#fadfdf", "#eb8888"),
   },
   {
-    title: "Walk-In SPS",
-    body: "A compact, self-service police station offering comprehensive security services, ensuring convenient and secure access for every member of the community at all times.",
+    title: "Area Commands",
+    body: "Nine Area Commands, among them Garki, Wuse, Asokoro, Maitama, Gwagwalada, Bwari, Kubwa, Karu and Lugbe, each supervising the divisions within its reach.",
     image: "/cms/Home/sps_walkin_be3b2b3d66.jpg",
     logo: "/cms/sps_walkin_b7f9fd121a.svg",
     tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
-    theme: theme("#042418", "#b0f6dc", "#54ecb3"),
+    theme: theme("#050F22", "#C4D8F8", "#7FB4FF"),
   },
   {
-    title: "Drive-Thru SPS",
-    body: "A smart, self-service police station delivering innovative and rapid services from the comfort of your car, providing a safe and seamless experience at any hour.",
+    title: "Divisional Headquarters",
+    body: "The division is where most people meet the Force: the counter that takes a report, the charge room, the investigators, and the patrol teams that answer a call in the neighbourhood.",
     image: "/cms/Home/sps_drive_thru_39157961d7.jpg",
     logo: "/cms/SPS_Drive_thru_4664b24271.svg",
     tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
-    theme: theme("#3C3D3C", "#fcfcfc", "#c8c9c8"),
+    theme: theme("#3C3E44", "#fcfcfc", "#C8CAD0"),
   },
   {
-    title: "Suburban SPS",
-    body: "A number of integrated interactive self-service police stations located in suburban areas across Dubai. Equipped with designated police patrol cars designed to endure those areas routes and aim at cutting response time for incidents reported nearby. The station also offers around-the-clock smart security services while maintaining total privacy.",
+    title: "Police Posts",
+    body: "Smaller outposts placed in the satellite towns and rural wards of the six Area Councils: Abuja Municipal, Gwagwalada, Kuje, Bwari, Kwali and Abaji. Each is held by a patrol team equipped for the roads it covers, which cuts the time it takes to reach an incident reported nearby.",
     image: "/cms/Home/sps_suburban_5da0e23641.jpg",
     logo: "/cms/Home/sps_suburban_3206ea7451.png",
     tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
     theme: theme("#2D3742", "#f5f7f8", "#b9c3cf"),
   },
   {
-    title: "Floating SPS",
-    body: "The Floating Smart Police Station is the first of its kind in the Middle East, offering island residents and sea-goers convenient, direct access to a wide range of innovative police services designed to meet their needs efficiently.",
+    title: "Marine Police Base",
+    body: "The Marine Police Base gives the communities along the waterways of the Territory direct access to a police response on the water, covering the dams, the lakes and the river crossings a patrol car cannot reach.",
     image: "/cms/Home/sps_floating_e877217271.jpg",
     logo: "/cms/sps_7ff02ae72b.svg",
     tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
@@ -269,18 +269,18 @@ export const smartPoliceStations: InitiativeCard[] = [
 
 export const community: InitiativeCard[] = [
   {
-    title: "Positive Spirit",
-    body: "Volunteer with Dubai Police, Celebrate the Positive Spirit, and get certified!",
+    title: "Police Community Relations Committee",
+    body: "Sit with the PCRC at your division, raise what worries your street, and help shape how your neighbourhood is policed.",
     image: "/cms/positive_spirit_final_s_d8fef6b5f6.jpg",
     logo: "/cms/icon_soul_01ee5459c0.png",
-    tags: [{ label: "Initiative Results", icon: "/cms/c1_9ba2902a1d.png" }],
+    tags: [{ label: "Committee Results", icon: "/cms/c1_9ba2902a1d.png" }],
     more: 1,
     wide: true,
     theme: theme("#17232C", "#d7e2ea", "#94b1c7"),
   },
   {
-    title: "Community Volunteering",
-    body: "Volunteer with Dubai Police to create real change. Support programmes that foster empathy, responsibility, and a safer city for all. Make a difference, together!",
+    title: "Safer Neighbourhood Watch",
+    body: "Volunteer with the Nigeria Police Force to create real change. Support programmes that build trust, shared responsibility and a safer Territory for all. Make a difference, together!",
     image: "/cms/Volutneer_86db1585d3.jpg",
     logo: "/cms/icon_volunteer_330f59b879.svg",
     tags: [
@@ -289,11 +289,11 @@ export const community: InitiativeCard[] = [
         icon: "/cms/c7_322f5132d5.png",
       },
     ],
-    theme: theme("#005245", "#d1fff8", "#6bffe8"),
+    theme: theme("#0C2340", "#DDE9FF", "#B7D9FF"),
   },
   {
-    title: "Hemaya Schools",
-    body: "A pioneering Dubai Police initiative, Hemaya Schools ensures that every child of our dedicated personnel has access to high-quality education. Our integrated institutions seamlessly blend academic achievement with personal growth and skills development in a supportive environment.",
+    title: "Police Children Schools",
+    body: "A long-standing undertaking of the Force, the Nigeria Police Children Schools make sure every child of our personnel has access to good education. The schools blend academic achievement with personal growth and skills development in a supportive environment.",
     image: "/cms/Hemaya_s_af272b586b.jpg",
     logo: "/cms/icon_hemaya_20e581d127.png",
     tags: [
@@ -303,8 +303,8 @@ export const community: InitiativeCard[] = [
     theme: theme("#554937", "#ffffff", "#dcd4c9"),
   },
   {
-    title: "Dubai Police eSports",
-    body: "A tournament that reflects Dubai Police's commitment to enhancing community awareness in digital and technological field",
+    title: "Nigeria Police Games",
+    body: "The championship of the Force, bringing officers from every Command together and carrying our message on discipline and fitness into the community",
     image: "/cms/e_Sport_75fdfaf219.jpg",
     logo: "/cms/icon_esports_ac23f1d678.png",
     badge: "Coming Soon",
@@ -312,8 +312,8 @@ export const community: InitiativeCard[] = [
     theme: theme("#17232C", "#d7e2ea", "#94b1c7"),
   },
   {
-    title: "Dubai Police Museum",
-    body: "A cultural landmark where the past illuminates the present, tracing the Dubai Police force’s evolution from its inception to a world-class institution",
+    title: "Nigeria Police Museum",
+    body: "A cultural landmark where the past illuminates the present, tracing the Force from its founding in 1930 to the national institution it is today",
     image: "/cms/p8_1ee31a74c5.webp",
     logo: "/cms/icon_museum_a5709a350d.png",
     badge: "Museum visit",
@@ -323,14 +323,17 @@ export const community: InitiativeCard[] = [
     theme: theme("#6A3D06", "#fef8f0", "#f9c990"),
   },
   {
-    title: "World Police Summit",
-    body: "More than 300 globally renowned speakers, 922+ Global Leaders and 85+ Chiefs of Police and over 170 leading exhibitors in safety and security, the Summit is the ultimate hub for driving innovation and transforming the global law enforcement ecosystem.",
+    title: "West African Police Summit",
+    body: "Police chiefs from across the region, alongside researchers, technology partners and civil society, meet in Abuja to share what works in investigation, forensics and community policing.",
     image: "/cms/World_Summit_Police_30fd9f4d13.jpg",
     logo: "/cms/World_Police_Summit_logo_5fd0fb8017.svg",
     logoIsWide: true,
     badge: "More",
     tags: [
-      { label: "WPS Awards 2026", icon: "/cms/announcement_01_9b8b72d1a1.svg" },
+      {
+        label: "Summit Awards 2026",
+        icon: "/cms/announcement_01_9b8b72d1a1.svg",
+      },
     ],
     more: 2,
     wide: true,
@@ -341,18 +344,18 @@ export const community: InitiativeCard[] = [
 export const emergencyNumbers = [
   {
     label: "Police",
-    number: "999",
+    number: "112",
     note: "For emergencies only",
     color: "#b30900",
   },
   {
-    label: "Call Center",
-    number: "901",
-    note: "For other inquiries",
-    color: "#006c44",
+    label: "Road Safety",
+    number: "122",
+    note: "Road crashes",
+    color: "#0E2648",
   },
-  { label: "Ambulance", number: "998", note: "", color: "#006c44" },
-  { label: "Civil Defence", number: "997", note: "", color: "#006c44" },
+  { label: "Fire Service", number: "199", note: "", color: "#0E2648" },
+  { label: "Child Helpline", number: "116", note: "", color: "#0E2648" },
 ];
 
 export const footerColumns = [
@@ -393,12 +396,12 @@ export const footerColumns = [
         href: "/app/home/information/laws-legislation",
       },
       {
-        label: "Black Points of Traffic Violations",
-        href: "/app/home/information/view-black-points-traffic-violations",
+        label: "Traffic Offences and Penalties",
+        href: "/app/home/information/traffic-offences-and-penalties",
       },
       {
-        label: "Street Speed Limits",
-        href: "/app/home/information/street-speed-limits",
+        label: "Road Speed Limits",
+        href: "/app/home/information/road-speed-limits",
       },
     ],
   },
@@ -406,19 +409,23 @@ export const footerColumns = [
     heading: "Friendly Websites",
     links: [
       {
-        label: "Esaad",
-        href: "https://esaad.dubaipolice.gov.ae/",
-        external: true,
-      },
-      { label: "UAE Government", href: "https://u.ae/", external: true },
-      {
-        label: "Digital Dubai",
-        href: "https://www.digitaldubai.ae/",
+        label: "POSSAP",
+        href: "https://possap.gov.ng/",
         external: true,
       },
       {
-        label: "Efaad",
-        href: "https://efaad.dubaipolice.gov.ae/",
+        label: "Federal Ministry of Interior",
+        href: "https://interior.gov.ng/",
+        external: true,
+      },
+      {
+        label: "Federal Road Safety Corps",
+        href: "https://frsc.gov.ng/",
+        external: true,
+      },
+      {
+        label: "NIMC",
+        href: "https://nimc.gov.ng/",
         external: true,
       },
     ],

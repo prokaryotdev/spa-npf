@@ -224,10 +224,10 @@ export default function ServiceSearch({
         className={`flex items-center rounded-2xl ${
           hero
             ? "gap-[11px] bg-white px-[11px]"
-            : "gap-3 bg-[#F4F8F6] px-4 ring-1 ring-black/5 transition-shadow focus-within:ring-2 focus-within:ring-dp-green"
+            : "gap-3 bg-[#F4F6FA] px-4 ring-1 ring-black/5 transition-shadow focus-within:ring-2 focus-within:ring-npf-blue"
         }`}
       >
-        <SearchIcon aria-hidden className="size-6 shrink-0 text-dp-green-ink" />
+        <SearchIcon aria-hidden className="size-6 shrink-0 text-npf-blue-ink" />
         <input
           id={`${id}-input`}
           name="q"
@@ -242,21 +242,21 @@ export default function ServiceSearch({
           aria-activedescendant={
             open && active >= 0 ? `${id}-row-${active}` : undefined
           }
-          aria-label={t("Search Dubai Police services")}
+          aria-label={t("Search Nigeria Police Force services")}
           placeholder={placeholder ?? t("Search for a service")}
           onChange={(e) => retype(e.target.value)}
           onFocus={openPanel}
           onKeyDown={onKeyDown}
-          className={`w-full flex-grow bg-transparent outline-none placeholder:text-dp-muted ${
+          className={`w-full flex-grow bg-transparent outline-none placeholder:text-npf-muted ${
             hero
-              ? "py-5 text-sm text-dp-muted [@media(max-height:768px)]:py-3"
-              : "py-4 text-base text-dp-ink"
+              ? "py-5 text-sm text-npf-muted [@media(max-height:768px)]:py-3"
+              : "py-4 text-base text-npf-ink"
           }`}
         />
         {trimmed ? (
           <button
             type="submit"
-            className="my-2 shrink-0 rounded-xl bg-dp-green px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
+            className="my-2 shrink-0 rounded-xl bg-npf-blue px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
           >
             {t("Search")}
           </button>
@@ -267,16 +267,16 @@ export default function ServiceSearch({
         <div
           ref={list}
           style={{ maxHeight }}
-          className={`dp-suggest absolute inset-x-0 z-50 overflow-y-auto rounded-2xl bg-white p-2 text-start shadow-[0_28px_60px_-24px_rgba(0,50,34,0.55)] ring-1 ring-black/10 ${
+          className={`npf-suggest absolute inset-x-0 z-50 overflow-y-auto rounded-2xl bg-white p-2 text-start shadow-[0_28px_60px_-24px_rgba(0,50,34,0.55)] ring-1 ring-black/10 ${
             placement === "up"
-              ? "dp-suggest-up bottom-[calc(100%+8px)]"
+              ? "npf-suggest-up bottom-[calc(100%+8px)]"
               : "top-[calc(100%+8px)]"
           }`}
         >
           <ul id={listId} role="listbox" aria-label={t("Suggestions")}>
             {groups.map((group) => (
               <li key={group.section} role="presentation">
-                <p className="px-3 pt-3 pb-1.5 text-xs font-medium tracking-[0.08em] text-dp-muted uppercase">
+                <p className="px-3 pt-3 pb-1.5 text-xs font-medium tracking-[0.08em] text-npf-muted uppercase">
                   {t(group.section)}
                 </p>
                 <ul role="presentation">
@@ -314,14 +314,14 @@ export default function ServiceSearch({
                             <span
                               className={`block truncate text-[15px] leading-snug font-medium ${
                                 index === active
-                                  ? "text-dp-green-ink"
-                                  : "text-dp-ink"
+                                  ? "text-npf-blue-ink"
+                                  : "text-npf-ink"
                               }`}
                             >
                               <Marked text={hit.title} query={trimmed} />
                             </span>
                             {hit.body ? (
-                              <span className="mt-0.5 block truncate text-[13px] text-dp-muted">
+                              <span className="mt-0.5 block truncate text-[13px] text-npf-muted">
                                 {hit.body}
                               </span>
                             ) : null}
@@ -329,7 +329,7 @@ export default function ServiceSearch({
                           {index === active ? (
                             <EnterKeyIcon
                               aria-hidden
-                              className="mt-1 size-4 shrink-0 text-dp-green"
+                              className="mt-1 size-4 shrink-0 text-npf-blue"
                             />
                           ) : null}
                         </Link>
@@ -342,14 +342,14 @@ export default function ServiceSearch({
           </ul>
 
           {empty ? (
-            <p className="px-3 py-6 text-center text-sm text-dp-body">
+            <p className="px-3 py-6 text-center text-sm text-npf-body">
               {t("Nothing matches")}{" "}
-              <span className="font-medium text-dp-ink">“{trimmed}”</span>
+              <span className="font-medium text-npf-ink">“{trimmed}”</span>
               {t(". Try a shorter word, or")}{" "}
               <Link
                 href="/app/services"
                 onClick={() => setOpen(false)}
-                className="font-medium text-dp-green underline underline-offset-2"
+                className="font-medium text-npf-blue underline underline-offset-2"
               >
                 {t("browse all services")}
               </Link>
@@ -360,7 +360,7 @@ export default function ServiceSearch({
           {!trimmed && recent.length ? (
             <div className="mt-1 border-t border-black/[0.07] pt-2">
               <div className="flex items-center justify-between px-3 pt-1 pb-1.5">
-                <p className="text-xs font-medium tracking-[0.08em] text-dp-muted uppercase">
+                <p className="text-xs font-medium tracking-[0.08em] text-npf-muted uppercase">
                   {t("Recent")}
                 </p>
                 <button
@@ -371,7 +371,7 @@ export default function ServiceSearch({
                       localStorage.removeItem(RECENT_KEY);
                     } catch {}
                   }}
-                  className="text-xs text-dp-muted underline underline-offset-2 transition-colors hover:text-dp-green"
+                  className="text-xs text-npf-muted underline underline-offset-2 transition-colors hover:text-npf-blue"
                 >
                   {t("Clear")}
                 </button>
@@ -382,11 +382,11 @@ export default function ServiceSearch({
                     <button
                       type="button"
                       onClick={() => retype(term)}
-                      className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-[15px] text-dp-body transition-colors hover:bg-black/[0.04]"
+                      className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-[15px] text-npf-body transition-colors hover:bg-black/[0.04]"
                     >
                       <ClockIcon
                         aria-hidden
-                        className="size-4 shrink-0 text-dp-muted"
+                        className="size-4 shrink-0 text-npf-muted"
                       />
                       <span className="truncate">{term}</span>
                     </button>
@@ -401,11 +401,11 @@ export default function ServiceSearch({
               <button
                 type="button"
                 onClick={(e) => submit(e)}
-                className="flex w-full items-center gap-2 text-left text-[13px] text-dp-body transition-colors hover:text-dp-green"
+                className="flex w-full items-center gap-2 text-left text-[13px] text-npf-body transition-colors hover:text-npf-blue"
               >
                 <EnterKeyIcon aria-hidden className="size-4 shrink-0" />
                 {t("See all results for")}
-                <span className="truncate font-medium text-dp-ink">
+                <span className="truncate font-medium text-npf-ink">
                   “{trimmed}”
                 </span>
               </button>
@@ -435,7 +435,7 @@ export default function ServiceSearch({
 function Glyph({ hit }: { hit: SearchHit }) {
   if (hit.icon)
     return (
-      <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-lg bg-[#F4F8F6]">
+      <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-lg bg-[#F4F6FA]">
         <Image
           src={hit.icon}
           alt=""
@@ -446,7 +446,7 @@ function Glyph({ hit }: { hit: SearchHit }) {
       </span>
     );
   return (
-    <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-lg bg-[#F4F8F6] text-dp-green-ink">
+    <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-lg bg-[#F4F6FA] text-npf-blue-ink">
       <ServicesIcon className="size-4" />
     </span>
   );

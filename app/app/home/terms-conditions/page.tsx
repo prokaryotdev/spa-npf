@@ -6,9 +6,9 @@ import { getT, getLocalized } from "../../../i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
   return {
-    title: t("Terms & Conditions | Dubai Police"),
+    title: t("Terms & Conditions | Nigeria Police Force"),
     description: t(
-      "The terms that govern your use of the Dubai Police website and its electronic services.",
+      "The terms that govern your use of the Nigeria Police Force website and its electronic services.",
     ),
   };
 }
@@ -20,7 +20,7 @@ export default async function TermsConditionsPage() {
     <PageShell
       title={termsConditions.title}
       intro={t(
-        "The terms that govern your use of the Dubai Police website and its electronic services.",
+        "The terms that govern your use of the Nigeria Police Force website and its electronic services.",
       )}
     >
       <LegalSections sections={termsConditions.sections} />

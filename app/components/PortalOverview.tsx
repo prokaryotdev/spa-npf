@@ -57,10 +57,10 @@ export default function PortalOverview({
                   className="group/row flex items-start gap-3 rounded-2xl bg-white px-4 py-3 transition-colors hover:bg-white/70"
                 >
                   <span className="min-w-0 flex-1">
-                    <span className="block font-medium text-dp-ink">
+                    <span className="block font-medium text-npf-ink">
                       {t(request.service)}
                     </span>
-                    <span className="mt-0.5 block text-sm text-dp-body">
+                    <span className="mt-0.5 block text-sm text-npf-body">
                       {t(
                         request.note ??
                           "Open the request to see what is needed.",
@@ -69,7 +69,7 @@ export default function PortalOverview({
                   </span>
                   <ChevronRight
                     aria-hidden
-                    className="mt-1 size-5 shrink-0 text-dp-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1 rtl:group-hover/row:-translate-x-1"
+                    className="mt-1 size-5 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1"
                   />
                 </Link>
               </li>
@@ -86,7 +86,7 @@ export default function PortalOverview({
         />
         <Stat
           label={t("Unpaid fines")}
-          value={owed ? format.aed(owed) : t("None")}
+          value={owed ? format.naira(owed) : t("None")}
           href="/app/portal/fines"
         />
         <Stat
@@ -101,7 +101,7 @@ export default function PortalOverview({
         action={
           <Link
             href="/app/services"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-dp-green-ink transition-colors hover:text-dp-green-deep"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-npf-blue-ink transition-colors hover:text-npf-blue-deep"
           >
             {t("All {n} services", { n: serviceCount })}
             <ArrowRight aria-hidden className="size-4" />
@@ -113,7 +113,7 @@ export default function PortalOverview({
             <li key={service.slug}>
               <Link
                 href={`/app/services/${service.slug}`}
-                className="group/row flex items-center gap-3 rounded-2xl bg-[#F4F8F6] px-4 py-3 transition-colors hover:bg-[#dcefe7]"
+                className="group/row flex items-center gap-3 rounded-2xl bg-[#F4F6FA] px-4 py-3 transition-colors hover:bg-[#DDE6F4]"
               >
                 {/*
                   A plain <img>, not next/image. These are 24px SVGs already
@@ -132,12 +132,12 @@ export default function PortalOverview({
                     className="size-6 shrink-0"
                   />
                 ) : null}
-                <span className="min-w-0 flex-1 truncate text-sm font-medium text-dp-ink">
+                <span className="min-w-0 flex-1 truncate text-sm font-medium text-npf-ink">
                   {t(service.name)}
                 </span>
                 <ChevronRight
                   aria-hidden
-                  className="size-4 shrink-0 text-dp-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1 rtl:group-hover/row:-translate-x-1"
+                  className="size-4 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1"
                 />
               </Link>
             </li>
@@ -150,7 +150,7 @@ export default function PortalOverview({
         action={
           <Link
             href="/app/portal/requests"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-dp-green-ink transition-colors hover:text-dp-green-deep"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-npf-blue-ink transition-colors hover:text-npf-blue-deep"
           >
             {t("See all")}
             <ArrowRight aria-hidden className="size-4" />
@@ -165,10 +165,10 @@ export default function PortalOverview({
                 className="flex flex-wrap items-center justify-between gap-3 py-3 first:pt-0 last:pb-0"
               >
                 <div className="min-w-0">
-                  <p className="truncate font-medium text-dp-ink">
+                  <p className="truncate font-medium text-npf-ink">
                     {t(request.service)}
                   </p>
-                  <p className="mt-0.5 text-sm text-dp-muted">
+                  <p className="mt-0.5 text-sm text-npf-muted">
                     {request.id} · {format.date(request.submitted)}
                   </p>
                 </div>
@@ -185,7 +185,7 @@ export default function PortalOverview({
             action={
               <Link
                 href="/app/services"
-                className="inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
+                className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
               >
                 {t("Browse services")}
                 <ArrowRight aria-hidden className="size-4" />
@@ -200,7 +200,7 @@ export default function PortalOverview({
         className="scroll-mt-32 rounded-3xl p-6 ring-1 ring-black/[0.07]"
       >
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="flex items-center gap-2 font-secondary text-lg font-bold text-dp-green-deep">
+          <h2 className="flex items-center gap-2 font-secondary text-lg font-bold text-npf-blue-deep">
             <BellIcon aria-hidden className="size-5" />
             {t("Notices")}
           </h2>
@@ -208,7 +208,7 @@ export default function PortalOverview({
             <button
               type="button"
               onClick={markNoticesRead}
-              className="text-sm font-medium text-dp-green underline underline-offset-2 transition-colors hover:text-dp-green-deep"
+              className="text-sm font-medium text-npf-blue underline underline-offset-2 transition-colors hover:text-npf-blue-deep"
             >
               {t("Mark all read")}
             </button>
@@ -221,18 +221,18 @@ export default function PortalOverview({
               <li
                 key={notice.id}
                 className={`rounded-2xl px-4 py-3 ${
-                  notice.read ? "bg-[#F9F9F9]" : "bg-[#e7f6f1]"
+                  notice.read ? "bg-[#F9F9F9]" : "bg-[#E8EEF8]"
                 }`}
               >
                 <p className="flex flex-wrap items-baseline justify-between gap-2">
-                  <span className="font-medium text-dp-ink">
+                  <span className="font-medium text-npf-ink">
                     {t(notice.title)}
                   </span>
-                  <span className="text-xs text-dp-muted">
+                  <span className="text-xs text-npf-muted">
                     {format.date(notice.at)}
                   </span>
                 </p>
-                <p className="mt-1 text-sm leading-relaxed text-dp-body">
+                <p className="mt-1 text-sm leading-relaxed text-npf-body">
                   {t(notice.body)}
                 </p>
               </li>
@@ -263,10 +263,10 @@ function Stat({
   return (
     <Link
       href={href}
-      className="rounded-3xl bg-[#F4F8F6] px-5 py-5 transition-colors hover:bg-[#dcefe7]"
+      className="rounded-3xl bg-[#F4F6FA] px-5 py-5 transition-colors hover:bg-[#DDE6F4]"
     >
-      <dt className="text-sm text-dp-body">{label}</dt>
-      <dd className="mt-1 font-secondary text-2xl font-bold text-dp-green-deep tabular-nums">
+      <dt className="text-sm text-npf-body">{label}</dt>
+      <dd className="mt-1 font-secondary text-2xl font-bold text-npf-blue-deep tabular-nums">
         {value}
       </dd>
     </Link>

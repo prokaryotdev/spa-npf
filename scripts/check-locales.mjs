@@ -4,13 +4,21 @@
  * (or `next start`) up, so it is not part of `npm test`. Start that server
  * with API_URL set, or app/backend.ts will 404 sign-in, the portal and the
  * console and the sweep will report fourteen routes it cannot reach:
- *   node scripts/check-locales.mjs [baseUrl]
+ *   node --import ./scripts/ts-resolve.mjs scripts/check-locales.mjs [baseUrl]
  *
  * It reports:
- *  - the html lang/dir attributes
- *  - visible English left on an Arabic page (text nodes with Latin letters)
+ *  - the html lang attribute
+ *  - English left on a Hausa page
  *  - any 4xx/5xx
+ *
+ * Both languages are written in Latin letters, so "is this line Arabic?"
+ * cannot stand in for "is this line translated?" the way it used to. The
+ * check that replaces it is stricter and more literal: the dictionary is
+ * loaded, and a Hausa page that still contains one of its English keys word
+ * for word is a page where translate() did not run. Short keys are skipped,
+ * because a four-letter English word can also be a Hausa one.
  */
+import { dictionary } from "../app/i18n/ha.ts";
 const BASE = process.argv[2] ?? "http://localhost:3111";
 
 const ROUTES = [
@@ -20,8 +28,8 @@ const ROUTES = [
   "/app/home/customer-service-agreement",
   "/app/home/information",
   "/app/home/information/laws-legislation",
-  "/app/home/information/street-speed-limits",
-  "/app/home/information/view-black-points-traffic-violations",
+  "/app/home/information/road-speed-limits",
+  "/app/home/information/traffic-offences-and-penalties",
   "/app/home/privacy-policy",
   "/app/home/sitemap",
   "/app/home/terms-conditions",
@@ -38,48 +46,48 @@ const ROUTES = [
   "/no-such-page",
 ];
 
-// Words that legitimately stay Latin on an Arabic page.
+/**
+ * Only long keys are worth hunting for. A short one risks matching a Hausa
+ * word, a proper noun or a fragment of a longer sentence that is correctly
+ * translated, and a false alarm in a sweep like this is worse than a gap.
+ */
+const HUNTED = Object.keys(dictionary).filter((k) => k.length >= 24);
+
+// Strings that legitimately stay in English on a Hausa page.
 const ALLOWED = [
   "English",
-  "UAE PASS",
-  "Dubai Police",
+  "NINAuth",
+  "Nigeria Police Force",
   "SSL",
   "IP",
   "PIN",
   "SPS",
-  "AED",
+  "₦",
   "IBAN",
-  "www.dubaipolice.gov.ae",
-  "mail@dubaipolice.gov.ae",
-  "GITEX",
+  "fct.npf.gov.ng",
+  "mail@npf.gov.ng",
   "SWAT",
-  "e&",
-  "SK",
+  "9mobile",
   "P1",
   "P2",
   "P3",
   "P4",
-  "GST",
+  "WAT",
   "QR",
   "TOEFL",
   "IELTS",
-  "EMSAT",
-  "RTA",
-  "DECCA",
-  "ICOM",
-  "IDEX",
-  "NAVDEX",
-  "WETEX",
-  "ATM",
-  "Etisalat",
-  "Rabdan",
-  "PhD",
+  "WAEC",
+  "NECO",
+  "NYSC",
+  "NDLEA",
+  "FRSC",
+  "FCT",
+  "FCTA",
+  "PCRC",
+  "POSSAP",
   "CID",
-  "OCEC",
-  "GDRFA",
-  "YGPLP",
-  "PIL",
-  "D3",
+  "ATM",
+  "PhD",
 ];
 
 const stripTags = (html) =>
@@ -90,7 +98,7 @@ const stripTags = (html) =>
 
 let bad = 0;
 for (const route of ROUTES) {
-  for (const lang of ["en", "ar"]) {
+  for (const lang of ["en", "ha"]) {
     // Locale is the first path segment now, not a cookie, so the address
     // itself is what is being checked.
     const url = BASE + (route === "/" ? `/${lang}` : `/${lang}${route}`);
@@ -98,28 +106,23 @@ for (const route of ROUTES) {
     const html = await res.text();
     const ok =
       res.status === 200 || (route === "/no-such-page" && res.status === 404);
-    const m = html.match(/<html[^>]*lang="([a-z]+)"[^>]*dir="([a-z]+)"/);
-    const dirOk =
-      m && m[1] === lang && m[2] === (lang === "ar" ? "rtl" : "ltr");
+    const m = html.match(/<html[^>]*lang="([a-z]+)"/);
+    const langOk = m && m[1] === lang;
 
     let leaks = [];
-    if (lang === "ar") {
-      const text = stripTags(html);
-      for (const line of text.split("\n")) {
-        const v = line.trim();
-        if (v.length < 4 || !/[A-Za-z]{4}/.test(v)) continue;
-        if (/[؀-ۿ]/.test(v)) continue; // mixed line, fine
-        if (ALLOWED.some((a) => v.includes(a))) continue;
-        if (/^[\w.-]+@|^https?:|^\/|^[a-z-]+$/.test(v)) continue;
-        leaks.push(v.slice(0, 90));
+    if (lang === "ha") {
+      const text = stripTags(html).replace(/\s+/g, " ");
+      for (const key of HUNTED) {
+        if (ALLOWED.some((a) => key.includes(a))) continue;
+        if (text.includes(key)) leaks.push(key.slice(0, 90));
       }
       leaks = [...new Set(leaks)];
     }
 
-    if (!ok || !dirOk || leaks.length) {
+    if (!ok || !langOk || leaks.length) {
       bad++;
       console.log(
-        `\n✗ ${lang} ${route}  status=${res.status} lang/dir=${m ? m[1] + "/" + m[2] : "?"}`,
+        `\n✗ ${lang} ${route}  status=${res.status} lang=${m ? m[1] : "?"}`,
       );
       for (const l of leaks.slice(0, 12)) console.log(`    EN: ${l}`);
       if (leaks.length > 12) console.log(`    … ${leaks.length - 12} more`);
@@ -158,7 +161,7 @@ for (const [from, expect] of [
 }
 
 // A prefixed address serves the page itself rather than bouncing again.
-for (const lang of ["en", "ar"]) {
+for (const lang of ["en", "ha"]) {
   const res = await fetch(`${BASE}/${lang}/app/services`, {
     redirect: "manual",
   });
@@ -168,8 +171,8 @@ for (const lang of ["en", "ar"]) {
 // The switcher has to offer the other language, as a real link, so it works
 // before hydration and gives the reader an address to copy.
 for (const [lang, offers] of [
-  ["en", "ar"],
-  ["ar", "en"],
+  ["en", "ha"],
+  ["ha", "en"],
 ]) {
   const html = await (await fetch(`${BASE}/${lang}/app/services`)).text();
   if (!html.includes(`href="/${offers}/app/services"`))
@@ -178,9 +181,9 @@ for (const [lang, offers] of [
 
 // Each page must name both of its addresses, or a crawler never learns the
 // other language exists.
-for (const lang of ["en", "ar"]) {
+for (const lang of ["en", "ha"]) {
   const html = await (await fetch(`${BASE}/${lang}/app/services`)).text();
-  for (const other of ["en", "ar"])
+  for (const other of ["en", "ha"])
     if (!new RegExp(`hreflang="${other}"[^>]*/${other}/app/services`, "i").test(html))
       fail(`the ${lang} page is missing its ${other} hreflang`);
   if (!new RegExp(`rel="canonical"[^>]*/${lang}/app/services`).test(html))

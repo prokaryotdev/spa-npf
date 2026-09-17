@@ -5,7 +5,7 @@ import { localePath } from "./i18n/path";
 import { services } from "./content-services";
 
 const BASE = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dubaipolice.gov.ae"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://fct.npf.gov.ng"
 ).replace(/\/$/, "");
 
 /**
@@ -31,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const link of legalLinks) paths.add(link.href);
 
   // Both languages, each entry naming the other, because a page a crawler
-  // cannot reach in Arabic is a page Arabic readers cannot find.
+  // cannot reach in Hausa is a page Hausa readers cannot find.
   return [...paths]
     .filter((p) => p.startsWith("/"))
     .flatMap((path) =>

@@ -31,10 +31,10 @@ export default function Error({
       <Header solid />
       <main id="main-content" tabIndex={-1} className="outline-none">
         <div className="relative overflow-hidden bg-white pt-40 pb-24 md:pt-48">
-          <div className="pointer-events-none absolute top-0 right-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3cbd6b75_7%,#22c55e38_40%,#22c55e00_70%)] opacity-70 md:size-[1000px] md:opacity-60" />
+          <div className="pointer-events-none absolute top-0 right-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 md:size-[1000px] md:opacity-60" />
 
-          <div className="dp-container relative">
-            <h1 className="font-secondary text-4xl leading-[1.15] font-bold text-dp-green-deep lg:text-7xl">
+          <div className="npf-container relative">
+            <h1 className="font-secondary text-4xl leading-[1.15] font-bold text-npf-blue-deep lg:text-7xl">
               {t("Something went wrong")}
             </h1>
             <p className="mt-5 max-w-[70ch] text-base text-neutral-700 md:text-xl">
@@ -45,14 +45,14 @@ export default function Error({
               <button
                 type="button"
                 onClick={() => retry()}
-                className="inline-flex items-center gap-2 rounded-full bg-dp-green px-6 py-3 font-medium text-white transition-colors hover:bg-dp-green-mid"
+                className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-colors hover:bg-npf-blue-mid"
               >
                 {t("Try again")}
                 <ArrowRight className="size-4" />
               </button>
               <Link
                 href="/"
-                className="inline-flex items-center rounded-full bg-[#F4F8F6] px-6 py-3 font-medium text-dp-green-ink ring-1 ring-black/5 transition-colors hover:bg-[#e7f6f1]"
+                className="inline-flex items-center rounded-full bg-[#F4F6FA] px-6 py-3 font-medium text-npf-blue-ink ring-1 ring-black/5 transition-colors hover:bg-[#E8EEF8]"
               >
                 {t("Back to home")}
               </Link>
@@ -60,7 +60,7 @@ export default function Error({
 
             {/* The only thing support can match against a server-side log. */}
             {error.digest ? (
-              <p className="mt-8 text-sm text-dp-muted">
+              <p className="mt-8 text-sm text-npf-muted">
                 {t("Reference:")}{" "}
                 <span className="font-mono">{error.digest}</span>
               </p>

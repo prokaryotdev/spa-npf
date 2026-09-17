@@ -36,10 +36,10 @@ const session = () => JSON.parse(sessionStorage.getItem("dp:session") ?? "null")
 
 // --- the session is this tab's, and nobody else's ------------------------
 signIn({
-  name: "Khalid Al Mansoori",
-  emiratesId: "784-1989-1234567-1",
-  email: "k@example.ae",
-  phone: "+971 50 123 4567",
+  name: "Chinedu Okafor",
+  nin: "12345678901",
+  email: "k@example.ng",
+  phone: "+234 803 123 4567",
   role: "citizen",
 });
 assert.equal(session().role, "citizen", "session lands in sessionStorage");
@@ -52,7 +52,7 @@ assert.ok(
 const filed = submitRequest({
   slug: "police-clearance-certificate",
   service: "Police Clearance Certificate",
-  fee: "AED 200",
+  fee: "₦80,000",
 });
 assert.equal(shared().requests[0].id, filed.id, "a request is shared work");
 assert.equal(shared().requests[0].status, "Submitted");
@@ -67,8 +67,8 @@ localStorage.setItem("dp:state:v2", JSON.stringify(theirs));
 for (const fn of handlers) fn({ key: "dp:state:v2" });
 
 assert.equal(
-  session().emiratesId,
-  "784-1989-1234567-1",
+  session().nin,
+  "12345678901",
   "another tab's work must not sign this one out",
 );
 
@@ -109,22 +109,22 @@ assert.equal(
 // the first tab out. Swapping the backing store is what a second tab *is*.
 const tabOne = sessionStorage;
 signIn({
-  name: "Khalid Al Mansoori",
-  emiratesId: "784-1989-1234567-1",
-  email: "k@example.ae",
-  phone: "+971 50 123 4567",
+  name: "Chinedu Okafor",
+  nin: "12345678901",
+  email: "k@example.ng",
+  phone: "+234 803 123 4567",
   role: "citizen",
 });
 
 globalThis.sessionStorage = store();
 signIn({
-  name: "Lt. Noura Bin Haider",
-  emiratesId: "784-1991-7654321-3",
-  email: "n@dubaipolice.gov.ae",
-  phone: "+971 50 987 6543",
+  name: "Insp. Ngozi Aliyu",
+  nin: "76543210987",
+  email: "n@npf.gov.ng",
+  phone: "+234 803 987 6543",
   role: "officer",
-  rank: "Lieutenant",
-  station: "Al Barsha Police Station",
+  rank: "Inspector",
+  station: "Wuse Police Station",
 });
 
 assert.equal(

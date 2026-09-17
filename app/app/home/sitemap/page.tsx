@@ -9,8 +9,8 @@ import { getLocalized, getT } from "../../../i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
   return {
-    title: t("Sitemap | Dubai Police"),
-    description: t("Every page on the Dubai Police website, in one list."),
+    title: t("Sitemap | Nigeria Police Force"),
+    description: t("Every page on the Nigeria Police Force website, in one list."),
   };
 }
 
@@ -33,7 +33,7 @@ const groupsSource: { heading: string; count?: number; links: Entry[] }[] = [
     heading: "Account",
     links: [
       { label: "Sign In", href: "/app/signin" },
-      { label: "My Dubai Police", href: "/app/portal" },
+      { label: "My Nigeria Police Force", href: "/app/portal" },
       { label: "Search", href: "/app/search" },
     ],
   },
@@ -57,13 +57,13 @@ export default async function SitemapPage() {
   return (
     <PageShell
       title={t("Sitemap")}
-      intro={t("Every page on the Dubai Police website, in one list.")}
+      intro={t("Every page on the Nigeria Police Force website, in one list.")}
     >
       <section className="bg-white pb-24">
-        <div className="dp-container grid gap-10 md:grid-cols-2 xl:grid-cols-3">
+        <div className="npf-container grid gap-10 md:grid-cols-2 xl:grid-cols-3">
           {groups.map((group, i) => (
             <div key={i}>
-              <h2 className="mb-4 border-b border-black/10 pb-3 font-secondary text-lg font-bold text-dp-green-deep">
+              <h2 className="mb-4 border-b border-black/10 pb-3 font-secondary text-lg font-bold text-npf-blue-deep">
                 {t(group.heading)}
                 {group.count ? ` (${group.count})` : null}
               </h2>
@@ -75,7 +75,7 @@ export default async function SitemapPage() {
                       href={link.href}
                       target={link.external ? "_blank" : undefined}
                       rel={link.external ? "noopener noreferrer" : undefined}
-                      className="inline-flex items-center gap-1.5 text-base text-dp-body transition-colors hover:text-dp-green"
+                      className="inline-flex items-center gap-1.5 text-base text-npf-body transition-colors hover:text-npf-blue"
                     >
                       {link.label}
                       {link.external ? (

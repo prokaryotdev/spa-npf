@@ -7,7 +7,7 @@ import { getLang } from "../../i18n/server";
  *
  * The language has to be carried across by hand: a bare redirect("/") sends
  * the visitor to a URL naming no language, and proxy.ts would then have to
- * guess one — landing an Arabic reader on the English homepage whenever the
+ * guess one — landing an Hausa reader on the English homepage whenever the
  * cookie is missing, which is exactly the case for a crawler.
  */
 export default async function AppHome() {

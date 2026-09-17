@@ -9,9 +9,9 @@ import { getT, getLocalized } from "../../i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
   return {
-    title: t("Search | Dubai Police"),
+    title: t("Search | Nigeria Police Force"),
     description: t(
-      "Search Dubai Police services, news, events and information.",
+      "Search Nigeria Police Force services, news, events and information.",
     ),
   };
 }
@@ -32,7 +32,7 @@ export default async function SearchPage({
       intro={t("Find a service, a news story, an event or a page.")}
     >
       <section className="bg-white pb-24">
-        <div className="dp-container">
+        <div className="npf-container">
           <div className="max-w-[680px]">
             <ServiceSearch
               key={query}
@@ -43,7 +43,7 @@ export default async function SearchPage({
           </div>
 
           {query ? (
-            <p aria-live="polite" className="mt-6 text-sm text-dp-muted">
+            <p aria-live="polite" className="mt-6 text-sm text-npf-muted">
               {t(results.length === 1 ? "{n} result for" : "{n} results for", {
                 n: results.length,
               })}
@@ -54,11 +54,11 @@ export default async function SearchPage({
           ) : null}
 
           {query && results.length === 0 ? (
-            <p className="mt-8 max-w-[60ch] text-base text-dp-body">
+            <p className="mt-8 max-w-[60ch] text-base text-npf-body">
               {t("Nothing matched. Try a shorter term, or browse the")}{" "}
               <Link
                 href="/app/home/sitemap"
-                className="font-medium text-dp-green underline underline-offset-2"
+                className="font-medium text-npf-blue underline underline-offset-2"
               >
                 {t("sitemap")}
               </Link>
@@ -75,10 +75,10 @@ export default async function SearchPage({
                   rel={hit.external ? "noopener noreferrer" : undefined}
                   className="group/hit block py-5"
                 >
-                  <span className="text-xs font-medium tracking-wide text-dp-muted uppercase">
+                  <span className="text-xs font-medium tracking-wide text-npf-muted uppercase">
                     {t(hit.section)}
                   </span>
-                  <span className="mt-1 flex items-start gap-1.5 font-secondary text-lg leading-snug font-bold text-dp-ink transition-colors group-hover/hit:text-dp-green">
+                  <span className="mt-1 flex items-start gap-1.5 font-secondary text-lg leading-snug font-bold text-npf-ink transition-colors group-hover/hit:text-npf-blue">
                     {hit.title}
                     {hit.external ? (
                       <>
@@ -94,7 +94,7 @@ export default async function SearchPage({
                     ) : null}
                   </span>
                   {hit.body ? (
-                    <span className="mt-1 block text-sm leading-relaxed text-dp-body">
+                    <span className="mt-1 block text-sm leading-relaxed text-npf-body">
                       {hit.body}
                     </span>
                   ) : null}

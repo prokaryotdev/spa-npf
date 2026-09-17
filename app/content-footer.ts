@@ -11,10 +11,10 @@ export const privacyPolicy = {
       content: [
         {
           link: {
-            href: "https://www.dubaipolice.gov.ae",
-            label: "www.dubaipolice.gov.ae",
+            href: "https://fct.npf.gov.ng",
+            label: "fct.npf.gov.ng",
           },
-          text: 'Dubai police is committed to protecting the rights of visitors to its Website and to maintaining the confidentiality of personal information that is used in this Website. Privacy Policy aims to clarify the approach of the Dubai Police, and the obligations; with respect to the collection, use, distribution, retention, destruction and dissemination (collectively called, "use" or "usage" or their derivatives) of personal information or data (collectively called, "data") which is collected on Dubai police eServices Website at ',
+          text: 'The Nigeria Police Force is committed to protecting the rights of visitors to its Website and to maintaining the confidentiality of personal information that is used in this Website. Privacy Policy aims to clarify the approach of the Nigeria Police Force, and the obligations; with respect to the collection, use, distribution, retention, destruction and dissemination (collectively called, "use" or "usage" or their derivatives) of personal information or data (collectively called, "data") which is collected on The Nigeria Police Force eServices Website at ',
           type: "paragraph",
           afterText: ".",
         },
@@ -24,7 +24,7 @@ export const privacyPolicy = {
       title: "Policy Statement",
       content: [
         {
-          text: "The information that Dubai Police may obtain from users of this website on the internet is treated with utmost privacy and confidentiality, and it is not disclosed to third parties except for legal, security, or awareness purposes.",
+          text: "The information that Nigeria Police Force may obtain from users of this website on the internet is treated with utmost privacy and confidentiality, and it is not disclosed to third parties except for legal, security, or awareness purposes.",
           type: "paragraph",
         },
         {
@@ -32,11 +32,11 @@ export const privacyPolicy = {
           type: "paragraph",
         },
         {
-          text: "Any data required from the user, in this Website, will be used, exclusively, in accordance with the privacy policy set forth below. Dubai Police will never ask for any unnecessary data.",
+          text: "Any data required from the user, in this Website, will be used, exclusively, in accordance with the privacy policy set forth below. Nigeria Police Force will never ask for any unnecessary data.",
           type: "paragraph",
         },
         {
-          text: 'Dubai Police Website includes public pages that can be browsed by all users, without having to provide any personal data with the exception of data collected by cookies when used (see details below). The Site also contains secured pages that require registration to be accessed, using the form "request a user registration", in the open public pages.',
+          text: 'Nigeria Police Force Website includes public pages that can be browsed by all users, without having to provide any personal data with the exception of data collected by cookies when used (see details below). The Site also contains secured pages that require registration to be accessed, using the form "request a user registration", in the open public pages.',
           type: "paragraph",
         },
       ],
@@ -45,15 +45,15 @@ export const privacyPolicy = {
       title: "Policy Scope",
       content: [
         {
-          text: "Privacy Policy, set forth in this document, applies to Dubai Police Website (www.dubaipolice.gov.ae) and to the information collected by this Site only. This Policy also applies to all employees of Dubai Police, apart from their place of work, and also to all the concerned suppliers’ employees, irrespective of the place of whoever manages Dubai Police Website, which can obtain personal data of the users.",
+          text: "Privacy Policy, set forth in this document, applies to Nigeria Police Force Website (fct.npf.gov.ng) and to the information collected by this Site only. This Policy also applies to all employees of Nigeria Police Force, apart from their place of work, and also to all the concerned suppliers’ employees, irrespective of the place of whoever manages Nigeria Police Force Website, which can obtain personal data of the users.",
           type: "paragraph",
         },
         {
-          text: "Dubai Police Website contains links to other websites that are provided only as service information and they are subject to their own privacy policy. Dubai Police is not responsible for any content available at these sites. Therefore, we advise you to have access to the privacy policies of those websites, which you visited through Dubai Police Website to determine the site-based practices there.",
+          text: "Nigeria Police Force Website contains links to other websites that are provided only as service information and they are subject to their own privacy policy. Nigeria Police Force is not responsible for any content available at these sites. Therefore, we advise you to have access to the privacy policies of those websites, which you visited through Nigeria Police Force Website to determine the site-based practices there.",
           type: "paragraph",
         },
         {
-          text: "Users should note that Dubai Police does not promote these sites neither it is sure of the contents or the products and services they offer. Dubai Police shall not exercise any authority whatsoever over the sites that are not owned or managed by it. Dubai Police is not responsible for protecting any information/data that the user provide when visiting those sites, including information security and privacy practices of these sites.",
+          text: "Users should note that Nigeria Police Force does not promote these sites neither it is sure of the contents or the products and services they offer. Nigeria Police Force shall not exercise any authority whatsoever over the sites that are not owned or managed by it. Nigeria Police Force is not responsible for protecting any information/data that the user provide when visiting those sites, including information security and privacy practices of these sites.",
           type: "paragraph",
         },
       ],
@@ -62,7 +62,7 @@ export const privacyPolicy = {
       title: "Collection and Storage of Information Automatically",
       content: [
         {
-          text: "Dear user, when browsing Dubai Police Website, we will collect and store certain information about your visit, automatically, while, at the same time, it does not identify you personally. We do automatically collect and store information about your visit, e.g.: Internet Protocol (IP) your computer (which is a number that is assigned automatically to your computer at any time you browse the Internet), used web browser and operating systems, which websites you moved from to our Website, date and time of your access to our website, and pages visited. We use this information to help us make our Site more useful to visitors, to find out the number of visitors to our Site, and the type of technology used by our visitors. We do not track down or record any information that relate to the individuals and to their visits.",
+          text: "Dear user, when browsing Nigeria Police Force Website, we will collect and store certain information about your visit, automatically, while, at the same time, it does not identify you personally. We do automatically collect and store information about your visit, e.g.: Internet Protocol (IP) your computer (which is a number that is assigned automatically to your computer at any time you browse the Internet), used web browser and operating systems, which websites you moved from to our Website, date and time of your access to our website, and pages visited. We use this information to help us make our Site more useful to visitors, to find out the number of visitors to our Site, and the type of technology used by our visitors. We do not track down or record any information that relate to the individuals and to their visits.",
           type: "paragraph",
         },
         {
@@ -70,7 +70,7 @@ export const privacyPolicy = {
           type: "paragraph",
         },
         {
-          text: "Dubai Police Site uses cookies to follow the users while browsing only to collect and analyze usage statistics for development and improvement and providing users with the best experience of our Site. Use of cookies is usual practice in the electronic websites. Cookies are simple text files stored in your personal computer by the web browser. It provides a distinction tool between site visitors. Cookies do not contain any personal identification number (PIN) or subject your privacy or information to any risk. It is possible to set most web browsers to reject cookies, accept, or delete these files. However, the refusal or removing cookies may obstruct those to run complete and faster.",
+          text: "Nigeria Police Force Site uses cookies to follow the users while browsing only to collect and analyze usage statistics for development and improvement and providing users with the best experience of our Site. Use of cookies is usual practice in the electronic websites. Cookies are simple text files stored in your personal computer by the web browser. It provides a distinction tool between site visitors. Cookies do not contain any personal identification number (PIN) or subject your privacy or information to any risk. It is possible to set most web browsers to reject cookies, accept, or delete these files. However, the refusal or removing cookies may obstruct those to run complete and faster.",
           type: "paragraph",
         },
       ],
@@ -79,7 +79,7 @@ export const privacyPolicy = {
       title: "Protection of personal information",
       content: [
         {
-          text: "For an effective and efficient service, Dubai Police collects some specific data of users, in certain places within the Site. Dubai Police is committed to maintain the confidentiality of all the information collected from users and will not allow accessing them but to the authorized government officials and within the limits of what they need to know only. Dubai Police needs the data that enable it to understand the needs of users and provide them with the correct service, accurately and completely. Hence, you must ensure that the information are complete and accurate and that you will not attempt to use the Site using someone else’s name. we will not provide any information you give us to any private organizations or persons, from the private sector. Dubai Police does not collect or use information for commercial marketing.",
+          text: "For an effective and efficient service, Nigeria Police Force collects some specific data of users, in certain places within the Site. Nigeria Police Force is committed to maintain the confidentiality of all the information collected from users and will not allow accessing them but to the authorized government officials and within the limits of what they need to know only. Nigeria Police Force needs the data that enable it to understand the needs of users and provide them with the correct service, accurately and completely. Hence, you must ensure that the information are complete and accurate and that you will not attempt to use the Site using someone else’s name. we will not provide any information you give us to any private organizations or persons, from the private sector. Nigeria Police Force does not collect or use information for commercial marketing.",
           type: "paragraph",
         },
         {
@@ -87,11 +87,11 @@ export const privacyPolicy = {
           type: "paragraph",
         },
         {
-          text: "Dubai Police Website encompasses a range of services and transactions that allow you to pay transaction fees electronically by entering credit card data in Dubai Police Payment Screen where credit card data are not stored in our databases, to ensure that the credit card is not used, by anyone else.",
+          text: "Nigeria Police Force Website encompasses a range of services and transactions that allow you to pay transaction fees electronically by entering credit card data in Nigeria Police Force Payment Screen where credit card data are not stored in our databases, to ensure that the credit card is not used, by anyone else.",
           type: "paragraph",
         },
         {
-          text: "In case you want to close your account or in the event that someone has stolen your account, you can report that to our Call Center (901), around the clock, or communicate your concern via email: mail@dubaipolice.gov.ae. Your account will be closed after confirming your identity but the personal information of the account will remain in our database to deter fraud by ensuring that persons who try to commit fraud will not be able to escape detection attempt, by closing their accounts and opening new accounts. However, if you close your account, we will not use your personal information for any other purpose, and will not sell or share any with third parties, unless the law requires it.",
+          text: "In case you want to close your account or in the event that someone has stolen your account, you can report that to our Complaint Response Unit (0805 700 0001), around the clock, or communicate your concern via email: mail@npf.gov.ng. Your account will be closed after confirming your identity but the personal information of the account will remain in our database to deter fraud by ensuring that persons who try to commit fraud will not be able to escape detection attempt, by closing their accounts and opening new accounts. However, if you close your account, we will not use your personal information for any other purpose, and will not sell or share any with third parties, unless the law requires it.",
           type: "paragraph",
         },
       ],
@@ -100,15 +100,15 @@ export const privacyPolicy = {
       title: "Information Security",
       content: [
         {
-          text: "Dubai Police Site is protected by multiple security measures, such as documentation, monitoring, auditing, and encryption. Dubai Police uses a variety of other mechanisms, security measurements; and technical, regulatory, and reasonable precautions; in the design and implementation of the daily operations. We continue our engagement with the electronic content and the electronic transfer of information to make sure that the data provided by users are not misused or modified or lost. These measurements include control, regular storage backup, and applying of database security policies.",
+          text: "Nigeria Police Force Site is protected by multiple security measures, such as documentation, monitoring, auditing, and encryption. Nigeria Police Force uses a variety of other mechanisms, security measurements; and technical, regulatory, and reasonable precautions; in the design and implementation of the daily operations. We continue our engagement with the electronic content and the electronic transfer of information to make sure that the data provided by users are not misused or modified or lost. These measurements include control, regular storage backup, and applying of database security policies.",
           type: "paragraph",
         },
         {
-          text: "This Site takes all the necessary precautions to protect users information. When users submit sensitive information via the Website, all are protected, whether when in use or after they were used. While encryption is used to protect sensitive information when in use, we do everything in our power to protect all information in the case of non-use. All electronic transactions performed by users, with Dubai Police, are subjected to the use of Secure Sockets Layer technology (SSL).",
+          text: "This Site takes all the necessary precautions to protect users information. When users submit sensitive information via the Website, all are protected, whether when in use or after they were used. While encryption is used to protect sensitive information when in use, we do everything in our power to protect all information in the case of non-use. All electronic transactions performed by users, with Nigeria Police Force, are subjected to the use of Secure Sockets Layer technology (SSL).",
           type: "paragraph",
         },
         {
-          text: "Dubai Police and would like to draw the attention of users to the fact that the data sent over the Internet is unsecured in nature, and therefore Dubai Police does not guarantee that data sent over the Internet are secured. Users are responsible for maintaining the confidentiality of their own users’ names and passwords. Dubai Police will not request any personal password unless user would like to use it to access a service or secured pages.",
+          text: "Nigeria Police Force and would like to draw the attention of users to the fact that the data sent over the Internet is unsecured in nature, and therefore Nigeria Police Force does not guarantee that data sent over the Internet are secured. Users are responsible for maintaining the confidentiality of their own users’ names and passwords. Nigeria Police Force will not request any personal password unless user would like to use it to access a service or secured pages.",
           type: "paragraph",
         },
       ],
@@ -117,15 +117,15 @@ export const privacyPolicy = {
       title: "Data Deletion and User Accounts",
       content: [
         {
-          text: "The Dubai Police mobile application does not create, manage, or store local user profiles. Authentication is securely handled via UAE PASS, an independent national digital identity service. Dubai Police does not control UAE PASS accounts or the personal data managed within that ecosystem. Personal information received through UAE PASS is used strictly to verify your identity and process the official government services you request.",
+          text: "The Nigeria Police Force mobile application does not create, manage, or store local user profiles. Authentication is securely handled via NINAuth, an independent national digital identity service. Nigeria Police Force does not control NINAuth accounts or the personal data managed within that ecosystem. Personal information received through NINAuth is used strictly to verify your identity and process the official government services you request.",
           type: "paragraph",
         },
         {
-          text: "Government Records and Retention: Service applications, requests, supporting documents, and related records submitted through the application form part of official government archives. In compliance with applicable UAE laws and government record-retention regulations, these official records cannot be deleted upon individual request.",
+          text: "Government Records and Retention: Service applications, requests, supporting documents, and related records submitted through the application form part of official government archives. In compliance with applicable Nigerian law and government record-retention regulations, these official records cannot be deleted upon individual request.",
           type: "paragraph",
         },
         {
-          text: "Managing Your Data & Contact Us: If you wish to manage your digital identity or profile data, please contact UAE PASS directly. For any questions regarding how Dubai Police processes your service requests or to exercise your rights under applicable data protection laws, please reach out to us at mail@dubaipolice.gov.ae",
+          text: "Managing Your Data & Contact Us: If you wish to manage your digital identity or profile data, please contact NINAuth directly. For any questions regarding how Nigeria Police Force processes your service requests or to exercise your rights under applicable data protection laws, please reach out to us at mail@npf.gov.ng",
           type: "paragraph",
         },
       ],
@@ -134,16 +134,16 @@ export const privacyPolicy = {
       title: "Amendment of Privacy Policy",
       content: [
         {
-          text: "Dubai Police may make some adjustments in the Privacy Policy to accommodate changes in the legal and regulatory requirements, business requirement for upgrading technologies and applications, or for service improvement. Dubai Police reserves the right to make any radical or slight modification of the content of this document at any time and without prior notice. Continue to use the Site means your acceptance of such changes. Please review this Policy periodically. In case of radical changes in this Policy, we will inform you via email or by means of a notice in our Homepage.",
+          text: "Nigeria Police Force may make some adjustments in the Privacy Policy to accommodate changes in the legal and regulatory requirements, business requirement for upgrading technologies and applications, or for service improvement. Nigeria Police Force reserves the right to make any radical or slight modification of the content of this document at any time and without prior notice. Continue to use the Site means your acceptance of such changes. Please review this Policy periodically. In case of radical changes in this Policy, we will inform you via email or by means of a notice in our Homepage.",
           type: "paragraph",
         },
       ],
     },
     {
-      title: "Dubai Police App Permissions",
+      title: "Nigeria Police Force App Permissions",
       content: [
         {
-          text: "Dubai Police’s app collects location data to enable features like Report Accident, Drive mode, Police Eye, My Map and Sail Safely. Our Sale Safely feature also requires Background Location Permission for the better use of the feature.",
+          text: "Nigeria Police Force’s app collects location data to enable features like Report Accident, Drive mode, Rescue Me, My Map and Sail Safely. Our Sale Safely feature also requires Background Location Permission for the better use of the feature.",
           type: "paragraph",
         },
         {
@@ -166,8 +166,8 @@ export const privacyPolicy = {
       content: [
         {
           link: {
-            href: "mailto:mail@dubaipolice.gov.ae",
-            label: "mail@dubaipolice.gov.ae",
+            href: "mailto:mail@npf.gov.ng",
+            label: "mail@npf.gov.ng",
           },
           text: "If you have any questions or suggestions regarding our privacy policy, please contact us at ",
           type: "paragraph",
@@ -185,7 +185,7 @@ export const termsConditions = {
       title: "Copyrights",
       content: [
         {
-          text: "Copyright ©2020 Dubai Police, All Rights Reserved. Any rights not expressly granted herein are reserved. No copyrighted material may be distributed, downloaded, modified, reused, copied, reproduced, transferred, displayed, reposted, transmitted, disseminated, sold, published, broadcast or circulated or otherwise used except as expressly stated either in such materials or in this notice without the express written permission of Dubai Police.",
+          text: "Copyright ©2020 Nigeria Police Force, All Rights Reserved. Any rights not expressly granted herein are reserved. No copyrighted material may be distributed, downloaded, modified, reused, copied, reproduced, transferred, displayed, reposted, transmitted, disseminated, sold, published, broadcast or circulated or otherwise used except as expressly stated either in such materials or in this notice without the express written permission of Nigeria Police Force.",
           type: "paragraph",
         },
       ],
@@ -194,7 +194,7 @@ export const termsConditions = {
       title: "Trademarks",
       content: [
         {
-          text: "The marks or logos appearing through this web site are proprietary of Dubai Police. You are prohibited from using any of the marks or logos without permission from Dubai Police, except as permitted by applicable law.",
+          text: "The marks or logos appearing through this web site are proprietary of Nigeria Police Force. You are prohibited from using any of the marks or logos without permission from Nigeria Police Force, except as permitted by applicable law.",
           type: "paragraph",
         },
       ],
@@ -203,7 +203,7 @@ export const termsConditions = {
       title: "Possible Errors and Revisions",
       content: [
         {
-          text: "The information, materials, software, products and services (collectivity data) included in or available through Dubai Police web site and services may be superseded and/or may include inaccuracies or typographical errors. Changes are periodically made to the date contained herein.",
+          text: "The information, materials, software, products and services (collectivity data) included in or available through Nigeria Police Force website and services may be superseded and/or may include inaccuracies or typographical errors. Changes are periodically made to the date contained herein.",
           type: "paragraph",
         },
       ],
@@ -212,7 +212,7 @@ export const termsConditions = {
       title: "Disclaimer of Warranties",
       content: [
         {
-          text: "Dubai Police web site and material relating to Police information, products and services (or to third party information, products and services) is provided as is without any representation or endorsement made and without warranty of any kind, whether express or implied, including but not limited to the implied warranties of satisfactory quality, fitness for a particular purpose non-infringement, compatibility, security and accuracy. The information on this site is provided for convince as part of the service we offer at this website.",
+          text: "Nigeria Police Force website and material relating to Police information, products and services (or to third party information, products and services) is provided as is without any representation or endorsement made and without warranty of any kind, whether express or implied, including but not limited to the implied warranties of satisfactory quality, fitness for a particular purpose non-infringement, compatibility, security and accuracy. The information on this site is provided for convince as part of the service we offer at this website.",
           type: "paragraph",
         },
       ],
@@ -221,15 +221,15 @@ export const termsConditions = {
       title: "Disclaimer of Liability",
       content: [
         {
-          text: "In no event will Dubai Police be liable for any damages whatsoever, but not limited to any direct, incidental, consequential, special, exemplary or other indirect damages arising out of the use of or inability to use the site, the services or the content; any transaction conducted through or facilitated by the site; any claim attributable to errors, omissions, or other inaccuracies in the site.",
+          text: "In no event will Nigeria Police Force be liable for any damages whatsoever, but not limited to any direct, incidental, consequential, special, exemplary or other indirect damages arising out of the use of or inability to use the site, the services or the content; any transaction conducted through or facilitated by the site; any claim attributable to errors, omissions, or other inaccuracies in the site.",
           type: "paragraph",
         },
         {
-          text: "The service and/or content, unauthorized access to or alteration of your transmissions or data or any other matter relating to the site, the service or the content even if Dubai Police has been advised of the possibility of such damages or losses. If you are dissatisfied with the site, the content, or with the terms of use, your sole and exclusive remedy is to discontinue using the site.",
+          text: "The service and/or content, unauthorized access to or alteration of your transmissions or data or any other matter relating to the site, the service or the content even if Nigeria Police Force has been advised of the possibility of such damages or losses. If you are dissatisfied with the site, the content, or with the terms of use, your sole and exclusive remedy is to discontinue using the site.",
           type: "paragraph",
         },
         {
-          text: "Links on this Web Site to third party web sites or information are provided solely as a convenience to you. We will make every effort to clearly indicate that you are leaving Dubai Police web site to go to a linked site but by definition links on Dubai Police web site will lead to other web sites which are not under our control and you are subject to the terms of use and privacy policy applicable to those web sites. We are not responsible for the content of any linked site. We cannot guarantee that these links will work all of the time and have no control over the availability of the linked pages. Visitors who rely on this information do so at their own risk.",
+          text: "Links on this Web Site to third party web sites or information are provided solely as a convenience to you. We will make every effort to clearly indicate that you are leaving Nigeria Police Force website to go to a linked site but by definition links on Nigeria Police Force website will lead to other web sites which are not under our control and you are subject to the terms of use and privacy policy applicable to those web sites. We are not responsible for the content of any linked site. We cannot guarantee that these links will work all of the time and have no control over the availability of the linked pages. Visitors who rely on this information do so at their own risk.",
           type: "paragraph",
         },
       ],
@@ -238,7 +238,7 @@ export const termsConditions = {
       title: "No Unlawful or Prohibited Use",
       content: [
         {
-          text: "As a condition of your use of Dubai Police Web site, you warrant to Dubai Police that you will not use Dubai Police Web site for any purpose that is unlawful or that is prohibited by these terms of use and notices. You may not use Dubai Police Web site in any manner which could damage, disable, overburden, or impair the Web site and servers. You may not use Dubai Police Web site or servers to publish, post, distribute or disseminate any defamatory, obscene or otherwise unlawful material or information, including another's proprietary information, including trademarks or copyrighted information, without express authorization from the rights holder.",
+          text: "As a condition of your use of Nigeria Police Force Website, you warrant to Nigeria Police Force that you will not use Nigeria Police Force Website for any purpose that is unlawful or that is prohibited by these terms of use and notices. You may not use Nigeria Police Force Website in any manner which could damage, disable, overburden, or impair the Web site and servers. You may not use Nigeria Police Force Website or servers to publish, post, distribute or disseminate any defamatory, obscene or otherwise unlawful material or information, including another's proprietary information, including trademarks or copyrighted information, without express authorization from the rights holder.",
           type: "paragraph",
         },
       ],
@@ -247,7 +247,7 @@ export const termsConditions = {
       title: "Privacy",
       content: [
         {
-          text: "Dubai Police Web site, servers and computer system may be monitored for all lawful purposes, including to ensure that their use is authorized, to manage the Web site, server and computer system, to facilitate protection against unauthorized access, and to verify security procedures, survivability and operational security. All information (including without limitation, personal information and electronic communications) placed on or sent over this Web site, server or computer system may be monitored by Dubai Police. The unauthorized use of the Web site, server or computer system may subject you to criminal prosecution. Please read the Dubai Police Web Site Privacy Policy that addresses other privacy issues associated with Dubai Police Website.",
+          text: "Nigeria Police Force Website, servers and computer system may be monitored for all lawful purposes, including to ensure that their use is authorized, to manage the Web site, server and computer system, to facilitate protection against unauthorized access, and to verify security procedures, survivability and operational security. All information (including without limitation, personal information and electronic communications) placed on or sent over this Web site, server or computer system may be monitored by Nigeria Police Force. The unauthorized use of the Web site, server or computer system may subject you to criminal prosecution. Please read the Nigeria Police Force Web Site Privacy Policy that addresses other privacy issues associated with Nigeria Police Force Website.",
           type: "paragraph",
         },
       ],
@@ -256,7 +256,7 @@ export const termsConditions = {
       title: "Password Security",
       content: [
         {
-          text: "If you are registered with Dubai Police Web Site for accessing online services, you are responsible for maintaining the confidentiality of your member identification and password information and for restricting access to your computer. You agree to accept responsibility for all activities that occur under your member identification and password.",
+          text: "If you are registered with Nigeria Police Force Web Site for accessing online services, you are responsible for maintaining the confidentiality of your member identification and password information and for restricting access to your computer. You agree to accept responsibility for all activities that occur under your member identification and password.",
           type: "paragraph",
         },
       ],
@@ -274,7 +274,7 @@ export const termsConditions = {
       title: "Governing Law",
       content: [
         {
-          text: "This Agreement is entered into in the Emirate of United Arab Emirates and shall be governed by and constructed in accordance with the laws of the United Arab Emirates.",
+          text: "This Agreement is entered into in the Territory of Federal Republic of Nigeria and shall be governed by and constructed in accordance with the laws of the Federal Republic of Nigeria.",
           type: "paragraph",
         },
       ],
@@ -283,7 +283,7 @@ export const termsConditions = {
       title: "Modifications",
       content: [
         {
-          text: "Dubai Police may amend or modify this agreement or impose new conditions at any time. Any use of the Web site by you after such notice shall be deemed to constitute acceptance by you of such amendments, modifications or new conditions. You are responsible for regularly reviewing these terms, conditions and notices.",
+          text: "Nigeria Police Force may amend or modify this agreement or impose new conditions at any time. Any use of the Web site by you after such notice shall be deemed to constitute acceptance by you of such amendments, modifications or new conditions. You are responsible for regularly reviewing these terms, conditions and notices.",
           type: "paragraph",
         },
       ],
@@ -292,11 +292,11 @@ export const termsConditions = {
       title: "Settlement of Disputes Relating Electronic Payment",
       content: [
         {
-          text: 'To make sure you get "Dubai Police" services that require electronic payment, legally and safely, avoid payment through an intermediary or by using a credit card or direct debit and/or using other means of payment that belong to third parties, without their consent.',
+          text: 'To make sure you get "Nigeria Police Force" services that require electronic payment, legally and safely, avoid payment through an intermediary or by using a credit card or direct debit and/or using other means of payment that belong to third parties, without their consent.',
           type: "paragraph",
         },
         {
-          text: "In case of violation of the above and/or complaint from the rightful owner of the means of electronic payment used, the client (whether natural or legal person) is subject to legal accountability and is punished by imprisonment and payment of fine, or by either, in accordance with Articles 11, 12, 13 and 14 of the Decree of Federal Law (5/2012), related to combating cybercrimes, without prejudice to the right of Dubai Police in exercising all means of legal protection and rights available and/or granted to it under the law.",
+          text: "In case of violation of the above and/or complaint from the rightful owner of the means of electronic payment used, the client (whether natural or legal person) is subject to legal accountability and is punished by imprisonment and payment of fine, or by either, in accordance with sections 24 to 27 of the Cybercrimes (Prohibition, Prevention, etc.) Act, 2015, without prejudice to the right of Nigeria Police Force in exercising all means of legal protection and rights available and/or granted to it under the law.",
           type: "paragraph",
         },
       ],
@@ -332,7 +332,7 @@ export const customerServiceAgreement = {
             "Provide Smart, Digital and E Services on a 24 hour basis",
             "Provide Service Completion requirements and completion details",
             "Provide transparency",
-            "Give priority to serious cases, to the People of Determination and to the elderly",
+            "Give priority to serious cases, to the Persons with Disabilities and to the elderly",
             "Efficient and humane treatment especially of victims of offences",
             "Accept opinions, receive and handle complaints and remarks.",
           ],
@@ -350,7 +350,7 @@ export const customerServiceAgreement = {
             "Provide required documents",
             "Provide your up to date information on our database",
             "Understand our priority system",
-            "Call 999 only in case of emergency",
+            "Call 112 only in case of emergency",
             "Respond to our inquiries",
             "Offer constructive feedback and suggestions",
           ],
@@ -361,7 +361,7 @@ export const customerServiceAgreement = {
       title: "Disclaimer of Warranties",
       content: [
         {
-          text: "Dubai Police web site and material relating to Police information, products and services (or to third party information, products and services) is provided as is without any representation or endorsement made and without warranty of any kind, whether express or implied, including but not limited to the implied warranties of satisfactory quality, fitness for a particular purpose non-infringement, compatibility security and accuracy. The information on this site is provided for convenience as part of the service we offer at this website.",
+          text: "Nigeria Police Force website and material relating to Police information, products and services (or to third party information, products and services) is provided as is without any representation or endorsement made and without warranty of any kind, whether express or implied, including but not limited to the implied warranties of satisfactory quality, fitness for a particular purpose non-infringement, compatibility security and accuracy. The information on this site is provided for convenience as part of the service we offer at this website.",
           type: "paragraph",
         },
       ],
@@ -370,22 +370,22 @@ export const customerServiceAgreement = {
 };
 
 export const contactUs = {
-  intro: "Reach Dubai Police 24/7",
+  intro: "Reach Nigeria Police Force 24/7",
   reach: {
-    title: "Reach Dubai Police Anytime, Anywhere",
+    title: "Reach Nigeria Police Force Anytime, Anywhere",
     description:
-      "Connect instantly with Dubai Police for emergency or non-emergency support through our dedicated channels — available 24 hours a day.",
+      "Connect instantly with Nigeria Police Force for emergency or non-emergency support through our dedicated channels — available 24 hours a day.",
     lines: [
       {
-        number: "999",
+        number: "112",
         title: "Emergency",
         description: "For immediate police assistance in any emergency.",
       },
       {
-        number: "901",
-        title: "Non-Emergency",
+        number: "122",
+        title: "Road Safety",
         description:
-          "For non-urgent inquiries, general information, or community support.",
+          "For road traffic crashes, obstructions and highway assistance.",
       },
     ],
     signLanguage: {
@@ -393,7 +393,7 @@ export const contactUs = {
       subTitle:
         "A dedicated service for people who are Deaf, hard of hearing, or have speech difficulties.",
       description:
-        "Connect with Dubai Police through the Sign Language Service for accessible communication assistance.",
+        "Connect with Nigeria Police Force through the Sign Language Service for accessible communication assistance.",
     },
   },
   feedback: {
@@ -401,7 +401,7 @@ export const contactUs = {
     subTitle:
       "We value every opinion, suggestion, and concern shared by our community — each helps us serve you better.",
     description:
-      "Please note: under the UAE Federal Penal Code of Law No. 3 of 1987, Article 266, knowingly submitting a false complaint is an offence.",
+      "Please note: under section 140 of the Penal Code Act, Cap. P3 LFN 2004, knowingly submitting a false complaint is an offence.",
     kinds: [
       {
         title: "Suggestion",
@@ -411,266 +411,291 @@ export const contactUs = {
       {
         title: "Remark",
         description:
-          "Share your appreciation for a Dubai Police Officer or team member who made a positive difference. Your words motivate us to do even better.",
+          "Share your appreciation for a Nigeria Police Force Officer or team member who made a positive difference. Your words motivate us to do even better.",
       },
       {
         title: "Complaint",
         description:
-          "Our IT support team is ready to help you resolve issues quickly and ensure your digital experience with Dubai Police runs smoothly.",
+          "Our IT support team is ready to help you resolve issues quickly and ensure your digital experience with Nigeria Police Force runs smoothly.",
       },
     ],
   },
   leaders: {
     title: "Contact",
-    titleMain: "Dubai Police Leadership",
+    titleMain: "Nigeria Police Force Leadership",
     description:
-      "This is a digital service that promotes communication between the senior leadership at Dubai Police and the public. Eliminating all administrative barriers and obstacles to ensure that the leaders respond to queries and remarks accordingly.",
+      "This is a digital service that promotes communication between the senior leadership at Nigeria Police Force and the public. Eliminating all administrative barriers and obstacles to ensure that the leaders respond to queries and remarks accordingly.",
   },
 };
 
+/**
+ * The Command's public counters: the Area Commands that supervise a slice of
+ * the Territory, and the Divisional Headquarters where a report is actually
+ * taken. Addresses and coverage are real; the photographs are placeholders.
+ */
 export const customerCenters = [
   {
-    name: "Barsha Police Station",
-    address: "E44 Al Khail Road - Al Barsha - Al Barsha South - Dubai",
+    name: "Central Area Command",
+    address: "Area 10, Garki",
+    area: "Abuja Municipal",
     about:
-      "The center’s development began in 2011 and was completed in 2013, becoming fully operational in June 2014 . It covers an area of approximately 44 square kilometers in the Emirate of Dubai . &nbsp; Located on Al Khail Street – Al Barsha South , the center provides a wide range of services, including certificates,…",
-    kind: "Smart Police Station",
+      "The senior command for the city centre, supervising the Garki, Wuse, Maitama and Asokoro divisions. It holds the Command's central charge office and the desks that take reports the divisions refer upward.",
+    kind: "Area Command",
     timing: "24 hours",
-    image:
-      "/cms/7645_D9_85_D8_B1_D9_83_D8_B2_D8_A7_D9_84_D8_A8_D8_B1_D8_B4_D8_A7_D8_A1_705bc8ce9b.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.076803,55.214093",
+    image: "/cms/7645_D9_85_D8_B1_D9_83_D8_B2_D8_A7_D9_84_D8_A8_D8_B1_D8_B4_D8_A7_D8_A1_705bc8ce9b.jpg",
+    map: "https://www.google.com/maps/search/?api=1&query=9.035,7.49",
   },
   {
-    name: "Jabal Ali Police Station",
-    address: "Sheikh Mohammed bin Zayed Road in Jebel Ali Industrial Area",
+    name: "Gwagwalada Area Command",
+    address: "Secretariat Road, Gwagwalada",
+    area: "Gwagwalada",
     about:
-      "Jebel Ali Police Station was established on 14 May 1971 , initially operating from a group of tents. With the development of the Jebel Ali Free Zone , the vision of the late Sheikh Rashid bin Saeed Al Maktoum, the station’s founder, became clear. It was entrusted with comprehensive security duties in this vital…",
-    kind: "Smart Police Station",
+      "Covers the Gwagwalada Area Council and the university town around it, including the stretch of the Abuja–Lokoja highway that runs through the council.",
+    kind: "Area Command",
     timing: "24 hours",
     image: "/cms/3152_KRM_9488_cf562f8589.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.010795,55.145633",
+    map: "https://www.google.com/maps/search/?api=1&query=8.943,7.08",
   },
   {
-    name: "Naif Police Station",
-    address: "Sikkat Al Khail Rd",
+    name: "Bwari Area Command",
+    address: "Kubwa Road, Bwari",
+    area: "Bwari",
     about:
-      "In 1939 , the late His Highness Sheikh Rashid bin Saeed Al Maktoum, may God rest his soul, ordered the construction of Naif Fort . Naif Police Station is located on Al Khail – Naif Railway Road , opposite the Hyatt Regency Hotel , and provides a wide range of criminal and traffic services and operations , serving the…",
-    kind: "Police Station",
+      "Responsible for Bwari town, Dutse-Alhaji and the hill settlements north of the city, with a standing patrol on the Bwari–Dutse road.",
+    kind: "Area Command",
     timing: "24 hours",
     image: "/cms/6176_KRM_8062_50432d72da.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.272569,55.305206",
+    map: "https://www.google.com/maps/search/?api=1&query=9.282,7.38",
   },
   {
-    name: "Qusais Police Station",
-    address: "Al Qusais No. (2) on Beirut Street",
+    name: "Kubwa Area Command",
+    address: "Phase 2, Kubwa",
+    area: "Bwari",
     about:
-      "Al Qusais Police Station was established in Al Qusais on 12 August 1977 . Due to the expansion of its jurisdiction, urban development, and population growth in the area, the station was upgraded to a police center on 26 January 1978 . The center is located in Al Qusais No. 2, on Beirut Street , and provides a wide…",
-    kind: "Police Station",
+      "One of the busiest commands in the Territory, covering Kubwa, Byazhin and the expressway that carries the morning traffic into the city.",
+    kind: "Area Command",
     timing: "24 hours",
     image: "/cms/3193_image_7516066b91.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.265042,55.391942",
+    map: "https://www.google.com/maps/search/?api=1&query=9.156,7.326",
   },
   {
-    name: "Rashidiya Police Station",
-    address: "Al-Rashidiya area - Opposite Nad Rashid Market - street number33",
+    name: "Karu Area Command",
+    address: "Nyanya–Karu Road, Nyanya",
+    area: "Abuja Municipal",
     about:
-      "Al-Rashidiya Police Station was opened on 17 July 1976 , initially as a station administratively affiliated with Al Muraqqabat Police Station . It became independent on , 19 July 1984 . The station is located in the Al-Rashidiya area, opposite Nad Rashid Market , and provides a wide range of services, including…",
-    kind: "Police Station",
+      "Covers the eastern corridor at the Nasarawa boundary — Nyanya, Karu, Jikwoyi and Karshi — where the Territory's largest commuter population lives.",
+    kind: "Area Command",
     timing: "24 hours",
     image: "/cms/6519_MN_1448_832x440_388961a3ed.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.226872,55.385722",
+    map: "https://www.google.com/maps/search/?api=1&query=9.01,7.59",
   },
   {
-    name: "Al Raffa Police Station",
-    address: "Bur Dubai area - Al-Fahidi neighborhood",
+    name: "Kuje Area Command",
+    address: "Kuje Town, off Kuje Road",
+    area: "Kuje",
     about:
-      "Al-Raffa Police Station was established in the early seventies, and its presence contributed to maintaining regular security in the Bur Dubai jurisdiction. Al-Raffa Police Station is located in the Bur Dubai area - Al-Fahidi neighborhood. The center provides a range of services and criminal and traffic operations.",
-    kind: "Police Station",
+      "Covers the Kuje Area Council, its farm settlements and the road that links the council to the airport corridor.",
+    kind: "Area Command",
     timing: "24 hours",
     image: "/cms/4513_N_B02736_832x440_450c673242.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.262550,55.289861",
+    map: "https://www.google.com/maps/search/?api=1&query=8.879,7.227",
   },
   {
-    name: "Murqabat Police Station",
-    address: "Abu Bakr Al Siddiq Street, after Warba Center",
+    name: "Garki Division",
+    address: "Area 3, Garki",
+    area: "Abuja Municipal",
     about:
-      "Al Muraqqabat Police Station was established on 26 March 1974 . In 2004 , the station’s building was renovated to keep pace with the urban development of Dubai . Located on Abu Bakr Al Siddiq Street , near Warba Center , the station provides a wide range of services, including certificates, permits, criminal…",
-    kind: "Smart Police Station",
+      "One of the oldest divisions in the Territory, serving Areas 1 to 11, the ministries around them and the Garki market.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/5276_2_1_832x440_qq_59ebc12b9e.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.269975,55.329300",
+    map: "https://www.google.com/maps/search/?api=1&query=9.0333,7.4833",
   },
   {
-    name: "Smart Police Station - Hatta (Wadi Hub)",
-    address: "In the Wadi Hub area",
+    name: "Wuse Division",
+    address: "Zone 3, Wuse",
+    area: "Abuja Municipal",
     about:
-      "The center is an integrated, interactive, self-service police station that operates without human intervention , making it the first of its kind in the Middle East . It follows Hatta Police Station and allows community members to access Dubai Police services that are usually provided in traditional police stations.",
-    kind: "Smart Police Station",
+      "Serves the Wuse zones and the Wuse market, and runs the beat that covers the banks and offices along Aminu Kano Crescent.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/7038_3_M7_A5995_ac1d088ee2.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=24.8154463,56.1601806",
+    map: "https://www.google.com/maps/search/?api=1&query=9.0667,7.4667",
   },
   {
-    name: "Al Faqaa Police Station",
-    address: "Dubai - Al Ain St- - Faqea - Dubai",
+    name: "Wuse II Division",
+    address: "Nouakchott Street, Wuse II",
+    area: "Abuja Municipal",
     about:
-      "Al Faqaa Smart Police Station was established on 04/07/1978 and upgraded to a full police centre on 09/02/2023. Situated on the Dubai – Al Ain Road, the centre serves as a comprehensive hub for criminal and traffic services, supporting the community across its broad jurisdiction — bordered by Abu Dhabi Emirate to the…",
-    kind: "Smart Police Station",
-    timing: "to be added",
+      "Covers Wuse II and the embassies, hotels and night-time economy along Adetokunbo Ademola Crescent.",
+    kind: "Divisional Headquarters",
+    timing: "24 hours",
     image: "/cms/4377_N_B03597_optimized_f2d96b90c9.png",
-    map: "https://www.google.com/maps/search/?api=1&query=24.7277463,55.6203918",
+    map: "https://www.google.com/maps/search/?api=1&query=9.0765,7.474",
   },
   {
-    name: "Al khawaneej Police Station",
-    address: "Al khawaneej 2 -Dubai",
+    name: "Maitama Division",
+    address: "Lungi Street, Maitama",
+    area: "Abuja Municipal",
     about:
-      "Al Khawaneej Police Station is a fully interactive, self-service police centre that operates without human intervention — the first of its kind in the Middle East. It provides community members with seamless access to four smart service packages: Reports, Traffic, Certificates and Permits, and Community Services. The…",
-    kind: "Smart Police Station",
+      "Serves Maitama, Mpape and the diplomatic quarter, working closely with the Command's protection duties.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/3619_N_B04394_5e9017812e.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.2226027,55.508299",
+    map: "https://www.google.com/maps/search/?api=1&query=9.085,7.49",
   },
   {
-    name: "Bur Dubai Police Station",
-    address:
-      "Sheikh Khalifa Bin Zayed st - Al Jafiliya -near the Trade Center roundabout",
+    name: "Asokoro Division",
+    address: "Yakubu Gowon Crescent, Asokoro",
+    area: "Abuja Municipal",
     about:
-      "On 20 October 1979, the late Sheikh Rashid bin Saeed Al Maktoum, may God rest his soul, inaugurated Bur Dubai Police Station, a landmark addition to Dubai's security network. Situated on Sheikh Zayed Road, near the Trade Centre Roundabout, the station delivers a comprehensive range of criminal and traffic services,…",
-    kind: "Smart Police Station",
+      "Covers Asokoro and Guzape, including the residences of government officials and the approach roads to the Presidential Villa.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/7718_N_B02505_1_832x600_6c1d155fb6.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.231531,55.289572",
+    map: "https://www.google.com/maps/search/?api=1&query=9.04,7.52",
   },
   {
-    name: "Smart Police Station - Al lissali",
-    address: "The center is located on Dubai-Al Ain Road",
+    name: "Utako Division",
+    address: "Ekukinam Street, Utako",
+    area: "Abuja Municipal",
     about:
-      "Al Lissali Smart Police Station is a fully interactive, self-service police centre that operates without human intervention. the first of its kind in the Middle East. Offering four smart service packages, Reports, Traffic, Certificates and Permits, and Community Services. the centre provides the community with…",
-    kind: "Smart Police Station",
+      "Serves Utako, the Utako market and the motor park, and the office blocks along the Jabi–Utako link.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/5967_N_B04285_832x440_f0fd1f25ef.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=24.959632,55.496946",
+    map: "https://www.google.com/maps/search/?api=1&query=9.07,7.438",
   },
   {
-    name: "Smart Police Station - Lahbab",
-    address: "Dubai - Hatta Rd",
+    name: "Jabi Division",
+    address: "Jabi District, off Bala Sokoto Way",
+    area: "Abuja Municipal",
     about:
-      "The Lahbab Police Station was inaugurated on 06/07/1978 AD and was converted into a police center on 09/02/2023 AD. The center is located on the Dubai - Hatta Road and offers a range of services including certificates, permits, criminal and traffic operations. It is considered a globally self-service smart police…",
-    kind: "Smart Police Station",
+      "Covers the Jabi district, the lake front and the shopping centre, and runs the marine patrol point on Jabi Lake.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/1737_N_B111_832x440_eb376c7ae5.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.0368725,55.58809",
+    map: "https://www.google.com/maps/search/?api=1&query=9.064,7.427",
   },
   {
-    name: "Ports Police Station",
-    address: "D94 - Jumeirah Street - Port Rashid - Dubai",
+    name: "Life Camp Division",
+    address: "Life Camp, Gwarinpa",
+    area: "Abuja Municipal",
     about:
-      "The Ports Police Station was established in 1968 AD. The Ports Police Station is located on Jumeirah Road - Al Mina - Port and provides a range of certificates, permits and criminal operations services.",
-    kind: "Police Station",
+      "Serves Life Camp, Kado and the Nigeria Police Force estates around them.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/6706_N_B00942_eb37e765de.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.249321742480408,55.277213803541095",
+    map: "https://www.google.com/maps/search/?api=1&query=9.093,7.423",
   },
   {
-    name: "Smart Police Station - The World Islands",
-    address: "near The World Islands",
+    name: "Gwarinpa Division",
+    address: "3rd Avenue, Gwarinpa Estate",
+    area: "Abuja Municipal",
     about:
-      "An integrated, interactive and self-service police station without human intervention. It is considered the first of its kind in the Middle East region, allowing community members to apply for Dubai Police services that are provided in traditional police stations. The center provides many smart services, the most…",
-    kind: "Smart Police Station",
+      "Covers Gwarinpa, the largest housing estate in West Africa, and the district roads running through its seven avenues.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/2375_3_M7_A4443_35ae9361a2.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.2206796,55.2242444",
+    map: "https://www.google.com/maps/search/?api=1&query=9.108,7.405",
   },
   {
-    name: "Smart Police Station - Al Eyas",
-    address:
-      "Al Khawaneej 2 area - Emirates Road - Exit No 67, next to Al Eyas Mosque",
+    name: "Karmo Division",
+    address: "Karmo Village, off Kubwa Expressway",
+    area: "Abuja Municipal",
     about:
-      "The center operates under Al Khawaneej Police Station and offers a comprehensive range of smart services designed to meet the needs of the public efficiently and conveniently. These services include Complaints Services Package, Traffic Services Package, Certificates and Permits Services Package, and Community Services…",
-    kind: "Smart Police Station",
+      "Serves Karmo and the settlements along the Kubwa expressway service lanes.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/5871_3_M7_A4020_HDR_cb49d254e2.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.2091910,55.5499830",
+    map: "https://www.google.com/maps/search/?api=1&query=9.098,7.445",
   },
   {
-    name: "Smart Police Station - Al Seef",
-    address: "Al Seef Street – Near the Car Parks (Dubai Creek)",
+    name: "Dei-Dei Division",
+    address: "Dei-Dei Building Materials Market",
+    area: "Abuja Municipal",
     about:
-      "Al Seef Police Station , inaugurated in 2019 , stands as a flagship Smart Police Station (SPS) and a symbol of Dubai Police’s commitment to innovation and excellence. Designed to redefine the policing experience, the station delivers a wide range of services through an advanced self-service system , enabling customers…",
-    kind: "Smart Police Station",
+      "Covers Dei-Dei, its timber and building-materials markets, and the heavy-goods traffic that feeds them.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/3031_3_M7_A5690_faf65a9220.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.259901,55.309341",
+    map: "https://www.google.com/maps/search/?api=1&query=9.12,7.33",
   },
   {
-    name: "Smart Police Station - Alnkhla",
-    address: "Located in Palm Jumeirah area - Golden Mile Galleria 7",
+    name: "Zuba Division",
+    address: "Zuba Market Road, Zuba",
+    area: "Gwagwalada",
     about:
-      "Its an integrated interactive self-service police center without human intervention, the first of its kind in the Middle East. It allows community members to apply for Dubai Police services typically provided in traditional police stations. The center offers many smart services, including packages for reports, traffic…",
-    kind: "Smart Police Station",
+      "Serves Zuba, the market and the junction where the Abuja–Kaduna and Abuja–Lokoja roads meet.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/5808_N_B04419_832x440_552369e48d.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.1103530,55.1422420",
+    map: "https://www.google.com/maps/search/?api=1&query=9.112,7.226",
   },
   {
-    name: "Smart Police Station - City Walk",
-    address: "The center is located in the Al Wasl area - Al Mustaqbal Street",
+    name: "Dutse-Alhaji Division",
+    address: "Dutse-Alhaji, off Bwari Road",
+    area: "Bwari",
     about:
-      "It is an integrated, interactive, self-service police center without human intervention, and it is considered the first of its kind in the Middle East. It allows members of the community to request Dubai Police services provided in traditional police stations. The center offers many smart services, including packages…",
-    kind: "Smart Police Station",
+      "Covers Dutse-Alhaji, Kubwa village and the surrounding settlements on the northern approach.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/8307_PDP_9241_194115ff1e.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.2047184,55.2601784",
+    map: "https://www.google.com/maps/search/?api=1&query=9.133,7.355",
   },
   {
-    name: "Smart Police Station - Arabian Ranches",
-    address: "Arabian Ranches - Community Centre - 311A",
+    name: "Lugbe Division",
+    address: "FHA Estate, Lugbe",
+    area: "Abuja Municipal",
     about:
-      "It is an integrated, interactive, self-service police station without human intervention. It is considered the first of its kind in the Middle East region, allowing community members to apply for Dubai Police services that are provided in traditional police stations. The center provides many smart services, the most…",
-    kind: "Smart Police Station",
+      "Serves Lugbe, Pyakasa and the airport road corridor, including the service lanes either side of the expressway.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/8455_3_M7_A4544_832x440_4ae88b9d4c.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.0556391,55.2708587",
+    map: "https://www.google.com/maps/search/?api=1&query=8.988,7.372",
   },
   {
-    name: "Smart Police Station - la Mer",
-    address: "The center is located in Jumeirah 1 - La Mer North",
+    name: "Apo Division",
+    address: "Apo Legislative Quarters, Apo",
+    area: "Abuja Municipal",
     about:
-      "It is a fully interactive, self-service police station without human intervention, considered the first of its kind in the Middle East. It allows community members to request Dubai Police services typically provided at traditional police stations. The center offers many smart services, including (Reports Services…",
-    kind: "Smart Police Station",
+      "Covers Apo, Gudu and the legislative quarters, and the mechanic village at Apo.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/510_N_B02759_832x440_718691f996.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.2331456,55.2617981",
+    map: "https://www.google.com/maps/search/?api=1&query=8.995,7.46",
   },
   {
-    name: "Smart Police Station - Design District D3",
-    address: "Dubai Design District - Building 3",
+    name: "Durumi Division",
+    address: "Durumi District, off Ahmadu Bello Way",
+    area: "Abuja Municipal",
     about:
-      "Design District D3 Smart Police Station is a fully interactive, self-service police centre without human intervention. the first of its kind in the Middle East. Designed to serve Dubai's creative community, it provides four smart service packages: Reports, Traffic, Certificates and Permits, and Community Services.…",
-    kind: "Smart Police Station",
+      "Serves Durumi, Area 1 and the Games Village, and the roads that connect them to the city centre.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/3547_3_S2_A3181_df17026e53.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.187357,55.297665",
+    map: "https://www.google.com/maps/search/?api=1&query=9.011,7.472",
   },
   {
-    name: "Smart Police Station - Headquarters",
-    address: "Al Twar 1, on Al Nahda Street",
+    name: "Nyanya Division",
+    address: "Nyanya–Karu Road, Nyanya",
+    area: "Abuja Municipal",
     about:
-      'The Smart Police Station at Dubai Police Headquarters is a fully interactive, self-service police centre that operates without human intervention — the first of its kind in the Middle East. Offering four smart service packages: "Reports, Traffic, Certificates and Permits, and Community Services", the centre provides…',
-    kind: "Smart Police Station",
+      "Covers Nyanya town and the bus terminals that move commuters between the Territory and Nasarawa State every morning.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/5454_N_B02391_3_832x600_4c752f6670.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.277966,55.359775",
+    map: "https://www.google.com/maps/search/?api=1&query=9.006,7.572",
   },
   {
-    name: "Smart Police Station - Sillicon Oasis",
-    address: "Dubai Silicon Oasis area, near the Cedre Shopping Centre",
+    name: "Airport Division",
+    address: "Nnamdi Azikiwe International Airport",
+    area: "Abuja Municipal",
     about:
-      "Fully interactive, self-service police station without human intervention. It is the first of its kind in the Middle East, allowing community members to request Dubai Police services that are typically provided at traditional police stations. The center offers numerous smart services, including a package of reporting…",
-    kind: "Smart Police Station",
+      "Based at the airport, covering the terminals, the cargo area and the airport road, and working alongside aviation security on the airside.",
+    kind: "Divisional Headquarters",
     timing: "24 hours",
     image: "/cms/7097_N_B04423_67f2cabe86.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=25.127580,55.398043",
+    map: "https://www.google.com/maps/search/?api=1&query=9.0068,7.2632",
   },
 ];
-

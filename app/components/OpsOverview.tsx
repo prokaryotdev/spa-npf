@@ -72,7 +72,7 @@ export default function OpsOverview() {
           </h1>
           <p className="mt-1 text-sm text-[var(--ops-dim)]">
             {t(
-              "Live picture for Bur Dubai control. Grades run P1 immediate to P4 scheduled.",
+              "Live picture for Asokoro control. Grades run P1 immediate to P4 scheduled.",
             )}
           </p>
         </div>
@@ -210,8 +210,8 @@ function PendingCall({
 
   return (
     <li
-      className={`dp-ops-row border-b border-[var(--ops-line)] px-4 py-3 last:border-0 ${
-        late ? "dp-ops-overdue" : ""
+      className={`npf-ops-row border-b border-[var(--ops-line)] px-4 py-3 last:border-0 ${
+        late ? "npf-ops-overdue" : ""
       }`}
     >
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">

@@ -8,9 +8,9 @@ import { getT, getLocalized } from "../../i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
   return {
-    title: t("Services | Dubai Police"),
+    title: t("Services | Nigeria Police Force"),
     description: t(
-      "Every Dubai Police service, with its fee, turnaround and who it is for.",
+      "Every Nigeria Police Force service, with its fee, turnaround and who it is for.",
     ),
   };
 }
@@ -22,12 +22,12 @@ export default async function ServicesPage() {
     <PageShell
       title={t("Services")}
       intro={t(
-        "All {n} Dubai Police services, with the fee, the turnaround and who each one is for.",
+        "All {n} Nigeria Police Force services, with the fee, the turnaround and who each one is for.",
         { n: services.length },
       )}
     >
       <section className="bg-white pb-24">
-        <div className="dp-container">
+        <div className="npf-container">
           {/* Reads ?package= from the homepage suite links. */}
           <Suspense fallback={null}>
             <ServiceCatalogue />

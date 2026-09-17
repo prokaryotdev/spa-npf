@@ -8,7 +8,7 @@ import { seedIncidents, seedUnits } from "../content-ops";
  * The whole of the app's "backend": one object in localStorage, read through
  * useSyncExternalStore so every mounted screen sees the same thing.
  *
- * ponytail: no server, no auth, no database. Signing in accepts any Emirates
+ * ponytail: no server, no auth, no database. Signing in accepts any Nigeria
  * ID of the right shape and a request is a row this file appends. Swap the
  * four functions at the bottom for fetch calls when an API exists; nothing
  * else in the app touches storage.
@@ -16,7 +16,7 @@ import { seedIncidents, seedUnits } from "../content-ops";
 
 export type Session = {
   name: string;
-  emiratesId: string;
+  nin: string;
   email: string;
   phone: string;
   /** Which side of the house the account belongs to. */
@@ -256,7 +256,7 @@ export function useStore(): State & { loaded: boolean } {
 
 const now = () => new Date().toISOString();
 
-/** DP-2026-0417 — the reference number people are asked to quote. */
+/** NPF-2026-0417 — the reference number people are asked to quote. */
 function reference(prefix: string) {
   const year = new Date().getFullYear();
   const n = Math.floor(1000 + Math.random() * 9000);
@@ -287,9 +287,9 @@ export function submitRequest(input: {
     submitted: at,
     updated: at,
     fee: input.fee,
-    channel: input.channel ?? "Dubai Police Website",
+    channel: input.channel ?? "Nigeria Police Force Website",
     note: input.note,
-    timeline: [{ at, label: "Submitted", note: "Received by Dubai Police." }],
+    timeline: [{ at, label: "Submitted", note: "Received by Nigeria Police Force." }],
   };
   write({ ...state, requests: [created, ...state.requests] });
   return created;
@@ -462,7 +462,7 @@ export function logIncident(input: {
     ...state.incidents.map((i) => Number(i.id.split("-")[1]) || 0),
   );
   const created: Incident = {
-    id: `DXB-${n + 1}`,
+    id: `FCT-${n + 1}`,
     ...input,
     reported: at,
     dispatched: null,

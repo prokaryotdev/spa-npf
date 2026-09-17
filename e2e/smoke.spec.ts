@@ -39,22 +39,25 @@ test.describe("the public site", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
   });
 
-  test("the Arabic catalogue is Arabic, right to left, and clean", async ({
+  test("the Hausa catalogue is actually in Hausa, and clean", async ({
     page,
   }) => {
     const errors = watchConsole(page);
-    await page.goto("/ar/app/services");
+    await page.goto("/ha/app/services");
 
     const html = page.locator("html");
-    await expect(html).toHaveAttribute("lang", "ar");
-    await expect(html).toHaveAttribute("dir", "rtl");
-    // The catalogue heading, not a fallback: if localize broke, this is English.
-    await expect(page.getByRole("heading", { name: "الخدمات" })).toBeVisible();
+    await expect(html).toHaveAttribute("lang", "ha");
+    // Both languages are Latin, so there is no direction to assert. What
+    // proves localize ran is the heading itself: leave it broken and this is
+    // still the English word.
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Ayyuka", exact: true }),
+    ).toBeVisible();
     expect(errors).toEqual([]);
   });
 
   test("the language switch keeps you on the same page", async ({ page }) => {
-    await page.goto("/ar/app/home/information/laws-legislation");
+    await page.goto("/ha/app/home/information/laws-legislation");
     await page.getByRole("link", { name: /Switch to English/i }).click();
     // Same page, other language — not dumped back on the homepage, which is
     // what every naive implementation of this does.
@@ -77,7 +80,7 @@ test.describe("the public site", () => {
   });
 
   test("every header link resolves, in both languages", async ({ page }) => {
-    for (const lang of ["en", "ar"]) {
+    for (const lang of ["en", "ha"]) {
       await page.goto(`/${lang}`);
       const hrefs = await page
         .locator("header a[href^='/']")
@@ -105,7 +108,7 @@ test.describe("the account half", () => {
     const errors = watchConsole(page);
     await page.goto("/en/app/signin");
 
-    await page.getByLabel(/Emirates ID number/i).fill("784-1989-1234567-1");
+    await page.getByLabel(/NIN/i).fill("12345678901");
     await page.getByLabel(/Password/i).fill("a-password-8-plus");
     await page.getByRole("button", { name: "Sign in", exact: true }).click();
 
@@ -114,20 +117,20 @@ test.describe("the account half", () => {
     // The whole point of the store: a reload must not sign you out.
     await page.reload();
     await expect(page).toHaveURL(/\/en\/app\/portal$/);
-    await expect(page.getByText("Khalid Al Mansoori").first()).toBeVisible();
+    await expect(page.getByText("Chinedu Okafor").first()).toBeVisible();
     expect(errors).toEqual([]);
   });
 
-  test("a bad Emirates ID is refused, and nothing is stored", async ({
+  test("a bad NIN is refused, and nothing is stored", async ({
     page,
   }) => {
     await page.goto("/en/app/signin");
-    await page.getByLabel(/Emirates ID number/i).fill("not-an-id");
+    await page.getByLabel(/NIN/i).fill("not-an-id");
     await page.getByLabel(/Password/i).fill("a-password-8-plus");
     await page.getByRole("button", { name: "Sign in", exact: true }).click();
 
     await expect(page).toHaveURL(/\/app\/signin/);
-    await expect(page.getByText(/An Emirates ID looks like/i)).toBeVisible();
+    await expect(page.getByText(/A NIN is eleven digits/i)).toBeVisible();
   });
 
   test("the portal is not reachable without signing in", async ({ page }) => {
@@ -170,8 +173,8 @@ test.describe("the things that protect the site", () => {
   test("an unknown page 404s in the language it was asked in", async ({
     page,
   }) => {
-    const res = await page.goto("/ar/no-such-page");
+    const res = await page.goto("/ha/no-such-page");
     expect(res!.status()).toBe(404);
-    await expect(page.locator("html")).toHaveAttribute("lang", "ar");
+    await expect(page.locator("html")).toHaveAttribute("lang", "ha");
   });
 });

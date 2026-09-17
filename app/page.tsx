@@ -18,9 +18,9 @@ import {
   smartPolicing as smartPolicingSource,
 } from "./content";
 
-/** The soft green bloom that sits behind the light sections. */
+/** The soft navy bloom that sits behind the light sections. */
 const bloom =
-  "bg-[radial-gradient(#3cbd6b75_7%,#22c55e38_40%,#22c55e00_70%)] rounded-full pointer-events-none absolute";
+  "bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] rounded-full pointer-events-none absolute";
 
 export default async function Home() {
   const appStores = await getLocalized(appStoresSource);
@@ -44,7 +44,7 @@ export default async function Home() {
           <h2 id="quick-services" className="sr-only">
             {t("Popular services")}
           </h2>
-          <div className="dp-container">
+          <div className="npf-container">
             <div className="grid grid-cols-2 gap-2 pt-4 sm:grid-cols-3 lg:flex lg:pt-9">
               {quickServices.map((service) => (
                 <Link
@@ -61,10 +61,10 @@ export default async function Home() {
                       className="object-contain transition-transform duration-500 ease-[var(--ease-custom)] group-hover:scale-110"
                     />
                   </span>
-                  <span className="mx-auto flex min-h-[42px] max-w-[17ch] items-center justify-center text-center font-secondary text-sm leading-normal font-bold text-dp-ink">
+                  <span className="mx-auto flex min-h-[42px] max-w-[17ch] items-center justify-center text-center font-secondary text-sm leading-normal font-bold text-npf-ink">
                     {service.title}
                   </span>
-                  <span className="mx-auto block max-w-[210px] text-center text-sm text-dp-muted lg:text-base lg:leading-tight">
+                  <span className="mx-auto block max-w-[210px] text-center text-sm text-npf-muted lg:text-base lg:leading-tight">
                     {service.body}
                   </span>
                 </Link>
@@ -75,7 +75,7 @@ export default async function Home() {
 
         <Pillars />
 
-        {/* Leading the Way in Smart Policing */}
+        {/* Leading the Way in Modern Policing */}
         <section
           aria-labelledby="smart-policing"
           className="relative overflow-hidden bg-white pt-[70px] pb-16 lg:py-[150px]"
@@ -91,13 +91,13 @@ export default async function Home() {
             className="pointer-events-none absolute top-[2%] left-1/2 z-20 w-[800px] opacity-[0.06]"
           />
 
-          <div className="dp-container relative z-10">
+          <div className="npf-container relative z-10">
             <h2
               id="smart-policing"
               data-reveal
-              className="mb-4 font-secondary text-4xl leading-[1.2] font-bold text-dp-green-deep md:max-w-[20ch] lg:mb-6 lg:text-7xl 2xl:text-8xl"
+              className="mb-4 font-secondary text-4xl leading-[1.2] font-bold text-npf-blue-deep md:max-w-[20ch] lg:mb-6 lg:text-7xl 2xl:text-8xl"
             >
-              {t("Leading the Way in Smart Policing")}
+              {t("Leading the Way in Modern Policing")}
             </h2>
             <p
               data-reveal
@@ -108,7 +108,7 @@ export default async function Home() {
               )}
             </p>
 
-            <CardRail label={t("smart policing")} className="mt-10 md:hidden">
+            <CardRail label={t("modern policing")} className="mt-10 md:hidden">
               {smartPolicing.map((card) => (
                 <InitiativeCard
                   key={card.title}
@@ -140,7 +140,7 @@ export default async function Home() {
 
         <Domains />
 
-        {/* Smart Police Stations */}
+        {/* Divisional Police Stations */}
         <section
           aria-labelledby="sps"
           className="relative overflow-hidden bg-white pt-[70px] pb-16 lg:py-[150px]"
@@ -149,20 +149,20 @@ export default async function Home() {
             className={`${bloom} top-0 right-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 opacity-70 md:size-[1200px] md:opacity-60`}
           />
 
-          <div className="dp-container relative z-10">
+          <div className="npf-container relative z-10">
             <h2
               id="sps"
               data-reveal
-              className="mb-4 font-secondary text-4xl leading-[1.2] font-bold text-dp-green-deep md:max-w-[20ch] lg:mb-6 lg:text-7xl 2xl:text-8xl"
+              className="mb-4 font-secondary text-4xl leading-[1.2] font-bold text-npf-blue-deep md:max-w-[20ch] lg:mb-6 lg:text-7xl 2xl:text-8xl"
             >
-              {t("Smart Police Stations")}
+              {t("Divisional Police Stations")}
             </h2>
             <p
               data-reveal
               className="max-w-[640px] text-sm text-neutral-700 md:text-2xl"
             >
               {t(
-                "Smart Police Stations (SPS): Smart, Practical, Secure, and around the clock.",
+                "Area Commands, Divisions and Posts: close by, always open, and staffed around the clock.",
               )}
             </p>
             <CardRail label={t("SPS")} className="mt-10 md:mt-20">
@@ -187,11 +187,11 @@ export default async function Home() {
             className={`${bloom} bottom-0 left-0 h-80 w-56 -translate-x-1/2 translate-y-1/2 opacity-70 md:size-[1200px] md:opacity-60`}
           />
 
-          <div className="dp-container relative z-10">
+          <div className="npf-container relative z-10">
             <h2
               id="community"
               data-reveal
-              className="mb-4 font-secondary text-4xl leading-[1.2] font-bold text-dp-green-deep md:max-w-[16ch] lg:mb-6 lg:text-7xl 2xl:text-8xl"
+              className="mb-4 font-secondary text-4xl leading-[1.2] font-bold text-npf-blue-deep md:max-w-[16ch] lg:mb-6 lg:text-7xl 2xl:text-8xl"
             >
               {t("Shaping the Future, Side by Side")}
             </h2>
@@ -239,7 +239,7 @@ export default async function Home() {
         {/* App download */}
         <section
           aria-labelledby="app"
-          className="relative flex items-center overflow-hidden bg-[#091815] py-16 text-white md:min-h-screen md:py-[120px] 2xl:py-[150px]"
+          className="relative flex items-center overflow-hidden bg-[#060D18] py-16 text-white md:min-h-screen md:py-[120px] 2xl:py-[150px]"
         >
           <div
             aria-hidden
@@ -264,20 +264,20 @@ export default async function Home() {
           </div>
           <span
             aria-hidden
-            className="pointer-events-none absolute top-0 -right-[25%] block aspect-square w-[50%] -translate-y-1/2 rounded-full bg-[radial-gradient(#00e599ba_-20%,#00e59924_40%,transparent_68%)] opacity-65"
+            className="pointer-events-none absolute top-0 -right-[25%] block aspect-square w-[50%] -translate-y-1/2 rounded-full bg-[radial-gradient(#2a8fe5ba_-20%,#2a8fe524_40%,transparent_68%)] opacity-65"
           />
           <span
             aria-hidden
-            className="pointer-events-none absolute bottom-0 -left-[25%] block aspect-square w-[70%] translate-y-1/2 rounded-full bg-[radial-gradient(#00e599ba_-20%,#00e59924_40%,transparent_68%)] opacity-65"
+            className="pointer-events-none absolute bottom-0 -left-[25%] block aspect-square w-[70%] translate-y-1/2 rounded-full bg-[radial-gradient(#2a8fe5ba_-20%,#2a8fe524_40%,transparent_68%)] opacity-65"
           />
 
-          <div className="dp-container relative z-10 max-w-[1276px] text-center">
+          <div className="npf-container relative z-10 max-w-[1276px] text-center">
             <h2
               id="app"
               data-reveal
               className="mx-auto max-w-[1100px] font-secondary text-3xl leading-tight font-bold lg:text-7xl"
             >
-              {t("Download the Dubai Police App")}
+              {t("Download the Nigeria Police Force App")}
             </h2>
             <p
               data-reveal
@@ -293,7 +293,7 @@ export default async function Home() {
                 {appStores.map((store) => (
                   <li key={store.label}>
                     <a
-                      href="https://www.dubaipolice.gov.ae/"
+                      href="https://fct.npf.gov.ng/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="relative block h-[42px] w-[132px] rounded-lg bg-black px-4 py-1.5 transition-transform duration-300 hover:-translate-y-1 md:h-[52px] md:w-[166px]"

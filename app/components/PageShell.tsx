@@ -30,15 +30,15 @@ export async function PageShell({
       <Header solid={solidHeader} />
       <main id="main-content" tabIndex={-1} className="outline-none">
         <div className="relative overflow-hidden bg-white pt-40 pb-16 md:pt-48">
-          <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rtl:-translate-x-1/2 rounded-full bg-[radial-gradient(#3cbd6b75_7%,#22c55e38_40%,#22c55e00_70%)] opacity-70 md:size-[1000px] md:opacity-60" />
+          <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 md:size-[1000px] md:opacity-60" />
 
-          <div className="dp-container relative">
+          <div className="npf-container relative">
             <nav aria-label={t("Breadcrumb")} className="mb-6">
-              <ol className="flex flex-wrap items-center gap-1 text-sm text-dp-body">
+              <ol className="flex flex-wrap items-center gap-1 text-sm text-npf-body">
                 <li className="flex items-center gap-1">
                   <Link
                     href="/"
-                    className="transition-colors hover:text-dp-green"
+                    className="transition-colors hover:text-npf-blue"
                   >
                     {t("Home")}
                   </Link>
@@ -48,7 +48,7 @@ export async function PageShell({
                   <li key={step.href} className="flex items-center gap-1">
                     <Link
                       href={step.href}
-                      className="transition-colors hover:text-dp-green"
+                      className="transition-colors hover:text-npf-blue"
                     >
                       {t(step.label)}
                     </Link>
@@ -57,7 +57,7 @@ export async function PageShell({
                 ))}
                 <li
                   aria-current="page"
-                  className="max-w-[46ch] truncate font-medium text-dp-ink"
+                  className="max-w-[46ch] truncate font-medium text-npf-ink"
                 >
                   {t(title)}
                 </li>
@@ -65,7 +65,7 @@ export async function PageShell({
             </nav>
 
             <h1
-              className={`font-secondary leading-[1.15] font-bold text-dp-green-deep ${
+              className={`font-secondary leading-[1.15] font-bold text-npf-blue-deep ${
                 titleSize === "article"
                   ? "max-w-[22ch] text-3xl lg:text-5xl"
                   : "text-4xl lg:text-7xl"
@@ -99,7 +99,7 @@ export function Panel({
 }) {
   return (
     <section>
-      <h2 className="mb-4 font-secondary text-xl font-bold text-dp-green-deep md:text-2xl">
+      <h2 className="mb-4 font-secondary text-xl font-bold text-npf-blue-deep md:text-2xl">
         {heading}
       </h2>
       {children}
@@ -136,17 +136,17 @@ export async function LinkCard({
         />
       </div>
       <div className="flex flex-col gap-3 p-6 lg:p-8">
-        <h2 className="font-secondary text-xl font-bold text-dp-green-deep md:text-2xl">
+        <h2 className="font-secondary text-xl font-bold text-npf-blue-deep md:text-2xl">
           {t(card.title)}
         </h2>
-        <p className="text-sm leading-relaxed text-dp-body md:text-base">
+        <p className="text-sm leading-relaxed text-npf-body md:text-base">
           {t(card.body)}
         </p>
         <Link
           href={card.href}
           target={external ? "_blank" : undefined}
           rel={external ? "noopener noreferrer" : undefined}
-          className="mt-1 inline-flex items-center gap-2 self-start rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
+          className="mt-1 inline-flex items-center gap-2 self-start rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
         >
           {t(card.cta)}
           <ArrowRight className="size-4" />
@@ -177,12 +177,12 @@ export async function LegalSections({
   const t = await getT();
   return (
     <section className="bg-white pb-24">
-      <div className="dp-container grid gap-10 lg:grid-cols-[260px_1fr] lg:gap-16">
+      <div className="npf-container grid gap-10 lg:grid-cols-[260px_1fr] lg:gap-16">
         <nav
           aria-label={t("On this page")}
           className="lg:sticky lg:top-32 lg:self-start"
         >
-          <h2 className="mb-3 font-secondary text-sm font-bold tracking-wide text-dp-muted uppercase">
+          <h2 className="mb-3 font-secondary text-sm font-bold tracking-wide text-npf-muted uppercase">
             {t("On this page")}
           </h2>
           <ol className="space-y-2 text-sm">
@@ -190,7 +190,7 @@ export async function LegalSections({
               <li key={s.title}>
                 <a
                   href={`#${slug(s.title)}`}
-                  className="text-dp-body transition-colors hover:text-dp-green"
+                  className="text-npf-body transition-colors hover:text-npf-blue"
                 >
                   {s.title}
                 </a>
@@ -206,14 +206,14 @@ export async function LegalSections({
               className="mb-10 scroll-mt-32"
               id={slug(s.title)}
             >
-              <h2 className="mb-4 font-secondary text-2xl font-bold text-dp-green-deep">
+              <h2 className="mb-4 font-secondary text-2xl font-bold text-npf-blue-deep">
                 {s.title}
               </h2>
               {s.content.map((item, i) =>
                 item.type === "list" ? (
                   <div key={i}>
                     {item.intro ? (
-                      <p className="mb-3 text-base leading-relaxed text-dp-body">
+                      <p className="mb-3 text-base leading-relaxed text-npf-body">
                         {item.intro}
                       </p>
                     ) : null}
@@ -221,7 +221,7 @@ export async function LegalSections({
                       {(item.items ?? []).map((li) => (
                         <li
                           key={li}
-                          className="relative ps-6 text-base leading-relaxed text-dp-body before:absolute before:top-[0.6em] before:start-0 before:size-2 before:rounded-full before:bg-dp-green"
+                          className="relative ps-6 text-base leading-relaxed text-npf-body before:absolute before:top-[0.6em] before:start-0 before:size-2 before:rounded-full before:bg-npf-blue"
                         >
                           {li}
                         </li>
@@ -231,7 +231,7 @@ export async function LegalSections({
                 ) : (
                   <p
                     key={i}
-                    className="mb-4 text-base leading-relaxed text-dp-body"
+                    className="mb-4 text-base leading-relaxed text-npf-body"
                   >
                     {item.text}
                     {item.link ? (
@@ -239,7 +239,7 @@ export async function LegalSections({
                         href={item.link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-medium text-dp-green underline underline-offset-2"
+                        className="font-medium text-npf-blue underline underline-offset-2"
                       >
                         {item.link.label}
                       </a>

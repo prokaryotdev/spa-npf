@@ -35,7 +35,7 @@ export default function PortalDocuments() {
 
   return (
     <div>
-      <h2 className="mb-6 font-secondary text-2xl font-bold text-dp-green-deep">
+      <h2 className="mb-6 font-secondary text-2xl font-bold text-npf-blue-deep">
         {t("Documents")}
       </h2>
 
@@ -46,14 +46,14 @@ export default function PortalDocuments() {
               key={doc.id}
               className="flex flex-wrap items-center gap-4 rounded-2xl px-5 py-4 ring-1 ring-black/[0.07]"
             >
-              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-[#F4F8F6] text-dp-green-ink">
+              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-[#F4F6FA] text-npf-blue-ink">
                 <FileIcon className="size-5" />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="font-secondary text-base font-bold text-dp-ink">
+                <p className="font-secondary text-base font-bold text-npf-ink">
                   {t(doc.name)}
                 </p>
-                <p className="mt-0.5 text-sm text-dp-muted tabular-nums">
+                <p className="mt-0.5 text-sm text-npf-muted tabular-nums">
                   {t("{ref} · issued {date}", {
                     ref: doc.id,
                     date: format.date(doc.issued),
@@ -69,7 +69,7 @@ export default function PortalDocuments() {
                 type="button"
                 disabled
                 title={t("Downloads are not available in this rebuild")}
-                className="inline-flex shrink-0 cursor-not-allowed items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-dp-muted ring-1 ring-black/10"
+                className="inline-flex shrink-0 cursor-not-allowed items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-muted ring-1 ring-black/10"
               >
                 <DownloadIcon aria-hidden className="size-4" />
                 {t("Download")}
@@ -86,7 +86,7 @@ export default function PortalDocuments() {
           action={
             <Link
               href="/app/services"
-              className="inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
+              className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
             >
               {t("Browse services")}
               <ArrowRight aria-hidden className="size-4" />

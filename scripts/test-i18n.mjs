@@ -1,5 +1,5 @@
 /**
- * Translation coverage. Fails when a string a reader can see has no Arabic
+ * Translation coverage. Fails when a string a reader can see has no Hausa
  * entry, which is the only way to keep a 1,700-string dictionary honest as
  * the content files grow:
  *   node --import ./scripts/ts-resolve.mjs scripts/test-i18n.mjs
@@ -8,30 +8,31 @@
  */
 import assert from "node:assert/strict";
 import { collectWanted } from "./wanted-strings.mjs";
+import { PROPER_NOUNS } from "./proper-nouns.mjs";
 
-import { dictionary } from "../app/i18n/ar.ts";
-import { arChrome } from "../app/i18n/ar-chrome.ts";
-import { arHome } from "../app/i18n/ar-home.ts";
-import { arServices } from "../app/i18n/ar-services.ts";
-import { arPages } from "../app/i18n/ar-pages.ts";
-import { arLegal } from "../app/i18n/ar-legal.ts";
-import { arAccount } from "../app/i18n/ar-account.ts";
-import { arOps } from "../app/i18n/ar-ops.ts";
+import { dictionary } from "../app/i18n/ha.ts";
+import { haChrome } from "../app/i18n/ha-chrome.ts";
+import { haHome } from "../app/i18n/ha-home.ts";
+import { haServices } from "../app/i18n/ha-services.ts";
+import { haPages } from "../app/i18n/ha-pages.ts";
+import { haLegal } from "../app/i18n/ha-legal.ts";
+import { haAccount } from "../app/i18n/ha-account.ts";
+import { haOps } from "../app/i18n/ha-ops.ts";
 
 const wanted = await collectWanted();
 
 const missing = [...wanted].filter(([key]) => !(key in dictionary));
 
 // No two dictionary files may claim the same English string, or the spread
-// order silently decides which Arabic ships.
+// order silently decides which Hausa ships.
 const parts = {
-  arChrome,
-  arHome,
-  arServices,
-  arPages,
-  arLegal,
-  arAccount,
-  arOps,
+  haChrome,
+  haHome,
+  haServices,
+  haPages,
+  haLegal,
+  haAccount,
+  haOps,
 };
 const seen = new Map();
 const clashes = [];
@@ -43,10 +44,14 @@ for (const [name, part] of Object.entries(parts))
     else if (!first) seen.set(key, name);
   }
 
-// Every Arabic value must actually be Arabic — a copy-paste that left the
-// English in place reads as "translated" to the fallback but not to a reader.
-const notArabic = Object.entries(dictionary).filter(
-  ([key, value]) => !/\p{Script=Arabic}/u.test(value) && value === key,
+// Hausa and English share the Latin alphabet, so there is no script test to
+// lean on the way an Arabic dictionary could: an entry left in English looks
+// exactly like a translated one. What is still catchable is the copy-paste
+// that translated nothing at all, so an entry whose value equals its key is
+// treated as untranslated — unless it is one of the names in proper-nouns.mjs,
+// which are identical in both languages on purpose and carry no entry at all.
+const notHausa = Object.entries(dictionary).filter(
+  ([key, value]) => value === key && !PROPER_NOUNS.has(key),
 );
 
 if (process.argv.includes("--list")) {
@@ -60,18 +65,18 @@ if (process.argv.includes("--list")) {
     `conflicting dictionary entries:\n${clashes.join("\n")}`,
   );
   assert.deepEqual(
-    notArabic.map(([k]) => k),
+    notHausa.map(([k]) => k),
     [],
     "dictionary entries left in English",
   );
   assert.equal(
     missing.length,
     0,
-    `${missing.length} of ${wanted.size} strings have no Arabic:\n` +
+    `${missing.length} of ${wanted.size} strings have no Hausa:\n` +
       missing
         .slice(0, 20)
         .map(([k, w]) => `  ${w}\t${k}`)
         .join("\n"),
   );
-  console.log(`arabic coverage ok — ${wanted.size} strings`);
+  console.log(`hausa coverage ok — ${wanted.size} strings`);
 }

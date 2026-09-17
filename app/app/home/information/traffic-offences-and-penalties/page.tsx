@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import DataTable from "../../../../components/DataTable";
 import { PageShell } from "../../../../components/PageShell";
-import { blackPoints as dataSource } from "../../../../content-sub";
+import { penaltyPoints as dataSource } from "../../../../content-sub";
 import { getT, getLocalized } from "../../../../i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
   return {
-    title: t("Black Points of Traffic Violations | Dubai Police"),
+    title: t("Traffic Offences and Penalties | Nigeria Police Force"),
     description: t(
-      "Fines, black points and vehicle confiscation periods for traffic violations in Dubai.",
+      "Fines, penalty points and vehicle confiscation periods for traffic violations in Abuja.",
     ),
   };
 }
@@ -20,29 +20,29 @@ export default async function BlackPointsPage() {
   return (
     <PageShell
       title={data.title}
-      intro={t("Learn how black points and fines impact your traffic record.")}
+      intro={t("Learn how penalty points and fines impact your traffic record.")}
       trail={[{ label: "Information", href: "/app/home/information" }]}
     >
       <section className="bg-white pb-24">
-        <div className="dp-container">
-          <p className="mb-6 text-sm text-dp-muted">
+        <div className="npf-container">
+          <p className="mb-6 text-sm text-npf-muted">
             {t("Page last updated: {date}", { date: t(data.updatedAt) })}
           </p>
           <DataTable
-            caption="Traffic violations, fines and black points"
+            caption="Traffic offences, fines and penalty points"
             rows={data.rows}
             filterKey="category"
             columns={[
-              { key: "description", label: "Violation" },
+              { key: "description", label: "Offence" },
               {
                 key: "fineAmount",
-                label: "Fine (AED)",
+                label: "Fine (₦)",
                 numeric: true,
                 width: "120px",
               },
               {
-                key: "blackPoints",
-                label: "Black points",
+                key: "penaltyPoints",
+                label: "Penalty points",
                 numeric: true,
                 width: "120px",
               },

@@ -18,7 +18,7 @@ import type { Service } from "../content-services";
  */
 
 const BASE = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dubaipolice.gov.ae"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://fct.npf.gov.ng"
 ).replace(/\/$/, "");
 
 /**
@@ -49,27 +49,29 @@ export async function OrganisationLd({ lang }: { lang: string }) {
       data={{
         "@context": "https://schema.org",
         "@type": "GovernmentOrganization",
-        name: lang === "ar" ? "شرطة دبي" : "Dubai Police",
+        name:
+          lang === "ha"
+            ? "Rundunar 'Yan Sandan Najeriya"
+            : "Nigeria Police Force",
         url: BASE,
-        logo: `${BASE}/img/logo-dubai-police.svg`,
-        areaServed: { "@type": "City", name: "Dubai" },
+        areaServed: { "@type": "City", name: "Abuja" },
         parentOrganization: {
           "@type": "GovernmentOrganization",
-          name: "Government of Dubai",
+          name: "Federal Republic of Nigeria",
         },
         contactPoint: [
           {
             "@type": "ContactPoint",
-            telephone: "+971-999",
+            telephone: "+234-112",
             contactType: "emergency",
-            areaServed: "AE",
+            areaServed: "NG",
           },
           {
             "@type": "ContactPoint",
-            telephone: "+971-901",
+            telephone: "+234-805-700-0001",
             contactType: "customer service",
-            areaServed: "AE",
-            availableLanguage: ["en", "ar"],
+            areaServed: "NG",
+            availableLanguage: ["en", "ha"],
           },
         ],
       }}
@@ -90,14 +92,14 @@ export async function ServiceLd({ service }: { service: Service }) {
         serviceType: service.category || undefined,
         provider: {
           "@type": "GovernmentOrganization",
-          name: "Dubai Police",
+          name: "Nigeria Police Force",
           url: BASE,
         },
-        areaServed: { "@type": "City", name: "Dubai" },
+        areaServed: { "@type": "City", name: "Abuja" },
         audience: service.audiences?.length
           ? service.audiences.map((a) => ({ "@type": "Audience", audienceType: a }))
           : undefined,
-        // feeSummary is prose — "Free of Charge", "AED 100 per copy" — so it
+        // feeSummary is prose — "Free of Charge", "₦40,000 per copy" — so it
         // goes in as a description rather than a number that would be wrong.
         offers: service.feeSummary
           ? { "@type": "Offer", description: service.feeSummary }

@@ -53,7 +53,7 @@ const logLine = (
  * The calls board: every call of the shift, and the panel where one is worked.
  *
  * The table leads with the grade and the clock rather than the reference
- * number, because nobody scans a board looking for DXB-4417 — they scan it
+ * number, because nobody scans a board looking for FCT-4417 — they scan it
  * looking for the oldest P1 with nobody on it.
  */
 export default function OpsIncidents() {
@@ -70,7 +70,7 @@ export default function OpsIncidents() {
 
   /**
    * Both languages are searched: the board holds English reference data but
-   * an Arabic-speaking operator types the call type in Arabic.
+   * an Hausa-speaking operator types the call type in Hausa.
    */
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -224,7 +224,7 @@ export default function OpsIncidents() {
                           active
                             ? "bg-[var(--ops-raised)]"
                             : "hover:bg-[var(--ops-raised)]/60"
-                        } ${late ? "dp-ops-overdue" : ""}`}
+                        } ${late ? "npf-ops-overdue" : ""}`}
                       >
                         <td className="py-2.5 pe-3 ps-4">
                           <PriorityTag priority={incident.priority} />
@@ -548,7 +548,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
   const t = useT();
   const id = useId();
   // State holds the English value the store records; only the option text is
-  // translated, so a call logged in Arabic still reads back in English.
+  // translated, so a call logged in Hausa still reads back in English.
   const [kind, setKind] = useState(callTypes[0]);
   const [priority, setPriority] = useState<Priority>("P3");
   const [area, setArea] = useState("");
@@ -612,7 +612,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
             value={area}
             onChange={(e) => setArea(e.target.value)}
             required
-            placeholder={t("Al Barsha 1")}
+            placeholder={t("Wuse 1")}
             className={INPUT}
           />
         </Field>

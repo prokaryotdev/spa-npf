@@ -43,7 +43,7 @@ export default function PortalRequests() {
 
   return (
     <div>
-      <h2 className="mb-6 font-secondary text-2xl font-bold text-dp-green-deep">
+      <h2 className="mb-6 font-secondary text-2xl font-bold text-npf-blue-deep">
         {t("My Requests")}
       </h2>
 
@@ -51,14 +51,14 @@ export default function PortalRequests() {
         <div className="min-w-[220px] flex-1">
           <label
             htmlFor={`${id}-q`}
-            className="mb-1.5 block text-sm font-medium text-dp-ink"
+            className="mb-1.5 block text-sm font-medium text-npf-ink"
           >
             {t("Find a request")}
           </label>
-          <div className="flex items-center gap-3 rounded-xl bg-[#F4F8F6] px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-dp-green">
+          <div className="flex items-center gap-3 rounded-xl bg-[#F4F6FA] px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-npf-blue">
             <SearchIcon
               aria-hidden
-              className="size-5 shrink-0 text-dp-green-ink"
+              className="size-5 shrink-0 text-npf-blue-ink"
             />
             <input
               id={`${id}-q`}
@@ -66,14 +66,14 @@ export default function PortalRequests() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t("Service name or reference")}
-              className="w-full bg-transparent py-3 text-base text-dp-ink outline-none placeholder:text-dp-muted"
+              className="w-full bg-transparent py-3 text-base text-npf-ink outline-none placeholder:text-npf-muted"
             />
           </div>
         </div>
         <div>
           <label
             htmlFor={`${id}-s`}
-            className="mb-1.5 block text-sm font-medium text-dp-ink"
+            className="mb-1.5 block text-sm font-medium text-npf-ink"
           >
             {t("Status")}
           </label>
@@ -81,7 +81,7 @@ export default function PortalRequests() {
             id={`${id}-s`}
             value={status}
             onChange={(e) => setStatus(e.target.value as RequestStatus | "All")}
-            className="rounded-xl bg-[#F4F8F6] px-4 py-3 text-base text-dp-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-dp-green"
+            className="rounded-xl bg-[#F4F6FA] px-4 py-3 text-base text-npf-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-npf-blue"
           >
             {FILTERS.map((f) => (
               <option key={f} value={f}>
@@ -92,7 +92,7 @@ export default function PortalRequests() {
         </div>
       </div>
 
-      <p aria-live="polite" className="mb-4 text-sm text-dp-muted">
+      <p aria-live="polite" className="mb-4 text-sm text-npf-muted">
         {t("Showing {shown} of {total} requests", {
           shown: visible.length,
           total: requests.length,
@@ -115,7 +115,7 @@ export default function PortalRequests() {
             requests.length ? null : (
               <Link
                 href="/app/services"
-                className="inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid"
+                className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
               >
                 {t("Browse services")}
                 <ArrowRight aria-hidden className="size-4" />
@@ -142,10 +142,10 @@ export default function PortalRequests() {
                   className="flex w-full items-center gap-4 px-5 py-4 text-start transition-colors hover:bg-[#F9F9F9]"
                 >
                   <span className="min-w-0 flex-1">
-                    <span className="block font-secondary text-base font-bold text-dp-ink">
+                    <span className="block font-secondary text-base font-bold text-npf-ink">
                       {t(request.service)}
                     </span>
-                    <span className="mt-0.5 block text-sm text-dp-muted">
+                    <span className="mt-0.5 block text-sm text-npf-muted">
                       {t("{ref} · submitted {date} · {fee}", {
                         ref: request.id,
                         date: format.date(request.submitted),
@@ -156,7 +156,7 @@ export default function PortalRequests() {
                   <StatusPill status={request.status} />
                   <ChevronDown
                     aria-hidden
-                    className={`size-5 shrink-0 text-dp-muted transition-transform duration-300 ease-[var(--ease-custom)] ${
+                    className={`size-5 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-custom)] ${
                       open ? "rotate-180" : ""
                     }`}
                   />
@@ -192,17 +192,17 @@ export default function PortalRequests() {
                           <span
                             aria-hidden
                             className={`absolute top-1.5 -start-6 size-[11px] rounded-full ring-4 ring-white ${
-                              i === 0 ? "bg-dp-green" : "bg-black/20"
+                              i === 0 ? "bg-npf-blue" : "bg-black/20"
                             }`}
                           />
-                          <p className="font-medium text-dp-ink">
+                          <p className="font-medium text-npf-ink">
                             {t(step.label)}
                           </p>
-                          <p className="mt-0.5 text-xs text-dp-muted tabular-nums">
+                          <p className="mt-0.5 text-xs text-npf-muted tabular-nums">
                             {format.dateTime(step.at)}
                           </p>
                           {step.note ? (
-                            <p className="mt-1 text-sm leading-relaxed text-dp-body">
+                            <p className="mt-1 text-sm leading-relaxed text-npf-body">
                               {t(step.note)}
                             </p>
                           ) : null}
@@ -213,14 +213,14 @@ export default function PortalRequests() {
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link
                       href={`/app/services/${request.slug}`}
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-dp-ink ring-1 ring-black/10 transition-colors hover:bg-black/[0.04]"
+                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-black/10 transition-colors hover:bg-black/[0.04]"
                     >
                       {t("About this service")}
                       <ArrowRight aria-hidden className="size-4" />
                     </Link>
                     <Link
                       href="/app/home/contactUs"
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-dp-ink ring-1 ring-black/10 transition-colors hover:bg-black/[0.04]"
+                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-black/10 transition-colors hover:bg-black/[0.04]"
                     >
                       {t("Ask about it")}
                     </Link>
@@ -236,7 +236,7 @@ export default function PortalRequests() {
 }
 
 /**
- * The other half of "Action Needed". Dubai Police asks the applicant for
+ * The other half of "Action Needed". Nigeria Police Force asks the applicant for
  * something; without this the applicant reads the request and has nowhere to
  * put the answer, so the request sits in the officer's queue for good.
  *
@@ -261,7 +261,7 @@ function Reply({ request }: { request: TrackedRequest }) {
     >
       <label
         htmlFor={`${id}-reply`}
-        className="mb-1.5 block text-sm font-medium text-dp-ink"
+        className="mb-1.5 block text-sm font-medium text-npf-ink"
       >
         {t("Your reply")}
       </label>
@@ -271,12 +271,12 @@ function Reply({ request }: { request: TrackedRequest }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder={t("Tell us what you have done, or what you are sending.")}
-        className="w-full rounded-xl border border-[#E4E2E6] bg-white px-4 py-3 text-base leading-relaxed text-dp-ink outline-none placeholder:text-dp-muted focus:ring-2 focus:ring-dp-green"
+        className="w-full rounded-xl border border-[#E4E2E6] bg-white px-4 py-3 text-base leading-relaxed text-npf-ink outline-none placeholder:text-npf-muted focus:ring-2 focus:ring-npf-blue"
       />
       <button
         type="submit"
         disabled={!text.trim()}
-        className="mt-3 inline-flex items-center gap-2 rounded-full bg-dp-green px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-dp-green-mid disabled:cursor-not-allowed disabled:opacity-40"
+        className="mt-3 inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid disabled:cursor-not-allowed disabled:opacity-40"
       >
         {t("Send reply")}
         <ArrowRight aria-hidden className="size-4" />

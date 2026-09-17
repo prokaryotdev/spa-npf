@@ -22,7 +22,7 @@ const ENTRY =
 
 let total = 0;
 let removed = 0;
-for (const f of fs.readdirSync("app/i18n").filter((f) => /^ar-.*\.ts$/.test(f))) {
+for (const f of fs.readdirSync("app/i18n").filter((f) => /^ha-.*.ts$/.test(f))) {
   const p = path.join("app/i18n", f);
   const src = fs.readFileSync(p, "utf8").replace(/\r\n/g, "\n");
   const hits = [...src.matchAll(ENTRY)];

@@ -3,34 +3,33 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { OrganisationLd } from "./components/StructuredData";
 import { LocaleProvider } from "./i18n/client";
-import { dirOf } from "./i18n/config";
 import { getLang, getPathname, getT } from "./i18n/server";
 import { LANGS } from "./i18n/config";
 import { localePath } from "./i18n/path";
 
-const dubai = localFont({
-  variable: "--font-dubai",
+const sans = localFont({
+  variable: "--font-primary-face",
   display: "swap",
   src: [
-    { path: "./fonts/DubaiLight.woff2", weight: "300", style: "normal" },
-    { path: "./fonts/DubaiRegular.woff2", weight: "400", style: "normal" },
-    { path: "./fonts/DubaiMedium.woff2", weight: "500", style: "normal" },
-    { path: "./fonts/DubaiBold.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/SansLight.woff2", weight: "300", style: "normal" },
+    { path: "./fonts/SansRegular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/SansMedium.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/SansBold.woff2", weight: "700", style: "normal" },
   ],
 });
 
-const bukra = localFont({
-  variable: "--font-bukra",
+const display = localFont({
+  variable: "--font-secondary-face",
   display: "swap",
   src: [
-    { path: "./fonts/BukraLight.woff2", weight: "300", style: "normal" },
-    { path: "./fonts/BukraRegular.woff2", weight: "400", style: "normal" },
-    { path: "./fonts/BukraBold.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/DisplayLight.woff2", weight: "300", style: "normal" },
+    { path: "./fonts/DisplayRegular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/DisplayBold.woff2", weight: "700", style: "normal" },
   ],
 });
 
 /**
- * Paints the phone browsers own chrome in the brand green instead of framing
+ * Paints the phone browsers own chrome in the brand navy instead of framing
  * the page in white, and keeps the page readable when the OS is in dark mode
  * rather than letting it invert a light design.
  *
@@ -39,7 +38,7 @@ const bukra = localFont({
  * wide wordmark used as a CSS mask. Guessing at it is not mine to do.
  */
 export const viewport: Viewport = {
-  themeColor: "#008755",
+  themeColor: "#12294B",
   colorScheme: "light",
 };
 
@@ -49,19 +48,19 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     // Lets article pages emit absolute og:image URLs; override per deployment.
     metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dubaipolice.gov.ae",
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://fct.npf.gov.ng",
     ),
     // One address per page per language, each naming the other. Without
-    // these a crawler has no way to learn the Arabic page exists.
+    // these a crawler has no way to learn the Hausa page exists.
     alternates: {
       canonical: localePath(path, await getLang()),
       languages: Object.fromEntries(
         LANGS.map((l) => [l, localePath(path, l)]),
       ),
     },
-    title: t("Dubai Police - Smart Secure Together"),
+    title: t("Nigeria Police Force, FCT Command - Safe Secure Together"),
     description: t(
-      "Together for a safer Dubai tomorrow. Report, apply, inquire and pay, and request support from Dubai Police.",
+      "Together for a safer Abuja tomorrow. Report, apply, inquire and pay, and request support from the Nigeria Police Force in the Federal Capital Territory.",
     ),
   };
 }
@@ -73,13 +72,13 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang={lang}
-      dir={dirOf(lang)}
-      className={`${dubai.variable} ${bukra.variable} h-full`}
+      dir="ltr"
+      className={`${sans.variable} ${display.variable} h-full`}
     >
       <body className="min-h-full overflow-x-hidden">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-dp-green-ink focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-npf-blue-ink focus:shadow-lg"
         >
           {t("Skip to main content")}
         </a>

@@ -2,15 +2,16 @@
  * What a reader actually sees, in English, anywhere on the site.
  *
  * One answer, imported by both scripts/test-i18n.mjs (which fails when one of
- * these has no Arabic) and scripts/prune-i18n.mjs (which deletes dictionary
+ * these has no Hausa) and scripts/prune-i18n.mjs (which deletes dictionary
  * entries that are not one of these). They used to each carry a copy, drifted
  * apart, and the drift was silent in the worst direction: the pruner's
  * narrower idea of "seen" would delete translations the coverage test had
- * just demanded, putting English back on Arabic pages with both scripts
+ * just demanded, putting English back on Hausa pages with both scripts
  * reporting success.
  */
 import fs from "node:fs";
 import path from "node:path";
+import { PROPER_NOUNS } from "./proper-nouns.mjs";
 
 /**
  * Keys whose value no reader ever sees.
@@ -19,7 +20,7 @@ import path from "node:path";
  * different question. localize skips `category`, `kind`, `status` and the rest
  * because translating them would break a lookup — the code compares against
  * those values. But the display sites hand them to t() before printing, so a
- * reader does see them. Sharing localize's list meant Arabic pages printing
+ * reader does see them. Sharing localize's list meant Hausa pages printing
  * "Speed Violation" while coverage reported no gaps.
  */
 export const SKIP = new Set([
@@ -35,11 +36,14 @@ export const isCopy = (s) => {
   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return false; // email addresses
   if (/^\d{4}-\d{2}-\d{2}/.test(v)) return false; // ISO dates
   if (/^[a-z0-9]+([-_.][a-z0-9]+)*$/.test(v)) return false; // slugs, filenames
-  if (/^[A-Z]{1,4}[-\d]*$/.test(v)) return false; // P1, PTL-14, AED, OCEC
-  if (/^\p{Script=Arabic}/u.test(v)) return false; // already Arabic
+  if (/^[A-Z]{1,4}[-\d]*$/.test(v)) return false; // P1, PTL-14, ₦0 OCEC
+  // Hausa is written in the same alphabet, so there is no "already
+  // translated" script test here the way there would be for Arabic. What
+  // stands in for it is the list of names that read the same in both.
+  if (PROPER_NOUNS.has(v)) return false;
   // Measurements read the same in both languages on this site: file sizes,
   // speeds and plate-style codes are numerals plus a unit, not copy.
-  if (/^[\d.,]+\s*(KB|MB|GB|km\/h|km|m|cm|AED)$/i.test(v)) return false;
+  if (/^[\d.,]+\s*(KB|MB|GB|km\/h|km|m|cm|₦)$/i.test(v)) return false;
   return true;
 };
 

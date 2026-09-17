@@ -6,9 +6,9 @@ import { getT, getLocalized } from "../../../i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
   return {
-    title: t("Privacy Policy | Dubai Police"),
+    title: t("Privacy Policy | Nigeria Police Force"),
     description: t(
-      "How Dubai Police collects, uses, stores and protects the data you share on this website.",
+      "How Nigeria Police Force collects, uses, stores and protects the data you share on this website.",
     ),
   };
 }
@@ -20,7 +20,7 @@ export default async function PrivacyPolicyPage() {
     <PageShell
       title={privacyPolicy.title}
       intro={t(
-        "How Dubai Police collects, uses, stores and protects the data you share on this website.",
+        "How Nigeria Police Force collects, uses, stores and protects the data you share on this website.",
       )}
     >
       <LegalSections sections={privacyPolicy.sections} />

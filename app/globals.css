@@ -2,26 +2,39 @@
 
 @theme inline {
   /*
-   * The two brand faces lead, then Arabic-capable fallbacks. Font fallback in
-   * CSS is per character, not per string, so an Arabic page picks up the next
-   * family in the stack for the glyphs Dubai/Bukra's web subsets do not carry
+   * The two brand faces lead, then Hausa-capable fallbacks. Font fallback in
+   * CSS is per character, not per string, so an Hausa page picks up the next
+   * family in the stack for the glyphs Abuja/Bukra's web subsets do not carry
    * while Latin digits and the odd English proper noun stay on brand.
    */
   --font-primary:
-    var(--font-dubai), "Dubai", "Noto Sans Arabic", "Segoe UI", Tahoma,
-    system-ui, sans-serif;
+    var(--font-primary-face), "Segoe UI", "Noto Sans", Tahoma, system-ui,
+    sans-serif;
   --font-secondary:
-    var(--font-bukra), "Dubai", "Noto Kufi Arabic", "Segoe UI", Tahoma,
-    system-ui, sans-serif;
+    var(--font-secondary-face), "Segoe UI", "Noto Sans", Tahoma, system-ui,
+    sans-serif;
 
-  --color-dp-green: #008755;
-  --color-dp-green-deep: #004a2e;
-  --color-dp-green-mid: #00925b;
-  --color-dp-green-ink: #006c44;
-  --color-dp-ink: #121212;
-  --color-dp-body: #4b4c4d;
-  --color-dp-muted: #58595a;
-  --color-dp-night: #091815;
+  --color-npf-blue: #12294B;
+  --color-npf-blue-deep: #0A1A31;
+  --color-npf-blue-mid: #1B3A66;
+  --color-npf-blue-ink: #0E2242;
+  --color-npf-ink: #101318;
+  --color-npf-body: #474B52;
+  --color-npf-muted: #5A6070;
+  --color-npf-night: #060D18;
+  /*
+   * The eagle-and-horses gold off the Force crest. Accent only — a rule, a
+   * kicker, an active marker; never a large fill and never body text, where
+   * it fails contrast on white. The -soft step is the one that reads on navy.
+   */
+  --color-npf-gold: #9A7B12;
+  --color-npf-gold-soft: #E6C766;
+  /*
+   * Green is no longer the brand, which frees it to mean what it always
+   * should have: done. Status only.
+   */
+  --color-npf-ok: #0E6B41;
+  --color-npf-ok-soft: #E6F4EC;
 
   --ease-custom: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -31,11 +44,6 @@
   @keyframes marquee {
     to {
       transform: translateX(-50%);
-    }
-  }
-  @keyframes marquee-rtl {
-    to {
-      transform: translateX(50%);
     }
   }
   @keyframes bob {
@@ -55,7 +63,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #121212;
+  --foreground: #101318;
 }
 
 body {
@@ -67,11 +75,11 @@ body {
 
 /* Browser surfaces themed from the palette rather than left at defaults. */
 ::selection {
-  background: #bee5d8;
-  color: #004a2e;
+  background: #CFDCF0;
+  color: #0A1A31;
 }
 :where(a, button, input, [tabindex]):focus-visible {
-  outline: 2px solid #00925b;
+  outline: 2px solid #1B3A66;
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -81,11 +89,11 @@ body {
  * In-page anchors jump instead, which `scroll-mt-*` already accounts for.
  */
 html {
-  scrollbar-color: #9dc4b4 #eef4f1;
+  scrollbar-color: #A8B8D4 #EEF1F6;
 }
 /* The photo lightbox and the menu drawer lean on <dialog>; shared backdrop. */
 dialog::backdrop {
-  background: rgba(4, 20, 14, 0.88);
+  background: rgba(5, 10, 24, 0.88);
   backdrop-filter: blur(4px);
 }
 /*
@@ -95,30 +103,22 @@ dialog::backdrop {
  * invisible navigation menu is a worse bug than a missing animation. Here the
  * resting state is on-screen and the animation is decoration.
  */
-@keyframes dp-drawer-in {
+@keyframes npf-drawer-in {
   from {
     translate: -100% 0;
   }
 }
-.dp-drawer[open] {
-  animation: dp-drawer-in 0.45s var(--ease-custom);
+.npf-drawer[open] {
+  animation: npf-drawer-in 0.45s var(--ease-custom);
 }
 /* A <dialog> with margin:0 already anchors to the inline-start edge, so in
-   Arabic the drawer lives on the right; only the entrance needs the mirror. */
-@keyframes dp-drawer-in-rtl {
-  from {
-    translate: 100% 0;
-  }
-}
-[dir="rtl"] .dp-drawer[open] {
-  animation-name: dp-drawer-in-rtl;
-}
+   Hausa the drawer lives on the right; only the entrance needs the mirror. */
 /*
  * Toggled by the header's accessibility button; every size in the app is in
  * rem, so bumping the root scales the whole page. Kept at 112% because the
  * desktop nav bar runs out of room above that.
  */
-html.dp-large-text {
+html.npf-large-text {
   font-size: 112%;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -135,26 +135,26 @@ html.dp-large-text {
 }
 
 /* Matches the site's 85%-width inner container at xl and up. */
-.dp-container {
+.npf-container {
   width: 100%;
   margin-inline: auto;
   padding-inline: 1rem;
   max-width: 1536px;
 }
 @media (min-width: 1280px) {
-  .dp-container {
+  .npf-container {
     width: 85%;
     padding-inline: 0;
   }
 }
 
 /* Horizontal card rails: native scroll-snap instead of a carousel library. */
-.dp-rail {
+.npf-rail {
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
-  scrollbar-color: #9dc4b4 #eef4f1;
+  scrollbar-color: #A8B8D4 #EEF1F6;
 }
-.dp-rail > * {
+.npf-rail > * {
   scroll-snap-align: start;
 }
 
@@ -231,22 +231,22 @@ html.dp-large-text {
 
 /* The suggestion panel is the one authored moment in the search box: it lifts
    and sharpens rather than sliding, so the row under the caret stays put. */
-@keyframes dp-suggest-in {
+@keyframes npf-suggest-in {
   from {
     opacity: 0;
     transform: translateY(-6px) scale(0.985);
     filter: blur(3px);
   }
 }
-.dp-suggest {
-  animation: dp-suggest-in 0.24s var(--ease-custom);
+.npf-suggest {
+  animation: npf-suggest-in 0.24s var(--ease-custom);
   transform-origin: top center;
 }
-.dp-suggest-up {
+.npf-suggest-up {
   transform-origin: bottom center;
-  animation-name: dp-suggest-in-up;
+  animation-name: npf-suggest-in-up;
 }
-@keyframes dp-suggest-in-up {
+@keyframes npf-suggest-in-up {
   from {
     opacity: 0;
     transform: translateY(6px) scale(0.985);
@@ -257,19 +257,19 @@ html.dp-large-text {
 /* The header's search sheet is full-width and top-anchored, which the default
    centred <dialog> box is not; its own backdrop is lighter than the drawer's
    because the page behind stays part of the picture. */
-.dp-search-sheet {
+.npf-search-sheet {
   max-height: 100dvh;
   inset: 0;
   border: 0;
 }
-.dp-search-sheet::backdrop {
-  background: rgba(4, 20, 14, 0.6);
+.npf-search-sheet::backdrop {
+  background: rgba(5, 10, 24, 0.6);
   backdrop-filter: blur(6px);
 }
-.dp-search-sheet[open] {
-  animation: dp-sheet-in 0.3s var(--ease-custom);
+.npf-search-sheet[open] {
+  animation: npf-sheet-in 0.3s var(--ease-custom);
 }
-@keyframes dp-sheet-in {
+@keyframes npf-sheet-in {
   from {
     opacity: 0;
     transform: translateY(-12px);
@@ -280,55 +280,55 @@ html.dp-large-text {
  * Operations console. The public site is a white page read in daylight; this
  * is a screen an officer sits in front of for a whole shift, often at night,
  * so it gets its own dark surface set rather than a dark variant of the site.
- * Scoped to .dp-ops so nothing leaks into the site around it.
+ * Scoped to .npf-ops so nothing leaks into the site around it.
  */
-.dp-ops {
+.npf-ops {
   /*
-   * Surfaces are the site's own --color-dp-night taken down, not a neutral
+   * Surfaces are the site's own --color-npf-night taken down, not a neutral
    * charcoal: the console has to read as the same organisation as the white
    * pages around it, and hue is the only thing carrying that at night.
    */
-  --ops-bg: #061310;
-  --ops-panel: #0c1c17;
-  --ops-raised: #142c24;
-  --ops-line: rgba(126, 186, 160, 0.16);
-  --ops-text: #e8f2ed;
-  --ops-dim: #90a79c;
-  /* The actual brand green, used where it is a fill under white text. */
-  --ops-brand: #008755;
-  --ops-brand-lift: #00a367;
+  --ops-bg: #060D18;
+  --ops-panel: #0C1526;
+  --ops-raised: #16233D;
+  --ops-line: rgba(150, 175, 225, 0.16);
+  --ops-text: #E9EDF5;
+  --ops-dim: #98A3B8;
+  /* The actual brand navy, used where it is a fill under white text. */
+  --ops-brand: #16305C;
+  --ops-brand-lift: #234B85;
   /* The same hue lifted to carry small text on a dark ground (8.2:1). */
-  --ops-accent: #45be8b;
+  --ops-accent: #8AB4E8;
 
-  /* Call grades. Never the brand green — a priority is not a brand moment. */
+  /* Call grades. Never the brand navy — a priority is not a brand moment. */
   --ops-p1: #ff5e5e;
   --ops-p2: #f5a524;
-  --ops-p3: #5fb4e8;
-  --ops-p4: #93ab9f;
+  --ops-p3: #8BE0D0;
+  --ops-p4: #9AA4B8;
 
   color-scheme: dark;
   background: var(--ops-bg);
   color: var(--ops-text);
-  scrollbar-color: #24483a #0c1c17;
+  scrollbar-color: #24365A #0C1526;
 }
-.dp-ops ::selection {
-  background: #00593a;
-  color: #eafff5;
+.npf-ops ::selection {
+  background: #1B3A66;
+  color: #EEF4FF;
 }
-.dp-ops :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+.npf-ops :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline: 2px solid var(--ops-accent);
   outline-offset: 2px;
 }
 /* The pending queue's newest call arrives rather than appearing. */
-@keyframes dp-ops-row-in {
+@keyframes npf-ops-row-in {
   from {
     opacity: 0;
     transform: translateY(-6px);
-    background-color: rgba(69, 190, 139, 0.16);
+    background-color: rgba(138, 180, 232, 0.16);
   }
 }
-.dp-ops-row {
-  animation: dp-ops-row-in 0.5s var(--ease-custom);
+.npf-ops-row {
+  animation: npf-ops-row-in 0.5s var(--ease-custom);
 }
 /*
  * The console's one authored moment. A pending call past its dispatch target
@@ -336,95 +336,28 @@ html.dp-large-text {
  * has to survive being glanced at from across a control room. Everything else
  * holds still so that this reads.
  */
-@keyframes dp-ops-overdue {
+@keyframes npf-ops-overdue {
   50% {
     box-shadow:
       inset 3px 0 0 var(--ops-p1),
       inset 0 0 44px -18px var(--ops-p1);
   }
 }
-.dp-ops-overdue {
+.npf-ops-overdue {
   box-shadow: inset 3px 0 0 var(--ops-p1);
-  animation: dp-ops-overdue 2.4s ease-in-out infinite;
+  animation: npf-ops-overdue 2.4s ease-in-out infinite;
 }
 /* Priority marker on a queue row: a dot, not a thick coloured border. */
-.dp-ops-dot {
+.npf-ops-dot {
   box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 20%, transparent);
 }
 /* The one live element in the console chrome: the shift clock's colon. */
-@keyframes dp-ops-tick {
+@keyframes npf-ops-tick {
   50% {
     opacity: 0.25;
   }
 }
-.dp-ops-tick {
-  animation: dp-ops-tick 2s steps(1, end) infinite;
+.npf-ops-tick {
+  animation: npf-ops-tick 2s steps(1, end) infinite;
 }
 
-/*
- * Both logo files are solid-white artwork, which is invisible on the white
- * inner pages — they were only ever seen over the dark hero. Painting them as
- * a mask instead of an <img> lets the same file take the ink colour of
- * whatever it sits on, which a brightness/invert filter cannot do.
- */
-.dp-logo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-color: currentColor;
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
-}
-.dp-logo-police {
-  mask-image: url("/img/logo-dubai-police.svg");
-  -webkit-mask-image: url("/img/logo-dubai-police.svg");
-}
-.dp-logo-gov {
-  mask-image: url("/img/logo-gov-dubai.svg");
-  -webkit-mask-image: url("/img/logo-gov-dubai.svg");
-  mask-position: left center;
-  -webkit-mask-position: left center;
-}
-[dir="rtl"] .dp-logo-gov {
-  mask-position: right center;
-  -webkit-mask-position: right center;
-}
-
-/*
- * Arabic has no capitals, so `uppercase` on a mixed heading only shouts at
- * the Latin words inside it and leaves the Arabic untouched — an uneven,
- * accidental emphasis. Tracking is a Latin device too: letters in Arabic
- * join, and spacing them apart breaks the joins. Both are neutralised for
- * the whole document rather than class by class.
- */
-[dir="rtl"] .uppercase {
-  text-transform: none;
-}
-[dir="rtl"] [class*="tracking-"] {
-  letter-spacing: normal;
-}
-/* Arabic sits lower in its em box and needs more room between lines. */
-[dir="rtl"] body {
-  line-height: 1.75;
-}
-[dir="rtl"] h1,
-[dir="rtl"] h2,
-[dir="rtl"] h3 {
-  line-height: 1.4;
-}
-/*
- * Directional marks the layout cannot fix. An arrow that means "forward"
- * points the other way in Arabic; an arrow that means "download" or "expand"
- * does not. Only the inline ones are flipped, by opt-in class.
- */
-[dir="rtl"] .dp-flip {
-  transform: scaleX(-1);
-}
-/* A marquee reads the way the script does. */
-[dir="rtl"] .animate-marquee {
-  animation-name: marquee-rtl;
-}

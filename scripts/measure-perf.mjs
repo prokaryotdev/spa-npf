@@ -29,7 +29,7 @@ const PAGES = [
   ["homepage (ar)", "/ar"],
   ["service catalogue", "/en/app/services"],
   ["a service", "/en/app/services/police-clearance-certificate"],
-  ["a data table", "/en/app/home/information/view-black-points-traffic-violations"],
+  ["a data table", "/en/app/home/information/traffic-offences-and-penalties"],
 ];
 
 const kb = (bytes) => (bytes / 1024).toFixed(0).padStart(5) + " KB";

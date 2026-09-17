@@ -4,7 +4,7 @@ import { getT } from "../../../i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
-  return { title: t("Service requests | Dubai Police") };
+  return { title: t("Service requests | Nigeria Police Force") };
 }
 
 export default function OpsRequestsPage() {

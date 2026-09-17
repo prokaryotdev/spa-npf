@@ -15,7 +15,7 @@ const QUEUE: RequestStatus[] = ["Submitted", "In Review", "Action Needed"];
 
 const TONE: Record<RequestStatus, string> = {
   Submitted: "bg-[var(--ops-raised)] text-[var(--ops-dim)]",
-  "In Review": "bg-[#0f2f45] text-[#a8d8f5]",
+  "In Review": "bg-[#2A1B4D] text-[#C3B0F5]",
   "Action Needed": "bg-[#3b2c0b] text-[#f8d79a]",
   Completed: "bg-[#0b3b2a] text-[#7fe7bb]",
   Rejected: "bg-[#3d1616] text-[#f5a8a8]",

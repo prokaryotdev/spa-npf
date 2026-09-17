@@ -19,7 +19,7 @@ const images = new Set();
 function asset(url) {
   if (!url) return null;
   if (!/\.(jpe?g|png|webp|gif|avif|svg)$/i.test(url)) {
-    return "https://www.dubaipolice.gov.ae/dpcms" + url;
+    return "https://fct.npf.gov.ng/dpcms" + url;
   }
   const clean = url.replace(/^\/cmsUploads\//, "");
   images.add(clean);
@@ -62,7 +62,7 @@ function openData(file) {
 
 const content = {
   lawsLegislation: openData("laws.json"),
-  blackPoints: openData("blackpoints.json"),
+  penaltyPoints: openData("blackpoints.json"),
   speedLimits: openData("speedlimits.json"),
 };
 

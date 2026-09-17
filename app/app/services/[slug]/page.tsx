@@ -28,13 +28,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const t = await getT();
   const source = servicesSource.find((s) => s.slug === slug);
-  if (!source) return { title: t("Service not found | Dubai Police") };
+  if (!source) return { title: t("Service not found | Nigeria Police Force") };
   const service = await getLocalized(source);
   return {
-    title: t("{name} | Dubai Police", { name: service.name }),
+    title: t("{name} | Nigeria Police Force", { name: service.name }),
     description:
       service.description ||
-      t("{name} from Dubai Police.", { name: service.name }),
+      t("{name} from Nigeria Police Force.", { name: service.name }),
   };
 }
 
@@ -69,7 +69,7 @@ export default async function ServicePage({
       <ServiceLd service={service} />
       <BreadcrumbLd
         trail={[
-          { name: "Dubai Police", href: "/" },
+          { name: "Nigeria Police Force", href: "/" },
           { name: "Services", href: "/app/services" },
           { name: service.name, href: "/app/services/" + service.slug },
         ]}
@@ -81,7 +81,7 @@ export default async function ServicePage({
         trail={[{ label: "Services", href: "/app/services" }]}
       >
         <section className="bg-white pb-24">
-          <div className="dp-container grid gap-10 lg:grid-cols-[1fr_360px] lg:gap-14">
+          <div className="npf-container grid gap-10 lg:grid-cols-[1fr_360px] lg:gap-14">
             <div className="order-2 space-y-10 lg:order-1">
               {service.documents.length ? (
                 <Panel heading={t("What you need")}>
@@ -91,10 +91,10 @@ export default async function ServicePage({
                         key={doc.label}
                         className="rounded-2xl bg-[#F9F9F9] px-5 py-4"
                       >
-                        <p className="flex items-start gap-3 font-medium text-dp-ink">
+                        <p className="flex items-start gap-3 font-medium text-npf-ink">
                           <FileIcon
                             aria-hidden
-                            className="mt-0.5 size-5 shrink-0 text-dp-green-ink"
+                            className="mt-0.5 size-5 shrink-0 text-npf-blue-ink"
                           />
                           {doc.label}
                         </p>
@@ -103,7 +103,7 @@ export default async function ServicePage({
                             {doc.items.map((item) => (
                               <li
                                 key={item}
-                                className="relative ps-5 text-sm text-dp-body before:absolute before:top-[0.55em] before:start-0 before:size-1.5 before:rounded-full before:bg-dp-green"
+                                className="relative ps-5 text-sm text-npf-body before:absolute before:top-[0.55em] before:start-0 before:size-1.5 before:rounded-full before:bg-npf-blue"
                               >
                                 {item}
                               </li>
@@ -124,8 +124,8 @@ export default async function ServicePage({
                         key={fee.label}
                         className="flex items-center justify-between gap-4 py-4"
                       >
-                        <dt className="text-sm text-dp-body">{fee.label}</dt>
-                        <dd className="font-secondary text-sm font-bold text-dp-ink tabular-nums">
+                        <dt className="text-sm text-npf-body">{fee.label}</dt>
+                        <dd className="font-secondary text-sm font-bold text-npf-ink tabular-nums">
                           {fee.value}
                         </dd>
                       </div>
@@ -133,12 +133,12 @@ export default async function ServicePage({
                     <div className="flex items-center justify-between gap-4 py-4">
                       {/* Not "Total": where the rows above are tiers or carry an
                         "if", the summary is the cheapest real price, not their
-                        sum, and a total that reads "From AED 120" is a
+                        sum, and a total that reads "From ₦48,000" is a
                         contradiction. */}
-                      <dt className="text-sm font-medium text-dp-ink">
+                      <dt className="text-sm font-medium text-npf-ink">
                         {t("Payable")}
                       </dt>
-                      <dd className="font-secondary text-base font-bold text-dp-green-ink tabular-nums">
+                      <dd className="font-secondary text-base font-bold text-npf-blue-ink tabular-nums">
                         {service.feeSummary}
                       </dd>
                     </div>
@@ -148,7 +148,7 @@ export default async function ServicePage({
                       {service.payment.map((method) => (
                         <li
                           key={method}
-                          className="inline-flex items-center gap-2 rounded-full bg-[#e7f6f1] px-3.5 py-1.5 text-sm text-dp-green-ink"
+                          className="inline-flex items-center gap-2 rounded-full bg-[#E8EEF8] px-3.5 py-1.5 text-sm text-npf-blue-ink"
                         >
                           <CardIcon aria-hidden className="size-4" />
                           {method}
@@ -165,11 +165,11 @@ export default async function ServicePage({
                     {service.terms.map((term) => (
                       <li
                         key={term}
-                        className="flex items-start gap-3 text-base leading-relaxed text-dp-body"
+                        className="flex items-start gap-3 text-base leading-relaxed text-npf-body"
                       >
                         <CheckIcon
                           aria-hidden
-                          className="mt-1 size-4 shrink-0 text-dp-green"
+                          className="mt-1 size-4 shrink-0 text-npf-blue"
                         />
                         {term}
                       </li>
@@ -184,10 +184,10 @@ export default async function ServicePage({
                     {splitDelivery(service.delivery).map((part) => (
                       <p
                         key={part.label + part.text}
-                        className="text-base leading-relaxed text-dp-body"
+                        className="text-base leading-relaxed text-npf-body"
                       >
                         {part.label ? (
-                          <span className="font-medium text-dp-ink">
+                          <span className="font-medium text-npf-ink">
                             {part.label}:{" "}
                           </span>
                         ) : null}
@@ -204,7 +204,7 @@ export default async function ServicePage({
                     {service.beneficiaries.map((who) => (
                       <li
                         key={who}
-                        className="rounded-full bg-[#e7f6f1] px-4 py-2 text-sm font-medium text-dp-green-ink"
+                        className="rounded-full bg-[#E8EEF8] px-4 py-2 text-sm font-medium text-npf-blue-ink"
                       >
                         {who}
                       </li>
@@ -219,11 +219,11 @@ export default async function ServicePage({
                     {service.channels.map((channel) => (
                       <li
                         key={channel}
-                        className="flex items-center gap-3 rounded-2xl bg-[#F9F9F9] px-5 py-4 text-sm font-medium text-dp-ink"
+                        className="flex items-center gap-3 rounded-2xl bg-[#F9F9F9] px-5 py-4 text-sm font-medium text-npf-ink"
                       >
                         <ServicesIcon
                           aria-hidden
-                          className="size-5 shrink-0 text-dp-green-ink"
+                          className="size-5 shrink-0 text-npf-blue-ink"
                         />
                         {channel}
                       </li>
@@ -240,8 +240,8 @@ export default async function ServicePage({
                         key={hour.label}
                         className="flex flex-wrap items-center justify-between gap-3 py-4"
                       >
-                        <dt className="text-sm text-dp-body">{hour.label}</dt>
-                        <dd className="font-secondary text-sm font-bold text-dp-ink">
+                        <dt className="text-sm text-npf-body">{hour.label}</dt>
+                        <dd className="font-secondary text-sm font-bold text-npf-ink">
                           {hour.value}
                         </dd>
                       </div>
@@ -257,7 +257,7 @@ export default async function ServicePage({
                       <li key={item.slug}>
                         <Link
                           href={`/app/services/${item.slug}`}
-                          className="block rounded-2xl bg-[#F4F8F6] px-5 py-4 text-sm font-medium text-dp-green-ink transition-colors hover:bg-[#dcefe7]"
+                          className="block rounded-2xl bg-[#F4F6FA] px-5 py-4 text-sm font-medium text-npf-blue-ink transition-colors hover:bg-[#DDE6F4]"
                         >
                           {item.name}
                         </Link>
@@ -269,7 +269,7 @@ export default async function ServicePage({
             </div>
 
             <aside className="order-1 h-fit lg:order-2 lg:sticky lg:top-28">
-              <div className="rounded-3xl bg-[#F4F8F6] p-6">
+              <div className="rounded-3xl bg-[#F4F6FA] p-6">
                 {service.icon ? (
                   <span className="mb-5 grid size-14 place-items-center rounded-2xl bg-white">
                     <Image
@@ -284,14 +284,14 @@ export default async function ServicePage({
 
                 <dl className="mb-6 grid grid-cols-2 gap-4">
                   <div>
-                    <dt className="text-xs text-dp-muted">{t("Fees")}</dt>
-                    <dd className="font-secondary text-base font-bold text-dp-ink">
+                    <dt className="text-xs text-npf-muted">{t("Fees")}</dt>
+                    <dd className="font-secondary text-base font-bold text-npf-ink">
                       {service.feeSummary}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-xs text-dp-muted">{t("Duration")}</dt>
-                    <dd className="font-secondary text-base font-bold text-dp-ink">
+                    <dt className="text-xs text-npf-muted">{t("Duration")}</dt>
+                    <dd className="font-secondary text-base font-bold text-npf-ink">
                       {service.turnaround}
                     </dd>
                   </div>
@@ -299,20 +299,20 @@ export default async function ServicePage({
 
                 <ServiceAction service={service} />
 
-                {service.uaePassOnly ? (
-                  <p className="mt-3 text-center text-xs text-dp-muted">
-                    {t("UAE PASS sign-in required")}
+                {service.ninAuthOnly ? (
+                  <p className="mt-3 text-center text-xs text-npf-muted">
+                    {t("NINAuth sign-in required")}
                   </p>
                 ) : null}
               </div>
 
               {service.contacts.length ? (
                 <div className="mt-6 rounded-3xl px-6 py-5 ring-1 ring-black/10">
-                  <h2 className="mb-3 flex items-center gap-2 font-secondary text-sm font-bold tracking-wide text-dp-muted uppercase">
+                  <h2 className="mb-3 flex items-center gap-2 font-secondary text-sm font-bold tracking-wide text-npf-muted uppercase">
                     <PhoneIcon aria-hidden className="size-4" />
                     {t("Need help")}
                   </h2>
-                  <ul className="space-y-2 text-sm text-dp-body">
+                  <ul className="space-y-2 text-sm text-npf-body">
                     {service.contacts.map((contact) => (
                       <li key={contact}>{contact}</li>
                     ))}
@@ -320,7 +320,7 @@ export default async function ServicePage({
                 </div>
               ) : null}
 
-              <p className="mt-6 flex items-center gap-2 px-1 text-xs text-dp-muted">
+              <p className="mt-6 flex items-center gap-2 px-1 text-xs text-npf-muted">
                 <ClockIcon aria-hidden className="size-4 shrink-0" />
                 {t("Processed in {turnaround}", {
                   turnaround: t(service.turnaround).toLowerCase(),

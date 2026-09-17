@@ -33,18 +33,18 @@ export default function GlobalError({
           placeItems: "center",
           padding: "2rem",
           background: "#fff",
-          color: "#233234",
+          color: "#2B3340",
           fontFamily: "system-ui, -apple-system, Segoe UI, sans-serif",
         }}
       >
-        <title>{t("Something went wrong | Dubai Police")}</title>
+        <title>{t("Something went wrong | Nigeria Police Force")}</title>
         <div style={{ maxWidth: "42rem" }}>
           <h1
             style={{
               margin: 0,
               fontSize: "clamp(2rem, 6vw, 3.5rem)",
               lineHeight: 1.15,
-              color: "#0B3B2C",
+              color: "#0B2244",
             }}
           >
             {t("Something went wrong")}
@@ -73,7 +73,7 @@ export default function GlobalError({
                 border: 0,
                 cursor: "pointer",
                 borderRadius: "9999px",
-                background: "#00925b",
+                background: "#1B3A66",
                 color: "#fff",
                 font: "inherit",
                 fontWeight: 500,
@@ -89,8 +89,8 @@ export default function GlobalError({
               href="/"
               style={{
                 borderRadius: "9999px",
-                background: "#F4F8F6",
-                color: "#00603b",
+                background: "#F4F6FA",
+                color: "#0D2444",
                 fontWeight: 500,
                 padding: "0.75rem 1.5rem",
                 textDecoration: "none",

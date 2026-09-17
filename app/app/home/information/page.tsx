@@ -6,9 +6,9 @@ import { getLocalized, getT } from "../../../i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
   return {
-    title: t("Information | Dubai Police"),
+    title: t("Information | Nigeria Police Force"),
     description: t(
-      "Laws and legislation, traffic black points, street speed limits, and sustainable development practices.",
+      "Laws and legislation, traffic penalty points, street speed limits, and sustainable development practices.",
     ),
   };
 }
@@ -18,7 +18,7 @@ export default async function InformationPage() {
   return (
     <PageShell title={information.title}>
       <section className="bg-white pb-24">
-        <div className="dp-container grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+        <div className="npf-container grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {information.cards.map((card) => (
             <LinkCard key={card.title} card={card} />
           ))}

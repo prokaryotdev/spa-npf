@@ -7,7 +7,7 @@ import { chapter, useScrollProgress } from "./useScrollProgress";
 import { useT, useLocalized } from "../i18n/client";
 
 const bloom =
-  "pointer-events-none absolute rounded-full bg-[radial-gradient(#3cbd6b75_7%,#22c55e38_40%,#22c55e00_70%)]";
+  "pointer-events-none absolute rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)]";
 
 /**
  * The signature chapter: the section pins for three screens while Smart,
@@ -35,7 +35,16 @@ export default function Pillars() {
         alt=""
         fill
         sizes="480px"
-        className="object-contain"
+        /*
+         * The three portraits are monochrome halftones rendered in the old
+         * brand green, and they are raster, so the palette cannot reach them
+         * the way it reaches everything else. Rotating the hue lands them on
+         * the navy — cheaper and more honest than shipping re-rendered PNGs
+         * we would then have to keep in step with the tokens.
+         * ponytail: hue-rotate, re-render the source art if the halftone
+         * ever needs to be anything but one flat colour.
+         */
+        className="object-contain [filter:hue-rotate(64deg)]"
       />
     </span>
   ));
@@ -47,7 +56,7 @@ export default function Pillars() {
       className="relative h-[320vh] bg-white"
     >
       <h2 id="pillars" className="sr-only">
-        {t("Smart, Secure, Together")}
+        {t("Safe, Secure, Together")}
       </h2>
 
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
@@ -64,7 +73,7 @@ export default function Pillars() {
             <li
               key={pillar.word}
               aria-current={i === active || undefined}
-              className={`font-secondary text-lg leading-[1.5] font-bold text-dp-green-mid transition-opacity duration-500 ${
+              className={`font-secondary text-lg leading-[1.5] font-bold text-npf-blue-mid transition-opacity duration-500 ${
                 i === active ? "opacity-100" : "opacity-25"
               }`}
             >
@@ -73,7 +82,7 @@ export default function Pillars() {
           ))}
         </ol>
 
-        <div className="dp-container relative">
+        <div className="npf-container relative">
           <div className="grid items-center gap-10 lg:grid-cols-12">
             <div className="order-2 lg:order-1 lg:col-span-7">
               <div className="relative min-h-[200px] text-center md:text-left lg:min-h-[280px]">
@@ -89,7 +98,7 @@ export default function Pillars() {
                           : "pointer-events-none translate-y-10 opacity-0"
                     }`}
                   >
-                    <p className="font-secondary text-6xl leading-[1.1] font-bold text-dp-green-deep lg:text-8xl 2xl:text-9xl">
+                    <p className="font-secondary text-6xl leading-[1.1] font-bold text-npf-blue-deep lg:text-8xl 2xl:text-9xl">
                       {pillar.word}
                     </p>
                     <p className="mx-auto mt-4 max-w-[320px] font-secondary text-base text-neutral-600 md:mx-0 md:max-w-none md:font-light lg:text-2xl">
@@ -121,9 +130,9 @@ export default function Pillars() {
                 />
                 <div className="mt-6 text-center lg:absolute lg:top-1/2 lg:start-0 lg:mt-0 lg:max-w-[64%] lg:-translate-y-1/2 lg:ps-[6%] lg:text-start">
                   <p className="mb-2 font-secondary text-base leading-snug font-bold text-[#414651] lg:mb-3 lg:text-2xl">
-                    {t("Together, We Build a Smart and Secure Dubai")}
+                    {t("Together, We Build a Smart and Secure Abuja")}
                   </p>
-                  <p className="font-secondary text-xs font-bold text-[#313a35] lg:text-base">
+                  <p className="font-secondary text-xs font-bold text-[#333A45] lg:text-base">
                     {t(
                       "With you, For you. Protecting, Connecting, and Innovating.",
                     )}

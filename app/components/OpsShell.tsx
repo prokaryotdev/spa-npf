@@ -8,6 +8,7 @@ import LanguageSwitch from "./LanguageSwitch";
 import { resetDemo, signOut, useStore } from "./store";
 import { useMounted, useNow } from "./OpsPieces";
 import { useT } from "../i18n/client";
+import { PoliceWordmark } from "./Wordmark";
 import {
   AlertIcon,
   ArrowUpRight,
@@ -45,13 +46,13 @@ const TABS = [
   },
 ];
 
-/** Dubai control rooms run three eight-hour reliefs; A starts at 06:00. */
+/** Abuja control rooms run three eight-hour reliefs; A starts at 06:00. */
 function shiftOf(d: Date) {
   const h = Number(
     new Intl.DateTimeFormat("en-GB", {
       hour: "2-digit",
       hour12: false,
-      timeZone: "Asia/Dubai",
+      timeZone: "Africa/Lagos",
     }).format(d),
   );
   if (h >= 6 && h < 14) return "A";
@@ -63,7 +64,7 @@ const clock = new Intl.DateTimeFormat("en-GB", {
   hour: "2-digit",
   minute: "2-digit",
   hour12: false,
-  timeZone: "Asia/Dubai",
+  timeZone: "Africa/Lagos",
 });
 
 /**
@@ -99,7 +100,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
 
   if (!loaded || !session)
     return (
-      <div className="dp-ops grid min-h-[100dvh] place-items-center">
+      <div className="npf-ops grid min-h-[100dvh] place-items-center">
         <p className="text-sm text-[var(--ops-dim)]">
           {t("Checking credentials…")}
         </p>
@@ -108,7 +109,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
 
   if (!officer)
     return (
-      <div className="dp-ops grid min-h-[100dvh] place-items-center px-6">
+      <div className="npf-ops grid min-h-[100dvh] place-items-center px-6">
         <div className="max-w-[46ch] text-center">
           <ShieldIcon
             aria-hidden
@@ -119,7 +120,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-[var(--ops-dim)]">
             {t(
-              "You are signed in as {name}, a public account. The operations console is for Dubai Police personnel.",
+              "You are signed in as {name}, a public account. The operations console is for Nigeria Police Force personnel.",
               { name: session.name },
             )}
           </p>
@@ -146,7 +147,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
     );
 
   return (
-    <div className="dp-ops min-h-[100dvh]">
+    <div className="npf-ops min-h-[100dvh]">
       {/*
         The command bar. Everything in it is a constant of the shift — who is
         on the desk, which station, what time it is — so it stays pinned while
@@ -155,13 +156,13 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-30 border-b border-[var(--ops-line)] bg-[var(--ops-bg)]/95 backdrop-blur">
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2 px-4 py-3 lg:px-6">
           <Link href="/app/police" className="flex items-center gap-3">
-            {/* .dp-logo fills its box, so the box is what carries the size. */}
+            {/* The mark scales to its box; the box is what carries the size. */}
             <span
               role="img"
-              aria-label={t("Dubai Police")}
-              className="block h-7 w-[86px] shrink-0 text-[var(--ops-text)]"
+              aria-label={t("Nigeria Police Force")}
+              className="block h-7 shrink-0 text-[var(--ops-text)]"
             >
-              <span aria-hidden className="dp-logo dp-logo-police" />
+              <PoliceWordmark className="h-full w-auto" />
             </span>
             <span className="border-s border-[var(--ops-line)] ps-3 font-secondary text-[11px] leading-tight font-bold tracking-[0.16em] text-[var(--ops-accent)] uppercase">
               {t("Command")}
@@ -253,7 +254,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-[var(--ops-line)] bg-[#2a1f06] px-4 py-2 text-xs leading-relaxed text-[#f4dca8] lg:px-6">
             <AlertIcon aria-hidden className="size-4 shrink-0" />
             {t(
-              "Illustrative data — a rebuild of the Dubai Police website, connected to no operational system.",
+              "Illustrative data — a rebuild of the Nigeria Police Force website, connected to no operational system.",
             )}
             <button
               type="button"
@@ -289,11 +290,11 @@ function ShiftClock() {
     <p className="ms-auto flex items-baseline gap-2 font-secondary text-xl font-bold tabular-nums">
       <span dir="ltr" className="flex items-baseline gap-2">
         {time.slice(0, 2)}
-        <span className="dp-ops-tick -mx-1">:</span>
+        <span className="npf-ops-tick -mx-1">:</span>
         {time.slice(3)}
       </span>
       <span className="font-primary text-[11px] font-normal tracking-[0.12em] text-[var(--ops-dim)] uppercase">
-        {t("GST · Shift {shift}", { shift: t(shift) })}
+        {t("WAT · Shift {shift}", { shift: t(shift) })}
       </span>
     </p>
   );

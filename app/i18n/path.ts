@@ -5,7 +5,7 @@ import { DEFAULT_LANG, LANGS, isLang, type Lang } from "./config";
  *
  * It used to live in a cookie, with every page at one address. That reads
  * well and indexes terribly: a search engine can only ever see one language
- * of a page it can only reach at one URL, so the Arabic half of a bilingual
+ * of a page it can only reach at one URL, so the Hausa half of a bilingual
  * public service was invisible to the people most likely to need it. These
  * two functions are the whole of the change — proxy.ts strips the prefix on
  * the way in, i18n/Link.tsx puts it back on every link on the way out.

@@ -30,9 +30,6 @@ export function useT(): T {
   return useMemo(() => translator(lang), [lang]);
 }
 
-/** `rtl` / `ltr` for the few places that need the value, not the CSS. */
-export const useDir = () => (useLang() === "ar" ? "rtl" : "ltr");
-
 export function useFormat(): Formatters {
   const lang = useLang();
   return useMemo(() => makeFormatters(lang), [lang]);

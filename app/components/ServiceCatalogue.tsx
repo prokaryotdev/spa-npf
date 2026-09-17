@@ -74,14 +74,14 @@ export default function ServiceCatalogue() {
         <div className="min-w-[240px] flex-1">
           <label
             htmlFor={`${id}-q`}
-            className="mb-1.5 block text-sm font-medium text-dp-ink"
+            className="mb-1.5 block text-sm font-medium text-npf-ink"
           >
             {t("Search services")}
           </label>
-          <div className="flex h-[50px] items-center gap-3 rounded-xl bg-[#F4F8F6] px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-dp-green">
+          <div className="flex h-[50px] items-center gap-3 rounded-xl bg-[#F4F6FA] px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-npf-blue">
             <SearchIcon
               aria-hidden
-              className="size-5 shrink-0 text-dp-green-ink"
+              className="size-5 shrink-0 text-npf-blue-ink"
             />
             <input
               id={`${id}-q`}
@@ -89,7 +89,7 @@ export default function ServiceCatalogue() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t("Certificate, fine, permit…")}
-              className="w-full bg-transparent py-3 text-base text-dp-ink outline-none placeholder:text-dp-muted"
+              className="w-full bg-transparent py-3 text-base text-npf-ink outline-none placeholder:text-npf-muted"
             />
           </div>
         </div>
@@ -97,7 +97,7 @@ export default function ServiceCatalogue() {
         <div>
           <label
             htmlFor={`${id}-cat`}
-            className="mb-1.5 block text-sm font-medium text-dp-ink"
+            className="mb-1.5 block text-sm font-medium text-npf-ink"
           >
             {t("Package")}
           </label>
@@ -105,7 +105,7 @@ export default function ServiceCatalogue() {
             id={`${id}-cat`}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="h-[50px] rounded-xl bg-[#F4F8F6] px-4 text-base text-dp-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-dp-green"
+            className="h-[50px] rounded-xl bg-[#F4F6FA] px-4 text-base text-npf-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-npf-blue"
           >
             <option value="">{t("All packages")}</option>
             {serviceCategoryNames.map((name) => (
@@ -119,7 +119,7 @@ export default function ServiceCatalogue() {
         <div>
           <label
             htmlFor={`${id}-aud`}
-            className="mb-1.5 block text-sm font-medium text-dp-ink"
+            className="mb-1.5 block text-sm font-medium text-npf-ink"
           >
             {t("I am")}
           </label>
@@ -127,7 +127,7 @@ export default function ServiceCatalogue() {
             id={`${id}-aud`}
             value={audience}
             onChange={(e) => setAudience(e.target.value)}
-            className="h-[50px] rounded-xl bg-[#F4F8F6] px-4 text-base text-dp-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-dp-green"
+            className="h-[50px] rounded-xl bg-[#F4F6FA] px-4 text-base text-npf-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-npf-blue"
           >
             <option value="">{t("Anyone")}</option>
             {AUDIENCES.map((name) => (
@@ -144,8 +144,8 @@ export default function ServiceCatalogue() {
           onClick={() => setPopularOnly((v) => !v)}
           className={`h-[50px] rounded-xl px-4 text-base font-medium transition-colors ${
             popularOnly
-              ? "bg-dp-green text-white"
-              : "bg-[#F4F8F6] text-dp-ink ring-1 ring-black/5 hover:bg-[#e7f0ec]"
+              ? "bg-npf-blue text-white"
+              : "bg-[#F4F6FA] text-npf-ink ring-1 ring-black/5 hover:bg-[#E8ECF4]"
           }`}
         >
           {t("Most used")}
@@ -153,7 +153,7 @@ export default function ServiceCatalogue() {
       </div>
 
       <div className="mb-6 flex flex-wrap items-center gap-4">
-        <p aria-live="polite" className="text-sm text-dp-muted">
+        <p aria-live="polite" className="text-sm text-npf-muted">
           {t("Showing {shown} of {total} services", {
             shown: visible.length,
             total: services.length,
@@ -170,7 +170,7 @@ export default function ServiceCatalogue() {
               // Otherwise a reload would restore the package from the URL.
               if (params.get("package")) router.replace("/app/services");
             }}
-            className="text-sm font-medium text-dp-green underline underline-offset-2 transition-colors hover:text-dp-green-deep"
+            className="text-sm font-medium text-npf-blue underline underline-offset-2 transition-colors hover:text-npf-blue-deep"
           >
             {t("Clear filters")}
           </button>
@@ -178,11 +178,11 @@ export default function ServiceCatalogue() {
       </div>
 
       {visible.length === 0 ? (
-        <p className="rounded-2xl bg-[#F9F9F9] px-6 py-10 text-center text-base text-dp-body">
+        <p className="rounded-2xl bg-[#F9F9F9] px-6 py-10 text-center text-base text-npf-body">
           {t("No service matches those filters. Try clearing one of them, or")}{" "}
           <Link
             href="/app/home/contactUs"
-            className="font-medium text-dp-green underline underline-offset-2"
+            className="font-medium text-npf-blue underline underline-offset-2"
           >
             {t("contact us")}
           </Link>
@@ -193,7 +193,7 @@ export default function ServiceCatalogue() {
       {sections.map((section) => (
         <section key={section.name || "all"} className="mb-10 last:mb-0">
           {section.name ? (
-            <h2 className="mb-4 font-secondary text-xl font-bold text-dp-green-deep md:text-2xl">
+            <h2 className="mb-4 font-secondary text-xl font-bold text-npf-blue-deep md:text-2xl">
               {t(section.name)}
             </h2>
           ) : null}
@@ -202,9 +202,9 @@ export default function ServiceCatalogue() {
               <li key={service.slug}>
                 <Link
                   href={`/app/services/${service.slug}`}
-                  className="group/row flex h-full items-start gap-4 rounded-2xl px-4 py-4 ring-1 ring-black/[0.07] transition-colors hover:bg-[#F4F8F6]"
+                  className="group/row flex h-full items-start gap-4 rounded-2xl px-4 py-4 ring-1 ring-black/[0.07] transition-colors hover:bg-[#F4F6FA]"
                 >
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-[#F4F8F6] transition-colors group-hover/row:bg-white">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-[#F4F6FA] transition-colors group-hover/row:bg-white">
                     {service.icon ? (
                       <Image
                         src={service.icon}
@@ -214,17 +214,17 @@ export default function ServiceCatalogue() {
                         className="size-6"
                       />
                     ) : (
-                      <ServicesIcon className="size-5 text-dp-green-ink" />
+                      <ServicesIcon className="size-5 text-npf-blue-ink" />
                     )}
                   </span>
 
                   <span className="min-w-0 flex-1">
                     <span className="flex flex-wrap items-baseline gap-x-2">
-                      <span className="font-secondary text-base leading-snug font-bold text-dp-ink transition-colors group-hover/row:text-dp-green-ink">
+                      <span className="font-secondary text-base leading-snug font-bold text-npf-ink transition-colors group-hover/row:text-npf-blue-ink">
                         {service.name}
                       </span>
                       {service.mostUsed ? (
-                        <span className="rounded-full bg-[#e7f6f1] px-2 py-0.5 text-[11px] font-medium text-dp-green-ink">
+                        <span className="rounded-full bg-[#E8EEF8] px-2 py-0.5 text-[11px] font-medium text-npf-blue-ink">
                           {t("Most used")}
                         </span>
                       ) : null}
@@ -232,12 +232,12 @@ export default function ServiceCatalogue() {
                     {service.description ? (
                       <span
                         // No `block`: line-clamp sets its own display value.
-                        className="mt-1 line-clamp-2 text-sm leading-relaxed text-dp-body"
+                        className="mt-1 line-clamp-2 text-sm leading-relaxed text-npf-body"
                       >
                         {service.description}
                       </span>
                     ) : null}
-                    <span className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-dp-muted">
+                    <span className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-npf-muted">
                       <span className="tabular-nums">{service.feeSummary}</span>
                       <span aria-hidden>·</span>
                       <span>{service.turnaround}</span>
@@ -254,7 +254,7 @@ export default function ServiceCatalogue() {
 
                   <ChevronRight
                     aria-hidden
-                    className="mt-3 size-5 shrink-0 text-dp-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1 group-hover/row:text-dp-green"
+                    className="mt-3 size-5 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1 group-hover/row:text-npf-blue"
                   />
                 </Link>
               </li>

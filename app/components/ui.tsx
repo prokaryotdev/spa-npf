@@ -4,24 +4,24 @@ import { useT } from "../i18n/client";
 import type { IncidentStatus, RequestStatus } from "./store";
 
 /**
- * Status colours carry meaning, so they are not the brand green: needing
+ * Status colours carry meaning, so they are not the brand navy: needing
  * something from you is amber, a refusal is red, done is green, and the two
  * "we are working on it" states stay neutral so the ones that need attention
  * are the only colour on the screen.
  */
 const REQUEST_TONE: Record<RequestStatus, string> = {
-  Submitted: "bg-black/[0.05] text-dp-body",
-  "In Review": "bg-[#E8F1FB] text-[#1c4f86]",
+  Submitted: "bg-black/[0.05] text-npf-body",
+  "In Review": "bg-[#EDE9FB] text-[#4A3B94]",
   "Action Needed": "bg-[#FFF2D9] text-[#8a5a00]",
-  Completed: "bg-[#e7f6f1] text-dp-green-ink",
+  Completed: "bg-npf-ok-soft text-npf-ok",
   Rejected: "bg-[#FDECEC] text-[#9b1c1c]",
 };
 
 const INCIDENT_TONE: Record<IncidentStatus, string> = {
   New: "bg-[#FFF2D9] text-[#8a5a00]",
-  Dispatched: "bg-[#E8F1FB] text-[#1c4f86]",
-  "On Scene": "bg-[#e7f6f1] text-dp-green-ink",
-  Closed: "bg-black/[0.05] text-dp-body",
+  Dispatched: "bg-[#EDE9FB] text-[#4A3B94]",
+  "On Scene": "bg-npf-ok-soft text-npf-ok",
+  Closed: "bg-black/[0.05] text-npf-body",
 };
 
 export function StatusPill({
@@ -59,7 +59,7 @@ export function Card({
   return (
     <section className="rounded-3xl p-6 ring-1 ring-black/[0.07]">
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-secondary text-lg font-bold text-dp-green-deep">
+        <h2 className="font-secondary text-lg font-bold text-npf-blue-deep">
           {t(title)}
         </h2>
         {action}
@@ -82,10 +82,10 @@ export function Empty({
   const t = useT();
   return (
     <div className="rounded-2xl bg-[#F9F9F9] px-6 py-12 text-center">
-      <p className="font-secondary text-base font-bold text-dp-ink">
+      <p className="font-secondary text-base font-bold text-npf-ink">
         {t(title)}
       </p>
-      <p className="mx-auto mt-2 max-w-[46ch] text-sm leading-relaxed text-dp-body">
+      <p className="mx-auto mt-2 max-w-[46ch] text-sm leading-relaxed text-npf-body">
         {t(body)}
       </p>
       {action ? <div className="mt-5">{action}</div> : null}

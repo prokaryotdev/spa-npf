@@ -9,7 +9,7 @@ import { useT } from "../i18n/client";
 /**
  * The site's one card shape: full-bleed photo, a triple gradient scrim driven by
  * the card's own ink colour, the initiative logo top-left, and the copy stacked
- * at the base. Shared by Smart Policing, Smart Police Stations and Community.
+ * at the base. Shared by Modern Policing, the station types and Community.
  */
 /** The three card ratios the site uses; mobile is always 330/530. */
 const shapes = {
@@ -111,7 +111,7 @@ export default function InitiativeCard({
             {card.tags.map((tag) => (
               <span
                 key={tag.label}
-                className="inline-flex items-center rounded-full border border-neutral-400 bg-[#F9F9F9] px-3 py-3 font-secondary text-[10px] leading-tight font-bold text-[#4B4C4D] shadow-[0_4px_4px_rgba(0,0,0,0.25)] md:px-4 md:text-xs xl:px-6"
+                className="inline-flex items-center rounded-full border border-neutral-400 bg-[#F9F9F9] px-3 py-3 font-secondary text-[10px] leading-tight font-bold text-[#474B52] shadow-[0_4px_4px_rgba(0,0,0,0.25)] md:px-4 md:text-xs xl:px-6"
               >
                 {tag.icon ? (
                   <span className="relative me-2 size-3.5 shrink-0 md:size-5">

@@ -22,9 +22,9 @@ export default async function SearchLoading() {
       intro={t("Find a service, a news story, an event or a page.")}
     >
       <section className="bg-white pb-24" aria-busy="true" aria-live="polite">
-        <div className="dp-container">
+        <div className="npf-container">
           <span className="sr-only">{t("Searching…")}</span>
-          <div className="h-[68px] max-w-[680px] animate-pulse rounded-2xl bg-[#F4F8F6]" />
+          <div className="h-[68px] max-w-[680px] animate-pulse rounded-2xl bg-[#F4F6FA]" />
           <ul className="mt-8 max-w-[80ch] divide-y divide-black/10">
             {[0, 1, 2, 3, 4].map((i) => (
               <li key={i} className="py-5">

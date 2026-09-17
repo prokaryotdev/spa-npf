@@ -33,7 +33,7 @@ export default defineConfig({
       testIgnore: /responsive\.spec\.ts/,
     },
     {
-      // Safari's engine. A large share of UAE traffic is iPhone, and WebKit is
+      // Safari's engine. A large share of Nigerian traffic is iPhone, and WebKit is
       // the engine most likely to differ on mask-image, `gap`, and anything
       // right-to-left — none of which Chromium would have shown us.
       name: "webkit",

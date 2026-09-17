@@ -21,9 +21,8 @@ const right = [
 ];
 
 const partners = [
-  { label: "dubai.ae", src: "/img/dubaiae.svg", width: 64 },
   { label: "Innovation", src: "/img/ai.svg", width: 32 },
-  { label: "Dubai Police AIX", src: "/img/dashboard/aix-logo1.png", width: 32 },
+  { label: "Nigeria Police Force AIX", src: "/img/dashboard/aix-logo1.png", width: 32 },
 ];
 
 /** Quick-access toolbar; rises once the hero is out of the way. */
@@ -40,7 +39,7 @@ export default function StickyBar() {
 
   return (
     <div className="pointer-events-none fixed bottom-0 left-0 z-50 w-full md:pb-5">
-      <div className="dp-container">
+      <div className="npf-container">
         <nav
           aria-label={t("Quick access toolbar")}
           className={`pointer-events-auto overflow-hidden rounded-t-3xl border border-black/5 bg-white/90 shadow-[0_-8px_30px_-18px_rgba(0,60,40,0.5)] backdrop-blur-md transition-transform duration-500 ease-[var(--ease-custom)] md:rounded-full ${
@@ -50,17 +49,17 @@ export default function StickyBar() {
           <div className="flex justify-between">
             <div className="flex items-center">
               <a
-                href="https://www.happinessmeter.ae/"
+                href="https://www.servicerating.gov.ng/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={t("Happiness Meter (opens in a new window)")}
-                className="inline-flex min-w-[74px] items-center justify-center px-4 py-4 text-dp-green transition-colors hover:bg-black/[0.04]"
+                aria-label={t("Service Rating (opens in a new window)")}
+                className="inline-flex min-w-[74px] items-center justify-center px-4 py-4 text-npf-blue transition-colors hover:bg-black/[0.04]"
               >
                 <SmileIcon className="size-7 lg:size-8" />
               </a>
               <Link
                 href="/app/services"
-                className="inline-flex min-w-[74px] items-center justify-center px-4 py-4 text-dp-green transition-colors hover:bg-black/[0.04]"
+                className="inline-flex min-w-[74px] items-center justify-center px-4 py-4 text-npf-blue transition-colors hover:bg-black/[0.04]"
               >
                 <ServicesIcon className="size-6 lg:size-7" />
                 <span className="ms-2 hidden text-sm font-medium lg:block">
@@ -86,7 +85,7 @@ export default function StickyBar() {
               {partners.map((partner) => (
                 <a
                   key={partner.label}
-                  href="https://www.dubaipolice.gov.ae/"
+                  href="https://fct.npf.gov.ng/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={partner.label}
