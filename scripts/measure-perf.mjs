@@ -10,6 +10,15 @@
  *
  * Uses the Playwright browser the end-to-end suite already installs, so there
  * is no Lighthouse dependency to carry for a number read once a release.
+ *
+ * Known and unexplained: /app/services reports CLS 0.268 on roughly half of
+ * runs and 0.000 on the rest, warm or cold. When it happens the page has been
+ * painted unstyled — 23,753px tall against 8,627px settled — and everything
+ * below the catalogue, the footer included, moves when the stylesheet finally
+ * applies. Ruled out so far: the stylesheet is render-blocking and in the head
+ * with its nonce, the service icons carry explicit width and height, and the
+ * footer neither crashes nor loses its content. Run it more than once before
+ * believing either number.
  */
 import { chromium } from "@playwright/test";
 
