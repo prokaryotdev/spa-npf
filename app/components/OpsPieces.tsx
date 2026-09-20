@@ -4,6 +4,7 @@ import { useSyncExternalStore } from "react";
 import { dispatchTarget } from "../content-ops";
 import { useT } from "../i18n/client";
 import { useHydrated } from "./store";
+import { SearchIcon } from "./icons";
 import type { Incident, Priority, UnitStatus } from "./store";
 
 /* -------------------------------------------------------------------------
@@ -121,6 +122,8 @@ export function OpsPanel({
   count,
   action,
   flush,
+  className = "",
+  bodyClassName = "",
   children,
 }: {
   title?: string;
@@ -128,17 +131,27 @@ export function OpsPanel({
   action?: React.ReactNode;
   /** Let a table run to the panel edge instead of sitting inside padding. */
   flush?: boolean;
+  className?: string;
+  bodyClassName?: string;
   children: React.ReactNode;
 }) {
   const t = useT();
   return (
-    <section className="overflow-hidden rounded-xl border border-[var(--ops-line)] bg-[var(--ops-panel)]">
+    <section
+      className={`flex min-h-0 flex-col overflow-hidden rounded-xl border border-[var(--ops-line)] bg-[var(--ops-panel)] ${className}`}
+    >
       {title ? (
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--ops-line)] px-4 py-3">
-          <h2 className="flex items-baseline gap-2.5 font-secondary text-sm font-bold tracking-[0.09em] uppercase">
+        /*
+         * Sentence case, not the small-caps the console used to set every
+         * panel, label and column head in. Six shouting headings on one
+         * screen is six things claiming to be the loudest, which leaves
+         * nothing leading; the weight step does the work instead.
+         */
+        <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[var(--ops-line)] px-4 py-2.5">
+          <h2 className="flex items-center gap-2 font-secondary text-[15px] font-bold">
             {t(title)}
             {count !== undefined ? (
-              <span className="font-primary text-xs font-normal tracking-normal text-[var(--ops-dim)] normal-case tabular-nums">
+              <span className="rounded bg-[var(--ops-raised)] px-1.5 py-0.5 font-primary text-[11px] font-medium text-[var(--ops-dim)] tabular-nums">
                 {count}
               </span>
             ) : null}
@@ -146,10 +159,94 @@ export function OpsPanel({
           {action}
         </div>
       ) : null}
-      <div className={flush ? "" : "p-4"}>{children}</div>
+      <div className={`min-h-0 ${flush ? "" : "p-4"} ${bodyClassName}`}>
+        {children}
+      </div>
     </section>
   );
 }
+
+/* -------------------------------------------------------------------------
+ * Page furniture
+ * ---------------------------------------------------------------------- */
+
+/**
+ * The title block every console screen opens with. The lead is capped at a
+ * readable measure rather than running the full width of a 1600px board,
+ * where a two-line sentence becomes one 180-character line.
+ */
+export function OpsHead({
+  title,
+  lead,
+  action,
+}: {
+  title: string;
+  lead: string;
+  action?: React.ReactNode;
+}) {
+  return (
+    <header className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+      <div>
+        <h1 className="font-secondary text-[26px] leading-tight font-bold">
+          {title}
+        </h1>
+        <p className="mt-1 max-w-[70ch] text-sm text-[var(--ops-dim)]">
+          {lead}
+        </p>
+      </div>
+      {action}
+    </header>
+  );
+}
+
+/**
+ * The band of readouts at the top of a board. Its children stretch, because
+ * a five-number strip that stops two thirds of the way across a wide board
+ * reads as an unfinished row rather than as a line of instruments.
+ */
+export function ReadoutStrip({ children }: { children: React.ReactNode }) {
+  return (
+    <dl className="flex flex-wrap divide-x divide-[var(--ops-line)] overflow-hidden rounded-xl border border-[var(--ops-line)] bg-[var(--ops-panel)]">
+      {children}
+    </dl>
+  );
+}
+
+/** The search box shared by the three filterable boards. */
+export function OpsSearch({
+  id,
+  label,
+  placeholder,
+  value,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  placeholder: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className="flex min-w-[220px] flex-1 items-center gap-2 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 focus-within:border-[var(--ops-accent)] focus-within:ring-2 focus-within:ring-[var(--ops-accent)]/15">
+      <SearchIcon aria-hidden className="size-4 shrink-0 text-[var(--ops-dim)]" />
+      <label htmlFor={id} className="sr-only">
+        {label}
+      </label>
+      <input
+        id={id}
+        type="search"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full bg-transparent py-2 text-sm outline-none placeholder:text-[var(--ops-dim)]"
+      />
+    </div>
+  );
+}
+
+/** The shared look of a `select` sitting in a filter bar. */
+export const OPS_SELECT =
+  "rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 py-2 text-sm outline-none focus:border-[var(--ops-accent)]";
 
 /* -------------------------------------------------------------------------
  * Grades and statuses
@@ -260,12 +357,14 @@ export function Readout({
 }) {
   const t = useT();
   return (
-    <div className="px-4 py-3 first:pl-0 sm:px-5">
-      <dt className="text-[11px] tracking-[0.12em] text-[var(--ops-dim)] uppercase">
+    /* basis + grow: the strip fills the board's width at any count, and the
+       readouts wrap to a second line rather than crushing on a laptop. */
+    <div className="flex-1 basis-[168px] px-4 py-3 sm:px-5">
+      <dt className="text-[11px] font-medium tracking-[0.1em] text-[var(--ops-dim)] uppercase">
         {t(label)}
       </dt>
       <dd
-        className="mt-1.5 font-secondary text-[26px] leading-none font-bold tabular-nums"
+        className="mt-2 font-secondary text-[28px] leading-none font-bold tabular-nums"
         style={tone ? { color: tone } : undefined}
       >
         {value}
@@ -289,7 +388,7 @@ export function OpsButton({
     brand:
       "bg-[var(--ops-brand)] text-white hover:bg-[var(--ops-brand-lift)] disabled:opacity-40",
     quiet:
-      "border border-[var(--ops-line)] text-[var(--ops-dim)] hover:border-[var(--ops-accent)]/50 hover:bg-[var(--ops-raised)] hover:text-[var(--ops-text)] disabled:opacity-40",
+      "border border-[var(--ops-line)] bg-[var(--ops-panel)] text-[var(--ops-text)] hover:border-[var(--ops-accent)] hover:bg-[var(--ops-raised)] disabled:opacity-40",
     danger:
       "border border-[var(--ops-p1)]/40 text-[var(--ops-p1)] hover:bg-[var(--ops-p1)]/12 disabled:opacity-40",
   };

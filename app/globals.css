@@ -299,6 +299,19 @@ html.npf-large-text {
   --ops-raised: #E4EAF6;
   --ops-line: #D3DCEA;
   --ops-text: #16203A;
+  /*
+   * The chrome. The board stays light — officers read it in daylight — but
+   * the frame around it is the Force's own navy, so the console reads as a
+   * fitted instrument rather than a web page with a toolbar, and so the one
+   * building of the site officers actually work in still wears the badge.
+   */
+  --ops-chrome: #102A52;
+  --ops-chrome-line: #24467E;
+  --ops-chrome-raised: #1B3F7A;
+  /* Secondary type on the chrome, 6.6:1 on --ops-chrome. */
+  --ops-chrome-dim: #A6BCDD;
+  /* Crest gold, legible on the chrome (8.4:1); marker and kicker only. */
+  --ops-chrome-gold: #E8CB74;
   /* Secondary text, 5.7:1 on the panel — dim, never grey-on-grey. */
   --ops-dim: #5C6880;
   /* The brand navy, used where it is a fill under white text (10.3:1). */
@@ -332,6 +345,25 @@ html.npf-large-text {
   color: var(--ops-text);
   scrollbar-color: #B6C6E2 #E6EBF4;
 }
+/*
+ * The UA centres <th>; every board in here is start-aligned, and the two
+ * tables shipped with their headers sitting most of a column off their own
+ * data. :where() keeps this at zero specificity, so `text-end` on a numeric
+ * column still wins.
+ */
+@layer base {
+  .npf-ops th {
+    text-align: start;
+  }
+}
+/* A sticky table head needs an opaque backing or rows scroll through it. */
+.npf-ops-thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--ops-panel);
+  box-shadow: inset 0 -1px 0 var(--ops-line);
+}
 .npf-ops ::selection {
   background: #CFE0F8;
   color: #14315F;
@@ -339,6 +371,11 @@ html.npf-large-text {
 .npf-ops :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline: 2px solid var(--ops-accent);
   outline-offset: 2px;
+}
+/* Navy chrome: the board's focus ring is too close to it to be seen. */
+.npf-ops-chrome
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline-color: var(--ops-chrome-gold);
 }
 /* The pending queue's newest call arrives rather than appearing. */
 @keyframes npf-ops-row-in {

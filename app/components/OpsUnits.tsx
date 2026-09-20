@@ -3,10 +3,14 @@
 import { useId, useMemo, useState } from "react";
 import {
   Elapsed,
+  OPS_SELECT,
   OpsButton,
+  OpsHead,
   OpsPanel,
+  OpsSearch,
   PriorityTag,
   Readout,
+  ReadoutStrip,
   UnitStatusTag,
   useNow,
 } from "./OpsPieces";
@@ -17,7 +21,6 @@ import {
   type Unit,
   type UnitStatus,
 } from "./store";
-import { SearchIcon } from "./icons";
 import { useT } from "../i18n/client";
 
 const ORDER: Record<UnitStatus, number> = {
@@ -75,16 +78,14 @@ export default function OpsUnits() {
 
   return (
     <div className="space-y-5">
-      <header>
-        <h1 className="font-secondary text-2xl font-bold">{t("Units")}</h1>
-        <p className="mt-1 text-sm text-[var(--ops-dim)]">
-          {t(
-            "Everyone on this shift and what they are on. The clock counts from the last status change.",
-          )}
-        </p>
-      </header>
+      <OpsHead
+        title={t("Units")}
+        lead={t(
+          "Everyone on this shift and what they are on. The clock counts from the last status change.",
+        )}
+      />
 
-      <dl className="flex flex-wrap divide-x divide-[var(--ops-line)] rounded-xl border border-[var(--ops-line)] bg-[var(--ops-panel)] px-4 py-1">
+      <ReadoutStrip>
         <Readout
           label={t("On duty")}
           value={units.length}
@@ -106,26 +107,16 @@ export default function OpsUnits() {
           value={off.length}
           note={t("refuelling, training")}
         />
-      </dl>
+      </ReadoutStrip>
 
       <div className="flex flex-wrap items-center gap-2">
-        <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 focus-within:border-[var(--ops-accent)]">
-          <SearchIcon
-            aria-hidden
-            className="size-4 shrink-0 text-[var(--ops-dim)]"
-          />
-          <label htmlFor={`${id}-q`} className="sr-only">
-            {t("Filter units")}
-          </label>
-          <input
-            id={`${id}-q`}
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={t("Callsign, officer or area")}
-            className="w-full bg-transparent py-2 text-sm outline-none placeholder:text-[var(--ops-dim)]"
-          />
-        </div>
+        <OpsSearch
+          id={`${id}-q`}
+          label={t("Filter units")}
+          placeholder={t("Callsign, officer or area")}
+          value={query}
+          onChange={setQuery}
+        />
         <label htmlFor={`${id}-div`} className="sr-only">
           {t("Division")}
         </label>
@@ -133,7 +124,7 @@ export default function OpsUnits() {
           id={`${id}-div`}
           value={division}
           onChange={(e) => setDivision(e.target.value)}
-          className="rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 py-2 text-sm outline-none focus:border-[var(--ops-accent)]"
+          className={OPS_SELECT}
         >
           <option value="">{t("Every division")}</option>
           {divisions.map((d) => (
@@ -142,14 +133,17 @@ export default function OpsUnits() {
             </option>
           ))}
         </select>
-      </div>
 
-      <p aria-live="polite" className="text-xs text-[var(--ops-dim)]">
-        {t("{shown} of {total} units", {
-          shown: visible.length,
-          total: units.length,
-        })}
-      </p>
+        <p
+          aria-live="polite"
+          className="ms-auto text-xs text-[var(--ops-dim)] tabular-nums"
+        >
+          {t("{shown} of {total} units", {
+            shown: visible.length,
+            total: units.length,
+          })}
+        </p>
+      </div>
 
       <OpsPanel flush>
         <div className="overflow-x-auto">
@@ -159,27 +153,27 @@ export default function OpsUnits() {
                 "Units on duty, with status, elapsed time in that status, and the call they are assigned to",
               )}
             </caption>
-            <thead className="text-[11px] tracking-[0.1em] text-[var(--ops-dim)] uppercase">
-              <tr className="border-b border-[var(--ops-line)]">
-                <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
+            <thead className="npf-ops-thead text-[11px] font-medium tracking-[0.08em] text-[var(--ops-dim)] uppercase">
+              <tr>
+                <th scope="col" className="py-2 pe-3 ps-4 font-medium">
                   {t("Callsign")}
                 </th>
-                <th scope="col" className="py-2.5 pe-3 font-medium">
+                <th scope="col" className="py-2 pe-3 font-medium">
                   {t("Officer")}
                 </th>
-                <th scope="col" className="py-2.5 pe-3 font-medium">
+                <th scope="col" className="py-2 pe-3 font-medium">
                   {t("Status")}
                 </th>
-                <th scope="col" className="py-2.5 pe-3 text-end font-medium">
+                <th scope="col" className="py-2 pe-3 text-end font-medium">
                   {t("Elapsed")}
                 </th>
-                <th scope="col" className="py-2.5 pe-3 font-medium">
+                <th scope="col" className="py-2 pe-3 font-medium">
                   {t("On call")}
                 </th>
-                <th scope="col" className="py-2.5 pe-3 font-medium">
+                <th scope="col" className="py-2 pe-3 font-medium">
                   {t("Location")}
                 </th>
-                <th scope="col" className="py-2.5 pe-4 text-end font-medium">
+                <th scope="col" className="py-2 pe-4 text-end font-medium">
                   {t("Move to")}
                 </th>
               </tr>
@@ -227,18 +221,18 @@ function Row({
 
   return (
     <tr className="border-b border-[var(--ops-line)] last:border-0 hover:bg-[var(--ops-raised)]/50">
-      <th scope="row" className="py-2.5 pe-3 ps-4 text-start">
+      <th scope="row" className="py-2 pe-3 ps-4">
         <span className="font-secondary font-bold">{t(unit.callsign)}</span>
         <span className="block text-[11px] font-normal text-[var(--ops-dim)]">
           {t(unit.division)}
         </span>
       </th>
-      <td className="py-2.5 pe-3 text-[var(--ops-dim)]">{t(unit.officer)}</td>
-      <td className="py-2.5 pe-3">
+      <td className="py-2 pe-3 text-[var(--ops-dim)]">{t(unit.officer)}</td>
+      <td className="py-2 pe-3">
         <UnitStatusTag status={unit.status} />
       </td>
       <td
-        className="py-2.5 pe-3 text-end font-medium"
+        className="py-2 pe-3 text-end font-medium"
         style={stale ? { color: "var(--ops-p2)" } : undefined}
       >
         <Elapsed from={unit.since} />
@@ -246,7 +240,7 @@ function Row({
           <span className="sr-only"> {t("— held over 45 minutes")}</span>
         ) : null}
       </td>
-      <td className="py-2.5 pe-3">
+      <td className="py-2 pe-3">
         {incident ? (
           <span className="flex items-center gap-2 whitespace-nowrap">
             <PriorityTag priority={incident.priority} />
@@ -258,10 +252,10 @@ function Row({
           <span className="text-xs text-[var(--ops-dim)]">—</span>
         )}
       </td>
-      <td className="py-2.5 pe-3 text-xs text-[var(--ops-dim)]">
+      <td className="py-2 pe-3 text-xs text-[var(--ops-dim)]">
         {t(unit.area)}
       </td>
-      <td className="py-2.5 pe-4 text-end">
+      <td className="py-2 pe-4 text-end">
         {/*
           A unit on a call is cleared from the call, not from here — clearing
           it here would leave the incident showing a unit that has gone.

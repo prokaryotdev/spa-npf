@@ -6,8 +6,11 @@ import { useFormat, useT } from "../i18n/client";
 import type { T } from "../i18n/translate";
 import {
   Elapsed,
+  OPS_SELECT,
   OpsButton,
+  OpsHead,
   OpsPanel,
+  OpsSearch,
   OpsStatus,
   PRIORITY,
   PriorityTag,
@@ -24,7 +27,7 @@ import {
   type Priority,
   type Unit,
 } from "./store";
-import { CloseIcon, PlusIcon, SearchIcon } from "./icons";
+import { CloseIcon, PlusIcon } from "./icons";
 
 const STATUSES: IncidentStatus[] = ["New", "Dispatched", "On Scene", "Closed"];
 const STATUS_LABEL: Record<IncidentStatus, string> = {
@@ -99,20 +102,18 @@ export default function OpsIncidents() {
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="font-secondary text-2xl font-bold">{t("Calls")}</h1>
-          <p className="mt-1 text-sm text-[var(--ops-dim)]">
-            {t(
-              "Every call of the shift, newest first. Pick a row to dispatch it, move it on, or write the log.",
-            )}
-          </p>
-        </div>
-        <OpsButton tone="brand" onClick={() => setTaking((v) => !v)}>
-          <PlusIcon aria-hidden className="size-4" />
-          {taking ? t("Cancel") : t("Take a call")}
-        </OpsButton>
-      </div>
+      <OpsHead
+        title={t("Calls")}
+        lead={t(
+          "Every call of the shift, newest first. Pick a row to dispatch it, move it on, or write the log.",
+        )}
+        action={
+          <OpsButton tone="brand" onClick={() => setTaking((v) => !v)}>
+            <PlusIcon aria-hidden className="size-4" />
+            {taking ? t("Cancel") : t("Take a call")}
+          </OpsButton>
+        }
+      />
 
       {taking ? (
         <TakeCall
@@ -123,24 +124,18 @@ export default function OpsIncidents() {
         />
       ) : null}
 
+      {/* Search, filters and the tally on one line. The count used to sit on
+          a line of its own between the controls and the board — a whole band
+          of vertical space spent on six words that belong beside the filters
+          that change them. */}
       <div className="flex flex-wrap items-center gap-2">
-        <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 focus-within:border-[var(--ops-accent)]">
-          <SearchIcon
-            aria-hidden
-            className="size-4 shrink-0 text-[var(--ops-dim)]"
-          />
-          <label htmlFor={`${id}-q`} className="sr-only">
-            {t("Filter calls")}
-          </label>
-          <input
-            id={`${id}-q`}
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={t("Reference, type, area, officer or callsign")}
-            className="w-full bg-transparent py-2 text-sm outline-none placeholder:text-[var(--ops-dim)]"
-          />
-        </div>
+        <OpsSearch
+          id={`${id}-q`}
+          label={t("Filter calls")}
+          placeholder={t("Reference, type, area, officer or callsign")}
+          value={query}
+          onChange={setQuery}
+        />
 
         <Filter
           id={`${id}-status`}
@@ -165,16 +160,19 @@ export default function OpsIncidents() {
         >
           {t("No unit")}
         </OpsButton>
+
+        <p
+          aria-live="polite"
+          className="ms-auto text-xs text-[var(--ops-dim)] tabular-nums"
+        >
+          {t("{shown} of {total} calls", {
+            shown: visible.length,
+            total: incidents.length,
+          })}
+        </p>
       </div>
 
-      <p aria-live="polite" className="text-xs text-[var(--ops-dim)]">
-        {t("{shown} of {total} calls", {
-          shown: visible.length,
-          total: incidents.length,
-        })}
-      </p>
-
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_336px]">
+      <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_336px] 2xl:grid-cols-[minmax(0,1fr)_380px]">
         {/* min-w-0: without it the table's min-content width shoves the
  detail panel off the page. */}
         <div className="min-w-0">
@@ -186,15 +184,15 @@ export default function OpsIncidents() {
                     "Calls, with grade, type, area, status, assigned unit and elapsed time",
                   )}
                 </caption>
-                <thead className="text-[11px] tracking-[0.1em] text-[var(--ops-dim)] uppercase">
-                  <tr className="border-b border-[var(--ops-line)]">
+                <thead className="npf-ops-thead text-[11px] font-medium tracking-[0.08em] text-[var(--ops-dim)] uppercase">
+                  <tr className="whitespace-nowrap">
                     <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
                       {t("Grade")}
                     </th>
                     <th scope="col" className="py-2.5 pe-3 font-medium">
                       {t("Ref")}
                     </th>
-                    <th scope="col" className="py-2.5 pe-3 font-medium">
+                    <th scope="col" className="w-full py-2.5 pe-3 font-medium">
                       {t("Type / area")}
                     </th>
                     <th scope="col" className="py-2.5 pe-3 font-medium">
@@ -222,7 +220,7 @@ export default function OpsIncidents() {
                         aria-selected={active}
                         className={`cursor-pointer border-b border-[var(--ops-line)] transition-colors last:border-0 ${
                           active
-                            ? "bg-[var(--ops-raised)]"
+                            ? "bg-[var(--ops-raised)] shadow-[inset_3px_0_0_var(--ops-accent)]"
                             : "hover:bg-[var(--ops-raised)]/60"
                         } ${late ? "npf-ops-overdue" : ""}`}
                       >
@@ -231,7 +229,7 @@ export default function OpsIncidents() {
                         </td>
                         <th
                           scope="row"
-                          className="py-2.5 pe-3 text-start font-normal"
+                          className="py-2.5 pe-3 font-normal whitespace-nowrap"
                         >
                           <button
                             type="button"
@@ -253,7 +251,7 @@ export default function OpsIncidents() {
                         <td className="py-2.5 pe-3">
                           <OpsStatus status={incident.status} />
                         </td>
-                        <td className="py-2.5 pe-3 text-xs">
+                        <td className="py-2.5 pe-3 text-xs whitespace-nowrap">
                           {incident.unit ? (
                             <>
                               <span className="font-secondary font-bold">
@@ -273,7 +271,7 @@ export default function OpsIncidents() {
                           )}
                         </td>
                         <td
-                          className="py-2.5 pe-4 text-end font-medium"
+                          className="py-2.5 pe-4 text-end font-medium whitespace-nowrap"
                           style={late ? { color: "var(--ops-p1)" } : undefined}
                         >
                           <Elapsed
@@ -305,7 +303,7 @@ export default function OpsIncidents() {
           </OpsPanel>
         </div>
 
-        <div className="xl:sticky xl:top-[124px] xl:self-start">
+        <div className="lg:sticky lg:top-0 lg:self-start">
           {open ? (
             <Detail
               incident={open}
@@ -314,7 +312,7 @@ export default function OpsIncidents() {
             />
           ) : (
             <OpsPanel title={t("Call detail")}>
-              <p className="py-10 text-center text-sm text-[var(--ops-dim)]">
+              <p className="py-6 text-center text-sm text-[var(--ops-dim)]">
                 {t("Pick a row to dispatch it, move it on, or read the log.")}
               </p>
             </OpsPanel>
@@ -744,7 +742,7 @@ function Filter({
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 py-2 text-sm outline-none focus:border-[var(--ops-accent)]"
+        className={OPS_SELECT}
       >
         <option value="">{all}</option>
         {options.map(([v, text]) => (

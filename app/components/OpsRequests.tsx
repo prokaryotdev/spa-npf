@@ -1,14 +1,21 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
-import { OpsButton, OpsPanel, Readout } from "./OpsPieces";
+import {
+  OpsButton,
+  OpsHead,
+  OpsPanel,
+  OpsSearch,
+  Readout,
+  ReadoutStrip,
+} from "./OpsPieces";
 import {
   advanceRequest,
   useStore,
   type RequestStatus,
   type TrackedRequest,
 } from "./store";
-import { CheckIcon, CloseIcon, SearchIcon } from "./icons";
+import { CheckIcon, CloseIcon } from "./icons";
 import { useFormat, useT } from "../i18n/client";
 
 const QUEUE: RequestStatus[] = ["Submitted", "In Review", "Action Needed"];
@@ -58,18 +65,14 @@ export default function OpsRequests() {
 
   return (
     <div className="space-y-5">
-      <header>
-        <h1 className="font-secondary text-2xl font-bold">
-          {t("Service requests")}
-        </h1>
-        <p className="mt-1 text-sm text-[var(--ops-dim)]">
-          {t(
-            "Applications waiting on a decision. Anything you do here appears on the applicant’s own screen within the second.",
-          )}
-        </p>
-      </header>
+      <OpsHead
+        title={t("Service requests")}
+        lead={t(
+          "Applications waiting on a decision. Anything you do here appears on the applicant’s own screen within the second.",
+        )}
+      />
 
-      <dl className="flex flex-wrap divide-x divide-[var(--ops-line)] rounded-xl border border-[var(--ops-line)] bg-[var(--ops-panel)] px-4 py-1">
+      <ReadoutStrip>
         <Readout
           label={t("In the queue")}
           value={requests.filter((r) => QUEUE.includes(r.status)).length}
@@ -95,26 +98,16 @@ export default function OpsRequests() {
           value={requests.filter((r) => r.status === "Rejected").length}
           note={t("conditions not met")}
         />
-      </dl>
+      </ReadoutStrip>
 
       <div className="flex flex-wrap items-center gap-2">
-        <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 focus-within:border-[var(--ops-accent)]">
-          <SearchIcon
-            aria-hidden
-            className="size-4 shrink-0 text-[var(--ops-dim)]"
-          />
-          <label htmlFor={`${id}-q`} className="sr-only">
-            {t("Filter requests")}
-          </label>
-          <input
-            id={`${id}-q`}
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={t("Reference or service")}
-            className="w-full bg-transparent py-2 text-sm outline-none placeholder:text-[var(--ops-dim)]"
-          />
-        </div>
+        <OpsSearch
+          id={`${id}-q`}
+          label={t("Filter requests")}
+          placeholder={t("Reference or service")}
+          value={query}
+          onChange={setQuery}
+        />
         <OpsButton
           tone={openOnly ? "brand" : "quiet"}
           aria-pressed={openOnly}
@@ -122,14 +115,17 @@ export default function OpsRequests() {
         >
           {t("Open only")}
         </OpsButton>
-      </div>
 
-      <p aria-live="polite" className="text-xs text-[var(--ops-dim)]">
-        {t("{shown} of {total} requests", {
-          shown: visible.length,
-          total: requests.length,
-        })}
-      </p>
+        <p
+          aria-live="polite"
+          className="ms-auto text-xs text-[var(--ops-dim)] tabular-nums"
+        >
+          {t("{shown} of {total} requests", {
+            shown: visible.length,
+            total: requests.length,
+          })}
+        </p>
+      </div>
 
       {visible.length === 0 ? (
         <OpsPanel>
@@ -141,29 +137,29 @@ export default function OpsRequests() {
         </OpsPanel>
       ) : null}
 
-      <ul className="space-y-3">
+      <ul className="grid items-start gap-3 xl:grid-cols-2">
         {visible.map((request) => (
           <li key={request.id}>
             <OpsPanel>
-              <div className="flex flex-wrap items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="font-secondary text-base font-bold">
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                  <h2 className="font-secondary text-base font-bold">
                     {t(request.service)}
-                  </p>
-                  <p className="mt-1 text-xs text-[var(--ops-dim)] tabular-nums">
-                    {t("{ref} · submitted {date} · {fee} · via {channel}", {
-                      ref: request.id,
-                      date: format.date(request.submitted),
-                      fee: t(request.fee),
-                      channel: t(request.channel),
-                    })}
-                  </p>
+                  </h2>
+                  <span
+                    className={`shrink-0 rounded px-2 py-0.5 text-xs font-medium ${TONE[request.status]}`}
+                  >
+                    {t(request.status)}
+                  </span>
                 </div>
-                <span
-                  className={`shrink-0 rounded px-2 py-0.5 text-xs font-medium ${TONE[request.status]}`}
-                >
-                  {t(request.status)}
-                </span>
+                <p className="mt-1 text-xs text-[var(--ops-dim)] tabular-nums">
+                  {t("{ref} · submitted {date} · {fee} · via {channel}", {
+                    ref: request.id,
+                    date: format.date(request.submitted),
+                    fee: t(request.fee),
+                    channel: t(request.channel),
+                  })}
+                </p>
               </div>
 
               <ol className="mt-4 space-y-1.5 border-t border-[var(--ops-line)] pt-3 text-xs">
@@ -250,7 +246,7 @@ export default function OpsRequests() {
                       {t("Start review")}
                     </Action>
                   ) : null}
-                  {request.status !== "Completed" ? (
+                  {QUEUE.includes(request.status) ? (
                     <Action
                       primary
                       onClick={() =>
