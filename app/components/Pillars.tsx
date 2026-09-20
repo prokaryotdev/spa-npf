@@ -35,16 +35,21 @@ export default function Pillars() {
         alt=""
         fill
         sizes="480px"
-        /*
-         * The three portraits are monochrome halftones rendered in the old
-         * brand green, and they are raster, so the palette cannot reach them
-         * the way it reaches everything else. Rotating the hue lands them on
-         * the navy — cheaper and more honest than shipping re-rendered PNGs
-         * we would then have to keep in step with the tokens.
-         * ponytail: hue-rotate, re-render the source art if the halftone
-         * ever needs to be anything but one flat colour.
-         */
-        className="object-contain [filter:hue-rotate(64deg)]"
+        /* Deep enough to survive the white wash the standing line needs. */
+        className="object-cover brightness-[0.82] contrast-[1.18]"
+      />
+      {/*
+       * Three photographs from three different moments of one deployment do
+       * not agree on colour, and the ring they sit in is the brand navy. A
+       * multiply wash over a desaturated base pulls them onto one hue without
+       * re-rendering anything, which is what the halftone cut-outs they
+       * replace were doing the expensive way.
+       * ponytail: CSS duotone, bake it into the files if the photographs ever
+       * need to differ from each other.
+       */}
+      <span
+        aria-hidden
+        className="absolute inset-0 bg-npf-blue-deep mix-blend-color"
       />
     </span>
   ));
@@ -122,11 +127,14 @@ export default function Pillars() {
                   />
                   {portraits}
                 </div>
-                {/* A diagonal white wash lifts the standing line off the portrait,
- the same trick the original uses over this block. */}
+                {/* A diagonal white wash lifts the standing line off the
+                    portrait, the same trick the original uses over this block.
+                    It is tuned against the portrait's brightness above: a
+                    photograph needs a shorter, harder falloff than the sparse
+                    halftone dots this wash was first drawn for. */}
                 <span
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(124deg,#ffffff_18%,rgba(255,255,255,0.75)_44%,transparent_68%)] lg:block"
+                  className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(124deg,#ffffff_16%,rgba(255,255,255,0.82)_40%,transparent_64%)] lg:block"
                 />
                 <div className="mt-6 text-center lg:absolute lg:top-1/2 lg:start-0 lg:mt-0 lg:max-w-[64%] lg:-translate-y-1/2 lg:ps-[6%] lg:text-start">
                   <p className="mb-2 font-secondary text-base leading-snug font-bold text-[#414651] lg:mb-3 lg:text-2xl">

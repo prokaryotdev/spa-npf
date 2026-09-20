@@ -72,19 +72,13 @@ export default function Domains() {
               aria-hidden
               className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.06)_42%,rgba(0,0,0,0.65)_100%)]"
             />
-            {/* The vehicle owns the right half so the copy keeps a clear column. */}
-            <div className="absolute inset-y-0 end-0 w-full md:w-[62%]">
-              <Image
-                src={domain.subject}
-                alt=""
-                fill
-                sizes="(max-width: 768px) 100vw, 62vw"
-                className="object-contain object-bottom md:object-right"
-              />
-            </div>
+            {/* A floating patrol-vehicle cut-out used to shade the right half;
+                it was Dubai Police, and no freely licensed NPF equivalent
+                exists. The photograph shows the domain itself now, so the
+                scrim only has to clear a reading column on the start side. */}
             <span
               aria-hidden
-              className="absolute inset-0 bg-[linear-gradient(100deg,rgba(3,12,9,0.94)_0%,rgba(3,12,9,0.76)_32%,rgba(3,12,9,0.1)_64%,transparent_80%)]"
+              className="absolute inset-0 bg-[linear-gradient(100deg,rgba(3,12,9,0.92)_0%,rgba(3,12,9,0.72)_38%,rgba(3,12,9,0.18)_72%,rgba(3,12,9,0.05)_100%)]"
             />
           </div>
         ))}
@@ -116,15 +110,20 @@ export default function Domains() {
                     >
                       {/* A label, not a control — nothing to click through to. */}
                       <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-md">
-                        <span className="relative size-5 shrink-0">
-                          <Image
-                            src={chip.icon}
-                            alt=""
-                            fill
-                            sizes="20px"
-                            className="object-contain"
-                          />
-                        </span>
+                        {/* The Air Wing's mark was the Oyoon eye, which carries
+                            the Dubai Police crest; that chip stands on its
+                            label until the Force has one of its own. */}
+                        {"icon" in chip ? (
+                          <span className="relative size-5 shrink-0">
+                            <Image
+                              src={chip.icon}
+                              alt=""
+                              fill
+                              sizes="20px"
+                              className="object-contain"
+                            />
+                          </span>
+                        ) : null}
                         {chip.label}
                       </span>
                     </li>

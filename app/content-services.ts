@@ -34,7 +34,7 @@ export const services: Service[] = [
     name: "A proactive approach to ensures public safety",
     action: "Start Service",
     category: null,
-    icon: "/cms/Police_Eye_ae490c99df.svg",
+    icon: "/cms/dp-service-icons/shield_01_00cf6986f7.svg",
     description:
       "By integrating the latest technologies to counter evolving crime patterns, the Rescue Me initiative ensures a proactive approach to public safety. It encourages residents to report suspicious observations promptly, reinforcing a culture of vigilance and cooperation. This initiative underpins the vision of the Territory and the Federal Ministry of Interior’s pursuit of leadership in security.",
     audiences: [],
@@ -1970,7 +1970,7 @@ export const services: Service[] = [
     name: "On-The-Go",
     action: "Start Service",
     category: null,
-    icon: "/cms/image_78_f4e47dbab1.svg",
+    icon: "/cms/icon_car_eaa24290bd.svg",
     description:
       "Nigeria Police Force pledges to act swiftly on government directives by eliminating unnecessary procedures, cutting timelines by no less than 50%, and removing redundant requirements, ensuring a more streamlined and efficient experience for society.",
     audiences: [],
@@ -2218,7 +2218,7 @@ export const services: Service[] = [
     name: "Rescue Me",
     action: "Report",
     category: null,
-    icon: "/cms/dp-service-icons/Police_Eye_5e89c77b75.svg",
+    icon: "/cms/dp-service-icons/shield_01_00cf6986f7.svg",
     description:
       "This service enables users to provide security or sensitive information and report any activities or incidents suspected of posing a threat to public safety and community security",
     audiences: ["Individuals", "Visitors", "Business"],
@@ -2252,7 +2252,7 @@ export const services: Service[] = [
     name: "Police Museum Visit Permit",
     action: "Apply",
     category: null,
-    icon: "/cms/Police_Museum_4de467afc8.svg",
+    icon: "/cms/dp-service-icons/Police_Museum_Visit_Permit_babfe5cf33.svg",
     description:
       "This service enables customers to obtain a permit to visit the Nigeria Police Force Museum and view its collections and security history.",
     audiences: ["Individuals"],
@@ -3276,7 +3276,7 @@ export const services: Service[] = [
     name: "Smart Home Security",
     action: "Apply",
     category: null,
-    icon: "/cms/dp-service-icons/home_security_594793c70b.svg",
+    icon: "/cms/icon_security_84e1e8baef.svg",
     description:
       "This service aims to enhance home security in Abuja through a smart monitoring system that operates 24/7, connected with the strategic partner “9mobile” to provide instant alerts supported by a unified cellular network.",
     audiences: ["Individuals"],
@@ -4134,7 +4134,7 @@ export const services: Service[] = [
     name: "Summit Statistics",
     action: "Start Service",
     category: null,
-    icon: "/cms/logo_wps_31b6e96011.webp",
+    icon: "/cms/dp-service-icons/manage_search_79041d21d3.svg",
     description: "",
     audiences: [],
     mostUsed: false,

@@ -61,17 +61,23 @@ export default function InitiativeCard({
       />
 
       <div className="relative z-10 mb-10 flex w-full items-start justify-between gap-4">
-        <div
-          className={`relative ${card.logoIsWide ? "h-10 w-[170px] md:h-14 md:w-[190px]" : "h-12 w-12 md:h-16 md:w-16"}`}
-        >
-          <Image
-            src={card.logo}
-            alt={t("{name} logo", { name: card.title })}
-            fill
-            sizes="190px"
-            className="object-contain object-left-top"
-          />
-        </div>
+        {/* Not every initiative owns a mark; the ones that do not lead with
+            the title instead of borrowing someone else's. */}
+        {card.logo ? (
+          <div
+            className={`relative ${card.logoIsWide ? "h-10 w-[170px] md:h-14 md:w-[190px]" : "h-12 w-12 md:h-16 md:w-16"}`}
+          >
+            <Image
+              src={card.logo}
+              alt={t("{name} logo", { name: card.title })}
+              fill
+              sizes="190px"
+              className="object-contain object-left-top"
+            />
+          </div>
+        ) : (
+          <span />
+        )}
 
         <div className="flex shrink-0 items-center gap-2">
           {card.badge ? (

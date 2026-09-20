@@ -530,7 +530,7 @@ export const customerCenters = [
       "Covers Wuse II and the embassies, hotels and night-time economy along Adetokunbo Ademola Crescent.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/4377_N_B03597_optimized_f2d96b90c9.png",
+    image: "/cms/4377_N_B03597_optimized_f2d96b90c9.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.0765,7.474",
   },
   {

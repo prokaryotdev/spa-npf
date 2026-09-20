@@ -12,7 +12,6 @@
 export const lawsLegislation = {
   title: "Laws & Legislation",
   description: "The statutes the Nigeria Police Force works under",
-  cover: "/cms/Laws_and_Legislation_jpg_641c959914.jpeg",
   updatedAt: "2026-01-05",
   rows: [
     {
@@ -161,7 +160,6 @@ export const penaltyPoints = {
   title: "Traffic Offences and Penalties",
   description:
     "Learn how penalty points and fines impact your traffic record",
-  cover: "/cms/traficviolation_fb1c8ee904.png",
   updatedAt: "2026-01-04",
   rows: [
     // --- conduct that puts other road users at risk ------------------------
@@ -431,7 +429,6 @@ export const speedLimits = {
   title: "Road Speed Limits",
   description:
     "Speed limits on the roads of the Federal Capital Territory, set by the National Road Traffic Regulations and posted on the road itself. The limit depends on the kind of road and on where it runs.",
-  cover: "/cms/traficviolation_fb1c8ee904.png",
   updatedAt: "2026-01-04",
   rows: [
     { roadName: "Nnamdi Azikiwe Expressway", speed: "100", radarControl: "110" },
