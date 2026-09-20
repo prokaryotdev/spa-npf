@@ -93,7 +93,7 @@ export default function OpsUnits() {
         <Readout
           label={t("Available")}
           value={free.length}
-          tone={free.length ? "var(--ops-accent)" : "var(--ops-p2)"}
+          tone={free.length ? "var(--ops-fill-ok)" : "var(--ops-p2)"}
           note={t("on the air")}
         />
         <Readout

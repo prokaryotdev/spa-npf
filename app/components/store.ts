@@ -119,7 +119,19 @@ type State = {
 // Versioned: the shape changed (word priorities became P1-P4) and an old blob
 // crashes the board. Bump on any breaking change to Shared — seed data makes
 // a migration pointless.
-const KEY = "dp:state:v2";
+//
+// v3 is a content break rather than a shape one, and it is the more dangerous
+// kind. readShared() spreads the saved collections over the fresh ones, so a
+// blob written before the seeds moved from Dubai to the FCT survives every
+// deploy: the console keeps serving Sheikh Zayed Road and DXB references, and
+// the fixed timestamps in it age into elapsed clocks reading ninety hours.
+// Anyone who opened the console once sees that version forever. Bump the key
+// whenever the seeds change, not only when their shape does.
+//
+// Exported so scripts/test-store.mjs reads the blob under whatever the
+// current key is: a copy of the string in the test turns the next bump into
+// a failing test rather than a passing one.
+export const KEY = "dp:state:v3";
 /**
  * The work lives in localStorage; who is signed in lives in sessionStorage.
  *

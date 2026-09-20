@@ -72,7 +72,7 @@ export default function OpsOverview() {
           </h1>
           <p className="mt-1 text-sm text-[var(--ops-dim)]">
             {t(
-              "Live picture for Asokoro control. Grades run P1 immediate to P4 scheduled.",
+              "Live picture for Wuse control. Grades run P1 immediate to P4 scheduled.",
             )}
           </p>
         </div>
@@ -302,6 +302,20 @@ function RunningCall({ incident }: { incident: Incident }) {
   );
 }
 
+/** What a segment of the availability track means, by unit status. */
+const UNIT_FILL: Record<Unit["status"], string> = {
+  Available: "var(--ops-fill-ok)",
+  Assigned: "var(--ops-fill-warn)",
+  "On Scene": "var(--ops-fill-warn)",
+  Unavailable: "var(--ops-raised)",
+};
+
+const UNIT_KEY: [string, string][] = [
+  ["Free", "var(--ops-fill-ok)"],
+  ["Committed", "var(--ops-fill-warn)"],
+  ["Off the air", "var(--ops-raised)"],
+];
+
 /**
  * The unit status board, rolled up by division. A dispatcher does not ask
  * "how many units exist", they ask "is there a traffic car free", so the
@@ -348,7 +362,11 @@ function UnitBoard({ units }: { units: Unit[] }) {
                 </th>
                 <td className="w-full px-3 py-2.5">
                   {/* Availability as a filled track: the bar is the number,
- not a decoration beside it. */}
+                      not a decoration beside it. One segment per unit, in the
+                      three colours the legend under the table names — free,
+                      committed, off the air — so the row is readable without
+                      counting and the colours mean the same thing they mean
+                      on the status pills. */}
                   <span
                     aria-hidden
                     className="flex h-1.5 gap-px overflow-hidden rounded-full"
@@ -357,14 +375,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
                       <span
                         key={u.callsign}
                         className="flex-1 first:rounded-s-full last:rounded-e-full"
-                        style={{
-                          background:
-                            u.status === "Available"
-                              ? "var(--ops-accent)"
-                              : u.status === "Unavailable"
-                                ? "var(--ops-raised)"
-                                : "var(--ops-p2)",
-                        }}
+                        style={{ background: UNIT_FILL[u.status] }}
                       />
                     ))}
                   </span>
@@ -372,7 +383,9 @@ function UnitBoard({ units }: { units: Unit[] }) {
                 <td
                   className="py-2.5 pe-4 text-end text-xs font-bold whitespace-nowrap tabular-nums"
                   style={{
-                    color: open.length ? "var(--ops-accent)" : "var(--ops-p2)",
+                    color: open.length
+                      ? "var(--ops-fill-ok)"
+                      : "var(--ops-p2)",
                   }}
                 >
                   {open.length}
@@ -385,6 +398,20 @@ function UnitBoard({ units }: { units: Unit[] }) {
           })}
         </tbody>
       </table>
+
+      {/* Three colours across twelve tracks earn one line naming them. */}
+      <ul className="flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--ops-line)] px-4 py-2.5 text-[11px] text-[var(--ops-dim)]">
+        {UNIT_KEY.map(([label, fill]) => (
+          <li key={label} className="flex items-center gap-1.5">
+            <span
+              aria-hidden
+              className="size-2 rounded-full"
+              style={{ background: fill }}
+            />
+            {t(label)}
+          </li>
+        ))}
+      </ul>
 
       <div className="border-t border-[var(--ops-line)] p-4">
         <p className="mb-2.5 text-[11px] tracking-[0.12em] text-[var(--ops-dim)] uppercase">

@@ -33,9 +33,10 @@ const display = localFont({
  * the page in white, and keeps the page readable when the OS is in dark mode
  * rather than letting it invert a light design.
  *
- * There is no web app manifest yet, deliberately: an installable icon needs a
- * square version of the force crest, and the only artwork in the repo is the
- * wide wordmark used as a CSS mask. Guessing at it is not mine to do.
+ * The tab and home-screen icons are the force crest, squared up from
+ * public/logo.png by app/favicon.ico, app/icon.png and app/apple-icon.png.
+ * There is still no web app manifest, so Android installs fall back to the
+ * apple-touch icon rather than getting a named, themed install.
  */
 export const viewport: Viewport = {
   themeColor: "#12294B",

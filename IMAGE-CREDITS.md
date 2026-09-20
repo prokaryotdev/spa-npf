@@ -1,19 +1,18 @@
 # Image credits
 
-Every photograph listed here comes from Wikimedia Commons and is reused under
+Every image listed here comes from Wikimedia Commons and is reused under
 the licence named in the last column. Most are CC BY-SA, which obliges us to
 keep this attribution with the work — do not delete this file, and surface it
 from the site before going live.
 
 Regenerate with `node scripts/fetch-nigeria-images.mjs`.
 
+The homepage hero photographs under `/cms/Home/hero/` are not listed: they are
+generated, not sourced. See `node scripts/gen-images.mjs`.
+
 | File | Source | Author | Licence |
 | --- | --- | --- | --- |
-| `/cms/Website_Banner_d3a5662877.jpg` | [2014 01 06 Nigeria Formed Police Unit Police Replacement and Rotation 01 (11798026163).jpg](https://commons.wikimedia.org/wiki/File:2014_01_06_Nigeria_Formed_Police_Unit_Police_Replacement_and_Rotation_01_(11798026163).jpg) | AMISOM Public Information | CC0 |
-| `/cms/96_years_of_the_Force_d1499023bc.jpeg` | [2014 12 05 Nigeria FPU Medal Ceremony-2 (15329593284).jpg](https://commons.wikimedia.org/wiki/File:2014_12_05_Nigeria_FPU_Medal_Ceremony-2_(15329593284).jpg) | AMISOM Public Information | CC0 |
-| `/cms/slide2_642a5cdf68.jpg` | [Abuja night time.jpg](https://commons.wikimedia.org/wiki/File:Abuja_night_time.jpg) | Teemages | CC BY-SA 4.0 |
-| `/cms/Home/Innovation_2d3f3540e6.jpg` | [2014 01 06 Nigeria Formed Police Unit Police Replacement and Rotation 12 (11798584036).jpg](https://commons.wikimedia.org/wiki/File:2014_01_06_Nigeria_Formed_Police_Unit_Police_Replacement_and_Rotation_12_(11798584036).jpg) | AMISOM Public Information | CC0 |
-| `/cms/Home/Tesla_fdb5e10caf.jpg` | [Police vehicle by the roadside in Abuja.jpg](https://commons.wikimedia.org/wiki/File:Police_vehicle_by_the_roadside_in_Abuja.jpg) | Kritzolina | CC BY-SA 4.0 |
+| `/coat-of-arms.png` | [Coat of arms of Nigeria.svg](https://commons.wikimedia.org/wiki/File:Coat_of_arms_of_Nigeria.svg) | Lumia1234 | CC BY-SA 3.0 |
 | `/cms/e_Crime_92e4e26ff1.jpg` | [Nile.University Computer Laboratory 05.jpg](https://commons.wikimedia.org/wiki/File:Nile.University_Computer_Laboratory_05.jpg) | Chris Ikpemi | CC BY-SA 4.0 |
 | `/cms/lost_and_found_a80bed6743.jpg` | [Garki International Market 07.jpg](https://commons.wikimedia.org/wiki/File:Garki_International_Market_07.jpg) | Kritzolina | CC BY-SA 4.0 |
 | `/cms/Home/Police_Eye_s_0f82177537.jpg` | [A COVID-19 Response Ambulance.jpg](https://commons.wikimedia.org/wiki/File:A_COVID-19_Response_Ambulance.jpg) | Theindigochxld | CC BY-SA 4.0 |

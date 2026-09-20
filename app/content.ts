@@ -64,27 +64,22 @@ export const heroSlides = [
   {
     title: "Police Week in the Federal Capital Territory",
     subtitle: "Visit Us",
-    image: "/cms/Website_Banner_d3a5662877.jpg",
+    image: "/cms/Home/hero/parade.jpg",
   },
   {
     title: "96 Years of the Nigeria Police Force",
     subtitle: "",
-    image: "/cms/96_years_of_the_Force_d1499023bc.jpeg",
+    image: "/cms/Home/hero/anniversary.jpg",
   },
   {
     title: "SAFE SECURE TOGETHER",
     subtitle: "Together for a safer Abuja tomorrow",
-    image: "/cms/slide2_642a5cdf68.jpg",
-  },
-  {
-    title: "Police Innovation and Leadership",
-    subtitle: "Be one of the officers shaping the future of policing in Nigeria",
-    image: "/cms/Home/Innovation_2d3f3540e6.jpg",
+    image: "/cms/Home/hero/community.jpg",
   },
   {
     title: "Ready on Every Road",
     subtitle: "The FCT Command adds new patrol vehicles to its fleet",
-    image: "/cms/Home/Tesla_fdb5e10caf.jpg",
+    image: "/cms/Home/hero/fleet.jpg",
   },
 ];
 

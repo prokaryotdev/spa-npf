@@ -14,14 +14,14 @@
     var(--font-secondary-face), "Segoe UI", "Noto Sans", Tahoma, system-ui,
     sans-serif;
 
-  --color-npf-blue: #12294B;
-  --color-npf-blue-deep: #0A1A31;
-  --color-npf-blue-mid: #1B3A66;
-  --color-npf-blue-ink: #0E2242;
-  --color-npf-ink: #101318;
-  --color-npf-body: #474B52;
-  --color-npf-muted: #5A6070;
-  --color-npf-night: #060D18;
+  --color-npf-blue: #1B3F7A;
+  --color-npf-blue-deep: #14315F;
+  --color-npf-blue-mid: #2C5FA8;
+  --color-npf-blue-ink: #17376B;
+  --color-npf-ink: #1A2338;
+  --color-npf-body: #4A5468;
+  --color-npf-muted: #667490;
+  --color-npf-night: #0A1526;
   /*
    * The eagle-and-horses gold off the Force crest. Accent only — a rule, a
    * kicker, an active marker; never a large fill and never body text, where
@@ -63,7 +63,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #101318;
+  --foreground: #1A2338;
 }
 
 body {
@@ -75,11 +75,11 @@ body {
 
 /* Browser surfaces themed from the palette rather than left at defaults. */
 ::selection {
-  background: #CFDCF0;
-  color: #0A1A31;
+  background: #D6E4FB;
+  color: #14315F;
 }
 :where(a, button, input, [tabindex]):focus-visible {
-  outline: 2px solid #1B3A66;
+  outline: 2px solid #2C5FA8;
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -89,7 +89,7 @@ body {
  * In-page anchors jump instead, which `scroll-mt-*` already accounts for.
  */
 html {
-  scrollbar-color: #A8B8D4 #EEF1F6;
+  scrollbar-color: #B6C6E2 #F1F4FA;
 }
 /* The photo lightbox and the menu drawer lean on <dialog>; shared backdrop. */
 dialog::backdrop {
@@ -152,7 +152,7 @@ html.npf-large-text {
 .npf-rail {
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
-  scrollbar-color: #A8B8D4 #EEF1F6;
+  scrollbar-color: #B6C6E2 #F1F4FA;
 }
 .npf-rail > * {
   scroll-snap-align: start;
@@ -277,43 +277,64 @@ html.npf-large-text {
 }
 
 /*
- * Operations console. The public site is a white page read in daylight; this
- * is a screen an officer sits in front of for a whole shift, often at night,
- * so it gets its own dark surface set rather than a dark variant of the site.
- * Scoped to .npf-ops so nothing leaks into the site around it.
+ * Operations console. Scoped to .npf-ops so nothing leaks into the site
+ * around it.
+ *
+ * It used to be a dark surface set, on the theory that a control room is
+ * read at night. In practice this console is read in daylight on the same
+ * desks as the rest of the site, and the dark version made the one building
+ * of the Force that officers actually work in look like a different product.
+ * So it is a light set now: the paper is the site's own off-white, panels are
+ * white, and the navy that carries the brand on the public pages carries it
+ * here too.
  */
 .npf-ops {
   /*
-   * Surfaces are the site's own --color-npf-night taken down, not a neutral
-   * charcoal: the console has to read as the same organisation as the white
-   * pages around it, and hue is the only thing carrying that at night.
+   * Three surface steps, not two: the console needs a ground the panels sit
+   * on, or a full-width board of white panels reads as one undifferentiated
+   * sheet. --ops-raised is the selected/hover step above the panel.
    */
-  --ops-bg: #060D18;
-  --ops-panel: #0C1526;
-  --ops-raised: #16233D;
-  --ops-line: rgba(150, 175, 225, 0.16);
-  --ops-text: #E9EDF5;
-  --ops-dim: #98A3B8;
-  /* The actual brand navy, used where it is a fill under white text. */
-  --ops-brand: #16305C;
-  --ops-brand-lift: #234B85;
-  /* The same hue lifted to carry small text on a dark ground (8.2:1). */
-  --ops-accent: #8AB4E8;
+  --ops-bg: #EDF1F8;
+  --ops-panel: #FFFFFF;
+  --ops-raised: #E4EAF6;
+  --ops-line: #D3DCEA;
+  --ops-text: #16203A;
+  /* Secondary text, 5.7:1 on the panel — dim, never grey-on-grey. */
+  --ops-dim: #5C6880;
+  /* The brand navy, used where it is a fill under white text (10.3:1). */
+  --ops-brand: #1B3F7A;
+  /* Hover on a light ground means going down, not up. */
+  --ops-brand-lift: #14315F;
+  /* The same hue as small text and icons on white (7.8:1). */
+  --ops-accent: #1D4FA3;
 
-  /* Call grades. Never the brand navy — a priority is not a brand moment. */
-  --ops-p1: #ff5e5e;
-  --ops-p2: #f5a524;
-  --ops-p3: #8BE0D0;
-  --ops-p4: #9AA4B8;
+  /*
+   * Call grades. Never the brand navy — a priority is not a brand moment.
+   * Every one of these carries small bold text on white, so they are the
+   * darkened steps of each hue rather than the poster versions: amber in
+   * particular fails badly on white until it is this far down.
+   */
+  --ops-p1: #C1121F;
+  --ops-p2: #B45309;
+  --ops-p3: #0F766E;
+  --ops-p4: #5C6880;
+  /*
+   * The same two meanings again, at the weight a block of colour needs rather
+   * than the weight small type needs. A bar or a segment only has to clear
+   * 3:1 against the panel, and the text-safe amber above is so far down that
+   * a chart drawn in it reads brown.
+   */
+  --ops-fill-ok: #1A7F4B;
+  --ops-fill-warn: #D97706;
 
-  color-scheme: dark;
+  color-scheme: light;
   background: var(--ops-bg);
   color: var(--ops-text);
-  scrollbar-color: #24365A #0C1526;
+  scrollbar-color: #B6C6E2 #E6EBF4;
 }
 .npf-ops ::selection {
-  background: #1B3A66;
-  color: #EEF4FF;
+  background: #CFE0F8;
+  color: #14315F;
 }
 .npf-ops :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline: 2px solid var(--ops-accent);
@@ -324,7 +345,7 @@ html.npf-large-text {
   from {
     opacity: 0;
     transform: translateY(-6px);
-    background-color: rgba(138, 180, 232, 0.16);
+    background-color: rgba(29, 79, 163, 0.1);
   }
 }
 .npf-ops-row {
@@ -338,9 +359,7 @@ html.npf-large-text {
  */
 @keyframes npf-ops-overdue {
   50% {
-    box-shadow:
-      inset 3px 0 0 var(--ops-p1),
-      inset 0 0 44px -18px var(--ops-p1);
+    background-color: color-mix(in srgb, var(--ops-p1) 9%, transparent);
   }
 }
 .npf-ops-overdue {

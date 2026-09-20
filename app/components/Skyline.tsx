@@ -23,7 +23,7 @@ export default function Skyline() {
     <section
       ref={section}
       aria-labelledby="finale"
-      className="relative h-[200vh] bg-[#081426] text-white"
+      className="relative h-[200vh] bg-npf-night text-white"
     >
       <div className="sticky top-0 h-screen overflow-hidden">
         <Image
@@ -39,7 +39,7 @@ export default function Skyline() {
             own ground, and the navy is the section's own colour. */}
         <span
           aria-hidden
-          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,20,38,0.35)_0%,rgba(8,20,38,0.15)_28%,rgba(8,20,38,0.78)_62%,rgba(8,20,38,0.96)_100%)]"
+          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,21,38,0.26)_0%,rgba(10,21,38,0.08)_30%,rgba(10,21,38,0.64)_64%,rgba(10,21,38,0.9)_100%)]"
         />
 
         <h2

@@ -23,18 +23,6 @@ const WIDTH = 1600;
 
 /** target path under public/ -> Commons file title (without the File: prefix) */
 const picks = {
-  // --- Homepage hero -------------------------------------------------------
-  "cms/Website_Banner_d3a5662877.jpg":
-    "2014 01 06 Nigeria Formed Police Unit Police Replacement and Rotation 01 (11798026163).jpg",
-  "cms/96_years_of_the_Force_d1499023bc.jpeg":
-    "2014 12 05 Nigeria FPU Medal Ceremony-2 (15329593284).jpg",
-  // "Abuja Skyline.jpg" is a roadside snapshot despite the name; this one is
-  // the National Mosque lit at night, and the hero's white type sits on it.
-  "cms/slide2_642a5cdf68.jpg": "Abuja night time.jpg",
-  "cms/Home/Innovation_2d3f3540e6.jpg":
-    "2014 01 06 Nigeria Formed Police Unit Police Replacement and Rotation 12 (11798584036).jpg",
-  "cms/Home/Tesla_fdb5e10caf.jpg": "Police vehicle by the roadside in Abuja.jpg",
-
   // --- Smart policing cards ------------------------------------------------
   "cms/e_Crime_92e4e26ff1.jpg": "Nile.University Computer Laboratory 05.jpg",
   "cms/lost_and_found_a80bed6743.jpg": "Garki International Market 07.jpg",

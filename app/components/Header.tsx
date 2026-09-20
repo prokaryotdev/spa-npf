@@ -52,7 +52,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
       className={`fixed top-0 left-0 z-50 w-full transition-[background-color,backdrop-filter] duration-500 ease-[var(--ease-custom)] ${
         scrolled
           ? "bg-white/90 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.06)]"
-          : "bg-gradient-to-b from-black/70 to-transparent"
+          : "bg-gradient-to-b from-npf-night/50 to-transparent"
       }`}
     >
       <div className="npf-container">

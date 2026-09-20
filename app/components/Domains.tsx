@@ -43,7 +43,7 @@ export default function Domains() {
     <section
       ref={section}
       aria-labelledby="domains"
-      className="relative h-[300vh] bg-black"
+      className="relative h-[300vh] bg-npf-night"
     >
       <h2 id="domains" className="sr-only">
         {t("Protection across sea, land and sky")}
@@ -70,7 +70,7 @@ export default function Domains() {
             />
             <span
               aria-hidden
-              className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.06)_42%,rgba(0,0,0,0.65)_100%)]"
+              className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,21,38,0.34)_0%,rgba(10,21,38,0.04)_42%,rgba(10,21,38,0.5)_100%)]"
             />
             {/* A floating patrol-vehicle cut-out used to shade the right half;
                 it was Dubai Police, and no freely licensed NPF equivalent
@@ -78,7 +78,7 @@ export default function Domains() {
                 scrim only has to clear a reading column on the start side. */}
             <span
               aria-hidden
-              className="absolute inset-0 bg-[linear-gradient(100deg,rgba(3,12,9,0.92)_0%,rgba(3,12,9,0.72)_38%,rgba(3,12,9,0.18)_72%,rgba(3,12,9,0.05)_100%)]"
+              className="absolute inset-0 bg-[linear-gradient(100deg,rgba(10,21,38,0.82),rgba(10,21,38,0.66))] md:bg-[linear-gradient(100deg,rgba(10,21,38,0.9)_0%,rgba(10,21,38,0.82)_46%,rgba(10,21,38,0.62)_60%,rgba(10,21,38,0.12)_80%,transparent_100%)]"
             />
           </div>
         ))}

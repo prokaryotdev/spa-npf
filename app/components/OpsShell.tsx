@@ -2,6 +2,7 @@
 
 import Link from "../i18n/Link";
 import { usePathname } from "next/navigation";
+import { stripLocale } from "../i18n/path";
 import { useRouter } from "../i18n/Link";
 import { useEffect } from "react";
 import LanguageSwitch from "./LanguageSwitch";
@@ -78,7 +79,14 @@ const clock = new Intl.DateTimeFormat("en-GB", {
 export default function OpsShell({ children }: { children: React.ReactNode }) {
   const t = useT();
   const router = useRouter();
-  const path = usePathname();
+  /*
+   * usePathname reports the rewritten path on the server and the locale-
+   * prefixed one in the browser, so comparing it raw against an unprefixed
+   * TABS href matched during the server render and stopped matching the
+   * moment React took over: the console has been shipping with no tab ever
+   * marked current, and no aria-current for a screen reader either.
+   */
+  const path = stripLocale(usePathname()).rest;
   const { session, incidents, requests, units, loaded } = useStore();
 
   const officer = session?.role === "officer";
@@ -152,8 +160,12 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         The command bar. Everything in it is a constant of the shift — who is
         on the desk, which station, what time it is — so it stays pinned while
         the boards under it scroll.
+
+        Chrome is white and the board behind it is the tinted ground. One step
+        of surface between the frame and the work is what stops a console of
+        white panels on a white page reading as a single undivided sheet.
       */}
-      <header className="sticky top-0 z-30 border-b border-[var(--ops-line)] bg-[var(--ops-bg)]/95 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-[var(--ops-line)] bg-[var(--ops-panel)]/95 backdrop-blur">
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2 px-4 py-3 lg:px-6">
           <Link href="/app/police" className="flex items-center gap-3">
             {/* The mark scales to its box; the box is what carries the size. */}
@@ -202,7 +214,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
       <div className="lg:grid lg:grid-cols-[212px_1fr]">
         <nav
           aria-label={t("Console")}
-          className="border-b border-[var(--ops-line)] lg:sticky lg:top-[61px] lg:h-[calc(100dvh-61px)] lg:border-e lg:border-b-0"
+          className="border-b border-[var(--ops-line)] bg-[var(--ops-panel)] lg:sticky lg:top-[61px] lg:flex lg:h-[calc(100dvh-61px)] lg:flex-col lg:border-e lg:border-b-0"
         >
           <ul className="flex gap-1 overflow-x-auto p-2 lg:flex-col lg:overflow-visible lg:p-3">
             {TABS.map(({ href, label, short, Icon }) => {
@@ -216,7 +228,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
                     className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm whitespace-nowrap transition-colors ${
                       active
                         ? "bg-[var(--ops-raised)] font-medium text-[var(--ops-text)] shadow-[inset_2px_0_0_var(--ops-accent)]"
-                        : "text-[var(--ops-dim)] hover:bg-[var(--ops-panel)] hover:text-[var(--ops-text)]"
+                        : "text-[var(--ops-dim)] hover:bg-[var(--ops-bg)] hover:text-[var(--ops-text)]"
                     }`}
                   >
                     <Icon className="size-[18px] shrink-0" />
@@ -242,7 +254,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
           <div className="hidden border-t border-[var(--ops-line)] p-3 lg:mt-auto lg:block">
             <Link
               href="/app/home"
-              className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs text-[var(--ops-dim)] transition-colors hover:bg-[var(--ops-panel)] hover:text-[var(--ops-text)]"
+              className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs text-[var(--ops-dim)] transition-colors hover:bg-[var(--ops-bg)] hover:text-[var(--ops-text)]"
             >
               <ArrowUpRight className="size-4 shrink-0" />
               {t("Public site")}
@@ -251,7 +263,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         </nav>
 
         <main id="main-content" tabIndex={-1} className="min-w-0 outline-none">
-          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-[var(--ops-line)] bg-[#2a1f06] px-4 py-2 text-xs leading-relaxed text-[#f4dca8] lg:px-6">
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-[#F0D9A8] bg-[#FDF6E7] px-4 py-2 text-xs leading-relaxed text-[#7A4B08] lg:px-6">
             <AlertIcon aria-hidden className="size-4 shrink-0" />
             {t(
               "Illustrative data — a rebuild of the Nigeria Police Force website, connected to no operational system.",
@@ -259,7 +271,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
             <button
               type="button"
               onClick={resetDemo}
-              className="font-medium underline underline-offset-2 hover:text-white"
+              className="font-medium underline underline-offset-2 hover:text-[#4F3005]"
             >
               {t("Reset the demo")}
             </button>

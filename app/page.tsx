@@ -39,7 +39,7 @@ export default async function Home() {
         {/* Four routes into the service catalogue, riding the seam below the hero. */}
         <section
           aria-labelledby="quick-services"
-          className="relative z-10 -mt-px bg-black pb-px"
+          className="relative z-10 -mt-px bg-npf-night pb-px"
         >
           <h2 id="quick-services" className="sr-only">
             {t("Popular services")}
@@ -239,7 +239,7 @@ export default async function Home() {
         {/* App download */}
         <section
           aria-labelledby="app"
-          className="relative flex items-center overflow-hidden bg-[#060D18] py-16 text-white md:min-h-screen md:py-[120px] 2xl:py-[150px]"
+          className="relative flex items-center overflow-hidden bg-npf-blue-deep py-16 text-white md:min-h-screen md:py-[120px] 2xl:py-[150px]"
         >
           <div
             aria-hidden

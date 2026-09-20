@@ -92,7 +92,7 @@ export default function Hero() {
   const slide = heroSlides[index];
 
   return (
-    <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-black">
+    <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-npf-night">
       {heroSlides.map((s, i) =>
         !shown.includes(i) ? null : (
           <div
@@ -108,14 +108,30 @@ export default function Hero() {
               fill
               sizes="100vw"
               priority={i === FIRST}
+              /*
+               * `shown` already decides which slides exist at all, so every
+               * one rendered here is a slide we have committed to showing.
+               * Left lazy, the fetch waits on a viewport trigger that never
+               * fires in time for a crossfade running off a six-second timer,
+               * and the hero goes black for the seconds the photograph takes
+               * to arrive.
+               */
+              loading={i === FIRST ? undefined : "eager"}
               className="object-cover"
             />
           </div>
         ),
       )}
 
-      {/* Top and bottom scrims keep the nav and the caption legible. */}
-      <span className="pointer-events-none absolute top-0 left-0 z-[1] h-[500px] w-full bg-gradient-to-b from-black to-[#05122E00]" />
+      {/*
+        Scrims keep the wordmark and the caption legible. Both used to be a
+        linear ramp out of solid black — 500px from the top, and the full
+        height of the caption block from the bottom — so on anything but a
+        very tall desktop the two met in the middle and painted the
+        photograph out completely. They are now eased navy stops sized to the
+        thing each one actually protects, and the slide shows between them.
+      */}
+      <span className="pointer-events-none absolute top-0 left-0 z-[1] h-[200px] w-full bg-[linear-gradient(to_bottom,rgba(10,21,38,0.72),rgba(10,21,38,0.32)_48%,transparent)]" />
 
       {/* Dims and blurs the slideshow while the search panel is open. */}
       <div
@@ -125,7 +141,7 @@ export default function Hero() {
         }`}
       />
 
-      <div className="relative z-10 mt-[calc(100vh-550px)] w-full bg-gradient-to-b from-[#05122E00] to-black pt-10 pb-16 md:mt-auto md:pb-6">
+      <div className="relative z-10 mt-[calc(100svh-460px)] w-full bg-[linear-gradient(to_bottom,transparent,rgba(10,21,38,0.55)_11%,rgba(10,21,38,0.9)_24%,rgba(10,21,38,0.96))] pt-24 pb-16 md:mt-auto md:pb-6">
         <div className="npf-container">
           <div className="mx-auto w-full max-w-[832px]">
             <div className="mb-4 min-h-[60px] text-center md:mb-8 lg:[@media(min-height:769px)]:min-h-[80px]">

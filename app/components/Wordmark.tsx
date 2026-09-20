@@ -2,10 +2,15 @@
  * The two institutional marks in the header, and the police mark again in the
  * footer and the operations console.
  *
- * They used to be two SVG files painted as CSS masks, which is what you do
- * when the artwork is lettering you cannot set. These are drawn here instead,
- * so the lettering is the site's own display face and one `currentColor`
- * carries every state: white over the hero, ink or deep navy on a page.
+ * Both emblems are the real artwork: the issued force crest for the police
+ * mark, the national coat of arms for the government one. They stood in as
+ * shapes drawn in code until the files existed, which read as approximately
+ * right and exactly wrong — a state badge is either the badge or it is not.
+ *
+ * Only the lettering is set here, so it stays the site's own display face and
+ * one `currentColor` carries every state: white over the hero, ink or deep
+ * navy on a page. The emblems are full colour and do not follow it; a badge
+ * is not meant to.
  *
  * `textLength` with `lengthAdjust="spacingAndGlyphs"` is load-bearing. It
  * pins each line to an exact measure, so a fallback face with different
@@ -13,30 +18,17 @@
  * the two lines of a lockup stay flush to the same left and right edges
  * whatever face resolves.
  *
- * The emblem is the confluence shield of the national arms — the Niger and
- * the Benue meeting as a Y — drawn as geometry, not traced from the crest.
+ * Every proportion below is a percentage of the mark's own height, because
+ * the caller sets only that — h-11 in the header, h-16 in the footer, h-7 in
+ * the console — and a lockup that changed shape between the three would read
+ * as three different marks. The gap lives inside the text viewBox as negative
+ * x rather than as a flex `gap`, for the same reason: a fixed pixel gap is
+ * right at one size and wrong at the other two.
  */
 
-type Props = { className?: string };
+import Image from "next/image";
 
-/** Shield silhouette with the Y knocked out of it, on a 40 × 40 grid. */
-function Shield({ id }: { id: string }) {
-  return (
-    <>
-      <mask id={id}>
-        <path
-          d="M4 3.5h32v15.6c0 9.1-6.5 14.3-16 18.6-9.5-4.3-16-9.5-16-18.6Z"
-          fill="#fff"
-        />
-        <g stroke="#000" strokeWidth="3.6" strokeLinecap="round" fill="none">
-          <path d="M10 10.5 20 20.5 30 10.5" />
-          <path d="M20 20.5v11.5" />
-        </g>
-      </mask>
-      <rect width="40" height="40" fill="currentColor" mask={`url(#${id})`} />
-    </>
-  );
-}
+type Props = { className?: string };
 
 const line = {
   fill: "currentColor",
@@ -44,48 +36,64 @@ const line = {
   lengthAdjust: "spacingAndGlyphs" as const,
 };
 
-/** Federal Republic of Nigeria — the government mark, 130 × 58. */
+/** Federal Republic of Nigeria — the national arms plus the lettering. */
 export function GovernmentWordmark({ className }: Props) {
   return (
-    <svg
-      viewBox="0 0 130 58"
-      className={className}
-      aria-hidden
-      focusable="false"
-      role="presentation"
-    >
-      <g transform="translate(0 9)">
-        <Shield id="npf-arms-gov" />
-      </g>
-      <text {...line} x="50" y="27" fontSize="12" fontWeight="700" textLength="80">
-        FEDERAL REPUBLIC
-      </text>
-      <text {...line} x="50" y="40" fontSize="12" fontWeight="700" textLength="52">
-        OF NIGERIA
-      </text>
-    </svg>
+    <span className={`inline-flex items-center ${className ?? ""}`}>
+      <Image
+        src="/coat-of-arms.png"
+        alt=""
+        width={604}
+        height={512}
+        sizes="64px"
+        aria-hidden
+        className="h-[69%] w-auto"
+      />
+      <svg
+        viewBox="-10 0 90 22"
+        className="h-[38%] w-auto"
+        aria-hidden
+        focusable="false"
+        role="presentation"
+      >
+        <text {...line} x="0" y="8.4" fontSize="12" fontWeight="700" textLength="80">
+          FEDERAL REPUBLIC
+        </text>
+        <text {...line} x="0" y="21.4" fontSize="12" fontWeight="700" textLength="52">
+          OF NIGERIA
+        </text>
+      </svg>
+    </span>
   );
 }
 
-/** Nigeria Police Force, FCT Command — the police mark, 150 × 44. */
+/** Nigeria Police Force, FCT Command — the issued crest plus the lettering. */
 export function PoliceWordmark({ className }: Props) {
   return (
-    <svg
-      viewBox="0 0 150 44"
-      className={className}
-      aria-hidden
-      focusable="false"
-      role="presentation"
-    >
-      <g transform="translate(0 2)">
-        <Shield id="npf-arms-police" />
-      </g>
-      <text {...line} x="48" y="22" fontSize="10.5" fontWeight="700" textLength="102">
-        NIGERIA POLICE FORCE
-      </text>
-      <text {...line} x="48" y="33" fontSize="6.8" fontWeight="500" textLength="102">
-        FCT COMMAND
-      </text>
-    </svg>
+    <span className={`inline-flex items-center ${className ?? ""}`}>
+      <Image
+        src="/logo.png"
+        alt=""
+        width={1179}
+        height={1334}
+        sizes="64px"
+        aria-hidden
+        className="h-[91%] w-auto"
+      />
+      <svg
+        viewBox="-8 0 110 18.4"
+        className="h-[42%] w-auto"
+        aria-hidden
+        focusable="false"
+        role="presentation"
+      >
+        <text {...line} x="0" y="7.4" fontSize="10.5" fontWeight="700" textLength="102">
+          NIGERIA POLICE FORCE
+        </text>
+        <text {...line} x="0" y="18.4" fontSize="6.8" fontWeight="500" textLength="102">
+          FCT COMMAND
+        </text>
+      </svg>
+    </span>
   );
 }

@@ -2,6 +2,7 @@
 
 import Link from "../i18n/Link";
 import { usePathname } from "next/navigation";
+import { stripLocale } from "../i18n/path";
 import { useRouter } from "../i18n/Link";
 import { useEffect } from "react";
 import Footer from "./Footer";
@@ -38,7 +39,9 @@ export default function PortalShell({
 }) {
   const t = useT();
   const router = useRouter();
-  const path = usePathname();
+  // Same locale-prefix trap as the console: strip it before comparing, or
+  // no tab is ever current once the browser takes over.
+  const path = stripLocale(usePathname()).rest;
   const { session, requests, fines, loaded } = useStore();
 
   // An officer account has no citizen record behind it — no fines, no

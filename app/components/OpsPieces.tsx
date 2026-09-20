@@ -195,9 +195,9 @@ export function PriorityTag({
 }
 
 const CALL_TONE: Record<Incident["status"], string> = {
-  New: "bg-[#3b2c0b] text-[#f8d79a]",
-  Dispatched: "bg-[#2A1B4D] text-[#C3B0F5]",
-  "On Scene": "bg-[#0b3b2a] text-[#7fe7bb]",
+  New: "bg-[#FDF0DC] text-[#8A4B06]",
+  Dispatched: "bg-[#E7E9FC] text-[#36309B]",
+  "On Scene": "bg-[#D9F1EC] text-[#0B5A54]",
   Closed: "bg-[var(--ops-raised)] text-[var(--ops-dim)]",
 };
 
@@ -221,9 +221,9 @@ export function OpsStatus({ status }: { status: Incident["status"] }) {
 }
 
 const UNIT_TONE: Record<UnitStatus, string> = {
-  Available: "bg-[#0b3b2a] text-[#7fe7bb]",
-  Assigned: "bg-[#3b2c0b] text-[#f8d79a]",
-  "On Scene": "bg-[#2A1B4D] text-[#C3B0F5]",
+  Available: "bg-[#DCF2E4] text-[#0E6437]",
+  Assigned: "bg-[#FDF0DC] text-[#8A4B06]",
+  "On Scene": "bg-[#E7E9FC] text-[#36309B]",
   Unavailable: "bg-[var(--ops-raised)] text-[var(--ops-dim)]",
 };
 

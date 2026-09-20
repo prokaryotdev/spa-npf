@@ -62,7 +62,9 @@ export default function OpsResponseChart() {
                   className="w-full rounded-t transition-opacity"
                   style={{
                     height: `${(point.minutes / peak) * 100}%`,
-                    background: over ? "var(--ops-p2)" : "var(--ops-accent)",
+                    background: over
+                      ? "var(--ops-fill-warn)"
+                      : "var(--ops-accent)",
                     opacity: hover === null || hover === i ? 1 : 0.45,
                   }}
                 />

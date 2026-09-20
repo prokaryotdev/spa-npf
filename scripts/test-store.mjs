@@ -24,14 +24,14 @@ globalThis.window = {
   removeEventListener: () => {},
 };
 
-const { signIn, submitRequest, advanceRequest, signOut, subscribe } =
+const { KEY, signIn, submitRequest, advanceRequest, signOut, subscribe } =
   await import("../app/components/store.ts");
 
 // subscribe() is what hydrates the module from storage; nothing reads until
 // a screen mounts, so the test has to mount one.
 subscribe(() => {});
 
-const shared = () => JSON.parse(localStorage.getItem("dp:state:v2") ?? "{}");
+const shared = () => JSON.parse(localStorage.getItem(KEY) ?? "{}");
 const session = () => JSON.parse(sessionStorage.getItem("dp:session") ?? "null");
 
 // --- the session is this tab's, and nobody else's ------------------------

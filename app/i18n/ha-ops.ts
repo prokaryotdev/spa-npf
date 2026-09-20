@@ -36,8 +36,8 @@ export const haOps: Record<string, string> = {
 
   // --- board ---------------------------------------------------------------
   "Status board": "Allon matsayi",
-  "Live picture for Asokoro control. Grades run P1 immediate to P4 scheduled.":
-    "Hoto kai tsaye na ɗakin kula na Asokoro. Matakai suna tafiya daga P1 na gaggawa zuwa P4 na jadawali.",
+  "Live picture for Wuse control. Grades run P1 immediate to P4 scheduled.":
+    "Hoto kai tsaye na ɗakin kula na Wuse. Matakai suna tafiya daga P1 na gaggawa zuwa P4 na jadawali.",
   "Show the numbers": "Nuna lambobin",
   "In the queue": "A cikin layi",
   "{n} waiting": "{n} suna jira",
