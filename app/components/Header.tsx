@@ -60,7 +60,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         <div
           className={`flex items-center justify-between overflow-hidden transition-all duration-500 ease-[var(--ease-custom)] ${
             atTop
-              ? "pt-5 pb-2 md:h-[74px] md:translate-y-0 md:opacity-100"
+              ? "pt-5 pb-2 md:h-[86px] md:translate-y-0 md:opacity-100"
               : "pt-5 pb-2 md:h-0 md:-translate-y-3 md:py-0 md:opacity-0"
           }`}
         >
@@ -113,24 +113,34 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         {/* Desktop nav bar */}
         <nav
           aria-label={t("Main")}
-          className={`mb-2 hidden h-14 items-center justify-between rounded-full px-3 transition-colors duration-500 md:flex ${
-            scrolled ? "bg-black/[0.04]" : "bg-white/10 backdrop-blur-md"
+          className={`mb-2 hidden h-14 items-center justify-between transition-colors duration-500 md:flex ${
+            scrolled ? "px-0" : "rounded-full bg-white/10 pe-3 backdrop-blur-md"
           }`}
         >
+          <div
+            className={`min-w-0 items-center ${scrolled ? "flex" : "hidden"}`}
+          >
+            <Link
+              href="/app/home"
+              aria-label={t("Nigeria Police Force home")}
+              className={`h-9 shrink-0 overflow-hidden text-npf-blue-deep transition-all duration-500 ease-[var(--ease-custom)] ${
+                scrolled
+                  ? "me-4 w-auto opacity-100"
+                  : "pointer-events-none w-0 opacity-0"
+              }`}
+              tabIndex={scrolled ? undefined : -1}
+              aria-hidden={scrolled ? undefined : true}
+            >
+              <PoliceWordmark className="h-full w-auto" />
+            </Link>
+          </div>
+
           <ul className="flex items-center">
-            <li className="px-3">
-              <button
-                type="button"
-                onClick={() => setMenuOpen(true)}
-                aria-label={t("Open menu")}
-                aria-expanded={menuOpen}
-                className={scrolled ? "text-npf-ink" : "text-white"}
-              >
-                <MenuIcon className="size-[18px]" />
-              </button>
-            </li>
             {navigation.map((item) => (
-              <li key={item.label} className="group relative px-3 xl:px-4">
+              <li
+                key={item.label}
+                className="group relative px-3 first:ps-6 xl:px-4"
+              >
                 <Link
                   href={item.href}
                   aria-haspopup={item.children ? "true" : undefined}
@@ -168,7 +178,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
           </ul>
 
           <ul
-            className={`flex items-center gap-2 ${scrolled ? "text-npf-ink" : "text-white"}`}
+            className={`flex min-w-0 items-center gap-2 ${scrolled ? "justify-end text-npf-ink" : "text-white"}`}
           >
             <li>
               <button

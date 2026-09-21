@@ -92,7 +92,7 @@ export default function Hero() {
   const slide = heroSlides[index];
 
   return (
-    <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-npf-night">
+    <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-black">
       {heroSlides.map((s, i) =>
         !shown.includes(i) ? null : (
           <div
@@ -128,10 +128,16 @@ export default function Hero() {
         linear ramp out of solid black — 500px from the top, and the full
         height of the caption block from the bottom — so on anything but a
         very tall desktop the two met in the middle and painted the
-        photograph out completely. They are now eased navy stops sized to the
+        photograph out completely. They are now eased black stops sized to the
         thing each one actually protects, and the slide shows between them.
       */}
-      <span className="pointer-events-none absolute top-0 left-0 z-[1] h-[200px] w-full bg-[linear-gradient(to_bottom,rgba(10,21,38,0.72),rgba(10,21,38,0.32)_48%,transparent)]" />
+      <span className="pointer-events-none absolute top-0 left-0 z-[1] h-[240px] w-full bg-[linear-gradient(to_bottom,rgba(0,0,0,0.72),rgba(0,0,0,0.60)_14%,rgba(0,0,0,0.44)_30%,rgba(0,0,0,0.28)_48%,rgba(0,0,0,0.15)_64%,rgba(0,0,0,0.06)_80%,rgba(0,0,0,0)_100%)]" />
+
+      {/*
+        Cinema vignette: pulls the eye to the middle of the slide and stops the
+        corners competing with the wordmark and the controls.
+      */}
+      <span className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_88%_72%_at_50%_40%,transparent_32%,rgba(0,0,0,0.10)_52%,rgba(0,0,0,0.24)_70%,rgba(0,0,0,0.42)_86%,rgba(0,0,0,0.58))]" />
 
       {/* Dims and blurs the slideshow while the search panel is open. */}
       <div
@@ -141,16 +147,18 @@ export default function Hero() {
         }`}
       />
 
-      <div className="relative z-10 mt-[calc(100svh-460px)] w-full bg-[linear-gradient(to_bottom,transparent,rgba(10,21,38,0.55)_11%,rgba(10,21,38,0.9)_24%,rgba(10,21,38,0.96))] pt-24 pb-16 md:mt-auto md:pb-6">
+      <div className="npf-hero-veil relative z-10 mt-auto w-full pt-24 pb-16 md:pb-6">
         <div className="npf-container">
           <div className="mx-auto w-full max-w-[832px]">
-            <div className="mb-4 min-h-[60px] text-center md:mb-8 lg:[@media(min-height:769px)]:min-h-[80px]">
-              <h1 className="mb-2 text-2xl font-semibold text-white lg:text-4xl [@media(max-height:768px)]:text-2xl">
+            <div
+              aria-live="polite"
+              className="mb-4 min-h-[76px] text-center md:mb-8 lg:[@media(min-height:769px)]:min-h-[104px]"
+            >
+              <h1 className="mb-3 text-[28px] leading-tight font-semibold tracking-tight text-balance text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.85)] md:text-4xl lg:text-5xl [@media(max-height:768px)]:text-3xl">
                 {slide.title}
               </h1>
               <p
-                aria-live="polite"
-                className="text-sm text-white lg:text-2xl [@media(max-height:768px)]:text-sm"
+                className="text-base text-balance text-white/90 [text-shadow:0_1px_16px_rgba(0,0,0,0.8)] lg:text-xl [@media(max-height:768px)]:text-sm"
               >
                 {slide.subtitle}
               </p>
@@ -175,7 +183,7 @@ export default function Hero() {
                 <ChevronLeft className="size-5" />
               </button>
 
-              <div className="relative hidden size-6 lg:block">
+              <div className="relative size-6 shrink-0">
                 <svg
                   aria-hidden
                   viewBox="0 0 36 36"
@@ -201,7 +209,7 @@ export default function Hero() {
                   aria-label={
                     playing ? t("Pause slideshow") : t("Play slideshow")
                   }
-                  className="absolute inset-0 grid place-items-center text-white"
+                  className="absolute inset-0 grid place-items-center text-white transition-opacity hover:opacity-70"
                 >
                   {playing ? (
                     <PauseIcon className="size-[17px]" />
@@ -238,6 +246,7 @@ export default function Hero() {
               >
                 <ChevronRight className="size-5" />
               </button>
+
             </div>
 
             <button

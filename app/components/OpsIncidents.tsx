@@ -8,6 +8,7 @@ import {
   Elapsed,
   OPS_SELECT,
   OpsButton,
+  OpsEmpty,
   OpsHead,
   OpsPanel,
   OpsSearch,
@@ -27,7 +28,7 @@ import {
   type Priority,
   type Unit,
 } from "./store";
-import { CloseIcon, PlusIcon } from "./icons";
+import { CloseIcon, PlusIcon, RadioIcon } from "./icons";
 
 const STATUSES: IncidentStatus[] = ["New", "Dispatched", "On Scene", "Closed"];
 const STATUS_LABEL: Record<IncidentStatus, string> = {
@@ -177,133 +178,164 @@ export default function OpsIncidents() {
  detail panel off the page. */}
         <div className="min-w-0">
           <OpsPanel flush>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[660px] text-start text-sm">
-                <caption className="sr-only">
-                  {t(
-                    "Calls, with grade, type, area, status, assigned unit and elapsed time",
-                  )}
-                </caption>
-                <thead className="npf-ops-thead text-[11px] font-medium tracking-[0.08em] text-[var(--ops-dim)] uppercase">
-                  <tr className="whitespace-nowrap">
-                    <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
-                      {t("Grade")}
-                    </th>
-                    <th scope="col" className="py-2.5 pe-3 font-medium">
-                      {t("Ref")}
-                    </th>
-                    <th scope="col" className="w-full py-2.5 pe-3 font-medium">
-                      {t("Type / area")}
-                    </th>
-                    <th scope="col" className="py-2.5 pe-3 font-medium">
-                      {t("Status")}
-                    </th>
-                    <th scope="col" className="py-2.5 pe-3 font-medium">
-                      {t("Unit")}
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-2.5 pe-4 text-end font-medium"
+            {/*
+              No horizontal scroller and no min-width. The board used to force
+              660px and let a phone swipe sideways through it, which hides the
+              elapsed clock — the one column the whole screen is about — off
+              the right edge by default. Below `md` the three supporting
+              columns fold into the call's own cell instead, so every row
+              still shows its grade, what it is, who is on it and how long it
+              has been running, in the width there actually is.
+            */}
+            <table className="w-full text-start text-sm">
+              <caption className="sr-only">
+                {t(
+                  "Calls, with grade, type, area, status, assigned unit and elapsed time",
+                )}
+              </caption>
+              <thead className="npf-ops-thead text-[11px] font-medium tracking-[0.08em] text-[var(--ops-dim)] uppercase">
+                <tr className="whitespace-nowrap">
+                  <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
+                    {t("Grade")}
+                  </th>
+                  <th
+                    scope="col"
+                    className="hidden py-2.5 pe-3 font-medium sm:table-cell"
+                  >
+                    {t("Ref")}
+                  </th>
+                  <th scope="col" className="w-full py-2.5 pe-3 font-medium">
+                    {t("Type / area")}
+                  </th>
+                  <th
+                    scope="col"
+                    className="hidden py-2.5 pe-3 font-medium md:table-cell"
+                  >
+                    {t("Status")}
+                  </th>
+                  <th
+                    scope="col"
+                    className="hidden py-2.5 pe-3 font-medium md:table-cell"
+                  >
+                    {t("Unit")}
+                  </th>
+                  <th scope="col" className="py-2.5 pe-4 text-end font-medium">
+                    {t("Elapsed")}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {visible.map((incident) => {
+                  const late = isOverdue(incident, now);
+                  const active = selected === incident.id;
+                  return (
+                    <tr
+                      key={incident.id}
+                      onClick={() => setSelected(incident.id)}
+                      aria-selected={active}
+                      className={`npf-ops-pick cursor-pointer border-b border-[var(--ops-line-soft)] last:border-0 ${
+                        active
+                          ? "bg-[var(--ops-raised)]"
+                          : "hover:bg-[var(--ops-raised)]/55"
+                      } ${late ? "npf-ops-overdue" : ""}`}
                     >
-                      {t("Elapsed")}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {visible.map((incident) => {
-                    const late = isOverdue(incident, now);
-                    const active = selected === incident.id;
-                    return (
-                      <tr
-                        key={incident.id}
-                        onClick={() => setSelected(incident.id)}
-                        aria-selected={active}
-                        className={`cursor-pointer border-b border-[var(--ops-line)] transition-colors last:border-0 ${
-                          active
-                            ? "bg-[var(--ops-raised)] shadow-[inset_3px_0_0_var(--ops-accent)]"
-                            : "hover:bg-[var(--ops-raised)]/60"
-                        } ${late ? "npf-ops-overdue" : ""}`}
+                      <td className="py-3 pe-3 ps-4 align-top">
+                        <PriorityTag priority={incident.priority} />
+                      </td>
+                      <th
+                        scope="row"
+                        className="hidden py-3 pe-3 align-top font-normal whitespace-nowrap sm:table-cell"
                       >
-                        <td className="py-2.5 pe-3 ps-4">
-                          <PriorityTag priority={incident.priority} />
-                        </td>
-                        <th
-                          scope="row"
-                          className="py-2.5 pe-3 font-normal whitespace-nowrap"
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelected(incident.id);
+                          }}
+                          className="font-secondary font-bold tabular-nums underline-offset-4 hover:underline"
                         >
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelected(incident.id);
-                            }}
-                            className="font-secondary font-bold tabular-nums underline-offset-4 hover:underline"
-                          >
+                          {incident.id}
+                        </button>
+                      </th>
+                      <td className="py-3 pe-3 align-top">
+                        <span className="sm:hidden">
+                          <span className="font-secondary text-xs font-bold tabular-nums text-[var(--ops-dim)]">
                             {incident.id}
-                          </button>
-                        </th>
-                        <td className="py-2.5 pe-3">
-                          {t(incident.kind)}
-                          <span className="block text-xs text-[var(--ops-dim)]">
-                            {t(incident.area)}
-                          </span>
-                        </td>
-                        <td className="py-2.5 pe-3">
+                          </span>{" "}
+                        </span>
+                        {t(incident.kind)}
+                        <span className="block text-xs text-[var(--ops-dim)]">
+                          {t(incident.area)}
+                        </span>
+                        <span className="mt-1.5 flex flex-wrap items-center gap-2 md:hidden">
                           <OpsStatus status={incident.status} />
-                        </td>
-                        <td className="py-2.5 pe-3 text-xs whitespace-nowrap">
-                          {incident.unit ? (
-                            <>
-                              <span className="font-secondary font-bold">
-                                {t(incident.unit)}
-                              </span>
-                              <span className="block text-[var(--ops-dim)]">
-                                {t(incident.assignee ?? "")}
-                              </span>
-                            </>
-                          ) : (
-                            <span
-                              style={{ color: "var(--ops-p2)" }}
-                              className="font-medium"
-                            >
-                              {t("No unit")}
-                            </span>
-                          )}
-                        </td>
-                        <td
-                          className="py-2.5 pe-4 text-end font-medium whitespace-nowrap"
-                          style={late ? { color: "var(--ops-p1)" } : undefined}
-                        >
-                          <Elapsed
-                            from={incident.reported}
-                            to={incident.closed}
-                          />
-                          <span className="block text-[11px] font-normal text-[var(--ops-dim)]">
-                            {incident.closed
-                              ? t("total")
-                              : incident.status === "New"
-                                ? t("of {n}m", {
-                                    n: dispatchTarget[incident.priority],
-                                  })
-                                : t("since call")}
+                          <span className="text-[11px] text-[var(--ops-dim)]">
+                            {incident.unit ? t(incident.unit) : t("No unit")}
                           </span>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                        </span>
+                      </td>
+                      <td className="hidden py-3 pe-3 align-top md:table-cell">
+                        <OpsStatus status={incident.status} />
+                      </td>
+                      <td className="hidden py-3 pe-3 align-top text-xs whitespace-nowrap md:table-cell">
+                        {incident.unit ? (
+                          <>
+                            <span className="font-secondary font-bold">
+                              {t(incident.unit)}
+                            </span>
+                            <span className="block text-[var(--ops-dim)]">
+                              {t(incident.assignee ?? "")}
+                            </span>
+                          </>
+                        ) : (
+                          <span
+                            style={{ color: "var(--ops-p2)" }}
+                            className="font-medium"
+                          >
+                            {t("No unit")}
+                          </span>
+                        )}
+                      </td>
+                      <td
+                        className="py-3 pe-4 text-end align-top font-medium whitespace-nowrap"
+                        style={late ? { color: "var(--ops-p1)" } : undefined}
+                      >
+                        <Elapsed
+                          from={incident.reported}
+                          to={incident.closed}
+                        />
+                        <span className="block text-[11px] font-normal text-[var(--ops-dim)]">
+                          {incident.closed
+                            ? t("total")
+                            : incident.status === "New"
+                              ? t("of {n}m", {
+                                  n: dispatchTarget[incident.priority],
+                                })
+                              : t("since call")}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
 
             {visible.length === 0 ? (
-              <p className="px-4 py-12 text-center text-sm text-[var(--ops-dim)]">
-                {t("No call matches those filters.")}
-              </p>
+              <OpsEmpty
+                tone="none"
+                title={t("No call matches those filters")}
+                hint={t(
+                  "Widen the grade or status filter, or clear the search box, to see the rest of the shift.",
+                )}
+              />
             ) : null}
           </OpsPanel>
         </div>
 
-        <div className="lg:sticky lg:top-0 lg:self-start">
+        {/* The detail panel pins under the console chrome rather than to the
+            top of the viewport — the page is the scroller now, so `top: 0`
+            would slide it up behind the navy bar. */}
+        <div className="lg:sticky lg:top-[calc(var(--ops-top)+1.25rem)] lg:self-start">
           {open ? (
             <Detail
               incident={open}
@@ -312,9 +344,17 @@ export default function OpsIncidents() {
             />
           ) : (
             <OpsPanel title={t("Call detail")}>
-              <p className="py-6 text-center text-sm text-[var(--ops-dim)]">
-                {t("Pick a row to dispatch it, move it on, or read the log.")}
-              </p>
+              <div className="flex flex-col items-center gap-3 px-2 py-8 text-center">
+                <span
+                  aria-hidden
+                  className="grid size-10 place-items-center rounded-full bg-[var(--ops-raised)] text-[var(--ops-accent)]"
+                >
+                  <RadioIcon className="size-5" />
+                </span>
+                <p className="max-w-[34ch] text-xs leading-relaxed text-[var(--ops-dim)]">
+                  {t("Pick a row to dispatch it, move it on, or read the log.")}
+                </p>
+              </div>
             </OpsPanel>
           )}
         </div>
@@ -381,7 +421,7 @@ function Detail({
       */}
       <Stamps incident={incident} />
 
-      <div className="mt-4 space-y-2.5 border-t border-[var(--ops-line)] pt-4">
+      <div className="mt-4 space-y-2.5 border-t border-[var(--ops-line-soft)] pt-4">
         <Assign
           id={`${id}-unit`}
           label={t("Unit")}
@@ -443,7 +483,7 @@ function Detail({
         </OpsButton>
       ) : null}
 
-      <div className="mt-5 border-t border-[var(--ops-line)] pt-4">
+      <div className="mt-5 border-t border-[var(--ops-line-soft)] pt-4">
         <p className="mb-3 text-[11px] tracking-[0.12em] text-[var(--ops-dim)] uppercase">
           {t("Log")}
         </p>
@@ -514,7 +554,7 @@ function Stamps({ incident }: { incident: Incident }) {
   ];
 
   return (
-    <ol className="mt-4 border-t border-[var(--ops-line)] pt-3 text-xs">
+    <ol className="mt-4 border-t border-[var(--ops-line-soft)] pt-3 text-xs">
       {rows.map(([label, at, from]) => (
         <li
           key={label}
@@ -578,7 +618,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
             id={`${id}-kind`}
             value={kind}
             onChange={(e) => setKind(e.target.value)}
-            className={INPUT}
+            className={SELECT}
           >
             {callTypes.map((type) => (
               <option key={type} value={type}>
@@ -593,7 +633,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
             id={`${id}-grade`}
             value={priority}
             onChange={(e) => setPriority(e.target.value as Priority)}
-            className={INPUT}
+            className={SELECT}
           >
             {PRIORITIES.map((p) => (
               <option key={p} value={p}>
@@ -620,7 +660,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
             id={`${id}-source`}
             value={source}
             onChange={(e) => setSource(e.target.value)}
-            className={INPUT}
+            className={SELECT}
           >
             {callSources.map((s) => (
               <option key={s} value={s}>
@@ -657,7 +697,8 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
 }
 
 const INPUT =
-  "w-full rounded-lg border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none placeholder:text-[var(--ops-dim)] focus:border-[var(--ops-accent)]";
+  "w-full rounded-lg border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none transition-colors placeholder:text-[var(--ops-dim)] hover:border-[var(--ops-accent)]/60 focus:border-[var(--ops-accent)]";
+const SELECT = `npf-ops-select ${INPUT}`;
 
 function Field({
   id,
@@ -705,7 +746,7 @@ function Assign({
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="min-w-0 flex-1 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none focus:border-[var(--ops-accent)]"
+        className="npf-ops-select min-w-0 flex-1 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none transition-colors hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)]"
       >
         {placeholder ? <option value="">{placeholder}</option> : null}
         {options.map(([v, text]) => (

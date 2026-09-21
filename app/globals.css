@@ -14,27 +14,27 @@
     var(--font-secondary-face), "Segoe UI", "Noto Sans", Tahoma, system-ui,
     sans-serif;
 
-  --color-npf-blue: #1B3F7A;
-  --color-npf-blue-deep: #14315F;
-  --color-npf-blue-mid: #2C5FA8;
-  --color-npf-blue-ink: #17376B;
-  --color-npf-ink: #1A2338;
-  --color-npf-body: #4A5468;
+  --color-npf-blue: #1b3f7a;
+  --color-npf-blue-deep: #14315f;
+  --color-npf-blue-mid: #2c5fa8;
+  --color-npf-blue-ink: #17376b;
+  --color-npf-ink: #1a2338;
+  --color-npf-body: #4a5468;
   --color-npf-muted: #667490;
-  --color-npf-night: #0A1526;
+  --color-npf-night: #0a1526;
   /*
    * The eagle-and-horses gold off the Force crest. Accent only — a rule, a
    * kicker, an active marker; never a large fill and never body text, where
    * it fails contrast on white. The -soft step is the one that reads on navy.
    */
-  --color-npf-gold: #9A7B12;
-  --color-npf-gold-soft: #E6C766;
+  --color-npf-gold: #9a7b12;
+  --color-npf-gold-soft: #e6c766;
   /*
    * Green is no longer the brand, which frees it to mean what it always
    * should have: done. Status only.
    */
-  --color-npf-ok: #0E6B41;
-  --color-npf-ok-soft: #E6F4EC;
+  --color-npf-ok: #0e6b41;
+  --color-npf-ok-soft: #e6f4ec;
 
   --ease-custom: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -63,7 +63,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #1A2338;
+  --foreground: #1a2338;
 }
 
 body {
@@ -75,11 +75,11 @@ body {
 
 /* Browser surfaces themed from the palette rather than left at defaults. */
 ::selection {
-  background: #D6E4FB;
-  color: #14315F;
+  background: #d6e4fb;
+  color: #14315f;
 }
 :where(a, button, input, [tabindex]):focus-visible {
-  outline: 2px solid #2C5FA8;
+  outline: 2px solid #2c5fa8;
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -89,7 +89,7 @@ body {
  * In-page anchors jump instead, which `scroll-mt-*` already accounts for.
  */
 html {
-  scrollbar-color: #B6C6E2 #F1F4FA;
+  scrollbar-color: #b6c6e2 #f1f4fa;
 }
 /* The photo lightbox and the menu drawer lean on <dialog>; shared backdrop. */
 dialog::backdrop {
@@ -152,7 +152,7 @@ html.npf-large-text {
 .npf-rail {
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
-  scrollbar-color: #B6C6E2 #F1F4FA;
+  scrollbar-color: #b6c6e2 #f1f4fa;
 }
 .npf-rail > * {
   scroll-snap-align: start;
@@ -294,32 +294,35 @@ html.npf-large-text {
    * on, or a full-width board of white panels reads as one undifferentiated
    * sheet. --ops-raised is the selected/hover step above the panel.
    */
-  --ops-bg: #EDF1F8;
-  --ops-panel: #FFFFFF;
-  --ops-raised: #E4EAF6;
-  --ops-line: #D3DCEA;
-  --ops-text: #16203A;
+  --ops-bg: #edf1f8;
+  --ops-panel: #ffffff;
+  --ops-raised: #e4eaf6;
+  --ops-line: #d3dcea;
+  /* A second, fainter rule for divisions inside a panel, where a full
+     --ops-line every 44px turns a call queue into graph paper. */
+  --ops-line-soft: #e7ecf5;
+  --ops-text: #16203a;
   /*
    * The chrome. The board stays light — officers read it in daylight — but
    * the frame around it is the Force's own navy, so the console reads as a
    * fitted instrument rather than a web page with a toolbar, and so the one
    * building of the site officers actually work in still wears the badge.
    */
-  --ops-chrome: #102A52;
-  --ops-chrome-line: #24467E;
-  --ops-chrome-raised: #1B3F7A;
+  --ops-chrome: #102a52;
+  --ops-chrome-line: #24467e;
+  --ops-chrome-raised: #1b3f7a;
   /* Secondary type on the chrome, 6.6:1 on --ops-chrome. */
-  --ops-chrome-dim: #A6BCDD;
+  --ops-chrome-dim: #a6bcdd;
   /* Crest gold, legible on the chrome (8.4:1); marker and kicker only. */
-  --ops-chrome-gold: #E8CB74;
+  --ops-chrome-gold: #e8cb74;
   /* Secondary text, 5.7:1 on the panel — dim, never grey-on-grey. */
-  --ops-dim: #5C6880;
+  --ops-dim: #5c6880;
   /* The brand navy, used where it is a fill under white text (10.3:1). */
-  --ops-brand: #1B3F7A;
+  --ops-brand: #1b3f7a;
   /* Hover on a light ground means going down, not up. */
-  --ops-brand-lift: #14315F;
+  --ops-brand-lift: #14315f;
   /* The same hue as small text and icons on white (7.8:1). */
-  --ops-accent: #1D4FA3;
+  --ops-accent: #1d4fa3;
 
   /*
    * Call grades. Never the brand navy — a priority is not a brand moment.
@@ -327,23 +330,55 @@ html.npf-large-text {
    * darkened steps of each hue rather than the poster versions: amber in
    * particular fails badly on white until it is this far down.
    */
-  --ops-p1: #C1121F;
-  --ops-p2: #B45309;
-  --ops-p3: #0F766E;
-  --ops-p4: #5C6880;
+  --ops-p1: #c1121f;
+  --ops-p2: #b45309;
+  --ops-p3: #0f766e;
+  --ops-p4: #5c6880;
   /*
    * The same two meanings again, at the weight a block of colour needs rather
    * than the weight small type needs. A bar or a segment only has to clear
    * 3:1 against the panel, and the text-safe amber above is so far down that
    * a chart drawn in it reads brown.
    */
-  --ops-fill-ok: #1A7F4B;
-  --ops-fill-warn: #D97706;
+  --ops-fill-ok: #1a7f4b;
+  --ops-fill-warn: #d97706;
+  /* The same "good" green at the weight small type needs: --ops-fill-ok is
+     4.5:1 on white and drops under it the moment a tinted cell sits behind
+     an 11px note, so a readout says "on the air" in this one. */
+  --ops-ok: #0e6437;
+
+  /*
+   * Elevation is declared once, and it is shadow. A panel carrying both a
+   * hairline and a shadow is the ghost card — two systems arguing about which
+   * one lifts it, and the reason a board of white rectangles read as a
+   * wireframe. So panels float on a navy-tinted shadow and keep hairlines
+   * strictly for divisions *inside* themselves.
+   */
+  --ops-shadow:
+    0 1px 1px rgba(16, 42, 82, 0.04), 0 2px 6px -1px rgba(16, 42, 82, 0.06),
+    0 8px 20px -8px rgba(16, 42, 82, 0.1);
+  --ops-shadow-lift:
+    0 1px 1px rgba(16, 42, 82, 0.05), 0 4px 10px -2px rgba(16, 42, 82, 0.09),
+    0 16px 32px -12px rgba(16, 42, 82, 0.16);
+
+  /*
+   * How far down the sticky console chrome ends. Everything that pins under
+   * it — the table heads, the call detail panel — offsets by this rather than
+   * guessing, so one change to the bar moves them all at once.
+   */
+  --ops-top: 6.75rem;
 
   color-scheme: light;
   background: var(--ops-bg);
   color: var(--ops-text);
-  scrollbar-color: #B6C6E2 #E6EBF4;
+  scrollbar-color: #b6c6e2 #e6ebf4;
+}
+/* From here the four destinations fold into the command bar and the frame is
+   one row tall. */
+@media (min-width: 1024px) {
+  .npf-ops {
+    --ops-top: 3.75rem;
+  }
 }
 /*
  * The UA centres <th>; every board in here is start-aligned, and the two
@@ -356,17 +391,22 @@ html.npf-large-text {
     text-align: start;
   }
 }
-/* A sticky table head needs an opaque backing or rows scroll through it. */
+/*
+ * A sticky table head pins under the console chrome, not to the top of the
+ * viewport. The board scrolls with the document now, so `top: 0` would park
+ * every column header behind the navy bar. It needs an opaque backing too,
+ * or rows scroll through it.
+ */
 .npf-ops-thead {
   position: sticky;
-  top: 0;
+  top: var(--ops-top);
   z-index: 1;
   background: var(--ops-panel);
   box-shadow: inset 0 -1px 0 var(--ops-line);
 }
 .npf-ops ::selection {
-  background: #CFE0F8;
-  color: #14315F;
+  background: #cfe0f8;
+  color: #14315f;
 }
 .npf-ops :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline: 2px solid var(--ops-accent);
@@ -376,6 +416,28 @@ html.npf-large-text {
 .npf-ops-chrome
   :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline-color: var(--ops-chrome-gold);
+}
+/*
+ * Every select in the console is drawn rather than left at the UA's. The
+ * native control ships a grey system chevron in a grey system well belonging
+ * to no design system on earth, and on a board where the dispatch decision
+ * *is* a select, it was the loudest tell that these screens were assembled
+ * rather than built.
+ */
+.npf-ops-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235C6880' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+  background-size: 0.95rem;
+  padding-inline-end: 1.9rem;
+}
+.npf-ops-select:dir(rtl) {
+  background-position: left 0.6rem center;
+}
+.npf-ops-select:disabled {
+  background-image: none;
+  padding-inline-end: 0.75rem;
 }
 /* The pending queue's newest call arrives rather than appearing. */
 @keyframes npf-ops-row-in {
@@ -393,14 +455,19 @@ html.npf-large-text {
  * breathes until somebody sends a unit — the single thing on this screen that
  * has to survive being glanced at from across a control room. Everything else
  * holds still so that this reads.
+ *
+ * The row is tinted rather than barred. A thick coloured edge is the cheap
+ * version of urgency and it fought the grade dot already carrying the same
+ * hue two centimetres away; the tint breathes, the elapsed clock goes red,
+ * and the row reads as late from three metres with no stripe on it.
  */
 @keyframes npf-ops-overdue {
   50% {
-    background-color: color-mix(in srgb, var(--ops-p1) 9%, transparent);
+    background-color: color-mix(in srgb, var(--ops-p1) 10%, transparent);
   }
 }
 .npf-ops-overdue {
-  box-shadow: inset 3px 0 0 var(--ops-p1);
+  background-color: color-mix(in srgb, var(--ops-p1) 4%, transparent);
   animation: npf-ops-overdue 2.4s ease-in-out infinite;
 }
 /* Priority marker on a queue row: a dot, not a thick coloured border. */
@@ -416,4 +483,91 @@ html.npf-large-text {
 .npf-ops-tick {
   animation: npf-ops-tick 2s steps(1, end) infinite;
 }
+/*
+ * A row that can be opened says so before it is clicked: the marker wipes out
+ * of the leading edge on hover and stays there once the row is the selected
+ * one, so the same three pixels mean "this one" in both states. Drawn as a
+ * background rather than a border so it costs the row no layout.
+ */
+.npf-ops-pick {
+  background-image: linear-gradient(
+    to right,
+    var(--ops-accent) 0 3px,
+    transparent 3px
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 0;
+  background-position: 0 0;
+  transition:
+    background-size 0.18s var(--ease-custom),
+    background-color 0.18s var(--ease-custom);
+}
+.npf-ops-pick:dir(rtl) {
+  background-image: linear-gradient(
+    to left,
+    var(--ops-accent) 0 3px,
+    transparent 3px
+  );
+  background-position: 100% 0;
+}
+.npf-ops-pick:hover,
+.npf-ops-pick[aria-selected="true"] {
+  background-size: 100% 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .npf-ops-row,
+  .npf-ops-overdue,
+  .npf-ops-tick,
+  .npf-ops-pick {
+    animation: none;
+    transition: none;
+  }
+}
 
+/*
+ * The hero's bottom veil.
+ *
+ * The caption used to sit on a nine-stop ramp that ended all but opaque navy,
+ * which painted the lower half of the photograph out and read as a flat grey
+ * wall. Three thin layers do the same job with the picture left in it: the
+ * photograph blurs away under the type (masked, so the blur has no seam where
+ * it starts), a navy tint only deep enough to carry white text, and a warm
+ * blue lift at the foot so the block has colour rather than soot.
+ *
+ * The layers sit at z-index -1 — behind the caption, in front of the slide —
+ * which the element's own `relative z-10` stacking context makes safe.
+ */
+.npf-hero-veil::before,
+.npf-hero-veil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.npf-hero-veil::before {
+  backdrop-filter: blur(32px) saturate(112%);
+  -webkit-backdrop-filter: blur(32px) saturate(112%);
+  mask-image: linear-gradient(to bottom, transparent, #000 26%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 26%);
+}
+.npf-hero-veil::after {
+  background:
+    /*
+     * Eased rather than linear: a straight ramp reads as a printed band edge
+     * across the photograph, and over this height the steps of a four-stop
+     * black show as stripes. The extra stops trace the curve instead, so the
+     * picture gives way to the caption without a visible start.
+     */
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.12) 9%,
+      rgba(0, 0, 0, 0.32) 19%,
+      rgba(0, 0, 0, 0.52) 30%,
+      rgba(0, 0, 0, 0.68) 42%,
+      rgba(0, 0, 0, 0.8) 56%,
+      rgba(0, 0, 0, 0.89) 72%,
+      rgba(0, 0, 0, 0.95) 100%
+    );
+}

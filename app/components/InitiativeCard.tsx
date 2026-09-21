@@ -29,7 +29,9 @@ export default function InitiativeCard({
 }) {
   const t = useT();
   const { ink, tint, edge, shadow } = card.theme;
-  const scrim = `linear-gradient(180deg, ${ink}0d 58%, ${ink} 100%), linear-gradient(45deg, ${ink}05 74%, ${ink}bf 106%), linear-gradient(322deg, ${ink}05 63%, ${ink}bf 103%)`;
+  // The vertical stop starts high enough that the body copy always lands on
+  // ink rather than on whatever the photograph happens to be doing there.
+  const scrim = `linear-gradient(180deg, ${ink}0d 46%, ${ink}b3 82%, ${ink} 100%), linear-gradient(45deg, ${ink}05 74%, ${ink}bf 106%), linear-gradient(322deg, ${ink}05 63%, ${ink}bf 103%)`;
 
   return (
     <article
@@ -47,6 +49,7 @@ export default function InitiativeCard({
         src={card.image}
         alt=""
         fill
+        quality={100}
         sizes={
           shape === "wide"
             ? "(max-width: 768px) 84vw, 92vw"

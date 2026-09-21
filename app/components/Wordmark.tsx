@@ -50,16 +50,30 @@ export function GovernmentWordmark({ className }: Props) {
         className="h-[69%] w-auto"
       />
       <svg
-        viewBox="-10 0 90 22"
-        className="h-[38%] w-auto"
+        viewBox="-10 -3 90 26"
+        className="h-[45%] w-auto"
         aria-hidden
         focusable="false"
         role="presentation"
       >
-        <text {...line} x="0" y="8.4" fontSize="12" fontWeight="700" textLength="80">
+        <text
+          {...line}
+          x="0"
+          y="8.4"
+          fontSize="12"
+          fontWeight="700"
+          textLength="80"
+        >
           FEDERAL REPUBLIC
         </text>
-        <text {...line} x="0" y="21.4" fontSize="12" fontWeight="700" textLength="52">
+        <text
+          {...line}
+          x="0"
+          y="21.4"
+          fontSize="12"
+          fontWeight="700"
+          textLength="52"
+        >
           OF NIGERIA
         </text>
       </svg>
@@ -81,16 +95,30 @@ export function PoliceWordmark({ className }: Props) {
         className="h-[91%] w-auto"
       />
       <svg
-        viewBox="-8 0 110 18.4"
-        className="h-[42%] w-auto"
+        viewBox="-8 -3 110 22"
+        className="h-[50%] w-auto"
         aria-hidden
         focusable="false"
         role="presentation"
       >
-        <text {...line} x="0" y="7.4" fontSize="10.5" fontWeight="700" textLength="102">
+        <text
+          {...line}
+          x="0"
+          y="7.4"
+          fontSize="10.5"
+          fontWeight="800"
+          textLength="102"
+        >
           NIGERIA POLICE FORCE
         </text>
-        <text {...line} x="0" y="18.4" fontSize="6.8" fontWeight="500" textLength="102">
+        <text
+          {...line}
+          x="0"
+          y="18.4"
+          fontSize="6.8"
+          fontWeight="700"
+          textLength="102"
+        >
           FCT COMMAND
         </text>
       </svg>

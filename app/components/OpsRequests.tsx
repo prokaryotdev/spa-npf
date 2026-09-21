@@ -3,6 +3,7 @@
 import { useId, useMemo, useState } from "react";
 import {
   OpsButton,
+  OpsEmpty,
   OpsHead,
   OpsPanel,
   OpsSearch,
@@ -129,18 +130,32 @@ export default function OpsRequests() {
 
       {visible.length === 0 ? (
         <OpsPanel>
-          <p className="py-10 text-center text-sm text-[var(--ops-dim)]">
-            {openOnly
-              ? t("Queue clear. Nothing is waiting on a decision.")
-              : t("No request matches that search.")}
-          </p>
+          {openOnly ? (
+            <OpsEmpty
+              title={t("Queue clear")}
+              hint={t(
+                "Nothing is waiting on a decision. Turn off “Open only” to read the ones already settled.",
+              )}
+            />
+          ) : (
+            <OpsEmpty
+              tone="none"
+              title={t("No request matches that search")}
+              hint={t(
+                "Try the reference number, or the name of the service the applicant asked for.",
+              )}
+            />
+          )}
         </OpsPanel>
       ) : null}
 
-      <ul className="grid items-start gap-3 xl:grid-cols-2">
+      {/* Stretch, not start-align: two cards side by side with different
+          timelines used to end at different heights, so the pair of action
+          rows an officer reaches for sat at two different depths. */}
+      <ul className="grid gap-3 xl:grid-cols-2">
         {visible.map((request) => (
-          <li key={request.id}>
-            <OpsPanel>
+          <li key={request.id} className="flex">
+            <OpsPanel className="w-full" bodyClassName="flex flex-1 flex-col">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                   <h2 className="font-secondary text-base font-bold">
@@ -162,7 +177,7 @@ export default function OpsRequests() {
                 </p>
               </div>
 
-              <ol className="mt-4 space-y-1.5 border-t border-[var(--ops-line)] pt-3 text-xs">
+              <ol className="mt-4 space-y-1.5 border-t border-[var(--ops-line-soft)] pt-3 text-xs">
                 {request.timeline
                   .slice()
                   .reverse()
@@ -191,7 +206,7 @@ export default function OpsRequests() {
                     e.preventDefault();
                     ask(request);
                   }}
-                  className="mt-4 border-t border-[var(--ops-line)] pt-4"
+                  className="mt-auto border-t border-[var(--ops-line-soft)] pt-4"
                 >
                   <label
                     htmlFor={`${id}-reason-${request.id}`}
@@ -211,30 +226,32 @@ export default function OpsRequests() {
                     )}
                   />
                   <div className="mt-3 flex gap-2">
-                    <button
+                    <OpsButton
                       type="submit"
+                      tone="brand"
                       disabled={!reason.trim()}
-                      className="rounded-lg bg-[var(--ops-brand)] px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--ops-brand-lift)] disabled:opacity-40"
                     >
                       {t("Send to applicant")}
-                    </button>
-                    <button
-                      type="button"
+                    </OpsButton>
+                    <OpsButton
                       onClick={() => {
                         setAsking(null);
                         setReason("");
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--ops-line)] px-3 py-2 text-sm text-[var(--ops-dim)] transition-colors hover:text-[var(--ops-text)]"
                     >
                       <CloseIcon aria-hidden className="size-4" />
                       {t("Cancel")}
-                    </button>
+                    </OpsButton>
                   </div>
                 </form>
               ) : (
-                <div className="mt-4 flex flex-wrap gap-2 border-t border-[var(--ops-line)] pt-4">
+                /* One button vocabulary across the console: these are the
+                   same OpsButton the Calls board and the Units board use,
+                   rather than a second set that looked almost but not quite
+                   like them. */
+                <div className="mt-auto flex flex-wrap gap-2 border-t border-[var(--ops-line-soft)] pt-4">
                   {request.status === "Submitted" ? (
-                    <Action
+                    <OpsButton
                       onClick={() =>
                         advanceRequest(
                           request.id,
@@ -244,29 +261,28 @@ export default function OpsRequests() {
                       }
                     >
                       {t("Start review")}
-                    </Action>
-                  ) : null}
-                  {QUEUE.includes(request.status) ? (
-                    <Action
-                      primary
-                      onClick={() =>
-                        advanceRequest(
-                          request.id,
-                          "Completed",
-                          "Approved and issued.",
-                        )
-                      }
-                    >
-                      <CheckIcon aria-hidden className="size-4" />
-                      {t("Approve")}
-                    </Action>
+                    </OpsButton>
                   ) : null}
                   {QUEUE.includes(request.status) ? (
                     <>
-                      <Action onClick={() => setAsking(request.id)}>
+                      <OpsButton
+                        tone="brand"
+                        onClick={() =>
+                          advanceRequest(
+                            request.id,
+                            "Completed",
+                            "Approved and issued.",
+                          )
+                        }
+                      >
+                        <CheckIcon aria-hidden className="size-4" />
+                        {t("Approve")}
+                      </OpsButton>
+                      <OpsButton onClick={() => setAsking(request.id)}>
                         {t("Ask for more")}
-                      </Action>
-                      <Action
+                      </OpsButton>
+                      <OpsButton
+                        tone="danger"
                         onClick={() =>
                           advanceRequest(
                             request.id,
@@ -276,7 +292,7 @@ export default function OpsRequests() {
                         }
                       >
                         {t("Reject")}
-                      </Action>
+                      </OpsButton>
                     </>
                   ) : null}
                 </div>
@@ -286,29 +302,5 @@ export default function OpsRequests() {
         ))}
       </ul>
     </div>
-  );
-}
-
-function Action({
-  primary,
-  children,
-  onClick,
-}: {
-  primary?: boolean;
-  children: React.ReactNode;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-        primary
-          ? "bg-[var(--ops-brand)] text-white hover:bg-[var(--ops-brand-lift)]"
-          : "border border-[var(--ops-line)] text-[var(--ops-dim)] hover:bg-[var(--ops-raised)] hover:text-[var(--ops-text)]"
-      }`}
-    >
-      {children}
-    </button>
   );
 }

@@ -32,12 +32,14 @@ export const haHome: Record<string, string> = {
   "For emergencies only": "Don gaggawa kaɗai",
 
   // --- hero ----------------------------------------------------------------
-  "Visit Us": "Ziyarce mu",
+  "A week of service across the Federal Capital Territory":
+    "Makon hidima a faɗin Babban Birnin Tarayya",
+  "Serving the nation since 1930": "Muna hidimar al'umma tun 1930",
   "Police Week in the Federal Capital Territory":
     "Makon 'Yan Sanda a Babban Birnin Tarayya",
   "96 Years of the Nigeria Police Force":
     "Shekaru 96 na Rundunar 'Yan Sandan Najeriya",
-  "SAFE SECURE TOGETHER": "LAFIYA TSARO TARE",
+  "Safe and Secure, Together": "Lafiya da Tsaro, Tare",
   "Together for a safer Abuja tomorrow":
     "Tare domin Abuja mai aminci gobe",
   "Police Innovation and Leadership": "Ƙirƙira da Jagoranci a 'Yan Sanda",
@@ -82,14 +84,13 @@ export const haHome: Record<string, string> = {
     "Muna kare kowane Gida, kowane Iyali, kowace Rana.",
   "Connecting Hearts, Building Trust. Stronger as One.":
     "Haɗa Zukata, Gina Amana. Mun fi ƙarfi a haɗe.",
-  "With you, For you. Protecting, Connecting, and Innovating.":
-    "Tare da kai, Saboda kai. Kariya, Haɗin kai, da Ƙirƙira.",
   "Shaping the Future, Side by Side": "Tsara Makoma, Kafaɗa da Kafaɗa",
 
   // --- modern policing -----------------------------------------------------
   "Leading the Way in Modern Policing":
     "Jagoranci a Aikin 'Yan Sanda na Zamani",
   "modern policing": "aikin 'yan sanda na zamani",
+  "Browse all services": "Duba dukkan ayyuka",
   "We harness intelligent technologies to keep public safety responsive, smart, and always one step ahead.":
     "Muna amfani da fasahohin zamani domin tsaron jama'a ya kasance mai saurin amsawa, mai hankali, kuma koyaushe mataki ɗaya a gaba.",
   "Cybercrime Reporting": "Bayar da Rahoton Laifukan Yanar Gizo",
@@ -182,8 +183,6 @@ export const haHome: Record<string, string> = {
   "Show previous {label} item": "Nuna abu na baya na {label}",
 
   // --- app band ------------------------------------------------------------
-  "Together, We Build a Smart and Secure Abuja":
-    "Tare, Muna Gina Abuja Mai Hankali Kuma Mai Tsaro",
   "Download the Nigeria Police Force App":
     "Sauke Manhajar Rundunar 'Yan Sandan Najeriya",
   "Services, updates, and alerts: right in your pocket.":

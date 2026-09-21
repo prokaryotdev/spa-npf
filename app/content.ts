@@ -63,23 +63,23 @@ export const navigation = [
 export const heroSlides = [
   {
     title: "Police Week in the Federal Capital Territory",
-    subtitle: "Visit Us",
-    image: "/cms/Home/hero/parade.jpg",
+    subtitle: "A week of service across the Federal Capital Territory",
+    image: "/npf/hero/parade.jpg",
   },
   {
     title: "96 Years of the Nigeria Police Force",
-    subtitle: "",
-    image: "/cms/Home/hero/anniversary.jpg",
+    subtitle: "Serving the nation since 1930",
+    image: "/npf/hero/anniversary.jpg",
   },
   {
-    title: "SAFE SECURE TOGETHER",
+    title: "Safe and Secure, Together",
     subtitle: "Together for a safer Abuja tomorrow",
-    image: "/cms/Home/hero/community.jpg",
+    image: "/npf/hero/community.jpg",
   },
   {
     title: "Ready on Every Road",
     subtitle: "The FCT Command adds new patrol vehicles to its fleet",
-    image: "/cms/Home/hero/fleet.jpg",
+    image: "/npf/hero/fleet.jpg",
   },
 ];
 
@@ -120,17 +120,17 @@ export const pillars = [
   {
     word: "Safe",
     line: "Your Safety; Backed by Every Officer on Duty.",
-    portrait: "/cms/pillar-safe.jpg",
+    portrait: "/npf/pillar-safe.jpg",
   },
   {
     word: "Secure",
     line: "Protecting every Home, every Family, every Day.",
-    portrait: "/cms/pillar-secure.jpg",
+    portrait: "/npf/pillar-secure.jpg",
   },
   {
     word: "Together",
     line: "Connecting Hearts, Building Trust. Stronger as One.",
-    portrait: "/cms/pillar-together.jpg",
+    portrait: "/npf/pillar-together.jpg",
   },
 ];
 
@@ -138,9 +138,7 @@ export const smartPolicing: InitiativeCard[] = [
   {
     title: "Cybercrime Reporting",
     body: "The National Cybercrime Centre receives reports of online fraud, blackmail and identity theft, and works to keep the community safe online",
-    image: "/cms/e_Crime_92e4e26ff1.jpg",
-    logo: "/cms/dp-service-icons/e_Crime_Home_0a7aa4d040.svg",
-    logoIsWide: true,
+    image: "/npf/cybercrime-centre.jpg",
     tags: [
       {
         label: "Cybercrimes Act 2015",
@@ -152,7 +150,7 @@ export const smartPolicing: InitiativeCard[] = [
   {
     title: "Lost & Found",
     body: "A paperless and secure way to find what matters, the Lost & Found desk offers a simple and reliable way to report and recover property",
-    image: "/cms/lost_and_found_a80bed6743.jpg",
+    image: "/npf/lost-and-found.jpg",
     tags: [
       {
         label: "Federal Capital Territory Digital Services",
@@ -164,11 +162,10 @@ export const smartPolicing: InitiativeCard[] = [
   {
     title: "Rescue Me",
     body: "We strive to build a proactive and secure community, reflecting the commitment of the Force to the safety and security of every resident",
-    image: "/cms/Home/Police_Eye_s_0f82177537.jpg",
+    image: "/npf/rescue-me.jpg",
     tags: [
       {
         label: "National Security Strategy",
-        icon: "/cms/dp-service-icons/shield_01_00cf6986f7.svg",
       },
     ],
     more: 1,
@@ -215,35 +212,35 @@ export const smartPoliceStations: InitiativeCard[] = [
   {
     title: "Command Headquarters",
     body: "The seat of the Federal Capital Territory Police Command at Garki, where the Commissioner of Police and the departments of the Command coordinate policing across the whole Territory.",
-    image: "/cms/Home/sps_original_53cd588de6.jpg",
+    image: "/npf/command-headquarters.jpg",
     tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
     theme: theme("#4D0D0D", "#fadfdf", "#eb8888"),
   },
   {
     title: "Area Commands",
     body: "Nine Area Commands, among them Garki, Wuse, Asokoro, Maitama, Gwagwalada, Bwari, Kubwa, Karu and Lugbe, each supervising the divisions within its reach.",
-    image: "/cms/Home/sps_walkin_be3b2b3d66.jpg",
+    image: "/npf/area-commands.jpg",
     tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
     theme: theme("#050F22", "#C4D8F8", "#7FB4FF"),
   },
   {
     title: "Divisional Headquarters",
     body: "The division is where most people meet the Force: the counter that takes a report, the charge room, the investigators, and the patrol teams that answer a call in the neighbourhood.",
-    image: "/cms/Home/sps_drive_thru_39157961d7.jpg",
+    image: "/npf/divisional-headquarters.jpg",
     tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
     theme: theme("#3C3E44", "#fcfcfc", "#C8CAD0"),
   },
   {
     title: "Police Posts",
     body: "Smaller outposts placed in the satellite towns and rural wards of the six Area Councils: Abuja Municipal, Gwagwalada, Kuje, Bwari, Kwali and Abaji. Each is held by a patrol team equipped for the roads it covers, which cuts the time it takes to reach an incident reported nearby.",
-    image: "/cms/Home/sps_suburban_5da0e23641.jpg",
+    image: "/npf/police-posts.jpg",
     tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
     theme: theme("#2D3742", "#f5f7f8", "#b9c3cf"),
   },
   {
     title: "Marine Police Base",
     body: "The Marine Police Base gives the communities along the waterways of the Territory direct access to a police response on the water, covering the dams, the lakes and the river crossings a patrol car cannot reach.",
-    image: "/cms/Home/sps_floating_e877217271.jpg",
+    image: "/npf/marine-police-base.jpg",
     tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
     theme: theme("#000000", "#bfbfbf", "#8c8c8c"),
   },
@@ -253,9 +250,8 @@ export const community: InitiativeCard[] = [
   {
     title: "Police Community Relations Committee",
     body: "Sit with the PCRC at your division, raise what worries your street, and help shape how your neighbourhood is policed.",
-    image: "/cms/positive_spirit_final_s_d8fef6b5f6.jpg",
-    logo: "/cms/icon_soul_01ee5459c0.png",
-    tags: [{ label: "Committee Results", icon: "/cms/c1_9ba2902a1d.png" }],
+    image: "/npf/pcrc.jpg",
+    tags: [{ label: "Committee Results" }],
     more: 1,
     wide: true,
     theme: theme("#17232C", "#d7e2ea", "#94b1c7"),
@@ -263,12 +259,10 @@ export const community: InitiativeCard[] = [
   {
     title: "Safer Neighbourhood Watch",
     body: "Volunteer with the Nigeria Police Force to create real change. Support programmes that build trust, shared responsibility and a safer Territory for all. Make a difference, together!",
-    image: "/cms/Volutneer_86db1585d3.jpg",
-    logo: "/cms/icon_volunteer_330f59b879.svg",
+    image: "/npf/neighbourhood-watch.jpg",
     tags: [
       {
         label: "Explore Volunteer Opportunities",
-        icon: "/cms/c7_322f5132d5.png",
       },
     ],
     theme: theme("#0C2340", "#DDE9FF", "#B7D9FF"),
@@ -276,18 +270,15 @@ export const community: InitiativeCard[] = [
   {
     title: "Police Children Schools",
     body: "A long-standing undertaking of the Force, the Nigeria Police Children Schools make sure every child of our personnel has access to good education. The schools blend academic achievement with personal growth and skills development in a supportive environment.",
-    image: "/cms/Hemaya_s_af272b586b.jpg",
-    logo: "/cms/icon_hemaya_20e581d127.png",
-    tags: [
-      { label: "Become a Safety Ambassador", icon: "/cms/c3_d96d1eea79.png" },
-    ],
+    image: "/npf/police-children-schools.jpg",
+    tags: [{ label: "Become a Safety Ambassador" }],
     more: 2,
     theme: theme("#554937", "#ffffff", "#dcd4c9"),
   },
   {
     title: "Nigeria Police Games",
     body: "The championship of the Force, bringing officers from every Command together and carrying our message on discipline and fitness into the community",
-    image: "/cms/e_Sport_75fdfaf219.jpg",
+    image: "/npf/nigeria-police-games.jpg",
     badge: "Coming Soon",
     tags: [],
     theme: theme("#17232C", "#d7e2ea", "#94b1c7"),
@@ -295,17 +286,15 @@ export const community: InitiativeCard[] = [
   {
     title: "Nigeria Police Museum",
     body: "A cultural landmark where the past illuminates the present, tracing the Force from its founding in 1930 to the national institution it is today",
-    image: "/cms/p8_1ee31a74c5.jpg",
+    image: "/npf/nigeria-police-museum.jpg",
     badge: "Museum visit",
-    tags: [
-      { label: "Visit our virtual museum", icon: "/cms/c8_c4d2878b60.png" },
-    ],
+    tags: [{ label: "Visit our virtual museum" }],
     theme: theme("#6A3D06", "#fef8f0", "#f9c990"),
   },
   {
     title: "West African Police Summit",
     body: "Police chiefs from across the region, alongside researchers, technology partners and civil society, meet in Abuja to share what works in investigation, forensics and community policing.",
-    image: "/cms/World_Summit_Police_30fd9f4d13.jpg",
+    image: "/npf/west-african-police-summit.jpg",
     badge: "More",
     tags: [
       {

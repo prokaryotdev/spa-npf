@@ -4,7 +4,7 @@ import { useSyncExternalStore } from "react";
 import { dispatchTarget } from "../content-ops";
 import { useT } from "../i18n/client";
 import { useHydrated } from "./store";
-import { SearchIcon } from "./icons";
+import { CheckIcon, SearchIcon } from "./icons";
 import type { Incident, Priority, UnitStatus } from "./store";
 
 /* -------------------------------------------------------------------------
@@ -114,8 +114,13 @@ export function isOverdue(incident: Incident, now: number) {
  * ---------------------------------------------------------------------- */
 
 /**
- * A block of the console. One elevation cue — a hairline — because a board
- * this dense cannot afford every panel casting a shadow at the reader.
+ * A block of the console.
+ *
+ * Elevation is declared once and it is the shadow. These panels used to carry
+ * a 1px hairline and nothing else, which on a pale blue ground made a board
+ * of white rectangles read as a wireframe of itself — the outline said
+ * "container" and nothing said "surface". Now the hairlines work strictly
+ * inside a panel, dividing its rows, and the shadow does the lifting.
  */
 export function OpsPanel({
   title,
@@ -138,7 +143,16 @@ export function OpsPanel({
   const t = useT();
   return (
     <section
-      className={`flex min-h-0 flex-col overflow-hidden rounded-xl border border-[var(--ops-line)] bg-[var(--ops-panel)] ${className}`}
+      /*
+       * `overflow-clip`, not `overflow-hidden`. Both round off a flush table's
+       * corners, but `hidden` makes the panel a scroll container, and a scroll
+       * container captures every sticky descendant: the column heads inside
+       * stopped pinning to the viewport and parked themselves 60px down the
+       * panel instead, with the first row of calls sliding underneath them.
+       * `clip` crops without ever becoming a scrollport, so the heads pin to
+       * the page — the only thing that scrolls here.
+       */
+      className={`flex min-h-0 flex-col overflow-clip rounded-xl bg-[var(--ops-panel)] shadow-[var(--ops-shadow)] ${className}`}
     >
       {title ? (
         /*
@@ -147,11 +161,11 @@ export function OpsPanel({
          * screen is six things claiming to be the loudest, which leaves
          * nothing leading; the weight step does the work instead.
          */
-        <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[var(--ops-line)] px-4 py-2.5">
-          <h2 className="flex items-center gap-2 font-secondary text-[15px] font-bold">
+        <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[var(--ops-line-soft)] px-4 py-3">
+          <h2 className="flex items-center gap-2 font-secondary text-[15px] leading-none font-bold tracking-[-0.01em]">
             {t(title)}
             {count !== undefined ? (
-              <span className="rounded bg-[var(--ops-raised)] px-1.5 py-0.5 font-primary text-[11px] font-medium text-[var(--ops-dim)] tabular-nums">
+              <span className="rounded bg-[var(--ops-raised)] px-1.5 py-0.5 font-primary text-[11px] leading-tight font-medium text-[var(--ops-dim)] tabular-nums">
                 {count}
               </span>
             ) : null}
@@ -163,6 +177,55 @@ export function OpsPanel({
         {children}
       </div>
     </section>
+  );
+}
+
+/**
+ * What a board says when a queue is clear or a filter matches nothing.
+ *
+ * Both are worth distinguishing: "nothing is waiting" is good news and reads
+ * as a green tick, "nothing matched" is a dead end and has to offer the way
+ * back out. The old version was one grey sentence for both.
+ */
+export function OpsEmpty({
+  title,
+  hint,
+  tone = "clear",
+  action,
+}: {
+  /** Already translated, like OpsHead's — so the coverage test can see it. */
+  title: string;
+  hint?: string;
+  tone?: "clear" | "none";
+  action?: React.ReactNode;
+}) {
+  const ok = tone === "clear";
+  return (
+    <div className="flex flex-col items-center gap-3 px-6 py-12 text-center">
+      <span
+        aria-hidden
+        className="grid size-10 place-items-center rounded-full"
+        style={{
+          background: ok
+            ? "color-mix(in srgb, var(--ops-fill-ok) 12%, transparent)"
+            : "var(--ops-raised)",
+          color: ok ? "var(--ops-fill-ok)" : "var(--ops-dim)",
+        }}
+      >
+        {ok ? (
+          <CheckIcon className="size-5" />
+        ) : (
+          <SearchIcon className="size-5" />
+        )}
+      </span>
+      <p className="text-sm font-medium">{title}</p>
+      {hint ? (
+        <p className="max-w-[44ch] text-xs leading-relaxed text-[var(--ops-dim)]">
+          {hint}
+        </p>
+      ) : null}
+      {action}
+    </div>
   );
 }
 
@@ -185,12 +248,18 @@ export function OpsHead({
   action?: React.ReactNode;
 }) {
   return (
-    <header className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
-      <div>
-        <h1 className="font-secondary text-[26px] leading-tight font-bold">
+    /*
+     * The title is 22px, not 26. On a console the screen name is the least
+     * surprising thing on the screen — the officer chose it a second ago —
+     * and setting it as the largest type on the board put the loudest voice
+     * on the one element carrying no information.
+     */
+    <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+      <div className="min-w-0">
+        <h1 className="font-secondary text-[22px] leading-tight font-bold tracking-[-0.015em]">
           {title}
         </h1>
-        <p className="mt-1 max-w-[70ch] text-sm text-[var(--ops-dim)]">
+        <p className="mt-1 max-w-[70ch] text-[13px] leading-relaxed text-[var(--ops-dim)]">
           {lead}
         </p>
       </div>
@@ -206,7 +275,7 @@ export function OpsHead({
  */
 export function ReadoutStrip({ children }: { children: React.ReactNode }) {
   return (
-    <dl className="flex flex-wrap divide-x divide-[var(--ops-line)] overflow-hidden rounded-xl border border-[var(--ops-line)] bg-[var(--ops-panel)]">
+    <dl className="flex flex-wrap divide-x divide-[var(--ops-line-soft)] overflow-clip rounded-xl bg-[var(--ops-panel)] shadow-[var(--ops-shadow)]">
       {children}
     </dl>
   );
@@ -227,8 +296,17 @@ export function OpsSearch({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="flex min-w-[220px] flex-1 items-center gap-2 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 focus-within:border-[var(--ops-accent)] focus-within:ring-2 focus-within:ring-[var(--ops-accent)]/15">
-      <SearchIcon aria-hidden className="size-4 shrink-0 text-[var(--ops-dim)]" />
+    /*
+     * Capped at 340px. It used to be `flex-1` against a short row of filters,
+     * so on the Units board a single search field ran 870px across an empty
+     * white box — a control sized by what was left over rather than by what
+     * anyone types into it.
+     */
+    <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 transition-colors sm:max-w-[340px] focus-within:border-[var(--ops-accent)] focus-within:ring-2 focus-within:ring-[var(--ops-accent)]/15">
+      <SearchIcon
+        aria-hidden
+        className="size-4 shrink-0 text-[var(--ops-dim)]"
+      />
       <label htmlFor={id} className="sr-only">
         {label}
       </label>
@@ -246,7 +324,7 @@ export function OpsSearch({
 
 /** The shared look of a `select` sitting in a filter bar. */
 export const OPS_SELECT =
-  "rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 py-2 text-sm outline-none focus:border-[var(--ops-accent)]";
+  "npf-ops-select rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 py-2 text-sm outline-none transition-colors hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)]";
 
 /* -------------------------------------------------------------------------
  * Grades and statuses
@@ -357,20 +435,40 @@ export function Readout({
 }) {
   const t = useT();
   return (
-    /* basis + grow: the strip fills the board's width at any count, and the
-       readouts wrap to a second line rather than crushing on a laptop. */
-    <div className="flex-1 basis-[168px] px-4 py-3 sm:px-5">
-      <dt className="text-[11px] font-medium tracking-[0.1em] text-[var(--ops-dim)] uppercase">
+    /*
+     * basis + grow: the strip fills the board's width at any count, and the
+     * readouts wrap to a second line rather than crushing on a laptop.
+     *
+     * A toned readout tints its whole cell, faintly, in its own hue. Five
+     * numbers set identically is five numbers with no order to read them in;
+     * the one that means "act now" has to be the one the eye lands on, and a
+     * red numeral alone on white was not winning that against four black ones
+     * the same size.
+     */
+    <div
+      className="relative flex-1 basis-[150px] px-4 py-3.5 sm:px-5"
+      style={
+        tone
+          ? { background: `color-mix(in srgb, ${tone} 6%, transparent)` }
+          : undefined
+      }
+    >
+      <dt className="text-[10px] font-medium tracking-[0.12em] text-[var(--ops-dim)] uppercase">
         {t(label)}
       </dt>
       <dd
-        className="mt-2 font-secondary text-[28px] leading-none font-bold tabular-nums"
+        className="mt-2 font-secondary text-[26px] leading-none font-bold tracking-[-0.02em] tabular-nums"
         style={tone ? { color: tone } : undefined}
       >
         {value}
       </dd>
       {note ? (
-        <p className="mt-1.5 text-[11px] text-[var(--ops-dim)]">{t(note)}</p>
+        <p
+          className="mt-1.5 text-[11px] leading-tight"
+          style={{ color: tone ? tone : "var(--ops-dim)" }}
+        >
+          {t(note)}
+        </p>
       ) : null}
     </div>
   );
@@ -386,17 +484,23 @@ export function OpsButton({
 }) {
   const tones = {
     brand:
-      "bg-[var(--ops-brand)] text-white hover:bg-[var(--ops-brand-lift)] disabled:opacity-40",
+      "bg-[var(--ops-brand)] text-white shadow-[0_1px_2px_rgba(16,42,82,0.25)] hover:bg-[var(--ops-brand-lift)] disabled:opacity-40 disabled:shadow-none",
     quiet:
       "border border-[var(--ops-line)] bg-[var(--ops-panel)] text-[var(--ops-text)] hover:border-[var(--ops-accent)] hover:bg-[var(--ops-raised)] disabled:opacity-40",
     danger:
       "border border-[var(--ops-p1)]/40 text-[var(--ops-p1)] hover:bg-[var(--ops-p1)]/12 disabled:opacity-40",
   };
   return (
+    /*
+     * `active:` on a real button, not just hover. A control that moves under
+     * the finger is the cheapest way an interface says the press landed, and
+     * on a board where one click dispatches a car to an assault it is worth
+     * more than it costs.
+     */
     <button
       type="button"
       {...props}
-      className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed ${tones[tone]} ${className}`}
+      className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-[background-color,border-color,box-shadow,translate] duration-150 enabled:active:translate-y-px disabled:cursor-not-allowed ${tones[tone]} ${className}`}
     />
   );
 }

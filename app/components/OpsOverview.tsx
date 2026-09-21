@@ -6,6 +6,7 @@ import { dispatchTarget } from "../content-ops";
 import OpsResponseChart from "./OpsResponseChart";
 import {
   Elapsed,
+  OpsEmpty,
   OpsHead,
   OpsPanel,
   OpsStatus,
@@ -139,7 +140,12 @@ export default function OpsOverview() {
                 ))}
               </ul>
             ) : (
-              <Empty>{t("Queue clear. Every call has a unit on it.")}</Empty>
+              <OpsEmpty
+                title={t("Queue clear")}
+                hint={t(
+                  "Every call that came in has a unit on it. A new one lands here the second the desk takes it.",
+                )}
+              />
             )}
           </OpsPanel>
 
@@ -160,7 +166,12 @@ export default function OpsOverview() {
                 ))}
               </ul>
             ) : (
-              <Empty>{t("No unit is currently committed to a call.")}</Empty>
+              <OpsEmpty
+                title={t("Nobody is committed")}
+                hint={t(
+                  "No unit is on a call right now. Dispatch one from the pending queue above.",
+                )}
+              />
             )}
           </OpsPanel>
         </div>
@@ -177,14 +188,6 @@ export default function OpsOverview() {
 }
 
 /* ------------------------------------------------------------------------ */
-
-function Empty({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="px-4 py-12 text-center text-sm text-[var(--ops-dim)]">
-      {children}
-    </p>
-  );
-}
 
 /** The link out of a panel to the board that owns the same data in full. */
 function More({ href, children }: { href: string; children: React.ReactNode }) {
@@ -225,7 +228,11 @@ function PendingCall({
 
   return (
     <li
-      className={`npf-ops-row flex gap-4 border-b border-[var(--ops-line)] px-4 py-3 last:border-0 ${
+      /* Stacked on a phone, side by side from 640px. Squeezing a 190px
+         dispatch control alongside the call on a 390px screen left the
+         summary about twenty characters wide — three ragged lines of what the
+         caller actually said. */
+      className={`npf-ops-row flex flex-col gap-3 border-b border-[var(--ops-line-soft)] px-4 py-3.5 last:border-0 sm:flex-row sm:gap-4 ${
         late ? "npf-ops-overdue" : ""
       }`}
     >
@@ -248,7 +255,7 @@ function PendingCall({
         </p>
       </div>
 
-      <div className="flex shrink-0 flex-col items-end gap-2">
+      <div className="flex shrink-0 items-center justify-between gap-3 sm:flex-col sm:items-end sm:gap-2">
         <span
           className="font-secondary text-sm leading-none font-bold"
           style={{ color: late ? "var(--ops-p1)" : "var(--ops-text)" }}
@@ -277,7 +284,7 @@ function PendingCall({
               status: "Dispatched",
             });
           }}
-          className="max-w-[184px] rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-2.5 py-1.5 text-xs font-medium outline-none hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)] disabled:opacity-50 disabled:hover:border-[var(--ops-line)]"
+          className="npf-ops-select max-w-[190px] rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-2.5 py-1.5 text-xs font-medium outline-none transition-colors hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)] disabled:opacity-50 disabled:hover:border-[var(--ops-line)]"
         >
           <option value="">
             {free.length
@@ -299,7 +306,7 @@ function PendingCall({
 function RunningCall({ incident }: { incident: Incident }) {
   const t = useT();
   return (
-    <li className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 border-b border-[var(--ops-line)] px-4 py-2.5 last:border-0">
+    <li className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 border-b border-[var(--ops-line-soft)] px-4 py-2.5 transition-colors last:border-0 hover:bg-[var(--ops-raised)]/40">
       <PriorityTag priority={incident.priority} />
       <span className="font-secondary text-sm font-bold tabular-nums">
         {incident.id}
@@ -362,7 +369,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
             return (
               <tr
                 key={division}
-                className="border-b border-[var(--ops-line)] last:border-0"
+                className="border-b border-[var(--ops-line-soft)] last:border-0"
               >
                 <th
                   scope="row"
@@ -408,7 +415,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
       </table>
 
       {/* Three colours across twelve tracks earn one line naming them. */}
-      <ul className="flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--ops-line)] bg-[var(--ops-bg)]/60 px-4 py-2 text-[11px] text-[var(--ops-dim)]">
+      <ul className="flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--ops-line-soft)] bg-[var(--ops-bg)]/50 px-4 py-2 text-[11px] text-[var(--ops-dim)]">
         {UNIT_KEY.map(([label, fill]) => (
           <li key={label} className="flex items-center gap-1.5">
             <span
@@ -421,7 +428,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
         ))}
       </ul>
 
-      <div className="border-t border-[var(--ops-line)] p-4">
+      <div className="border-t border-[var(--ops-line-soft)] p-4">
         <p className="mb-2.5 font-secondary text-xs font-bold">
           {t("On the air")}
         </p>

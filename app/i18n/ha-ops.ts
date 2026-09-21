@@ -10,12 +10,13 @@ export const haOps: Record<string, string> = {
   Command: "Umarni",
   "& Control": "da Kula",
   "Command board": "Allon umarni",
+  /* The tab strip passes its short label through a table, so `t()` never
+     sees it as a literal and the coverage test never asked for this one. */
+  Board: "Allo",
   "Operations Console | Nigeria Police Force":
     "Allon Ayyuka | Rundunar 'Yan Sandan Najeriya",
-  "Operations | Nigeria Police Force":
-    "Ayyuka | Rundunar 'Yan Sandan Najeriya",
-  "Incidents | Nigeria Police Force":
-    "Lamurra | Rundunar 'Yan Sandan Najeriya",
+  "Operations | Nigeria Police Force": "Ayyuka | Rundunar 'Yan Sandan Najeriya",
+  "Incidents | Nigeria Police Force": "Lamurra | Rundunar 'Yan Sandan Najeriya",
   "Units | Nigeria Police Force": "Rundunoni | Rundunar 'Yan Sandan Najeriya",
   "Service requests | Nigeria Police Force":
     "Buƙatun hidima | Rundunar 'Yan Sandan Najeriya",
@@ -24,6 +25,7 @@ export const haOps: Record<string, string> = {
   "WAT · Shift {shift}": "WAT · Aikin {shift}",
   "End shift": "Kammala aiki",
   "Public site": "Shafin jama'a",
+  Requests: "Buƙatu",
   "Checking credentials…": "Ana duba shaida…",
   "Force credentials required": "Ana buƙatar shaidar Rundunar",
   "You are signed in as {name}, a public account. The operations console is for Nigeria Police Force personnel.":
@@ -57,14 +59,16 @@ export const haOps: Record<string, string> = {
   "{n} committed": "{n} kan aiki",
   "units committed": "rundunonin da ke kan aiki",
   Committed: "Kan aiki",
-  "No unit is currently committed to a call.":
-    "Babu rundunar da ke kan wani kira a yanzu.",
   "Every unit is committed. New calls will hold in the queue.":
     "Duk rundunonin suna kan aiki. Sabbin kira za su jira a layi.",
-  "Queue clear. Every call has a unit on it.":
-    "Layi a sarari. Kowane kira yana da rundunar da ke kansa.",
-  "Queue clear. Nothing is waiting on a decision.":
-    "Layi a sarari. Babu abin da ke jiran hukunci.",
+  "Queue clear": "Layi a sarari",
+  "Every call that came in has a unit on it. A new one lands here the second the desk takes it.":
+    "Kowane kiran da ya shigo yana da rundunar da ke kansa. Sabo zai sauka nan daƙiƙar da tebur ya karɓe shi.",
+  "Nobody is committed": "Babu wanda ke kan aiki",
+  "No unit is on a call right now. Dispatch one from the pending queue above.":
+    "Babu rundunar da ke kan wani kira a yanzu. Ka tura ɗaya daga layin jira na sama.",
+  "Nothing is waiting on a decision. Turn off “Open only” to read the ones already settled.":
+    "Babu abin da ke jiran hukunci. Ka kashe “Buɗaɗɗu kaɗai” don karanta waɗanda aka riga aka warware.",
   "{n} calls closed": "An rufe kira {n}",
   "Response time": "Lokacin amsawa",
   "Median dispatch": "Matsakaicin turawa",
@@ -96,7 +100,9 @@ export const haOps: Record<string, string> = {
   "Type / area": "Nau'i / yanki",
   "Reference, type, area, officer or callsign":
     "Lambar tuntuɓa, nau'i, yanki, jami'i ko lambar rediyo",
-  "No call matches those filters.": "Babu kiran da ya dace da waɗannan taceƙa.",
+  "No call matches those filters": "Babu kiran da ya dace da waɗannan taceƙa",
+  "Widen the grade or status filter, or clear the search box, to see the rest of the shift.":
+    "Ka faɗaɗa taceƙar daraja ko matsayi, ko ka share akwatin bincike, don ganin sauran aikin.",
   "{shown} of {total} calls": "{shown} daga kira {total}",
   "Every call of the shift, newest first. Pick a row to dispatch it, move it on, or write the log.":
     "Kowane kira na aikin, sabo na farko. Ka zaɓi layi don ka tura shi, ka ci gaba da shi, ko ka rubuta bayanin.",
@@ -128,6 +134,18 @@ export const haOps: Record<string, string> = {
   Elapsed: "Lokacin da ya wuce",
   "of {n}m": "daga mintuna {n}",
   "since call": "tun kira",
+  /*
+   * The status pills. These reach `t()` through a lookup table rather than as
+   * literals, so the coverage test never asked for them and every Hausa board
+   * in the console has been showing "En route" and "On scene" in English.
+   */
+  "En route": "A kan hanya",
+  "On scene": "A wurin",
+  "On Scene": "A wurin",
+  Assigned: "An ba da",
+  Unavailable: "Ba ya samuwa",
+  Closed: "An rufe",
+  total: "jimla",
   Arrived: "Ya iso",
   Urgent: "Gaggawa",
   Immediate: "Nan take",
@@ -169,7 +187,9 @@ export const haOps: Record<string, string> = {
   Pending: "Yana jira",
   "Filter units": "Tace rundunoni",
   "Callsign, officer or area": "Lambar rediyo, jami'i ko yanki",
-  "No unit matches that filter.": "Babu rundunar da ta dace da wannan taceƙa.",
+  "No unit matches that filter": "Babu rundunar da ta dace da wannan taceƙa",
+  "Clear the search box or pick every division to see the whole shift again.":
+    "Ka share akwatin bincike ko ka zaɓi kowace sashe don sake ganin dukan aikin.",
   "{shown} of {total} units": "{shown} daga rundunoni {total}",
   "Units on duty, with status, elapsed time in that status, and the call they are assigned to":
     "Rundunonin da ke kan aiki, tare da matsayi, lokacin da aka ɗauka a wannan matsayi, da kiran da aka ba su",
@@ -209,15 +229,16 @@ export const haOps: Record<string, string> = {
     "Buƙatun da ke jiran hukunci. Duk abin da ka yi nan yana bayyana a allon mai neman cikin daƙiƙa ɗaya.",
   "Filter requests": "Tace buƙatu",
   "Reference or service": "Lambar tuntuɓa ko aiki",
-  "No request matches that search.":
-    "Babu buƙatar da ta dace da wannan binciken.",
+  "No request matches that search":
+    "Babu buƙatar da ta dace da wannan binciken",
+  "Try the reference number, or the name of the service the applicant asked for.":
+    "Ka gwada lambar tuntuɓa, ko sunan aikin da mai neman ya buƙata.",
   "{shown} of {total} requests": "{shown} daga buƙatu {total}",
   "{ref} · submitted {date} · {fee} · via {channel}":
     "{ref} · an gabatar {date} · {fee} · ta {channel}",
   "Start review": "Fara bita",
   "Ask for more": "Nemi ƙari",
-  "What does the applicant need to do?":
-    "Me mai neman yake buƙatar ya yi?",
+  "What does the applicant need to do?": "Me mai neman yake buƙatar ya yi?",
   "Upload a clearer copy of the passport photo page.":
     "Ka ɗora kwafi mai haske na shafin hoton fasfo.",
   "Send to applicant": "Aika wa mai neman",

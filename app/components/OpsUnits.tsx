@@ -5,6 +5,7 @@ import {
   Elapsed,
   OPS_SELECT,
   OpsButton,
+  OpsEmpty,
   OpsHead,
   OpsPanel,
   OpsSearch,
@@ -94,7 +95,7 @@ export default function OpsUnits() {
         <Readout
           label={t("Available")}
           value={free.length}
-          tone={free.length ? "var(--ops-fill-ok)" : "var(--ops-p2)"}
+          tone={free.length ? "var(--ops-ok)" : "var(--ops-p2)"}
           note={t("on the air")}
         />
         <Readout
@@ -146,57 +147,75 @@ export default function OpsUnits() {
       </div>
 
       <OpsPanel flush>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[760px] text-start text-sm">
-            <caption className="sr-only">
-              {t(
-                "Units on duty, with status, elapsed time in that status, and the call they are assigned to",
-              )}
-            </caption>
-            <thead className="npf-ops-thead text-[11px] font-medium tracking-[0.08em] text-[var(--ops-dim)] uppercase">
-              <tr>
-                <th scope="col" className="py-2 pe-3 ps-4 font-medium">
-                  {t("Callsign")}
-                </th>
-                <th scope="col" className="py-2 pe-3 font-medium">
-                  {t("Officer")}
-                </th>
-                <th scope="col" className="py-2 pe-3 font-medium">
-                  {t("Status")}
-                </th>
-                <th scope="col" className="py-2 pe-3 text-end font-medium">
-                  {t("Elapsed")}
-                </th>
-                <th scope="col" className="py-2 pe-3 font-medium">
-                  {t("On call")}
-                </th>
-                <th scope="col" className="py-2 pe-3 font-medium">
-                  {t("Location")}
-                </th>
-                <th scope="col" className="py-2 pe-4 text-end font-medium">
-                  {t("Move to")}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {visible.map((unit) => (
-                <Row
-                  key={unit.callsign}
-                  unit={unit}
-                  incident={
-                    incidents.find((i) => i.id === unit.incident) ?? null
-                  }
-                  now={now}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {/*
+          No sideways scroller. Below `lg` the officer, the call and the
+          location fold into the callsign's own cell, so a phone still shows
+          every unit with its status, its clock and the control that changes
+          it, rather than a 760px table swiped one column at a time.
+        */}
+        <table className="w-full text-start text-sm">
+          <caption className="sr-only">
+            {t(
+              "Units on duty, with status, elapsed time in that status, and the call they are assigned to",
+            )}
+          </caption>
+          <thead className="npf-ops-thead text-[11px] font-medium tracking-[0.08em] text-[var(--ops-dim)] uppercase">
+            <tr>
+              <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
+                {t("Callsign")}
+              </th>
+              <th
+                scope="col"
+                className="hidden py-2.5 pe-3 font-medium lg:table-cell"
+              >
+                {t("Officer")}
+              </th>
+              <th
+                scope="col"
+                className="hidden py-2.5 pe-3 font-medium sm:table-cell"
+              >
+                {t("Status")}
+              </th>
+              <th scope="col" className="py-2.5 pe-3 text-end font-medium">
+                {t("Elapsed")}
+              </th>
+              <th
+                scope="col"
+                className="hidden py-2.5 pe-3 font-medium lg:table-cell"
+              >
+                {t("On call")}
+              </th>
+              <th
+                scope="col"
+                className="hidden py-2.5 pe-3 font-medium lg:table-cell"
+              >
+                {t("Location")}
+              </th>
+              <th scope="col" className="py-2.5 pe-4 text-end font-medium">
+                {t("Move to")}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {visible.map((unit) => (
+              <Row
+                key={unit.callsign}
+                unit={unit}
+                incident={incidents.find((i) => i.id === unit.incident) ?? null}
+                now={now}
+              />
+            ))}
+          </tbody>
+        </table>
 
         {visible.length === 0 ? (
-          <p className="px-4 py-12 text-center text-sm text-[var(--ops-dim)]">
-            {t("No unit matches that filter.")}
-          </p>
+          <OpsEmpty
+            tone="none"
+            title={t("No unit matches that filter")}
+            hint={t(
+              "Clear the search box or pick every division to see the whole shift again.",
+            )}
+          />
         ) : null}
       </OpsPanel>
     </div>
@@ -220,19 +239,48 @@ function Row({
   const stale = held > STALE_MINUTES && unit.status !== "Available";
 
   return (
-    <tr className="border-b border-[var(--ops-line)] last:border-0 hover:bg-[var(--ops-raised)]/50">
-      <th scope="row" className="py-2 pe-3 ps-4">
-        <span className="font-secondary font-bold">{t(unit.callsign)}</span>
-        <span className="block text-[11px] font-normal text-[var(--ops-dim)]">
-          {t(unit.division)}
-        </span>
+    <tr className="border-b border-[var(--ops-line-soft)] transition-colors last:border-0 hover:bg-[var(--ops-raised)]/50">
+      <th scope="row" className="py-2.5 pe-3 ps-4 align-top">
+        {/*
+          The folded lines live inside a capped block, not loose in the cell.
+          A table cell ignores max-width under auto layout, so the `truncate`
+          on a long standby location made the column as wide as "Bill Clinton
+          Drive — standby" and pushed the status control clean off the panel
+          edge — where `overflow-clip` cropped it with no scrollbar to find it
+          by. Capped here, the same text ellipsises instead.
+        */}
+        <div className="max-w-[34vw] sm:max-w-[16rem] lg:max-w-none">
+          <span className="font-secondary font-bold">{t(unit.callsign)}</span>
+          <span className="block truncate text-[11px] font-normal text-[var(--ops-dim)]">
+            {t(unit.division)}
+            <span className="lg:hidden"> · {t(unit.officer)}</span>
+          </span>
+          <span className="mt-1 flex items-center gap-x-2 text-[11px] font-normal text-[var(--ops-dim)] lg:hidden">
+            <span className="sm:hidden">
+              <UnitStatusTag status={unit.status} />
+            </span>
+            {incident ? (
+              <>
+                <PriorityTag priority={incident.priority} />
+                <span className="shrink-0 font-secondary font-bold tabular-nums">
+                  {incident.id}
+                </span>
+              </>
+            ) : null}
+            <span className="truncate">{t(unit.area)}</span>
+          </span>
+        </div>
       </th>
-      <td className="py-2 pe-3 text-[var(--ops-dim)]">{t(unit.officer)}</td>
-      <td className="py-2 pe-3">
+      <td className="hidden py-2.5 pe-3 align-top whitespace-nowrap text-[var(--ops-dim)] lg:table-cell">
+        {t(unit.officer)}
+      </td>
+      {/* Callsign, clock and control are what a phone has room for; the
+          status pill folds up into the callsign block below 640px. */}
+      <td className="hidden py-2.5 pe-3 align-top sm:table-cell">
         <UnitStatusTag status={unit.status} />
       </td>
       <td
-        className="py-2 pe-3 text-end font-medium"
+        className="py-2.5 pe-3 text-end align-top font-medium whitespace-nowrap"
         style={stale ? { color: "var(--ops-p2)" } : undefined}
       >
         <Elapsed from={unit.since} />
@@ -240,7 +288,7 @@ function Row({
           <span className="sr-only"> {t("— held over 45 minutes")}</span>
         ) : null}
       </td>
-      <td className="py-2 pe-3">
+      <td className="hidden py-2.5 pe-3 align-top lg:table-cell">
         {incident ? (
           <span className="flex items-center gap-2 whitespace-nowrap">
             <PriorityTag priority={incident.priority} />
@@ -252,10 +300,10 @@ function Row({
           <span className="text-xs text-[var(--ops-dim)]">—</span>
         )}
       </td>
-      <td className="py-2 pe-3 text-xs text-[var(--ops-dim)]">
+      <td className="hidden w-full py-2.5 pe-3 align-top text-xs text-[var(--ops-dim)] lg:table-cell">
         {t(unit.area)}
       </td>
-      <td className="py-2 pe-4 text-end">
+      <td className="py-2.5 pe-4 text-end align-top">
         {/*
           A unit on a call is cleared from the call, not from here — clearing
           it here would leave the incident showing a unit that has gone.
@@ -268,7 +316,7 @@ function Row({
                   incident.status === "Dispatched" ? "On Scene" : "Closed",
               })
             }
-            className="!px-2.5 !py-1 !text-xs"
+            className="min-w-24 max-w-30 justify-center !px-2.5 !py-1 text-center !text-xs sm:min-w-0 sm:max-w-none sm:whitespace-nowrap"
           >
             {incident.status === "Dispatched" ? t("Arrived") : t("Clear call")}
           </OpsButton>
@@ -281,7 +329,7 @@ function Row({
                 unit.status === "Available" ? "Unavailable" : "Available",
               )
             }
-            className="!px-2.5 !py-1 !text-xs"
+            className="min-w-24 max-w-30 justify-center !px-2.5 !py-1 text-center !text-xs sm:min-w-0 sm:max-w-none sm:whitespace-nowrap"
           >
             {unit.status === "Available"
               ? t("Off the air")

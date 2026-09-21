@@ -221,10 +221,10 @@ export default function ServiceSearch({
       <form
         role="search"
         onSubmit={submit}
-        className={`flex items-center rounded-2xl ${
+        className={`flex items-center ${
           hero
-            ? "gap-[11px] bg-white px-[11px]"
-            : "gap-3 bg-[#F4F6FA] px-4 ring-1 ring-black/5 transition-shadow focus-within:ring-2 focus-within:ring-npf-blue"
+            ? "gap-[11px] rounded-[26px] bg-white px-4 ring-0 transition-shadow focus-within:ring-2 focus-within:ring-npf-blue-mid"
+            : "gap-3 rounded-2xl bg-[#F4F6FA] px-4 ring-1 ring-black/5 transition-shadow focus-within:ring-2 focus-within:ring-npf-blue"
         }`}
       >
         <SearchIcon aria-hidden className="size-6 shrink-0 text-npf-blue-ink" />
@@ -247,7 +247,7 @@ export default function ServiceSearch({
           onChange={(e) => retype(e.target.value)}
           onFocus={openPanel}
           onKeyDown={onKeyDown}
-          className={`w-full flex-grow bg-transparent outline-none placeholder:text-npf-muted ${
+          className={`w-full flex-grow bg-transparent outline-none focus-visible:outline-none placeholder:text-npf-muted ${
             hero
               ? "py-5 text-sm text-npf-muted [@media(max-height:768px)]:py-3"
               : "py-4 text-base text-npf-ink"

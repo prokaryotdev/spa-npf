@@ -5,6 +5,7 @@ import Domains from "./components/Domains";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import { ArrowRight } from "./components/icons";
 import InitiativeCard from "./components/InitiativeCard";
 import Pillars from "./components/Pillars";
 import Skyline from "./components/Skyline";
@@ -17,10 +18,6 @@ import {
   smartPoliceStations as smartPoliceStationsSource,
   smartPolicing as smartPolicingSource,
 } from "./content";
-
-/** The soft navy bloom that sits behind the light sections. */
-const bloom =
-  "bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] rounded-full pointer-events-none absolute";
 
 export default async function Home() {
   const appStores = await getLocalized(appStoresSource);
@@ -39,7 +36,7 @@ export default async function Home() {
         {/* Four routes into the service catalogue, riding the seam below the hero. */}
         <section
           aria-labelledby="quick-services"
-          className="relative z-10 -mt-px bg-npf-night pb-px"
+          className="relative z-10 -mt-px bg-[linear-gradient(to_bottom,#000_0%,#020407_28%,#04070e_58%,#060b16_100%)] pb-px"
         >
           <h2 id="quick-services" className="sr-only">
             {t("Popular services")}
@@ -75,38 +72,45 @@ export default async function Home() {
 
         <Pillars />
 
-        {/* Leading the Way in Modern Policing */}
+        {/* Leading the Way in Modern Policing.
+
+            Its own surface, not a bloom bleeding down from Pillars: the
+            corner-anchored radial read as spill from the section above, and a
+            flat tint separates the two chapters without a decoration. */}
         <section
           aria-labelledby="smart-policing"
-          className="relative overflow-hidden bg-white pt-[70px] pb-16 lg:py-[150px]"
+          className="relative overflow-hidden border-t border-npf-blue/[0.08] bg-[#f4f7fb] pt-[70px] pb-16 lg:py-[150px]"
         >
-          <div
-            className={`${bloom} top-0 left-0 h-80 w-56 -translate-x-1/2 -translate-y-1/2 opacity-70 md:size-[1200px] md:opacity-60`}
-          />
-          <Image
-            src="/img/assets-home/static/cloud.png"
-            alt=""
-            width={800}
-            height={358}
-            className="pointer-events-none absolute top-[2%] left-1/2 z-20 w-[800px] opacity-[0.06]"
-          />
-
           <div className="npf-container relative z-10">
-            <h2
-              id="smart-policing"
-              data-reveal
-              className="mb-4 font-secondary text-4xl leading-[1.2] font-bold text-npf-blue-deep md:max-w-[20ch] lg:mb-6 lg:text-7xl 2xl:text-8xl"
-            >
-              {t("Leading the Way in Modern Policing")}
-            </h2>
-            <p
-              data-reveal
-              className="max-w-[568px] text-sm text-neutral-700 md:text-2xl"
-            >
-              {t(
-                "We harness intelligent technologies to keep public safety responsive, smart, and always one step ahead.",
-              )}
-            </p>
+            {/* Heading and lede sit side by side from lg up: the heading alone
+                left a half-empty band across the widest breakpoints. */}
+            <header className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-20">
+              <h2
+                id="smart-policing"
+                data-reveal
+                className="font-secondary text-4xl leading-[1.05] font-bold tracking-[-0.02em] text-balance text-npf-blue-deep md:max-w-[16ch] lg:text-7xl 2xl:text-8xl"
+              >
+                {t("Leading the Way in Modern Policing")}
+              </h2>
+              <div
+                data-reveal
+                style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
+                className="max-w-[568px] lg:max-w-[26rem] lg:shrink-0 lg:pb-3"
+              >
+                <p className="text-sm leading-relaxed text-neutral-700 md:text-xl">
+                  {t(
+                    "We harness intelligent technologies to keep public safety responsive, smart, and always one step ahead.",
+                  )}
+                </p>
+                <Link
+                  href="/app/services"
+                  className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-npf-blue transition-colors hover:text-npf-blue-deep focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-npf-blue"
+                >
+                  {t("Browse all services")}
+                  <ArrowRight className="size-4 transition-transform duration-300 ease-[var(--ease-custom)] group-hover:translate-x-1 rtl:-scale-x-100" />
+                </Link>
+              </div>
+            </header>
 
             <CardRail label={t("modern policing")} className="mt-10 md:hidden">
               {smartPolicing.map((card) => (
@@ -118,7 +122,7 @@ export default async function Home() {
               ))}
             </CardRail>
 
-            <div className="mt-10 hidden grid-cols-2 gap-6 md:mt-32 md:grid md:gap-12">
+            <div className="mt-12 hidden grid-cols-2 gap-6 md:mt-20 md:grid md:gap-8 lg:gap-12">
               {smartPolicing.map((card, i) => (
                 <div
                   key={card.title}
@@ -143,29 +147,28 @@ export default async function Home() {
         {/* Divisional Police Stations */}
         <section
           aria-labelledby="sps"
-          className="relative overflow-hidden bg-white pt-[70px] pb-16 lg:py-[150px]"
+          className="relative overflow-hidden border-t border-npf-blue/[0.08] bg-white pt-[70px] pb-16 lg:py-[150px]"
         >
-          <div
-            className={`${bloom} top-0 right-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 opacity-70 md:size-[1200px] md:opacity-60`}
-          />
-
           <div className="npf-container relative z-10">
-            <h2
-              id="sps"
-              data-reveal
-              className="mb-4 font-secondary text-4xl leading-[1.2] font-bold text-npf-blue-deep md:max-w-[20ch] lg:mb-6 lg:text-7xl 2xl:text-8xl"
-            >
-              {t("Divisional Police Stations")}
-            </h2>
-            <p
-              data-reveal
-              className="max-w-[640px] text-sm text-neutral-700 md:text-2xl"
-            >
-              {t(
-                "Area Commands, Divisions and Posts: close by, always open, and staffed around the clock.",
-              )}
-            </p>
-            <CardRail label={t("SPS")} className="mt-10 md:mt-20">
+            <header className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-20">
+              <h2
+                id="sps"
+                data-reveal
+                className="font-secondary text-4xl leading-[1.05] font-bold tracking-[-0.02em] text-balance text-npf-blue-deep md:max-w-[16ch] lg:text-7xl 2xl:text-8xl"
+              >
+                {t("Divisional Police Stations")}
+              </h2>
+              <p
+                data-reveal
+                style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
+                className="max-w-[568px] text-sm leading-relaxed text-neutral-700 md:text-xl lg:max-w-[26rem] lg:shrink-0 lg:pb-3"
+              >
+                {t(
+                  "Area Commands, Divisions and Posts: close by, always open, and staffed around the clock.",
+                )}
+              </p>
+            </header>
+            <CardRail label={t("SPS")} className="mt-12 md:mt-20">
               {smartPoliceStations.map((card) => (
                 <InitiativeCard
                   key={card.title}
@@ -181,30 +184,29 @@ export default async function Home() {
         {/* Community */}
         <section
           aria-labelledby="community"
-          className="relative overflow-hidden bg-white pt-[70px] pb-16 lg:py-[150px]"
+          className="relative overflow-hidden border-t border-npf-blue/[0.08] bg-[#f4f7fb] pt-[70px] pb-16 lg:py-[150px]"
         >
-          <div
-            className={`${bloom} bottom-0 left-0 h-80 w-56 -translate-x-1/2 translate-y-1/2 opacity-70 md:size-[1200px] md:opacity-60`}
-          />
-
           <div className="npf-container relative z-10">
-            <h2
-              id="community"
-              data-reveal
-              className="mb-4 font-secondary text-4xl leading-[1.2] font-bold text-npf-blue-deep md:max-w-[16ch] lg:mb-6 lg:text-7xl 2xl:text-8xl"
-            >
-              {t("Shaping the Future, Side by Side")}
-            </h2>
-            <p
-              data-reveal
-              className="max-w-[640px] text-sm text-neutral-700 md:text-2xl"
-            >
-              {t(
-                "Bringing communities together through education, cultural heritage, volunteer service, and dedicated support.",
-              )}
-            </p>
+            <header className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-20">
+              <h2
+                id="community"
+                data-reveal
+                className="font-secondary text-4xl leading-[1.05] font-bold tracking-[-0.02em] text-balance text-npf-blue-deep md:max-w-[16ch] lg:text-7xl 2xl:text-8xl"
+              >
+                {t("Shaping the Future, Side by Side")}
+              </h2>
+              <p
+                data-reveal
+                style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
+                className="max-w-[568px] text-sm leading-relaxed text-neutral-700 md:text-xl lg:max-w-[26rem] lg:shrink-0 lg:pb-3"
+              >
+                {t(
+                  "Bringing communities together through education, cultural heritage, volunteer service, and dedicated support.",
+                )}
+              </p>
+            </header>
 
-            <CardRail label={t("community")} className="mt-10 md:hidden">
+            <CardRail label={t("community")} className="mt-12 md:hidden">
               {community.map((card) => (
                 <InitiativeCard
                   key={card.title}
@@ -214,7 +216,7 @@ export default async function Home() {
               ))}
             </CardRail>
 
-            <div className="mt-10 hidden grid-cols-2 gap-8 md:mt-32 md:grid">
+            <div className="mt-12 hidden grid-cols-2 gap-8 md:mt-20 md:grid md:gap-8 lg:gap-12">
               {community.map((card, i) => (
                 <div
                   key={card.title}

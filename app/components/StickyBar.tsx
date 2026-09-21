@@ -1,33 +1,42 @@
 "use client";
 
-import Image from "next/image";
 import Link from "../i18n/Link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useT } from "../i18n/client";
+import { useT, useLocalized } from "../i18n/client";
+import { stripLocale } from "../i18n/path";
+import { emergencyNumbers as emergencyNumbersSource } from "../content";
 import {
-  PhoneIcon,
+  ArrowUpIcon,
+  ArrowUpRight,
+  CallIcon,
   PinIcon,
   ServicesIcon,
   SmileIcon,
 } from "./icons";
 
-const right = [
+const links = [
+  { label: "Services", href: "/app/services", Icon: ServicesIcon },
   {
     label: "Customer Centers",
     href: "/app/home/customer-centers",
     Icon: PinIcon,
   },
-  { label: "Contact Us", href: "/app/home/contactUs", Icon: PhoneIcon },
 ];
 
-const partners = [
-  { label: "Innovation", src: "/img/ai.svg", width: 32 },
-  { label: "Nigeria Police Force AIX", src: "/img/dashboard/aix-logo1.png", width: 32 },
-];
-
-/** Quick-access toolbar; rises once the hero is out of the way. */
+/**
+ * The foot of every page, once the hero is behind you.
+ *
+ * One primary action and a quiet row of secondary ones: on a police site the
+ * thing a visitor may need in a hurry is the emergency line, so that is the
+ * only coloured control in the bar and everything else recedes to plain
+ * text. The number comes from content.ts rather than being typed here, so it
+ * can never drift from the footer's copy of it.
+ */
 export default function StickyBar() {
   const t = useT();
+  const [emergency] = useLocalized(emergencyNumbersSource);
+  const { rest } = stripLocale(usePathname() ?? "/");
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
@@ -37,73 +46,95 @@ export default function StickyBar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const quiet =
+    "group relative inline-flex h-11 items-center gap-2 rounded-lg px-3 text-sm font-medium text-[#3f4a5a] transition-colors hover:bg-npf-blue/[0.06] hover:text-npf-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue";
+
   return (
-    <div className="pointer-events-none fixed bottom-0 left-0 z-50 w-full md:pb-5">
-      <div className="npf-container">
-        <nav
-          aria-label={t("Quick access toolbar")}
-          className={`pointer-events-auto overflow-hidden rounded-t-3xl border border-black/5 bg-white/90 shadow-[0_-8px_30px_-18px_rgba(0,60,40,0.5)] backdrop-blur-md transition-transform duration-500 ease-[var(--ease-custom)] md:rounded-full ${
-            shown ? "translate-y-0" : "translate-y-[150%]"
-          }`}
-        >
-          <div className="flex justify-between">
-            <div className="flex items-center">
+    <div
+      className={`pointer-events-none fixed inset-x-0 bottom-0 z-50 transition-transform duration-500 ease-[var(--ease-custom)] ${
+        shown ? "translate-y-0" : "translate-y-full"
+      }`}
+    >
+      <nav
+        aria-label={t("Quick access toolbar")}
+        className="pointer-events-auto border-t border-npf-blue/[0.12] bg-white/90 backdrop-blur-xl backdrop-saturate-150"
+      >
+        <div className="npf-container">
+          <div className="flex h-16 items-center gap-2 pb-[env(safe-area-inset-bottom)] sm:gap-4">
+            <a
+              href={`tel:${emergency.number}`}
+              className="group inline-flex h-10 shrink-0 items-center gap-2 rounded-full border border-[#b30900]/25 bg-[#b30900]/[0.06] px-3.5 text-[#b30900] transition-colors duration-200 ease-[var(--ease-custom)] hover:border-[#b30900] hover:bg-[#b30900] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b30900]"
+            >
+              <CallIcon className="size-[18px] shrink-0 transition-transform duration-500 ease-[var(--ease-custom)] group-hover:-rotate-12" />
+              <span className="text-sm font-semibold tracking-[-0.01em]">
+                {t("Call")}{" "}
+                <span className="tabular-nums">{emergency.number}</span>
+              </span>
+              <span className="sr-only">— {emergency.note}</span>
+            </a>
+
+            <span
+              aria-hidden
+              className="h-7 w-px shrink-0 bg-npf-blue/[0.14]"
+            />
+
+            <ul className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {links.map(({ label, href, Icon }) => {
+                const active = rest === href;
+                return (
+                  <li key={label} className="shrink-0">
+                    <Link
+                      href={href}
+                      aria-current={active ? "page" : undefined}
+                      className={`${quiet} ${
+                        active ? "bg-npf-blue/[0.08] !text-npf-blue" : ""
+                      }`}
+                    >
+                      <Icon className="size-[18px] shrink-0" />
+                      <span className="hidden whitespace-nowrap md:block">
+                        {t(label)}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="flex shrink-0 items-center gap-1">
               <a
                 href="https://www.servicerating.gov.ng/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={t("Service Rating (opens in a new window)")}
-                className="inline-flex min-w-[74px] items-center justify-center px-4 py-4 text-npf-blue transition-colors hover:bg-black/[0.04]"
+                className={quiet}
               >
-                <SmileIcon className="size-7 lg:size-8" />
-              </a>
-              <Link
-                href="/app/services"
-                className="inline-flex min-w-[74px] items-center justify-center px-4 py-4 text-npf-blue transition-colors hover:bg-black/[0.04]"
-              >
-                <ServicesIcon className="size-6 lg:size-7" />
-                <span className="ms-2 hidden text-sm font-medium lg:block">
-                  {t("Services")}
+                <SmileIcon className="size-[18px] shrink-0" />
+                <span className="hidden whitespace-nowrap lg:block">
+                  {t("Rate this service")}
                 </span>
-              </Link>
-            </div>
-
-            <div className="flex items-center">
-              {right.map(({ label, href, Icon }) => (
-                <Link
-                  key={label}
-                  href={href}
-                  aria-label={t(label)}
-                  className="inline-flex min-w-[74px] items-center justify-center px-4 py-4 text-[#575757] transition-colors hover:bg-black/[0.04]"
-                >
-                  <Icon className="size-6 lg:size-7" />
-                  <span className="ms-2 hidden text-sm leading-none lg:block">
-                    {t(label)}
-                  </span>
-                </Link>
-              ))}
-              {partners.map((partner) => (
-                <a
-                  key={partner.label}
-                  href="https://fct.npf.gov.ng/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={partner.label}
-                  className="hidden min-w-[64px] items-center justify-center px-3 py-4 transition-colors hover:bg-black/[0.04] sm:inline-flex"
-                >
-                  <Image
-                    src={partner.src}
-                    alt={partner.label}
-                    width={partner.width}
-                    height={32}
-                    className="h-8 w-auto"
-                  />
-                </a>
-              ))}
+                <ArrowUpRight className="size-3.5 shrink-0 opacity-45" />
+                <span className="sr-only">{t("(opens in a new window)")}</span>
+              </a>
+              <button
+                type="button"
+                onClick={() =>
+                  window.scrollTo({
+                    top: 0,
+                    behavior: window.matchMedia(
+                      "(prefers-reduced-motion: reduce)",
+                    ).matches
+                      ? "auto"
+                      : "smooth",
+                  })
+                }
+                aria-label={t("Back to top")}
+                className={`${quiet} px-2.5`}
+              >
+                <ArrowUpIcon className="size-[18px] transition-transform duration-200 ease-[var(--ease-custom)] group-hover:-translate-y-0.5" />
+              </button>
             </div>
           </div>
-        </nav>
-      </div>
+        </div>
+      </nav>
     </div>
   );
 }

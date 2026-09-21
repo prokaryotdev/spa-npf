@@ -35,21 +35,7 @@ export default function Pillars() {
         alt=""
         fill
         sizes="480px"
-        /* Deep enough to survive the white wash the standing line needs. */
-        className="object-cover brightness-[0.82] contrast-[1.18]"
-      />
-      {/*
-       * Three photographs from three different moments of one deployment do
-       * not agree on colour, and the ring they sit in is the brand navy. A
-       * multiply wash over a desaturated base pulls them onto one hue without
-       * re-rendering anything, which is what the halftone cut-outs they
-       * replace were doing the expensive way.
-       * ponytail: CSS duotone, bake it into the files if the photographs ever
-       * need to differ from each other.
-       */}
-      <span
-        aria-hidden
-        className="absolute inset-0 bg-npf-blue-deep mix-blend-color"
+        className="object-cover"
       />
     </span>
   ));
@@ -71,21 +57,6 @@ export default function Pillars() {
         <div
           className={`${bloom} top-1/2 right-0 h-72 w-56 translate-x-1/2 -translate-y-1/2 opacity-70 md:top-0 md:size-[1200px] md:opacity-60`}
         />
-
-        {/* Chapter marker in the outer gutter, the way the original tracks place. */}
-        <ol className="pointer-events-none absolute top-1/2 start-6 hidden -translate-y-1/2 xl:block 2xl:start-10">
-          {pillars.map((pillar, i) => (
-            <li
-              key={pillar.word}
-              aria-current={i === active || undefined}
-              className={`font-secondary text-lg leading-[1.5] font-bold text-npf-blue-mid transition-opacity duration-500 ${
-                i === active ? "opacity-100" : "opacity-25"
-              }`}
-            >
-              {pillar.word}
-            </li>
-          ))}
-        </ol>
 
         <div className="npf-container relative">
           <div className="grid items-center gap-10 lg:grid-cols-12">
@@ -112,6 +83,37 @@ export default function Pillars() {
                   </div>
                 ))}
               </div>
+
+              {/*
+               * Chapter marker. It used to hang in the outer gutter, where it
+               * only existed above 1280px and read as a stray list. Sitting
+               * under the standing word it belongs to the copy, works at every
+               * width, and the filling rule shows how far through the pin the
+               * reader is rather than only which word is up.
+               */}
+              <ol className="mt-8 flex items-stretch justify-center gap-6 md:justify-start lg:mt-12 lg:gap-10">
+                {pillars.map((pillar, i) => (
+                  <li key={pillar.word} aria-current={i === active || undefined}>
+                    <span
+                      aria-hidden
+                      className="block h-px w-full bg-npf-blue-mid/20"
+                    >
+                      <span
+                        className={`block h-px origin-left bg-npf-blue-mid transition-transform duration-700 ease-[var(--ease-custom)] ${
+                          i <= active ? "scale-x-100" : "scale-x-0"
+                        }`}
+                      />
+                    </span>
+                    <span
+                      className={`mt-3 block font-secondary text-sm leading-none font-bold tracking-[0.14em] text-npf-blue-mid uppercase transition-opacity duration-500 lg:text-base ${
+                        i === active ? "opacity-100" : "opacity-30"
+                      }`}
+                    >
+                      {pillar.word}
+                    </span>
+                  </li>
+                ))}
+              </ol>
             </div>
 
             <div className="order-1 lg:order-2 lg:col-span-5">
@@ -126,25 +128,6 @@ export default function Pillars() {
                     className="object-contain opacity-70"
                   />
                   {portraits}
-                </div>
-                {/* A diagonal white wash lifts the standing line off the
-                    portrait, the same trick the original uses over this block.
-                    It is tuned against the portrait's brightness above: a
-                    photograph needs a shorter, harder falloff than the sparse
-                    halftone dots this wash was first drawn for. */}
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(124deg,#ffffff_16%,rgba(255,255,255,0.82)_40%,transparent_64%)] lg:block"
-                />
-                <div className="mt-6 text-center lg:absolute lg:top-1/2 lg:start-0 lg:mt-0 lg:max-w-[64%] lg:-translate-y-1/2 lg:ps-[6%] lg:text-start">
-                  <p className="mb-2 font-secondary text-base leading-snug font-bold text-[#414651] lg:mb-3 lg:text-2xl">
-                    {t("Together, We Build a Smart and Secure Abuja")}
-                  </p>
-                  <p className="font-secondary text-xs font-bold text-[#333A45] lg:text-base">
-                    {t(
-                      "With you, For you. Protecting, Connecting, and Innovating.",
-                    )}
-                  </p>
                 </div>
               </div>
             </div>
