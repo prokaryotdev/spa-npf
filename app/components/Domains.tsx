@@ -58,16 +58,31 @@ export default function Domains() {
               i === active ? "opacity-100" : "opacity-0"
             }`}
           >
-            <Image
-              src={domain.background}
-              alt=""
-              fill
-              sizes="100vw"
-              style={{
-                transform: `scale(${1.06 + (i === active ? progress * 0.06 : 0)})`,
-              }}
-              className="object-cover"
-            />
+            {/*
+              A <picture>, not next/image: a phone needs a different crop, not
+              a smaller one. These slides are shot with the reading column left
+              empty — on the wide file that column is the left third, on the
+              tall file it is the upper two-thirds — so a narrow viewport has
+              to be handed its own photograph. next/image resizes one source
+              and cannot swap it, and rendering both and hiding one downloads
+              both.
+            */}
+            <picture>
+              <source
+                media="(max-width: 767px)"
+                srcSet={domain.background.replace(".jpg", "-mobile.jpg")}
+              />
+              <img
+                src={domain.background}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                style={{
+                  transform: `scale(${1.06 + (i === active ? progress * 0.06 : 0)})`,
+                }}
+                className="absolute inset-0 size-full object-cover"
+              />
+            </picture>
             <span
               aria-hidden
               className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,21,38,0.34)_0%,rgba(10,21,38,0.04)_42%,rgba(10,21,38,0.5)_100%)]"
