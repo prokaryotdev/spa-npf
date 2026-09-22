@@ -5,22 +5,21 @@ import Domains from "./components/Domains";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import { ArrowRight } from "./components/icons";
+import { AlertIcon, ArrowRight, BellIcon, FileIcon } from "./components/icons";
 import InitiativeCard from "./components/InitiativeCard";
 import Pillars from "./components/Pillars";
-import Skyline from "./components/Skyline";
 import StickyBar from "./components/StickyBar";
 import { getT, getLocalized } from "./i18n/server";
 import {
-  appStores as appStoresSource,
   community as communitySource,
   quickServices as quickServicesSource,
   smartPoliceStations as smartPoliceStationsSource,
   smartPolicing as smartPolicingSource,
+  storeBadges as storeBadgesSource,
 } from "./content";
 
 export default async function Home() {
-  const appStores = await getLocalized(appStoresSource);
+  const storeBadges = await getLocalized(storeBadgesSource);
   const community = await getLocalized(communitySource);
   const quickServices = await getLocalized(quickServicesSource);
   const smartPoliceStations = await getLocalized(smartPoliceStationsSource);
@@ -238,84 +237,144 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* App download */}
+        {/* App download. Pitch, what you get, where to get it on the start
+            side; the phone on the end side, rising out of the band's floor
+            inside the brand rings so the section has one thing to look at. */}
         <section
           aria-labelledby="app"
-          className="relative flex items-center overflow-hidden bg-npf-blue-deep py-16 text-white md:min-h-screen md:py-[120px] 2xl:py-[150px]"
+          className="relative overflow-hidden bg-npf-blue-deep text-white"
         >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -top-[38%] left-1/2 w-[55%] -translate-x-1/2"
-          >
-            <div className="relative aspect-square">
-              <Image
-                src="/img/assets-home/static/Ring.svg"
-                alt=""
-                fill
-                sizes="60vw"
-                className="animate-[spin_90s_linear_infinite] object-contain opacity-10 motion-reduce:animate-none"
-              />
-              <Image
-                src="/img/assets-home/static/Ring2.svg"
-                alt=""
-                fill
-                sizes="60vw"
-                className="animate-[spin_70s_linear_infinite_reverse] scale-[1.2] object-contain opacity-10 motion-reduce:animate-none"
-              />
-            </div>
-          </div>
           <span
             aria-hidden
-            className="pointer-events-none absolute top-0 -right-[25%] block aspect-square w-[50%] -translate-y-1/2 rounded-full bg-[radial-gradient(#2a8fe5ba_-20%,#2a8fe524_40%,transparent_68%)] opacity-65"
-          />
-          <span
-            aria-hidden
-            className="pointer-events-none absolute bottom-0 -left-[25%] block aspect-square w-[70%] translate-y-1/2 rounded-full bg-[radial-gradient(#2a8fe5ba_-20%,#2a8fe524_40%,transparent_68%)] opacity-65"
+            className="pointer-events-none absolute top-0 -right-[20%] block aspect-square w-[70%] -translate-y-1/2 rounded-full bg-[radial-gradient(#2a8fe5ba_-20%,#2a8fe524_40%,transparent_68%)] opacity-60 rtl:right-auto rtl:-left-[20%]"
           />
 
-          <div className="npf-container relative z-10 max-w-[1276px] text-center">
-            <h2
-              id="app"
-              data-reveal
-              className="mx-auto max-w-[1100px] font-secondary text-3xl leading-tight font-bold lg:text-7xl"
-            >
-              {t("Download the Nigeria Police Force App")}
-            </h2>
-            <p
-              data-reveal
-              className="mx-auto mt-4 max-w-5xl font-secondary text-lg font-bold md:mt-6 md:text-3xl"
-            >
-              {t("Services, updates, and alerts: right in your pocket.")}
-            </p>
-            <div data-reveal className="mt-10 lg:mt-16">
-              <h3 className="mb-4 font-secondary text-sm font-bold md:text-3xl">
-                {t("Available on")}
-              </h3>
-              <ul className="flex flex-wrap justify-center gap-2 md:gap-3">
-                {appStores.map((store) => (
-                  <li key={store.label}>
-                    <a
-                      href="https://fct.npf.gov.ng/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="relative block h-[42px] w-[132px] rounded-lg bg-black px-4 py-1.5 transition-transform duration-300 hover:-translate-y-1 md:h-[52px] md:w-[166px]"
-                    >
-                      <Image
-                        src={store.icon}
-                        alt={store.label}
-                        fill
-                        sizes="166px"
-                        className="object-contain p-2"
-                      />
-                    </a>
+          <div className="npf-container relative z-10 grid gap-16 pt-20 md:pt-28 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-12 lg:pt-0">
+            <div className="lg:py-[150px]">
+              <h2
+                id="app"
+                data-reveal
+                className="max-w-[15ch] font-secondary text-4xl leading-[1.05] font-bold tracking-[-0.02em] text-balance lg:text-7xl"
+              >
+                {t("Download the Nigeria Police Force App")}
+              </h2>
+              <p
+                data-reveal
+                style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
+                className="mt-5 max-w-[40ch] text-base leading-relaxed text-white/80 md:mt-6 md:text-xl md:leading-snug"
+              >
+                {t("Services, updates, and alerts: right in your pocket.")}
+              </p>
+
+              <ul
+                data-reveal
+                style={{ "--reveal-delay": "180ms" } as React.CSSProperties}
+                className="mt-10 max-w-lg divide-y divide-white/10 border-y border-white/10 md:mt-12"
+              >
+                {[
+                  {
+                    Icon: FileIcon,
+                    title: t("Services"),
+                    body: t("Apply, pay, and track your requests."),
+                  },
+                  {
+                    Icon: BellIcon,
+                    title: t("Updates"),
+                    body: t("News and notices from the FCT Command."),
+                  },
+                  {
+                    Icon: AlertIcon,
+                    title: t("Alerts"),
+                    body: t("Safety alerts the moment they go out."),
+                  },
+                ].map(({ Icon, title, body }) => (
+                  <li key={title} className="flex items-center gap-4 py-4">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/[0.08] text-[#8cc4f5] ring-1 ring-white/10">
+                      <Icon className="size-5" />
+                    </span>
+                    <span>
+                      <span className="block font-semibold">{title}</span>
+                      <span className="block text-sm text-white/70">
+                        {body}
+                      </span>
+                    </span>
                   </li>
                 ))}
               </ul>
+
+              <div
+                data-reveal
+                style={{ "--reveal-delay": "270ms" } as React.CSSProperties}
+                className="mt-10 md:mt-12"
+              >
+                <h3 className="text-sm font-semibold text-white/70">
+                  {t("Available on")}
+                </h3>
+                <ul className="mt-4 flex flex-wrap gap-3">
+                  {storeBadges.map((badge) => (
+                    <li key={badge.label}>
+                      <a
+                        href="https://fct.npf.gov.ng/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block rounded-lg transition-transform duration-300 ease-[var(--ease-custom)] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                      >
+                        <Image
+                          src={badge.src}
+                          alt={badge.label}
+                          width={badge.width}
+                          height={40}
+                          className="h-12 w-auto"
+                        />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* The phone overhangs the band's bottom edge and is clipped by
+                it, so it reads as rising out of the floor. */}
+            <div
+              aria-hidden
+              data-reveal
+              style={{ "--reveal-delay": "140ms" } as React.CSSProperties}
+              className="relative mx-auto -mb-44 w-[272px] self-end md:-mb-52 md:w-[320px] lg:-mb-28 lg:w-[360px]"
+            >
+              <span className="pointer-events-none absolute top-[38%] left-1/2 aspect-square w-[160%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#2a8fe566_0%,transparent_62%)]" />
+              {[130, 175, 220].map((size) => (
+                <span
+                  key={size}
+                  className="pointer-events-none absolute top-[38%] left-1/2 aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.09]"
+                  style={{ width: `${size}%` }}
+                />
+              ))}
+              <div className="relative rounded-[3rem] bg-[#0a1322] p-2.5 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.7)] ring-1 ring-white/15">
+                {/* A status-bar strip keeps the notch off the site's own
+                    header in the capture. */}
+                <div className="relative aspect-[9/19.5] overflow-hidden rounded-[2.5rem] bg-black">
+                  <div className="absolute inset-x-0 top-10 bottom-0">
+                    <Image
+                      src="/img/app-preview.png"
+                      alt=""
+                      fill
+                      sizes="(min-width: 1024px) 360px, (min-width: 768px) 320px, 272px"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                  <span className="absolute top-2.5 left-1/2 h-6 w-[88px] -translate-x-1/2 rounded-full bg-[#111]" />
+                </div>
+              </div>
             </div>
           </div>
-        </section>
 
-        <Skyline />
+          {/* Sinks the phone into the floor instead of slicing whatever line
+              of the capture happens to sit on the edge. */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-32 bg-[linear-gradient(to_top,var(--color-npf-blue-deep)_40%,transparent)] lg:h-48"
+          />
+        </section>
       </main>
 
       <Footer />

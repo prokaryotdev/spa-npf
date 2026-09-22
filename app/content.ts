@@ -409,21 +409,6 @@ export const legalLinks = [
   { label: "Sitemap", href: "/app/home/sitemap" },
 ];
 
-export const appStores = [
-  {
-    label: "App Store",
-    icon: "/img/assets-home/static/home-apps/icon_appstore.svg",
-  },
-  {
-    label: "Google Play",
-    icon: "/img/assets-home/static/home-apps/icon_playstore.svg",
-  },
-  {
-    label: "AppGallery",
-    icon: "/img/assets-home/static/home-apps/icon_app.svg",
-  },
-];
-
 export const storeBadges = [
   { label: "App Store", src: "/img/app-store.svg", width: 120 },
   { label: "Google Play", src: "/img/google-play.svg", width: 135 },
