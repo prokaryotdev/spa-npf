@@ -18,6 +18,48 @@ import {
   storeBadges as storeBadgesSource,
 } from "./content";
 
+/** Space between a section head and the cards under it, the same everywhere. */
+const BODY_GAP = "mt-12 md:mt-20";
+
+/**
+ * The head every light homepage chapter opens with: display heading on the
+ * start side, lede on the end side from lg up (the heading alone left a
+ * half-empty band across the widest breakpoints).
+ */
+function SectionHead({
+  id,
+  title,
+  lede,
+  children,
+}: {
+  id: string;
+  title: string;
+  lede: string;
+  children?: React.ReactNode;
+}) {
+  return (
+    <header className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-20">
+      <h2
+        id={id}
+        data-reveal
+        className="npf-h2 text-npf-blue-deep md:max-w-[16ch]"
+      >
+        {title}
+      </h2>
+      <div
+        data-reveal
+        style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
+        className="max-w-[568px] lg:max-w-[26rem] lg:shrink-0 lg:pb-3"
+      >
+        <p className="text-base leading-relaxed text-npf-body md:text-xl">
+          {lede}
+        </p>
+        {children}
+      </div>
+    </header>
+  );
+}
+
 export default async function Home() {
   const storeBadges = await getLocalized(storeBadgesSource);
   const community = await getLocalized(communitySource);
@@ -78,40 +120,29 @@ export default async function Home() {
             flat tint separates the two chapters without a decoration. */}
         <section
           aria-labelledby="smart-policing"
-          className="relative overflow-hidden border-t border-npf-blue/[0.08] bg-[#f4f7fb] pt-[70px] pb-16 lg:py-[150px]"
+          className="npf-section relative overflow-hidden border-t border-npf-blue/[0.08] bg-[#f4f7fb]"
         >
           <div className="npf-container relative z-10">
-            {/* Heading and lede sit side by side from lg up: the heading alone
-                left a half-empty band across the widest breakpoints. */}
-            <header className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-20">
-              <h2
-                id="smart-policing"
-                data-reveal
-                className="font-secondary text-4xl leading-[1.05] font-bold tracking-[-0.02em] text-balance text-npf-blue-deep md:max-w-[16ch] lg:text-7xl 2xl:text-8xl"
+            <SectionHead
+              id="smart-policing"
+              title={t("Leading the Way in Modern Policing")}
+              lede={t(
+                "We harness intelligent technologies to keep public safety responsive, smart, and always one step ahead.",
+              )}
+            >
+              <Link
+                href="/app/services"
+                className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-npf-blue transition-colors hover:text-npf-blue-deep focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-npf-blue"
               >
-                {t("Leading the Way in Modern Policing")}
-              </h2>
-              <div
-                data-reveal
-                style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
-                className="max-w-[568px] lg:max-w-[26rem] lg:shrink-0 lg:pb-3"
-              >
-                <p className="text-sm leading-relaxed text-neutral-700 md:text-xl">
-                  {t(
-                    "We harness intelligent technologies to keep public safety responsive, smart, and always one step ahead.",
-                  )}
-                </p>
-                <Link
-                  href="/app/services"
-                  className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-npf-blue transition-colors hover:text-npf-blue-deep focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-npf-blue"
-                >
-                  {t("Browse all services")}
-                  <ArrowRight className="size-4 transition-transform duration-300 ease-[var(--ease-custom)] group-hover:translate-x-1 rtl:-scale-x-100" />
-                </Link>
-              </div>
-            </header>
+                {t("Browse all services")}
+                <ArrowRight className="size-4 transition-transform duration-300 ease-[var(--ease-custom)] group-hover:translate-x-1 rtl:-scale-x-100" />
+              </Link>
+            </SectionHead>
 
-            <CardRail label={t("modern policing")} className="mt-10 md:hidden">
+            <CardRail
+              label={t("modern policing")}
+              className={`${BODY_GAP} md:hidden`}
+            >
               {smartPolicing.map((card) => (
                 <InitiativeCard
                   key={card.title}
@@ -121,7 +152,9 @@ export default async function Home() {
               ))}
             </CardRail>
 
-            <div className="mt-12 hidden grid-cols-2 gap-6 md:mt-20 md:grid md:gap-8 lg:gap-12">
+            <div
+              className={`${BODY_GAP} hidden grid-cols-2 gap-8 md:grid lg:gap-12`}
+            >
               {smartPolicing.map((card, i) => (
                 <div
                   key={card.title}
@@ -143,31 +176,23 @@ export default async function Home() {
 
         <Domains />
 
-        {/* Divisional Police Stations */}
+        {/* Divisional Police Stations. No hairline on top: coming out of the
+            night-blue Domains chapter, the change of ground is the divider.
+            The rail runs off the viewport edge rather than being cut at the
+            container's, so it reads as "more this way". */}
         <section
           aria-labelledby="sps"
-          className="relative overflow-hidden border-t border-npf-blue/[0.08] bg-white pt-[70px] pb-16 lg:py-[150px]"
+          className="npf-section relative overflow-hidden bg-white"
         >
           <div className="npf-container relative z-10">
-            <header className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-20">
-              <h2
-                id="sps"
-                data-reveal
-                className="font-secondary text-4xl leading-[1.05] font-bold tracking-[-0.02em] text-balance text-npf-blue-deep md:max-w-[16ch] lg:text-7xl 2xl:text-8xl"
-              >
-                {t("Divisional Police Stations")}
-              </h2>
-              <p
-                data-reveal
-                style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
-                className="max-w-[568px] text-sm leading-relaxed text-neutral-700 md:text-xl lg:max-w-[26rem] lg:shrink-0 lg:pb-3"
-              >
-                {t(
-                  "Area Commands, Divisions and Posts: close by, always open, and staffed around the clock.",
-                )}
-              </p>
-            </header>
-            <CardRail label={t("SPS")} className="mt-12 md:mt-20">
+            <SectionHead
+              id="sps"
+              title={t("Divisional Police Stations")}
+              lede={t(
+                "Area Commands, Divisions and Posts: close by, always open, and staffed around the clock.",
+              )}
+            />
+            <CardRail label={t("SPS")} bleed className={BODY_GAP}>
               {smartPoliceStations.map((card) => (
                 <InitiativeCard
                   key={card.title}
@@ -183,29 +208,21 @@ export default async function Home() {
         {/* Community */}
         <section
           aria-labelledby="community"
-          className="relative overflow-hidden border-t border-npf-blue/[0.08] bg-[#f4f7fb] pt-[70px] pb-16 lg:py-[150px]"
+          className="npf-section relative overflow-hidden border-t border-npf-blue/[0.08] bg-[#f4f7fb]"
         >
           <div className="npf-container relative z-10">
-            <header className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-20">
-              <h2
-                id="community"
-                data-reveal
-                className="font-secondary text-4xl leading-[1.05] font-bold tracking-[-0.02em] text-balance text-npf-blue-deep md:max-w-[16ch] lg:text-7xl 2xl:text-8xl"
-              >
-                {t("Shaping the Future, Side by Side")}
-              </h2>
-              <p
-                data-reveal
-                style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
-                className="max-w-[568px] text-sm leading-relaxed text-neutral-700 md:text-xl lg:max-w-[26rem] lg:shrink-0 lg:pb-3"
-              >
-                {t(
-                  "Bringing communities together through education, cultural heritage, volunteer service, and dedicated support.",
-                )}
-              </p>
-            </header>
+            <SectionHead
+              id="community"
+              title={t("Shaping the Future, Side by Side")}
+              lede={t(
+                "Bringing communities together through education, cultural heritage, volunteer service, and dedicated support.",
+              )}
+            />
 
-            <CardRail label={t("community")} className="mt-12 md:hidden">
+            <CardRail
+              label={t("community")}
+              className={`${BODY_GAP} md:hidden`}
+            >
               {community.map((card) => (
                 <InitiativeCard
                   key={card.title}
@@ -215,7 +232,9 @@ export default async function Home() {
               ))}
             </CardRail>
 
-            <div className="mt-12 hidden grid-cols-2 gap-8 md:mt-20 md:grid md:gap-8 lg:gap-12">
+            <div
+              className={`${BODY_GAP} hidden grid-cols-2 gap-8 md:grid lg:gap-12`}
+            >
               {community.map((card, i) => (
                 <div
                   key={card.title}
@@ -249,19 +268,15 @@ export default async function Home() {
             className="pointer-events-none absolute top-0 -right-[20%] block aspect-square w-[70%] -translate-y-1/2 rounded-full bg-[radial-gradient(#2a8fe5ba_-20%,#2a8fe524_40%,transparent_68%)] opacity-60 rtl:right-auto rtl:-left-[20%]"
           />
 
-          <div className="npf-container relative z-10 grid gap-16 pt-20 md:pt-28 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-12 lg:pt-0">
-            <div className="lg:py-[150px]">
-              <h2
-                id="app"
-                data-reveal
-                className="max-w-[15ch] font-secondary text-4xl leading-[1.05] font-bold tracking-[-0.02em] text-balance lg:text-7xl"
-              >
+          <div className="npf-container relative z-10 grid gap-16 pt-(--npf-section-y) lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-12 lg:pt-0">
+            <div className="lg:py-(--npf-section-y)">
+              <h2 id="app" data-reveal className="npf-h2 max-w-[15ch]">
                 {t("Download the Nigeria Police Force App")}
               </h2>
               <p
                 data-reveal
                 style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
-                className="mt-5 max-w-[40ch] text-base leading-relaxed text-white/80 md:mt-6 md:text-xl md:leading-snug"
+                className="mt-5 max-w-[40ch] text-base leading-relaxed text-white/80 md:text-xl"
               >
                 {t("Services, updates, and alerts: right in your pocket.")}
               </p>

@@ -148,6 +148,33 @@ html.npf-large-text {
   }
 }
 
+/*
+ * One vertical rhythm and one display size for every homepage chapter, so the
+ * page breathes the same way from section to section. Both are fluid rather
+ * than stepped: 72px/36px on a phone up to 150px/96px on a wide screen, with
+ * no jump at a breakpoint. Sections stay distinct through their layouts and
+ * grounds, not through drifting type sizes.
+ */
+:root {
+  --npf-section-y: clamp(4.5rem, 2.5rem + 7vw, 9.375rem);
+}
+.npf-section {
+  padding-block: var(--npf-section-y);
+}
+.npf-h2 {
+  font-family: var(--font-secondary);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 1.2rem + 4.4vw, 6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+/* A rail that runs off the inline-end edge of the viewport instead of being
+   cut at the container's edge, so it reads as "more this way". */
+.npf-bleed-end {
+  margin-inline-end: calc(50% - 50vw);
+}
+
 /* Horizontal card rails: native scroll-snap instead of a carousel library. */
 .npf-rail {
   scroll-snap-type: x mandatory;

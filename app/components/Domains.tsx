@@ -104,7 +104,7 @@ export default function Domains() {
               <div key={domain.id} className="max-w-[620px]">
                 <h3
                   aria-label={domain.title}
-                  className="mb-4 max-w-[15ch] font-secondary text-4xl leading-none font-bold text-white sm:text-5xl lg:text-6xl"
+                  className="npf-h2 mb-4 max-w-[15ch] text-white"
                 >
                   <LetterStagger text={domain.title} />
                 </h3>

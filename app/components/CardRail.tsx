@@ -13,12 +13,15 @@ export default function CardRail({
   label,
   className = "",
   showControls = true,
+  bleed = false,
 }: {
   children: React.ReactNode;
   /** Names the rail for the arrow buttons, e.g. "SPS". */
   label: string;
   className?: string;
   showControls?: boolean;
+  /** Run the rail off the viewport's end edge instead of the container's. */
+  bleed?: boolean;
 }) {
   const t = useT();
   const rail = useRef<HTMLDivElement>(null);
@@ -61,7 +64,7 @@ export default function CardRail({
         tabIndex={0}
         role="group"
         aria-label={label}
-        className="npf-rail -mx-4 flex gap-6 overflow-x-auto px-4 pb-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue"
+        className={`npf-rail -mx-4 flex gap-6 overflow-x-auto px-4 pb-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue ${bleed ? "npf-bleed-end" : ""}`}
       >
         {children}
       </div>

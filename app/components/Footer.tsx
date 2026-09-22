@@ -71,7 +71,7 @@ export default function Footer() {
         <hr className="my-6 border-black/10" />
       </div>
 
-      <div className="npf-container grid grid-flow-row gap-3 text-base text-npf-body md:grid-flow-col md:gap-20">
+      <div className="npf-container grid grid-flow-row gap-3 text-base text-npf-body md:grid-cols-3 md:gap-x-10 md:gap-y-12 xl:grid-flow-col xl:grid-cols-none xl:gap-20">
         {footerColumns.map((col) => {
           const isOpen = open === col.heading;
           return (
