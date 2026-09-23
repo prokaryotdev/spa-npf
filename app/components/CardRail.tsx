@@ -60,17 +60,18 @@ export default function CardRail({
         // A horizontally scrolling region has to be reachable, or its cards
         // are unreadable to anyone not using a mouse. tabIndex makes it a stop
         // and the arrow keys then scroll it; the group role and the label say
-        // what was just focused.
+        // what was just focused. The deep bottom padding is room for the
+        // cards' drop shadows, which the scroll box would otherwise clip.
         tabIndex={0}
         role="group"
         aria-label={label}
-        className={`npf-rail -mx-4 flex gap-6 overflow-x-auto px-4 pb-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue ${bleed ? "npf-bleed-end" : ""}`}
+        className={`npf-rail -mx-4 flex scroll-px-4 gap-6 overflow-x-auto px-4 pb-14 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue ${bleed ? "npf-bleed-end" : ""}`}
       >
         {children}
       </div>
 
       {showControls ? (
-        <div className="mt-2 flex justify-end gap-2">
+        <div className="-mt-6 flex justify-end gap-2">
           <button
             type="button"
             onClick={() => nudge(-1)}

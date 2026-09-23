@@ -28,11 +28,7 @@ export default function Footer() {
   return (
     <footer
       id="staticFooter"
-      className="w-full pt-16 pb-32"
-      style={{
-        background:
-          "linear-gradient(rgb(227,238,232) -15.6%, rgb(255,255,255) 25.33%)",
-      }}
+      className="w-full bg-white pt-16 pb-32"
     >
       <div className="npf-container text-base text-npf-body">
         <div className="flex flex-col items-center gap-8 md:flex-row md:items-start md:justify-between">

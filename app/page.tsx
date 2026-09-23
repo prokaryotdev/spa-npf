@@ -19,7 +19,7 @@ import {
 } from "./content";
 
 /** Space between a section head and the cards under it, the same everywhere. */
-const BODY_GAP = "mt-12 md:mt-20";
+const BODY_GAP = "mt-10 md:mt-16";
 
 /**
  * The head every light homepage chapter opens with: display heading on the
@@ -51,7 +51,7 @@ function SectionHead({
         style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
         className="max-w-[568px] lg:max-w-[26rem] lg:shrink-0 lg:pb-3"
       >
-        <p className="text-base leading-relaxed text-npf-body md:text-xl">
+        <p className="text-base leading-relaxed text-npf-body md:text-lg">
           {lede}
         </p>
         {children}
@@ -77,7 +77,7 @@ export default async function Home() {
         {/* Four routes into the service catalogue, riding the seam below the hero. */}
         <section
           aria-labelledby="quick-services"
-          className="relative z-10 -mt-px bg-[linear-gradient(to_bottom,#000_0%,#020407_28%,#04070e_58%,#060b16_100%)] pb-px"
+          className="relative z-10 -mt-px bg-[linear-gradient(to_bottom,#000,var(--color-npf-night))] pb-px"
         >
           <h2 id="quick-services" className="sr-only">
             {t("Popular services")}
@@ -205,10 +205,13 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Community */}
+        {/* Community. The one place the page leaves the cool blues: Modern
+            Policing is the technology chapter on mist, this is the people
+            and heritage one on sand, so the two card grids never read as the
+            same section twice. */}
         <section
           aria-labelledby="community"
-          className="npf-section relative overflow-hidden border-t border-npf-blue/[0.08] bg-[#f4f7fb]"
+          className="npf-section relative overflow-hidden border-t border-npf-gold/15 bg-npf-sand"
         >
           <div className="npf-container relative z-10">
             <SectionHead
@@ -263,10 +266,6 @@ export default async function Home() {
           aria-labelledby="app"
           className="relative overflow-hidden bg-npf-blue-deep text-white"
         >
-          <span
-            aria-hidden
-            className="pointer-events-none absolute top-0 -right-[20%] block aspect-square w-[70%] -translate-y-1/2 rounded-full bg-[radial-gradient(#2a8fe5ba_-20%,#2a8fe524_40%,transparent_68%)] opacity-60 rtl:right-auto rtl:-left-[20%]"
-          />
 
           <div className="npf-container relative z-10 grid gap-16 pt-(--npf-section-y) lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-12 lg:pt-0">
             <div className="lg:py-(--npf-section-y)">
@@ -276,7 +275,7 @@ export default async function Home() {
               <p
                 data-reveal
                 style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
-                className="mt-5 max-w-[40ch] text-base leading-relaxed text-white/80 md:text-xl"
+                className="mt-5 max-w-[40ch] text-base leading-relaxed text-white/80 md:text-lg"
               >
                 {t("Services, updates, and alerts: right in your pocket.")}
               </p>

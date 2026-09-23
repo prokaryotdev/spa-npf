@@ -22,6 +22,8 @@
   --color-npf-body: #4a5468;
   --color-npf-muted: #667490;
   --color-npf-night: #0a1526;
+  /* Community's ground: the crest's gold thinned to paper. */
+  --color-npf-sand: #faf6ec;
   /*
    * The eagle-and-horses gold off the Force crest. Accent only — a rule, a
    * kicker, an active marker; never a large fill and never body text, where
@@ -151,12 +153,13 @@ html.npf-large-text {
 /*
  * One vertical rhythm and one display size for every homepage chapter, so the
  * page breathes the same way from section to section. Both are fluid rather
- * than stepped: 72px/36px on a phone up to 150px/96px on a wide screen, with
- * no jump at a breakpoint. Sections stay distinct through their layouts and
- * grounds, not through drifting type sizes.
+ * than stepped: 64px/32px on a phone up to 128px/56px on a wide screen, with
+ * no jump at a breakpoint. The display size stays under the hero's own title
+ * so the page keeps one top voice. Sections stay distinct through their
+ * layouts and grounds, not through drifting type sizes.
  */
 :root {
-  --npf-section-y: clamp(4.5rem, 2.5rem + 7vw, 9.375rem);
+  --npf-section-y: clamp(4rem, 2rem + 6vw, 8rem);
 }
 .npf-section {
   padding-block: var(--npf-section-y);
@@ -164,8 +167,8 @@ html.npf-large-text {
 .npf-h2 {
   font-family: var(--font-secondary);
   font-weight: 700;
-  font-size: clamp(2.25rem, 1.2rem + 4.4vw, 6rem);
-  line-height: 1.05;
+  font-size: clamp(2rem, 1.2rem + 2.6vw, 3.5rem);
+  line-height: 1.08;
   letter-spacing: -0.02em;
   text-wrap: balance;
 }

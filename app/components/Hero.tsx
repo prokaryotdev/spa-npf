@@ -153,9 +153,9 @@ export default function Hero() {
           <div className="mx-auto w-full max-w-[832px]">
             <div
               aria-live="polite"
-              className="mb-4 min-h-[76px] text-center md:mb-8 lg:[@media(min-height:769px)]:min-h-[104px]"
+              className="mb-4 min-h-[76px] text-center md:mb-8 lg:[@media(min-height:769px)]:min-h-[120px]"
             >
-              <h1 className="mb-3 text-[28px] leading-tight font-semibold tracking-tight text-balance text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.85)] md:text-4xl lg:text-5xl [@media(max-height:768px)]:text-3xl">
+              <h1 className="mb-3 text-[28px] leading-tight font-semibold tracking-tight text-balance text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.85)] md:text-5xl lg:text-6xl [@media(max-height:768px)]:text-3xl">
                 {slide.title}
               </h1>
               <p
