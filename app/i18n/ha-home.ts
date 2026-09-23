@@ -78,12 +78,12 @@ export const haHome: Record<string, string> = {
   Secure: "Tsaro",
   Together: "Tare",
   "Safe, Secure, Together": "Lafiya, Tsaro, Tare",
-  "Your Safety; Backed by Every Officer on Duty.":
-    "Amincinka; Kowane jami'i kan aiki yana bayanka.",
-  "Protecting every Home, every Family, every Day.":
-    "Muna kare kowane Gida, kowane Iyali, kowace Rana.",
-  "Connecting Hearts, Building Trust. Stronger as One.":
-    "Haɗa Zukata, Gina Amana. Mun fi ƙarfi a haɗe.",
+  "Your safety, backed by every officer on duty.":
+    "Amincinka, kowane jami'i kan aiki yana bayanka.",
+  "Protecting every home, every family, every day.":
+    "Muna kare kowane gida, kowane iyali, kowace rana.",
+  "Connecting hearts, building trust. Stronger as one.":
+    "Haɗa zukata, gina amana. Mun fi ƙarfi a haɗe.",
   "Shaping the Future, Side by Side": "Tsara Makoma, Kafaɗa da Kafaɗa",
 
   // --- modern policing -----------------------------------------------------

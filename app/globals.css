@@ -207,43 +207,6 @@ html.npf-large-text {
   }
 }
 
-/* The pillar portraits hand off as the section crosses the viewport. Without
-   scroll-driven animation support all three simply stack and the last shows. */
-[data-portrait="1"] {
-  z-index: 1;
-}
-[data-portrait="2"] {
-  z-index: 2;
-}
-[data-portrait="3"] {
-  z-index: 3;
-}
-
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    [data-portrait="2"],
-    [data-portrait="3"] {
-      animation: portrait-in linear both;
-      animation-timeline: view();
-    }
-    [data-portrait="2"] {
-      animation-range: cover 26% cover 46%;
-    }
-    [data-portrait="3"] {
-      animation-range: cover 56% cover 76%;
-    }
-  }
-}
-
-@keyframes portrait-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 /* Per-letter heading entrance, used by the sea/land/sky chapter. */
 @keyframes letter-up {
   from {

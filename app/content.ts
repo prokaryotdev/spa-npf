@@ -119,17 +119,17 @@ export const quickServices = [
 export const pillars = [
   {
     word: "Safe",
-    line: "Your Safety; Backed by Every Officer on Duty.",
+    line: "Your safety, backed by every officer on duty.",
     portrait: "/npf/pillar-safe.jpg",
   },
   {
     word: "Secure",
-    line: "Protecting every Home, every Family, every Day.",
+    line: "Protecting every home, every family, every day.",
     portrait: "/npf/pillar-secure.jpg",
   },
   {
     word: "Together",
-    line: "Connecting Hearts, Building Trust. Stronger as One.",
+    line: "Connecting hearts, building trust. Stronger as one.",
     portrait: "/npf/pillar-together.jpg",
   },
 ];
