@@ -103,8 +103,8 @@ export const haHome: Record<string, string> = {
   "Federal Capital Territory Digital Services":
     "Ayyukan Dijital na Babban Birnin Tarayya",
   "Rescue Me": "Ku Cece Ni",
-  "We strive to build a proactive and secure community, reflecting the commitment of the Force to the safety and security of every resident":
-    "Muna ƙoƙarin gina al'umma mai shirin gaba kuma mai tsaro, wanda ke nuna alƙawarin Rundunar ga aminci da tsaron kowane mazaunin",
+  "Seen something suspicious? Report activity or incidents that could threaten public safety, or share security information with the Force. It is free, and open to residents, visitors and businesses":
+    "Kun ga wani abu da ake zargi? Ku bayar da rahoton ayyuka ko abubuwan da ka iya zama barazana ga lafiyar jama'a, ko ku raba bayanan tsaro da Rundunar. Kyauta ne, kuma a buɗe yake ga mazauna, baƙi da 'yan kasuwa",
   "National Security Strategy": "Dabarun Tsaro na Ƙasa",
 
   // --- domains -------------------------------------------------------------

@@ -26,6 +26,8 @@ export type InitiativeCard = {
   badge?: string;
   /** Spans both columns of the desktop mosaic at a 1650/750 ratio. */
   wide?: boolean;
+  /** The service page the initiative opens, where one exists. */
+  href?: string;
   theme: CardTheme;
 };
 
@@ -137,6 +139,7 @@ export const pillars = [
 export const smartPolicing: InitiativeCard[] = [
   {
     title: "Cybercrime Reporting",
+    href: "/app/services/ecrime",
     body: "The National Cybercrime Centre receives reports of online fraud, blackmail and identity theft, and works to keep the community safe online",
     image: "/npf/cybercrime-centre.jpg",
     tags: [
@@ -149,6 +152,7 @@ export const smartPolicing: InitiativeCard[] = [
   },
   {
     title: "Lost & Found",
+    href: "/app/services/lost-and-found",
     body: "A paperless and secure way to find what matters, the Lost & Found desk offers a simple and reliable way to report and recover property",
     image: "/npf/lost-and-found.jpg",
     tags: [
@@ -161,7 +165,8 @@ export const smartPolicing: InitiativeCard[] = [
   },
   {
     title: "Rescue Me",
-    body: "We strive to build a proactive and secure community, reflecting the commitment of the Force to the safety and security of every resident",
+    href: "/app/services/share-security-information",
+    body: "Seen something suspicious? Report activity or incidents that could threaten public safety, or share security information with the Force. It is free, and open to residents, visitors and businesses",
     image: "/npf/rescue-me.jpg",
     tags: [
       {

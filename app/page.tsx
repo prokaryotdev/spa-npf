@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Hero from "./components/Hero";
 import { AlertIcon, ArrowRight, BellIcon, FileIcon } from "./components/icons";
 import InitiativeCard from "./components/InitiativeCard";
+import ModernPolicing from "./components/ModernPolicing";
 import Pillars from "./components/Pillars";
 import StickyBar from "./components/StickyBar";
 import { getT, getLocalized } from "./i18n/server";
@@ -116,12 +117,27 @@ export default async function Home() {
         {/* Leading the Way in Modern Policing.
 
             Its own surface, not a bloom bleeding down from Pillars: the
-            corner-anchored radial read as spill from the section above, and a
-            flat tint separates the two chapters without a decoration. */}
+            corner-anchored radial read as spill from the section above, so
+            the ground here starts pale and only deepens toward the tiles. */}
         <section
           aria-labelledby="smart-policing"
-          className="npf-section relative overflow-hidden border-t border-npf-blue/[0.08] bg-[#f4f7fb]"
+          className="npf-section relative overflow-hidden border-t border-npf-blue/[0.08] bg-[linear-gradient(180deg,#f6f8fc_0%,#edf2f9_55%,#e6edf7_100%)]"
         >
+          {/* The brand rings from Pillars and the app band, faint and pooled
+              in the bottom end corner behind the tiles, and a cool glow under the
+              tiles so they sit in light rather than on a flat tint. */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute top-1/2 left-1/2 h-[70%] w-[90%] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(44,95,168,0.16),transparent)] blur-2xl"
+          />
+          {[560, 860, 1160].map((size) => (
+            <span
+              key={size}
+              aria-hidden
+              className="pointer-events-none absolute end-0 bottom-0 hidden aspect-square translate-x-1/2 translate-y-1/2 rounded-full border border-npf-blue/[0.08] md:block rtl:-translate-x-1/2"
+              style={{ width: size }}
+            />
+          ))}
           <div className="npf-container relative z-10">
             <SectionHead
               id="smart-policing"
@@ -139,37 +155,8 @@ export default async function Home() {
               </Link>
             </SectionHead>
 
-            <CardRail
-              label={t("modern policing")}
-              className={`${BODY_GAP} md:hidden`}
-            >
-              {smartPolicing.map((card) => (
-                <InitiativeCard
-                  key={card.title}
-                  card={card}
-                  className="w-[84vw] max-w-[420px] shrink-0"
-                />
-              ))}
-            </CardRail>
-
-            <div
-              className={`${BODY_GAP} hidden grid-cols-2 gap-8 md:grid lg:gap-12`}
-            >
-              {smartPolicing.map((card, i) => (
-                <div
-                  key={card.title}
-                  data-reveal
-                  style={
-                    { "--reveal-delay": `${i * 110}ms` } as React.CSSProperties
-                  }
-                  className={card.wide ? "col-span-2" : undefined}
-                >
-                  <InitiativeCard
-                    card={card}
-                    shape={card.wide ? "wide" : "square"}
-                  />
-                </div>
-              ))}
+            <div className={BODY_GAP}>
+              <ModernPolicing items={smartPolicing} />
             </div>
           </div>
         </section>
@@ -207,8 +194,7 @@ export default async function Home() {
 
         {/* Community. The one place the page leaves the cool blues: Modern
             Policing is the technology chapter on mist, this is the people
-            and heritage one on sand, so the two card grids never read as the
-            same section twice. */}
+            and heritage one on sand. */}
         <section
           aria-labelledby="community"
           className="npf-section relative overflow-hidden border-t border-npf-gold/15 bg-npf-sand"
