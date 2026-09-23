@@ -107,6 +107,7 @@ export default function Hero() {
               alt=""
               fill
               sizes="100vw"
+              quality={100}
               priority={i === FIRST}
               /*
                * `shown` already decides which slides exist at all, so every
