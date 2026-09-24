@@ -89,7 +89,7 @@ export default function ServiceCatalogue() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t("Certificate, fine, permit…")}
-              className="w-full bg-transparent py-3 text-base text-npf-ink outline-none placeholder:text-npf-muted"
+              className="w-full bg-transparent py-3 text-base text-npf-ink outline-none placeholder:text-npf-steel"
             />
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function ServiceCatalogue() {
       </div>
 
       <div className="mb-6 flex flex-wrap items-center gap-4">
-        <p aria-live="polite" className="text-sm text-npf-muted">
+        <p aria-live="polite" className="text-sm text-npf-steel">
           {t("Showing {shown} of {total} services", {
             shown: visible.length,
             total: services.length,
@@ -237,7 +237,7 @@ export default function ServiceCatalogue() {
                         {service.description}
                       </span>
                     ) : null}
-                    <span className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-npf-muted">
+                    <span className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-npf-steel">
                       <span className="tabular-nums">{service.feeSummary}</span>
                       <span aria-hidden>·</span>
                       <span>{service.turnaround}</span>

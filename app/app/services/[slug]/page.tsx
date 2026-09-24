@@ -284,13 +284,13 @@ export default async function ServicePage({
 
                 <dl className="mb-6 grid grid-cols-2 gap-4">
                   <div>
-                    <dt className="text-xs text-npf-muted">{t("Fees")}</dt>
+                    <dt className="text-xs text-npf-steel">{t("Fees")}</dt>
                     <dd className="font-secondary text-base font-bold text-npf-ink">
                       {service.feeSummary}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-xs text-npf-muted">{t("Duration")}</dt>
+                    <dt className="text-xs text-npf-steel">{t("Duration")}</dt>
                     <dd className="font-secondary text-base font-bold text-npf-ink">
                       {service.turnaround}
                     </dd>
@@ -300,7 +300,7 @@ export default async function ServicePage({
                 <ServiceAction service={service} />
 
                 {service.ninAuthOnly ? (
-                  <p className="mt-3 text-center text-xs text-npf-muted">
+                  <p className="mt-3 text-center text-xs text-npf-steel">
                     {t("NINAuth sign-in required")}
                   </p>
                 ) : null}
@@ -308,7 +308,7 @@ export default async function ServicePage({
 
               {service.contacts.length ? (
                 <div className="mt-6 rounded-3xl px-6 py-5 ring-1 ring-black/10">
-                  <h2 className="mb-3 flex items-center gap-2 font-secondary text-sm font-bold tracking-wide text-npf-muted uppercase">
+                  <h2 className="mb-3 flex items-center gap-2 font-secondary text-sm font-bold tracking-wide text-npf-steel uppercase">
                     <PhoneIcon aria-hidden className="size-4" />
                     {t("Need help")}
                   </h2>
@@ -320,7 +320,7 @@ export default async function ServicePage({
                 </div>
               ) : null}
 
-              <p className="mt-6 flex items-center gap-2 px-1 text-xs text-npf-muted">
+              <p className="mt-6 flex items-center gap-2 px-1 text-xs text-npf-steel">
                 <ClockIcon aria-hidden className="size-4 shrink-0" />
                 {t("Processed in {turnaround}", {
                   turnaround: t(service.turnaround).toLowerCase(),

@@ -43,7 +43,7 @@ export default function ServiceAction({ service }: { service: Service }) {
           })}
           <ArrowRight className="size-4" />
         </Link>
-        <p className="mt-3 text-center text-xs text-npf-muted">
+        <p className="mt-3 text-center text-xs text-npf-steel">
           {t("Takes about {turnaround} once submitted", {
             turnaround: t(service.turnaround).toLowerCase(),
           })}
@@ -85,7 +85,7 @@ export default function ServiceAction({ service }: { service: Service }) {
           {t("Open request {ref}", { ref: existing.id })}
           <ArrowRight className="size-4" />
         </Link>
-        <p className="mt-3 text-center text-xs text-npf-muted">
+        <p className="mt-3 text-center text-xs text-npf-steel">
           {t("You already have this open — status: {status}", {
             status: t(existing.status).toLowerCase(),
           })}
@@ -111,7 +111,7 @@ export default function ServiceAction({ service }: { service: Service }) {
         {service.action}
         <ArrowRight className="size-4" />
       </button>
-      <p className="mt-3 text-center text-xs text-npf-muted">
+      <p className="mt-3 text-center text-xs text-npf-steel">
         {service.feeSummary === t("Free of Charge")
           ? t("No fee")
           : t("{fee} payable on approval", { fee: service.feeSummary })}{" "}
