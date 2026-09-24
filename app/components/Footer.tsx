@@ -47,34 +47,29 @@ export default function Footer() {
         </h2>
         <div className="grid gap-4 lg:grid-cols-12 lg:gap-6">
           {/* 112 is the one line someone may need in a hurry, so it gets the
-              alarm red as a whole surface and the whole surface dials. */}
+              alarm red as a whole surface and the whole surface dials. A warm
+              glow in the top corner deepens to dark red at the bottom. */}
           <a
             href={`tel:${lead.number}`}
-            className="group relative isolate flex flex-col justify-between gap-10 overflow-hidden rounded-2xl bg-[#b30900] p-6 text-white shadow-[0_24px_48px_-24px_rgba(179,9,0,0.6)] transition-[box-shadow,translate] duration-300 ease-[var(--ease-custom)] hover:-translate-y-0.5 hover:shadow-[0_32px_56px_-24px_rgba(179,9,0,0.7)] focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[#b30900] active:translate-y-0 md:p-9 lg:col-span-7"
+            className="group flex flex-col justify-between gap-8 rounded-2xl bg-[#b30900] bg-[radial-gradient(90%_80%_at_100%_0%,rgba(255,120,90,0.35),transparent_60%),linear-gradient(135deg,#c9150a_0%,#b30900_45%,#7a0500_100%)] p-6 text-white shadow-[0_20px_40px_-24px_rgba(120,6,0,0.55)] ring-1 ring-white/20 ring-inset transition-[box-shadow,translate] duration-300 ease-[var(--ease-custom)] hover:-translate-y-0.5 hover:shadow-[0_28px_48px_-24px_rgba(120,6,0,0.6)] focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[#b30900] active:translate-y-0 md:p-8 lg:col-span-7"
           >
-            {/* Light falls from the top corner so the red reads as a surface,
-                not a flat swatch. */}
-            <span
-              aria-hidden
-              className="absolute inset-0 -z-10 bg-[radial-gradient(120%_90%_at_100%_0%,rgba(255,255,255,0.16),transparent_55%),linear-gradient(180deg,transparent_40%,rgba(80,0,0,0.28))]"
-            />
-            <span className="flex flex-col gap-1">
+            <span className="flex flex-wrap items-center justify-between gap-3">
               <span className="font-secondary text-xl font-bold md:text-2xl">
                 {lead.label}
               </span>
               {lead.note ? (
-                <span className="text-sm text-white/80 md:text-base">
+                <span className="rounded-full bg-white/12 px-3 py-1 text-sm font-medium text-white ring-1 ring-white/20 ring-inset">
                   {lead.note}
                 </span>
               ) : null}
             </span>
             <span className="flex flex-wrap items-end justify-between gap-x-6 gap-y-5">
-              <span className="font-secondary text-[clamp(5.5rem,3.5rem+7vw,9rem)] leading-[0.78] font-bold tracking-[-0.035em] tabular-nums">
+              <span className="font-secondary text-[clamp(5rem,3.5rem+5vw,7.5rem)] leading-[0.78] font-bold tracking-[-0.035em] tabular-nums">
                 {lead.number}
               </span>
               {/* A real button shape, so nobody wonders whether the card
                   dials. The ring ripples out like a line ringing. */}
-              <span className="inline-flex items-center gap-3 rounded-full bg-white py-1.5 ps-1.5 pe-5 font-secondary font-bold text-[#b30900] shadow-[0_10px_24px_-10px_rgba(60,0,0,0.7)] transition-transform duration-300 ease-[var(--ease-custom)] group-hover:scale-[1.04] group-active:scale-95 md:text-lg">
+              <span className="inline-flex items-center gap-3 rounded-full bg-white py-1.5 ps-1.5 pe-5 font-secondary font-bold text-[#b30900] transition-transform duration-300 ease-[var(--ease-custom)] group-hover:scale-[1.04] group-active:scale-95 md:text-lg">
                 <span className="relative grid size-10 place-items-center rounded-full bg-[#b30900] text-white md:size-11">
                   <span
                     aria-hidden
@@ -87,38 +82,44 @@ export default function Footer() {
             </span>
           </a>
 
-          {/* The other lines read as a directory: name on the left, number on
-              the right, so they line up however long a translated label runs. */}
-          <ul className="flex flex-col rounded-2xl bg-npf-blue/[0.045] p-2 lg:col-span-5">
-            {others.map((item) => (
-              <li
-                key={item.number}
-                className="flex flex-1 border-b border-npf-ink/[0.08] last:border-none"
-              >
-                <a
-                  href={`tel:${item.number}`}
-                  className="group flex flex-1 items-center justify-between gap-4 rounded-xl px-4 py-5 transition-colors duration-200 hover:bg-white focus-visible:bg-white focus-visible:outline-2 focus-visible:outline-npf-blue md:px-5"
-                >
-                  <span className="flex min-w-0 flex-col gap-0.5">
-                    <span className="font-secondary font-bold text-npf-ink md:text-lg">
-                      {item.label}
+          {/* The other lines are quieter white cards stacked to the red card's
+              height, with the call button pinned right so they line up
+              however long a translated label runs. */}
+          <ul className="flex flex-col gap-3 lg:col-span-5">
+            {others.map((item) => {
+              return (
+                <li key={item.number} className="flex flex-1">
+                  <a
+                    href={`tel:${item.number}`}
+                    className="group flex flex-1 items-center justify-between gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_14px_30px_-22px_rgba(27,63,122,0.45)] ring-1 ring-npf-ink/10 transition-[box-shadow,translate] duration-300 ease-[var(--ease-custom)] ring-inset hover:-translate-y-0.5 hover:shadow-[0_22px_40px_-22px_rgba(27,63,122,0.55)] hover:ring-npf-blue/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue active:translate-y-0 md:px-6"
+                  >
+                    {/* Read like a small 112 card: what it is, then the number
+                        big underneath. */}
+                    <span className="flex min-w-0 flex-col">
+                      <span className="font-secondary font-bold text-npf-ink md:text-lg">
+                        {item.label}
+                        {item.note ? (
+                          <span className="font-primary text-sm font-normal text-npf-muted">
+                            {" · "}
+                            {item.note}
+                          </span>
+                        ) : null}
+                      </span>
+                      <span className="mt-1 font-secondary text-3xl leading-none font-bold tracking-[-0.03em] text-npf-ink tabular-nums transition-colors duration-200 group-hover:text-npf-blue md:text-4xl">
+                        {item.number}
+                      </span>
                     </span>
-                    {item.note ? (
-                      <span className="text-sm text-npf-muted">{item.note}</span>
-                    ) : null}
-                  </span>
-                  <span className="flex items-center gap-4">
-                    <span className="font-secondary text-3xl font-bold tracking-[-0.02em] text-npf-ink tabular-nums md:text-4xl">
-                      {item.number}
-                    </span>
-                    <span className="inline-flex h-10 shrink-0 items-center gap-2 rounded-full bg-white px-3.5 font-secondary text-sm font-bold text-npf-blue ring-1 ring-npf-ink/10 transition-[background-color,color,box-shadow,scale] duration-200 ring-inset group-hover:bg-npf-blue group-hover:text-white group-hover:ring-npf-blue group-active:scale-95">
-                      <PhoneCallIcon className="size-4" />
+                    {/* The same button as 112, in the Force's blue. */}
+                    <span className="inline-flex h-12 shrink-0 items-center gap-2.5 rounded-full bg-npf-blue ps-1.5 pe-5 font-secondary font-bold text-white shadow-[0_8px_18px_-10px_rgba(27,63,122,0.7)] transition-[background-color,scale] duration-300 ease-[var(--ease-custom)] group-hover:scale-[1.04] group-hover:bg-npf-blue-deep group-active:scale-95 md:text-lg">
+                      <span className="grid size-9 place-items-center rounded-full bg-white text-npf-blue md:size-10">
+                        <PhoneCallIcon className="size-4 transition-transform duration-300 group-hover:rotate-[-12deg] md:size-5" />
+                      </span>
                       {t("Call")}
                     </span>
-                  </span>
-                </a>
-              </li>
-            ))}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>
@@ -282,13 +283,18 @@ export default function Footer() {
       <div className="npf-container flex flex-col gap-6 border-t border-npf-ink/10 pt-8 pb-12 text-sm text-npf-muted lg:flex-row lg:items-start lg:justify-between lg:gap-12">
         <div className="space-y-2">
           <p className="font-medium text-npf-ink">
-            {t("© {year} FCT Police Command Headquarters. All Rights Reserved", {
-              year: process.env.NEXT_PUBLIC_BUILD_YEAR ?? "",
-            })}
+            {t(
+              "© {year} FCT Police Command Headquarters. All Rights Reserved",
+              {
+                year: process.env.NEXT_PUBLIC_BUILD_YEAR ?? "",
+              },
+            )}
           </p>
           <p className="flex flex-wrap gap-x-5 gap-y-1">
             <span>
-              {t("This site is monitored and maintained by Nigeria Police Force.")}
+              {t(
+                "This site is monitored and maintained by Nigeria Police Force.",
+              )}
             </span>
             {/* The line this replaces named IE11 first. Microsoft retired it
                 in 2022, and this site uses CSS it could never have rendered,

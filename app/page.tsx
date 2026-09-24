@@ -4,7 +4,17 @@ import Domains from "./components/Domains";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import { ArrowRight } from "./components/icons";
+import {
+  ArrowRight,
+  BellIcon,
+  FileIcon,
+  InboxIcon,
+  PhoneCallIcon,
+  ServicesIcon,
+  ShieldIcon,
+  UserCircle,
+} from "./components/icons";
+import { PoliceWordmark } from "./components/Wordmark";
 import ModernPolicing from "./components/ModernPolicing";
 import Pillars from "./components/Pillars";
 import Community from "./components/Community";
@@ -267,7 +277,7 @@ export default async function Home() {
               aria-hidden
               data-reveal
               style={{ "--reveal-delay": "140ms" } as React.CSSProperties}
-              className="relative mx-auto w-[216px] sm:w-[240px] lg:w-[270px] xl:w-[290px]"
+              className="relative mx-auto w-[240px] sm:w-[270px] lg:w-[300px] xl:w-[320px]"
             >
               {/* Light and the brand rings, centred on the phone. */}
               <span className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[240%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.42),rgba(255,255,255,0.1)_50%,transparent)]" />
@@ -282,15 +292,19 @@ export default async function Home() {
               <span className="pointer-events-none absolute inset-x-[8%] -bottom-8 h-10 rounded-[50%] bg-[#0a1f44]/60 blur-xl" />
 
               {/* Side buttons. */}
-              <span className="absolute top-[18%] -left-[3px] h-8 w-[3px] rounded-s-sm bg-[#1c2a40]" />
-              <span className="absolute top-[25%] -left-[3px] h-12 w-[3px] rounded-s-sm bg-[#1c2a40]" />
-              <span className="absolute top-[22%] -right-[3px] h-16 w-[3px] rounded-e-sm bg-[#1c2a40]" />
+              <span className="absolute top-[17%] -left-[2px] h-7 w-[3px] rounded-s-sm bg-[linear-gradient(90deg,#6b7b92,#2c3a4e)]" />
+              <span className="absolute top-[23%] -left-[2px] h-12 w-[3px] rounded-s-sm bg-[linear-gradient(90deg,#6b7b92,#2c3a4e)]" />
+              <span className="absolute top-[31%] -left-[2px] h-12 w-[3px] rounded-s-sm bg-[linear-gradient(90deg,#6b7b92,#2c3a4e)]" />
+              <span className="absolute top-[26%] -right-[2px] h-20 w-[3px] rounded-e-sm bg-[linear-gradient(270deg,#6b7b92,#2c3a4e)]" />
 
-              <div className="relative rounded-[3rem] bg-[linear-gradient(150deg,#34465f_0%,#0a1322_22%,#0a1322_78%,#2a3a52_100%)] p-2.5 shadow-[0_40px_80px_-24px_rgba(10,31,68,0.85)] ring-1 ring-white/15">
-                <div className="relative aspect-[9/17.5] overflow-hidden rounded-[2.4rem] bg-black">
-                  {/* A status bar keeps the island off the capture's own
-                      header and makes the screen read as an app. */}
-                  <div className="absolute inset-x-0 top-0 z-10 flex h-10 items-center justify-between bg-black px-[10%] text-xs sm:text-[13px] font-semibold tabular-nums">
+              {/* Black glass in a thin metal band: the band is an inset ring,
+                  so the phone's edge catches light instead of reading grey. */}
+              <div className="relative rounded-[3.4rem] bg-[#05080f] p-[11px] shadow-[inset_0_0_0_1.5px_#5d6d84,inset_0_0_0_3px_#0b111c,0_50px_90px_-30px_rgba(5,15,40,0.9),0_18px_36px_-18px_rgba(5,15,40,0.6)]">
+                {/* The capture's own ratio, so its headline and controls are
+                    never cropped off the bottom of the screen. */}
+                <div className="relative aspect-[9/19.5] overflow-hidden rounded-[2.65rem] bg-[#0d1524]">
+                  {/* Status bar, in the app header's blue. */}
+                  <div className="absolute inset-x-0 top-0 z-20 flex h-[42px] items-center justify-between px-[11%] text-xs sm:text-[13px] font-semibold tabular-nums">
                     <span>9:41</span>
                     <span className="flex items-center gap-1.5">
                       <svg
@@ -333,18 +347,130 @@ export default async function Home() {
                       </svg>
                     </span>
                   </div>
-                  <span className="absolute top-2.5 left-1/2 z-10 h-6 w-[30%] -translate-x-1/2 rounded-full bg-[#111]" />
-                  <div className="absolute inset-x-0 top-10 bottom-0">
-                    <Image
-                      src="/img/app-preview.png"
-                      alt=""
-                      fill
-                      sizes="(min-width: 1280px) 290px, (min-width: 1024px) 270px, (min-width: 640px) 240px, 216px"
-                      className="object-cover object-top"
-                    />
+                  <span className="absolute top-2 left-1/2 z-10 h-[26px] w-[32%] -translate-x-1/2 rounded-full bg-black" />
+
+                  {/* The app's home screen, drawn rather than captured: the
+                      site's own services, 112 and account tabs. Sized in
+                      container units so it reads the same at every phone width. */}
+                  <div className="absolute inset-0 flex flex-col bg-[#f2f5fa] text-npf-ink @container">
+                    <div className="bg-npf-blue px-[6cqw] pt-[calc(42px+3cqw)] pb-[12cqw] text-white">
+                      <div className="flex items-center justify-between">
+                        <PoliceWordmark className="h-[10cqw]" />
+                        <span className="grid size-[9cqw] place-items-center rounded-full bg-white/12">
+                          <BellIcon className="size-[4.6cqw]" />
+                        </span>
+                      </div>
+                      <p className="mt-[6cqw] font-secondary text-[6.6cqw] leading-tight font-bold tracking-[-0.02em]">
+                        {t("How can we help?")}
+                      </p>
+                    </div>
+
+                    <div className="-mt-[7cqw] flex flex-1 flex-col gap-[4cqw] px-[5cqw]">
+                      <div className="flex items-center justify-between rounded-[4cqw] bg-[#b30900] px-[5cqw] py-[3.6cqw] text-white shadow-[0_3cqw_6cqw_-3cqw_rgba(120,6,0,0.6)]">
+                        <span className="flex flex-col">
+                          <span className="text-[3.3cqw] font-semibold text-white/85">
+                            {t("Emergency")}
+                          </span>
+                          <span className="font-secondary text-[8.4cqw] leading-none font-bold tabular-nums">
+                            112
+                          </span>
+                        </span>
+                        <span className="grid size-[11cqw] place-items-center rounded-full bg-white text-[#b30900]">
+                          <PhoneCallIcon className="size-[5.4cqw]" />
+                        </span>
+                      </div>
+
+                      <div>
+                        <div className="flex items-baseline justify-between">
+                          <span className="font-secondary text-[4cqw] font-bold">
+                            {t("Services")}
+                          </span>
+                          <span className="text-[3cqw] font-semibold text-npf-blue-mid">
+                            {t("See all")}
+                          </span>
+                        </div>
+                        <ul className="mt-[2.6cqw] grid grid-cols-2 gap-[2.6cqw]">
+                          {quickServices.slice(0, 4).map((service) => (
+                            <li
+                              key={service.title}
+                              className="flex flex-col gap-[2cqw] rounded-[3.4cqw] bg-white p-[3.2cqw] shadow-[0_1cqw_3cqw_-1cqw_rgba(27,63,122,0.18)]"
+                            >
+                              <span className="relative block size-[9cqw]">
+                                <Image
+                                  src={service.icon}
+                                  alt=""
+                                  fill
+                                  sizes="32px"
+                                  className="object-contain"
+                                />
+                              </span>
+                              <span className="line-clamp-2 min-h-[2lh] text-[3.1cqw] leading-snug font-bold">
+                                {service.title}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="relative h-[26cqw] overflow-hidden rounded-[3.4cqw] bg-npf-night">
+                        <Image
+                          src="/npf/hero/fleet.jpg"
+                          alt=""
+                          fill
+                          sizes="300px"
+                          className="object-cover"
+                        />
+                        <span className="absolute inset-0 flex flex-col justify-end bg-[linear-gradient(to_top,rgba(10,21,38,0.9),transparent_70%)] p-[3.2cqw] text-white">
+                          <span className="text-[2.6cqw] font-semibold text-npf-gold-soft">
+                            {t("News")}
+                          </span>
+                          <span className="font-secondary text-[3.6cqw] leading-tight font-bold">
+                            {t("Ready on Every Road")}
+                          </span>
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-[3cqw] rounded-[3.4cqw] bg-white p-[3.2cqw] shadow-[0_1cqw_3cqw_-1cqw_rgba(27,63,122,0.18)]">
+                        <span className="grid size-[9cqw] shrink-0 place-items-center rounded-[2.4cqw] bg-npf-blue/10 text-npf-blue">
+                          <FileIcon className="size-[4.8cqw]" />
+                        </span>
+                        <span className="flex min-w-0 flex-1 flex-col">
+                          <span className="text-[2.7cqw] text-npf-muted">
+                            {t("Your request")}
+                          </span>
+                          <span className="truncate text-[3.2cqw] font-bold">
+                            {t("Certificate application")}
+                          </span>
+                        </span>
+                        <span className="rounded-full bg-[#fdf3d7] px-[2.4cqw] py-[0.8cqw] text-[2.6cqw] font-semibold text-npf-gold">
+                          {t("In review")}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Tab bar, clear of the home indicator. */}
+                    <nav className="grid grid-cols-4 border-t border-npf-ink/8 bg-white px-[3cqw] pt-[2.6cqw] pb-[7cqw] text-[2.5cqw] font-semibold text-npf-muted">
+                      {[
+                        { label: t("Home"), Icon: ShieldIcon, on: true },
+                        { label: t("Services"), Icon: ServicesIcon },
+                        { label: t("Requests"), Icon: InboxIcon },
+                        { label: t("Profile"), Icon: UserCircle },
+                      ].map(({ label, Icon, on }) => (
+                        <span
+                          key={label}
+                          className={`flex flex-col items-center gap-[1cqw] ${on ? "text-npf-blue" : ""}`}
+                        >
+                          <Icon className="size-[5.4cqw]" />
+                          {label}
+                        </span>
+                      ))}
+                    </nav>
                   </div>
+
+                  {/* Home indicator. */}
+                  <span className="absolute bottom-2 left-1/2 z-10 h-1 w-[36%] -translate-x-1/2 rounded-full bg-npf-ink/80" />
                   {/* Glass. */}
-                  <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,0.09)_0%,transparent_32%)]" />
+                  <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,0.08)_0%,transparent_30%)]" />
                 </div>
               </div>
             </div>

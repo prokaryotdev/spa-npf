@@ -188,6 +188,10 @@ export const haHome: Record<string, string> = {
     "Sauke Manhajar Rundunar 'Yan Sandan Najeriya",
   "Services, updates, and alerts: right in your pocket.":
     "Ayyuka, sabuntawa, da faɗakarwa: nan a aljihunka.",
+  "How can we help?": "Ta yaya za mu taimaka?",
+  News: "Labarai",
+  "Your request": "Buƙatarka",
+  "Certificate application": "Neman takardar shaida",
   "App Store": "App Store",
   "Google Play": "Google Play",
   "App Gallery": "App Gallery",
