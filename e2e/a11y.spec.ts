@@ -34,9 +34,16 @@ const PAGES = [
  */
 test.use({ reducedMotion: "reduce" });
 
+/**
+ * Legacy mode runs axe in one pass. The default splits the run, then carries
+ * every node's results to a second blank page to merge them — which doubled
+ * the 92-row catalogue to ~12s and pushed it past the 30s test timeout. What
+ * the split buys is scanning cross-origin iframes, and the site has none.
+ */
 const scan = (page: import("@playwright/test").Page) =>
   new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+    .setLegacyMode()
     .analyze();
 
 /** Readable in the terminal: rule, impact, and the element to go and look at. */
