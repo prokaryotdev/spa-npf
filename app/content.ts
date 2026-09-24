@@ -292,7 +292,6 @@ export const community: InitiativeCard[] = [
     title: "Nigeria Police Museum",
     body: "A cultural landmark where the past illuminates the present, tracing the Force from its founding in 1930 to the national institution it is today",
     image: "/npf/nigeria-police-museum.jpg",
-    badge: "Museum visit",
     tags: [{ label: "Visit our virtual museum" }],
     theme: theme("#6A3D06", "#fef8f0", "#f9c990"),
   },
@@ -300,7 +299,6 @@ export const community: InitiativeCard[] = [
     title: "West African Police Summit",
     body: "Police chiefs from across the region, alongside researchers, technology partners and civil society, meet in Abuja to share what works in investigation, forensics and community policing.",
     image: "/npf/west-african-police-summit.jpg",
-    badge: "More",
     tags: [
       {
         label: "Summit Awards 2026",

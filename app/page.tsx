@@ -1,14 +1,13 @@
 import Image from "next/image";
 import Link from "./i18n/Link";
-import CardRail from "./components/CardRail";
 import Domains from "./components/Domains";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import { AlertIcon, ArrowRight, BellIcon, FileIcon } from "./components/icons";
-import InitiativeCard from "./components/InitiativeCard";
 import ModernPolicing from "./components/ModernPolicing";
 import Pillars from "./components/Pillars";
+import Community from "./components/Community";
 import Stations from "./components/Stations";
 import StickyBar from "./components/StickyBar";
 import { getT, getLocalized } from "./i18n/server";
@@ -184,11 +183,10 @@ export default async function Home() {
         {/* Community. The one place the page leaves the cool blues: Modern
             Policing is the technology chapter on mist, this is the people
             and heritage one on sand. */}
-        <section
-          aria-labelledby="community"
-          className="npf-section relative overflow-hidden border-t border-npf-gold/15 bg-npf-sand"
-        >
-          <div className="npf-container relative z-10">
+        <Community
+          id="community"
+          items={community}
+          head={
             <SectionHead
               id="community"
               title={t("Shaping the Future, Side by Side")}
@@ -196,55 +194,23 @@ export default async function Home() {
                 "Bringing communities together through education, cultural heritage, volunteer service, and dedicated support.",
               )}
             />
+          }
+        />
 
-            <CardRail
-              label={t("community")}
-              className={`${BODY_GAP} md:hidden`}
-            >
-              {community.map((card) => (
-                <InitiativeCard
-                  key={card.title}
-                  card={card}
-                  className="w-[84vw] max-w-[420px] shrink-0"
-                />
-              ))}
-            </CardRail>
-
-            <div
-              className={`${BODY_GAP} hidden grid-cols-2 gap-8 md:grid lg:gap-12`}
-            >
-              {community.map((card, i) => (
-                <div
-                  key={card.title}
-                  data-reveal
-                  style={
-                    {
-                      "--reveal-delay": `${(i % 2) * 110}ms`,
-                    } as React.CSSProperties
-                  }
-                  className={card.wide ? "col-span-2" : undefined}
-                >
-                  <InitiativeCard
-                    card={card}
-                    shape={card.wide ? "wide" : "square"}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* App download. Pitch, what you get, where to get it on the start
-            side; the phone on the end side, rising out of the band's floor
-            inside the brand rings so the section has one thing to look at. */}
+        {/* App download. Pitch and the store badges first, what you get
+            under them; the whole phone on the end side, lit from behind and
+            standing on its own shadow so the band has one thing to look at. */}
         <section
           aria-labelledby="app"
-          className="relative overflow-hidden bg-npf-blue-deep text-white"
+          className="npf-section relative overflow-hidden bg-[linear-gradient(180deg,var(--color-npf-blue-deep)_0%,#0f2547_100%)] text-white"
         >
-
-          <div className="npf-container relative z-10 grid gap-16 pt-(--npf-section-y) lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-12 lg:pt-0">
-            <div className="lg:py-(--npf-section-y)">
-              <h2 id="app" data-reveal className="npf-h2 max-w-[15ch]">
+          <div className="npf-container relative z-10 grid items-center gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-12">
+            <div>
+              <h2
+                id="app"
+                data-reveal
+                className="npf-h2 max-w-[15ch] text-balance"
+              >
                 {t("Download the Nigeria Police Force App")}
               </h2>
               <p
