@@ -15,8 +15,14 @@ import { useT, useLocalized, useFormat } from "../i18n/client";
 
 const socials = ["Facebook", "Youtube", "Twitter", "Instagram"] as const;
 
+/*
+ * The page closes on the same night ground as Domains, so the footer reads as
+ * the last chapter rather than an appendix. 112 leads because it is the one
+ * thing on the page someone may need in a hurry; the other lines sit beside
+ * it at a quieter size.
+ */
 export default function Footer() {
-  const emergencyNumbers = useLocalized(emergencyNumbersSource);
+  const [lead, ...others] = useLocalized(emergencyNumbersSource);
   const footerColumns = useLocalized(footerColumnsSource);
   const legalLinks = useLocalized(legalLinksSource);
   const format = useFormat();
@@ -28,60 +34,140 @@ export default function Footer() {
   return (
     <footer
       id="staticFooter"
-      className="w-full bg-white pt-16 pb-32"
+      className="npf-on-night w-full bg-npf-night pb-32 text-white/70"
     >
-      <div className="npf-container text-base text-npf-body">
-        <div className="flex flex-col items-center gap-8 md:flex-row md:items-start md:justify-between">
-          <div className="flex flex-col items-center gap-6 md:flex-row md:items-start">
-            <span className="rounded-xl bg-[#EAF0FA] p-3.5 text-npf-blue-ink">
-              <PhoneIcon className="size-12" />
+      {/* Emergency */}
+      <section
+        aria-labelledby="footer-emergency"
+        className="npf-container grid gap-10 border-b border-white/10 pt-16 pb-14 md:pt-24 lg:grid-cols-12 lg:items-end lg:gap-12"
+      >
+        <div className="lg:col-span-6">
+          <h2
+            id="footer-emergency"
+            className="mb-8 font-secondary text-3xl font-bold tracking-[-0.02em] text-white md:text-4xl"
+          >
+            {t("Emergency Numbers")}
+          </h2>
+          <a
+            href={`tel:${lead.number}`}
+            className="group flex items-center gap-5 rounded-[28px] md:gap-7"
+          >
+            <span className="grid size-16 shrink-0 place-items-center rounded-full bg-npf-alert-soft text-npf-night transition-transform duration-300 ease-[var(--ease-custom)] group-hover:scale-105 group-active:scale-95 md:size-20">
+              <PhoneIcon className="size-7 md:size-9" />
             </span>
-            <span className="max-w-[188px] text-center font-secondary text-3xl font-bold text-npf-ink md:text-left">
-              {t("Emergency Numbers")}
+            <span className="font-secondary text-[clamp(4.5rem,3rem+6vw,8rem)] leading-[0.9] font-bold tracking-[-0.03em] text-npf-alert-soft tabular-nums">
+              {lead.number}
             </span>
-          </div>
+            <span className="flex flex-col gap-1">
+              <span className="font-secondary text-lg font-bold text-white">
+                {lead.label}
+              </span>
+              {lead.note ? (
+                <span className="text-sm text-white/60">{lead.note}</span>
+              ) : null}
+            </span>
+          </a>
+        </div>
 
-          <div className="grid w-full grid-cols-2 gap-4 md:w-auto lg:grid-cols-4">
-            {emergencyNumbers.map((item) => (
-              <div
-                key={item.number}
-                className="flex h-[100px] flex-col items-center justify-center rounded-2xl bg-[#F9F9F9] px-4 lg:w-[159.5px]"
+        <ul className="grid grid-cols-3 divide-x divide-white/10 border-t border-white/10 pt-6 lg:col-span-6 lg:border-t-0 lg:pt-0 rtl:divide-x-reverse">
+          {others.map((item) => (
+            <li key={item.number} className="px-3 first:ps-0 md:px-6">
+              <a
+                href={`tel:${item.number}`}
+                className="group flex flex-col gap-1"
               >
-                <span className="font-secondary text-sm font-bold">
+                <span className="font-secondary text-[13px] font-bold whitespace-nowrap text-white/60 transition-colors group-hover:text-white md:text-sm">
                   {item.label}
                 </span>
-                <a
-                  href={`tel:${item.number}`}
-                  className="font-secondary text-[41px] leading-tight font-bold tabular-nums transition-opacity hover:opacity-80"
-                  style={{ color: item.color }}
-                >
+                <span className="font-secondary text-4xl font-bold tracking-[-0.02em] text-white tabular-nums md:text-5xl">
                   {item.number}
-                </a>
-                {item.note ? (
-                  <span className="text-[10px]">{item.note}</span>
-                ) : null}
-              </div>
-            ))}
-          </div>
+                </span>
+                <span className="min-h-5 text-sm text-white/50">
+                  {item.note}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Brand and newsletter */}
+      <div className="npf-container grid gap-8 border-b border-white/10 py-12 md:py-14 lg:grid-cols-12 lg:items-center lg:gap-12">
+        <span
+          role="img"
+          aria-label={t("Nigeria Police Force")}
+          className="text-white lg:col-span-4"
+        >
+          <PoliceWordmark className="h-14 w-auto md:h-16" />
+        </span>
+        <div className="lg:col-span-3">
+          <h2
+            id="footer-newsletter"
+            className="mb-1 font-secondary text-lg font-bold text-white"
+          >
+            {t("Subscribe to our Newsletter")}
+          </h2>
+          <p className="text-sm">
+            {t("Stay updated with the latest news and announcements.")}
+          </p>
         </div>
-        <hr className="my-6 border-black/10" />
+        {/* ponytail: no mailing-list backend, so this confirms and stops. */}
+        <form
+          className="lg:col-span-5"
+          aria-labelledby="footer-newsletter"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setSubscribed(true);
+            e.currentTarget.reset();
+          }}
+        >
+          <div className="relative">
+            <label htmlFor="subscribeEmail" className="sr-only">
+              {t("Email address")}
+            </label>
+            <input
+              id="subscribeEmail"
+              type="email"
+              required
+              autoComplete="email"
+              placeholder={t("Email address")}
+              className="h-14 w-full rounded-full border border-white/15 bg-white/5 ps-6 pe-40 text-white caret-npf-gold-soft transition-colors placeholder:text-white/55 hover:border-white/30 focus:border-npf-gold-soft focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="absolute inset-y-1.5 end-1.5 rounded-full bg-npf-gold-soft px-6 font-secondary font-bold text-npf-night transition-[background-color,scale] duration-200 hover:bg-white active:scale-[0.97]"
+            >
+              {t("Subscribe")}
+            </button>
+          </div>
+          <p
+            aria-live="polite"
+            className="mt-2 min-h-5 ps-6 text-sm text-npf-gold-soft"
+          >
+            {subscribed ? t("Thanks, you are on the list.") : ""}
+          </p>
+        </form>
       </div>
 
-      <div className="npf-container grid grid-flow-row gap-3 text-base text-npf-body md:grid-cols-3 md:gap-x-10 md:gap-y-12 xl:grid-flow-col xl:grid-cols-none xl:gap-20">
+      {/* Link columns */}
+      <nav
+        aria-label={t("Site Map")}
+        className="npf-container grid py-6 md:grid-cols-3 md:gap-x-10 md:gap-y-12 md:py-16 xl:grid-cols-[1.35fr_1fr_0.85fr_1.15fr_1.15fr]"
+      >
         {footerColumns.map((col) => {
           const isOpen = open === col.heading;
           return (
             <div
               key={col.heading}
-              className="border-b border-black/10 pb-4 md:border-none md:pb-0"
+              className="border-b border-white/10 py-4 md:border-none md:py-0"
             >
               <button
                 type="button"
                 onClick={() => setOpen(isOpen ? null : col.heading)}
                 aria-expanded={isOpen}
-                className="flex w-full items-center justify-between text-left md:cursor-default"
+                className="flex w-full items-center justify-between text-start md:pointer-events-none"
               >
-                <h2 className="mb-0 font-medium text-npf-ink md:mb-6">
+                <h2 className="font-secondary font-bold text-white md:mb-5">
                   {col.heading}
                 </h2>
                 <ChevronDown
@@ -89,147 +175,97 @@ export default function Footer() {
                 />
               </button>
               <ul
-                className={`space-y-3 overflow-hidden transition-all duration-300 md:max-h-full md:opacity-100 ${
+                className={`space-y-3 overflow-hidden transition-all duration-300 md:max-h-none md:pt-0 md:opacity-100 ${
                   isOpen
                     ? "max-h-[420px] pt-4 opacity-100"
                     : "max-h-0 opacity-0"
                 }`}
               >
-                {col.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      target={
-                        "external" in link && link.external
-                          ? "_blank"
-                          : undefined
-                      }
-                      rel={
-                        "external" in link && link.external
-                          ? "noopener noreferrer"
-                          : undefined
-                      }
-                      className="inline-flex items-center gap-1.5 transition-colors hover:text-[#234B85]"
-                    >
-                      {link.label}
-                      {"external" in link && link.external ? (
-                        <ArrowUpRight className="size-4" />
-                      ) : null}
-                    </Link>
-                  </li>
-                ))}
+                {col.links.map((link) => {
+                  const external = "external" in link && link.external;
+                  return (
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        target={external ? "_blank" : undefined}
+                        rel={external ? "noopener noreferrer" : undefined}
+                        className="group inline-flex items-center gap-1.5 underline-offset-4 transition-colors hover:text-white hover:underline decoration-npf-gold-soft"
+                      >
+                        {link.label}
+                        {external ? (
+                          <ArrowUpRight className="size-4 shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 rtl:-scale-x-100" />
+                        ) : null}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           );
         })}
+      </nav>
 
-        <div>
-          <p className="mb-6 h-16 text-npf-blue-deep">
-            <span role="img" aria-label={t("Nigeria Police Force")}>
-              <PoliceWordmark className="h-16 w-auto" />
-            </span>
+      {/* Legal */}
+      <div className="npf-container grid gap-8 border-t border-white/10 pt-8 text-sm text-white/55 lg:grid-cols-2">
+        <div className="space-y-1">
+          <p className="text-white/75">
+            {t("© {year} FCT Police Command Headquarters. All Rights Reserved", {
+              year: process.env.NEXT_PUBLIC_BUILD_YEAR ?? "",
+            })}
           </p>
-          <h2 className="mb-6 font-medium text-npf-ink">
-            {t("Subscribe to our Newsletter")}
-          </h2>
-          <p className="mb-3">
-            {t("Stay updated with the latest news and announcements.")}
+          <p>
+            {t("This site is monitored and maintained by Nigeria Police Force.")}
           </p>
-          {/* ponytail: no mailing-list backend, so this confirms and stops. */}
-          <form
-            className="mb-6"
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSubscribed(true);
-              e.currentTarget.reset();
-            }}
-          >
-            <div className="relative w-full">
-              <label htmlFor="subscribeEmail" className="sr-only">
-                {t("Email Address")}
-              </label>
-              <input
-                id="subscribeEmail"
-                type="email"
-                required
-                placeholder={t("Email Address")}
-                className="w-full rounded-lg border border-[#E4E2E6] bg-white px-4 py-3 pe-32 text-npf-ink placeholder:text-[#6b6b6b]"
-              />
-              <button
-                type="submit"
-                className="absolute top-0 end-0 h-full rounded-lg bg-npf-blue px-4 text-xl font-medium text-white transition-colors hover:bg-[#234B85]"
-              >
-                {t("Subscribe")}
-              </button>
-            </div>
-            <p
-              aria-live="polite"
-              className="mt-2 min-h-[1.25rem] text-sm text-npf-blue-ink"
-            >
-              {subscribed ? t("Thanks — you are on the list.") : ""}
-            </p>
-          </form>
-          <div className="flex gap-6">
-            {socials.map((name) => (
-              <a
-                key={name}
-                href="https://fct.npf.gov.ng/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={name}
-                className="text-npf-body transition-colors hover:text-npf-blue"
-              >
-                <SocialIcon name={name} className="size-6" />
-              </a>
-            ))}
-          </div>
+          {/* The line this replaces named IE11 first. Microsoft retired it
+              in 2022, and this site uses CSS it could never have rendered,
+              so the advice was both stale and wrong. */}
+          <p>
+            {t(
+              "The site is best viewed in a current version of Chrome, Safari, Edge or Firefox",
+            )}
+          </p>
+          <p>
+            {t("Last modified Date: {date}", {
+              date: format.date(process.env.NEXT_PUBLIC_BUILD_DATE ?? ""),
+            })}
+          </p>
         </div>
-      </div>
-
-      <div className="npf-container text-base text-npf-body">
-        <hr className="mt-8 mb-6 border-black/10 md:mt-16" />
-        <div className="flex flex-col justify-between gap-4 md:flex-row">
-          <div className="w-full max-w-[536px]">
-            <p>
-              {t("© {year} FCT Police Command Headquarters. All Rights Reserved", {
-                year: process.env.NEXT_PUBLIC_BUILD_YEAR ?? "",
-              })}
-            </p>
-            <p>
-              {t("This site is monitored and maintained by Nigeria Police Force.")}
-              <br />
-              {/* The line this replaces named IE11 first. Microsoft retired it
-                  in 2022, and this site uses CSS it could never have rendered,
-                  so the advice was both stale and wrong. */}
-              {t(
-                "The site is best viewed in a current version of Chrome, Safari, Edge or Firefox",
-              )}
-              <br />
-              {t("Last modified Date: {date}", {
-                date: format.date(process.env.NEXT_PUBLIC_BUILD_DATE ?? ""),
-              })}
-            </p>
-          </div>
-          <div className="flex flex-col md:items-end">
-            <ul className="mb-6 flex flex-wrap gap-x-6 gap-y-2">
-              {legalLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="transition-colors hover:text-[#234B85]"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
+        <div className="flex flex-col gap-6 lg:items-end">
+          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+            {legalLinks.map((link) => (
+              <li key={link.label}>
+                <Link
+                  href={link.href}
+                  className="underline-offset-4 transition-colors hover:text-white hover:underline"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-5 lg:justify-end">
+            <div className="flex gap-2">
+              {socials.map((name) => (
+                <a
+                  key={name}
+                  href="https://fct.npf.gov.ng/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={name}
+                  className="grid size-10 place-items-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  <SocialIcon name={name} className="size-5" />
+                </a>
               ))}
-            </ul>
-            <div className="flex flex-wrap gap-6">
+            </div>
+            <div className="flex flex-wrap gap-3">
               {storeBadges.map((badge) => (
                 <a
                   key={badge.label}
                   href="https://fct.npf.gov.ng/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="rounded-lg transition-opacity hover:opacity-80"
                 >
                   <Image
                     src={badge.src}

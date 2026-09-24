@@ -25,6 +25,9 @@ export const haChrome: Record<string, string> = {
   "Back to home": "Koma gida",
   "On this page": "A wannan shafi",
   "Quick access toolbar": "Kayan aiki na gaggawa",
+  Call: "Kira",
+  "Rate this service": "Ba wannan aikin maki",
+  "Back to top": "Koma sama",
   "Larger text": "Rubutu mafi girma",
   Innovation: "Ƙirƙira",
   "Nigeria Police Force home": "Gidan Rundunar 'Yan Sandan Najeriya",
@@ -49,7 +52,7 @@ export const haChrome: Record<string, string> = {
   Subscribe: "Yi rajista",
   "Stay updated with the latest news and announcements.":
     "Ka ci gaba da sanin sabbin labarai da sanarwa.",
-  "Thanks — you are on the list.": "Na gode — kana cikin jerin.",
+  "Thanks, you are on the list.": "Na gode, kana cikin jerin.",
   "Email address": "Adireshin imel",
 
   // --- search, lists, filters --------------------------------------------

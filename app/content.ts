@@ -318,16 +318,14 @@ export const emergencyNumbers = [
     label: "Police",
     number: "112",
     note: "For emergencies only",
-    color: "#b30900",
   },
   {
     label: "Road Safety",
     number: "122",
     note: "Road crashes",
-    color: "#0E2648",
   },
-  { label: "Fire Service", number: "199", note: "", color: "#0E2648" },
-  { label: "Child Helpline", number: "116", note: "", color: "#0E2648" },
+  { label: "Fire Service", number: "199", note: "" },
+  { label: "Child Helpline", number: "116", note: "" },
 ];
 
 export const footerColumns = [

@@ -31,6 +31,8 @@
    */
   --color-npf-gold: #9a7b12;
   --color-npf-gold-soft: #e6c766;
+  /* 112 on the night ground. The #b30900 alarm red fails contrast there. */
+  --color-npf-alert-soft: #ff8a7a;
   /*
    * Green is no longer the brand, which frees it to mean what it always
    * should have: done. Status only.
@@ -563,4 +565,9 @@ html.npf-large-text {
       rgba(0, 0, 0, 0.89) 72%,
       rgba(0, 0, 0, 0.95) 100%
     );
+}
+
+/* The default blue focus ring vanishes on the night ground; gold reads there. */
+.npf-on-night :where(a, button, input):focus-visible {
+  outline-color: var(--color-npf-gold-soft);
 }
