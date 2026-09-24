@@ -22,7 +22,7 @@ export default function Community({
   const last = items.length - 1;
 
   return (
-    <section aria-labelledby={id} className="npf-section bg-npf-sand">
+    <section aria-labelledby={id} className="npf-section border-t border-npf-gold/20 bg-npf-sand">
       <div className="npf-container">
         {head}
 

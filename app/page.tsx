@@ -90,12 +90,12 @@ export default async function Home() {
             page below. */}
         <section
           aria-labelledby="quick-services"
-          className="relative -mt-px bg-linear-to-b from-black to-npf-night pt-2 pb-(--npf-head-gap) lg:pb-0"
+          className="relative -mt-px border-b border-npf-blue/15 bg-linear-to-b from-black to-npf-night pt-2 pb-(--npf-head-gap) lg:pb-0"
         >
           <h2 id="quick-services" className="sr-only">
             {t("Popular services")}
           </h2>
-          <ul className="npf-container grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-2">
+          <ul className="npf-container mb-0.5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-2 xl:w-[90%] xl:max-w-[1620px]">
             {quickServices.map((service, i) => (
               <li
                 key={service.title}
@@ -118,10 +118,10 @@ export default async function Home() {
                   {/* Two lines tall whatever the title (three on the narrow five-up
                       row, where the longest title needs it), so a one-line title and
                       a two-line one start their text on the same line. */}
-                  <span className="npf-h5 mt-4 flex min-h-[2lh] items-center lg:max-[1400px]:min-h-[3lh] justify-center text-balance text-npf-ink">
+                  <span className="npf-h5 mt-4 flex min-h-[2lh] text-[1rem] items-center lg:max-[1400px]:min-h-[3lh] justify-center text-balance text-npf-ink">
                     {service.title}
                   </span>
-                  <span className="npf-small mt-2 hidden max-w-[24ch] text-pretty text-npf-steel sm:block">
+                  <span className="npf-small mt-2 hidden max-w-[24ch] font-normal text-pretty text-npf-steel sm:block">
                     {service.body}
                   </span>
                 </Link>
@@ -132,11 +132,11 @@ export default async function Home() {
 
         <Pillars />
 
-        {/* The online services. White flows down from the pillars into a
-            pale mist, so the two chapters read as one page, not two blocks. */}
+        {/* The online services, on the mist behind a hairline seam, so
+            leaving the white pillars reads as a new chapter. */}
         <section
           aria-labelledby="smart-policing"
-          className="npf-section relative overflow-hidden bg-linear-to-b from-white to-npf-mist"
+          className="npf-section relative overflow-hidden border-t border-npf-blue/10 bg-npf-mist"
         >
           {/* The brand rings from the app band, faint and pooled in the
               bottom end corner behind the tiles, and a cool glow under the
@@ -208,12 +208,11 @@ export default async function Home() {
 
         {/* The app. The pitch, what it does and the stores on the start side;
             the phone on the end side, lit from behind, so the band has one
-            thing to look at. A gold seam hands over to the white footer. */}
+            thing to look at. */}
         <section
           aria-labelledby="app"
           className="npf-section relative isolate overflow-hidden bg-npf-blue text-white"
         >
-          <span className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] bg-npf-gold-soft" />
           <div className="npf-container relative grid items-center gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-12">
             <div>
               <h2 id="app" {...reveal()} className="npf-h2 max-w-[15ch]">
