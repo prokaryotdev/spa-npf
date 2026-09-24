@@ -203,9 +203,9 @@ export default async function Home() {
             standing on its own shadow so the band has one thing to look at. */}
         <section
           aria-labelledby="app"
-          className="npf-section relative isolate overflow-hidden bg-[radial-gradient(90%_120%_at_85%_40%,#4a8ee0_0%,transparent_60%),linear-gradient(160deg,var(--color-npf-blue-mid)_0%,#23539a_100%)] text-white"
+          className="npf-section relative isolate overflow-hidden bg-npf-blue text-white"
         >
-          {/* A bright band, not a second footer: royal blue lit from the
+          {/* A bright band, not a second footer: the Force's own blue, lit from the
               phone's side, with a gold hairline where it meets the footer. */}
           <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/25" />
           <span className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] bg-npf-gold-soft" />
