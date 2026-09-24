@@ -132,27 +132,13 @@ export default async function Home() {
 
         <Pillars />
 
-        {/* The online services, on the mist behind a hairline seam, so
-            leaving the white pillars reads as a new chapter. */}
+        {/* The online services on plain white behind a hairline seam, so the
+            photo tiles stand out between the gold Together chapter and the
+            night-blue domains. */}
         <section
           aria-labelledby="smart-policing"
-          className="npf-section relative overflow-hidden border-t border-npf-blue/10 bg-npf-mist"
+          className="npf-section relative border-t border-npf-blue/10 bg-white"
         >
-          {/* The brand rings from the app band, faint and pooled in the
-              bottom end corner behind the tiles, and a cool glow under the
-              tiles so they sit in light rather than on a flat tint. */}
-          <span
-            aria-hidden
-            className="pointer-events-none absolute top-1/2 left-1/2 h-[70%] w-[90%] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-npf-blue-mid)_14%,transparent),transparent)]"
-          />
-          {[560, 860, 1160].map((size) => (
-            <span
-              key={size}
-              aria-hidden
-              className="pointer-events-none absolute end-0 bottom-0 hidden aspect-square translate-x-1/2 translate-y-1/2 rounded-full border border-npf-blue/[0.08] md:block"
-              style={{ width: size }}
-            />
-          ))}
           <div className="npf-container relative">
             <SectionHead
               id="smart-policing"

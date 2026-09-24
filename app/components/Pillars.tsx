@@ -9,6 +9,15 @@ import { useT, useLocalized } from "../i18n/client";
 // The frame is drawn in a 100-unit box so the arc length is a known number.
 const R = 48;
 const ARC = 2 * Math.PI * R;
+// One sky per chapter, crossfaded as the chapters hand off: cool dawn for
+// Safe, a deeper steel blue for Secure, the gold of the crest for Together,
+// whose floor settles into the cream the services section opens on.
+const SKIES = [
+  "radial-gradient(60% 70% at 85% 20%, color-mix(in srgb, var(--color-npf-blue-mid) 30%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, #7fb2ff 26%, transparent), transparent 75%), linear-gradient(160deg, #f7faff, var(--color-npf-mist))",
+  "radial-gradient(65% 75% at 80% 30%, color-mix(in srgb, var(--color-npf-blue) 34%, transparent), transparent 70%), radial-gradient(70% 60% at 0% 100%, color-mix(in srgb, #7fb2ff 24%, transparent), transparent 70%), linear-gradient(200deg, #e9f0fb, #f6f8fc)",
+  "linear-gradient(to bottom, transparent 65%, #fbf8f1), radial-gradient(60% 70% at 80% 25%, color-mix(in srgb, var(--color-npf-gold-soft) 55%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, #f3a86b 22%, transparent), transparent 75%), linear-gradient(170deg, var(--color-npf-gold-wash), #fbf8f1)",
+];
+
 const at = (fn: (a: number) => number, p: number) =>
   (50 + R * fn(p * 2 * Math.PI)).toFixed(3);
 
@@ -46,13 +55,23 @@ export default function Pillars() {
     <section
       ref={section}
       aria-labelledby="pillars"
-      className="relative h-[320vh] bg-white"
+      className="relative h-[320vh] bg-npf-mist"
     >
       <h2 id="pillars" className="sr-only">
         {t("Safe, Secure, Together")}
       </h2>
 
       <div className="sticky top-0 flex h-svh items-center overflow-hidden">
+        {SKIES.map((sky, i) => (
+          <span
+            key={sky}
+            aria-hidden
+            style={{ backgroundImage: sky }}
+            className={`pointer-events-none absolute inset-0 transition-opacity duration-1000 ease-out ${
+              i === active ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
         <div className="npf-container relative">
           <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
             <div className="order-2 lg:order-1 lg:col-span-6">
@@ -96,13 +115,13 @@ export default function Pillars() {
                     >
                       <span
                         aria-hidden
-                        className="block h-0.5 w-full overflow-hidden rounded-full bg-npf-blue-mid/15 transition-colors group-hover:bg-npf-blue-mid/30"
+                        className="block h-1 w-full overflow-hidden rounded-full bg-npf-blue-mid/15 transition-colors group-hover:bg-npf-blue-mid/30"
                       >
                         <span
                           ref={(el) => {
                             rules.current[i] = el;
                           }}
-                          className="block h-full origin-left scale-x-0 bg-npf-blue-mid rtl:origin-right"
+                          className="block h-full origin-left scale-x-0 bg-linear-to-r from-[#5b9bff] to-npf-blue-deep rtl:origin-right rtl:bg-linear-to-l"
                         />
                       </span>
                       <span
@@ -124,13 +143,20 @@ export default function Pillars() {
               <div className="relative mx-auto aspect-square w-full max-w-[min(300px,42svh)] sm:max-w-[min(440px,48svh)] lg:max-w-[min(520px,70svh)]">
                 <span
                   aria-hidden
-                  className="pointer-events-none absolute -inset-[22%] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-npf-blue-mid)_12%,transparent),transparent)]"
+                  className="pointer-events-none absolute -inset-[22%] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,white_80%,transparent),transparent)]"
                 />
                 <svg
                   aria-hidden
                   viewBox="0 0 100 100"
                   className="absolute inset-0 size-full -rotate-90 overflow-visible"
                 >
+                  <defs>
+                    <linearGradient id="pillars-arc" gradientUnits="userSpaceOnUse" x1="0" y1="100" x2="100" y2="0">
+                      <stop offset="0" stopColor="#5b9bff" />
+                      <stop offset="0.5" stopColor="var(--color-npf-blue-mid)" />
+                      <stop offset="1" stopColor="var(--color-npf-blue-deep)" />
+                    </linearGradient>
+                  </defs>
                   <circle
                     cx="50"
                     cy="50"
@@ -145,11 +171,11 @@ export default function Pillars() {
                     cy="50"
                     r={R}
                     fill="none"
-                    strokeWidth="0.9"
+                    strokeWidth="1.1"
                     strokeLinecap="round"
                     strokeDasharray={ARC}
                     strokeDashoffset={ARC}
-                    className="stroke-npf-blue-mid"
+                    stroke="url(#pillars-arc)"
                   />
                   {/* Where each chapter begins on the ring. */}
                   {pillars.map((pillar, i) => (
@@ -173,7 +199,7 @@ export default function Pillars() {
                   </g>
                 </svg>
 
-                <div className="absolute inset-[7%] overflow-hidden rounded-full bg-npf-mist shadow-raised">
+                <div className="absolute inset-[7%] overflow-hidden rounded-full bg-npf-mist shadow-[0_0_0_6px_white,0_30px_60px_-20px_color-mix(in_srgb,var(--color-npf-blue-deep)_45%,transparent)]">
                   {pillars.map((pillar, i) => (
                     <Image
                       key={pillar.portrait}
