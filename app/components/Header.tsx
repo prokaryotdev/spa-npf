@@ -1,24 +1,27 @@
 "use client";
 
 import Link from "../i18n/Link";
-import { useCallback, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   emergencyNumbers as emergencyNumbersSource,
   navigation as navigationSource,
 } from "../content";
 import { useT, useLocalized } from "../i18n/client";
+import { stripLocale } from "../i18n/path";
 import AccountLink from "./AccountLink";
 import LanguageSwitch from "./LanguageSwitch";
 import ServiceSearch from "./ServiceSearch";
 import {
   AccessibilityIcon,
+  ArrowRight,
   CallIcon,
   ChevronDown,
   CloseIcon,
   MenuIcon,
   SearchIcon,
 } from "./icons";
-import { GovernmentWordmark, PoliceWordmark } from "./Wordmark";
+import { PoliceWordmark } from "./Wordmark";
 import { useDialog } from "./useDialog";
 
 /**
@@ -26,28 +29,34 @@ import { useDialog } from "./useDialog";
  * because the header is the one thing that never scrolls out of reach, so
  * nothing has to float over the content to keep 112 close. It is the alarm
  * red, the one place the header breaks from navy, with white type that holds
- * on the dark hero and the white scrolled bar alike. From lg a small
- * "Emergency" caption says what the number is for; below that the badge and
- * the number carry it alone. The number comes from content.ts, like the
- * footer's copy of it.
+ * on the dark hero and the white scrolled bar alike. It is the same pill as
+ * Sign In beside it, one line, so the two read as a pair and only the colour
+ * says which one matters. From lg a quiet "Emergency" says what the number is
+ * for; below that the handset and the number carry it alone. The number comes
+ * from content.ts, like the footer's copy of it.
  */
-function CallButton() {
+function CallButton({ onDark }: { onDark: boolean }) {
   const t = useT();
   const [emergency] = useLocalized(emergencyNumbersSource);
   return (
     <a
       href={`tel:${emergency.number}`}
-      className="group inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-[#b30900] ps-1.5 pe-4 text-white shadow-[0_10px_22px_-10px_rgba(179,9,0,0.7),inset_0_1px_0_rgba(255,255,255,0.2)] transition-[background-color,scale] duration-150 ease-out hover:bg-[#960800] active:scale-[0.97]"
+      className={`group inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-[#b30900] ps-3.5 pe-4 text-white shadow-[0_1px_2px_rgba(10,21,38,0.2),inset_0_1px_0_rgba(255,255,255,0.16)] transition-[background-color,scale] duration-150 ease-out hover:bg-[#9c0800] active:scale-[0.97] ${
+        onDark ? "focus-visible:outline-white" : "focus-visible:outline-[#b30900]"
+      }`}
     >
-      <span className="grid size-8 shrink-0 place-items-center rounded-full bg-white text-[#b30900]">
-        <CallIcon className="size-4 transition-transform duration-300 ease-out group-hover:-rotate-12" />
-      </span>
-      <span className="flex flex-col font-secondary leading-none">
-        <span className="mb-0.5 hidden text-[10px] font-bold text-white/80 lg:block">
+      {/*
+        The handset is drawn in the top of its box. The nudges line its ink
+        up with the caps, a hair above the pill's middle, where the eye reads
+        it as centred.
+      */}
+      <CallIcon className="size-[18px] shrink-0 translate-y-[1.5px] transition-transform duration-200 ease-out group-hover:-rotate-12" />
+      <span className="flex -translate-y-px items-baseline gap-1.5 leading-none">
+        <span className="hidden font-medium text-white/85 lg:inline">
           {t("Emergency")}
         </span>
         <span className="sr-only">{t("Call")} </span>
-        <span className="text-base font-bold tabular-nums">
+        <span className="font-secondary text-base font-bold tabular-nums">
           {emergency.number}
         </span>
       </span>
@@ -57,12 +66,32 @@ function CallButton() {
 }
 
 /**
+ * The nav item for the page you are on: the longest href the path starts
+ * with, so Application Status wins over Services and Information over Home.
+ * The bare root is the home page.
+ */
+function useCurrent(hrefs: string[]) {
+  const { rest } = stripLocale(usePathname() ?? "/");
+  const path = rest === "/" ? "/app/home" : rest;
+  return hrefs
+    .filter((href) => path === href || path.startsWith(`${href}/`))
+    .sort((a, b) => b.length - a.length)[0];
+}
+
+/**
+ * One row from xl: the police mark, the sections centred, the tools. Only
+ * Sign In is the Force's blue and 112 the alarm red; the rest are plain, so
+ * the header has two filled controls and nothing else shouting. Below xl it is
+ * the phone header: menu, mark, 112, search.
+ *
  * `solid` is for pages that open on content rather than a dark hero, where the
  * transparent-over-photo treatment would leave white text on white.
  */
 export default function Header({ solid = false }: { solid?: boolean }) {
   const navigation = useLocalized(navigationSource);
   const t = useT();
+  const current = useCurrent(navigation.map((item) => item.href));
+  const marker = useRef<HTMLDivElement>(null);
   const [atTop, setAtTop] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -73,11 +102,14 @@ export default function Header({ solid = false }: { solid?: boolean }) {
     document.documentElement.classList.toggle("npf-large-text", bigText);
   }, [bigText]);
 
+  // The marker covers the first 80px of the page; once it has scrolled out,
+  // the header turns solid. One observer instead of a handler per scroll.
   useEffect(() => {
-    const onScroll = () => setAtTop(window.scrollY <= 80);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const observer = new IntersectionObserver(([entry]) =>
+      setAtTop(entry.isIntersecting),
+    );
+    if (marker.current) observer.observe(marker.current);
+    return () => observer.disconnect();
   }, []);
 
   // showModal/close drive the drawer; the browser locks background scrolling.
@@ -86,185 +118,162 @@ export default function Header({ solid = false }: { solid?: boolean }) {
   const closeSearch = useCallback(() => setSearchOpen(false), []);
   const searchDialog = useDialog(searchOpen, closeSearch);
 
-  return (
-    <header
-      className={`fixed top-0 left-0 z-50 w-full transition-[background-color,backdrop-filter] duration-500 ease-[var(--ease-custom)] ${
-        scrolled
-          ? "bg-white/90 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.06)]"
-          : "bg-gradient-to-b from-npf-night/50 to-transparent"
-      }`}
-    >
-      <div className="npf-container">
-        {/* The logo band folds away once you scroll, leaving the nav pill. */}
-        <div
-          className={`flex items-center justify-between overflow-hidden transition-all duration-500 ease-[var(--ease-custom)] ${
-            atTop
-              ? "pt-5 pb-2 lg:h-[86px] lg:translate-y-0 lg:opacity-100"
-              : "pt-5 pb-2 lg:h-0 lg:-translate-y-3 lg:py-0 lg:opacity-0"
-          }`}
-        >
-          <button
-            type="button"
-            onClick={() => setMenuOpen(true)}
-            aria-label={t("Open menu")}
-            aria-expanded={menuOpen}
-            className={`grid size-11 place-items-center rounded-full transition-colors lg:hidden ${
-              scrolled ? "bg-black/5 text-npf-ink" : "bg-white/15 text-white"
-            }`}
-          >
-            <MenuIcon className="size-5" />
-          </button>
+  const ink = scrolled ? "text-npf-ink" : "text-white";
+  const ghost = scrolled ? "hover:bg-npf-ink/[0.06]" : "hover:bg-white/10";
+  const round = `grid size-11 place-items-center rounded-full transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] ${ghost}`;
 
-          <div className="flex w-auto items-center gap-6 lg:w-full lg:justify-between">
-            <Link
-              href="/app/home"
-              aria-label={t("Federal Republic of Nigeria")}
-              className={`hidden h-[58px] transition-colors duration-500 lg:block ${
-                scrolled ? "text-npf-ink" : "text-white"
+  return (
+    <>
+      <div
+        ref={marker}
+        aria-hidden
+        className="pointer-events-none absolute top-0 left-0 h-20 w-px"
+      />
+      <header
+        className={`fixed top-0 left-0 z-50 w-full border-b transition-[background-color,border-color] duration-500 ease-[var(--ease-custom)] ${
+          scrolled
+            ? "border-npf-ink/[0.08] bg-white/90 backdrop-blur-xl"
+            : "border-white/15 bg-gradient-to-b from-npf-night/60 to-transparent"
+        }`}
+      >
+        <div className="npf-container">
+          {/* Phone and tablet */}
+          <div className="flex items-center justify-between gap-3 pt-5 pb-2 xl:hidden">
+            <button
+              type="button"
+              onClick={() => setMenuOpen(true)}
+              aria-label={t("Open menu")}
+              aria-expanded={menuOpen}
+              className={`grid size-11 place-items-center rounded-full transition-colors ${
+                scrolled ? "bg-npf-ink/[0.06] text-npf-ink" : "bg-white/15 text-white"
               }`}
             >
-              <GovernmentWordmark className="h-full w-auto" />
-            </Link>
+              <MenuIcon className="size-5" />
+            </button>
             <Link
               href="/app/home"
               aria-label={t("Nigeria Police Force home")}
-              className={`h-9 transition-colors duration-500 lg:h-11 ${
+              className={`h-9 transition-colors duration-500 ${
                 scrolled ? "text-npf-blue-deep" : "text-white"
               }`}
             >
               <PoliceWordmark className="h-full w-auto" />
             </Link>
-          </div>
-
-          <div className="flex items-center gap-2 lg:hidden">
-            <CallButton />
-            <button
-              type="button"
-              onClick={() => setSearchOpen(true)}
-              aria-label={t("Search")}
-              aria-expanded={searchOpen}
-              className={`grid size-11 place-items-center rounded-full transition-colors ${
-                scrolled ? "bg-black/5 text-npf-ink" : "bg-white/15 text-white"
-              }`}
-            >
-              <SearchIcon className="size-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Desktop nav bar */}
-        <nav
-          aria-label={t("Main")}
-          className={`mb-2 hidden h-14 items-center justify-between transition-colors duration-500 lg:flex ${
-            scrolled ? "px-0" : "rounded-full bg-white/10 pe-3 backdrop-blur-md"
-          }`}
-        >
-          <div
-            className={`min-w-0 items-center ${scrolled ? "flex" : "hidden"}`}
-          >
-            <Link
-              href="/app/home"
-              aria-label={t("Nigeria Police Force home")}
-              className={`h-9 shrink-0 overflow-hidden text-npf-blue-deep transition-all duration-500 ease-[var(--ease-custom)] ${
-                scrolled
-                  ? "me-4 w-auto opacity-100"
-                  : "pointer-events-none w-0 opacity-0"
-              }`}
-              tabIndex={scrolled ? undefined : -1}
-              aria-hidden={scrolled ? undefined : true}
-            >
-              <PoliceWordmark className="h-full w-auto" />
-            </Link>
-          </div>
-
-          <ul className="flex items-center">
-            {navigation.map((item) => (
-              <li
-                key={item.label}
-                className="group relative px-3 first:ps-6 xl:px-4"
-              >
-                <Link
-                  href={item.href}
-                  aria-haspopup={item.children ? "true" : undefined}
-                  className={`relative inline-flex items-center gap-1 py-4 text-base whitespace-nowrap transition-colors duration-300 ${
-                    scrolled
-                      ? "text-npf-ink before:bg-npf-gold"
-                      : "text-white before:bg-npf-gold-soft"
-                  } before:absolute before:bottom-0 before:start-0 before:h-1 before:w-full before:origin-left before:scale-x-0 before:rounded-t-full before:transition-transform before:duration-300 group-hover:before:scale-x-100 motion-reduce:before:transition-none`}
-                >
-                  {t(item.label)}
-                  {item.children ? (
-                    <ChevronDown className="size-4 opacity-70" />
-                  ) : null}
-                </Link>
-                {item.children ? (
-                  <ul
-                    role="menu"
-                    className="invisible absolute top-full start-0 z-50 mt-0.5 w-[375px] rounded-xl border border-black/5 bg-white p-3 opacity-0 shadow-[0_20px_40px_-24px_rgba(0,60,40,0.45)] transition-opacity duration-300 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
-                  >
-                    {item.children.map((child) => (
-                      <li key={child.label} role="none">
-                        <Link
-                          role="menuitem"
-                          href={child.href}
-                          className="block rounded-lg px-4 py-2.5 text-npf-ink transition-colors hover:bg-[rgba(13,160,110,0.07)]"
-                        >
-                          {t(child.label)}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-
-          <ul
-            className={`flex min-w-0 items-center gap-2 ${scrolled ? "justify-end text-npf-ink" : "text-white"}`}
-          >
-            <li>
+            <div className="flex items-center gap-2">
+              <CallButton onDark={!scrolled} />
               <button
                 type="button"
                 onClick={() => setSearchOpen(true)}
                 aria-label={t("Search")}
                 aria-expanded={searchOpen}
-                className="grid size-10 place-items-center rounded-full transition-colors hover:bg-black/5"
+                className={`grid size-11 place-items-center rounded-full transition-colors ${
+                  scrolled ? "bg-npf-ink/[0.06] text-npf-ink" : "bg-white/15 text-white"
+                }`}
               >
                 <SearchIcon className="size-5" />
               </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                onClick={() => setBigText((v) => !v)}
-                aria-pressed={bigText}
-                aria-label={t("Larger text")}
-                title={t("Larger text")}
-                className={`grid size-10 place-items-center rounded-full transition-colors hover:bg-black/5 ${
-                  bigText ? "bg-npf-blue text-white hover:bg-npf-blue" : ""
-                }`}
-              >
-                <AccessibilityIcon className="size-5" />
-              </button>
-            </li>
-            <li className="flex">
-              <LanguageSwitch
-                className={
-                  scrolled
-                    ? "bg-black/[0.06] hover:bg-black/[0.1]"
-                    : "bg-white/15 hover:bg-white/25"
-                }
-              />
-            </li>
-            <li>
-              <AccountLink />
-            </li>
-            <li className="flex">
-              <CallButton />
-            </li>
-          </ul>
-        </nav>
-      </div>
+            </div>
+          </div>
+
+          {/* Desktop */}
+          <nav
+            aria-label={t("Main")}
+            className={`hidden h-[72px] items-center gap-8 xl:flex ${ink}`}
+          >
+            <Link
+              href="/app/home"
+              aria-label={t("Nigeria Police Force home")}
+              className={`h-10 shrink-0 transition-colors duration-500 ${
+                scrolled ? "text-npf-blue-deep" : "text-white"
+              }`}
+            >
+              <PoliceWordmark className="h-full w-auto" />
+            </Link>
+
+            <ul className="mx-auto flex items-center">
+              {navigation.map((item) => {
+                const here = item.href === current;
+                return (
+                  <li key={item.label} className="group relative">
+                    <Link
+                      href={item.href}
+                      aria-current={here ? "page" : undefined}
+                      aria-haspopup={item.children ? "true" : undefined}
+                      className={`relative inline-flex items-center gap-1 px-3 py-6 font-medium whitespace-nowrap transition-opacity duration-200 2xl:px-4 ${
+                        scrolled ? "before:bg-npf-gold" : "before:bg-npf-gold-soft"
+                      } before:absolute before:inset-x-3 before:bottom-4 before:h-0.5 before:origin-left before:rounded-full before:transition-transform before:duration-300 before:ease-[var(--ease-custom)] 2xl:before:inset-x-4 rtl:before:origin-right ${
+                        here
+                          ? "before:scale-x-100"
+                          : "opacity-85 before:scale-x-0 group-hover:opacity-100 group-hover:before:scale-x-100"
+                      }`}
+                    >
+                      {t(item.label)}
+                      {item.children ? (
+                        <ChevronDown className="size-4 opacity-70 transition-transform duration-200 group-hover:rotate-180" />
+                      ) : null}
+                    </Link>
+                    {item.children ? (
+                      // pt-2 is the bridge the pointer crosses from the link
+                      // to the panel without the hover dropping.
+                      <div className="invisible absolute top-full left-1/2 z-50 -translate-x-1/2 translate-y-1 pt-2 opacity-0 transition-[opacity,translate,visibility] duration-200 ease-out group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                        <ul className="w-[320px] rounded-2xl bg-white p-2 text-npf-ink shadow-[0_24px_48px_-20px_rgba(10,21,38,0.35)] ring-1 ring-npf-ink/[0.06]">
+                          {item.children.map((child) => (
+                            <li key={child.label}>
+                              <Link
+                                href={child.href}
+                                className="group/item flex items-center justify-between gap-3 rounded-xl px-4 py-3 transition-colors hover:bg-npf-blue/[0.06] hover:text-npf-blue-deep"
+                              >
+                                {t(child.label)}
+                                <ArrowRight className="size-4 shrink-0 -translate-x-1 opacity-0 transition-[opacity,translate] duration-200 ease-out group-hover/item:translate-x-0 group-hover/item:opacity-100 rtl:-scale-x-100" />
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
+                  </li>
+                );
+              })}
+            </ul>
+
+            <ul className="flex shrink-0 items-center gap-1">
+              <li>
+                <button
+                  type="button"
+                  onClick={() => setSearchOpen(true)}
+                  aria-label={t("Search")}
+                  aria-expanded={searchOpen}
+                  className={round}
+                >
+                  <SearchIcon className="size-5" />
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => setBigText((v) => !v)}
+                  aria-pressed={bigText}
+                  aria-label={t("Larger text")}
+                  title={t("Larger text")}
+                  className={`${round} ${
+                    bigText ? "bg-npf-blue text-white hover:bg-npf-blue" : ""
+                  }`}
+                >
+                  <AccessibilityIcon className="size-5" />
+                </button>
+              </li>
+              <li className="flex">
+                <LanguageSwitch className={`h-11 ${ghost}`} />
+              </li>
+              <li className="ms-1 flex">
+                <AccountLink />
+              </li>
+              <li className="ms-2 flex">
+                <CallButton onDark={!scrolled} />
+              </li>
+            </ul>
+          </nav>
+        </div>
 
       {/*
         Search overlay. The box needs room for its suggestion panel and the
@@ -277,7 +286,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         onClick={(e) => {
           if (e.target === searchDialog.current) setSearchOpen(false);
         }}
-        className="npf-search-sheet m-0 mt-0 w-full max-w-none bg-transparent p-4 pt-24 backdrop:bg-[rgba(4,20,14,0.6)] md:pt-28"
+        className="npf-search-sheet m-0 mt-0 w-full max-w-none bg-transparent p-4 pt-24 backdrop:bg-[rgba(10,21,38,0.6)] md:pt-28"
       >
         <div className="mx-auto w-full max-w-[680px]">
           {/* Mounted only while open so autoFocus fires on every opening. */}
@@ -315,14 +324,14 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         className="npf-drawer m-0 h-[100dvh] max-h-none w-[min(420px,88vw)] max-w-none overflow-y-auto bg-white p-6 shadow-2xl"
       >
         <div className="mb-8 flex items-center justify-between">
-          <span className="font-secondary text-lg font-bold text-npf-blue-deep">
-            {t("Main Menu")}
+          <span className="h-9 text-npf-blue-deep">
+            <PoliceWordmark className="h-full w-auto" />
           </span>
           <button
             type="button"
             onClick={() => setMenuOpen(false)}
             aria-label={t("Close menu")}
-            className="grid size-10 place-items-center rounded-full bg-black/5 text-npf-ink"
+            className="grid size-11 place-items-center rounded-full bg-npf-ink/[0.06] text-npf-ink transition-[background-color,scale] duration-150 ease-out hover:bg-npf-ink/10 active:scale-[0.97]"
           >
             <CloseIcon className="size-5" />
           </button>
@@ -333,17 +342,22 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             <li key={item.label}>
               <Link
                 href={item.href}
-                className="block rounded-lg px-3 py-3 text-lg text-npf-ink transition-colors hover:bg-[rgba(13,160,110,0.07)]"
+                aria-current={item.href === current ? "page" : undefined}
+                className={`block rounded-xl px-4 py-3 font-secondary text-xl font-bold transition-colors hover:bg-npf-blue/[0.06] ${
+                  item.href === current
+                    ? "bg-npf-blue/[0.06] text-npf-blue-deep"
+                    : "text-npf-ink"
+                }`}
               >
                 {t(item.label)}
               </Link>
               {item.children ? (
-                <ul className="mb-2 ms-3 border-s border-black/10 ps-3">
+                <ul className="mt-1 mb-3 ms-4 border-s border-npf-ink/10 ps-3">
                   {item.children.map((child) => (
                     <li key={child.label}>
                       <Link
                         href={child.href}
-                        className="block rounded-lg px-3 py-2 text-npf-body transition-colors hover:text-npf-blue"
+                        className="block rounded-lg px-3 py-2.5 text-npf-body transition-colors hover:bg-npf-blue/[0.06] hover:text-npf-blue-deep"
                       >
                         {t(child.label)}
                       </Link>
@@ -359,10 +373,11 @@ export default function Header({ solid = false }: { solid?: boolean }) {
           {/* The drawer is the only place a phone can reach the switch. */}
           <LanguageSwitch
             block
-            className="border border-black/10 py-3 text-npf-ink hover:bg-black/[0.04]"
+            className="border border-npf-ink/10 py-3 text-npf-ink hover:bg-npf-ink/[0.04]"
           />
         </div>
       </dialog>
-    </header>
+      </header>
+    </>
   );
 }

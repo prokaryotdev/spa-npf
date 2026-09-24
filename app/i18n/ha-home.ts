@@ -188,15 +188,6 @@ export const haHome: Record<string, string> = {
     "Sauke Manhajar Rundunar 'Yan Sandan Najeriya",
   "Services, updates, and alerts: right in your pocket.":
     "Ayyuka, sabuntawa, da faɗakarwa: nan a aljihunka.",
-  "Available on": "Ana samu a",
-  Updates: "Sabuntawa",
-  Alerts: "Faɗakarwa",
-  "Apply, pay, and track your requests.":
-    "Nema, biya, da bibiyar buƙatunka.",
-  "News and notices from the FCT Command.":
-    "Labarai da sanarwa daga Rundunar FCT.",
-  "Safety alerts the moment they go out.":
-    "Faɗakarwar tsaro da zarar an fitar da su.",
   "App Store": "App Store",
   "Google Play": "Google Play",
   "App Gallery": "App Gallery",

@@ -209,45 +209,53 @@ export const domains = [
     lead: "",
     body: "The Police Air Wing and our drone units watch over the Territory from above, holding the highest standards of security.",
     background: "/img/3d-static/drone-bg.jpg",
-    chips: [{ label: "Air Wing" }],
+    chips: [{ label: "Air Wing", icon: "/cms/icon_drone.svg" }],
   },
 ];
+
+/** One ground for every station type: they are tiers of one Command, not rival brands. */
+const station = theme("#0A1526", "#C4D8F8", "#7FB4FF");
 
 export const smartPoliceStations: InitiativeCard[] = [
   {
     title: "Command Headquarters",
     body: "The seat of the Federal Capital Territory Police Command at Garki, where the Commissioner of Police and the departments of the Command coordinate policing across the whole Territory.",
     image: "/npf/command-headquarters.jpg",
-    tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
-    theme: theme("#4D0D0D", "#fadfdf", "#eb8888"),
+    href: "/app/home/customer-centers",
+    tags: [],
+    theme: station,
   },
   {
     title: "Area Commands",
     body: "Nine Area Commands, among them Garki, Wuse, Asokoro, Maitama, Gwagwalada, Bwari, Kubwa, Karu and Lugbe, each supervising the divisions within its reach.",
     image: "/npf/area-commands.jpg",
-    tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
-    theme: theme("#050F22", "#C4D8F8", "#7FB4FF"),
+    href: "/app/home/customer-centers",
+    tags: [],
+    theme: station,
   },
   {
     title: "Divisional Headquarters",
     body: "The division is where most people meet the Force: the counter that takes a report, the charge room, the investigators, and the patrol teams that answer a call in the neighbourhood.",
     image: "/npf/divisional-headquarters.jpg",
-    tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
-    theme: theme("#3C3E44", "#fcfcfc", "#C8CAD0"),
+    href: "/app/home/customer-centers",
+    tags: [],
+    theme: station,
   },
   {
     title: "Police Posts",
     body: "Smaller outposts placed in the satellite towns and rural wards of the six Area Councils: Abuja Municipal, Gwagwalada, Kuje, Bwari, Kwali and Abaji. Each is held by a patrol team equipped for the roads it covers, which cuts the time it takes to reach an incident reported nearby.",
     image: "/npf/police-posts.jpg",
-    tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
-    theme: theme("#2D3742", "#f5f7f8", "#b9c3cf"),
+    href: "/app/home/customer-centers",
+    tags: [],
+    theme: station,
   },
   {
     title: "Marine Police Base",
     body: "The Marine Police Base gives the communities along the waterways of the Territory direct access to a police response on the water, covering the dams, the lakes and the river crossings a patrol car cannot reach.",
     image: "/npf/marine-police-base.jpg",
-    tags: [{ label: "Explore more", icon: "/cms/info_circle_3bd5c42108.svg" }],
-    theme: theme("#000000", "#bfbfbf", "#8c8c8c"),
+    href: "/app/home/customer-centers",
+    tags: [],
+    theme: station,
   },
 ];
 

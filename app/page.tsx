@@ -4,7 +4,7 @@ import Domains from "./components/Domains";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import { AlertIcon, ArrowRight, BellIcon, FileIcon } from "./components/icons";
+import { ArrowRight } from "./components/icons";
 import ModernPolicing from "./components/ModernPolicing";
 import Pillars from "./components/Pillars";
 import Community from "./components/Community";
@@ -223,111 +223,115 @@ export default async function Home() {
               <ul
                 data-reveal
                 style={{ "--reveal-delay": "180ms" } as React.CSSProperties}
-                className="mt-10 max-w-lg divide-y divide-white/10 border-y border-white/10 md:mt-12"
+                className="mt-8 flex flex-wrap gap-3 md:mt-10"
               >
-                {[
-                  {
-                    Icon: FileIcon,
-                    title: t("Services"),
-                    body: t("Apply, pay, and track your requests."),
-                  },
-                  {
-                    Icon: BellIcon,
-                    title: t("Updates"),
-                    body: t("News and notices from the FCT Command."),
-                  },
-                  {
-                    Icon: AlertIcon,
-                    title: t("Alerts"),
-                    body: t("Safety alerts the moment they go out."),
-                  },
-                ].map(({ Icon, title, body }) => (
-                  <li key={title} className="flex items-center gap-4 py-4">
-                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/[0.08] text-[#8cc4f5] ring-1 ring-white/10">
-                      <Icon className="size-5" />
-                    </span>
-                    <span>
-                      <span className="block font-semibold">{title}</span>
-                      <span className="block text-sm text-white/70">
-                        {body}
-                      </span>
-                    </span>
+                {storeBadges.map((badge) => (
+                  <li key={badge.label}>
+                    <a
+                      href="https://fct.npf.gov.ng/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block rounded-lg shadow-[0_10px_24px_-12px_rgba(0,0,0,0.6)] transition-[translate,box-shadow] duration-300 ease-[var(--ease-custom)] hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-12px_rgba(0,0,0,0.7)] active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                    >
+                      <Image
+                        src={badge.src}
+                        alt={badge.label}
+                        width={badge.width}
+                        height={40}
+                        className="h-12 w-auto"
+                      />
+                    </a>
                   </li>
                 ))}
               </ul>
-
-              <div
-                data-reveal
-                style={{ "--reveal-delay": "270ms" } as React.CSSProperties}
-                className="mt-10 md:mt-12"
-              >
-                <h3 className="text-sm font-semibold text-white/70">
-                  {t("Available on")}
-                </h3>
-                <ul className="mt-4 flex flex-wrap gap-3">
-                  {storeBadges.map((badge) => (
-                    <li key={badge.label}>
-                      <a
-                        href="https://fct.npf.gov.ng/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block rounded-lg transition-transform duration-300 ease-[var(--ease-custom)] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-                      >
-                        <Image
-                          src={badge.src}
-                          alt={badge.label}
-                          width={badge.width}
-                          height={40}
-                          className="h-12 w-auto"
-                        />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
             </div>
 
-            {/* The phone overhangs the band's bottom edge and is clipped by
-                it, so it reads as rising out of the floor. */}
             <div
               aria-hidden
               data-reveal
               style={{ "--reveal-delay": "140ms" } as React.CSSProperties}
-              className="relative mx-auto -mb-44 w-[272px] self-end md:-mb-52 md:w-[320px] lg:-mb-28 lg:w-[360px]"
+              className="relative mx-auto w-[216px] sm:w-[240px] lg:w-[270px] xl:w-[290px]"
             >
-              <span className="pointer-events-none absolute top-[38%] left-1/2 aspect-square w-[160%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#2a8fe566_0%,transparent_62%)]" />
-              {[130, 175, 220].map((size) => (
+              {/* Light and the brand rings, centred on the phone. */}
+              <span className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[240%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(58,120,205,0.6),rgba(44,95,168,0.16)_55%,transparent)]" />
+              {[150, 205, 260].map((size) => (
                 <span
                   key={size}
-                  className="pointer-events-none absolute top-[38%] left-1/2 aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.09]"
+                  className="pointer-events-none absolute top-1/2 left-1/2 aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.08]"
                   style={{ width: `${size}%` }}
                 />
               ))}
-              <div className="relative rounded-[3rem] bg-[#0a1322] p-2.5 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.7)] ring-1 ring-white/15">
-                {/* A status-bar strip keeps the notch off the site's own
-                    header in the capture. */}
-                <div className="relative aspect-[9/19.5] overflow-hidden rounded-[2.5rem] bg-black">
+              {/* The shadow it stands on. */}
+              <span className="pointer-events-none absolute inset-x-[8%] -bottom-8 h-10 rounded-[50%] bg-black/55 blur-xl" />
+
+              {/* Side buttons. */}
+              <span className="absolute top-[18%] -left-[3px] h-8 w-[3px] rounded-s-sm bg-[#1c2a40]" />
+              <span className="absolute top-[25%] -left-[3px] h-12 w-[3px] rounded-s-sm bg-[#1c2a40]" />
+              <span className="absolute top-[22%] -right-[3px] h-16 w-[3px] rounded-e-sm bg-[#1c2a40]" />
+
+              <div className="relative rounded-[3rem] bg-[linear-gradient(150deg,#34465f_0%,#0a1322_22%,#0a1322_78%,#2a3a52_100%)] p-2.5 shadow-[0_40px_80px_-24px_rgba(0,0,0,0.8)] ring-1 ring-white/15">
+                <div className="relative aspect-[9/17.5] overflow-hidden rounded-[2.4rem] bg-black">
+                  {/* A status bar keeps the island off the capture's own
+                      header and makes the screen read as an app. */}
+                  <div className="absolute inset-x-0 top-0 z-10 flex h-10 items-center justify-between bg-black px-[10%] text-xs sm:text-[13px] font-semibold tabular-nums">
+                    <span>9:41</span>
+                    <span className="flex items-center gap-1.5">
+                      <svg
+                        viewBox="0 0 17 11"
+                        className="h-2.5 w-auto fill-white"
+                      >
+                        <rect x="0" y="7" width="3" height="4" rx="0.7" />
+                        <rect x="4.5" y="5" width="3" height="6" rx="0.7" />
+                        <rect x="9" y="2.5" width="3" height="8.5" rx="0.7" />
+                        <rect x="13.5" y="0" width="3" height="11" rx="0.7" />
+                      </svg>
+                      <svg viewBox="0 0 26 12" className="h-3 w-auto">
+                        <rect
+                          x="0.5"
+                          y="0.5"
+                          width="22"
+                          height="11"
+                          rx="3"
+                          fill="none"
+                          stroke="white"
+                          strokeOpacity="0.4"
+                        />
+                        <rect
+                          x="2"
+                          y="2"
+                          width="16"
+                          height="8"
+                          rx="1.6"
+                          fill="white"
+                        />
+                        <rect
+                          x="23.8"
+                          y="4"
+                          width="1.6"
+                          height="4"
+                          rx="0.8"
+                          fill="white"
+                          fillOpacity="0.4"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <span className="absolute top-2.5 left-1/2 z-10 h-6 w-[30%] -translate-x-1/2 rounded-full bg-[#111]" />
                   <div className="absolute inset-x-0 top-10 bottom-0">
                     <Image
                       src="/img/app-preview.png"
                       alt=""
                       fill
-                      sizes="(min-width: 1024px) 360px, (min-width: 768px) 320px, 272px"
+                      sizes="(min-width: 1280px) 290px, (min-width: 1024px) 270px, (min-width: 640px) 240px, 216px"
                       className="object-cover object-top"
                     />
                   </div>
-                  <span className="absolute top-2.5 left-1/2 h-6 w-[88px] -translate-x-1/2 rounded-full bg-[#111]" />
+                  {/* Glass. */}
+                  <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,0.09)_0%,transparent_32%)]" />
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Sinks the phone into the floor instead of slicing whatever line
-              of the capture happens to sit on the edge. */}
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-32 bg-[linear-gradient(to_top,var(--color-npf-blue-deep)_40%,transparent)] lg:h-48"
-          />
         </section>
       </main>
 
