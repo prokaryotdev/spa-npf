@@ -85,15 +85,17 @@ export default async function Home() {
         <Hero />
 
         {/* The five ways in, on the dark seam under the hero, so the first
-            thing past the photograph is what you came to do. */}
+            thing past the photograph is what you came to do. Wide screens stand
+            them on the floor with square feet, tabs rising out of the white
+            page below. */}
         <section
           aria-labelledby="quick-services"
-          className="relative -mt-px bg-linear-to-b from-black to-npf-night pt-2 pb-(--npf-head-gap)"
+          className="relative -mt-px bg-linear-to-b from-black to-npf-night pt-2 pb-(--npf-head-gap) lg:pb-0"
         >
           <h2 id="quick-services" className="sr-only">
             {t("Popular services")}
           </h2>
-          <ul className="npf-container grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-(--npf-gap)">
+          <ul className="npf-container grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-2">
             {quickServices.map((service, i) => (
               <li
                 key={service.title}
@@ -102,27 +104,25 @@ export default async function Home() {
               >
                 <Link
                   href={service.href}
-                  className="npf-card group flex flex-col gap-4 p-5 focus-visible:outline-offset-4 focus-visible:outline-npf-gold-soft md:p-6"
+                  className="npf-card group flex flex-col items-center px-4 pt-6 pb-5 text-center focus-visible:outline-offset-4 focus-visible:outline-npf-gold-soft md:px-5 md:pt-7 md:pb-6 lg:min-h-[242px] lg:rounded-b-none lg:pt-8 lg:pb-10 lg:shadow-none"
                 >
-                  <span className="flex items-start justify-between gap-3">
-                    <span className="relative block size-12 shrink-0">
-                      <Image
-                        src={service.icon}
-                        alt=""
-                        fill
-                        sizes="48px"
-                        className="object-contain"
-                      />
-                    </span>
-                    <ArrowRight className="size-5 shrink-0 text-npf-blue transition-[translate] group-hover:translate-x-1 rtl:-scale-x-100 rtl:group-hover:-translate-x-1" />
+                  <span className="relative block size-14 shrink-0 transition-[scale] duration-(--dur-hover) ease-(--ease-out) group-hover:scale-110">
+                    <Image
+                      src={service.icon}
+                      alt=""
+                      fill
+                      sizes="56px"
+                      className="object-contain"
+                    />
                   </span>
-                  <span className="mt-auto">
-                    <span className="npf-h5 block text-npf-ink">
-                      {service.title}
-                    </span>
-                    <span className="npf-small mt-1.5 hidden text-npf-muted sm:block">
-                      {service.body}
-                    </span>
+                  {/* Two lines tall whatever the title (three on the narrow five-up
+                      row, where the longest title needs it), so a one-line title and
+                      a two-line one start their text on the same line. */}
+                  <span className="npf-h5 mt-4 flex min-h-[2lh] items-center lg:max-[1400px]:min-h-[3lh] justify-center text-balance text-npf-ink">
+                    {service.title}
+                  </span>
+                  <span className="npf-small mt-2 hidden max-w-[24ch] text-pretty text-npf-steel sm:block">
+                    {service.body}
                   </span>
                 </Link>
               </li>
