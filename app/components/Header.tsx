@@ -2,13 +2,17 @@
 
 import Link from "../i18n/Link";
 import { useCallback, useEffect, useState } from "react";
-import { navigation as navigationSource } from "../content";
+import {
+  emergencyNumbers as emergencyNumbersSource,
+  navigation as navigationSource,
+} from "../content";
 import { useT, useLocalized } from "../i18n/client";
 import AccountLink from "./AccountLink";
 import LanguageSwitch from "./LanguageSwitch";
 import ServiceSearch from "./ServiceSearch";
 import {
   AccessibilityIcon,
+  CallIcon,
   ChevronDown,
   CloseIcon,
   MenuIcon,
@@ -16,6 +20,41 @@ import {
 } from "./icons";
 import { GovernmentWordmark, PoliceWordmark } from "./Wordmark";
 import { useDialog } from "./useDialog";
+
+/**
+ * The emergency line, one tap away on every page. It lives in the header
+ * because the header is the one thing that never scrolls out of reach, so
+ * nothing has to float over the content to keep 112 close. It is the alarm
+ * red, the one place the header breaks from navy, with white type that holds
+ * on the dark hero and the white scrolled bar alike. From lg a small
+ * "Emergency" caption says what the number is for; below that the badge and
+ * the number carry it alone. The number comes from content.ts, like the
+ * footer's copy of it.
+ */
+function CallButton() {
+  const t = useT();
+  const [emergency] = useLocalized(emergencyNumbersSource);
+  return (
+    <a
+      href={`tel:${emergency.number}`}
+      className="group inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-[#b30900] ps-1.5 pe-4 text-white shadow-[0_10px_22px_-10px_rgba(179,9,0,0.7),inset_0_1px_0_rgba(255,255,255,0.2)] transition-[background-color,scale] duration-150 ease-out hover:bg-[#960800] active:scale-[0.97]"
+    >
+      <span className="grid size-8 shrink-0 place-items-center rounded-full bg-white text-[#b30900]">
+        <CallIcon className="size-4 transition-transform duration-300 ease-out group-hover:-rotate-12" />
+      </span>
+      <span className="flex flex-col font-secondary leading-none">
+        <span className="mb-0.5 hidden text-[10px] font-bold text-white/80 lg:block">
+          {t("Emergency")}
+        </span>
+        <span className="sr-only">{t("Call")} </span>
+        <span className="text-base font-bold tabular-nums">
+          {emergency.number}
+        </span>
+      </span>
+      <span className="sr-only">, {emergency.note}</span>
+    </a>
+  );
+}
 
 /**
  * `solid` is for pages that open on content rather than a dark hero, where the
@@ -60,8 +99,8 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         <div
           className={`flex items-center justify-between overflow-hidden transition-all duration-500 ease-[var(--ease-custom)] ${
             atTop
-              ? "pt-5 pb-2 md:h-[86px] md:translate-y-0 md:opacity-100"
-              : "pt-5 pb-2 md:h-0 md:-translate-y-3 md:py-0 md:opacity-0"
+              ? "pt-5 pb-2 lg:h-[86px] lg:translate-y-0 lg:opacity-100"
+              : "pt-5 pb-2 lg:h-0 lg:-translate-y-3 lg:py-0 lg:opacity-0"
           }`}
         >
           <button
@@ -69,18 +108,18 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             onClick={() => setMenuOpen(true)}
             aria-label={t("Open menu")}
             aria-expanded={menuOpen}
-            className={`grid size-11 place-items-center rounded-full transition-colors md:hidden ${
+            className={`grid size-11 place-items-center rounded-full transition-colors lg:hidden ${
               scrolled ? "bg-black/5 text-npf-ink" : "bg-white/15 text-white"
             }`}
           >
             <MenuIcon className="size-5" />
           </button>
 
-          <div className="flex w-auto items-center gap-6 md:w-full md:justify-between">
+          <div className="flex w-auto items-center gap-6 lg:w-full lg:justify-between">
             <Link
               href="/app/home"
               aria-label={t("Federal Republic of Nigeria")}
-              className={`hidden h-[58px] transition-colors duration-500 md:block ${
+              className={`hidden h-[58px] transition-colors duration-500 lg:block ${
                 scrolled ? "text-npf-ink" : "text-white"
               }`}
             >
@@ -89,7 +128,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             <Link
               href="/app/home"
               aria-label={t("Nigeria Police Force home")}
-              className={`h-9 transition-colors duration-500 md:h-11 ${
+              className={`h-9 transition-colors duration-500 lg:h-11 ${
                 scrolled ? "text-npf-blue-deep" : "text-white"
               }`}
             >
@@ -97,23 +136,26 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             </Link>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setSearchOpen(true)}
-            aria-label={t("Search")}
-            aria-expanded={searchOpen}
-            className={`grid size-11 place-items-center rounded-full transition-colors md:hidden ${
-              scrolled ? "bg-black/5 text-npf-ink" : "bg-white/15 text-white"
-            }`}
-          >
-            <SearchIcon className="size-5" />
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <CallButton />
+            <button
+              type="button"
+              onClick={() => setSearchOpen(true)}
+              aria-label={t("Search")}
+              aria-expanded={searchOpen}
+              className={`grid size-11 place-items-center rounded-full transition-colors ${
+                scrolled ? "bg-black/5 text-npf-ink" : "bg-white/15 text-white"
+              }`}
+            >
+              <SearchIcon className="size-5" />
+            </button>
+          </div>
         </div>
 
         {/* Desktop nav bar */}
         <nav
           aria-label={t("Main")}
-          className={`mb-2 hidden h-14 items-center justify-between transition-colors duration-500 md:flex ${
+          className={`mb-2 hidden h-14 items-center justify-between transition-colors duration-500 lg:flex ${
             scrolled ? "px-0" : "rounded-full bg-white/10 pe-3 backdrop-blur-md"
           }`}
         >
@@ -216,6 +258,9 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             </li>
             <li>
               <AccountLink />
+            </li>
+            <li className="flex">
+              <CallButton />
             </li>
           </ul>
         </nav>

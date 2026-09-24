@@ -9,7 +9,6 @@ import ModernPolicing from "./components/ModernPolicing";
 import Pillars from "./components/Pillars";
 import Community from "./components/Community";
 import Stations from "./components/Stations";
-import StickyBar from "./components/StickyBar";
 import { getT, getLocalized } from "./i18n/server";
 import {
   community as communitySource,
@@ -333,7 +332,6 @@ export default async function Home() {
       </main>
 
       <Footer />
-      <StickyBar />
     </>
   );
 }

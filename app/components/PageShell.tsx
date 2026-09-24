@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "../i18n/Link";
 import Footer from "./Footer";
 import Header from "./Header";
-import StickyBar from "./StickyBar";
 import { ArrowRight, ChevronRight } from "./icons";
 import { getT } from "../i18n/server";
 
@@ -84,7 +83,6 @@ export async function PageShell({
         {children}
       </main>
       <Footer />
-      <StickyBar />
     </>
   );
 }

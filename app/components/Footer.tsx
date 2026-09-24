@@ -34,7 +34,7 @@ export default function Footer() {
   return (
     <footer
       id="staticFooter"
-      className="npf-on-night w-full bg-npf-night pb-32 text-white/70"
+      className="npf-on-night w-full bg-npf-night pb-12 text-white/70"
     >
       {/* Emergency */}
       <section
