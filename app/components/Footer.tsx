@@ -21,8 +21,11 @@ const socials = ["Facebook", "Youtube", "Twitter", "Instagram"] as const;
  * because it is the one thing on the page someone may need in a hurry; the
  * other lines sit beside it as a quieter directory. Then the site map, the
  * newsletter on a faint blue ground, and a sign-off with crest and legal.
+ *
+ * `showApps` drops the store badges where the page above already offers
+ * them (the homepage's app band).
  */
-export default function Footer() {
+export default function Footer({ showApps = true }: { showApps?: boolean }) {
   const [lead, ...others] = useLocalized(emergencyNumbersSource);
   const footerColumns = useLocalized(footerColumnsSource);
   const legalLinks = useLocalized(legalLinksSource);
@@ -37,89 +40,76 @@ export default function Footer() {
       {/* Emergency */}
       <section
         aria-labelledby="footer-emergency"
-        className="npf-container pt-16 pb-14 md:pt-24 md:pb-20"
+        className="npf-container pt-(--npf-section-y) pb-(--npf-head-gap)"
       >
-        <h2
-          id="footer-emergency"
-          className="mb-8 font-secondary text-3xl font-bold tracking-[-0.02em] text-balance text-npf-ink md:mb-10 md:text-4xl"
-        >
+        <h2 id="footer-emergency" className="npf-h3 mb-8 text-npf-ink">
           {t("Emergency Numbers")}
         </h2>
-        <div className="grid gap-4 lg:grid-cols-12 lg:gap-6">
+        <div className="grid gap-(--npf-gap) lg:grid-cols-12">
           {/* 112 is the one line someone may need in a hurry, so it gets the
               alarm red as a whole surface and the whole surface dials. A warm
-              glow in the top corner deepens to dark red at the bottom. */}
+              light in the top corner deepens to dark red at the foot. */}
           <a
             href={`tel:${lead.number}`}
-            className="group flex flex-col justify-between gap-8 rounded-2xl bg-[#b30900] bg-[radial-gradient(90%_80%_at_100%_0%,rgba(255,120,90,0.35),transparent_60%),linear-gradient(135deg,#c9150a_0%,#b30900_45%,#7a0500_100%)] p-6 text-white shadow-[0_20px_40px_-24px_rgba(120,6,0,0.55)] ring-1 ring-white/20 ring-inset transition-[box-shadow,translate] duration-300 ease-[var(--ease-custom)] hover:-translate-y-0.5 hover:shadow-[0_28px_48px_-24px_rgba(120,6,0,0.6)] focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[#b30900] active:translate-y-0 md:p-8 lg:col-span-7"
+            className="group flex flex-col justify-between gap-8 rounded-tile bg-npf-alert bg-[radial-gradient(90%_80%_at_100%_0%,rgb(255_120_90/0.35),transparent_60%),linear-gradient(135deg,var(--color-npf-alert)_40%,var(--color-npf-alert-deep)_100%)] p-(--npf-pad) text-white shadow-raised transition-[translate] hover:-translate-y-1 focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-npf-alert lg:col-span-7"
           >
             <span className="flex flex-wrap items-center justify-between gap-3">
-              <span className="font-secondary text-xl font-bold md:text-2xl">
-                {lead.label}
-              </span>
+              <span className="npf-h4">{lead.label}</span>
               {lead.note ? (
-                <span className="rounded-full bg-white/12 px-3 py-1 text-sm font-medium text-white ring-1 ring-white/20 ring-inset">
+                <span className="npf-caption rounded-full bg-white/12 px-3 py-1.5 ring-1 ring-white/20 ring-inset">
                   {lead.note}
                 </span>
               ) : null}
             </span>
             <span className="flex flex-wrap items-end justify-between gap-x-6 gap-y-5">
-              <span className="font-secondary text-[clamp(5rem,3.5rem+5vw,7.5rem)] leading-[0.78] font-bold tracking-[-0.035em] tabular-nums">
-                {lead.number}
-              </span>
+              <span className="npf-display-xl tabular-nums">{lead.number}</span>
               {/* A real button shape, so nobody wonders whether the card
                   dials. The ring ripples out like a line ringing. */}
-              <span className="inline-flex items-center gap-3 rounded-full bg-white py-1.5 ps-1.5 pe-5 font-secondary font-bold text-[#b30900] transition-transform duration-300 ease-[var(--ease-custom)] group-hover:scale-[1.04] group-active:scale-95 md:text-lg">
-                <span className="relative grid size-10 place-items-center rounded-full bg-[#b30900] text-white md:size-11">
+              <span className="npf-btn bg-white text-npf-alert">
+                {t("Call")} {lead.number}
+                <span className="npf-btn-disc relative bg-npf-alert text-white">
                   <span
                     aria-hidden
-                    className="absolute inset-0 rounded-full ring-2 ring-[#b30900]/50 motion-safe:animate-[npf-ring_2.4s_cubic-bezier(0.16,1,0.3,1)_infinite]"
+                    className="absolute inset-0 rounded-full ring-2 ring-npf-alert/50 motion-safe:animate-[npf-ring_2.4s_var(--ease-out)_infinite]"
                   />
-                  <PhoneCallIcon className="size-5 transition-transform duration-300 group-hover:rotate-[-12deg]" />
+                  <PhoneCallIcon className="size-[18px] transition-[rotate] group-hover:-rotate-12" />
                 </span>
-                {t("Call")} {lead.number}
               </span>
             </span>
           </a>
 
-          {/* The other lines are quieter white cards stacked to the red card's
-              height, with the call button pinned right so they line up
-              however long a translated label runs. */}
+          {/* The other lines are quieter white cards stacked to the red
+              card's height, with the call button pinned to the end so they
+              line up however long a translated label runs. */}
           <ul className="flex flex-col gap-3 lg:col-span-5">
-            {others.map((item) => {
-              return (
-                <li key={item.number} className="flex flex-1">
-                  <a
-                    href={`tel:${item.number}`}
-                    className="group flex flex-1 items-center justify-between gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_14px_30px_-22px_rgba(27,63,122,0.45)] ring-1 ring-npf-ink/10 transition-[box-shadow,translate] duration-300 ease-[var(--ease-custom)] ring-inset hover:-translate-y-0.5 hover:shadow-[0_22px_40px_-22px_rgba(27,63,122,0.55)] hover:ring-npf-blue/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue active:translate-y-0 md:px-6"
-                  >
-                    {/* Read like a small 112 card: what it is, then the number
-                        big underneath. */}
-                    <span className="flex min-w-0 flex-col">
-                      <span className="font-secondary font-bold text-npf-ink md:text-lg">
-                        {item.label}
-                        {item.note ? (
-                          <span className="font-primary text-sm font-normal text-npf-muted">
-                            {" · "}
-                            {item.note}
-                          </span>
-                        ) : null}
-                      </span>
-                      <span className="mt-1 font-secondary text-3xl leading-none font-bold tracking-[-0.03em] text-npf-ink tabular-nums transition-colors duration-200 group-hover:text-npf-blue md:text-4xl">
-                        {item.number}
-                      </span>
+            {others.map((item) => (
+              <li key={item.number} className="flex flex-1">
+                <a
+                  href={`tel:${item.number}`}
+                  className="npf-card group flex flex-1 items-center justify-between gap-4 px-5 py-4 md:px-6"
+                >
+                  <span className="flex min-w-0 flex-col gap-1">
+                    <span className="flex flex-wrap items-baseline gap-x-2">
+                      <span className="npf-h5 text-npf-ink">{item.label}</span>
+                      {item.note ? (
+                        <span className="npf-small text-npf-muted">
+                          {item.note}
+                        </span>
+                      ) : null}
                     </span>
-                    {/* The same button as 112, in the Force's blue. */}
-                    <span className="inline-flex h-12 shrink-0 items-center gap-2.5 rounded-full bg-npf-blue ps-1.5 pe-5 font-secondary font-bold text-white shadow-[0_8px_18px_-10px_rgba(27,63,122,0.7)] transition-[background-color,scale] duration-300 ease-[var(--ease-custom)] group-hover:scale-[1.04] group-hover:bg-npf-blue-deep group-active:scale-95 md:text-lg">
-                      <span className="grid size-9 place-items-center rounded-full bg-white text-npf-blue md:size-10">
-                        <PhoneCallIcon className="size-4 transition-transform duration-300 group-hover:rotate-[-12deg] md:size-5" />
-                      </span>
-                      {t("Call")}
+                    <span className="npf-h3 leading-none text-npf-ink tabular-nums transition-colors group-hover:text-npf-blue">
+                      {item.number}
                     </span>
-                  </a>
-                </li>
-              );
-            })}
+                  </span>
+                  <span className="npf-btn npf-btn-primary">
+                    {t("Call")}
+                    <span className="npf-btn-disc">
+                      <PhoneCallIcon className="size-[18px] transition-[rotate] group-hover:-rotate-12" />
+                    </span>
+                  </span>
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
@@ -134,28 +124,29 @@ export default function Footer() {
           return (
             <div
               key={col.heading}
-              className="border-b border-npf-ink/10 py-4 last:border-none md:border-none md:py-0"
+              className="border-b border-npf-ink/10 py-2 last:border-none md:border-none md:py-0"
             >
-              <h2 className="font-secondary font-bold text-npf-ink md:mb-5">
+              <h2 className="npf-h5 text-npf-ink md:mb-5">
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? null : col.heading)}
                   aria-expanded={isOpen}
-                  className="flex w-full items-center justify-between text-start md:pointer-events-none"
+                  className="flex min-h-11 w-full items-center justify-between text-start md:pointer-events-none md:min-h-0"
                 >
                   {col.heading}
                   <ChevronDown
-                    className={`size-5 transition-transform duration-300 md:hidden ${isOpen ? "rotate-180" : ""}`}
+                    className={`size-5 transition-[rotate] md:hidden ${isOpen ? "rotate-180" : ""}`}
                   />
                 </button>
               </h2>
-              {/* `invisible` takes a closed list out of the tab order on
-                  phones; from md up the links always show. */}
+              {/* Closed lists are display:none on phones, which also takes
+                  them out of the tab order; from md up the links always
+                  show. Opening fades in rather than animating height. */}
               <ul
-                className={`space-y-3 overflow-hidden transition-all duration-300 md:visible md:max-h-none md:pt-0 md:opacity-100 ${
+                className={`space-y-3 pt-2 pb-3 md:block md:py-0 ${
                   isOpen
-                    ? "max-h-[420px] pt-4 opacity-100"
-                    : "invisible max-h-0 opacity-0"
+                    ? "block animate-[reveal-up_var(--dur-hover)_var(--ease-out)]"
+                    : "hidden"
                 }`}
               >
                 {col.links.map((link) => {
@@ -170,7 +161,7 @@ export default function Footer() {
                       >
                         {link.label}
                         {external ? (
-                          <ArrowUpRight className="size-4 shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 rtl:-scale-x-100" />
+                          <ArrowUpRight className="size-4 shrink-0 transition-[translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100" />
                         ) : null}
                       </Link>
                     </li>
@@ -184,16 +175,13 @@ export default function Footer() {
 
       {/* Newsletter */}
       <div className="npf-container">
-        <div className="grid gap-6 rounded-2xl bg-npf-blue/[0.045] p-6 md:p-10 lg:grid-cols-2 lg:items-center lg:gap-12">
+        <div className="grid gap-6 rounded-tile bg-npf-mist p-(--npf-pad) lg:grid-cols-2 lg:items-center lg:gap-12">
           <div>
-            <h2
-              id="footer-newsletter"
-              className="mb-2 font-secondary text-2xl font-bold tracking-[-0.01em] text-balance text-npf-ink"
-            >
-              {t("Subscribe to our Newsletter")}
+            <h2 id="footer-newsletter" className="npf-h4 mb-2 text-npf-ink">
+              {t("Get news from the Command")}
             </h2>
-            <p className="text-pretty">
-              {t("Stay updated with the latest news and announcements.")}
+            <p className="npf-body">
+              {t("Announcements, safety advice and events, sent to your inbox.")}
             </p>
           </div>
           {/* ponytail: no mailing-list backend, so this confirms and stops. */}
@@ -215,18 +203,18 @@ export default function Footer() {
                 required
                 autoComplete="email"
                 placeholder={t("Email address")}
-                className="h-14 w-full rounded-full border border-npf-ink/15 bg-white ps-6 pe-36 text-npf-ink caret-npf-blue transition-[border-color,box-shadow] placeholder:text-npf-muted hover:border-npf-ink/30 focus:border-npf-blue focus:shadow-[0_0_0_4px_rgba(27,63,122,0.12)] focus:outline-none"
+                className="h-15 w-full rounded-full border border-npf-ink/15 bg-white ps-6 pe-40 text-npf-ink caret-npf-blue transition-[border-color,box-shadow] placeholder:text-npf-muted hover:border-npf-ink/30 focus:border-npf-blue focus:shadow-[0_0_0_4px_rgb(27_63_122/0.12)] focus:outline-none"
               />
               <button
                 type="submit"
-                className="absolute inset-y-1.5 end-1.5 rounded-full bg-npf-blue px-6 font-secondary font-bold text-white transition-[background-color,scale] duration-200 hover:bg-npf-blue-deep active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue"
+                className="npf-btn npf-btn-primary absolute end-1.5 top-1.5"
               >
                 {t("Subscribe")}
               </button>
             </div>
             <p
               aria-live="polite"
-              className="mt-2 min-h-5 ps-6 text-sm text-npf-ok"
+              className="npf-small mt-2 min-h-5 ps-6 text-npf-ok"
             >
               {subscribed ? t("Thanks, you are on the list.") : ""}
             </p>
@@ -252,35 +240,37 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={name}
-                className="grid size-11 place-items-center rounded-full text-npf-ink ring-1 ring-npf-ink/12 ring-inset transition-[background-color,color,box-shadow] duration-200 hover:bg-npf-blue hover:text-white hover:ring-npf-blue"
+                className="npf-icon-btn"
               >
                 <SocialIcon name={name} className="size-5" />
               </a>
             ))}
           </div>
-          <div className="flex flex-wrap gap-2.5">
-            {storeBadges.map((badge) => (
-              <a
-                key={badge.label}
-                href="https://fct.npf.gov.ng/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-lg transition-[opacity,translate] duration-200 hover:-translate-y-0.5 hover:opacity-90"
-              >
-                <Image
-                  src={badge.src}
-                  alt={badge.label}
-                  width={badge.width}
-                  height={40}
-                />
-              </a>
-            ))}
-          </div>
+          {showApps ? (
+            <div className="flex flex-wrap gap-2.5">
+              {storeBadges.map((badge) => (
+                <a
+                  key={badge.label}
+                  href="https://fct.npf.gov.ng/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-chip transition-[translate] hover:-translate-y-0.5"
+                >
+                  <Image
+                    src={badge.src}
+                    alt={badge.label}
+                    width={badge.width}
+                    height={40}
+                  />
+                </a>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
 
       {/* Legal */}
-      <div className="npf-container flex flex-col gap-6 border-t border-npf-ink/10 pt-8 pb-12 text-sm text-npf-muted lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+      <div className="npf-small npf-container flex flex-col gap-6 border-t border-npf-ink/10 pt-8 pb-12 text-npf-muted lg:flex-row lg:items-start lg:justify-between lg:gap-12">
         <div className="space-y-2">
           <p className="font-medium text-npf-ink">
             {t(

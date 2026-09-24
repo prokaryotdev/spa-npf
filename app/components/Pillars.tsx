@@ -3,40 +3,44 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { pillars as pillarsSource } from "../content";
-import { chapter, useScrollProgress } from "./useScrollProgress";
+import { scrollToProgress, useScrollProgress } from "./useScrollProgress";
 import { useT, useLocalized } from "../i18n/client";
 
 // The frame is drawn in a 100-unit box so the arc length is a known number.
 const R = 48;
 const ARC = 2 * Math.PI * R;
+const at = (fn: (a: number) => number, p: number) =>
+  (50 + R * fn(p * 2 * Math.PI)).toFixed(3);
 
 /**
  * The signature chapter: the section pins for three screens while Safe,
  * Secure and Together hand off one at a time and the portrait inside the
  * ring changes with them. The ring's arc is the reader's place in the pin.
+ *
+ * The arc, its tip and the tab rules follow the scroll by having their
+ * attributes written directly each frame; only the chapter change goes
+ * through React.
  */
 export default function Pillars() {
   const pillars = useLocalized(pillarsSource);
   const t = useT();
+  const n = pillars.length;
   const section = useRef<HTMLElement>(null);
-  const progress = useScrollProgress(section);
-  const active = chapter(progress, pillars.length);
-  // Where the arc's leading end sits; rounded so server and client agree.
-  const tip = (fn: (a: number) => number) =>
-    +(50 + R * fn(progress * 2 * Math.PI)).toFixed(3);
+  const arc = useRef<SVGCircleElement>(null);
+  const tip = useRef<SVGGElement>(null);
+  const rules = useRef<(HTMLSpanElement | null)[]>([]);
 
-  // Land just inside chapter i of the pin.
-  const goTo = (i: number) => {
-    const el = section.current;
-    if (!el) return;
-    const span = el.offsetHeight - window.innerHeight;
-    window.scrollTo({
-      top: el.offsetTop + span * ((i + 0.08) / pillars.length),
-      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
+  const active = useScrollProgress(section, n, (p) => {
+    arc.current?.setAttribute("stroke-dashoffset", String(ARC * (1 - p)));
+    tip.current?.setAttribute(
+      "transform",
+      `translate(${at(Math.cos, p)} ${at(Math.sin, p)})`,
+    );
+    rules.current.forEach((rule, i) => {
+      if (rule)
+        rule.style.transform = `scaleX(${Math.min(1, Math.max(0, p * n - i))})`;
     });
-  };
+  });
 
   return (
     <section
@@ -59,18 +63,18 @@ export default function Pillars() {
                   <div
                     key={pillar.word}
                     aria-hidden={i !== active}
-                    className={`[grid-area:1/1] transition-[opacity,transform,filter] duration-700 ease-[var(--ease-custom)] ${
+                    className={`[grid-area:1/1] transition-[opacity,translate] duration-(--dur-media) ease-out ${
                       i === active
-                        ? "translate-y-0 opacity-100 blur-0"
+                        ? "opacity-100"
                         : i < active
-                          ? "pointer-events-none -translate-y-8 opacity-0 blur-[2px]"
-                          : "pointer-events-none translate-y-8 opacity-0 blur-[2px]"
+                          ? "pointer-events-none -translate-y-6 opacity-0"
+                          : "pointer-events-none translate-y-6 opacity-0"
                     }`}
                   >
-                    <p className="font-secondary text-6xl leading-none font-bold tracking-[-0.03em] text-npf-blue-deep sm:text-7xl 2xl:text-8xl">
+                    <p className="npf-display-xl text-npf-blue-deep">
                       {pillar.word}
                     </p>
-                    <p className="mx-auto mt-5 max-w-[28ch] font-secondary text-lg leading-snug text-npf-body md:mx-0 lg:mt-6 lg:text-2xl">
+                    <p className="npf-lede mx-auto mt-5 max-w-[28ch] text-npf-body md:mx-0 lg:mt-6">
                       {pillar.line}
                     </p>
                   </div>
@@ -84,23 +88,25 @@ export default function Pillars() {
                   <li key={pillar.word}>
                     <button
                       type="button"
-                      onClick={() => goTo(i)}
+                      onClick={() =>
+                        scrollToProgress(section.current, (i + 0.08) / n)
+                      }
                       aria-current={i === active || undefined}
-                      className="group block cursor-pointer rounded-md px-2 py-3 text-start outline-offset-4 focus-visible:outline-2 focus-visible:outline-npf-blue-mid"
+                      className="group block min-h-11 cursor-pointer rounded-chip px-2 py-3 text-start"
                     >
                       <span
                         aria-hidden
                         className="block h-0.5 w-full overflow-hidden rounded-full bg-npf-blue-mid/15 transition-colors group-hover:bg-npf-blue-mid/30"
                       >
                         <span
-                          className="block h-full origin-left bg-npf-blue-mid"
-                          style={{
-                            transform: `scaleX(${Math.min(1, Math.max(0, progress * pillars.length - i))})`,
+                          ref={(el) => {
+                            rules.current[i] = el;
                           }}
+                          className="block h-full origin-left scale-x-0 bg-npf-blue-mid rtl:origin-right"
                         />
                       </span>
                       <span
-                        className={`mt-3 block font-secondary text-sm leading-none font-bold tracking-[0.14em] uppercase transition-colors duration-500 ${
+                        className={`npf-label mt-3 block transition-colors ${
                           i === active
                             ? "text-npf-blue-mid"
                             : "text-npf-muted group-hover:text-npf-blue-mid"
@@ -118,7 +124,7 @@ export default function Pillars() {
               <div className="relative mx-auto aspect-square w-full max-w-[min(300px,42svh)] sm:max-w-[min(440px,48svh)] lg:max-w-[min(520px,70svh)]">
                 <span
                   aria-hidden
-                  className="pointer-events-none absolute -inset-[22%] rounded-full bg-[radial-gradient(closest-side,#2c5fa81f,#2c5fa800)]"
+                  className="pointer-events-none absolute -inset-[22%] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-npf-blue-mid)_12%,transparent),transparent)]"
                 />
                 <svg
                   aria-hidden
@@ -134,6 +140,7 @@ export default function Pillars() {
                     className="stroke-npf-blue-mid/15"
                   />
                   <circle
+                    ref={arc}
                     cx="50"
                     cy="50"
                     r={R}
@@ -141,54 +148,41 @@ export default function Pillars() {
                     strokeWidth="0.9"
                     strokeLinecap="round"
                     strokeDasharray={ARC}
-                    strokeDashoffset={ARC * (1 - progress)}
+                    strokeDashoffset={ARC}
                     className="stroke-npf-blue-mid"
                   />
                   {/* Where each chapter begins on the ring. */}
-                  {pillars.map((pillar, i) => {
-                    const a = (i / pillars.length) * 2 * Math.PI;
-                    return (
-                      <circle
-                        key={pillar.word}
-                        cx={+(50 + R * Math.cos(a)).toFixed(3)}
-                        cy={+(50 + R * Math.sin(a)).toFixed(3)}
-                        r="1.4"
-                        strokeWidth="0.6"
-                        className={`transition-[fill] duration-500 ${
-                          i <= active
-                            ? "fill-npf-blue-mid stroke-white"
-                            : "fill-white stroke-npf-blue-mid/30"
-                        }`}
-                      />
-                    );
-                  })}
+                  {pillars.map((pillar, i) => (
+                    <circle
+                      key={pillar.word}
+                      cx={at(Math.cos, i / n)}
+                      cy={at(Math.sin, i / n)}
+                      r="1.4"
+                      strokeWidth="0.6"
+                      className={`transition-[fill,stroke] ${
+                        i <= active
+                          ? "fill-npf-blue-mid stroke-white"
+                          : "fill-white stroke-npf-blue-mid/30"
+                      }`}
+                    />
+                  ))}
                   {/* The pen tip: a soft halo riding the arc's leading end. */}
-                  <circle
-                    cx={tip(Math.cos)}
-                    cy={tip(Math.sin)}
-                    r="3.2"
-                    className="fill-npf-blue-mid/15"
-                  />
-                  <circle
-                    cx={tip(Math.cos)}
-                    cy={tip(Math.sin)}
-                    r="1.3"
-                    className="fill-npf-blue-mid"
-                  />
+                  <g ref={tip} transform={`translate(${at(Math.cos, 0)} 50)`}>
+                    <circle r="3.2" className="fill-npf-blue-mid/15" />
+                    <circle r="1.3" className="fill-npf-blue-mid" />
+                  </g>
                 </svg>
 
-                <div className="absolute inset-[7%] overflow-hidden rounded-full bg-npf-blue-deep/5 shadow-[0_24px_48px_-20px_rgba(20,49,95,0.45)]">
+                <div className="absolute inset-[7%] overflow-hidden rounded-full bg-npf-mist shadow-raised">
                   {pillars.map((pillar, i) => (
                     <Image
                       key={pillar.portrait}
                       src={pillar.portrait}
                       alt=""
                       fill
-                      sizes="(min-width: 1024px) 480px, 300px"
-                      className={`object-cover transition-[opacity,transform,filter] duration-700 ease-[var(--ease-custom)] ${
-                        i === active
-                          ? "scale-100 opacity-100 blur-0"
-                          : "scale-105 opacity-0 blur-sm"
+                      sizes="(min-width: 1024px) 480px, (min-width: 640px) 400px, 300px"
+                      className={`object-cover transition-[opacity,scale] duration-(--dur-media) ease-out ${
+                        i === active ? "opacity-100" : "scale-105 opacity-0"
                       }`}
                     />
                   ))}

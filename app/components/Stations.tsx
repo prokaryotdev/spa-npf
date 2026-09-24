@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { InitiativeCard } from "../content";
 import { ArrowRight } from "./icons";
 import { useT } from "../i18n/client";
+import { reveal } from "./reveal";
 
 /**
  * The station types are tiers of one Command, read from the start side:
@@ -62,14 +63,6 @@ export default function Stations({
     });
   };
 
-  // White with a hairline ring at rest, filled brand blue on hover with the
-  // arrow nudging the way it points, pressed in on click. Disabled drops to
-  // a faint ring and icon rather than fading the whole button.
-  const arrow =
-    "group/arrow grid size-14 place-items-center rounded-full bg-white text-npf-blue-deep ring-1 ring-npf-ink/15 ring-inset transition-[background-color,color,box-shadow,scale] duration-200 ease-[var(--ease-custom)] hover:bg-npf-blue hover:text-white hover:ring-npf-blue active:scale-[0.94] disabled:pointer-events-none disabled:text-npf-ink/25 disabled:ring-npf-ink/[0.08] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue";
-  const icon =
-    "size-[22px] transition-transform duration-300 ease-[var(--ease-custom)]";
-
   return (
     <section
       aria-labelledby={id}
@@ -85,55 +78,41 @@ export default function Stations({
           onScroll={onScroll}
           tabIndex={0}
           aria-labelledby={id}
-          className="npf-rail me-[calc(50%-50vw)] mt-10 flex gap-4 overflow-x-auto md:mt-12 pe-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-npf-blue md:gap-6 xl:pe-[7.5vw]"
+          className="npf-rail me-[calc(50%-50vw)] mt-(--npf-head-gap) flex gap-(--npf-gap) overflow-x-auto pe-4 focus-visible:outline-offset-4 xl:pe-[7.5vw]"
         >
-          {/* Poster cards: the photograph is the card, and the text sits
-              on a night-blue fade rising from the bottom edge, so it reads
-              on any photo. */}
-          {tiers.map((tier) => (
+          {/* Poster cards: the photograph is the card and the words sit on
+              the night shade rising from the foot, so they read on any
+              photo. Not links (every tier leads to the one place the head
+              already points to), so they hold still under the pointer. */}
+          {tiers.map((tier, i) => (
             <li
               key={tier.title}
-              className="group relative isolate flex aspect-[3/4] w-[76%] shrink-0 flex-col justify-end overflow-hidden rounded-[24px] bg-npf-night text-white sm:w-[47%] lg:w-[36%] xl:w-[34%] 2xl:w-[31%]"
+              {...reveal(Math.min(i, 3))}
+              className="flex aspect-[3/4] w-[76%] shrink-0 sm:w-[47%] lg:w-[36%] xl:w-[34%] 2xl:w-[31%]"
             >
-              <Image
-                src={tier.image}
-                alt=""
-                fill
-                sizes="(min-width: 1536px) 31vw, (min-width: 1280px) 30vw, (min-width: 1024px) 36vw, (min-width: 640px) 47vw, 76vw"
-                className="-z-10 object-cover transition-transform duration-700 ease-[var(--ease-custom)] group-hover:scale-[1.05]"
-              />
-              <div
-                aria-hidden
-                className="absolute inset-0 -z-10 bg-[linear-gradient(to_top,var(--color-npf-night)_0%,rgb(10_21_38/0.85)_32%,rgb(10_21_38/0.3)_52%,rgb(10_21_38/0)_66%)]"
-              />
-              <div className="p-6 md:p-8">
-                <h3 className="font-secondary text-2xl font-bold tracking-[-0.02em] text-balance md:text-[26px]">
-                  {tier.title}
-                </h3>
-                <p className="mt-2.5 text-[15px] leading-relaxed text-pretty text-white/80">
-                  {tier.body}
-                </p>
+              <div className="npf-tile flex-1 p-(--npf-pad)">
+                <Image
+                  src={tier.image}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1536px) 31vw, (min-width: 1280px) 30vw, (min-width: 1024px) 36vw, (min-width: 640px) 47vw, 76vw"
+                  className="npf-tile-media"
+                />
+                <div aria-hidden className="npf-tile-shade" />
+                <h3 className="npf-h4 text-white">{tier.title}</h3>
+                <p className="npf-small mt-2.5 text-white/85">{tier.body}</p>
               </div>
-              {/* A hairline edge, so the dark card doesn't smear into the
-                  photo's own dark corners. */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 rounded-[24px] ring-1 ring-white/10 ring-inset"
-              />
             </li>
           ))}
         </ol>
 
         {/* Where you are in the row, then the way to move it. */}
-        <div className="mt-8 flex items-center gap-6 md:mt-10 md:gap-10">
+        <div className="mt-(--npf-gap) flex items-center gap-6 md:gap-10">
           <div
             aria-hidden
             className="h-[3px] flex-1 overflow-hidden rounded-full bg-npf-blue/10"
           >
-            <span
-              ref={thumb}
-              className="block h-full rounded-full bg-npf-blue transition-[translate] duration-150 ease-out"
-            />
+            <span ref={thumb} className="block h-full rounded-full bg-npf-blue" />
           </div>
           <div className="flex gap-3">
             <button
@@ -141,22 +120,18 @@ export default function Stations({
               onClick={() => step(-1)}
               disabled={edge.start}
               aria-label={t("Previous slide")}
-              className={arrow}
+              className="npf-icon-btn"
             >
-              <ArrowRight
-                className={`${icon} -scale-x-100 group-hover/arrow:-translate-x-0.5`}
-              />
+              <ArrowRight className="size-5 -scale-x-100" />
             </button>
             <button
               type="button"
               onClick={() => step(1)}
               disabled={edge.end}
               aria-label={t("Next slide")}
-              className={arrow}
+              className="npf-icon-btn"
             >
-              <ArrowRight
-                className={`${icon} group-hover/arrow:translate-x-0.5`}
-              />
+              <ArrowRight className="size-5" />
             </button>
           </div>
         </div>

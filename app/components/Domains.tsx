@@ -3,12 +3,12 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { domains as domainsSource } from "../content";
-import { chapter, useScrollProgress } from "./useScrollProgress";
+import { scrollToProgress, useScrollProgress } from "./useScrollProgress";
 import { useLocalized, useT } from "../i18n/client";
 
 /**
  * The headings animate letter by letter. Both languages are written in Latin
- * letters that stand alone, so one pass serves English and Hausa alike —
+ * letters that stand alone, so one pass serves English and Hausa alike,
  * including the hooked letters, which are single characters, not pairs.
  * The animation class is only present while `play` is true, so adding it
  * replays the entrance each time a chapter comes back.
@@ -22,8 +22,8 @@ function LetterStagger({ text, play }: { text: string; play: boolean }) {
           {[...word].map((piece, i) => (
             <span
               key={i}
-              className={`inline-block ${play ? "animate-[letter-up_0.75s_var(--ease-custom)_both]" : ""}`}
-              style={{ animationDelay: `${n++ * 38}ms` }}
+              className={`inline-block ${play ? "animate-[letter-up_var(--dur-media)_var(--ease-out)_both]" : ""}`}
+              style={{ animationDelay: `${n++ * 32}ms` }}
             >
               {piece}
             </span>
@@ -36,35 +36,49 @@ function LetterStagger({ text, play }: { text: string; play: boolean }) {
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
+/**
+ * Sea, land and sky. The section pins while each photograph rises over the
+ * one beneath it, and the words hand over with it.
+ *
+ * Everything that follows the scroll is a transform written straight onto
+ * its element each frame: a scene rises by translating its layer up, and the
+ * picture inside lags behind by translating back down, so the new scene
+ * reads as coming up from below rather than sliding over. Nothing is
+ * clipped, blurred or re-rendered per frame.
+ */
 export default function Domains() {
   const domains = useLocalized(domainsSource);
   const t = useT();
-  const section = useRef<HTMLElement>(null);
-  const progress = useScrollProgress(section);
   const n = domains.length;
-  const active = chapter(progress, n);
+  const section = useRef<HTMLElement>(null);
+  const layers = useRef<(HTMLDivElement | null)[]>([]);
+  const words = useRef<HTMLDivElement>(null);
+  const climb = useRef<HTMLSpanElement>(null);
 
-  // Each photograph after the first rises over the one beneath it across a
-  // window centred on its chapter's start: water, then ground, then sky.
-  const rise = (i: number) =>
-    i === 0 ? 1 : clamp01((progress * n - i + 0.25) / 0.5);
+  // Each photograph after the first rises across a window centred on its
+  // chapter's start: water, then ground, then sky.
+  const rise = (i: number, p: number) =>
+    i === 0 ? 1 : clamp01((p * n - i + 0.25) / 0.5);
 
-  // The words on screen leave as the next photograph starts to rise, and are
-  // gone by the time it is half up — when the next chapter's words arrive.
-  const leave = active < n - 1 ? clamp01(rise(active + 1) * 2) : 0;
-
-  // Land where chapter i's photograph has fully risen.
-  const goTo = (i: number) => {
-    const el = section.current;
-    if (!el) return;
-    const span = el.offsetHeight - window.innerHeight;
-    window.scrollTo({
-      top: el.offsetTop + span * ((i + 0.3) / n),
-      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
+  const active = useScrollProgress(section, n, (p) => {
+    layers.current.forEach((layer, i) => {
+      if (!layer) return;
+      const down = 1 - rise(i, p);
+      const [inner, horizon] = layer.children as unknown as HTMLElement[];
+      layer.style.transform = `translate3d(0, ${down * 100}%, 0)`;
+      inner.style.transform = `translate3d(0, ${down * -72}%, 0) scale(${1.04 + p * 0.06})`;
+      horizon.style.opacity = down > 0 && down < 1 ? "1" : "0";
     });
-  };
+    // The words on screen leave as the next photograph starts to rise, and
+    // are gone by the time it is half up, when the next chapter's arrive.
+    const now = Math.min(n - 1, Math.floor(p * n));
+    const leave = now < n - 1 ? clamp01(rise(now + 1, p) * 2) : 0;
+    if (words.current) {
+      words.current.style.opacity = String(1 - leave);
+      words.current.style.transform = `translate3d(0, ${leave * -24}px, 0)`;
+    }
+    if (climb.current) climb.current.style.transform = `scaleY(${p})`;
+  });
 
   return (
     <section
@@ -77,72 +91,67 @@ export default function Domains() {
       </h2>
 
       <div className="sticky top-0 h-svh overflow-hidden">
-        {domains.map((domain, i) => {
-          const r = rise(i);
-          return (
-            <div
-              key={domain.id}
-              aria-hidden
-              className="absolute inset-0 overflow-hidden"
-              style={{ clipPath: `inset(${(1 - r) * 100}% 0 0 0)` }}
-            >
+        {domains.map((domain, i) => (
+          <div
+            key={domain.id}
+            ref={(el) => {
+              layers.current[i] = el;
+            }}
+            aria-hidden
+            className="absolute inset-0 overflow-hidden will-change-transform"
+            style={i ? { transform: "translate3d(0, 100%, 0)" } : undefined}
+          >
+            <div className="absolute inset-0">
               {/*
-                A <picture>, not next/image: a phone needs a different crop, not
-                a smaller one. These slides are shot with the reading column left
-                empty — on the wide file that column is the left third, on the
-                tall file it is the upper two-thirds — so a narrow viewport has
-                to be handed its own photograph. next/image resizes one source
-                and cannot swap it, and rendering both and hiding one downloads
-                both.
+                A <picture>, not next/image: a phone needs a different crop,
+                not a smaller one. These slides are shot with the reading
+                column left empty (the left third on the wide file, the upper
+                two-thirds on the tall one), so a narrow viewport is handed
+                its own photograph.
               */}
               <picture>
                 <source
                   media="(max-width: 767px)"
                   srcSet={domain.background.replace(".jpg", "-mobile.jpg")}
                 />
-                {/* The picture lags its rising edge, so the new scene reads
-                    as coming up from below rather than sliding over. */}
                 <img
                   src={domain.background}
                   alt=""
                   loading={i === 0 ? "eager" : "lazy"}
                   decoding="async"
-                  style={{
-                    transform: `translateY(${(1 - r) * 28}%) scale(${1.04 + progress * 0.06})`,
-                  }}
-                  className="absolute inset-0 size-full object-cover will-change-transform"
+                  className="absolute inset-0 size-full object-cover"
                 />
               </picture>
               {/* Only the reading column is shaded; the rest of the frame is
                   the photograph as shot. */}
               <span
                 aria-hidden
-                className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,12,24,0.86)_0%,rgba(6,12,24,0.62)_42%,rgba(6,12,24,0)_72%)] md:bg-[linear-gradient(90deg,rgba(6,12,24,0.86)_0%,rgba(6,12,24,0.7)_30%,rgba(6,12,24,0.22)_50%,rgba(6,12,24,0)_64%)]"
+                className="absolute inset-0 bg-[linear-gradient(180deg,rgb(10_21_38/0.86)_0%,rgb(10_21_38/0.62)_42%,transparent_72%)] md:bg-[linear-gradient(90deg,rgb(10_21_38/0.86)_0%,rgb(10_21_38/0.7)_30%,rgb(10_21_38/0.22)_50%,transparent_64%)]"
               />
-              {/* The horizon line riding the rising edge. */}
-              {r > 0 && r < 1 ? (
-                <span
-                  aria-hidden
-                  className="absolute inset-x-0 top-0 h-px bg-white/60"
-                />
-              ) : null}
             </div>
-          );
-        })}
+            {/* The horizon line riding the rising edge. */}
+            <span
+              aria-hidden
+              className="absolute inset-x-0 top-0 h-px bg-white/60 opacity-0"
+            />
+          </div>
+        ))}
 
         <div className="npf-container relative flex h-full items-start pt-28 md:items-center md:pt-0">
           {/* Every chapter shares one grid cell, so the column keeps the
               height of its longest chapter and the heading never jumps. */}
-          <div
-            className="grid max-w-[34rem] pe-10 will-change-[opacity,transform,filter] md:pe-0"
-            style={{
-              opacity: 1 - leave,
-              transform: `translateY(${leave * -24}px)`,
-              filter: leave ? `blur(${leave * 6}px)` : undefined,
-            }}
-          >
+          <div ref={words} className="grid max-w-[34rem] pe-10 md:pe-0">
             {domains.map((domain, i) => {
               const on = i === active;
+              // Lines follow the heading's letters on the reveal stagger.
+              const enter = (step: number) => ({
+                className: on
+                  ? "animate-[reveal-up_var(--dur-reveal)_var(--ease-out)_both]"
+                  : "",
+                style: {
+                  animationDelay: `calc(200ms + var(--reveal-step) * ${step})`,
+                },
+              });
               return (
                 <div
                   key={domain.id}
@@ -157,13 +166,15 @@ export default function Domains() {
                   </h3>
                   {domain.lead ? (
                     <p
-                      className={`mb-3 font-secondary text-lg font-bold text-white md:text-2xl ${on ? "animate-[reveal-up_0.8s_var(--ease-custom)_0.25s_both]" : ""}`}
+                      style={enter(0).style}
+                      className={`npf-h4 mb-3 text-white ${enter(0).className}`}
                     >
                       {domain.lead}
                     </p>
                   ) : null}
                   <p
-                    className={`max-w-[44ch] text-base text-white/85 md:text-lg ${on ? "animate-[reveal-up_0.8s_var(--ease-custom)_0.35s_both]" : ""}`}
+                    style={enter(1).style}
+                    className={`npf-lede max-w-[44ch] text-white/85 ${enter(1).className}`}
                   >
                     {domain.body}
                   </p>
@@ -172,12 +183,13 @@ export default function Domains() {
                       The icons are drawn grey for light grounds, hence the
                       invert. */}
                   <ul
-                    className={`mt-7 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/20 pt-5 ${on ? "animate-[reveal-up_0.7s_var(--ease-custom)_0.45s_both]" : ""}`}
+                    style={enter(2).style}
+                    className={`mt-7 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/20 pt-5 ${enter(2).className}`}
                   >
                     {domain.chips.map((chip) => (
                       <li
                         key={chip.label}
-                        className="flex items-center gap-2 text-sm font-medium text-white"
+                        className="npf-small flex items-center gap-2 font-medium text-white"
                       >
                         <span className="relative size-4 shrink-0">
                           <Image
@@ -209,28 +221,30 @@ export default function Domains() {
               className="absolute inset-y-3 end-[11.5px] w-px bg-white/25"
             >
               <span
-                className="block size-full origin-bottom bg-white"
-                style={{ transform: `scaleY(${progress})` }}
+                ref={climb}
+                className="block size-full origin-bottom scale-y-0 bg-white"
               />
             </span>
             {domains.map((domain, i) => (
               <li key={domain.id} className="relative">
                 <button
                   type="button"
-                  onClick={() => goTo(i)}
+                  onClick={() =>
+                    scrollToProgress(section.current, (i + 0.3) / n)
+                  }
                   aria-current={i === active || undefined}
                   aria-label={domain.title}
-                  className="group relative grid size-6 cursor-pointer place-items-center rounded-full outline-offset-2 focus-visible:outline-2 focus-visible:outline-white"
+                  className="group relative grid size-6 cursor-pointer place-items-center rounded-full outline-offset-2 focus-visible:outline-white"
                 >
                   <span
                     aria-hidden
-                    className="pointer-events-none absolute end-full me-2 translate-x-1 rounded-md bg-npf-night/80 px-2.5 py-1.5 font-secondary text-xs font-bold whitespace-nowrap text-white opacity-0 backdrop-blur-sm transition-[opacity,transform] duration-200 ease-[var(--ease-custom)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 rtl:-translate-x-1"
+                    className="npf-caption pointer-events-none absolute end-full me-2 translate-x-1 rounded-chip bg-npf-night/80 px-2.5 py-1.5 whitespace-nowrap text-white opacity-0 backdrop-blur-sm transition-[opacity,translate] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 rtl:-translate-x-1"
                   >
                     {domain.title}
                   </span>
                   <span
                     aria-hidden
-                    className={`size-2 rounded-full transition-[background-color,box-shadow,scale] duration-500 ease-[var(--ease-custom)] group-hover:scale-125 ${
+                    className={`size-2 rounded-full transition-[background-color,box-shadow,scale] duration-(--dur-media) group-hover:scale-125 ${
                       i <= active ? "bg-white" : "bg-white/40"
                     } ${i === active ? "ring-[5px] ring-white/25" : "ring-0"}`}
                   />

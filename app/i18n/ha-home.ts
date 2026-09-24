@@ -85,15 +85,10 @@ export const haHome: Record<string, string> = {
     "Muna kare kowane gida, kowane iyali, kowace rana.",
   "Connecting hearts, building trust. Stronger as one.":
     "Haɗa zukata, gina amana. Mun fi ƙarfi a haɗe.",
-  "Shaping the Future, Side by Side": "Tsara Makoma, Kafaɗa da Kafaɗa",
 
   // --- modern policing -----------------------------------------------------
-  "Leading the Way in Modern Policing":
-    "Jagoranci a Aikin 'Yan Sanda na Zamani",
   "modern policing": "aikin 'yan sanda na zamani",
   "Browse all services": "Duba dukkan ayyuka",
-  "We harness intelligent technologies to keep public safety responsive, smart, and always one step ahead.":
-    "Muna amfani da fasahohin zamani domin tsaron jama'a ya kasance mai saurin amsawa, mai hankali, kuma koyaushe mataki ɗaya a gaba.",
   "Cybercrime Reporting": "Bayar da Rahoton Laifukan Yanar Gizo",
   "The National Cybercrime Centre receives reports of online fraud, blackmail and identity theft, and works to keep the community safe online":
     "Cibiyar Laifukan Yanar Gizo ta Ƙasa tana karɓar rahotannin zamba ta yanar gizo, barazana da satar shaidar mutum, tana kuma aiki domin al'umma ta kasance cikin aminci a yanar gizo",
@@ -128,8 +123,6 @@ export const haHome: Record<string, string> = {
   "Air Wing": "Rundunar Jiragen Sama",
 
   // --- station types -------------------------------------------------------
-  "Area Commands, Divisions and Posts: close by, always open, and staffed around the clock.":
-    "Rundunonin Yanki, Sassa da Ofisoshi: kusa da kai, a buɗe koyaushe, kuma da jami'ai sa'o'i ashirin da huɗu.",
   "Command Headquarters": "Hedkwatar Rundunar",
   "Seat of the FCT Police Command at Garki, where the Commissioner of Police coordinates policing across the Territory.":
     "Mazaunin Rundunar 'Yan Sandan Babban Birnin Tarayya a Garki, inda Kwamishinan 'Yan Sanda ke tsara aikin 'yan sanda a faɗin Babban Birnin Tarayya.",
@@ -148,8 +141,6 @@ export const haHome: Record<string, string> = {
   "Explore more": "Ƙara bincike",
 
   // --- community -----------------------------------------------------------
-  "Bringing communities together through education, cultural heritage, volunteer service, and dedicated support.":
-    "Haɗa al'ummomi ta hanyar ilimi, al'adun gargajiya, aikin sa kai, da taimako na musamman.",
   "Police Community Relations Committee":
     "Kwamitin Hulɗa tsakanin 'Yan Sanda da Al'umma",
   "Sit with the PCRC at your division, raise what worries your street, and help shape how your neighbourhood is policed.":
@@ -184,10 +175,27 @@ export const haHome: Record<string, string> = {
   "Show previous {label} item": "Nuna abu na baya na {label}",
 
   // --- app band ------------------------------------------------------------
-  "Download the Nigeria Police Force App":
-    "Sauke Manhajar Rundunar 'Yan Sandan Najeriya",
-  "Services, updates, and alerts: right in your pocket.":
-    "Ayyuka, sabuntawa, da faɗakarwa: nan a aljihunka.",
+  "The Nigeria Police Force, in your pocket":
+    "Rundunar 'Yan Sandan Najeriya, a aljihunka",
+  "Call 112, apply for certificates and follow your requests, all from one app.":
+    "Kira 112, nemi takardun shaida, kuma bi diddigin buƙatunka, duk daga manhaja ɗaya.",
+  "Call 112 in one tap": "Kira 112 da taɓawa ɗaya",
+  "Apply for certificates and permits": "Nemi takardun shaida da izini",
+  "Follow every request to the end": "Bi diddigin kowace buƙata har ƙarshe",
+  // --- section heads -------------------------------------------------------
+  "Nigeria Police Force, FCT Command":
+    "Rundunar 'Yan Sandan Najeriya, Rundunar FCT",
+  "Get help online, without the queue":
+    "Samu taimako ta intanet, ba tare da bin layi ba",
+  "Report cybercrime, recover lost property and share security information from your phone or computer.":
+    "Kai rahoton laifukan intanet, nemo kayan da suka ɓace, kuma raba bayanan tsaro daga wayarka ko kwamfutarka.",
+  "A station close to you": "Ofishin 'yan sanda kusa da kai",
+  "From Command Headquarters in Garki to posts in the rural wards, every station takes reports and is staffed around the clock.":
+    "Daga Hedikwatar Runduna a Garki zuwa ofisoshi a unguwannin karkara, kowane ofishi yana karɓar rahoto kuma akwai jami'ai a cikinsa dare da rana.",
+  "Policing with the community, not just for it":
+    "Aikin 'yan sanda tare da al'umma, ba don ita kaɗai ba",
+  "Committees, volunteers, schools, sport and heritage: the ways the Force and the people of the FCT work side by side.":
+    "Kwamitoci, masu aikin sa-kai, makarantu, wasanni da al'adu: hanyoyin da Rundunar da mutanen FCT ke aiki kafaɗa da kafaɗa.",
   "How can we help?": "Ta yaya za mu taimaka?",
   News: "Labarai",
   "Your request": "Buƙatarka",

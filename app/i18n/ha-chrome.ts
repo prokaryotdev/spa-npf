@@ -46,10 +46,10 @@ export const haChrome: Record<string, string> = {
   "Last modified Date: {date}": "Kwanan sabuntawa na ƙarshe: {date}",
 
   // --- newsletter ---------------------------------------------------------
-  "Subscribe to our Newsletter": "Yi rajista ga wasiƙarmu",
+  "Get news from the Command": "Samu labarai daga Rundunar",
+  "Announcements, safety advice and events, sent to your inbox.":
+    "Sanarwa, shawarwarin tsaro da abubuwan da ke tafe, kai tsaye zuwa akwatin imel ɗinka.",
   Subscribe: "Yi rajista",
-  "Stay updated with the latest news and announcements.":
-    "Ka ci gaba da sanin sabbin labarai da sanarwa.",
   "Thanks, you are on the list.": "Na gode, kana cikin jerin.",
   "Email address": "Adireshin imel",
 

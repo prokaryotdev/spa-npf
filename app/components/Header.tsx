@@ -41,8 +41,8 @@ function CallButton({ onDark }: { onDark: boolean }) {
   return (
     <a
       href={`tel:${emergency.number}`}
-      className={`group inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-[#b30900] ps-3.5 pe-4 text-white shadow-[0_1px_2px_rgba(10,21,38,0.2),inset_0_1px_0_rgba(255,255,255,0.16)] transition-[background-color,scale] duration-150 ease-out hover:bg-[#9c0800] active:scale-[0.97] ${
-        onDark ? "focus-visible:outline-white" : "focus-visible:outline-[#b30900]"
+      className={`group inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-npf-alert ps-3.5 pe-4 text-white shadow-card transition-[background-color,scale] hover:bg-npf-alert-deep active:scale-[0.97] active:duration-(--dur-press) ${
+        onDark ? "focus-visible:outline-white" : "focus-visible:outline-npf-alert"
       }`}
     >
       {/*
@@ -50,7 +50,7 @@ function CallButton({ onDark }: { onDark: boolean }) {
         up with the caps, a hair above the pill's middle, where the eye reads
         it as centred.
       */}
-      <CallIcon className="size-[18px] shrink-0 translate-y-[1.5px] transition-transform duration-200 ease-out group-hover:-rotate-12" />
+      <CallIcon className="size-[18px] shrink-0 translate-y-[1.5px] transition-[rotate] group-hover:-rotate-12" />
       <span className="flex -translate-y-px items-baseline gap-1.5 leading-none">
         <span className="hidden font-medium text-white/85 lg:inline">
           {t("Emergency")}
@@ -120,7 +120,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
 
   const ink = scrolled ? "text-npf-ink" : "text-white";
   const ghost = scrolled ? "hover:bg-npf-ink/[0.06]" : "hover:bg-white/10";
-  const round = `grid size-11 place-items-center rounded-full transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] ${ghost}`;
+  const round = `grid size-11 place-items-center rounded-full transition-[background-color,scale] active:scale-[0.97] active:duration-(--dur-press) ${ghost}`;
 
   return (
     <>
@@ -130,7 +130,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         className="pointer-events-none absolute top-0 left-0 h-20 w-px"
       />
       <header
-        className={`fixed top-0 left-0 z-50 w-full border-b transition-[background-color,border-color] duration-500 ease-[var(--ease-custom)] ${
+        className={`fixed top-0 left-0 z-50 w-full border-b transition-[background-color,border-color] duration-(--dur-media) ${
           scrolled
             ? "border-npf-ink/[0.08] bg-white/90 backdrop-blur-xl"
             : "border-white/15 bg-gradient-to-b from-npf-night/60 to-transparent"
@@ -153,7 +153,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             <Link
               href="/app/home"
               aria-label={t("Nigeria Police Force home")}
-              className={`h-9 transition-colors duration-500 ${
+              className={`h-9 transition-colors duration-(--dur-media) ${
                 scrolled ? "text-npf-blue-deep" : "text-white"
               }`}
             >
@@ -183,7 +183,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             <Link
               href="/app/home"
               aria-label={t("Nigeria Police Force home")}
-              className={`h-10 shrink-0 transition-colors duration-500 ${
+              className={`h-10 shrink-0 transition-colors duration-(--dur-media) ${
                 scrolled ? "text-npf-blue-deep" : "text-white"
               }`}
             >
@@ -199,9 +199,9 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                       href={item.href}
                       aria-current={here ? "page" : undefined}
                       aria-haspopup={item.children ? "true" : undefined}
-                      className={`relative inline-flex items-center gap-1 px-3 py-6 font-medium whitespace-nowrap transition-opacity duration-200 2xl:px-4 ${
+                      className={`relative inline-flex items-center gap-1 px-3 py-6 font-medium whitespace-nowrap transition-opacity 2xl:px-4 ${
                         scrolled ? "before:bg-npf-gold" : "before:bg-npf-gold-soft"
-                      } before:absolute before:inset-x-3 before:bottom-4 before:h-0.5 before:origin-left before:rounded-full before:transition-transform before:duration-300 before:ease-[var(--ease-custom)] 2xl:before:inset-x-4 rtl:before:origin-right ${
+                      } before:absolute before:inset-x-3 before:bottom-4 before:h-0.5 before:origin-left before:rounded-full before:transition-[scale] 2xl:before:inset-x-4 rtl:before:origin-right ${
                         here
                           ? "before:scale-x-100"
                           : "opacity-85 before:scale-x-0 group-hover:opacity-100 group-hover:before:scale-x-100"
@@ -209,22 +209,22 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                     >
                       {t(item.label)}
                       {item.children ? (
-                        <ChevronDown className="size-4 opacity-70 transition-transform duration-200 group-hover:rotate-180" />
+                        <ChevronDown className="size-4 opacity-70 transition-[rotate] group-hover:rotate-180" />
                       ) : null}
                     </Link>
                     {item.children ? (
                       // pt-2 is the bridge the pointer crosses from the link
                       // to the panel without the hover dropping.
-                      <div className="invisible absolute top-full left-1/2 z-50 -translate-x-1/2 translate-y-1 pt-2 opacity-0 transition-[opacity,translate,visibility] duration-200 ease-out group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                        <ul className="w-[320px] rounded-2xl bg-white p-2 text-npf-ink shadow-[0_24px_48px_-20px_rgba(10,21,38,0.35)] ring-1 ring-npf-ink/[0.06]">
+                      <div className="invisible absolute top-full left-1/2 z-50 -translate-x-1/2 translate-y-1 pt-2 opacity-0 transition-[opacity,translate,visibility] group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                        <ul className="w-[320px] rounded-card bg-white p-2 text-npf-ink shadow-raised ring-1 ring-npf-ink/[0.06]">
                           {item.children.map((child) => (
                             <li key={child.label}>
                               <Link
                                 href={child.href}
-                                className="group/item flex items-center justify-between gap-3 rounded-xl px-4 py-3 transition-colors hover:bg-npf-blue/[0.06] hover:text-npf-blue-deep"
+                                className="group/item flex items-center justify-between gap-3 rounded-chip px-4 py-3 transition-colors hover:bg-npf-blue/[0.06] hover:text-npf-blue-deep"
                               >
                                 {t(child.label)}
-                                <ArrowRight className="size-4 shrink-0 -translate-x-1 opacity-0 transition-[opacity,translate] duration-200 ease-out group-hover/item:translate-x-0 group-hover/item:opacity-100 rtl:-scale-x-100" />
+                                <ArrowRight className="size-4 shrink-0 -translate-x-1 opacity-0 transition-[opacity,translate] group-hover/item:translate-x-0 group-hover/item:opacity-100 rtl:-scale-x-100" />
                               </Link>
                             </li>
                           ))}
@@ -286,7 +286,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         onClick={(e) => {
           if (e.target === searchDialog.current) setSearchOpen(false);
         }}
-        className="npf-search-sheet m-0 mt-0 w-full max-w-none bg-transparent p-4 pt-24 backdrop:bg-[rgba(10,21,38,0.6)] md:pt-28"
+        className="npf-search-sheet m-0 mt-0 w-full max-w-none bg-transparent p-4 pt-24 md:pt-28"
       >
         <div className="mx-auto w-full max-w-[680px]">
           {/* Mounted only while open so autoFocus fires on every opening. */}
@@ -331,7 +331,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             type="button"
             onClick={() => setMenuOpen(false)}
             aria-label={t("Close menu")}
-            className="grid size-11 place-items-center rounded-full bg-npf-ink/[0.06] text-npf-ink transition-[background-color,scale] duration-150 ease-out hover:bg-npf-ink/10 active:scale-[0.97]"
+            className="grid size-11 place-items-center rounded-full bg-npf-ink/[0.06] text-npf-ink transition-[background-color,scale] hover:bg-npf-ink/10 active:scale-[0.97]"
           >
             <CloseIcon className="size-5" />
           </button>
@@ -343,7 +343,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
               <Link
                 href={item.href}
                 aria-current={item.href === current ? "page" : undefined}
-                className={`block rounded-xl px-4 py-3 font-secondary text-xl font-bold transition-colors hover:bg-npf-blue/[0.06] ${
+                className={`npf-h4 block rounded-chip px-4 py-3 transition-colors hover:bg-npf-blue/[0.06] ${
                   item.href === current
                     ? "bg-npf-blue/[0.06] text-npf-blue-deep"
                     : "text-npf-ink"
@@ -357,7 +357,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                     <li key={child.label}>
                       <Link
                         href={child.href}
-                        className="block rounded-lg px-3 py-2.5 text-npf-body transition-colors hover:bg-npf-blue/[0.06] hover:text-npf-blue-deep"
+                        className="block rounded-chip px-3 py-2.5 text-npf-body transition-colors hover:bg-npf-blue/[0.06] hover:text-npf-blue-deep"
                       >
                         {t(child.label)}
                       </Link>

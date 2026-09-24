@@ -39,8 +39,51 @@
    */
   --color-npf-ok: #0e6b41;
   --color-npf-ok-soft: #e6f4ec;
+  /*
+   * The alarm red: 112 and nothing else. White on it is 6.4:1; -deep is its
+   * hover and the dark end of its gradient.
+   */
+  --color-npf-alert: #b30900;
+  --color-npf-alert-deep: #8e0700;
+  /* The pale cool ground a light chapter settles into, and the gold's wash
+     for a status chip. */
+  --color-npf-mist: #eef3fa;
+  --color-npf-gold-wash: #fdf3d7;
+  /* The phone in the app band: black glass and the steel of its band. */
+  --color-npf-glass: #05080f;
+  --color-npf-steel: #5d6d84;
 
-  --ease-custom: cubic-bezier(0.22, 1, 0.36, 1);
+  /*
+   * Three radii: chips and badges, white cards, and the photo tiles that
+   * carry a picture edge to edge. Anything round is a pill (rounded-full).
+   */
+  --radius-chip: 0.5rem;
+  --radius-card: 1rem;
+  --radius-tile: 1.5rem;
+
+  /*
+   * Three elevations, all navy-tinted and all with an offset: a card resting
+   * on the page, a panel raised over it (menus, the red 112 card), and the
+   * phone floating over the app band.
+   */
+  --shadow-card:
+    0 1px 2px rgb(10 21 38 / 0.06), 0 10px 28px -14px rgb(10 21 38 / 0.24);
+  --shadow-raised:
+    0 2px 4px rgb(10 21 38 / 0.08), 0 28px 56px -28px rgb(10 21 38 / 0.5);
+  --shadow-float:
+    0 18px 36px -18px rgb(5 15 40 / 0.6), 0 50px 90px -30px rgb(5 15 40 / 0.85);
+
+  /*
+   * Motion. One strong ease-out for anything that enters or answers the
+   * pointer, one ease-in-out for things that travel on screen. Every plain
+   * `transition-*` utility defaults to the hover timing, so a hover reads
+   * the same wherever it is on the site.
+   */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-custom: cubic-bezier(0.23, 1, 0.32, 1);
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 
   --animate-marquee: marquee 40s linear infinite;
   --animate-bob: bob 1.5s cubic-bezier(0.7, 0.01, 0.28, 0.99) infinite;
@@ -80,10 +123,10 @@ body {
 /* Browser surfaces themed from the palette rather than left at defaults. */
 ::selection {
   background: #d6e4fb;
-  color: #14315f;
+  color: var(--color-npf-blue-deep);
 }
 :where(a, button, input, [tabindex]):focus-visible {
-  outline: 2px solid #2c5fa8;
+  outline: 2px solid var(--color-npf-blue-mid);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -163,26 +206,331 @@ html.npf-large-text {
 }
 
 /*
- * One vertical rhythm and one display size for every homepage chapter, so the
- * page breathes the same way from section to section. Both are fluid rather
- * than stepped: 64px/32px on a phone up to 128px/56px on a wide screen, with
- * no jump at a breakpoint. The display size stays under the hero's own title
- * so the page keeps one top voice. Sections stay distinct through their
- * layouts and grounds, not through drifting type sizes.
+ * The design system's non-colour tokens. Tailwind's own 4px spacing scale
+ * carries the small steps inside a component; these carry the page rhythm.
+ * They are fluid rather than stepped, so the page breathes the same way at
+ * every width with no jump at a breakpoint.
  */
 :root {
+  /* Vertical padding of every homepage chapter: 64px on a phone to 128px. */
   --npf-section-y: clamp(4rem, 2rem + 6vw, 8rem);
+  /* From a section's head to its content. */
+  --npf-head-gap: clamp(2.5rem, 1.5rem + 2.5vw, 4rem);
+  /* Between cards and tiles in a grid or a rail. */
+  --npf-gap: clamp(1rem, 0.75rem + 0.6vw, 1.5rem);
+  /* Inside a card or tile. */
+  --npf-pad: clamp(1.5rem, 1rem + 1.4vw, 2.5rem);
+
+  /*
+   * Durations. Press answers a click; hover is the default above; media is
+   * a photograph easing in, zooming or handing over; reveal is a block
+   * arriving on scroll, which travels --reveal-y and staggers by
+   * --reveal-step.
+   */
+  --dur-press: 140ms;
+  --dur-hover: 200ms;
+  --dur-media: 600ms;
+  --dur-reveal: 640ms;
+  --reveal-y: 16px;
+  --reveal-step: 80ms;
 }
 .npf-section {
   padding-block: var(--npf-section-y);
 }
-.npf-h2 {
-  font-family: var(--font-secondary);
-  font-weight: 700;
-  font-size: clamp(2rem, 1.2rem + 2.6vw, 3.5rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
+
+@layer components {
+  /*
+   * The type scale. Every heading of a level looks the same everywhere: one
+   * family, weight, leading and tracking per step, sized fluidly. Colour is
+   * left to the ground it sits on. The hero title also caps on viewport
+   * height, so a short laptop screen still shows the photograph.
+   */
+  .npf-display-xl,
+  .npf-display,
+  .npf-h2,
+  .npf-h3,
+  .npf-h4,
+  .npf-h5 {
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  /* A single word or number set as the picture: the pillars, 112. */
+  .npf-display-xl {
+    font-size: clamp(4rem, 2.4rem + 5.4vw, 6rem);
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+  }
+  .npf-display {
+    font-size: clamp(2rem, min(1.1rem + 3.6vw, 7.5vh), 4.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+  }
+  .npf-h2 {
+    font-size: clamp(2rem, 1.2rem + 2.6vw, 3.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+  .npf-h3 {
+    font-size: clamp(1.5rem, 1.15rem + 1.2vw, 2.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .npf-h4 {
+    font-size: clamp(1.25rem, 1.15rem + 0.35vw, 1.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+  .npf-h5 {
+    font-size: 1.0625rem;
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+  }
+  .npf-lede {
+    font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+  .npf-body {
+    font-size: 1rem;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+  .npf-small {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+  .npf-caption {
+    font-family: var(--font-secondary);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    font-weight: 700;
+  }
+  /* A caption set as a control label: the pillar tabs. */
+  .npf-label {
+    font-family: var(--font-secondary);
+    font-size: 0.875rem;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /*
+   * One button: 48px tall, a pill, the display face in bold. The variant
+   * only picks colours. A trailing disc carries the arrow or the handset and
+   * pulls the end padding in so it sits evenly inside the pill.
+   */
+  .npf-btn {
+    display: inline-flex;
+    height: 3rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    border-radius: 9999px;
+    padding-inline: 1.5rem;
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    white-space: nowrap;
+    transition-property: background-color, color, box-shadow, scale;
+    transition-duration: var(--dur-hover);
+    transition-timing-function: var(--ease-out);
+  }
+  .npf-btn:has(.npf-btn-disc) {
+    padding-inline-end: 0.375rem;
+  }
+  .npf-btn:active,
+  .group:active .npf-btn {
+    scale: 0.97;
+    transition-duration: var(--dur-press);
+  }
+  .npf-btn:disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .npf-btn-disc {
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 9999px;
+    transition: translate var(--dur-hover) var(--ease-out);
+  }
+  .npf-btn-primary {
+    background: var(--color-npf-blue);
+    color: #fff;
+  }
+  .npf-btn-primary .npf-btn-disc {
+    background: #fff;
+    color: var(--color-npf-blue);
+  }
+  .npf-btn-alert {
+    background: var(--color-npf-alert);
+    color: #fff;
+  }
+  .npf-btn-alert .npf-btn-disc {
+    background: #fff;
+    color: var(--color-npf-alert);
+  }
+  /* White on any ground: a light card's quiet action, or the main action on
+     the blue and night chapters. */
+  .npf-btn-secondary {
+    background: #fff;
+    color: var(--color-npf-blue-deep);
+    box-shadow: inset 0 0 0 1px rgb(26 35 56 / 0.14);
+  }
+  .npf-btn-secondary .npf-btn-disc {
+    background: var(--color-npf-blue);
+    color: #fff;
+  }
+  .npf-btn-ghost {
+    color: inherit;
+  }
+
+  /* The round icon button: 44px everywhere, outlined at rest. */
+  .npf-icon-btn {
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 9999px;
+    background: #fff;
+    color: var(--color-npf-blue-deep);
+    box-shadow: inset 0 0 0 1px rgb(26 35 56 / 0.14);
+    transition-property: background-color, color, box-shadow, scale;
+    transition-duration: var(--dur-hover);
+    transition-timing-function: var(--ease-out);
+  }
+  .npf-icon-btn:active {
+    scale: 0.94;
+    transition-duration: var(--dur-press);
+  }
+  .npf-icon-btn:disabled {
+    color: rgb(26 35 56 / 0.25);
+    box-shadow: inset 0 0 0 1px rgb(26 35 56 / 0.08);
+    pointer-events: none;
+  }
+
+  /* A white card on the page: service shortcuts, the phone lines. */
+  .npf-card {
+    border-radius: var(--radius-card);
+    background: #fff;
+    color: var(--color-npf-ink);
+    box-shadow: var(--shadow-card);
+    transition: translate var(--dur-hover) var(--ease-out);
+  }
+
+  /*
+   * A photo tile: the photograph is the card and the words sit on a shade
+   * rising from the foot. When the tile is a link it lifts 4px and its
+   * photograph eases in a touch, on a pointer that can hover.
+   */
+  .npf-tile {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    border-radius: var(--radius-tile);
+    background: var(--color-npf-night);
+    color: #fff;
+    box-shadow: var(--shadow-card);
+    transition: translate var(--dur-hover) var(--ease-out);
+  }
+  /* A light hairline keeps a dark photograph's edge crisp on a pale ground. */
+  .npf-tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+    pointer-events: none;
+  }
+  .npf-tile-media {
+    z-index: -2;
+    object-fit: cover;
+    transition: scale var(--dur-media) var(--ease-out);
+  }
+  .npf-tile-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      to top,
+      rgb(10 21 38 / 0.94) 0%,
+      rgb(10 21 38 / 0.72) 38%,
+      rgb(10 21 38 / 0) 72%
+    );
+  }
+
+  /* Hover only where a pointer can hover, so a tap never sticks a lift. */
+  @media (hover: hover) and (pointer: fine) {
+    .npf-btn-primary:hover,
+    .group:hover .npf-btn-primary {
+      background: var(--color-npf-blue-deep);
+    }
+    .npf-btn-alert:hover,
+    .group:hover .npf-btn-alert {
+      background: var(--color-npf-alert-deep);
+    }
+    .npf-btn-secondary:hover {
+      background: var(--color-npf-mist);
+    }
+    .npf-btn-ghost:hover {
+      background: rgb(26 35 56 / 0.06);
+    }
+    .npf-btn:hover .npf-btn-disc:has(.npf-arrow),
+    .group:hover .npf-btn-disc:has(.npf-arrow) {
+      translate: 3px 0;
+    }
+    .npf-btn:hover .npf-btn-disc:has(.npf-arrow):dir(rtl),
+    .group:hover .npf-btn-disc:has(.npf-arrow):dir(rtl) {
+      translate: -3px 0;
+    }
+    .npf-icon-btn:hover {
+      background: var(--color-npf-blue);
+      color: #fff;
+      box-shadow: inset 0 0 0 1px var(--color-npf-blue);
+    }
+    a.npf-card:hover,
+    a.npf-tile:hover {
+      translate: 0 -4px;
+    }
+    a.npf-tile:hover .npf-tile-media {
+      scale: 1.04;
+    }
+  }
+}
+
+/*
+ * Scroll reveal. A block starts 16px low and transparent and arrives the
+ * first time it comes into view (RevealObserver sets data-shown). The hidden
+ * state only applies once that observer is running, so the page never
+ * depends on script to show its content. Put it on a wrapper, never on an
+ * element that has its own hover transition.
+ */
+.npf-reveal-on [data-reveal] {
+  transition:
+    opacity var(--dur-reveal) var(--ease-out),
+    translate var(--dur-reveal) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.npf-reveal-on [data-reveal]:not([data-shown]) {
+  opacity: 0;
+  translate: 0 var(--reveal-y);
+}
+@media (prefers-reduced-motion: reduce) {
+  .npf-reveal-on [data-reveal] {
+    transition-delay: 0ms;
+  }
+  .npf-reveal-on [data-reveal]:not([data-shown]) {
+    translate: none;
+  }
 }
 /*
  * Horizontal card rail (the police stations): native scroll with snap, moved
@@ -200,25 +548,25 @@ html.npf-large-text {
   scroll-snap-align: start;
 }
 
-/* Scroll-reveal via native scroll-driven animations. Browsers without
-   animation-timeline render the content in its final state instead. */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    [data-reveal] {
-      animation: reveal-up linear both;
-      animation-timeline: view();
-      animation-range: entry 5% cover 28%;
-    }
-  }
-}
+/* A line arriving inside a pinned chapter, on the same distance as a reveal. */
 @keyframes reveal-up {
   from {
     opacity: 0;
-    transform: translateY(48px);
+    transform: translateY(var(--reveal-y));
   }
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* The hero's countdown ring, drawn round over one slide's interval. */
+@keyframes npf-countdown {
+  from {
+    stroke-dashoffset: 100.5;
+  }
+  to {
+    stroke-dashoffset: 0;
   }
 }
 

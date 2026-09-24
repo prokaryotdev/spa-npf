@@ -38,9 +38,10 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_BUILD_YEAR: String(built.getUTCFullYear()),
   },
   images: {
-    // 75 is next/image's default; the card photography is served at 100,
-    // since a full-bleed hero-sized crop shows JPEG ringing at 75.
-    qualities: [75, 100],
+    // 75 is next/image's default. Full-bleed and large-tile photography is
+    // served at 85: a hero-sized crop shows JPEG ringing at 75, and 100
+    // roughly doubles the bytes for no difference anyone can see.
+    qualities: [75, 85, 100],
     // next/image answers 400 for SVG unless this is on, and the site's art is
     // mostly SVG. Every file is mirrored into public/ by scripts/fetch-assets,
     // so nothing untrusted goes through here; the CSP below keeps it inert.
