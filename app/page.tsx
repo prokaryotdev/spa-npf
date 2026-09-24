@@ -147,10 +147,12 @@ export default async function Home() {
             >
               <Link
                 href="/app/services"
-                className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-npf-blue transition-colors hover:text-npf-blue-deep focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-npf-blue"
+                className="group mt-5 inline-flex items-center gap-3 rounded-full bg-npf-blue py-2 ps-6 pe-2 font-secondary font-bold text-white transition-[background-color,scale] duration-200 hover:bg-npf-blue-deep active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-npf-blue"
               >
                 {t("Browse all services")}
-                <ArrowRight className="size-4 transition-transform duration-300 ease-[var(--ease-custom)] group-hover:translate-x-1 rtl:-scale-x-100" />
+                <span className="grid size-10 place-items-center rounded-full bg-white text-npf-blue transition-transform duration-300 ease-[var(--ease-custom)] group-hover:translate-x-1 rtl:-scale-x-100 rtl:group-hover:-translate-x-1">
+                  <ArrowRight className="size-[18px]" />
+                </span>
               </Link>
             </SectionHead>
 
@@ -201,8 +203,12 @@ export default async function Home() {
             standing on its own shadow so the band has one thing to look at. */}
         <section
           aria-labelledby="app"
-          className="npf-section relative overflow-hidden bg-[linear-gradient(180deg,var(--color-npf-blue-deep)_0%,#0f2547_100%)] text-white"
+          className="npf-section relative isolate overflow-hidden bg-[radial-gradient(90%_120%_at_85%_40%,#4a8ee0_0%,transparent_60%),linear-gradient(160deg,var(--color-npf-blue-mid)_0%,#23539a_100%)] text-white"
         >
+          {/* A bright band, not a second footer: royal blue lit from the
+              phone's side, with a gold hairline where it meets the footer. */}
+          <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/25" />
+          <span className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] bg-npf-gold-soft" />
           <div className="npf-container relative z-10 grid items-center gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-12">
             <div>
               <h2
@@ -215,7 +221,7 @@ export default async function Home() {
               <p
                 data-reveal
                 style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
-                className="mt-5 max-w-[40ch] text-base leading-relaxed text-white/80 md:text-lg"
+                className="mt-5 max-w-[40ch] text-base leading-relaxed text-white/90 md:text-lg"
               >
                 {t("Services, updates, and alerts: right in your pocket.")}
               </p>
@@ -231,7 +237,7 @@ export default async function Home() {
                       href="https://fct.npf.gov.ng/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block rounded-lg shadow-[0_10px_24px_-12px_rgba(0,0,0,0.6)] transition-[translate,box-shadow] duration-300 ease-[var(--ease-custom)] hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-12px_rgba(0,0,0,0.7)] active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                      className="block rounded-lg shadow-[0_10px_24px_-12px_rgba(10,31,68,0.7)] transition-[translate,box-shadow] duration-300 ease-[var(--ease-custom)] hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-12px_rgba(10,31,68,0.8)] active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                     >
                       <Image
                         src={badge.src}
@@ -253,23 +259,23 @@ export default async function Home() {
               className="relative mx-auto w-[216px] sm:w-[240px] lg:w-[270px] xl:w-[290px]"
             >
               {/* Light and the brand rings, centred on the phone. */}
-              <span className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[240%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(58,120,205,0.6),rgba(44,95,168,0.16)_55%,transparent)]" />
+              <span className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[240%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.42),rgba(255,255,255,0.1)_50%,transparent)]" />
               {[150, 205, 260].map((size) => (
                 <span
                   key={size}
-                  className="pointer-events-none absolute top-1/2 left-1/2 aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.08]"
+                  className="pointer-events-none absolute top-1/2 left-1/2 aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.14]"
                   style={{ width: `${size}%` }}
                 />
               ))}
               {/* The shadow it stands on. */}
-              <span className="pointer-events-none absolute inset-x-[8%] -bottom-8 h-10 rounded-[50%] bg-black/55 blur-xl" />
+              <span className="pointer-events-none absolute inset-x-[8%] -bottom-8 h-10 rounded-[50%] bg-[#0a1f44]/60 blur-xl" />
 
               {/* Side buttons. */}
               <span className="absolute top-[18%] -left-[3px] h-8 w-[3px] rounded-s-sm bg-[#1c2a40]" />
               <span className="absolute top-[25%] -left-[3px] h-12 w-[3px] rounded-s-sm bg-[#1c2a40]" />
               <span className="absolute top-[22%] -right-[3px] h-16 w-[3px] rounded-e-sm bg-[#1c2a40]" />
 
-              <div className="relative rounded-[3rem] bg-[linear-gradient(150deg,#34465f_0%,#0a1322_22%,#0a1322_78%,#2a3a52_100%)] p-2.5 shadow-[0_40px_80px_-24px_rgba(0,0,0,0.8)] ring-1 ring-white/15">
+              <div className="relative rounded-[3rem] bg-[linear-gradient(150deg,#34465f_0%,#0a1322_22%,#0a1322_78%,#2a3a52_100%)] p-2.5 shadow-[0_40px_80px_-24px_rgba(10,31,68,0.85)] ring-1 ring-white/15">
                 <div className="relative aspect-[9/17.5] overflow-hidden rounded-[2.4rem] bg-black">
                   {/* A status bar keeps the island off the capture's own
                       header and makes the screen read as an app. */}

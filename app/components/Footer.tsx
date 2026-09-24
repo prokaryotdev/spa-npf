@@ -16,8 +16,8 @@ import { useT, useLocalized, useFormat } from "../i18n/client";
 const socials = ["Facebook", "Youtube", "Twitter", "Instagram"] as const;
 
 /*
- * The page closes on the same night ground as Domains, so the footer reads as
- * the last chapter rather than an appendix. 112 leads because it is the one
+ * The page closes on plain white, a clean break from the blue app band above,
+ * with the Force's blue and the alarm red left to carry the brand. 112 leads because it is the one
  * thing on the page someone may need in a hurry; the other lines sit beside
  * it at a quieter size.
  */
@@ -34,17 +34,17 @@ export default function Footer() {
   return (
     <footer
       id="staticFooter"
-      className="npf-on-night w-full bg-npf-night pb-12 text-white/70"
+      className="w-full bg-white pb-12 text-npf-body"
     >
       {/* Emergency */}
       <section
         aria-labelledby="footer-emergency"
-        className="npf-container grid gap-10 border-b border-white/10 pt-16 pb-14 md:pt-24 lg:grid-cols-12 lg:items-end lg:gap-12"
+        className="npf-container grid gap-10 border-b border-npf-ink/10 pt-16 pb-14 md:pt-24 lg:grid-cols-12 lg:items-end lg:gap-12"
       >
         <div className="lg:col-span-6">
           <h2
             id="footer-emergency"
-            className="mb-8 font-secondary text-3xl font-bold tracking-[-0.02em] text-white md:text-4xl"
+            className="mb-8 font-secondary text-3xl font-bold tracking-[-0.02em] text-npf-ink md:text-4xl"
           >
             {t("Emergency Numbers")}
           </h2>
@@ -52,37 +52,37 @@ export default function Footer() {
             href={`tel:${lead.number}`}
             className="group flex items-center gap-5 rounded-[28px] md:gap-7"
           >
-            <span className="grid size-16 shrink-0 place-items-center rounded-full bg-npf-alert-soft text-npf-night transition-transform duration-300 ease-[var(--ease-custom)] group-hover:scale-105 group-active:scale-95 md:size-20">
+            <span className="grid size-16 shrink-0 place-items-center rounded-full bg-[#b30900] text-white transition-transform duration-300 ease-[var(--ease-custom)] group-hover:scale-105 group-active:scale-95 md:size-20">
               <PhoneIcon className="size-7 md:size-9" />
             </span>
-            <span className="font-secondary text-[clamp(4.5rem,3rem+6vw,8rem)] leading-[0.9] font-bold tracking-[-0.03em] text-npf-alert-soft tabular-nums">
+            <span className="font-secondary text-[clamp(4.5rem,3rem+6vw,8rem)] leading-[0.9] font-bold tracking-[-0.03em] text-[#b30900] tabular-nums">
               {lead.number}
             </span>
             <span className="flex flex-col gap-1">
-              <span className="font-secondary text-lg font-bold text-white">
+              <span className="font-secondary text-lg font-bold text-npf-ink">
                 {lead.label}
               </span>
               {lead.note ? (
-                <span className="text-sm text-white/60">{lead.note}</span>
+                <span className="text-sm text-npf-muted">{lead.note}</span>
               ) : null}
             </span>
           </a>
         </div>
 
-        <ul className="grid grid-cols-3 divide-x divide-white/10 border-t border-white/10 pt-6 lg:col-span-6 lg:border-t-0 lg:pt-0 rtl:divide-x-reverse">
+        <ul className="grid grid-cols-3 divide-x divide-npf-ink/10 border-t border-npf-ink/10 pt-6 lg:col-span-6 lg:border-t-0 lg:pt-0 rtl:divide-x-reverse">
           {others.map((item) => (
             <li key={item.number} className="px-3 first:ps-0 md:px-6">
               <a
                 href={`tel:${item.number}`}
                 className="group flex flex-col gap-1"
               >
-                <span className="font-secondary text-[13px] font-bold whitespace-nowrap text-white/60 transition-colors group-hover:text-white md:text-sm">
+                <span className="font-secondary text-[13px] font-bold whitespace-nowrap text-npf-muted transition-colors group-hover:text-npf-blue md:text-sm">
                   {item.label}
                 </span>
-                <span className="font-secondary text-4xl font-bold tracking-[-0.02em] text-white tabular-nums md:text-5xl">
+                <span className="font-secondary text-4xl font-bold tracking-[-0.02em] text-npf-ink tabular-nums transition-colors group-hover:text-npf-blue md:text-5xl">
                   {item.number}
                 </span>
-                <span className="min-h-5 text-sm text-white/50">
+                <span className="min-h-5 text-sm text-npf-muted">
                   {item.note}
                 </span>
               </a>
@@ -92,18 +92,18 @@ export default function Footer() {
       </section>
 
       {/* Brand and newsletter */}
-      <div className="npf-container grid gap-8 border-b border-white/10 py-12 md:py-14 lg:grid-cols-12 lg:items-center lg:gap-12">
+      <div className="npf-container grid gap-8 border-b border-npf-ink/10 py-12 md:py-14 lg:grid-cols-12 lg:items-center lg:gap-12">
         <span
           role="img"
           aria-label={t("Nigeria Police Force")}
-          className="text-white lg:col-span-4"
+          className="text-npf-blue lg:col-span-4"
         >
           <PoliceWordmark className="h-14 w-auto md:h-16" />
         </span>
         <div className="lg:col-span-3">
           <h2
             id="footer-newsletter"
-            className="mb-1 font-secondary text-lg font-bold text-white"
+            className="mb-1 font-secondary text-lg font-bold text-npf-ink"
           >
             {t("Subscribe to our Newsletter")}
           </h2>
@@ -131,18 +131,18 @@ export default function Footer() {
               required
               autoComplete="email"
               placeholder={t("Email address")}
-              className="h-14 w-full rounded-full border border-white/15 bg-white/5 ps-6 pe-40 text-white caret-npf-gold-soft transition-colors placeholder:text-white/55 hover:border-white/30 focus:border-npf-gold-soft focus:outline-none"
+              className="h-14 w-full rounded-full border border-npf-ink/15 bg-npf-blue/[0.03] ps-6 pe-40 text-npf-ink caret-npf-blue transition-colors placeholder:text-npf-muted hover:border-npf-ink/30 focus:border-npf-blue focus:outline-none"
             />
             <button
               type="submit"
-              className="absolute inset-y-1.5 end-1.5 rounded-full bg-npf-gold-soft px-6 font-secondary font-bold text-npf-night transition-[background-color,scale] duration-200 hover:bg-white active:scale-[0.97]"
+              className="absolute inset-y-1.5 end-1.5 rounded-full bg-npf-blue px-6 font-secondary font-bold text-white transition-[background-color,scale] duration-200 hover:bg-npf-blue-deep active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue"
             >
               {t("Subscribe")}
             </button>
           </div>
           <p
             aria-live="polite"
-            className="mt-2 min-h-5 ps-6 text-sm text-npf-gold-soft"
+            className="mt-2 min-h-5 ps-6 text-sm text-npf-ok"
           >
             {subscribed ? t("Thanks, you are on the list.") : ""}
           </p>
@@ -159,7 +159,7 @@ export default function Footer() {
           return (
             <div
               key={col.heading}
-              className="border-b border-white/10 py-4 md:border-none md:py-0"
+              className="border-b border-npf-ink/10 py-4 md:border-none md:py-0"
             >
               <button
                 type="button"
@@ -167,7 +167,7 @@ export default function Footer() {
                 aria-expanded={isOpen}
                 className="flex w-full items-center justify-between text-start md:pointer-events-none"
               >
-                <h2 className="font-secondary font-bold text-white md:mb-5">
+                <h2 className="font-secondary font-bold text-npf-ink md:mb-5">
                   {col.heading}
                 </h2>
                 <ChevronDown
@@ -189,7 +189,7 @@ export default function Footer() {
                         href={link.href}
                         target={external ? "_blank" : undefined}
                         rel={external ? "noopener noreferrer" : undefined}
-                        className="group inline-flex items-center gap-1.5 underline-offset-4 transition-colors hover:text-white hover:underline decoration-npf-gold-soft"
+                        className="group inline-flex items-center gap-1.5 underline-offset-4 transition-colors hover:text-npf-blue hover:underline decoration-npf-gold"
                       >
                         {link.label}
                         {external ? (
@@ -206,9 +206,9 @@ export default function Footer() {
       </nav>
 
       {/* Legal */}
-      <div className="npf-container grid gap-8 border-t border-white/10 pt-8 text-sm text-white/55 lg:grid-cols-2">
+      <div className="npf-container grid gap-8 border-t border-npf-ink/10 pt-8 text-sm text-npf-muted lg:grid-cols-2">
         <div className="space-y-1">
-          <p className="text-white/75">
+          <p className="text-npf-body">
             {t("© {year} FCT Police Command Headquarters. All Rights Reserved", {
               year: process.env.NEXT_PUBLIC_BUILD_YEAR ?? "",
             })}
@@ -236,7 +236,7 @@ export default function Footer() {
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className="underline-offset-4 transition-colors hover:text-white hover:underline"
+                  className="underline-offset-4 transition-colors hover:text-npf-blue hover:underline decoration-npf-gold"
                 >
                   {link.label}
                 </Link>
@@ -252,7 +252,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={name}
-                  className="grid size-10 place-items-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+                  className="grid size-10 place-items-center rounded-full text-npf-muted transition-colors hover:bg-npf-blue/[0.06] hover:text-npf-blue"
                 >
                   <SocialIcon name={name} className="size-5" />
                 </a>
