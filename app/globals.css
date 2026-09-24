@@ -115,6 +115,16 @@ dialog::backdrop {
 .npf-drawer[open] {
   animation: npf-drawer-in 0.45s var(--ease-custom);
 }
+
+/* The 112 call button in the footer breathes a ring outward, like a line
+   ringing. It starts on the button, so a frozen frame still looks right. */
+@keyframes npf-ring {
+  70%,
+  100% {
+    scale: 1.7;
+    opacity: 0;
+  }
+}
 /* A <dialog> with margin:0 already anchors to the inline-start edge, so in
    Hausa the drawer lives on the right; only the entrance needs the mirror. */
 /*

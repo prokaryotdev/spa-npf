@@ -9,7 +9,7 @@ import {
   legalLinks as legalLinksSource,
   storeBadges as storeBadgesSource,
 } from "../content";
-import { ArrowUpRight, ChevronDown, PhoneIcon, SocialIcon } from "./icons";
+import { ArrowUpRight, ChevronDown, PhoneCallIcon, SocialIcon } from "./icons";
 import { PoliceWordmark } from "./Wordmark";
 import { useT, useLocalized, useFormat } from "../i18n/client";
 
@@ -37,61 +37,90 @@ export default function Footer() {
       {/* Emergency */}
       <section
         aria-labelledby="footer-emergency"
-        className="npf-container grid gap-10 pt-16 pb-14 md:pt-24 md:pb-20 lg:grid-cols-12 lg:items-end lg:gap-16"
+        className="npf-container pt-16 pb-14 md:pt-24 md:pb-20"
       >
-        <div className="lg:col-span-7">
-          <h2
-            id="footer-emergency"
-            className="mb-8 font-secondary text-3xl font-bold tracking-[-0.02em] text-balance text-npf-ink md:text-4xl"
-          >
-            {t("Emergency Numbers")}
-          </h2>
+        <h2
+          id="footer-emergency"
+          className="mb-8 font-secondary text-3xl font-bold tracking-[-0.02em] text-balance text-npf-ink md:mb-10 md:text-4xl"
+        >
+          {t("Emergency Numbers")}
+        </h2>
+        <div className="grid gap-4 lg:grid-cols-12 lg:gap-6">
+          {/* 112 is the one line someone may need in a hurry, so it gets the
+              alarm red as a whole surface and the whole surface dials. */}
           <a
             href={`tel:${lead.number}`}
-            className="group flex items-center gap-5 rounded-[28px] md:gap-7"
+            className="group relative isolate flex flex-col justify-between gap-10 overflow-hidden rounded-2xl bg-[#b30900] p-6 text-white shadow-[0_24px_48px_-24px_rgba(179,9,0,0.6)] transition-[box-shadow,translate] duration-300 ease-[var(--ease-custom)] hover:-translate-y-0.5 hover:shadow-[0_32px_56px_-24px_rgba(179,9,0,0.7)] focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[#b30900] active:translate-y-0 md:p-9 lg:col-span-7"
           >
-            <span className="grid size-16 shrink-0 place-items-center rounded-full bg-[#b30900] text-white shadow-[0_10px_24px_-8px_rgba(179,9,0,0.55)] transition-transform duration-300 ease-[var(--ease-custom)] group-hover:scale-105 group-active:scale-95 md:size-20">
-              <PhoneIcon className="size-7 md:size-9" />
-            </span>
-            <span className="font-secondary text-[clamp(4.5rem,3rem+6vw,8rem)] leading-[0.9] font-bold tracking-[-0.03em] text-[#b30900] tabular-nums">
-              {lead.number}
-            </span>
+            {/* Light falls from the top corner so the red reads as a surface,
+                not a flat swatch. */}
+            <span
+              aria-hidden
+              className="absolute inset-0 -z-10 bg-[radial-gradient(120%_90%_at_100%_0%,rgba(255,255,255,0.16),transparent_55%),linear-gradient(180deg,transparent_40%,rgba(80,0,0,0.28))]"
+            />
             <span className="flex flex-col gap-1">
-              <span className="font-secondary text-lg font-bold text-npf-ink md:text-xl">
+              <span className="font-secondary text-xl font-bold md:text-2xl">
                 {lead.label}
               </span>
               {lead.note ? (
-                <span className="text-sm text-npf-muted">{lead.note}</span>
+                <span className="text-sm text-white/80 md:text-base">
+                  {lead.note}
+                </span>
               ) : null}
             </span>
+            <span className="flex flex-wrap items-end justify-between gap-x-6 gap-y-5">
+              <span className="font-secondary text-[clamp(5.5rem,3.5rem+7vw,9rem)] leading-[0.78] font-bold tracking-[-0.035em] tabular-nums">
+                {lead.number}
+              </span>
+              {/* A real button shape, so nobody wonders whether the card
+                  dials. The ring ripples out like a line ringing. */}
+              <span className="inline-flex items-center gap-3 rounded-full bg-white py-1.5 ps-1.5 pe-5 font-secondary font-bold text-[#b30900] shadow-[0_10px_24px_-10px_rgba(60,0,0,0.7)] transition-transform duration-300 ease-[var(--ease-custom)] group-hover:scale-[1.04] group-active:scale-95 md:text-lg">
+                <span className="relative grid size-10 place-items-center rounded-full bg-[#b30900] text-white md:size-11">
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 rounded-full ring-2 ring-[#b30900]/50 motion-safe:animate-[npf-ring_2.4s_cubic-bezier(0.16,1,0.3,1)_infinite]"
+                  />
+                  <PhoneCallIcon className="size-5 transition-transform duration-300 group-hover:rotate-[-12deg]" />
+                </span>
+                {t("Call")} {lead.number}
+              </span>
+            </span>
           </a>
-        </div>
 
-        {/* The other lines read as a directory: name on the left, number on
-            the right, so they line up however long a translated label runs. */}
-        <ul className="border-t border-npf-ink/10 lg:col-span-5">
-          {others.map((item) => (
-            <li key={item.number} className="border-b border-npf-ink/10">
-              <a
-                href={`tel:${item.number}`}
-                className="group -mx-3 flex items-center justify-between gap-4 rounded-xl px-3 py-4 transition-colors hover:bg-npf-blue/[0.04]"
+          {/* The other lines read as a directory: name on the left, number on
+              the right, so they line up however long a translated label runs. */}
+          <ul className="flex flex-col rounded-2xl bg-npf-blue/[0.045] p-2 lg:col-span-5">
+            {others.map((item) => (
+              <li
+                key={item.number}
+                className="flex flex-1 border-b border-npf-ink/[0.08] last:border-none"
               >
-                <span className="flex min-w-0 flex-col">
-                  <span className="font-secondary font-bold text-npf-ink">
-                    {item.label}
+                <a
+                  href={`tel:${item.number}`}
+                  className="group flex flex-1 items-center justify-between gap-4 rounded-xl px-4 py-5 transition-colors duration-200 hover:bg-white focus-visible:bg-white focus-visible:outline-2 focus-visible:outline-npf-blue md:px-5"
+                >
+                  <span className="flex min-w-0 flex-col gap-0.5">
+                    <span className="font-secondary font-bold text-npf-ink md:text-lg">
+                      {item.label}
+                    </span>
+                    {item.note ? (
+                      <span className="text-sm text-npf-muted">{item.note}</span>
+                    ) : null}
                   </span>
-                  {item.note ? (
-                    <span className="text-sm text-npf-muted">{item.note}</span>
-                  ) : null}
-                </span>
-                <span className="flex items-center gap-3 font-secondary text-3xl font-bold tracking-[-0.02em] text-npf-ink tabular-nums transition-colors group-hover:text-npf-blue md:text-4xl">
-                  <PhoneIcon className="size-4 text-npf-blue opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100" />
-                  {item.number}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
+                  <span className="flex items-center gap-4">
+                    <span className="font-secondary text-3xl font-bold tracking-[-0.02em] text-npf-ink tabular-nums md:text-4xl">
+                      {item.number}
+                    </span>
+                    <span className="inline-flex h-10 shrink-0 items-center gap-2 rounded-full bg-white px-3.5 font-secondary text-sm font-bold text-npf-blue ring-1 ring-npf-ink/10 transition-[background-color,color,box-shadow,scale] duration-200 ring-inset group-hover:bg-npf-blue group-hover:text-white group-hover:ring-npf-blue group-active:scale-95">
+                      <PhoneCallIcon className="size-4" />
+                      {t("Call")}
+                    </span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {/* Link columns */}
