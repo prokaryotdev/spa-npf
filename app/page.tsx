@@ -9,6 +9,7 @@ import { AlertIcon, ArrowRight, BellIcon, FileIcon } from "./components/icons";
 import InitiativeCard from "./components/InitiativeCard";
 import ModernPolicing from "./components/ModernPolicing";
 import Pillars from "./components/Pillars";
+import Stations from "./components/Stations";
 import StickyBar from "./components/StickyBar";
 import { getT, getLocalized } from "./i18n/server";
 import {
@@ -165,13 +166,11 @@ export default async function Home() {
 
         {/* Divisional Police Stations. No hairline on top: coming out of the
             night-blue Domains chapter, the change of ground is the divider.
-            The rail runs off the viewport edge rather than being cut at the
-            container's, so it reads as "more this way". */}
-        <section
-          aria-labelledby="sps"
-          className="npf-section relative overflow-hidden bg-white"
-        >
-          <div className="npf-container relative z-10">
+            The tiers read as one list beside a single photo stage. */}
+        <Stations
+          id="sps"
+          tiers={smartPoliceStations}
+          head={
             <SectionHead
               id="sps"
               title={t("Divisional Police Stations")}
@@ -179,18 +178,8 @@ export default async function Home() {
                 "Area Commands, Divisions and Posts: close by, always open, and staffed around the clock.",
               )}
             />
-            <CardRail label={t("SPS")} bleed className={BODY_GAP}>
-              {smartPoliceStations.map((card) => (
-                <InitiativeCard
-                  key={card.title}
-                  card={card}
-                  shape="tall"
-                  className="w-[84vw] max-w-[420px] shrink-0 md:w-[400px] md:max-w-none lg:w-[460px]"
-                />
-              ))}
-            </CardRail>
-          </div>
-        </section>
+          }
+        />
 
         {/* Community. The one place the page leaves the cool blues: Modern
             Policing is the technology chapter on mist, this is the people

@@ -10,6 +10,7 @@ export const haHome: Record<string, string> = {
   "My Account": "Asusuna",
   "Contact us": "Tuntuɓe mu",
   "Customer Centers": "Cibiyoyin Ba da Hidima",
+  "Find a station near you": "Nemi ofishin 'yan sanda kusa da kai",
   "Site Map": "Taswirar Shafi",
   Sitemap: "Taswirar Shafi",
   Packages: "Ƙunshiyoyi",
