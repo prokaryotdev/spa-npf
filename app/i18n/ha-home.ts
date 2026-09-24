@@ -131,20 +131,20 @@ export const haHome: Record<string, string> = {
   "Area Commands, Divisions and Posts: close by, always open, and staffed around the clock.":
     "Rundunonin Yanki, Sassa da Ofisoshi: kusa da kai, a buɗe koyaushe, kuma da jami'ai sa'o'i ashirin da huɗu.",
   "Command Headquarters": "Hedkwatar Rundunar",
-  "The seat of the Federal Capital Territory Police Command at Garki, where the Commissioner of Police and the departments of the Command coordinate policing across the whole Territory.":
-    "Mazaunin Rundunar 'Yan Sandan Babban Birnin Tarayya a Garki, inda Kwamishinan 'Yan Sanda da sassan Rundunar ke tsara aikin 'yan sanda a faɗin Babban Birnin Tarayya baki ɗaya.",
+  "Seat of the FCT Police Command at Garki, where the Commissioner of Police coordinates policing across the Territory.":
+    "Mazaunin Rundunar 'Yan Sandan Babban Birnin Tarayya a Garki, inda Kwamishinan 'Yan Sanda ke tsara aikin 'yan sanda a faɗin Babban Birnin Tarayya.",
   "Area Commands": "Rundunonin Yanki",
-  "Nine Area Commands, among them Garki, Wuse, Asokoro, Maitama, Gwagwalada, Bwari, Kubwa, Karu and Lugbe, each supervising the divisions within its reach.":
-    "Rundunonin Yanki tara, ciki har da Garki, Wuse, Asokoro, Maitama, Gwagwalada, Bwari, Kubwa, Karu da Lugbe, kowanne yana kula da sassan da ke ƙarƙashinsa.",
+  "Nine Area Commands, each supervising the divisions within its reach.":
+    "Rundunonin Yanki tara, kowanne yana kula da sassan da ke ƙarƙashinsa.",
   "Divisional Headquarters": "Hedkwatar Sashe",
-  "The division is where most people meet the Force: the counter that takes a report, the charge room, the investigators, and the patrol teams that answer a call in the neighbourhood.":
-    "Sashe shi ne inda mafi yawan mutane ke haɗuwa da Rundunar: teburin da ke karɓar rahoto, ɗakin tuhuma, masu binciken laifuka, da tawagogin sintiri da ke amsa kira a unguwa.",
+  "Where most people meet the Force: the counter that takes a report, the investigators and the patrol teams.":
+    "Inda mafi yawan mutane ke haɗuwa da Rundunar: teburin da ke karɓar rahoto, masu binciken laifuka, da tawagogin sintiri.",
   "Police Posts": "Ofisoshin 'Yan Sanda",
-  "Smaller outposts placed in the satellite towns and rural wards of the six Area Councils: Abuja Municipal, Gwagwalada, Kuje, Bwari, Kwali and Abaji. Each is held by a patrol team equipped for the roads it covers, which cuts the time it takes to reach an incident reported nearby.":
-    "Ƙananan ofisoshi da aka kafa a garuruwan kewaye da ƙauyukan Ƙananan Hukumomi shida: Abuja Municipal, Gwagwalada, Kuje, Bwari, Kwali da Abaji. Tawagar sintiri ce ke riƙe kowanne, da kayan aikin da suka dace da hanyoyin da take kulawa, wanda hakan ke rage lokacin da ake ɗauka kafin a isa wurin lamarin da aka bayar da rahoto kusa.",
+  "Smaller outposts in the satellite towns and rural wards of the six Area Councils. Each is held by a patrol team.":
+    "Ƙananan ofisoshi da aka kafa a garuruwan kewaye da ƙauyukan Ƙananan Hukumomi shida. Tawagar sintiri ce ke riƙe kowanne.",
   "Marine Police Base": "Sansanin 'Yan Sandan Ruwa",
-  "The Marine Police Base gives the communities along the waterways of the Territory direct access to a police response on the water, covering the dams, the lakes and the river crossings a patrol car cannot reach.":
-    "Sansanin 'Yan Sandan Ruwa yana ba al'ummomin da ke gefen hanyoyin ruwa na Babban Birnin Tarayya damar samun amsa daga 'yan sanda kai tsaye a kan ruwa, yana rufe madatsun ruwa, tafkuna da mashigar koguna waɗanda motar sintiri ba za ta iya kaiwa ba.",
+  "Gives waterside communities a police response on the water, covering the dams, lakes and river crossings a patrol car cannot reach.":
+    "Yana ba al'ummomin da ke gefen hanyoyin ruwa damar samun amsa daga 'yan sanda a kan ruwa, yana rufe madatsun ruwa, tafkuna da mashigar koguna waɗanda motar sintiri ba za ta iya kaiwa ba.",
   "Explore more": "Ƙara bincike",
 
   // --- community -----------------------------------------------------------

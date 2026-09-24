@@ -174,17 +174,17 @@ html.npf-large-text {
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
-/* A rail that runs off the inline-end edge of the viewport instead of being
-   cut at the container's edge, so it reads as "more this way". */
-.npf-bleed-end {
-  margin-inline-end: calc(50% - 50vw);
-}
-
-/* Horizontal card rails: native scroll-snap instead of a carousel library. */
+/*
+ * Horizontal card rail (the police stations): native scroll with snap, moved
+ * by its arrows and by touch, with the scrollbar hidden. The page's own
+ * vertical scroll never moves it.
+ */
 .npf-rail {
   scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: #b6c6e2 #f1f4fa;
+  scrollbar-width: none;
+}
+.npf-rail::-webkit-scrollbar {
+  display: none;
 }
 .npf-rail > * {
   scroll-snap-align: start;

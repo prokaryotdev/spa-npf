@@ -219,7 +219,7 @@ const station = theme("#0A1526", "#C4D8F8", "#7FB4FF");
 export const smartPoliceStations: InitiativeCard[] = [
   {
     title: "Command Headquarters",
-    body: "The seat of the Federal Capital Territory Police Command at Garki, where the Commissioner of Police and the departments of the Command coordinate policing across the whole Territory.",
+    body: "Seat of the FCT Police Command at Garki, where the Commissioner of Police coordinates policing across the Territory.",
     image: "/npf/command-headquarters.jpg",
     href: "/app/home/customer-centers",
     tags: [],
@@ -227,7 +227,7 @@ export const smartPoliceStations: InitiativeCard[] = [
   },
   {
     title: "Area Commands",
-    body: "Nine Area Commands, among them Garki, Wuse, Asokoro, Maitama, Gwagwalada, Bwari, Kubwa, Karu and Lugbe, each supervising the divisions within its reach.",
+    body: "Nine Area Commands, each supervising the divisions within its reach.",
     image: "/npf/area-commands.jpg",
     href: "/app/home/customer-centers",
     tags: [],
@@ -235,7 +235,7 @@ export const smartPoliceStations: InitiativeCard[] = [
   },
   {
     title: "Divisional Headquarters",
-    body: "The division is where most people meet the Force: the counter that takes a report, the charge room, the investigators, and the patrol teams that answer a call in the neighbourhood.",
+    body: "Where most people meet the Force: the counter that takes a report, the investigators and the patrol teams.",
     image: "/npf/divisional-headquarters.jpg",
     href: "/app/home/customer-centers",
     tags: [],
@@ -243,7 +243,7 @@ export const smartPoliceStations: InitiativeCard[] = [
   },
   {
     title: "Police Posts",
-    body: "Smaller outposts placed in the satellite towns and rural wards of the six Area Councils: Abuja Municipal, Gwagwalada, Kuje, Bwari, Kwali and Abaji. Each is held by a patrol team equipped for the roads it covers, which cuts the time it takes to reach an incident reported nearby.",
+    body: "Smaller outposts in the satellite towns and rural wards of the six Area Councils. Each is held by a patrol team.",
     image: "/npf/police-posts.jpg",
     href: "/app/home/customer-centers",
     tags: [],
@@ -251,7 +251,7 @@ export const smartPoliceStations: InitiativeCard[] = [
   },
   {
     title: "Marine Police Base",
-    body: "The Marine Police Base gives the communities along the waterways of the Territory direct access to a police response on the water, covering the dams, the lakes and the river crossings a patrol car cannot reach.",
+    body: "Gives waterside communities a police response on the water, covering the dams, lakes and river crossings a patrol car cannot reach.",
     image: "/npf/marine-police-base.jpg",
     href: "/app/home/customer-centers",
     tags: [],

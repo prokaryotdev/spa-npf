@@ -166,7 +166,8 @@ export default async function Home() {
 
         {/* Divisional Police Stations. No hairline on top: coming out of the
             night-blue Domains chapter, the change of ground is the divider.
-            The tiers read as one list beside a single photo stage. */}
+            The tiers run as one row that its arrows move; the way out
+            sits under the lede so it is seen before the rail, not after. */}
         <Stations
           id="sps"
           tiers={smartPoliceStations}
@@ -177,7 +178,17 @@ export default async function Home() {
               lede={t(
                 "Area Commands, Divisions and Posts: close by, always open, and staffed around the clock.",
               )}
-            />
+            >
+              <Link
+                href="/app/home/customer-centers"
+                className="group mt-7 inline-flex items-center gap-3 rounded-full bg-npf-blue py-2 ps-6 pe-2 font-secondary font-bold text-white transition-[background-color,scale] duration-200 hover:bg-npf-blue-deep active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-npf-blue"
+              >
+                {t("Find a station near you")}
+                <span className="grid size-10 place-items-center rounded-full bg-white text-npf-blue transition-transform duration-300 ease-[var(--ease-custom)] group-hover:translate-x-1 rtl:-scale-x-100 rtl:group-hover:-translate-x-1">
+                  <ArrowRight className="size-[18px]" />
+                </span>
+              </Link>
+            </SectionHead>
           }
         />
 
