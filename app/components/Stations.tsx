@@ -11,9 +11,9 @@ import { reveal } from "./reveal";
  * The station types are tiers of one Command, read from the start side:
  * headquarters, area, division, post, and the base on the water. Tall photo
  * cards with the text on them, in one row that runs off the end of the
- * screen so the next tier peeks in. The page's scroll leaves it alone: the
- * arrows move it a card at a time, and touch can still swipe it. The row
- * has no visible scrollbar. Every tier leads to the same place, so the one
+ * screen so the next tier peeks in. Wheel and trackpad never move it: only
+ * the arrows (buttons or keys), a drag on the cards, or a drag on the bar
+ * under them. Every tier leads to the same place, so the one
  * way out lives in the head.
  */
 export default function Stations({
@@ -51,6 +51,29 @@ export default function Stations({
   // Size the thumb before the first scroll.
   useEffect(onScroll, []);
 
+  // The row only moves when asked: a drag on the cards (mouse or touch) or
+  // on the bar under them. Snap is off while the finger is down so the row
+  // follows it, and comes back on release to settle on a card.
+  const drag = (e: React.PointerEvent<HTMLElement>, scale: number) => {
+    const el = rail.current;
+    if (!el || e.button !== 0) return;
+    const x0 = e.clientX;
+    const s0 = el.scrollLeft;
+    const target = e.currentTarget;
+    target.setPointerCapture(e.pointerId);
+    el.style.scrollSnapType = "none";
+    const move = (ev: PointerEvent) => {
+      el.scrollLeft = s0 + (ev.clientX - x0) * scale;
+    };
+    const up = () => {
+      el.style.scrollSnapType = "";
+      target.removeEventListener("pointermove", move);
+    };
+    target.addEventListener("pointermove", move);
+    target.addEventListener("pointerup", up, { once: true });
+    target.addEventListener("pointercancel", up, { once: true });
+  };
+
   const step = (dir: 1 | -1) => {
     const el = rail.current;
     const card = el?.firstElementChild as HTMLElement | null;
@@ -72,13 +95,22 @@ export default function Stations({
         {head}
 
         {/* Bleeds off the end edge of the screen; the end padding lets the
-            last card stop in line with the container. */}
+            last card stop in line with the container. The block padding
+            (taken back by the margin) gives the reveal's rise and the card
+            shadow room, so the clip never cuts a card's top. */}
         <ol
           ref={rail}
           onScroll={onScroll}
+          onPointerDown={(e) => drag(e, -1)}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowRight") step(1);
+            else if (e.key === "ArrowLeft") step(-1);
+            else return;
+            e.preventDefault();
+          }}
           tabIndex={0}
           aria-labelledby={id}
-          className="npf-rail me-[calc(50%-50vw)] mt-(--npf-head-gap) flex gap-(--npf-gap) overflow-x-auto pe-4 focus-visible:outline-offset-4 xl:pe-[7.5vw]"
+          className="npf-rail me-[calc(50%-50vw)] mt-[calc(var(--npf-head-gap)-2rem)] -mb-8 flex cursor-grab touch-pan-y gap-(--npf-gap) overflow-hidden py-8 pe-4 select-none focus-visible:outline-offset-4 active:cursor-grabbing xl:pe-[7.5vw]"
         >
           {/* Poster cards: the photograph is the card and the words sit on
               the night shade rising from the foot, so they read on any
@@ -95,6 +127,7 @@ export default function Stations({
                   src={tier.image}
                   alt=""
                   fill
+                  draggable={false}
                   sizes="(min-width: 1536px) 31vw, (min-width: 1280px) 30vw, (min-width: 1024px) 36vw, (min-width: 640px) 47vw, 76vw"
                   className="npf-tile-media"
                 />
@@ -108,11 +141,21 @@ export default function Stations({
 
         {/* Where you are in the row, then the way to move it. */}
         <div className="mt-(--npf-gap) flex items-center gap-6 md:gap-10">
+          {/* The bar drags too; the padding makes the thin line easy to grab. */}
           <div
             aria-hidden
-            className="h-[3px] flex-1 overflow-hidden rounded-full bg-npf-blue/10"
+            onPointerDown={(e) => {
+              const el = rail.current;
+              if (el) drag(e, el.scrollWidth / e.currentTarget.clientWidth);
+            }}
+            className="-my-3 flex-1 cursor-grab touch-none py-3 active:cursor-grabbing"
           >
-            <span ref={thumb} className="block h-full rounded-full bg-npf-blue" />
+            <div className="h-[3px] overflow-hidden rounded-full bg-npf-blue/10">
+              <span
+                ref={thumb}
+                className="block h-full rounded-full bg-npf-blue"
+              />
+            </div>
           </div>
           <div className="flex gap-3">
             <button

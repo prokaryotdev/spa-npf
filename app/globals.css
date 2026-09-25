@@ -533,16 +533,12 @@ html.npf-large-text {
   }
 }
 /*
- * Horizontal card rail (the police stations): native scroll with snap, moved
- * by its arrows and by touch, with the scrollbar hidden. The page's own
- * vertical scroll never moves it.
+ * Horizontal card rail (the police stations): overflow hidden, so wheel and
+ * trackpad can't nudge it, moved only from script (arrows and drag) and
+ * snapped to a card.
  */
 .npf-rail {
   scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-}
-.npf-rail::-webkit-scrollbar {
-  display: none;
 }
 .npf-rail > * {
   scroll-snap-align: start;
