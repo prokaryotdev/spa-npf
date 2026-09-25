@@ -67,7 +67,10 @@ export default function Domains() {
       const [inner, horizon] = layer.children as unknown as HTMLElement[];
       layer.style.transform = `translate3d(0, ${down * 100}%, 0)`;
       inner.style.transform = `translate3d(0, ${down * -72}%, 0) scale(${1.04 + p * 0.06})`;
-      horizon.style.opacity = down > 0 && down < 1 ? "1" : "0";
+      // A rising scene casts its shadow up onto the one it covers.
+      const moving = down > 0 && down < 1;
+      horizon.style.opacity = moving ? "1" : "0";
+      layer.style.boxShadow = moving ? "0 -32px 72px rgb(3 8 18 / 0.55)" : "none";
     });
     // The words on screen leave as the next photograph starts to rise, and
     // are gone by the time it is half up, when the next chapter's arrive.
@@ -98,7 +101,7 @@ export default function Domains() {
               layers.current[i] = el;
             }}
             aria-hidden
-            className="absolute inset-x-0 top-18 bottom-0 overflow-hidden will-change-transform"
+            className="absolute inset-0 overflow-hidden will-change-transform"
             style={
               {
                 "--shade": domain.shade,
@@ -127,24 +130,20 @@ export default function Domains() {
                   className="absolute inset-0 size-full object-cover"
                 />
               </picture>
-              {/* Only the reading column is shaded, in the photo's own dusk
-                  tone and on an eased ramp, so it reads as shadow falling
-                  across the frame rather than a panel laid over it. */}
-              <span
-                aria-hidden
-                className="absolute inset-0 bg-[linear-gradient(180deg,rgb(var(--shade)/0.88)_0%,rgb(var(--shade)/0.74)_28%,rgb(var(--shade)/0.46)_48%,rgb(var(--shade)/0.18)_62%,transparent_76%)] md:bg-[linear-gradient(90deg,rgb(var(--shade)/0.88)_0%,rgb(var(--shade)/0.8)_24%,rgb(var(--shade)/0.6)_38%,rgb(var(--shade)/0.36)_50%,rgb(var(--shade)/0.16)_60%,rgb(var(--shade)/0.05)_68%,transparent_76%)]"
-              />
+              <span aria-hidden className="npf-domain-shade" />
             </div>
-            {/* The horizon line riding the rising edge. */}
+            {/* The horizon riding the rising edge: light caught on the seam,
+                strongest mid-frame and gone at the sides. */}
             <span
               aria-hidden
-              className="absolute inset-x-0 top-0 h-px bg-white/60 opacity-0"
+              className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgb(255_255_255/0.55)_35%,rgb(255_255_255/0.55)_65%,transparent)] opacity-0"
             />
           </div>
         ))}
 
-        {/* The photographs start under the fixed header, so no frame loses
-            its top to it, and the words centre in what is left. */}
+        {/* The photographs run to the top edge, behind the fixed header, so
+            no bare band shows as the section scrolls in. The words centre in
+            what the header leaves. */}
         <div className="npf-container relative flex h-full items-start pt-28 md:items-center md:pt-18">
           {/* Every chapter shares one grid cell, so the column keeps the
               height of its longest chapter and the heading never jumps. */}

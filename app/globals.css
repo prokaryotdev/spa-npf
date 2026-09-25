@@ -472,6 +472,47 @@ html.npf-large-text {
     );
   }
 
+  /* The domain scenes' reading shade, in each photo's own dusk (--shade).
+     A falloff from the corner the words sit in, never a band, so it reads as
+     the light dropping away across the frame. The head and foot darken a
+     little too: the header sits over the top, and the next scene rises out
+     of the foot. The phone shots leave the upper two-thirds empty, so there
+     the shade falls from the top. */
+  .npf-domain-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        180deg,
+        rgb(var(--shade) / 0.92) 0%,
+        rgb(var(--shade) / 0.78) 26%,
+        rgb(var(--shade) / 0.5) 44%,
+        rgb(var(--shade) / 0.2) 58%,
+        transparent 72%
+      ),
+      linear-gradient(0deg, rgb(var(--shade) / 0.55), transparent 22%);
+  }
+  @media (min-width: 48rem) {
+    .npf-domain-shade {
+      background:
+        radial-gradient(
+          110% 95% at 0% 50%,
+          rgb(var(--shade) / 0.86) 0%,
+          rgb(var(--shade) / 0.7) 28%,
+          rgb(var(--shade) / 0.4) 46%,
+          rgb(var(--shade) / 0.14) 62%,
+          transparent 76%
+        ),
+        linear-gradient(
+          180deg,
+          rgb(var(--shade) / 0.5) 0%,
+          transparent 20%,
+          transparent 74%,
+          rgb(var(--shade) / 0.5) 100%
+        );
+    }
+  }
+
   /* Hover only where a pointer can hover, so a tap never sticks a lift. */
   @media (hover: hover) and (pointer: fine) {
     .npf-btn-primary:hover,
