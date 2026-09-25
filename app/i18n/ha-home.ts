@@ -200,6 +200,7 @@ export const haHome: Record<string, string> = {
   News: "Labarai",
   "Your request": "Buƙatarka",
   "Certificate application": "Neman takardar shaida",
+  Ready: "A shirye",
   "App Store": "App Store",
   "Google Play": "Google Play",
   "App Gallery": "App Gallery",

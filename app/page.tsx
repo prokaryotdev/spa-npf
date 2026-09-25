@@ -194,10 +194,10 @@ export default async function Home() {
 
         {/* The app. The pitch, what it does and the stores on the start side;
             the phone on the end side, lit from behind, so the band has one
-            thing to look at. */}
+            thing to look at. The blue deepens toward night away from it. */}
         <section
           aria-labelledby="app"
-          className="npf-section relative isolate overflow-hidden bg-npf-blue text-white"
+          className="npf-section relative isolate overflow-hidden bg-npf-blue bg-[radial-gradient(55%_75%_at_78%_45%,rgb(44_95_168/0.9),transparent_70%),linear-gradient(160deg,var(--color-npf-blue)_0%,var(--color-npf-blue-deep)_55%,var(--color-npf-night)_100%)] text-white"
         >
           <div className="npf-container relative grid items-center gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-12">
             <div>
@@ -210,12 +210,13 @@ export default async function Home() {
                 )}
               </p>
 
-              <ul {...reveal(2)} className="mt-8 flex flex-col gap-4">
+              <ul
+                {...reveal(2)}
+                className="mt-10 max-w-[28rem] divide-y divide-white/12 border-y border-white/12"
+              >
                 {appPerks.map(({ Icon, label }) => (
-                  <li key={label} className="npf-body flex items-center gap-3 font-medium">
-                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white/12 text-npf-gold-soft">
-                      <Icon className="size-[18px]" />
-                    </span>
+                  <li key={label} className="npf-body flex items-center gap-4 py-4 font-semibold">
+                    <Icon className="size-[22px] shrink-0 text-npf-gold-soft" />
                     {label}
                   </li>
                 ))}
