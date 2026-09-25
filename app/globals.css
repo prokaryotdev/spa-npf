@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* A phone turned sideways: wide enough for tablet breakpoints, too short for
+   the pinned chapters to stack. They lay out side by side instead. */
+@custom-variant short (@media (orientation: landscape) and (max-height: 540px));
+
 @theme inline {
   /*
    * The two brand faces lead, then Hausa-capable fallbacks. Font fallback in

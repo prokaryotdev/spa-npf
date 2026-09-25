@@ -144,10 +144,10 @@ export default function Domains() {
         {/* The photographs run to the top edge, behind the fixed header, so
             no bare band shows as the section scrolls in. The words centre in
             what the header leaves. */}
-        <div className="npf-container relative flex h-full items-start pt-28 md:items-center md:pt-18">
+        <div className="npf-container relative flex h-full items-start pt-28 md:items-center md:pt-18 short:items-center short:pt-16">
           {/* Every chapter shares one grid cell, so the column keeps the
               height of its longest chapter and the heading never jumps. */}
-          <div ref={words} className="grid max-w-[34rem] pe-10 md:pe-0">
+          <div ref={words} className="grid max-w-[34rem] pe-10 md:pe-0 short:max-w-[40rem]">
             {domains.map((domain, i) => {
               const on = i === active;
               // Lines follow the heading's letters on the reveal stagger.
@@ -167,21 +167,21 @@ export default function Domains() {
                 >
                   <h3
                     aria-label={domain.title}
-                    className="npf-h2 mb-4 max-w-[15ch] text-white"
+                    className="npf-h2 mb-4 max-w-[15ch] text-white short:mb-2"
                   >
                     <LetterStagger text={domain.title} play={on} />
                   </h3>
                   {domain.lead ? (
                     <p
                       style={enter(0).style}
-                      className={`npf-h4 mb-3 text-white ${enter(0).className}`}
+                      className={`npf-h4 mb-3 text-white short:mb-1 ${enter(0).className}`}
                     >
                       {domain.lead}
                     </p>
                   ) : null}
                   <p
                     style={enter(1).style}
-                    className={`npf-lede max-w-[44ch] text-white/85 ${enter(1).className}`}
+                    className={`npf-lede max-w-[44ch] text-white/85 short:max-w-[60ch] short:leading-normal ${enter(1).className}`}
                   >
                     {domain.body}
                   </p>
@@ -191,7 +191,7 @@ export default function Domains() {
                       invert. */}
                   <ul
                     style={enter(2).style}
-                    className={`mt-7 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/20 pt-5 ${enter(2).className}`}
+                    className={`mt-7 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/20 pt-5 short:mt-4 short:pt-3 ${enter(2).className}`}
                   >
                     {domain.chips.map((chip) => (
                       <li

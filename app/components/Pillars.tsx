@@ -72,12 +72,12 @@ export default function Pillars() {
             }`}
           />
         ))}
-        <div className="npf-container relative">
-          <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
-            <div className="order-2 lg:order-1 lg:col-span-6">
+        <div className="npf-container relative pt-18 short:pt-16">
+          <div className="grid items-center gap-8 short:grid-cols-12 short:gap-6 lg:grid-cols-12 lg:gap-10">
+            <div className="order-2 short:order-1 short:col-span-7 lg:order-1 lg:col-span-6">
               {/* Every chapter shares one grid cell, so the block is as tall
                   as its longest line in any language, never a guessed height. */}
-              <div className="grid text-center md:text-start">
+              <div className="grid text-center short:text-start md:text-start">
                 {pillars.map((pillar, i) => (
                   <div
                     key={pillar.word}
@@ -93,7 +93,7 @@ export default function Pillars() {
                     <p className="npf-display-xl text-npf-blue-deep">
                       {pillar.word}
                     </p>
-                    <p className="npf-lede mx-auto mt-5 max-w-[28ch] text-npf-body md:mx-0 lg:mt-6">
+                    <p className="npf-lede mx-auto mt-5 max-w-[28ch] text-npf-body short:mx-0 short:mt-3 md:mx-0 lg:mt-6">
                       {pillar.line}
                     </p>
                   </div>
@@ -102,7 +102,7 @@ export default function Pillars() {
 
               {/* Each rule fills with the reader's scroll through its own
                   chapter, and a tap jumps straight to that chapter. */}
-              <ol className="mt-8 flex justify-center gap-2 md:-mx-2 md:justify-start lg:mt-12 lg:gap-6">
+              <ol className="mt-8 flex justify-center gap-2 short:-mx-2 short:mt-4 short:justify-start md:-mx-2 md:justify-start lg:mt-12 lg:gap-6">
                 {pillars.map((pillar, i) => (
                   <li key={pillar.word}>
                     <button
@@ -139,8 +139,8 @@ export default function Pillars() {
               </ol>
             </div>
 
-            <div className="order-1 lg:order-2 lg:col-span-6">
-              <div className="relative mx-auto aspect-square w-full max-w-[min(300px,42svh)] sm:max-w-[min(440px,48svh)] lg:max-w-[min(520px,70svh)]">
+            <div className="order-1 short:order-2 short:col-span-5 lg:order-2 lg:col-span-6">
+              <div className="relative mx-auto aspect-square w-full max-w-[min(300px,38svh)] sm:max-w-[min(440px,48svh)] short:max-w-[min(260px,62svh)] lg:max-w-[min(520px,70svh)]">
                 <span
                   aria-hidden
                   className="pointer-events-none absolute -inset-[22%] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,white_80%,transparent),transparent)]"
