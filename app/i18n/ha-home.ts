@@ -29,7 +29,6 @@ export const haHome: Record<string, string> = {
   Police: "'Yan Sanda",
   "Fire Service": "Ma'aikatar Kashe Gobara",
   "Child Helpline": "Layin Taimakon Yara",
-  "Road crashes": "Haɗurran hanya",
   "For emergencies only": "Don gaggawa kaɗai",
 
   // --- hero ----------------------------------------------------------------
@@ -41,8 +40,7 @@ export const haHome: Record<string, string> = {
   "96 Years of the Nigeria Police Force":
     "Shekaru 96 na Rundunar 'Yan Sandan Najeriya",
   "Safe and Secure, Together": "Lafiya da Tsaro, Tare",
-  "Together for a safer Abuja tomorrow":
-    "Tare domin Abuja mai aminci gobe",
+  "Together for a safer Abuja tomorrow": "Tare domin Abuja mai aminci gobe",
   "Police Innovation and Leadership": "Ƙirƙira da Jagoranci a 'Yan Sanda",
   "Be one of the officers shaping the future of policing in Nigeria":
     "Ka zama ɗaya daga cikin jami'an da ke tsara makomar aikin 'yan sanda a Najeriya",

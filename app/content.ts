@@ -325,11 +325,7 @@ export const emergencyNumbers = [
     number: "112",
     note: "For emergencies only",
   },
-  {
-    label: "Road Safety",
-    number: "122",
-    note: "Road crashes",
-  },
+  { label: "Road Safety", number: "122", note: "" },
   { label: "Fire Service", number: "199", note: "" },
   { label: "Child Helpline", number: "116", note: "" },
 ];

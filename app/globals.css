@@ -125,10 +125,14 @@ body {
   background: #d6e4fb;
   color: var(--color-npf-blue-deep);
 }
-:where(a, button, input, [tabindex]):focus-visible {
-  outline: 2px solid var(--color-npf-blue-mid);
-  outline-offset: 3px;
-  border-radius: 4px;
+/* In the base layer so a component's own radius (every pill) and utilities
+   like `outline-none` win; a bare link still gets the soft 4px corner. */
+@layer base {
+  :where(a, button, input, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-npf-blue-mid);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
 }
 /*
  * No `scroll-behavior: smooth` on html: it stops the App Router from scrolling

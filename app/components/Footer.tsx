@@ -9,11 +9,22 @@ import {
   legalLinks as legalLinksSource,
   storeBadges as storeBadgesSource,
 } from "../content";
-import { ArrowUpRight, ChevronDown, PhoneCallIcon, SocialIcon } from "./icons";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  CheckIcon,
+  ChevronDown,
+  InboxIcon,
+  PhoneCallIcon,
+  SocialIcon,
+} from "./icons";
 import { PoliceWordmark } from "./Wordmark";
 import { useT, useLocalized, useFormat } from "../i18n/client";
 
 const socials = ["Facebook", "Youtube", "Twitter", "Instagram"] as const;
+
+// Module-level so React sees one stable ref and focuses only on mount.
+const focusOnMount = (el: HTMLElement | null) => el?.focus();
 
 /*
  * The page closes on plain white, a clean break from the blue app band above,
@@ -51,7 +62,7 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
               light in the top corner deepens to dark red at the foot. */}
           <a
             href={`tel:${lead.number}`}
-            className="group flex flex-col justify-between gap-8 rounded-tile bg-npf-alert bg-[radial-gradient(90%_80%_at_100%_0%,rgb(255_120_90/0.35),transparent_60%),linear-gradient(135deg,var(--color-npf-alert)_40%,var(--color-npf-alert-deep)_100%)] p-(--npf-pad) text-white shadow-raised transition-[translate] hover:-translate-y-1 focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-npf-alert lg:col-span-7"
+            className="group flex flex-col justify-between gap-8 rounded-tile bg-npf-alert bg-[radial-gradient(90%_80%_at_100%_0%,rgb(255_120_90/0.35),transparent_60%),linear-gradient(135deg,var(--color-npf-alert)_40%,var(--color-npf-alert-deep)_100%)] p-(--npf-pad) text-white shadow-card transition-[translate] hover:-translate-y-1 focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-npf-alert lg:col-span-7"
           >
             <span className="flex flex-wrap items-center justify-between gap-3">
               <span className="npf-h4">{lead.label}</span>
@@ -78,15 +89,15 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
             </span>
           </a>
 
-          {/* The other lines are quieter white cards stacked to the red
-              card's height, with the call button pinned to the end so they
+          {/* The other lines are white cards with the newsletter's edge and
+              a hint of its mist, stacked to the red card's height, with the call button pinned to the end so they
               line up however long a translated label runs. */}
           <ul className="flex flex-col gap-3 lg:col-span-5">
             {others.map((item) => (
               <li key={item.number} className="flex flex-1">
                 <a
                   href={`tel:${item.number}`}
-                  className="npf-card group flex flex-1 items-center justify-between gap-4 px-5 py-4 md:px-6"
+                  className="group flex flex-1 items-center justify-between gap-4 rounded-tile bg-white bg-[radial-gradient(60%_140%_at_100%_0%,var(--color-npf-mist),transparent_70%)] px-5 py-4 text-npf-ink ring-1 ring-npf-blue/8 transition-[translate,box-shadow] ring-inset hover:-translate-y-0.5 hover:shadow-card md:px-6"
                 >
                   <span className="flex min-w-0 flex-col gap-1">
                     <span className="flex flex-wrap items-baseline gap-x-2">
@@ -173,27 +184,49 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
         })}
       </nav>
 
-      {/* Newsletter */}
+      {/* Newsletter on a faint blue ground, a soft white light in the far
+          corner so the mist has some depth instead of lying flat. */}
       <div className="npf-container">
-        <div className="grid gap-6 rounded-tile bg-npf-mist p-(--npf-pad) lg:grid-cols-2 lg:items-center lg:gap-12">
-          <div>
-            <h2 id="footer-newsletter" className="npf-h4 mb-2 text-npf-ink">
-              {t("Get news from the Command")}
-            </h2>
-            <p className="npf-body">
-              {t("Announcements, safety advice and events, sent to your inbox.")}
-            </p>
+        <div className="grid gap-7 rounded-tile bg-npf-mist bg-[radial-gradient(55%_130%_at_100%_0%,rgb(255_255_255/0.85),transparent_70%)] p-(--npf-pad) ring-1 ring-npf-blue/8 ring-inset lg:grid-cols-[1fr_minmax(0,30rem)] lg:items-center lg:gap-16">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+            <span className="grid size-14 shrink-0 place-items-center rounded-full bg-white text-npf-blue shadow-card">
+              <InboxIcon className="size-6" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <h2 id="footer-newsletter" className="npf-h4 mb-1.5 text-npf-ink">
+                {t("Get news from the Command")}
+              </h2>
+              <p className="npf-body">
+                {t(
+                  "Announcements, safety advice and events, sent to your inbox.",
+                )}
+              </p>
+            </div>
           </div>
-          {/* ponytail: no mailing-list backend, so this confirms and stops. */}
-          <form
-            aria-labelledby="footer-newsletter"
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSubscribed(true);
-              e.currentTarget.reset();
-            }}
-          >
-            <div className="relative">
+          {/* ponytail: no mailing-list backend, so this confirms and stops.
+              The confirmation takes the form's place and takes focus, so
+              the button vanishing never drops keyboard users on <body>. */}
+          {subscribed ? (
+            <p
+              ref={focusOnMount}
+              tabIndex={-1}
+              role="status"
+              className="npf-h5 flex min-h-15 items-center gap-3 rounded-full bg-npf-ok-soft py-2 ps-2 pe-6 text-npf-ok ring-1 ring-npf-ok/15 ring-inset outline-none motion-safe:animate-[reveal-up_var(--dur-reveal)_var(--ease-out)]"
+            >
+              <span className="grid size-11 shrink-0 place-items-center rounded-full bg-npf-ok text-white">
+                <CheckIcon className="size-5" />
+              </span>
+              {t("Thanks, you are on the list.")}
+            </p>
+          ) : (
+            <form
+              aria-labelledby="footer-newsletter"
+              className="flex flex-col gap-3 sm:relative"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setSubscribed(true);
+              }}
+            >
               <label htmlFor="subscribeEmail" className="sr-only">
                 {t("Email address")}
               </label>
@@ -203,22 +236,19 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
                 required
                 autoComplete="email"
                 placeholder={t("Email address")}
-                className="h-15 w-full rounded-full border border-npf-ink/15 bg-white ps-6 pe-40 text-npf-ink caret-npf-blue transition-[border-color,box-shadow] placeholder:text-npf-muted hover:border-npf-ink/30 focus:border-npf-blue focus:shadow-[0_0_0_4px_rgb(27_63_122/0.12)] focus:outline-none"
+                className="h-15 w-full rounded-full border border-npf-ink/15 bg-white px-6 text-npf-ink caret-npf-blue shadow-card transition-[border-color,box-shadow] placeholder:text-npf-muted hover:border-npf-ink/30 focus:border-npf-blue focus:shadow-[0_0_0_4px_rgb(27_63_122/0.12)] focus:outline-none user-invalid:border-npf-alert user-invalid:shadow-[0_0_0_4px_rgb(179_9_0/0.1)] sm:pe-48"
               />
               <button
                 type="submit"
-                className="npf-btn npf-btn-primary absolute end-1.5 top-1.5"
+                className="npf-btn npf-btn-primary sm:absolute sm:end-1.5 sm:top-1.5"
               >
                 {t("Subscribe")}
+                <span className="npf-btn-disc">
+                  <ArrowRight className="npf-arrow size-[18px] rtl:-scale-x-100" />
+                </span>
               </button>
-            </div>
-            <p
-              aria-live="polite"
-              className="npf-small mt-2 min-h-5 ps-6 text-npf-ok"
-            >
-              {subscribed ? t("Thanks, you are on the list.") : ""}
-            </p>
-          </form>
+            </form>
+          )}
         </div>
       </div>
 
