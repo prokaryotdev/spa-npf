@@ -186,14 +186,18 @@ export const domains = [
     lead: "Wherever you are, your safety is assured.",
     body: "The Marine Police patrol Jabi Lake, the Lower Usuma Dam and the rivers around the Territory, so work and leisure on the water stay safe.",
     background: "/img/3d-static/boat-bg.jpg",
+    // The reading shade takes the photo's own dusk: warm over the gold
+    // lake, night blue over the road and the sky.
+    shade: "30 20 12",
     chips: [{ label: "Sail Safely", icon: "/cms/icon_boat_3777bd658e.svg" }],
   },
   {
     id: "ground",
     title: "On the Ground",
-    lead: "",
+    lead: "Wherever you go, help is close by.",
     body: "Our patrols, officers and specialised units are always nearby, ready to assist whenever you need us.",
     background: "/img/3d-static/car-bg.jpg",
+    shade: "10 21 38",
     chips: [
       {
         label: "Neighbourhood Security",
@@ -206,9 +210,10 @@ export const domains = [
   {
     id: "sky",
     title: "From the Sky",
-    lead: "",
+    lead: "A watchful eye over the whole Territory.",
     body: "The Police Air Wing and our drone units watch over the Territory from above, holding the highest standards of security.",
     background: "/img/3d-static/drone-bg.jpg",
+    shade: "10 21 38",
     chips: [{ label: "Air Wing", icon: "/cms/icon_drone.svg" }],
   },
 ];

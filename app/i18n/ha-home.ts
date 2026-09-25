@@ -110,12 +110,15 @@ export const haHome: Record<string, string> = {
     "'Yan Sandan Ruwa suna sintiri a Tafkin Jabi, Madatsar Ruwa ta Lower Usuma da koguna kewaye da Babban Birnin Tarayya, don aiki da shaƙatawa a kan ruwa su kasance cikin aminci.",
   "Sail Safely": "Yi Tafiya Lafiya",
   "On the Ground": "A Kan Ƙasa",
+  "Wherever you go, help is close by.": "Duk inda ka je, taimako yana kusa.",
   "Our patrols, officers and specialised units are always nearby, ready to assist whenever you need us.":
     "Sintirinmu, jami'anmu da rundunonin mu na musamman koyaushe suna kusa, a shirye su taimaka duk lokacin da kake buƙatarmu.",
   "Neighbourhood Security": "Tsaron Unguwa",
   "On The Go": "A Kan Tafiya",
   "Tourist Police": "'Yan Sandan Yawon Buɗe Ido",
   "From the Sky": "Daga Sama",
+  "A watchful eye over the whole Territory.":
+    "Ana sa ido a kan dukan Babban Birnin Tarayya.",
   "The Police Air Wing and our drone units watch over the Territory from above, holding the highest standards of security.":
     "Rundunar Jiragen Sama ta 'Yan Sanda da rundunonin jirage marasa matuƙi suna sa ido kan Babban Birnin Tarayya daga sama, suna riƙe da matsayin tsaro mafi girma.",
   "Air Wing": "Rundunar Jiragen Sama",

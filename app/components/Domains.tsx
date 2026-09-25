@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, type CSSProperties } from "react";
 import { domains as domainsSource } from "../content";
 import { scrollToProgress, useScrollProgress } from "./useScrollProgress";
 import { useLocalized, useT } from "../i18n/client";
@@ -98,8 +98,13 @@ export default function Domains() {
               layers.current[i] = el;
             }}
             aria-hidden
-            className="absolute inset-0 overflow-hidden will-change-transform"
-            style={i ? { transform: "translate3d(0, 100%, 0)" } : undefined}
+            className="absolute inset-x-0 top-18 bottom-0 overflow-hidden will-change-transform"
+            style={
+              {
+                "--shade": domain.shade,
+                transform: i ? "translate3d(0, 100%, 0)" : undefined,
+              } as CSSProperties
+            }
           >
             <div className="absolute inset-0">
               {/*
@@ -122,11 +127,12 @@ export default function Domains() {
                   className="absolute inset-0 size-full object-cover"
                 />
               </picture>
-              {/* Only the reading column is shaded; the rest of the frame is
-                  the photograph as shot. */}
+              {/* Only the reading column is shaded, in the photo's own dusk
+                  tone and on an eased ramp, so it reads as shadow falling
+                  across the frame rather than a panel laid over it. */}
               <span
                 aria-hidden
-                className="absolute inset-0 bg-[linear-gradient(180deg,rgb(10_21_38/0.86)_0%,rgb(10_21_38/0.62)_42%,transparent_72%)] md:bg-[linear-gradient(90deg,rgb(10_21_38/0.86)_0%,rgb(10_21_38/0.7)_30%,rgb(10_21_38/0.22)_50%,transparent_64%)]"
+                className="absolute inset-0 bg-[linear-gradient(180deg,rgb(var(--shade)/0.88)_0%,rgb(var(--shade)/0.74)_28%,rgb(var(--shade)/0.46)_48%,rgb(var(--shade)/0.18)_62%,transparent_76%)] md:bg-[linear-gradient(90deg,rgb(var(--shade)/0.88)_0%,rgb(var(--shade)/0.8)_24%,rgb(var(--shade)/0.6)_38%,rgb(var(--shade)/0.36)_50%,rgb(var(--shade)/0.16)_60%,rgb(var(--shade)/0.05)_68%,transparent_76%)]"
               />
             </div>
             {/* The horizon line riding the rising edge. */}
@@ -137,7 +143,9 @@ export default function Domains() {
           </div>
         ))}
 
-        <div className="npf-container relative flex h-full items-start pt-28 md:items-center md:pt-0">
+        {/* The photographs start under the fixed header, so no frame loses
+            its top to it, and the words centre in what is left. */}
+        <div className="npf-container relative flex h-full items-start pt-28 md:items-center md:pt-18">
           {/* Every chapter shares one grid cell, so the column keeps the
               height of its longest chapter and the heading never jumps. */}
           <div ref={words} className="grid max-w-[34rem] pe-10 md:pe-0">
@@ -214,7 +222,7 @@ export default function Domains() {
             that climbs with the reader. The heading already names the
             chapter, so the rail stays dots; a pointer or keyboard landing on
             a dot names it. A tap jumps to that domain. */}
-        <div className="absolute inset-y-0 end-0 flex items-center pe-3 md:pe-8">
+        <div className="absolute end-0 top-18 bottom-0 flex items-center pe-3 md:pe-8">
           <ol className="relative flex h-[min(36svh,280px)] flex-col-reverse justify-between">
             <span
               aria-hidden
