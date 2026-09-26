@@ -15,7 +15,7 @@ const ARC = 2 * Math.PI * R;
 const SKIES = [
   "radial-gradient(60% 70% at 85% 20%, color-mix(in srgb, var(--color-npf-blue-mid) 14%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, #7fb2ff 12%, transparent), transparent 75%), linear-gradient(160deg, #f7faff, var(--color-npf-mist))",
   "radial-gradient(65% 75% at 80% 30%, color-mix(in srgb, var(--color-npf-blue) 15%, transparent), transparent 70%), radial-gradient(70% 60% at 0% 100%, color-mix(in srgb, #7fb2ff 11%, transparent), transparent 70%), linear-gradient(200deg, #e9f0fb, #f6f8fc)",
-  "radial-gradient(60% 70% at 80% 25%, color-mix(in srgb, var(--color-npf-gold-soft) 24%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, #f3a86b 10%, transparent), transparent 75%), linear-gradient(170deg, var(--color-npf-gold-wash), #fbf8f1)",
+  "radial-gradient(60% 70% at 80% 25%, color-mix(in srgb, var(--color-npf-gold-soft) 36%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, #f3a86b 15%, transparent), transparent 75%), linear-gradient(170deg, var(--color-npf-gold-wash), #fbf8f1)",
 ];
 
 const at = (fn: (a: number) => number, p: number) =>
