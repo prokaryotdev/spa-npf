@@ -15,7 +15,10 @@ const ARC = 2 * Math.PI * R;
 const SKIES = [
   "radial-gradient(60% 70% at 85% 20%, color-mix(in srgb, var(--color-npf-blue-mid) 14%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, #7fb2ff 12%, transparent), transparent 75%), linear-gradient(160deg, #f7faff, var(--color-npf-mist))",
   "radial-gradient(65% 75% at 80% 30%, color-mix(in srgb, var(--color-npf-blue) 15%, transparent), transparent 70%), radial-gradient(70% 60% at 0% 100%, color-mix(in srgb, #7fb2ff 11%, transparent), transparent 70%), linear-gradient(200deg, #e9f0fb, #f6f8fc)",
-  "radial-gradient(60% 70% at 80% 25%, color-mix(in srgb, var(--color-npf-gold-soft) 36%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, #f3a86b 15%, transparent), transparent 75%), linear-gradient(170deg, var(--color-npf-gold-wash), #fbf8f1)",
+  // Together is golden hour, the light its portrait was shot in: a low sun
+  // behind the ring, warming to apricot at the floor, so the chapter feels
+  // like the end of a good day rather than a tinted slide.
+  "radial-gradient(45% 60% at 72% 48%, color-mix(in srgb, var(--color-npf-gold-soft) 55%, transparent), transparent 70%), radial-gradient(90% 60% at 20% 110%, color-mix(in srgb, #f3a86b 28%, transparent), transparent 75%), linear-gradient(175deg, #fffaf0 10%, var(--color-npf-gold-wash) 55%, #fde9d6)",
 ];
 
 const at = (fn: (a: number) => number, p: number) =>
@@ -153,6 +156,13 @@ export default function Pillars() {
                 <span
                   aria-hidden
                   className="pointer-events-none absolute -inset-[22%] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,white_80%,transparent),transparent)]"
+                />
+                {/* On Together the halo turns to sunlight behind the family. */}
+                <span
+                  aria-hidden
+                  className={`npf-fade pointer-events-none absolute -inset-[22%] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,#ffe3a0_85%,transparent),transparent)] transition-opacity duration-1000 ease-(--ease-in-out) ${
+                    active === n - 1 ? "opacity-100" : "opacity-0"
+                  }`}
                 />
                 <svg
                   aria-hidden
