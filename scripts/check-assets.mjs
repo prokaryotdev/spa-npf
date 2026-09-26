@@ -1,10 +1,8 @@
 /**
  * Fails if any /img or /cms path in app/content-*.ts has no file behind it.
  *
- * The generators copy asset paths straight out of the CMS, and some of those
- * files were never mirrored — three /img/contactus icons shipped as broken
- * images because nothing rendered them until a form did. Run from the repo
- * root, and after any generator:
+ * A path with no file behind it ships as a broken image, and nothing notices
+ * until a page renders it. Run from the repo root:
  *   node scripts/check-assets.mjs
  */
 import fs from "node:fs";
@@ -25,7 +23,7 @@ for (const file of files) {
   );
   checked += refs.size;
   for (const ref of refs) {
-    // Some CMS paths arrive percent-encoded; the mirrored file is not.
+    // Some paths are percent-encoded; the file on disk is not.
     const onDisk =
       fs.existsSync("public" + ref) ||
       fs.existsSync("public" + decodeURIComponent(ref));

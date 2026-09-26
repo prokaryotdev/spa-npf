@@ -43,8 +43,8 @@ const nextConfig: NextConfig = {
     // roughly doubles the bytes for no difference anyone can see.
     qualities: [75, 85, 100],
     // next/image answers 400 for SVG unless this is on, and the site's art is
-    // mostly SVG. Every file is mirrored into public/ by scripts/fetch-assets,
-    // so nothing untrusted goes through here; the CSP below keeps it inert.
+    // mostly SVG. Every file is committed to public/, so nothing untrusted
+    // goes through here; the CSP below keeps it inert.
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },

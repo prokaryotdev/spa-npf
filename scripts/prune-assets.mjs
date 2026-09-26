@@ -3,8 +3,7 @@
  * references any more. Run after removing pages or content:
  *   node scripts/prune-assets.mjs --apply
  *
- * Without --apply it only reports. The mirrored CMS assets are 60MB of the
- * repo, and the generators copy in far more than the pages ever render.
+ * Without --apply it only reports.
  */
 import fs from "node:fs";
 import path from "node:path";

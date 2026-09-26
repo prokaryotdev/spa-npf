@@ -5,8 +5,6 @@ the licence named in the last column. Most are CC BY-SA, which obliges us to
 keep this attribution with the work — do not delete this file, and surface it
 from the site before going live.
 
-Regenerate with `node scripts/fetch-nigeria-images.mjs`.
-
 | File | Source | Author | Licence |
 | --- | --- | --- | --- |
 | `/img/3d-static/boat-bg.jpg` | [A boatman paddles over the wide length of man-made Jabi Lake in the heart of Abuja.jpg](https://commons.wikimedia.org/wiki/File:A_boatman_paddles_over_the_wide_length_of_man-made_Jabi_Lake_in_the_heart_of_Abuja.jpg) | GodwinPaya | CC BY-SA 4.0 |

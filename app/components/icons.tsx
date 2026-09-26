@@ -151,9 +151,8 @@ export const PinIcon = ({ className }: IconProps) => (
 );
 
 /*
- * The three feedback kinds. The CMS names icon files under /img/contactus that
- * were never mirrored and that the origin now refuses to serve, so they are
- * drawn here with the rest of the set.
+ * The three feedback kinds. Drawn here with the rest of the set rather
+ * than shipped as image files.
  */
 export const IdeaIcon = ({ className }: IconProps) => (
   <svg {...base} className={className}>
