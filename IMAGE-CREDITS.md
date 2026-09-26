@@ -9,10 +9,6 @@ Regenerate with `node scripts/fetch-nigeria-images.mjs`.
 
 | File | Source | Author | Licence |
 | --- | --- | --- | --- |
-| `/coat-of-arms.png` | [Coat of arms of Nigeria.svg](https://commons.wikimedia.org/wiki/File:Coat_of_arms_of_Nigeria.svg) | Lumia1234 | CC BY-SA 3.0 |
-| `/cms/pillar-safe.jpg` | [2014 01 06 Nigeria Formed Police Unit Police Replacement and Rotation 07 (11797801835).jpg](https://commons.wikimedia.org/wiki/File:2014_01_06_Nigeria_Formed_Police_Unit_Police_Replacement_and_Rotation_07_(11797801835).jpg) | AMISOM Public Information | CC0 |
-| `/cms/pillar-secure.jpg` | [2014 01 06 Nigeria Formed Police Unit Police Replacement and Rotation 15 (11798253434).jpg](https://commons.wikimedia.org/wiki/File:2014_01_06_Nigeria_Formed_Police_Unit_Police_Replacement_and_Rotation_15_(11798253434).jpg) | AMISOM Public Information | CC0 |
-| `/cms/pillar-together.jpg` | [2014 01 06 Nigeria Formed Police Unit Police Replacement and Rotation 17 (11798186144).jpg](https://commons.wikimedia.org/wiki/File:2014_01_06_Nigeria_Formed_Police_Unit_Police_Replacement_and_Rotation_17_(11798186144).jpg) | AMISOM Public Information | CC0 |
 | `/img/3d-static/boat-bg.jpg` | [A boatman paddles over the wide length of man-made Jabi Lake in the heart of Abuja.jpg](https://commons.wikimedia.org/wiki/File:A_boatman_paddles_over_the_wide_length_of_man-made_Jabi_Lake_in_the_heart_of_Abuja.jpg) | GodwinPaya | CC BY-SA 4.0 |
 | `/img/3d-static/car-bg.jpg` | [A police officer coordinating traffic.jpg](https://commons.wikimedia.org/wiki/File:A_police_officer_coordinating_traffic.jpg) | Timmylegend | CC BY-SA 4.0 |
 | `/img/3d-static/drone-bg.jpg` | [Aerial photograph of trees at Guzape, Abuja.jpg](https://commons.wikimedia.org/wiki/File:Aerial_photograph_of_trees_at_Guzape,_Abuja.jpg) | Zisan Duniya | CC0 |
