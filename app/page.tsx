@@ -156,7 +156,7 @@ export default async function Home() {
 
         <Domains />
 
-        {/* Out of the night-blue sea, land and sky chapter, the change of
+        {/* Out of the night-blue land, water and sky chapter, the change of
             ground is the divider. */}
         <Stations
           id="sps"

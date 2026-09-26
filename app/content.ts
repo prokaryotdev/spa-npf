@@ -181,22 +181,13 @@ export const smartPolicing: InitiativeCard[] = [
 
 export const domains = [
   {
-    id: "shore",
-    title: "On the Water",
-    lead: "Wherever you are, your safety is assured.",
-    body: "The Marine Police patrol Jabi Lake, the Lower Usuma Dam and the rivers around the Territory, so work and leisure on the water stay safe.",
-    background: "/img/3d-static/boat-bg.jpg",
-    // The reading shade takes the photo's own dusk: warm over the gold
-    // lake, deep night over the wet road, open evening blue over the sky.
-    shade: "30 20 12",
-    chips: [{ label: "Sail Safely", icon: "/cms/icon_boat_3777bd658e.svg" }],
-  },
-  {
     id: "ground",
     title: "On the Ground",
     lead: "Wherever you go, help is close by.",
     body: "Our patrols, officers and specialised units are always nearby, ready to assist whenever you need us.",
     background: "/img/3d-static/car-bg.jpg",
+    // The reading shade takes the photo's own dusk: deep night over the wet
+    // road, warm over the gold lake, open evening blue over the sky.
     shade: "8 17 34",
     chips: [
       {
@@ -206,6 +197,15 @@ export const domains = [
       { label: "On The Go", icon: "/cms/icon_car_eaa24290bd.svg" },
       { label: "Tourist Police", icon: "/cms/icon_tourist_a49d88a5f4.svg" },
     ],
+  },
+  {
+    id: "shore",
+    title: "On the Water",
+    lead: "Wherever you are, your safety is assured.",
+    body: "The Marine Police patrol Jabi Lake, the Lower Usuma Dam and the rivers around the Territory, so work and leisure on the water stay safe.",
+    background: "/img/3d-static/boat-bg.jpg",
+    shade: "30 20 12",
+    chips: [{ label: "Sail Safely", icon: "/cms/icon_boat_3777bd658e.svg" }],
   },
   {
     id: "sky",

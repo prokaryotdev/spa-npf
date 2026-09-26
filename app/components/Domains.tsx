@@ -37,7 +37,7 @@ function LetterStagger({ text, play }: { text: string; play: boolean }) {
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
 /**
- * Sea, land and sky. The section pins while each photograph rises over the
+ * Land, water and sky. The section pins while each photograph rises over the
  * one beneath it, and the words hand over with it.
  *
  * Everything that follows the scroll is a transform written straight onto
@@ -56,7 +56,7 @@ export default function Domains() {
   const climb = useRef<HTMLSpanElement>(null);
 
   // Each photograph after the first rises across a window centred on its
-  // chapter's start: water, then ground, then sky.
+  // chapter's start: ground, then water, then sky.
   const rise = (i: number, p: number) =>
     i === 0 ? 1 : clamp01((p * n - i + 0.25) / 0.5);
 
@@ -90,7 +90,7 @@ export default function Domains() {
       className="relative h-[300vh] bg-npf-night"
     >
       <h2 id="domains" className="sr-only">
-        {t("Protection across sea, land and sky")}
+        {t("Protection across land, water and sky")}
       </h2>
 
       <div className="sticky top-0 h-svh overflow-hidden">
@@ -217,7 +217,7 @@ export default function Domains() {
           </div>
         </div>
 
-        {/* An altitude rail: water at the foot, sky at the top, and a line
+        {/* A rail: ground at the foot, sky at the top, and a line
             that climbs with the reader. The heading already names the
             chapter, so the rail stays dots; a pointer or keyboard landing on
             a dot names it. A tap jumps to that domain. */}

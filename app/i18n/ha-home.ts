@@ -102,7 +102,7 @@ export const haHome: Record<string, string> = {
   "National Security Strategy": "Dabarun Tsaro na Ƙasa",
 
   // --- domains -------------------------------------------------------------
-  "Protection across sea, land and sky": "Kariya a ruwa, ƙasa da sama",
+  "Protection across land, water and sky": "Kariya a ƙasa, ruwa da sama",
   "On the Water": "A Kan Ruwa",
   "Wherever you are, your safety is assured.":
     "Duk inda kake, an tabbatar da amincinka.",
