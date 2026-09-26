@@ -264,26 +264,24 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
         <div className="flex flex-wrap items-center gap-x-8 gap-y-5">
           <div className="flex gap-2">
             {socials.map((name) => (
-              <a
+              // ponytail: home until the real profiles are known.
+              <Link
                 key={name}
-                href="https://fct.npf.gov.ng/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/"
                 aria-label={name}
                 className="npf-icon-btn"
               >
                 <SocialIcon name={name} className="size-5" />
-              </a>
+              </Link>
             ))}
           </div>
           {showApps ? (
             <div className="flex flex-wrap gap-2.5">
               {storeBadges.map((badge) => (
-                <a
+                // ponytail: home until the store listings exist.
+                <Link
                   key={badge.label}
-                  href="https://fct.npf.gov.ng/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/"
                   className="rounded-chip transition-[translate] hover:-translate-y-0.5"
                 >
                   <Image
@@ -292,7 +290,7 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
                     width={badge.width}
                     height={40}
                   />
-                </a>
+                </Link>
               ))}
             </div>
           ) : null}

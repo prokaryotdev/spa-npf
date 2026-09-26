@@ -225,10 +225,9 @@ export default async function Home() {
               <ul {...reveal(3)} className="mt-10 flex flex-wrap gap-3">
                 {storeBadges.map((badge) => (
                   <li key={badge.label}>
-                    <a
-                      href="https://fct.npf.gov.ng/"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    {/* ponytail: home until the store listings exist. */}
+                    <Link
+                      href="/"
                       className="block rounded-chip shadow-card transition-[translate] hover:-translate-y-0.5 focus-visible:outline-offset-4 focus-visible:outline-white"
                     >
                       <Image
@@ -238,7 +237,7 @@ export default async function Home() {
                         height={40}
                         className="h-12 w-auto"
                       />
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

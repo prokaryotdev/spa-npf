@@ -113,7 +113,7 @@ export default function Hero() {
           <div
             key={s.image}
             aria-hidden={i !== index}
-            className={`absolute inset-0 transition-opacity duration-[1200ms] ease-in-out ${
+            className={`npf-fade absolute inset-0 transition-opacity duration-[1200ms] ease-in-out ${
               i === index ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -263,7 +263,7 @@ export default function Hero() {
                     onClick={() => dispatch({ type: "to", index: i })}
                     aria-label={t("Go to slide {n}", { n: i + 1 })}
                     aria-current={i === index}
-                    className="group grid size-7 place-items-center"
+                    className="group grid h-11 w-7 place-items-center sm:w-11"
                   >
                     <span
                       className={`block size-1.5 rounded-full transition-[scale,background-color] ${

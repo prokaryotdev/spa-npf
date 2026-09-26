@@ -241,11 +241,11 @@ export default function Domains() {
                   }
                   aria-current={i === active || undefined}
                   aria-label={domain.title}
-                  className="group relative grid size-6 cursor-pointer place-items-center rounded-full outline-offset-2 focus-visible:outline-white"
+                  className="group relative -m-2.5 grid size-11 cursor-pointer place-items-center rounded-full focus-visible:outline-white"
                 >
                   <span
                     aria-hidden
-                    className="npf-caption pointer-events-none absolute end-full me-2 translate-x-1 rounded-chip bg-npf-night/80 px-2.5 py-1.5 whitespace-nowrap text-white opacity-0 backdrop-blur-sm transition-[opacity,translate] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 rtl:-translate-x-1"
+                    className="npf-caption pointer-events-none absolute end-full me-0 translate-x-1 rounded-chip bg-npf-night/80 px-2.5 py-1.5 whitespace-nowrap text-white opacity-0 backdrop-blur-sm transition-[opacity,translate] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 rtl:-translate-x-1"
                   >
                     {domain.title}
                   </span>

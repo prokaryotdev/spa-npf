@@ -67,7 +67,7 @@ export default function Pillars() {
             key={sky}
             aria-hidden
             style={{ backgroundImage: sky }}
-            className={`pointer-events-none absolute inset-0 transition-opacity duration-1000 ease-out ${
+            className={`npf-fade pointer-events-none absolute inset-0 transition-opacity duration-1000 ease-out ${
               i === active ? "opacity-100" : "opacity-0"
             }`}
           />
@@ -128,7 +128,7 @@ export default function Pillars() {
                         className={`npf-label mt-3 block transition-colors ${
                           i === active
                             ? "text-npf-blue-mid"
-                            : "text-npf-muted group-hover:text-npf-blue-mid"
+                            : "text-npf-steel group-hover:text-npf-blue-mid"
                         }`}
                       >
                         {pillar.word}

@@ -598,6 +598,12 @@ html.npf-large-text {
   .npf-reveal-on [data-reveal]:not([data-shown]) {
     translate: none;
   }
+  /* Fades survive the global kill above: with the travel gone they only
+     change opacity, which carries the change without moving anything. */
+  .npf-reveal-on [data-reveal],
+  .npf-fade {
+    transition-duration: var(--dur-media) !important;
+  }
 }
 /*
  * Horizontal card rail (the police stations): overflow hidden, so wheel and
