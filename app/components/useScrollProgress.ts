@@ -30,13 +30,25 @@ export function useScrollProgress(
 
     let frame = 0;
     let near = false;
-    const measure = () => {
+    // What the section shows, which glides after the scroll position rather
+    // than jumping to it, so a wheel's notches read as one movement. It
+    // closes ~63% of the gap every GLIDE ms whatever the frame rate, and
+    // snaps when the section is off screen or motion is reduced.
+    let shown = -1;
+    let last = 0;
+    const measure = (now = performance.now()) => {
       frame = 0;
       const rect = el.getBoundingClientRect();
       const span = rect.height - window.innerHeight;
-      const p = span <= 0 ? 0 : Math.min(1, Math.max(0, -rect.top / span));
-      frameRef.current(p);
-      setActive(chapter(p, count));
+      const target = span <= 0 ? 0 : Math.min(1, Math.max(0, -rect.top / span));
+      const snap = shown < 0 || !near || matchMedia(REDUCED).matches;
+      const k = 1 - Math.exp(-Math.min(32, now - last) / GLIDE);
+      last = now;
+      shown = snap ? target : shown + (target - shown) * k;
+      if (Math.abs(target - shown) < 0.0004) shown = target;
+      frameRef.current(shown);
+      setActive(chapter(shown, count));
+      if (shown !== target) schedule();
     };
     const schedule = () => {
       if (near && !frame) frame = requestAnimationFrame(measure);
@@ -63,6 +75,10 @@ export function useScrollProgress(
 
   return active;
 }
+
+/** How long the glide takes to close most of the gap to the scroll, in ms. */
+const GLIDE = 90;
+const REDUCED = "(prefers-reduced-motion: reduce)";
 
 /** Which of `count` chapters the progress sits in. */
 function chapter(progress: number, count: number) {

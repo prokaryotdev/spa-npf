@@ -10,12 +10,12 @@ import { useT, useLocalized } from "../i18n/client";
 const R = 48;
 const ARC = 2 * Math.PI * R;
 // One sky per chapter, crossfaded as the chapters hand off: cool dawn for
-// Safe, a deeper steel blue for Secure, the gold of the crest for Together,
-// whose floor settles into the cream the services section opens on.
+// Safe, a deeper steel blue for Secure, the gold of the crest for Together.
+// The blues are washes, not glows: the words and the portrait carry the colour.
 const SKIES = [
-  "radial-gradient(60% 70% at 85% 20%, color-mix(in srgb, var(--color-npf-blue-mid) 30%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, #7fb2ff 26%, transparent), transparent 75%), linear-gradient(160deg, #f7faff, var(--color-npf-mist))",
-  "radial-gradient(65% 75% at 80% 30%, color-mix(in srgb, var(--color-npf-blue) 34%, transparent), transparent 70%), radial-gradient(70% 60% at 0% 100%, color-mix(in srgb, #7fb2ff 24%, transparent), transparent 70%), linear-gradient(200deg, #e9f0fb, #f6f8fc)",
-  "linear-gradient(to bottom, transparent 65%, #fbf8f1), radial-gradient(60% 70% at 80% 25%, color-mix(in srgb, var(--color-npf-gold-soft) 55%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, #f3a86b 22%, transparent), transparent 75%), linear-gradient(170deg, var(--color-npf-gold-wash), #fbf8f1)",
+  "radial-gradient(60% 70% at 85% 20%, color-mix(in srgb, var(--color-npf-blue-mid) 14%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, #7fb2ff 12%, transparent), transparent 75%), linear-gradient(160deg, #f7faff, var(--color-npf-mist))",
+  "radial-gradient(65% 75% at 80% 30%, color-mix(in srgb, var(--color-npf-blue) 15%, transparent), transparent 70%), radial-gradient(70% 60% at 0% 100%, color-mix(in srgb, #7fb2ff 11%, transparent), transparent 70%), linear-gradient(200deg, #e9f0fb, #f6f8fc)",
+  "radial-gradient(60% 70% at 80% 25%, color-mix(in srgb, var(--color-npf-gold-soft) 55%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, #f3a86b 22%, transparent), transparent 75%), linear-gradient(170deg, var(--color-npf-gold-wash), #fbf8f1)",
 ];
 
 const at = (fn: (a: number) => number, p: number) =>
@@ -60,6 +60,15 @@ export default function Pillars() {
       <h2 id="pillars" className="sr-only">
         {t("Safe, Secure, Together")}
       </h2>
+      {/* The pinned chapters only show one at a time, so a screen reader gets
+          all three here and the drawn ones below stay out of its way. */}
+      <ul className="sr-only">
+        {pillars.map((pillar) => (
+          <li key={pillar.word}>
+            {pillar.word}. {pillar.line}
+          </li>
+        ))}
+      </ul>
 
       <div className="sticky top-0 flex h-svh items-center overflow-hidden">
         {SKIES.map((sky, i) => (
@@ -67,7 +76,7 @@ export default function Pillars() {
             key={sky}
             aria-hidden
             style={{ backgroundImage: sky }}
-            className={`npf-fade pointer-events-none absolute inset-0 transition-opacity duration-1000 ease-out ${
+            className={`npf-fade pointer-events-none absolute inset-0 transition-opacity duration-1000 ease-(--ease-in-out) ${
               i === active ? "opacity-100" : "opacity-0"
             }`}
           />
@@ -81,7 +90,7 @@ export default function Pillars() {
                 {pillars.map((pillar, i) => (
                   <div
                     key={pillar.word}
-                    aria-hidden={i !== active}
+                    aria-hidden
                     className={`[grid-area:1/1] transition-[opacity,translate] duration-(--dur-media) ease-out ${
                       i === active
                         ? "opacity-100"
@@ -207,7 +216,7 @@ export default function Pillars() {
                       alt=""
                       fill
                       sizes="(min-width: 1024px) 480px, (min-width: 640px) 400px, 300px"
-                      className={`object-cover transition-[opacity,scale] duration-(--dur-media) ease-out ${
+                      className={`object-cover transition-[opacity,scale] duration-(--dur-media) ease-(--ease-in-out) ${
                         i === active ? "opacity-100" : "scale-105 opacity-0"
                       }`}
                     />
