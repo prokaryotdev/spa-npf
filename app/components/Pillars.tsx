@@ -18,7 +18,7 @@ const SKIES = [
   // Together is golden hour, the light its portrait was shot in: a low sun
   // behind the ring, warming to apricot at the floor, so the chapter feels
   // like the end of a good day rather than a tinted slide.
-  "radial-gradient(45% 60% at 72% 48%, color-mix(in srgb, var(--color-npf-gold-soft) 55%, transparent), transparent 70%), radial-gradient(90% 60% at 20% 110%, color-mix(in srgb, #f3a86b 20%, transparent), transparent 75%), linear-gradient(175deg, #fffaf0 10%, var(--color-npf-gold-wash) 55%, color-mix(in srgb, #fde9d6 50%, white))",
+  "radial-gradient(45% 60% at 72% 48%, color-mix(in srgb, var(--color-npf-gold-soft) 55%, transparent), transparent 70%), radial-gradient(90% 60% at 20% 110%, color-mix(in srgb, #f3a86b 10%, transparent), transparent 75%), linear-gradient(175deg, #fffaf0 10%, var(--color-npf-gold-wash) 55%, color-mix(in srgb, #fde9d6 50%, white))",
 ];
 
 const at = (fn: (a: number) => number, p: number) =>
