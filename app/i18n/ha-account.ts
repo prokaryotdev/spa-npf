@@ -126,7 +126,6 @@ export const haAccount: Record<string, string> = {
     "Ajiye mota a wurin da aka keɓe wa masu naƙasa",
   "Nnamdi Azikiwe Expressway, before Junction 3":
     "Babbar Hanyar Nnamdi Azikiwe, kafin Mahaɗa ta 3",
-  "Outer Southern Expressway": "Babbar Hanyar Kudu ta Waje",
 
   // --- documents -----------------------------------------------------------
   "Documents | My Nigeria Police Force":

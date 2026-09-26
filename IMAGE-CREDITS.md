@@ -7,9 +7,6 @@ from the site before going live.
 
 Regenerate with `node scripts/fetch-nigeria-images.mjs`.
 
-The homepage hero photographs under `/cms/Home/hero/` are not listed: they are
-generated, not sourced. See `node scripts/gen-images.mjs`.
-
 | File | Source | Author | Licence |
 | --- | --- | --- | --- |
 | `/coat-of-arms.png` | [Coat of arms of Nigeria.svg](https://commons.wikimedia.org/wiki/File:Coat_of_arms_of_Nigeria.svg) | Lumia1234 | CC BY-SA 3.0 |

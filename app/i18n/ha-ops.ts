@@ -12,7 +12,6 @@ export const haOps: Record<string, string> = {
   "Command board": "Allon umarni",
   /* The tab strip passes its short label through a table, so `t()` never
      sees it as a literal and the coverage test never asked for this one. */
-  Board: "Allo",
   "Operations Console | Nigeria Police Force":
     "Allon Ayyuka | Rundunar 'Yan Sandan Najeriya",
   "Operations | Nigeria Police Force": "Ayyuka | Rundunar 'Yan Sandan Najeriya",
@@ -139,13 +138,6 @@ export const haOps: Record<string, string> = {
    * literals, so the coverage test never asked for them and every Hausa board
    * in the console has been showing "En route" and "On scene" in English.
    */
-  "En route": "A kan hanya",
-  "On scene": "A wurin",
-  "On Scene": "A wurin",
-  Assigned: "An ba da",
-  Unavailable: "Ba ya samuwa",
-  Closed: "An rufe",
-  total: "jimla",
   Arrived: "Ya iso",
   Urgent: "Gaggawa",
   Immediate: "Nan take",
@@ -196,32 +188,6 @@ export const haOps: Record<string, string> = {
   "Everyone on this shift and what they are on. The clock counts from the last status change.":
     "Duk wanda ke kan wannan aikin da abin da yake yi. Agogo yana ƙidaya tun canjin matsayi na ƙarshe.",
   "refuelling, training": "cika mai, horo",
-
-  // --- callsigns and officers (identifiers, left as they read) ------------
-  "Patrol 04": "Patrol 04",
-  "Patrol 09": "Patrol 09",
-  "Patrol 12": "Patrol 12",
-  "Patrol 17": "Patrol 17",
-  "Patrol 21": "Patrol 21",
-  "Patrol 26": "Patrol 26",
-  "Traffic 07": "Traffic 07",
-  "Traffic 11": "Traffic 11",
-  "Marine 02": "Marine 02",
-  "Air Wing 01": "Air Wing 01",
-  "K9 03": "K9 03",
-  "Cybercrime 01": "Cybercrime 01",
-  "Cpl. H. Suleiman": "Kfl. H. Suleiman",
-  "Cpl. F. Adeyemi": "Kfl. F. Adeyemi",
-  "Cpl. K. Ogundipe": "Kfl. K. Ogundipe",
-  "Cpl. M. Eze": "Kfl. M. Eze",
-  "Cpl. T. Yakubu": "Kfl. T. Yakubu",
-  "Sgt. R. Okafor": "Saj. R. Okafor",
-  "Sgt. M. Danladi": "Saj. M. Danladi",
-  "Sgt. A. Garba": "Saj. A. Garba",
-  "Sgt. Y. Musa": "Saj. Y. Musa",
-  "Insp. S. Bello": "Sufa. S. Bello",
-  "Insp. N. Aliyu": "Sufa. N. Aliyu",
-  "ASP O. Nwosu": "ASP O. Nwosu",
 
   // --- service requests ----------------------------------------------------
   "Service requests": "Buƙatun hidima",

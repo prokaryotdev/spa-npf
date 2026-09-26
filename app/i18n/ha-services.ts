@@ -221,7 +221,6 @@ export const haServices: Record<string, string> = {
   "POA Association": "Haɗa Wakilcin Shari'a",
   "Trust receipt": "Rasit ɗin amana",
   "Court's ruling": "Hukuncin kotu",
-  "Family declaration": "Sanarwar iyali",
   "Family declaration (family information)": "Sanarwar iyali (bayanan iyali)",
   " Family declaration (family information)": " Sanarwar iyali (bayanan iyali)",
   "family declaration": "sanarwar iyali",
@@ -327,7 +326,6 @@ export const haServices: Record<string, string> = {
   "Contact Police Research Council": "Tuntuɓi Majalisar Binciken 'Yan Sanda",
   "NPF Leaders At Your Service": "Shugabannin NPF a Hidimarka",
   "NPF Personnel Welfare and Support": "Jin Daɗi da Tallafin Ma'aikatan NPF",
-  "NPF leadership": "shugabancin NPF",
   "Request Nigeria Police Force Activities":
     "Nemi Ayyukan Rundunar 'Yan Sandan Najeriya",
   "Summit Statistics": "Ƙididdigar Taro",

@@ -1,5 +1,5 @@
 /**
- * Deletes every file under public/img and public/cms that no source file
+ * Deletes every file under public/ that no source file
  * references any more. Run after removing pages or content:
  *   node scripts/prune-assets.mjs --apply
  *
@@ -23,11 +23,14 @@ const sources = [];
 for (const f of fs.readdirSync("scripts"))
   if (/\.(mjs|txt)$/.test(f)) sources.push(path.join("scripts", f));
 
-/** Referenced paths, normalised the way check-assets.mjs matches them. */
+/**
+ * Every root-relative file path in the sources. Not only /img and /cms: the
+ * logo, the crest and everything under /npf live elsewhere in public/.
+ */
 const referenced = new Set();
 for (const file of sources) {
   const src = fs.readFileSync(file, "utf8");
-  for (const m of src.matchAll(/\/(?:img|cms)\/[^"'`)\s]+/g)) {
+  for (const m of src.matchAll(/\/[^"'`)\s]+\.\w+/g)) {
     referenced.add(m[0]);
     referenced.add(decodeURIComponent(m[0]));
   }

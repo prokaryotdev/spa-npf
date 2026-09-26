@@ -17,7 +17,6 @@ export const haChrome: Record<string, string> = {
   Home: "Gida",
   Main: "Babba",
   "Main menu": "Babban menu",
-  "Main Menu": "Babban Menu",
   "Open menu": "Buɗe menu",
   "Close menu": "Rufe menu",
   Close: "Rufe",
@@ -27,10 +26,7 @@ export const haChrome: Record<string, string> = {
   Call: "Kira",
   "Rate this service": "Ba wannan aikin maki",
   "Larger text": "Rubutu mafi girma",
-  Innovation: "Ƙirƙira",
   "Nigeria Police Force home": "Gidan Rundunar 'Yan Sandan Najeriya",
-  "Nigeria Police Force AIX": "AIX na Rundunar 'Yan Sandan Najeriya",
-  "Federal Republic of Nigeria": "Jamhuriyar Tarayyar Najeriya",
   "Emergency Numbers": "Lambobin Gaggawa",
   "Search Nigeria Police Force": "Nemi a Rundunar 'Yan Sandan Najeriya",
   "Nigeria Police Force, FCT Command - Safe Secure Together":
@@ -55,18 +51,9 @@ export const haChrome: Record<string, string> = {
 
   // --- search, lists, filters --------------------------------------------
   "Search {what}": "Nemi {what}",
-  "Search {noun}": "Nemi {noun}",
-  "Filter by name": "Tace da suna",
   "Filter by category": "Tace da rukuni",
   "All categories": "Duk rukunan",
-  "All types": "Duk nau'uka",
-  Type: "Nau'i",
-  "Sort by": "Tsara da",
-  "Newest first": "Sabo na farko",
-  "Oldest first": "Tsoho na farko",
   "{shown} of {total}": "{shown} daga {total}",
-  "Showing {shown} of {total} {noun}":
-    "Ana nuna {shown} daga {total} {noun}",
   "Page {page} of {pages}": "Shafi na {page} daga {pages}",
   "Next page": "Shafi na gaba",
   "Previous page": "Shafi na baya",
@@ -83,8 +70,6 @@ export const haChrome: Record<string, string> = {
     "Na gode — an rubuta {kind} naka",
   "A member of the team will be in touch by email. Reference numbers are issued once the service is connected.":
     "Wani daga cikin tawagar zai tuntuɓe ka ta imel. Ana bayar da lambobin tuntuɓa da zarar an haɗa aikin.",
-  "Service Rating (opens in a new window)":
-    "Ƙimar Hidima (yana buɗewa a sabon taga)",
 
   // --- error and empty states --------------------------------------------
   "Page not found": "Ba a sami shafin ba",

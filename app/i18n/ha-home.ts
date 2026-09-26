@@ -21,7 +21,6 @@ export const haHome: Record<string, string> = {
   "Laws and Legislation": "Dokoki da Ƙa'idoji",
   "Traffic and Accidents": "Zirga-zirga da Haɗura",
   "Business and Corporate": "Kasuwanci da Kamfanoni",
-  POSSAP: "POSSAP",
   "Federal Ministry of Interior": "Ma'aikatar Cikin Gida ta Tarayya",
   "Federal Road Safety Corps": "Hukumar Kula da Hanyoyi ta Tarayya",
 
@@ -41,9 +40,6 @@ export const haHome: Record<string, string> = {
     "Shekaru 96 na Rundunar 'Yan Sandan Najeriya",
   "Safe and Secure, Together": "Lafiya da Tsaro, Tare",
   "Together for a safer Abuja tomorrow": "Tare domin Abuja mai aminci gobe",
-  "Police Innovation and Leadership": "Ƙirƙira da Jagoranci a 'Yan Sanda",
-  "Be one of the officers shaping the future of policing in Nigeria":
-    "Ka zama ɗaya daga cikin jami'an da ke tsara makomar aikin 'yan sanda a Najeriya",
   "Ready on Every Road": "A Shirye a Kowace Hanya",
   "The FCT Command adds new patrol vehicles to its fleet":
     "Rundunar FCT ta ƙara sabbin motocin sintiri a cikin jerin motocinta",
@@ -85,7 +81,6 @@ export const haHome: Record<string, string> = {
     "Haɗa zukata, gina amana. Mun fi ƙarfi a haɗe.",
 
   // --- modern policing -----------------------------------------------------
-  "modern policing": "aikin 'yan sanda na zamani",
   "Browse all services": "Duba dukkan ayyuka",
   "Cybercrime Reporting": "Bayar da Rahoton Laifukan Yanar Gizo",
   "The National Cybercrime Centre receives reports of online fraud, blackmail and identity theft, and works to keep the community safe online":
@@ -139,7 +134,6 @@ export const haHome: Record<string, string> = {
   "Marine Police Base": "Sansanin 'Yan Sandan Ruwa",
   "Gives waterside communities a police response on the water, covering the dams, lakes and river crossings a patrol car cannot reach.":
     "Yana ba al'ummomin da ke gefen hanyoyin ruwa damar samun amsa daga 'yan sanda a kan ruwa, yana rufe madatsun ruwa, tafkuna da mashigar koguna waɗanda motar sintiri ba za ta iya kaiwa ba.",
-  "Explore more": "Ƙara bincike",
 
   // --- community -----------------------------------------------------------
   "Police Community Relations Committee":
@@ -162,18 +156,11 @@ export const haHome: Record<string, string> = {
   "Nigeria Police Museum": "Gidan Tarihi na 'Yan Sandan Najeriya",
   "A cultural landmark where the past illuminates the present, tracing the Force from its founding in 1930 to the national institution it is today":
     "Wurin tarihi na al'ada inda baya ke haskaka yau, yana bin tarihin Rundunar tun kafuwarta a 1930 zuwa cibiyar ƙasa da take a yau",
-  "Museum visit": "Ziyarar gidan tarihi",
   "Visit our virtual museum": "Ziyarci gidan tarihinmu na kan layi",
   "West African Police Summit": "Taron 'Yan Sandan Yammacin Afirka",
   "Police chiefs from across the region, alongside researchers, technology partners and civil society, meet in Abuja to share what works in investigation, forensics and community policing.":
     "Shugabannin 'yan sanda daga faɗin yankin, tare da masu bincike, abokan huldar fasaha da ƙungiyoyin farar hula, suna haɗuwa a Abuja domin tattauna abin da ke aiki wajen bincike, kimiyyar shaida da aikin 'yan sanda na al'umma.",
   "Summit Awards 2026": "Kyautukan Taron 2026",
-  More: "Ƙari",
-  "+{n} more": "+{n} ƙari",
-  "More Details": "Ƙarin Bayani",
-  Initiative: "Shiri",
-  "Show next {label} item": "Nuna abu na gaba na {label}",
-  "Show previous {label} item": "Nuna abu na baya na {label}",
 
   // --- app band ------------------------------------------------------------
   "The Nigeria Police Force, in your pocket":
@@ -202,9 +189,4 @@ export const haHome: Record<string, string> = {
   "Your request": "Buƙatarka",
   "Certificate application": "Neman takardar shaida",
   Ready: "A shirye",
-  "App Store": "App Store",
-  "Google Play": "Google Play",
-  "App Gallery": "App Gallery",
-  AppGallery: "AppGallery",
-  "{name} logo": "Tambarin {name}",
 };
