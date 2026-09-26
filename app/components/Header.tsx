@@ -133,7 +133,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         className={`fixed top-0 left-0 z-50 w-full border-b transition-[background-color,border-color] duration-(--dur-media) ${
           scrolled
             ? "border-npf-ink/[0.08] bg-white/90 backdrop-blur-xl"
-            : "border-white/15 bg-gradient-to-b from-npf-night/60 to-transparent"
+            : "border-white/50 bg-gradient-to-b from-npf-night/60 to-transparent"
         }`}
       >
         <div className="npf-container">
