@@ -355,10 +355,6 @@ export const seedUnits = (): Unit[] =>
     since: minutesAgo(sinceMins),
   }));
 
-/** The roster the assignment controls pick from. */
-export const officers = UNITS.map((u) => u.officer).sort();
-export const units = UNITS.map((u) => u.callsign);
-
 /** Call types the desk can log, in the order the desk reaches for them. */
 export const callTypes = [
   "Road traffic collision",

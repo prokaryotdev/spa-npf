@@ -1,6 +1,5 @@
 import { cookies, headers } from "next/headers";
 import { DEFAULT_LANG, LANG_COOKIE, isLang, type Lang } from "./config";
-import { makeFormatters, type Formatters } from "./format";
 import { localize } from "./localize";
 import { translator, type T } from "./translate";
 
@@ -27,10 +26,6 @@ export async function getPathname(): Promise<string> {
 
 export async function getT(): Promise<T> {
   return translator(await getLang());
-}
-
-export async function getFormat(): Promise<Formatters> {
-  return makeFormatters(await getLang());
 }
 
 /** Translate a whole content object. See i18n/localize.ts. */

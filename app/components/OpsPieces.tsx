@@ -99,7 +99,7 @@ export function Elapsed({
 }
 
 /** Minutes a pending call has been waiting, for the overdue test. */
-export function waitingMinutes(incident: Incident, now: number) {
+function waitingMinutes(incident: Incident, now: number) {
   return (now - new Date(incident.reported).getTime()) / 60_000;
 }
 

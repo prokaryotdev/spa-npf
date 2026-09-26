@@ -3,7 +3,7 @@
  * Card palettes are the per-card CSS custom properties each card ships.
  */
 
-export type CardTheme = {
+type CardTheme = {
   /** Deep brand ink for the card's chips and button text. */
   ink: string;
   /** Pale chip background. */

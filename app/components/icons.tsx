@@ -53,13 +53,6 @@ export const CallIcon = ({ className }: IconProps) => (
   </svg>
 );
 
-export const ArrowUpIcon = ({ className }: IconProps) => (
-  <svg {...base} className={className}>
-    <path d="M12 19.5v-15" />
-    <path d="m5.5 11 6.5-6.5 6.5 6.5" />
-  </svg>
-);
-
 export const ArrowUpRight = ({ className }: IconProps) => (
   <svg {...base} className={className}>
     <path d="M7.5 16.5 16.5 7.5" />
@@ -150,26 +143,10 @@ export const ServicesIcon = ({ className }: IconProps) => (
   </svg>
 );
 
-export const CalendarIcon = ({ className }: IconProps) => (
-  <svg {...base} className={className}>
-    <rect x="3.5" y="5" width="17" height="15.5" rx="3" />
-    <path d="M3.5 9.5h17" />
-    <path d="M8 3v4M16 3v4" />
-  </svg>
-);
-
 export const PinIcon = ({ className }: IconProps) => (
   <svg {...base} className={className}>
     <path d="M12 21s7-5.8 7-11a7 7 0 1 0-14 0c0 5.2 7 11 7 11Z" />
     <circle cx="12" cy="10" r="2.6" />
-  </svg>
-);
-
-export const SmileIcon = ({ className }: IconProps) => (
-  <svg {...base} className={className}>
-    <circle cx="12" cy="12" r="9" />
-    <path d="M8.5 14a4.4 4.4 0 0 0 7 0" />
-    <path d="M9 9.5h.01M15 9.5h.01" />
   </svg>
 );
 
@@ -322,13 +299,6 @@ export const RadioIcon = ({ className }: IconProps) => (
     <circle cx="12" cy="12" r="2.4" />
     <path d="M7.8 7.8a6 6 0 0 0 0 8.4M16.2 16.2a6 6 0 0 0 0-8.4" />
     <path d="M4.9 4.9a10 10 0 0 0 0 14.2M19.1 19.1a10 10 0 0 0 0-14.2" />
-  </svg>
-);
-
-export const TrendIcon = ({ className }: IconProps) => (
-  <svg {...base} className={className}>
-    <path d="m3.6 16.4 5.6-5.6 3.4 3.4 7.8-7.8" />
-    <path d="M15.4 6.4h5v5" />
   </svg>
 );
 

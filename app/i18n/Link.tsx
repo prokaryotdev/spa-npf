@@ -2,7 +2,7 @@
 
 import NextLink from "next/link";
 import { useRouter as useNextRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useLang } from "./client";
 import { localePath } from "./path";
 
@@ -51,10 +51,4 @@ export function useRouter() {
     }),
     [router, lang],
   );
-}
-
-/** For an href that has to be built by hand, outside a Link. */
-export function useLocalePath() {
-  const lang = useLang();
-  return useCallback((href: string) => localePath(href, lang), [lang]);
 }

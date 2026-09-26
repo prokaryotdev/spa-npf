@@ -23,13 +23,13 @@ import { PROPER_NOUNS } from "./proper-nouns.mjs";
  * reader does see them. Sharing localize's list meant Hausa pages printing
  * "Speed Violation" while coverage reported no gaps.
  */
-export const SKIP = new Set([
+const SKIP = new Set([
   "slug", "id", "icon", "href", "src", "image", "img", "logo", "cover",
   "file", "url", "email", "website", "color", "theme", "background",
 ]);
 
 /** A string a reader sees, rather than a path, a code or a date. */
-export const isCopy = (s) => {
+const isCopy = (s) => {
   const v = s.trim();
   if (v.length < 2 || !/\p{L}/u.test(v)) return false;
   if (/^[/#]/.test(v) || /^https?:|^mailto:|^tel:/.test(v)) return false;

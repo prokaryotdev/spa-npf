@@ -65,7 +65,7 @@ export function useScrollProgress(
 }
 
 /** Which of `count` chapters the progress sits in. */
-export function chapter(progress: number, count: number) {
+function chapter(progress: number, count: number) {
   return Math.min(count - 1, Math.floor(progress * count));
 }
 

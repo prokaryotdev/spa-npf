@@ -31,7 +31,3 @@ export const translator =
   (lang: Lang): T =>
   (text, vars) =>
     translate(lang, text, vars);
-
-/** True when the string has no Hausa entry. Used by the coverage test. */
-export const isTranslated = (text: string) =>
-  Object.prototype.hasOwnProperty.call(dictionary, text.trim());

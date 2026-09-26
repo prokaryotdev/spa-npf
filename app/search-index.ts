@@ -79,7 +79,7 @@ const entries: SearchHit[] = [
 
 ];
 
-export const searchIndex = entries.filter(
+const searchIndex = entries.filter(
   (hit) => hit.title && (hit.external || internal(hit.href)),
 );
 
