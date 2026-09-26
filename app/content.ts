@@ -66,22 +66,22 @@ export const heroSlides = [
   {
     title: "Police Week in the Federal Capital Territory",
     subtitle: "A week of service across the Federal Capital Territory",
-    image: "/npf/hero/parade.jpg",
+    image: "/images/home/hero/parade.jpg",
   },
   {
     title: "96 Years of the Nigeria Police Force",
     subtitle: "Serving the nation since 1930",
-    image: "/npf/hero/anniversary.jpg",
+    image: "/images/home/hero/anniversary.jpg",
   },
   {
     title: "Safe and Secure, Together",
     subtitle: "Together for a safer Abuja tomorrow",
-    image: "/npf/hero/community.jpg",
+    image: "/images/home/hero/community.jpg",
   },
   {
     title: "Ready on Every Road",
     subtitle: "The FCT Command adds new patrol vehicles to its fleet",
-    image: "/npf/hero/fleet.jpg",
+    image: "/images/shared/fleet.jpg",
   },
 ];
 
@@ -114,7 +114,7 @@ export const quickServices = [
     title: "Explore More Services",
     body: "Browse and discover more available police services",
     href: "/app/services",
-    icon: "/icons/services/more.svg",
+    icon: "/icons/home/more.svg",
   },
 ];
 
@@ -122,17 +122,17 @@ export const pillars = [
   {
     word: "Safe",
     line: "Your safety, backed by every officer on duty.",
-    portrait: "/npf/pillar-safe.jpg",
+    portrait: "/images/home/pillars/safe.jpg",
   },
   {
     word: "Secure",
     line: "Protecting every home, every family, every day.",
-    portrait: "/npf/pillar-secure.jpg",
+    portrait: "/images/home/pillars/secure.jpg",
   },
   {
     word: "Together",
     line: "Connecting hearts, building trust. Stronger as one.",
-    portrait: "/npf/pillar-together.jpg",
+    portrait: "/images/home/pillars/together.jpg",
   },
 ];
 
@@ -141,7 +141,7 @@ export const smartPolicing: InitiativeCard[] = [
     title: "Cybercrime Reporting",
     href: "/app/services/ecrime",
     body: "The National Cybercrime Centre receives reports of online fraud, blackmail and identity theft, and works to keep the community safe online",
-    image: "/npf/cybercrime-centre.jpg",
+    image: "/images/home/smart-policing/cybercrime-centre.jpg",
     tags: [
       {
         label: "Cybercrimes Act 2015",
@@ -154,7 +154,7 @@ export const smartPolicing: InitiativeCard[] = [
     title: "Lost & Found",
     href: "/app/services/lost-and-found",
     body: "A paperless and secure way to find what matters, the Lost & Found desk offers a simple and reliable way to report and recover property",
-    image: "/npf/lost-and-found.jpg",
+    image: "/images/home/smart-policing/lost-and-found.jpg",
     tags: [
       {
         label: "Federal Capital Territory Digital Services",
@@ -167,7 +167,7 @@ export const smartPolicing: InitiativeCard[] = [
     title: "Rescue Me",
     href: "/app/services/share-security-information",
     body: "Seen something suspicious? Report activity or incidents that could threaten public safety, or share security information with the Force. It is free, and open to residents, visitors and businesses",
-    image: "/npf/rescue-me.jpg",
+    image: "/images/home/smart-policing/rescue-me.jpg",
     tags: [
       {
         label: "National Security Strategy",
@@ -185,18 +185,18 @@ export const domains = [
     title: "On the Ground",
     lead: "Wherever you go, help is close by.",
     body: "Our patrols, officers and specialised units are always nearby, ready to assist whenever you need us.",
-    background: "/npf/domains/car.jpg",
-    backgroundMobile: "/npf/domains/car-mobile.jpg",
+    background: "/images/home/domains/car.jpg",
+    backgroundMobile: "/images/home/domains/car-mobile.jpg",
     // The reading shade takes the photo's own dusk: deep night over the wet
     // road, warm over the gold lake, open evening blue over the sky.
     shade: "8 17 34",
     chips: [
       {
         label: "Neighbourhood Security",
-        icon: "/icons/services/icon-security.svg",
+        icon: "/icons/shared/security.svg",
       },
-      { label: "On The Go", icon: "/icons/services/icon-car.svg" },
-      { label: "Tourist Police", icon: "/icons/services/icon-tourist.svg" },
+      { label: "On The Go", icon: "/icons/shared/car.svg" },
+      { label: "Tourist Police", icon: "/icons/home/tourist.svg" },
     ],
   },
   {
@@ -204,20 +204,20 @@ export const domains = [
     title: "On the Water",
     lead: "Wherever you are, your safety is assured.",
     body: "The Marine Police patrol Jabi Lake, the Lower Usuma Dam and the rivers around the Territory, so work and leisure on the water stay safe.",
-    background: "/npf/domains/boat.jpg",
-    backgroundMobile: "/npf/domains/boat-mobile.jpg",
+    background: "/images/home/domains/boat.jpg",
+    backgroundMobile: "/images/home/domains/boat-mobile.jpg",
     shade: "30 20 12",
-    chips: [{ label: "Sail Safely", icon: "/icons/services/icon-boat.svg" }],
+    chips: [{ label: "Sail Safely", icon: "/icons/home/boat.svg" }],
   },
   {
     id: "sky",
     title: "From the Sky",
     lead: "A watchful eye over the whole Territory.",
     body: "The Police Air Wing and our drone units watch over the Territory from above, holding the highest standards of security.",
-    background: "/npf/domains/drone.jpg",
-    backgroundMobile: "/npf/domains/drone-mobile.jpg",
+    background: "/images/home/domains/drone.jpg",
+    backgroundMobile: "/images/home/domains/drone-mobile.jpg",
     shade: "13 29 54",
-    chips: [{ label: "Air Wing", icon: "/icons/services/icon-drone.svg" }],
+    chips: [{ label: "Air Wing", icon: "/icons/home/drone.svg" }],
   },
 ];
 
@@ -228,7 +228,7 @@ export const smartPoliceStations: InitiativeCard[] = [
   {
     title: "Command Headquarters",
     body: "Seat of the FCT Police Command at Garki, where the Commissioner of Police coordinates policing across the Territory.",
-    image: "/npf/command-headquarters.jpg",
+    image: "/images/home/smart-stations/command-headquarters.jpg",
     href: "/app/home/customer-centers",
     tags: [],
     theme: station,
@@ -236,7 +236,7 @@ export const smartPoliceStations: InitiativeCard[] = [
   {
     title: "Area Commands",
     body: "Nine Area Commands, each supervising the divisions within its reach.",
-    image: "/npf/area-commands.jpg",
+    image: "/images/home/smart-stations/area-commands.jpg",
     href: "/app/home/customer-centers",
     tags: [],
     theme: station,
@@ -244,7 +244,7 @@ export const smartPoliceStations: InitiativeCard[] = [
   {
     title: "Divisional Headquarters",
     body: "Where most people meet the Force: the counter that takes a report, the investigators and the patrol teams.",
-    image: "/npf/divisional-headquarters.jpg",
+    image: "/images/home/smart-stations/divisional-headquarters.jpg",
     href: "/app/home/customer-centers",
     tags: [],
     theme: station,
@@ -252,7 +252,7 @@ export const smartPoliceStations: InitiativeCard[] = [
   {
     title: "Police Posts",
     body: "Smaller outposts in the satellite towns and rural wards of the six Area Councils. Each is held by a patrol team.",
-    image: "/npf/police-posts.jpg",
+    image: "/images/home/smart-stations/police-posts.jpg",
     href: "/app/home/customer-centers",
     tags: [],
     theme: station,
@@ -260,7 +260,7 @@ export const smartPoliceStations: InitiativeCard[] = [
   {
     title: "Marine Police Base",
     body: "Gives waterside communities a police response on the water, covering the dams, lakes and river crossings a patrol car cannot reach.",
-    image: "/npf/marine-police-base.jpg",
+    image: "/images/home/smart-stations/marine-police-base.jpg",
     href: "/app/home/customer-centers",
     tags: [],
     theme: station,
@@ -271,7 +271,7 @@ export const community: InitiativeCard[] = [
   {
     title: "Police Community Relations Committee",
     body: "Sit with the PCRC at your division, raise what worries your street, and help shape how your neighbourhood is policed.",
-    image: "/npf/pcrc.jpg",
+    image: "/images/home/community/pcrc.jpg",
     tags: [{ label: "Committee Results" }],
     more: 1,
     wide: true,
@@ -280,7 +280,7 @@ export const community: InitiativeCard[] = [
   {
     title: "Safer Neighbourhood Watch",
     body: "Volunteer with the Nigeria Police Force to create real change. Support programmes that build trust, shared responsibility and a safer Territory for all. Make a difference, together!",
-    image: "/npf/neighbourhood-watch.jpg",
+    image: "/images/home/community/neighbourhood-watch.jpg",
     tags: [
       {
         label: "Explore Volunteer Opportunities",
@@ -291,7 +291,7 @@ export const community: InitiativeCard[] = [
   {
     title: "Police Children Schools",
     body: "A long-standing undertaking of the Force, the Nigeria Police Children Schools make sure every child of our personnel has access to good education. The schools blend academic achievement with personal growth and skills development in a supportive environment.",
-    image: "/npf/police-children-schools.jpg",
+    image: "/images/home/community/police-children-schools.jpg",
     tags: [{ label: "Become a Safety Ambassador" }],
     more: 2,
     theme: theme("#554937", "#ffffff", "#dcd4c9"),
@@ -299,7 +299,7 @@ export const community: InitiativeCard[] = [
   {
     title: "Nigeria Police Games",
     body: "The championship of the Force, bringing officers from every Command together and carrying our message on discipline and fitness into the community",
-    image: "/npf/nigeria-police-games.jpg",
+    image: "/images/home/community/nigeria-police-games.jpg",
     badge: "Coming Soon",
     tags: [],
     theme: theme("#17232C", "#d7e2ea", "#94b1c7"),
@@ -307,18 +307,18 @@ export const community: InitiativeCard[] = [
   {
     title: "Nigeria Police Museum",
     body: "A cultural landmark where the past illuminates the present, tracing the Force from its founding in 1930 to the national institution it is today",
-    image: "/npf/nigeria-police-museum.jpg",
+    image: "/images/home/community/nigeria-police-museum.jpg",
     tags: [{ label: "Visit our virtual museum" }],
     theme: theme("#6A3D06", "#fef8f0", "#f9c990"),
   },
   {
     title: "West African Police Summit",
     body: "Police chiefs from across the region, alongside researchers, technology partners and civil society, meet in Abuja to share what works in investigation, forensics and community policing.",
-    image: "/npf/west-african-police-summit.jpg",
+    image: "/images/home/community/west-african-police-summit.jpg",
     tags: [
       {
         label: "Summit Awards 2026",
-        icon: "/icons/services/announcement-01.svg",
+        icon: "/icons/home/announcement.svg",
       },
     ],
     more: 2,

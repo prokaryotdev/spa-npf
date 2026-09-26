@@ -39,7 +39,7 @@ export function PoliceWordmark({ className }: Props) {
   return (
     <span className={`inline-flex items-center ${className ?? ""}`}>
       <Image
-        src="/logo.png"
+        src="/brand/logo.png"
         alt=""
         width={1179}
         height={1334}

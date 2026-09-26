@@ -1965,7 +1965,7 @@ export const services: Service[] = [
     name: "On-The-Go",
     action: "Start Service",
     category: null,
-    icon: "/icons/services/icon-car.svg",
+    icon: "/icons/shared/car.svg",
     description:
       "Nigeria Police Force pledges to act swiftly on government directives by eliminating unnecessary procedures, cutting timelines by no less than 50%, and removing redundant requirements, ensuring a more streamlined and efficient experience for society.",
     audiences: [],
@@ -3271,7 +3271,7 @@ export const services: Service[] = [
     name: "Smart Home Security",
     action: "Apply",
     category: null,
-    icon: "/icons/services/icon-security.svg",
+    icon: "/icons/shared/security.svg",
     description:
       "This service aims to enhance home security in Abuja through a smart monitoring system that operates 24/7, connected with the strategic partner “9mobile” to provide instant alerts supported by a unified cellular network.",
     audiences: ["Individuals"],

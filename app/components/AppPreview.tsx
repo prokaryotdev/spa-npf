@@ -163,7 +163,7 @@ export default function AppPreview({
 
               <div className="relative mb-[4cqw] min-h-[26cqw] flex-1 overflow-hidden rounded-[3.4cqw] bg-npf-night">
                 <Image
-                  src="/npf/hero/fleet.jpg"
+                  src="/images/shared/fleet.jpg"
                   alt=""
                   fill
                   sizes="300px"

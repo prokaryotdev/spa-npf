@@ -34,7 +34,7 @@ const display = localFont({
  * rather than letting it invert a light design.
  *
  * The tab and home-screen icons are the force crest, squared up from
- * public/logo.png by app/favicon.ico, app/icon.png and app/apple-icon.png.
+ * public/brand/logo.png by app/favicon.ico, app/icon.png and app/apple-icon.png.
  * There is still no web app manifest, so Android installs fall back to the
  * apple-touch icon rather than getting a named, themed install.
  */
