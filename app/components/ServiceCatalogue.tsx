@@ -254,7 +254,7 @@ export default function ServiceCatalogue() {
 
                   <ChevronRight
                     aria-hidden
-                    className="mt-3 size-5 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1 group-hover/row:text-npf-blue"
+                    className="mt-3 size-5 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-out)] group-hover/row:translate-x-1 group-hover/row:text-npf-blue"
                   />
                 </Link>
               </li>

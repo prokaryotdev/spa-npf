@@ -85,7 +85,6 @@
    */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-custom: cubic-bezier(0.23, 1, 0.32, 1);
   --default-transition-duration: 200ms;
   --default-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 
@@ -164,7 +163,7 @@ dialog::backdrop {
   }
 }
 .npf-drawer[open] {
-  animation: npf-drawer-in 0.45s var(--ease-custom);
+  animation: npf-drawer-in 0.45s var(--ease-out);
 }
 
 /* The 112 call button in the footer breathes a ring outward, like a line
@@ -661,7 +660,7 @@ html.npf-large-text {
   }
 }
 .npf-suggest {
-  animation: npf-suggest-in 0.24s var(--ease-custom);
+  animation: npf-suggest-in 0.24s var(--ease-out);
   transform-origin: top center;
 }
 .npf-suggest-up {
@@ -689,7 +688,7 @@ html.npf-large-text {
   backdrop-filter: blur(6px);
 }
 .npf-search-sheet[open] {
-  animation: npf-sheet-in 0.3s var(--ease-custom);
+  animation: npf-sheet-in 0.3s var(--ease-out);
 }
 @keyframes npf-sheet-in {
   from {
@@ -870,7 +869,7 @@ html.npf-large-text {
   }
 }
 .npf-ops-row {
-  animation: npf-ops-row-in 0.5s var(--ease-custom);
+  animation: npf-ops-row-in 0.5s var(--ease-out);
 }
 /*
  * The console's one authored moment. A pending call past its dispatch target
@@ -921,8 +920,8 @@ html.npf-large-text {
   background-size: 100% 0;
   background-position: 0 0;
   transition:
-    background-size 0.18s var(--ease-custom),
-    background-color 0.18s var(--ease-custom);
+    background-size 0.18s var(--ease-out),
+    background-color 0.18s var(--ease-out);
 }
 .npf-ops-pick:dir(rtl) {
   background-image: linear-gradient(

@@ -156,7 +156,7 @@ export default function PortalRequests() {
                   <StatusPill status={request.status} />
                   <ChevronDown
                     aria-hidden
-                    className={`size-5 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-custom)] ${
+                    className={`size-5 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-out)] ${
                       open ? "rotate-180" : ""
                     }`}
                   />

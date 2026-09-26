@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import { useRef, type CSSProperties } from "react";
 import { domains as domainsSource } from "../content";
 import { scrollToProgress, useScrollProgress } from "./useScrollProgress";
@@ -35,6 +35,40 @@ function LetterStagger({ text, play }: { text: string; play: boolean }) {
 }
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+const REDUCED = "(prefers-reduced-motion: reduce)";
+
+/**
+ * A <picture>, not next/image: a phone needs a different crop, not a smaller
+ * one. These slides are shot with the reading column left empty (the left
+ * third on the wide file, the upper two-thirds on the tall one), so a narrow
+ * viewport is handed its own photograph. Both crops still go through the
+ * image optimizer, so they arrive resized and in WebP rather than as 600KB
+ * originals.
+ */
+function Scene({
+  src,
+  srcMobile,
+  eager,
+}: {
+  src: string;
+  srcMobile: string;
+  eager: boolean;
+}) {
+  const common = { alt: "", fill: true, sizes: "100vw", quality: 85 } as const;
+  const { srcSet: mobile } = getImageProps({ ...common, src: srcMobile }).props;
+  const { props } = getImageProps({
+    ...common,
+    src,
+    loading: eager ? "eager" : "lazy",
+  });
+  return (
+    <picture>
+      <source media="(max-width: 767px)" srcSet={mobile} />
+      {/* eslint-disable-next-line jsx-a11y/alt-text -- getImageProps sets alt="" */}
+      <img {...props} className="object-cover" />
+    </picture>
+  );
+}
 
 /**
  * Land, water and sky. The section pins while each photograph rises over the
@@ -61,10 +95,22 @@ export default function Domains() {
     i === 0 ? 1 : clamp01((p * n - i + 0.25) / 0.5);
 
   const active = useScrollProgress(section, n, (p) => {
+    // Reduced motion keeps the handover but drops the travel: each scene
+    // fades in over the last where it would have risen, and nothing zooms.
+    const still = matchMedia(REDUCED).matches;
     layers.current.forEach((layer, i) => {
       if (!layer) return;
       const down = 1 - rise(i, p);
       const [inner, horizon] = layer.children as unknown as HTMLElement[];
+      if (still) {
+        layer.style.transform = "none";
+        layer.style.opacity = String(1 - down);
+        inner.style.transform = "none";
+        horizon.style.opacity = "0";
+        layer.style.boxShadow = "none";
+        return;
+      }
+      layer.style.opacity = "";
       layer.style.transform = `translate3d(0, ${down * 100}%, 0)`;
       inner.style.transform = `translate3d(0, ${down * -72}%, 0) scale(${1.04 + p * 0.06})`;
       // A rising scene casts its shadow up onto the one it covers.
@@ -78,7 +124,9 @@ export default function Domains() {
     const leave = now < n - 1 ? clamp01(rise(now + 1, p) * 2) : 0;
     if (words.current) {
       words.current.style.opacity = String(1 - leave);
-      words.current.style.transform = `translate3d(0, ${leave * -24}px, 0)`;
+      words.current.style.transform = still
+        ? "none"
+        : `translate3d(0, ${leave * -24}px, 0)`;
     }
     if (climb.current) climb.current.style.transform = `scaleY(${p})`;
   });
@@ -92,6 +140,22 @@ export default function Domains() {
       <h2 id="domains" className="sr-only">
         {t("Protection across land, water and sky")}
       </h2>
+      {/* The pinned chapters only show one at a time, so a screen reader gets
+          all three here and the drawn ones below stay out of its way. */}
+      <div className="sr-only">
+        {domains.map((domain) => (
+          <div key={domain.id}>
+            <h3>{domain.title}</h3>
+            {domain.lead ? <p>{domain.lead}</p> : null}
+            <p>{domain.body}</p>
+            <ul>
+              {domain.chips.map((chip) => (
+                <li key={chip.label}>{chip.label}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
 
       <div className="sticky top-0 h-svh overflow-hidden">
         {domains.map((domain, i) => (
@@ -110,26 +174,11 @@ export default function Domains() {
             }
           >
             <div className="absolute inset-0">
-              {/*
-                A <picture>, not next/image: a phone needs a different crop,
-                not a smaller one. These slides are shot with the reading
-                column left empty (the left third on the wide file, the upper
-                two-thirds on the tall one), so a narrow viewport is handed
-                its own photograph.
-              */}
-              <picture>
-                <source
-                  media="(max-width: 767px)"
-                  srcSet={domain.backgroundMobile}
-                />
-                <img
-                  src={domain.background}
-                  alt=""
-                  loading={i === 0 ? "eager" : "lazy"}
-                  decoding="async"
-                  className="absolute inset-0 size-full object-cover"
-                />
-              </picture>
+              <Scene
+                src={domain.background}
+                srcMobile={domain.backgroundMobile}
+                eager={i === 0}
+              />
               <span aria-hidden className="npf-domain-shade" />
             </div>
             {/* The horizon riding the rising edge: light caught on the seam,
@@ -162,13 +211,10 @@ export default function Domains() {
               return (
                 <div
                   key={domain.id}
-                  aria-hidden={!on}
+                  aria-hidden
                   className={`[grid-area:1/1] ${on ? "" : "invisible"}`}
                 >
-                  <h3
-                    aria-label={domain.title}
-                    className="npf-h2 mb-4 max-w-[15ch] text-white short:mb-2"
-                  >
+                  <h3 className="npf-h2 mb-4 max-w-[15ch] text-white short:mb-2">
                     <LetterStagger text={domain.title} play={on} />
                   </h3>
                   {domain.lead ? (

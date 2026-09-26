@@ -69,7 +69,7 @@ export default function PortalOverview({
                   </span>
                   <ChevronRight
                     aria-hidden
-                    className="mt-1 size-5 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1"
+                    className="mt-1 size-5 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-out)] group-hover/row:translate-x-1"
                   />
                 </Link>
               </li>
@@ -137,7 +137,7 @@ export default function PortalOverview({
                 </span>
                 <ChevronRight
                   aria-hidden
-                  className="size-4 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-custom)] group-hover/row:translate-x-1"
+                  className="size-4 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-out)] group-hover/row:translate-x-1"
                 />
               </Link>
             </li>
