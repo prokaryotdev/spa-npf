@@ -122,7 +122,7 @@ export default function Stations({
               {...reveal(Math.min(i, 3))}
               className="flex aspect-[3/4] w-[76%] shrink-0 sm:w-[47%] lg:w-[36%] xl:w-[34%] 2xl:w-[31%]"
             >
-              <div className="npf-tile flex-1 p-(--npf-pad)">
+              <div className="npf-tile npf-grade flex-1 p-(--npf-pad)">
                 <Image
                   src={tier.image}
                   alt=""

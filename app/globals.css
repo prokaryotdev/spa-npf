@@ -476,6 +476,24 @@ html.npf-large-text {
     );
   }
 
+  /* The station tiers' film grade: the noon photos pulled toward the
+     chapter's night blue, a cooled sky over the building and a soft
+     vignette, so five sunny snapshots read as one set. */
+  .npf-grade .npf-tile-media {
+    filter: saturate(0.9) contrast(1.06);
+  }
+  .npf-grade::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(130% 95% at 50% 40%, transparent 65%, rgb(10 21 38 / 0.3) 100%),
+      linear-gradient(to bottom, rgb(28 62 120 / 0.25) 0%, transparent 50%);
+    mix-blend-mode: multiply;
+  }
+
   /* The domain scenes' reading shade, in each photo's own dusk (--shade).
      A falloff from the corner the words sit in, never a band, so it reads as
      the light dropping away across the frame. The head and foot darken a
