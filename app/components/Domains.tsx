@@ -120,7 +120,7 @@ export default function Domains() {
               <picture>
                 <source
                   media="(max-width: 767px)"
-                  srcSet={domain.background.replace(".jpg", "-mobile.jpg")}
+                  srcSet={domain.backgroundMobile}
                 />
                 <img
                   src={domain.background}

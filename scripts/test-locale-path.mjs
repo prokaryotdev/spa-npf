@@ -59,7 +59,7 @@ for (const href of ["/api/report-error", "/sitemap.xml", "/robots.txt", "/_next/
 // extension".
 for (const href of [
   "/img/ai.svg",
-  "/cms/dp-service-icons/Cardiac_Support_3d22628230.svg",
+  "/icons/services/cardiac-support.svg",
   "/cms/Home/Innovation_2d3f3540e6.jpg",
   "/fonts/SansRegular.woff2",
   "/opengraph-image.png",

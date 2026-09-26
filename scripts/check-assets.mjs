@@ -1,5 +1,5 @@
 /**
- * Fails if any /img or /cms path in app/content-*.ts has no file behind it.
+ * Fails if any image path in app/content-*.ts has no file behind it.
  *
  * A path with no file behind it ships as a broken image, and nothing notices
  * until a page renders it. Run from the repo root:
@@ -19,7 +19,7 @@ let checked = 0;
 for (const file of files) {
   const source = fs.readFileSync(file, "utf8");
   const refs = new Set(
-    [...source.matchAll(/"(\/(?:img|cms)\/[^"]+)"/g)].map((m) => m[1]),
+    [...source.matchAll(/"(\/[^"/][^"]*\.(?:jpe?g|png|svg|webp))"/g)].map((m) => m[1]),
   );
   checked += refs.size;
   for (const ref of refs) {

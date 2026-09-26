@@ -90,31 +90,31 @@ export const quickServices = [
     title: "Make a Report",
     body: "Report a crime or submit your complaint directly",
     href: "/app/services?package=Criminal+Reports+and+Complaints",
-    icon: "/cms/homeServiceIcon/Reports_and_Complaints_Suite_2877ee8e89.svg",
+    icon: "/icons/home/reports-and-complaints-suite.svg",
   },
   {
     title: "Apply for a Certificate or Permit",
     body: "Access official documents from the Nigeria Police Force quickly and securely",
     href: "/app/services?package=Permits+and+Certificates",
-    icon: "/cms/homeServiceIcon/Request_for_a_Certificate_or_Permit_f02f7b6956.svg",
+    icon: "/icons/home/request-for-a-certificate-or-permit.svg",
   },
   {
     title: "Inquire & Pay",
     body: "Stay updated and settle your payments instantly",
     href: "/app/services?package=Inquiries+and+Follow-up",
-    icon: "/cms/homeServiceIcon/Inquire_and_Pay_2177158856.svg",
+    icon: "/icons/home/inquire-and-pay.svg",
   },
   {
     title: "Request Support",
     body: "Request support on-site, digitally, in seamless steps",
     href: "/app/services?package=Emergency+and+Response",
-    icon: "/cms/homeServiceIcon/Request_Support_a63f371d92.svg",
+    icon: "/icons/home/request-support.svg",
   },
   {
     title: "Explore More Services",
     body: "Browse and discover more available police services",
     href: "/app/services",
-    icon: "/cms/more_12a8588c06.svg",
+    icon: "/icons/services/more.svg",
   },
 ];
 
@@ -185,17 +185,18 @@ export const domains = [
     title: "On the Ground",
     lead: "Wherever you go, help is close by.",
     body: "Our patrols, officers and specialised units are always nearby, ready to assist whenever you need us.",
-    background: "/img/3d-static/car-bg.jpg",
+    background: "/npf/domains/car.jpg",
+    backgroundMobile: "/npf/domains/car-mobile.jpg",
     // The reading shade takes the photo's own dusk: deep night over the wet
     // road, warm over the gold lake, open evening blue over the sky.
     shade: "8 17 34",
     chips: [
       {
         label: "Neighbourhood Security",
-        icon: "/cms/icon_security_84e1e8baef.svg",
+        icon: "/icons/services/icon-security.svg",
       },
-      { label: "On The Go", icon: "/cms/icon_car_eaa24290bd.svg" },
-      { label: "Tourist Police", icon: "/cms/icon_tourist_a49d88a5f4.svg" },
+      { label: "On The Go", icon: "/icons/services/icon-car.svg" },
+      { label: "Tourist Police", icon: "/icons/services/icon-tourist.svg" },
     ],
   },
   {
@@ -203,18 +204,20 @@ export const domains = [
     title: "On the Water",
     lead: "Wherever you are, your safety is assured.",
     body: "The Marine Police patrol Jabi Lake, the Lower Usuma Dam and the rivers around the Territory, so work and leisure on the water stay safe.",
-    background: "/img/3d-static/boat-bg.jpg",
+    background: "/npf/domains/boat.jpg",
+    backgroundMobile: "/npf/domains/boat-mobile.jpg",
     shade: "30 20 12",
-    chips: [{ label: "Sail Safely", icon: "/cms/icon_boat_3777bd658e.svg" }],
+    chips: [{ label: "Sail Safely", icon: "/icons/services/icon-boat.svg" }],
   },
   {
     id: "sky",
     title: "From the Sky",
     lead: "A watchful eye over the whole Territory.",
     body: "The Police Air Wing and our drone units watch over the Territory from above, holding the highest standards of security.",
-    background: "/img/3d-static/drone-bg.jpg",
+    background: "/npf/domains/drone.jpg",
+    backgroundMobile: "/npf/domains/drone-mobile.jpg",
     shade: "13 29 54",
-    chips: [{ label: "Air Wing", icon: "/cms/icon_drone.svg" }],
+    chips: [{ label: "Air Wing", icon: "/icons/services/icon-drone.svg" }],
   },
 ];
 
@@ -315,7 +318,7 @@ export const community: InitiativeCard[] = [
     tags: [
       {
         label: "Summit Awards 2026",
-        icon: "/cms/announcement_01_9b8b72d1a1.svg",
+        icon: "/icons/services/announcement-01.svg",
       },
     ],
     more: 2,
@@ -425,7 +428,7 @@ export const legalLinks = [
 ];
 
 export const storeBadges = [
-  { label: "App Store", src: "/img/app-store.svg", width: 120 },
-  { label: "Google Play", src: "/img/google-play.svg", width: 135 },
-  { label: "App Gallery", src: "/img/app-gallery.svg", width: 133 },
+  { label: "App Store", src: "/badges/app-store.svg", width: 120 },
+  { label: "Google Play", src: "/badges/google-play.svg", width: 135 },
+  { label: "App Gallery", src: "/badges/app-gallery.svg", width: 133 },
 ];

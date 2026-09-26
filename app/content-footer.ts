@@ -437,7 +437,7 @@ export const customerCenters = [
       "The senior command for the city centre, supervising the Garki, Wuse, Maitama and Asokoro divisions. It holds the Command's central charge office and the desks that take reports the divisions refer upward.",
     kind: "Area Command",
     timing: "24 hours",
-    image: "/cms/7645_D9_85_D8_B1_D9_83_D8_B2_D8_A7_D9_84_D8_A8_D8_B1_D8_B4_D8_A7_D8_A1_705bc8ce9b.jpg",
+    image: "/npf/stations/central-area-command.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.035,7.49",
   },
   {
@@ -448,7 +448,7 @@ export const customerCenters = [
       "Covers the Gwagwalada Area Council and the university town around it, including the stretch of the Abuja–Lokoja highway that runs through the council.",
     kind: "Area Command",
     timing: "24 hours",
-    image: "/cms/3152_KRM_9488_cf562f8589.jpg",
+    image: "/npf/stations/gwagwalada-area-command.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=8.943,7.08",
   },
   {
@@ -459,7 +459,7 @@ export const customerCenters = [
       "Responsible for Bwari town, Dutse-Alhaji and the hill settlements north of the city, with a standing patrol on the Bwari–Dutse road.",
     kind: "Area Command",
     timing: "24 hours",
-    image: "/cms/6176_KRM_8062_50432d72da.jpg",
+    image: "/npf/stations/bwari-area-command.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.282,7.38",
   },
   {
@@ -470,7 +470,7 @@ export const customerCenters = [
       "One of the busiest commands in the Territory, covering Kubwa, Byazhin and the expressway that carries the morning traffic into the city.",
     kind: "Area Command",
     timing: "24 hours",
-    image: "/cms/3193_image_7516066b91.jpg",
+    image: "/npf/stations/kubwa-area-command.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.156,7.326",
   },
   {
@@ -481,7 +481,7 @@ export const customerCenters = [
       "Covers the eastern corridor at the Nasarawa boundary — Nyanya, Karu, Jikwoyi and Karshi — where the Territory's largest commuter population lives.",
     kind: "Area Command",
     timing: "24 hours",
-    image: "/cms/6519_MN_1448_832x440_388961a3ed.jpg",
+    image: "/npf/stations/karu-area-command.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.01,7.59",
   },
   {
@@ -492,7 +492,7 @@ export const customerCenters = [
       "Covers the Kuje Area Council, its farm settlements and the road that links the council to the airport corridor.",
     kind: "Area Command",
     timing: "24 hours",
-    image: "/cms/4513_N_B02736_832x440_450c673242.jpg",
+    image: "/npf/stations/kuje-area-command.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=8.879,7.227",
   },
   {
@@ -503,7 +503,7 @@ export const customerCenters = [
       "One of the oldest divisions in the Territory, serving Areas 1 to 11, the ministries around them and the Garki market.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/5276_2_1_832x440_qq_59ebc12b9e.jpg",
+    image: "/npf/stations/garki-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.0333,7.4833",
   },
   {
@@ -514,7 +514,7 @@ export const customerCenters = [
       "Serves the Wuse zones and the Wuse market, and runs the beat that covers the banks and offices along Aminu Kano Crescent.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/7038_3_M7_A5995_ac1d088ee2.jpg",
+    image: "/npf/stations/wuse-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.0667,7.4667",
   },
   {
@@ -525,7 +525,7 @@ export const customerCenters = [
       "Covers Wuse II and the embassies, hotels and night-time economy along Adetokunbo Ademola Crescent.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/4377_N_B03597_optimized_f2d96b90c9.jpg",
+    image: "/npf/stations/wuse-ii-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.0765,7.474",
   },
   {
@@ -536,7 +536,7 @@ export const customerCenters = [
       "Serves Maitama, Mpape and the diplomatic quarter, working closely with the Command's protection duties.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/3619_N_B04394_5e9017812e.jpg",
+    image: "/npf/stations/maitama-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.085,7.49",
   },
   {
@@ -547,7 +547,7 @@ export const customerCenters = [
       "Covers Asokoro and Guzape, including the residences of government officials and the approach roads to the Presidential Villa.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/7718_N_B02505_1_832x600_6c1d155fb6.jpg",
+    image: "/npf/stations/asokoro-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.04,7.52",
   },
   {
@@ -558,7 +558,7 @@ export const customerCenters = [
       "Serves Utako, the Utako market and the motor park, and the office blocks along the Jabi–Utako link.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/5967_N_B04285_832x440_f0fd1f25ef.jpg",
+    image: "/npf/stations/utako-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.07,7.438",
   },
   {
@@ -569,7 +569,7 @@ export const customerCenters = [
       "Covers the Jabi district, the lake front and the shopping centre, and runs the marine patrol point on Jabi Lake.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/1737_N_B111_832x440_eb376c7ae5.jpg",
+    image: "/npf/stations/jabi-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.064,7.427",
   },
   {
@@ -580,7 +580,7 @@ export const customerCenters = [
       "Serves Life Camp, Kado and the Nigeria Police Force estates around them.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/6706_N_B00942_eb37e765de.jpg",
+    image: "/npf/stations/life-camp-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.093,7.423",
   },
   {
@@ -591,7 +591,7 @@ export const customerCenters = [
       "Covers Gwarinpa, the largest housing estate in West Africa, and the district roads running through its seven avenues.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/2375_3_M7_A4443_35ae9361a2.jpg",
+    image: "/npf/stations/gwarinpa-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.108,7.405",
   },
   {
@@ -602,7 +602,7 @@ export const customerCenters = [
       "Serves Karmo and the settlements along the Kubwa expressway service lanes.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/5871_3_M7_A4020_HDR_cb49d254e2.jpg",
+    image: "/npf/stations/karmo-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.098,7.445",
   },
   {
@@ -613,7 +613,7 @@ export const customerCenters = [
       "Covers Dei-Dei, its timber and building-materials markets, and the heavy-goods traffic that feeds them.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/3031_3_M7_A5690_faf65a9220.jpg",
+    image: "/npf/stations/dei-dei-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.12,7.33",
   },
   {
@@ -624,7 +624,7 @@ export const customerCenters = [
       "Serves Zuba, the market and the junction where the Abuja–Kaduna and Abuja–Lokoja roads meet.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/5808_N_B04419_832x440_552369e48d.jpg",
+    image: "/npf/stations/zuba-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.112,7.226",
   },
   {
@@ -635,7 +635,7 @@ export const customerCenters = [
       "Covers Dutse-Alhaji, Kubwa village and the surrounding settlements on the northern approach.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/8307_PDP_9241_194115ff1e.jpg",
+    image: "/npf/stations/dutse-alhaji-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.133,7.355",
   },
   {
@@ -646,7 +646,7 @@ export const customerCenters = [
       "Serves Lugbe, Pyakasa and the airport road corridor, including the service lanes either side of the expressway.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/8455_3_M7_A4544_832x440_4ae88b9d4c.jpg",
+    image: "/npf/stations/lugbe-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=8.988,7.372",
   },
   {
@@ -657,7 +657,7 @@ export const customerCenters = [
       "Covers Apo, Gudu and the legislative quarters, and the mechanic village at Apo.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/510_N_B02759_832x440_718691f996.jpg",
+    image: "/npf/stations/apo-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=8.995,7.46",
   },
   {
@@ -668,7 +668,7 @@ export const customerCenters = [
       "Serves Durumi, Area 1 and the Games Village, and the roads that connect them to the city centre.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/3547_3_S2_A3181_df17026e53.jpg",
+    image: "/npf/stations/durumi-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.011,7.472",
   },
   {
@@ -679,7 +679,7 @@ export const customerCenters = [
       "Covers Nyanya town and the bus terminals that move commuters between the Territory and Nasarawa State every morning.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/5454_N_B02391_3_832x600_4c752f6670.jpg",
+    image: "/npf/stations/nyanya-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.006,7.572",
   },
   {
@@ -690,7 +690,7 @@ export const customerCenters = [
       "Based at the airport, covering the terminals, the cargo area and the airport road, and working alongside aviation security on the airside.",
     kind: "Divisional Headquarters",
     timing: "24 hours",
-    image: "/cms/7097_N_B04423_67f2cabe86.jpg",
+    image: "/npf/stations/airport-division.jpg",
     map: "https://www.google.com/maps/search/?api=1&query=9.0068,7.2632",
   },
 ];
