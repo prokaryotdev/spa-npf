@@ -31,7 +31,12 @@ export async function PageShell({
   return (
     <>
       <Header solid={solidHeader} />
-      <main id="main-content" tabIndex={-1} className="outline-none">
+      {/* A white page into a white footer: the rule marks where one ends. */}
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="border-b border-npf-ink/10 outline-none"
+      >
         <div className="relative overflow-hidden bg-white pt-40 pb-16 md:pt-48">
           <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 [mask-image:linear-gradient(to_bottom,#000_65%,transparent_90%)] md:size-[1000px] md:opacity-60" />
 

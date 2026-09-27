@@ -39,17 +39,12 @@ export type ServiceRow = Pick<
 
 const AUDIENCES = ["Individuals", "Visitors", "Business", "Students"];
 
-/** The first letter a reader would file a name under, accents stripped. */
-const letterOf = (name: string) =>
-  (name.normalize("NFD").match(/\p{L}/u)?.[0] ?? "#").toUpperCase();
-
 /**
  * All 92 services on one page.
  *
  * The search sits in the page head (ServiceSearch, sharing the query
- * through ServiceQuery). Here, the whole catalogue A to Z: most services belong to
- * no package, so grouping by package gave a few one-row sections and one
- * pile of seventy; by letter every group is a place you can find by name.
+ * through ServiceQuery). Here, one grid: the most used first, then by name.
+ * Search and the package chips do the finding, so no A-to-Z index.
  *
  * Filtering runs on the rows the page sent down. They stay in English so
  * category and audience compare against the same values in every language;
@@ -91,21 +86,16 @@ export default function ServiceCatalogue({
 
   const filtered = Boolean(query.trim() || category || audience);
 
-  // Sorted by the name the reader sees, so Hausa files under Hausa initials.
-  // Lettered while browsing the whole catalogue; flat once a filter has
-  // narrowed it, where a letter over every one or two rows is noise.
-  const groups = useMemo(() => {
-    const sorted = [...visible].sort((a, b) =>
-      t(a.name).localeCompare(t(b.name), lang),
-    );
-    if (filtered) return [["", sorted] as const];
-    const byLetter = new Map<string, ServiceRow[]>();
-    sorted.forEach((s) => {
-      const letter = letterOf(t(s.name));
-      byLetter.set(letter, [...(byLetter.get(letter) ?? []), s]);
-    });
-    return [...byLetter];
-  }, [visible, filtered, t, lang]);
+  // Most used first, then by the name the reader sees (Hausa sorts as Hausa).
+  const sorted = useMemo(
+    () =>
+      [...visible].sort(
+        (a, b) =>
+          Number(b.mostUsed) - Number(a.mostUsed) ||
+          t(a.name).localeCompare(t(b.name), lang),
+      ),
+    [visible, t, lang],
+  );
   const clear = () => {
     setQuery("");
     setCategory("");
@@ -182,23 +172,6 @@ export default function ServiceCatalogue({
                 </button>
               ) : null}
             </p>
-
-            {!filtered ? (
-              <nav aria-label={t("Jump to letter")}>
-                <ul className="-mx-1 flex flex-wrap">
-                  {groups.map(([letter]) => (
-                    <li key={letter}>
-                      <a
-                        href={`#${id}-${letter}`}
-                        className="grid size-8 place-items-center rounded-full font-secondary text-sm font-bold text-npf-blue transition-colors hover:bg-npf-chip hover:text-npf-blue-deep"
-                      >
-                        {letter}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            ) : null}
           </div>
 
           {visible.length === 0 ? (
@@ -228,37 +201,13 @@ export default function ServiceCatalogue({
             </div>
           ) : null}
 
-          <div className="mt-6 space-y-10">
-            {groups.map(([letter, items]) => (
-              <section
-                key={letter || "all"}
-                aria-labelledby={letter ? `${id}-${letter}` : undefined}
-                className={
-                  letter
-                    ? "grid gap-4 border-t border-npf-ink/10 pt-6 lg:grid-cols-[5rem_minmax(0,1fr)] lg:gap-8"
-                    : undefined
-                }
-              >
-                {letter ? (
-                  <h2
-                    id={`${id}-${letter}`}
-                    className="npf-h3 scroll-mt-28 text-npf-blue lg:sticky lg:top-28 lg:self-start"
-                  >
-                    {letter}
-                  </h2>
-                ) : null}
-                <ul
-                  className={`grid gap-3 md:grid-cols-2 ${letter ? "" : "xl:grid-cols-3"}`}
-                >
-                  {items.map((service) => (
-                    <li key={service.slug}>
-                      <ServiceRowLink service={service} />
-                    </li>
-                  ))}
-                </ul>
-              </section>
+          <ul className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {sorted.map((service) => (
+              <li key={service.slug}>
+                <ServiceCard service={service} />
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </>
@@ -304,73 +253,63 @@ export function ServiceSearch() {
   );
 }
 
-function ServiceRowLink({ service }: { service: ServiceRow }) {
+/**
+ * One service as a card. The fee and turnaround sit on a ruled foot pinned
+ * to the bottom, so across a row of cards they line up whatever the
+ * description's length.
+ */
+function ServiceCard({ service }: { service: ServiceRow }) {
   const t = useT();
   return (
     <Link
       href={`/app/services/${service.slug}`}
-      className="group flex h-full items-start gap-4 rounded-card bg-white p-4 ring-1 ring-npf-ink/[0.08] transition-[box-shadow,scale] ring-inset hover:shadow-card active:scale-[0.99] active:duration-(--dur-press) md:p-5"
+      className="group flex h-full flex-col rounded-card bg-white p-5 ring-1 ring-npf-ink/[0.08] transition-[box-shadow,scale] ring-inset hover:shadow-card active:scale-[0.99] active:duration-(--dur-press)"
     >
-      <ServiceIconTile icon={service.icon} />
-
-      <span className="min-w-0 flex-1">
-        <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-          <span className="npf-h5 text-npf-ink transition-colors group-hover:text-npf-blue">
-            {t(service.name)}
-          </span>
-          {service.mostUsed ? (
-            <span className="rounded-full bg-npf-chip px-2.5 py-0.5 text-xs font-semibold text-npf-blue-ink">
-              {t("Most used")}
-            </span>
-          ) : null}
+      <span className="flex items-start justify-between gap-4">
+        <span className="grid size-12 shrink-0 place-items-center rounded-chip bg-npf-cloud">
+          {service.icon ? (
+            <Image
+              src={service.icon}
+              alt=""
+              width={26}
+              height={26}
+              className="size-[26px]"
+            />
+          ) : (
+            <ServicesIcon className="size-6 text-npf-blue-ink" />
+          )}
         </span>
-        {service.description ? (
-          // No `block`: line-clamp sets its own display value.
-          <span className="npf-small mt-1 line-clamp-2 text-npf-body">
-            {t(service.description)}
+        {service.mostUsed ? (
+          <span className="rounded-full bg-npf-gold-wash px-2.5 py-1 text-xs font-semibold text-npf-gold">
+            {t("Most used")}
           </span>
         ) : null}
-        <span className="npf-small mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-npf-steel">
-          <span className="inline-flex items-center gap-1.5 tabular-nums">
-            <CardIcon className="size-4 shrink-0" />
+      </span>
+
+      <span className="npf-h5 mt-4 text-npf-ink transition-colors group-hover:text-npf-blue">
+        {t(service.name)}
+      </span>
+      {service.description ? (
+        // No `block`: line-clamp sets its own display value.
+        <span className="npf-small mt-1.5 line-clamp-2 text-npf-body">
+          {t(service.description)}
+        </span>
+      ) : null}
+
+      <span className="mt-auto pt-5">
+        <span className="npf-small flex items-center gap-x-5 border-t border-npf-ink/[0.08] pt-4">
+          <span className="inline-flex items-center gap-1.5 font-medium text-npf-ink tabular-nums">
+            <CardIcon className="size-4 shrink-0 text-npf-steel" />
             {t(service.feeSummary)}
           </span>
-          <span className="inline-flex items-center gap-1.5">
+          <span className="inline-flex items-center gap-1.5 text-npf-steel">
             <ClockIcon className="size-4 shrink-0" />
             {t(service.turnaround)}
           </span>
+          <ArrowRight className="ms-auto size-[18px] shrink-0 text-npf-blue transition-transform group-hover:translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:-translate-x-[3px]" />
         </span>
       </span>
-
-      <ArrowDisc />
     </Link>
-  );
-}
-
-function ServiceIconTile({ icon }: { icon: string | null }) {
-  return (
-    <span className="grid size-12 shrink-0 place-items-center rounded-chip bg-npf-cloud">
-      {icon ? (
-        <Image
-          src={icon}
-          alt=""
-          width={26}
-          height={26}
-          className="size-[26px]"
-        />
-      ) : (
-        <ServicesIcon className="size-6 text-npf-blue-ink" />
-      )}
-    </span>
-  );
-}
-
-/** The site's button disc, answering its card's hover. */
-function ArrowDisc() {
-  return (
-    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue transition-[background-color,color,translate] group-hover:translate-x-[3px] group-hover:bg-npf-blue group-hover:text-white rtl:group-hover:-translate-x-[3px]">
-      <ArrowRight className="size-[18px] rtl:-scale-x-100" />
-    </span>
   );
 }
 
