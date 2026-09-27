@@ -19,6 +19,14 @@ assert.equal(top("fines"), "Fines Inquiry and Payment");
 // Every term has to appear; nonsense matches nothing.
 assert.equal(search("zzzz").length, 0);
 assert.equal(search("").length, 0);
+// Word order, punctuation and a typo still find it.
+assert.equal(top("clearance police"), "Police Clearance Certificate");
+assert.equal(top("police-clearance"), "Police Clearance Certificate");
+assert.equal(top("polce clearence"), "Police Clearance Certificate");
+// A real word never pulls in its lookalikes.
+assert.ok(search("fine").map((h) => h.title).every((t) => !/\bline\b/i.test(t)));
+// Short terms stay exact, or "fin" would match half the site.
+assert.equal(search("qqq").length, 0);
 // Services lead the grouping, and the panel stays capped.
 assert.equal(suggest("permit")[0].section, "Services");
 assert.ok(suggest("permit").flatMap((g) => g.hits).length <= 8);

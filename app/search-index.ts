@@ -20,6 +20,8 @@ export type SearchHit = {
    * is what the search box on the homepage is for.
    */
   weight?: number;
+  /** Searched but not shown, e.g. a service's category. */
+  tags?: string;
 };
 
 const internal = (href: string) => href.startsWith("/");
@@ -72,6 +74,7 @@ const entries: SearchHit[] = [
     href: `/app/services/${s.slug}`,
     section: "Services",
     icon: s.icon,
+    tags: s.category ?? undefined,
     // The five the CMS flags as most used surface first on an empty query and
     // tie-break above the rest on a partial one.
     weight: s.mostUsed ? 6 : 4,
@@ -127,29 +130,63 @@ type Indexed = {
   hit: SearchHit;
   titles: string[];
   haystack: string;
+  words: string[];
 };
+
+const split = (s: string) => s.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
 
 const indexed: Indexed[] = searchIndex.map((hit) => {
   const haTitle = translate("ha", hit.title);
   const titles = [fold(hit.title)];
   if (haTitle !== hit.title) titles.push(fold(haTitle));
-  return {
-    hit,
-    titles,
-    haystack: fold(
-      [
-        hit.title,
-        hit.body,
-        hit.section,
-        haTitle,
-        translate("ha", hit.body),
-        translate("ha", hit.section),
-      ].join(" "),
-    ),
-  };
+  const haystack = fold(
+    [
+      hit.title,
+      hit.body,
+      hit.section,
+      hit.tags ?? "",
+      haTitle,
+      translate("ha", hit.body),
+      translate("ha", hit.section),
+      translate("ha", hit.tags ?? ""),
+    ].join(" "),
+  );
+  return { hit, titles, haystack, words: split(haystack) };
 });
 
-const terms = (query: string) => fold(query).split(/\s+/).filter(Boolean);
+// "police-clearance" and "police, clearance" are two words, like the titles.
+const terms = (query: string) => split(fold(query));
+
+/** One slip apart: a letter wrong, missing, extra, or two swapped. */
+function near(a: string, b: string) {
+  if (Math.abs(a.length - b.length) > 1) return false;
+  let i = 0;
+  while (i < a.length && a[i] === b[i]) i++;
+  const rest = (x: number, y: number) => a.slice(x) === b.slice(y);
+  return (
+    rest(i + 1, i + 1) ||
+    rest(i + 1, i) ||
+    rest(i, i + 1) ||
+    (a[i] === b[i + 1] && a[i + 1] === b[i] && rest(i + 2, i + 2))
+  );
+}
+
+/**
+ * Exact anywhere, or a typo of some word's start. Typos are only guessed for
+ * a term the index has nowhere, so "fine" never drags in "line". Under four
+ * letters a slip matches half the index, so short terms must be exact.
+ */
+const known = (term: string) => indexed.some((e) => e.haystack.includes(term));
+
+const found = (entry: Indexed, term: string, typo: boolean) =>
+  entry.haystack.includes(term) ||
+  (typo &&
+    term.length >= 4 &&
+    entry.words.some(
+      (w) =>
+        near(w.slice(0, term.length), term) ||
+        near(w.slice(0, term.length + 1), term),
+    ));
 
 /**
  * Where a term lands decides the rank: the front of the title, the front of a
@@ -158,8 +195,8 @@ const terms = (query: string) => fold(query).split(/\s+/).filter(Boolean);
  * Certificate" purely by list order, which is the wrong answer to the most
  * common query on the site.
  */
-function score(entry: Indexed, words: string[]): number {
-  if (!words.every((t) => entry.haystack.includes(t))) return 0;
+function score(entry: Indexed, words: string[], typo: boolean[]): number {
+  if (!words.every((t, i) => found(entry, t, typo[i]))) return 0;
 
   // Scored against whichever language's title matches better, so an Hausa
   // query still earns the front-of-title bonuses.
@@ -185,10 +222,11 @@ const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 export function search(query: string): SearchHit[] {
   const words = terms(query);
   if (!words.length) return [];
+  const typo = words.map((t) => !known(t));
 
   const seen = new Set<string>();
   return indexed
-    .map((entry) => ({ hit: entry.hit, rank: score(entry, words) }))
+    .map((entry) => ({ hit: entry.hit, rank: score(entry, words, typo) }))
     .filter((r) => r.rank > 0)
     .sort((a, b) => b.rank - a.rank)
     .map((r) => r.hit)

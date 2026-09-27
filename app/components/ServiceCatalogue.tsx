@@ -23,6 +23,7 @@ import {
   ServicesIcon,
 } from "./icons";
 import { useLang, useT } from "../i18n/client";
+import { search } from "../search-index";
 
 export type ServiceRow = Pick<
   Service,
@@ -72,29 +73,42 @@ export default function ServiceCatalogue({
   });
   const [audience, setAudience] = useState("");
 
-  const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return services.filter((s) => {
-      if (category && s.category !== category) return false;
-      if (audience && !s.audiences.includes(audience)) return false;
-      if (!q) return true;
-      return `${s.name} ${t(s.name)} ${s.description} ${t(s.description)} ${s.category ?? ""} ${t(s.category ?? "")}`
-        .toLowerCase()
-        .includes(q);
+  // The site search does the matching (both languages, hooks, typos) and the
+  // ranking; its order is this grid's order while there is a query.
+  const rank = useMemo(() => {
+    const byslug = new Map<string, number>();
+    search(query).forEach((hit, i) => {
+      const slug = hit.href.split("/app/services/")[1];
+      if (slug && !byslug.has(slug)) byslug.set(slug, i);
     });
-  }, [services, query, category, audience, t]);
+    return byslug;
+  }, [query]);
+  const q = query.trim();
 
-  const filtered = Boolean(query.trim() || category || audience);
+  const visible = useMemo(
+    () =>
+      services.filter(
+        (s) =>
+          (!category || s.category === category) &&
+          (!audience || s.audiences.includes(audience)) &&
+          (!q || rank.has(s.slug)),
+      ),
+    [services, q, rank, category, audience],
+  );
 
-  // Most used first, then by the name the reader sees (Hausa sorts as Hausa).
+  const filtered = Boolean(q || category || audience);
+
+  // Best match first while searching; otherwise most used first, then by the
+  // name the reader sees (Hausa sorts as Hausa).
   const sorted = useMemo(
     () =>
-      [...visible].sort(
-        (a, b) =>
-          Number(b.mostUsed) - Number(a.mostUsed) ||
-          t(a.name).localeCompare(t(b.name), lang),
+      [...visible].sort((a, b) =>
+        q
+          ? rank.get(a.slug)! - rank.get(b.slug)!
+          : Number(b.mostUsed) - Number(a.mostUsed) ||
+            t(a.name).localeCompare(t(b.name), lang),
       ),
-    [visible, t, lang],
+    [visible, q, rank, t, lang],
   );
   const clear = () => {
     setQuery("");
@@ -238,7 +252,7 @@ export function ServiceSearch() {
       <label htmlFor={`${id}-q`} className="sr-only">
         {t("Search services")}
       </label>
-      <div className="flex h-15 items-center gap-3 rounded-full bg-white ps-6 pe-2 shadow-[0_12px_32px_-14px_rgb(20_49_95/0.35)] ring-1 ring-npf-ink/10 transition-shadow ring-inset focus-within:ring-2 focus-within:ring-npf-blue-mid">
+      <div className="flex h-15 items-center gap-3 rounded-full bg-white px-6 shadow-[0_12px_32px_-14px_rgb(20_49_95/0.35)] ring-1 ring-npf-ink/10 transition-shadow ring-inset focus-within:ring-2 focus-within:ring-npf-blue-mid">
         <SearchIcon className="size-5 shrink-0 text-npf-blue" />
         <input
           id={`${id}-q`}
