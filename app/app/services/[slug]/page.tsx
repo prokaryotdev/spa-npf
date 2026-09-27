@@ -89,7 +89,7 @@ export default async function ServicePage({
                     {service.documents.map((doc) => (
                       <li
                         key={doc.label}
-                        className="rounded-2xl bg-[#F9F9F9] px-5 py-4"
+                        className="rounded-2xl bg-npf-paper px-5 py-4"
                       >
                         <p className="flex items-start gap-3 font-medium text-npf-ink">
                           <FileIcon
@@ -118,7 +118,7 @@ export default async function ServicePage({
 
               {service.fees.length ? (
                 <Panel heading={t("Fees")}>
-                  <dl className="divide-y divide-black/10 rounded-2xl bg-[#F9F9F9] px-5">
+                  <dl className="divide-y divide-black/10 rounded-2xl bg-npf-paper px-5">
                     {service.fees.map((fee) => (
                       <div
                         key={fee.label}
@@ -148,7 +148,7 @@ export default async function ServicePage({
                       {service.payment.map((method) => (
                         <li
                           key={method}
-                          className="inline-flex items-center gap-2 rounded-full bg-[#E8EEF8] px-3.5 py-1.5 text-sm text-npf-blue-ink"
+                          className="inline-flex items-center gap-2 rounded-full bg-npf-chip px-3.5 py-1.5 text-sm text-npf-blue-ink"
                         >
                           <CardIcon aria-hidden className="size-4" />
                           {method}
@@ -180,7 +180,7 @@ export default async function ServicePage({
 
               {service.delivery ? (
                 <Panel heading={t("How you receive it")}>
-                  <div className="space-y-3 rounded-2xl bg-[#F9F9F9] px-5 py-4">
+                  <div className="space-y-3 rounded-2xl bg-npf-paper px-5 py-4">
                     {splitDelivery(service.delivery).map((part) => (
                       <p
                         key={part.label + part.text}
@@ -204,7 +204,7 @@ export default async function ServicePage({
                     {service.beneficiaries.map((who) => (
                       <li
                         key={who}
-                        className="rounded-full bg-[#E8EEF8] px-4 py-2 text-sm font-medium text-npf-blue-ink"
+                        className="rounded-full bg-npf-chip px-4 py-2 text-sm font-medium text-npf-blue-ink"
                       >
                         {who}
                       </li>
@@ -219,7 +219,7 @@ export default async function ServicePage({
                     {service.channels.map((channel) => (
                       <li
                         key={channel}
-                        className="flex items-center gap-3 rounded-2xl bg-[#F9F9F9] px-5 py-4 text-sm font-medium text-npf-ink"
+                        className="flex items-center gap-3 rounded-2xl bg-npf-paper px-5 py-4 text-sm font-medium text-npf-ink"
                       >
                         <ServicesIcon
                           aria-hidden
@@ -234,7 +234,7 @@ export default async function ServicePage({
 
               {service.hours.length ? (
                 <Panel heading={t("Working hours")}>
-                  <dl className="divide-y divide-black/10 rounded-2xl bg-[#F9F9F9] px-5">
+                  <dl className="divide-y divide-black/10 rounded-2xl bg-npf-paper px-5">
                     {service.hours.map((hour) => (
                       <div
                         key={hour.label}
@@ -257,7 +257,7 @@ export default async function ServicePage({
                       <li key={item.slug}>
                         <Link
                           href={`/app/services/${item.slug}`}
-                          className="block rounded-2xl bg-[#F4F6FA] px-5 py-4 text-sm font-medium text-npf-blue-ink transition-colors hover:bg-[#DDE6F4]"
+                          className="block rounded-2xl bg-npf-cloud px-5 py-4 text-sm font-medium text-npf-blue-ink transition-colors hover:bg-npf-cloud-deep"
                         >
                           {item.name}
                         </Link>
@@ -269,7 +269,7 @@ export default async function ServicePage({
             </div>
 
             <aside className="order-1 h-fit lg:order-2 lg:sticky lg:top-28">
-              <div className="rounded-3xl bg-[#F4F6FA] p-6">
+              <div className="rounded-3xl bg-npf-cloud p-6">
                 {service.icon ? (
                   <span className="mb-5 grid size-14 place-items-center rounded-2xl bg-white">
                     <Image

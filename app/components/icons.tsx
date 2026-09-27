@@ -45,7 +45,14 @@ export const ArrowRight = ({ className }: IconProps) => (
 );
 
 /** Handset with signal arcs — a call being placed, not a phone number. */
-export const CallIcon = ({ className }: IconProps) => (
+export const ArrowDown = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M12 4.5v14" />
+    <path d="m6.5 13 5.5 5.5 5.5-5.5" />
+  </svg>
+);
+
+export const CallIcon =({ className }: IconProps) => (
   <svg {...base} className={className}>
     <path d="M4.8 3.4h2.4l1.2 3-1.7 1.2a9.6 9.6 0 0 0 5.7 5.7l1.2-1.7 3 1.2v2.4a1.7 1.7 0 0 1-1.9 1.7A14.1 14.1 0 0 1 3.1 5.3a1.7 1.7 0 0 1 1.7-1.9Z" />
     <path d="M14.6 3.2a6.4 6.4 0 0 1 6.2 6.2" />

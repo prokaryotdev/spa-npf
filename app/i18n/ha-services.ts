@@ -44,7 +44,8 @@ export const haServices: Record<string, string> = {
   "{n} suggestions for {q}": "Shawarwari {n} na {q}",
   "See all results for": "Duba duk sakamako na",
   Suggestions: "Shawarwari",
-  "Showing {shown} of {total} services": "Ana nuna {shown} daga ayyuka {total}",
+  "of {total} services": "daga ayyuka {total}",
+  "Jump to letter": "Tsallaka zuwa harafi",
   "No service matches those filters. Try clearing one of them, or":
     "Babu aikin da ya dace da waɗannan taceƙa. Ka gwada share ɗaya daga cikinsu, ko",
   "Nothing matched. Try a shorter term, or browse the":
