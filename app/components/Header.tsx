@@ -321,7 +321,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         onClick={(e) => {
           if (e.target === menu.current) setMenuOpen(false);
         }}
-        className="npf-drawer m-0 h-[100dvh] max-h-none w-[min(420px,88vw)] max-w-none overflow-y-auto bg-white p-6 shadow-2xl"
+        className="npf-drawer m-0 h-[100dvh] max-h-none w-[min(420px,88vw)] max-w-none overflow-y-auto bg-white p-6 shadow-raised"
       >
         <div className="mb-8 flex items-center justify-between">
           <span className="h-9 text-npf-blue-deep">

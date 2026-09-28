@@ -267,7 +267,7 @@ export default function ServiceSearch({
         <div
           ref={list}
           style={{ maxHeight }}
-          className={`npf-suggest absolute inset-x-0 z-50 overflow-y-auto rounded-2xl bg-white p-2 text-start shadow-[0_28px_60px_-24px_rgba(0,50,34,0.55)] ring-1 ring-black/10 ${
+          className={`npf-suggest absolute inset-x-0 z-50 overflow-y-auto rounded-2xl bg-white p-2 text-start shadow-raised ring-1 ring-npf-ink/[0.06] ${
             placement === "up"
               ? "npf-suggest-up bottom-[calc(100%+8px)]"
               : "top-[calc(100%+8px)]"

@@ -258,7 +258,7 @@ export function ServiceSearch() {
       <label htmlFor={`${id}-q`} className="sr-only">
         {t("Search services")}
       </label>
-      <div className="flex h-15 items-center gap-3 rounded-full bg-white px-6 shadow-[0_12px_32px_-14px_rgb(20_49_95/0.35)] ring-1 ring-npf-ink/10 transition-shadow ring-inset focus-within:ring-2 focus-within:ring-npf-blue-mid">
+      <div className="flex h-15 items-center gap-3 rounded-full bg-white px-6 shadow-card ring-1 ring-npf-ink/10 transition-shadow ring-inset focus-within:ring-2 focus-within:ring-npf-blue-mid">
         <SearchIcon className="size-5 shrink-0 text-npf-blue" />
         <input
           id={`${id}-q`}
@@ -283,10 +283,10 @@ function ServiceCard({ service }: { service: ServiceRow }) {
   return (
     <Link
       href={`/app/services/${service.slug}`}
-      className="group flex h-full flex-col rounded-card bg-white p-5 ring-1 ring-npf-ink/[0.08] transition-[box-shadow,scale] ring-inset hover:shadow-card active:scale-[0.99] active:duration-(--dur-press)"
+      className="group flex h-full flex-col rounded-card bg-white p-5 ring-1 ring-npf-ink/[0.08] transition-[box-shadow,translate,scale] duration-(--dur-hover) ease-(--ease-out) ring-inset hover:-translate-y-0.5 hover:shadow-card hover:ring-transparent active:scale-[0.99] active:duration-(--dur-press) motion-reduce:hover:translate-y-0"
     >
       <span className="flex">
-        <span className="grid size-12 shrink-0 place-items-center rounded-chip bg-npf-cloud">
+        <span className="grid size-12 shrink-0 place-items-center rounded-chip bg-npf-cloud transition-colors duration-(--dur-hover) group-hover:bg-npf-chip">
           {service.icon ? (
             <Image
               src={service.icon}
@@ -329,10 +329,9 @@ function ServiceCard({ service }: { service: ServiceRow }) {
 }
 
 /**
- * The packages as pills with their counts, the chosen one navy. From lg up
- * a four-by-two grid (All plus seven packages), so the rows square off
- * instead of wrapping ragged; below that, a swipe row that keeps the
- * choice in view.
+ * The packages as quiet outlined pills, each count in a small badge, the
+ * chosen one filled navy. From lg up they wrap at their own width; below
+ * that, a swipe row that keeps the choice in view.
  */
 function PackageTabs({
   label,
@@ -364,7 +363,7 @@ function PackageTabs({
       ref={track}
       role="group"
       aria-label={label}
-      className="-mx-4 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none] lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0"
+      className="-mx-4 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none] lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0"
     >
       {chips.map((chip) => {
         const on = value === chip.value;
@@ -374,15 +373,15 @@ function PackageTabs({
             type="button"
             aria-pressed={on}
             onClick={() => onChange(chip.value)}
-            className={`flex min-h-12 shrink-0 items-center justify-between gap-3 rounded-full px-5 text-sm font-medium whitespace-nowrap transition-[background-color,color,box-shadow,scale] active:scale-[0.97] active:duration-(--dur-press) ${
+            className={`flex min-h-11 shrink-0 items-center gap-2.5 rounded-full ps-4 pe-2 text-sm font-medium whitespace-nowrap ring-1 ring-inset transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) ease-(--ease-out) active:scale-[0.97] active:duration-(--dur-press) ${
               on
-                ? "bg-npf-blue-deep text-white shadow-[0_8px_18px_-10px_rgb(20_49_95/0.7)]"
-                : "bg-npf-cloud text-npf-blue-ink hover:bg-npf-chip"
+                ? "bg-npf-blue-deep text-white ring-npf-blue-deep"
+                : "bg-white text-npf-body ring-npf-ink/10 hover:text-npf-ink hover:ring-npf-ink/25"
             }`}
           >
             {chip.label}
             <span
-              className={`text-xs tabular-nums ${on ? "text-white/70" : "text-npf-steel"}`}
+              className={`grid h-6 min-w-6 place-items-center rounded-full px-1.5 text-xs font-semibold tabular-nums transition-colors duration-(--dur-hover) ${on ? "bg-white/15 text-white" : "bg-npf-cloud text-npf-steel"}`}
             >
               {chip.count}
             </span>

@@ -236,7 +236,7 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
                 required
                 autoComplete="email"
                 placeholder={t("Email address")}
-                className="h-15 w-full rounded-full border border-npf-ink/15 bg-white px-6 text-npf-ink caret-npf-blue shadow-card transition-[border-color,box-shadow] placeholder:text-npf-muted hover:border-npf-ink/30 focus:border-npf-blue focus:shadow-[0_0_0_4px_rgb(27_63_122/0.12)] focus:outline-none user-invalid:border-npf-alert user-invalid:shadow-[0_0_0_4px_rgb(179_9_0/0.1)] sm:pe-48"
+                className="h-15 w-full rounded-full border border-npf-ink/15 bg-white px-6 text-npf-ink caret-npf-blue transition-[border-color,box-shadow] placeholder:text-npf-muted hover:border-npf-ink/30 focus:border-npf-blue focus:shadow-[0_0_0_4px_rgb(27_63_122/0.12)] focus:outline-none user-invalid:border-npf-alert user-invalid:shadow-[0_0_0_4px_rgb(179_9_0/0.1)] sm:pe-48"
               />
               <button
                 type="submit"

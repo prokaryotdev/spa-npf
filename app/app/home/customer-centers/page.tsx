@@ -46,7 +46,7 @@ export default async function CustomerCentersPage() {
             {customerCenters.map((center) => (
               <li
                 key={center.name}
-                className="flex flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-black/5 shadow-[0_24px_40px_-30px_rgba(0,60,40,0.5)]"
+                className="flex flex-col overflow-hidden rounded-3xl bg-white shadow-card"
               >
                 {center.image ? (
                   <div className="relative aspect-[16/9]">

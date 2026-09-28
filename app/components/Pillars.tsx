@@ -218,7 +218,7 @@ export default function Pillars() {
                   </g>
                 </svg>
 
-                <div className="absolute inset-[7%] overflow-hidden rounded-full bg-npf-mist shadow-[0_0_0_6px_white,0_30px_60px_-20px_color-mix(in_srgb,var(--color-npf-blue-deep)_45%,transparent)]">
+                <div className="absolute inset-[7%] overflow-hidden rounded-full bg-npf-mist shadow-[0_0_0_6px_white,var(--shadow-raised)]">
                   {pillars.map((pillar, i) => (
                     <Image
                       key={pillar.portrait}

@@ -133,7 +133,7 @@ export async function LinkCard({
   const t = await getT();
   const external = card.href.startsWith("http");
   return (
-    <article className="group/card overflow-hidden rounded-3xl bg-white shadow-[0_24px_40px_-28px_rgba(0,60,40,0.5)] ring-1 ring-black/5 transition-transform duration-500 ease-[var(--ease-out)] md:hover:-translate-y-2">
+    <article className="group/card overflow-hidden rounded-3xl bg-white shadow-card transition-transform duration-500 ease-[var(--ease-out)] md:hover:-translate-y-2">
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={card.image}
