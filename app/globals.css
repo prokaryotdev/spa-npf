@@ -137,6 +137,12 @@ body {
 /* In the base layer so a component's own radius (every pill) and utilities
    like `outline-none` win; a bare link still gets the soft 4px corner. */
 @layer base {
+  /* Tailwind v4 leaves buttons on the arrow; on a website anything you can
+     press shows the hand, as links do. Disabled ones keep the arrow. */
+  :where(button, [role="button"], summary):not(:disabled) {
+    cursor: pointer;
+  }
+
   :where(a, button, input, [tabindex]):focus-visible {
     outline: 2px solid var(--color-npf-blue-mid);
     outline-offset: 3px;
