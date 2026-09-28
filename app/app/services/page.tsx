@@ -8,6 +8,7 @@ import ServiceCatalogue, {
 import {
   services as servicesSource,
   serviceCategoryNames,
+  serviceImportance,
 } from "../../content-services";
 import { getT } from "../../i18n/server";
 
@@ -24,18 +25,21 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ServicesPage() {
   const t = await getT();
   // Only the fields a row draws cross to the browser, and in English: the
-  // filters compare category and audience against English values, and the
-  // catalogue translates at render.
+  // package filter compares against English values, and the catalogue
+  // translates at render.
   const rows = servicesSource.map((s) => ({
     slug: s.slug,
     name: s.name,
     category: s.category,
     icon: s.icon,
     description: s.description,
-    audiences: s.audiences,
     mostUsed: s.mostUsed,
     feeSummary: s.feeSummary,
     turnaround: s.turnaround,
+    // Unlisted services tie at the end and fall back to A to Z.
+    importance: serviceImportance.includes(s.slug)
+      ? serviceImportance.indexOf(s.slug)
+      : serviceImportance.length,
   }));
   return (
     <ServiceQuery>

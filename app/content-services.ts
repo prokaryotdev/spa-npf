@@ -32,7 +32,7 @@ export const services: Service[] = [
     icon: "/icons/services/shield-01.svg",
     description:
       "By integrating the latest technologies to counter evolving crime patterns, the Rescue Me initiative ensures a proactive approach to public safety. It encourages residents to report suspicious observations promptly, reinforcing a culture of vigilance and cooperation. This initiative underpins the vision of the Territory and the Federal Ministry of Interior’s pursuit of leadership in security.",
-    audiences: [],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -57,7 +57,7 @@ export const services: Service[] = [
     icon: "/icons/services/application-status.svg",
     description:
       "This service allows users to track the status of their application using the reference number.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -99,7 +99,7 @@ export const services: Service[] = [
     icon: "/icons/services/job-vacancies.svg",
     description:
       "A service enables job seekers to apply to vacancies at Nigeria Police Force",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Students"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -184,7 +184,7 @@ export const services: Service[] = [
     icon: "/icons/services/file-attachment-02.svg",
     description:
       "This service enables users to attach the required documents to support their applications or electronic transactions with Nigeria Police Force . It allows relevant files to be uploaded directly .",
-    audiences: ["Individuals", "Business"],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -217,7 +217,7 @@ export const services: Service[] = [
     icon: "/icons/services/bounce-cheque.svg",
     description:
       "This service enables users to report bounced checks, settle the dispute amicably if possible, or refer the case directly to the competent authorities.",
-    audiences: ["Individuals", "Visitors", "Business"],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -290,7 +290,7 @@ export const services: Service[] = [
     icon: "/icons/services/bounce-cheque.svg",
     description:
       "This service enables users to report bounced checks, settle the dispute amicably if possible, or refer the case directly to the competent authorities.",
-    audiences: [],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -362,7 +362,7 @@ export const services: Service[] = [
     icon: "/icons/services/change-vehicle-color-permit.svg",
     description:
       "This service enables customers wishing to change the color of their vehicles registered in the Federal Capital Territory to obtain a permit to do so.",
-    audiences: ["Individuals", "Business"],
+    audiences: ["Drivers", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -428,7 +428,7 @@ export const services: Service[] = [
     icon: "/icons/services/child-protection.svg",
     description:
       "This service aims to provide an immediate and comprehensive response to cases involving children exposed to any form of physical or psychological abuse or neglect, by offering the necessary protection and support to ensure their safety and safeguard their rights in accordance with applicable laws.",
-    audiences: ["Individuals", "Visitors"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -474,7 +474,7 @@ export const services: Service[] = [
     icon: "/icons/services/travel-ban-01.svg",
     description:
       "This service enables users to inquire about circulars related to financial cases and travel bans issued against them by the competent security authorities.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: true,
     dashboardOrder: 5,
     ninAuthOnly: true,
@@ -509,7 +509,7 @@ export const services: Service[] = [
     icon: "/icons/services/heart-hand.svg",
     description:
       "Service to join volunteering initiatives or other Nigeria Police Force's initiatives",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Students"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -543,7 +543,7 @@ export const services: Service[] = [
     icon: "/icons/services/police-museum-visit-permit.svg",
     description:
       "This service allows users to submit a request to hire a lecturer or request to give a lecture with the help of a lecturer from Nigeria Police Force.",
-    audiences: [],
+    audiences: ["Residents", "Organisations", "Students"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -578,7 +578,7 @@ export const services: Service[] = [
     icon: "/icons/services/corpse-entry-permit-2.svg",
     description:
       "This service allows Nigerian citizens and residents to obtain a permit for the entry of a deceased person into the country, subject to prior approval from the relevant authorities",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -641,7 +641,7 @@ export const services: Service[] = [
     icon: "/icons/services/check-circle.svg",
     description:
       "Through this service, Lawyers can apply for Restriction release Certificate from Nigeria Police Force Head Quarter, to follow up on procedures for lifting circulars and security restrictions on individuals or license plates, after settling the client's legal and financial status.",
-    audiences: [],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: 6,
     ninAuthOnly: false,
@@ -688,7 +688,7 @@ export const services: Service[] = [
     icon: "/icons/services/cardiac-support.svg",
     description:
       "This service aims to enable heart patients and those with critical medical conditions in the Federal Capital Territory to register for priority ambulance dispatch and receive prompt and appropriate medical attention in case of an emergency.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -726,7 +726,7 @@ export const services: Service[] = [
     icon: "/icons/services/destroy-explosives-and-ammunition.svg",
     description:
       "This service aims to enable the business sector to submit an official request to Nigeria Police Force for the safe disposal of expired explosives, ammunition, and fireworks, in accordance with approved procedures.",
-    audiences: ["Business"],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -787,7 +787,7 @@ export const services: Service[] = [
     icon: "/icons/services/lost.svg",
     description:
       "Embracing the National Digital Economy Policy and the paperless government drive, the Lost & Found service ensures a fully digital experience that eliminates bureaucracy and promotes sustainability, reinforced by the Blockchain's security and transparency",
-    audiences: [],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -812,7 +812,7 @@ export const services: Service[] = [
     icon: "/icons/services/diplomatic-services.svg",
     description:
       "A service that provides security support and facilities to diplomatic entities",
-    audiences: ["Business"],
+    audiences: ["Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -846,7 +846,7 @@ export const services: Service[] = [
     icon: "/icons/services/diplomatic-exe-1.svg",
     description:
       "This service enables diplomatic corps to get information related to their citizens, through the General Department of Criminal Investigation of the Nigeria Police Force.",
-    audiences: ["Individuals"],
+    audiences: ["Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: true,
@@ -884,7 +884,7 @@ export const services: Service[] = [
     icon: "/icons/services/diplomatic-line.svg",
     description:
       "This service enables diplomatic corps to get information related to their citizens, through the General Department of Criminal Investigation of the Nigeria Police Force.",
-    audiences: ["Individuals"],
+    audiences: ["Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -922,7 +922,7 @@ export const services: Service[] = [
     icon: "/icons/services/document-verification.svg",
     description:
       "This service enables users to verify the authenticity and validity of electronic documents issued by Nigeria Police Force that do not require an official stamp.",
-    audiences: ["Business"],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -952,7 +952,7 @@ export const services: Service[] = [
     icon: "/icons/services/leaders-at-your-service.svg",
     description:
       "This service aims to enhance direct communication between Nigeria Police Force senior leadership and the public, allowing leaders to respond to inquiries and feedback within their functional and administrative responsibilities",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -987,7 +987,7 @@ export const services: Service[] = [
     icon: "/icons/services/annotation-question.svg",
     description:
       "A medical and social care service for Nigeria Police Force's employees",
-    audiences: ["Individuals"],
+    audiences: ["Police officers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1021,7 +1021,7 @@ export const services: Service[] = [
     icon: "/icons/services/drugs.svg",
     description:
       "This service aims to enable organizations involved in drug control to meet their needs by conducting training courses or organizing specialized field workshops on drug control.",
-    audiences: [],
+    audiences: ["Organisations", "Students"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: true,
@@ -1058,7 +1058,7 @@ export const services: Service[] = [
     icon: "/icons/services/e-crime-2.svg",
     description:
       "In line with Nigeria’s National Development Plan 2021–2025 and the Federal Ministry of Interior’s 2023 –2026 digital security goals, report cybercrime and help create a safer digital space.",
-    audiences: [],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1083,7 +1083,7 @@ export const services: Service[] = [
     icon: "/icons/services/e-crime-3.svg",
     description:
       "This service allows individuals impacted by various types of criminal offenses to file complaints to the competent authorities who then refer the cases to the judicial authorities to ensure their rights are upheld",
-    audiences: ["Individuals", "Business"],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1130,7 +1130,7 @@ export const services: Service[] = [
     icon: "/icons/services/sos.svg",
     description:
       "This service allows customers and members of the community to communicate with the police to request help when they or others or their properties are at risk.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners", "Drivers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1159,7 +1159,7 @@ export const services: Service[] = [
     icon: "/icons/services/event-security.svg",
     description:
       "This service allows government authorities or the businesses to request police presence at their events to ensure effectiveness by providing all security procedures and facilitating traffic, preventive measures and security and safety procedures.",
-    audiences: ["Business"],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1263,7 +1263,7 @@ export const services: Service[] = [
     icon: "/icons/services/bank-fraud-2.svg",
     description:
       "A centralised digital platform enabling rapid, coordinated response between public and private sectors to minimise financial fraud losses and protect customer funds.",
-    audiences: [],
+    audiences: ["Organisations", "Police officers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: true,
@@ -1317,7 +1317,7 @@ export const services: Service[] = [
     icon: "/icons/services/fast-track.svg",
     description:
       "This service enables users to book an appointment in advance before visiting service centers to complete their transactions in person. It also allows them to modify or cancel their appointment, ensuring a more flexible experience that saves time and eliminates waiting",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: true,
@@ -1347,7 +1347,7 @@ export const services: Service[] = [
     icon: "/icons/services/file-criminal-complaint.svg",
     description:
       "This service enables users to submit criminal complaints of all kinds and to coordinate with the competent authorities to refer the complaint file to the judicial authorities after verifying the validity of the complaint.",
-    audiences: [],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: 4,
     ninAuthOnly: false,
@@ -1430,7 +1430,7 @@ export const services: Service[] = [
     icon: "/icons/services/fines-inquiry-and-payment-2.svg",
     description:
       "A service to inquire about traffic violations, including the following: • Traffic Fines Payment: A service that enables the settlement of traffic violations registered against a vehicle plate, driving licence, or traffic code. • Traffic Fines Instalments: A service that allows for the payment of traffic violations in monthly instalments via direct debit or credit card, subject to applicable terms and conditions. • Pay Against Impound: A service that allows for the payment of a daily fee to waive a vehicle’s impoundment period, provided no legal restrictions apply. • Smart…",
-    audiences: ["Individuals", "Visitors", "Business"],
+    audiences: ["Drivers", "Organisations"],
     mostUsed: true,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1481,7 +1481,7 @@ export const services: Service[] = [
     icon: "/icons/services/gold-management.svg",
     description:
       "This service enables gold traders to submit security verification requests for gold purchase transactions, to ensure that the gold being sold is not linked to any criminal cases or offenses.",
-    audiences: ["Business"],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1520,7 +1520,7 @@ export const services: Service[] = [
     icon: "/icons/services/hq-entry-permit.svg",
     description:
       "This service enables users wishing to visit the FCT Police Command Headquarters building to obtain a time-limited entry permit.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: true,
     dashboardOrder: null,
     ninAuthOnly: true,
@@ -1564,7 +1564,7 @@ export const services: Service[] = [
     icon: "/icons/services/manage-search.svg",
     description:
       "Comprehensive service for applications status, Reports, and inquiries",
-    audiences: ["Individuals", "Business"],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1614,7 +1614,7 @@ export const services: Service[] = [
     icon: "/icons/services/job-vacancies.svg",
     description:
       "A service through which job seekers can learn about vacancies in Nigeria Police Force and apply accordingly.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Students"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1671,7 +1671,7 @@ export const services: Service[] = [
     icon: "/icons/services/lost-certificate.svg",
     description:
       "This service enables users to report lost property or hand over found items to Nigeria Police Force for restoration to their rightful owners following verification. It also allows them to track their application status and obtain an official ‘Loss Certificate’",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1696,7 +1696,7 @@ export const services: Service[] = [
     icon: "/icons/services/medical-aid-support.svg",
     description:
       "This service enables health authorities and medical centers to submit requests for extending the treatment period of Nigeria Police Force patients receiving medical care abroad, ensuring the continuity of care in accordance with approved medical reports and recommendations.",
-    audiences: ["Individuals"],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1736,7 +1736,7 @@ export const services: Service[] = [
     icon: "/icons/services/simple-accident-report-1.svg",
     description:
       "This service enables drivers of vehicles involved in minor or moderate traffic accidents without injuries, whether at fault or affected, to obtain an official report that allows them to proceed with insurance claims and complete the necessary procedures, provided the accident is not linked to a criminal case or that the driver was under the influence of alcohol.",
-    audiences: ["Individuals", "Visitors", "Business"],
+    audiences: ["Drivers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1794,7 +1794,7 @@ export const services: Service[] = [
     icon: "/icons/services/neighborhood.svg",
     description:
       "This service aims to strengthen community policing by enabling residents to communicate directly with police officers through an interactive neighborhood platform, report concerns and suggestions, and collaborate in addressing local issues, thereby enhancing security, safety, and quality of life within the community.",
-    audiences: ["Individuals"],
+    audiences: ["Residents"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1832,7 +1832,7 @@ export const services: Service[] = [
     icon: "/icons/services/night-work-permit.svg",
     description:
       "This service enables users to obtain a temporary permit for night time work to perform specific tasks within shops or banks, whether in enclosed shopping centers or outside of regular working hours.",
-    audiences: ["Business"],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1889,7 +1889,7 @@ export const services: Service[] = [
     icon: "/icons/services/bank-fraud.svg",
     description:
       "This service enables police officers and financial institutions to handle banking information through the Economic Crimes Operations Center, which serves as a vital link between the victim and the banking sector, with the aim of halting fraudulent transactions and identifying the perpetrators.",
-    audiences: ["Individuals", "Business"],
+    audiences: ["Organisations", "Police officers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1926,7 +1926,7 @@ export const services: Service[] = [
     icon: "/icons/services/shield-01.svg",
     description:
       "Serving various events and requests that require on-site police support",
-    audiences: ["Individuals", "Visitors", "Business"],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1968,7 +1968,7 @@ export const services: Service[] = [
     icon: "/icons/shared/car.svg",
     description:
       "Nigeria Police Force pledges to act swiftly on government directives by eliminating unnecessary procedures, cutting timelines by no less than 50%, and removing redundant requirements, ensuring a more streamlined and efficient experience for society.",
-    audiences: [],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -1992,7 +1992,7 @@ export const services: Service[] = [
     category: "Traffic Services",
     icon: "/icons/services/fines-inquiry-and-payment.svg",
     description: "Manage and pay traffic violations on your vehicle or license",
-    audiences: ["Individuals"],
+    audiences: ["Drivers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2022,7 +2022,7 @@ export const services: Service[] = [
     icon: "/icons/services/accessibility-support.svg",
     description:
       "This service aims to enable Persons with Disabilities with physical, hearing, or visual disabilities across all Nigeria to register and subscribe, ensuring they granted priority in ambulance dispatch and provided with a fast and appropriate response in emergency situations.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2052,7 +2052,7 @@ export const services: Service[] = [
     icon: "/icons/services/supplier-application.svg",
     description:
       "This service enables lawyers to associate Powers of Attorney with registered reports to formally establish their capacity to act on behalf of clients.",
-    audiences: [],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: 2,
     ninAuthOnly: false,
@@ -2087,7 +2087,7 @@ export const services: Service[] = [
     icon: "/icons/services/supplier-application-2.svg",
     description:
       "This service enables lawyers to securely obtain formal, digitally-signed powers of attorney from their clients.",
-    audiences: [],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: 1,
     ninAuthOnly: false,
@@ -2130,7 +2130,7 @@ export const services: Service[] = [
     icon: "/icons/services/police-clearance-certificate.svg",
     description:
       "This service aims to enable individuals to obtain a certificate proving that they have no criminal record within the Federal Republic of Nigeria.",
-    audiences: ["Individuals", "Visitors", "Business", "Students"],
+    audiences: ["Residents", "Foreigners", "Students"],
     mostUsed: true,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2216,7 +2216,7 @@ export const services: Service[] = [
     icon: "/icons/services/shield-01.svg",
     description:
       "This service enables users to provide security or sensitive information and report any activities or incidents suspected of posing a threat to public safety and community security",
-    audiences: ["Individuals", "Visitors", "Business"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2250,7 +2250,7 @@ export const services: Service[] = [
     icon: "/icons/services/police-museum-visit-permit.svg",
     description:
       "This service enables customers to obtain a permit to visit the Nigeria Police Force Museum and view its collections and security history.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners", "Students"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2285,47 +2285,6 @@ export const services: Service[] = [
     related: [],
   },
   {
-    slug: "positive-spirit",
-    name: "Community Volunteering",
-    action: "Start Service",
-    category: null,
-    icon: "/icons/services/positive-soul.svg",
-    description: "Testing data",
-    audiences: [],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: [],
-    channels: [],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "ds",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "1",
-      },
-      {
-        label: "Police Stations",
-        value: "fdfsf",
-      },
-      {
-        label: "Other",
-        value: "fdsfsf",
-      },
-    ],
-    contacts: [],
-    turnaround: "Instant",
-    terms: ["test", "new"],
-    related: [],
-  },
-  {
     slug: "human-trafficking",
     name: "Provide Care for Human Trafficking Victims",
     action: "Report",
@@ -2333,7 +2292,7 @@ export const services: Service[] = [
     icon: "/icons/services/human-trafficking-victims.svg",
     description:
       "This service enables individuals to report suspected cases or practices related to human trafficking such as labor exploitation, sexual exploitation, or organ trafficking. It also aims to protect the privacy of individuals and ensure that information reaches the competent authorities in a secure and safe manner.",
-    audiences: ["Individuals", "Visitors"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2381,7 +2340,7 @@ export const services: Service[] = [
     icon: "/icons/services/lecturer-request-2.svg",
     description:
       "This service discusses the most critical issues, challenges and developments in drug control. It examines the topic from multiple perspectives with a team of specialists, aiming to develop solutions and recommendations for these concerns.",
-    audiences: ["Students"],
+    audiences: ["Organisations", "Students"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2422,7 +2381,7 @@ export const services: Service[] = [
     icon: "/icons/services/public-tenders.svg",
     description:
       "The service is for companies wishing to register as one of the suppliers in the Nigeria Police Force Supplier Registry, which will allow them to access tenders, receive tender award notices, and deal with Nigeria Police Force electronically",
-    audiences: ["Business"],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2452,7 +2411,7 @@ export const services: Service[] = [
     icon: "/icons/services/group-question.svg",
     description:
       "This service enables law firms to register with Nigeria Police Force, granting authorized access to the Lawyers’ Dashboard and its suite of specialized legal services",
-    audiences: ["Business"],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2486,7 +2445,7 @@ export const services: Service[] = [
     category: "Traffic Services",
     icon: "/icons/services/drive-mode.svg",
     description: "Report obstructing vehicles and misuse of traffic rules",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Drivers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2520,7 +2479,7 @@ export const services: Service[] = [
     icon: "/icons/services/file-criminal-complaint-2.svg",
     description:
       "A service to file various crime reports and related complaints",
-    audiences: ["Individuals", "Business"],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2558,7 +2517,7 @@ export const services: Service[] = [
     icon: "/icons/services/found-item-certificate.svg",
     description:
       "This service enables individuals and organizations within the Federal Capital Territory to hand over found items to police stations or designated partners participating in the Lost and Found Program. The objective is to facilitate the process of locating and returning lost items to their rightful owners",
-    audiences: [],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2610,7 +2569,7 @@ export const services: Service[] = [
     icon: "/icons/services/lost-item.svg",
     description:
       "This service allows individuals to report the loss of their belongings or personal items and ensures communication with the owner if the item is found. With the option to request Lost certificate (subject to a fees), which can be used with other official entities.",
-    audiences: ["Individuals", "Visitors", "Business"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2672,7 +2631,7 @@ export const services: Service[] = [
     icon: "/icons/services/report-driver.svg",
     description:
       "Report dangerous driving, improper lane changes, or aggressive behavior on the road.",
-    audiences: [],
+    audiences: ["Residents", "Drivers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2702,7 +2661,7 @@ export const services: Service[] = [
     icon: "/icons/services/e-crime.svg",
     description:
       "This service allows individuals impacted by various types of criminal offenses to file complaints to the competent authorities who then refer the cases to the judicial authorities to ensure their rights are upheld.",
-    audiences: ["Individuals", "Visitors", "Business"],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: true,
@@ -2746,7 +2705,7 @@ export const services: Service[] = [
     icon: "/icons/services/vehicle-obstruction-2.svg",
     description:
       "This service enables customers to report vehicles obstructing their movement, with the vehicle owner automatically notified via a warning SMS to move the vehicle immediately.",
-    audiences: ["Individuals"],
+    audiences: ["Drivers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2785,7 +2744,7 @@ export const services: Service[] = [
     icon: "/icons/services/certificate-03.svg",
     description:
       "A Service to obtain various official certificates issued by Nigeria Police Force",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2831,7 +2790,7 @@ export const services: Service[] = [
     icon: "/icons/services/lecturer-request.svg",
     description:
       "To arrange lectures, courses, and specialised workshops in various fields",
-    audiences: ["Individuals", "Business", "Students"],
+    audiences: ["Organisations", "Students"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2873,7 +2832,7 @@ export const services: Service[] = [
     icon: "/icons/services/check-circle.svg",
     description:
       "A Service to obtain various official permits issued by Nigeria Police Force",
-    audiences: ["Individuals", "Business"],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2931,7 +2890,7 @@ export const services: Service[] = [
     icon: "/icons/services/military-tech.svg",
     description:
       "This service enables individuals, entities, and organizations to request the participation of Nigeria Police Force specialized units, such as the Mounted Police, Music Band, K9 Unit, and Highway Patrols in official events, festivals, and public parades held across the Federal Capital Territory.",
-    audiences: ["Individuals", "Business"],
+    audiences: ["Organisations", "Students"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -2969,7 +2928,7 @@ export const services: Service[] = [
     icon: "/icons/services/phone-call-01.svg",
     description:
       "Connect with NPF leadership or relevant specialists in related fields",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3003,7 +2962,7 @@ export const services: Service[] = [
     icon: "/icons/services/police-retirees.svg",
     description:
       "This service enables Nigeria Police Force retirees to access a comprehensive package of dedicated services designed to strengthen communication and facilitate their access to various benefits. The services include the issuance and renewal of military and civil identification cards, issuance and renewal of the “POSSAP” card, military health insurance, medical treatment and equipment requests, issuance of different types of service certificates, and home visit arrangements for senior citizens and individuals unable to attend in person.",
-    audiences: ["Individuals"],
+    audiences: ["Police officers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3033,7 +2992,7 @@ export const services: Service[] = [
     icon: "/icons/services/road-closure-permit.svg",
     description:
       "This service enables users who have obtained a street closure permit from the FCTA Transport Secretariat to notify Nigeria Police Force of closure periods, enabling the Command and Control Center to know about closed roads while directing patrols to accident sites and reports.",
-    audiences: ["Individuals", "Business"],
+    audiences: ["Residents", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3082,7 +3041,7 @@ export const services: Service[] = [
     icon: "/icons/services/sail-safely.svg",
     description:
       "This service enables users to register their marine trips and expected locations, and to request assistance in emergency situations. The system automatically sends alerts for delayed trips. The service also offers various features such as trip tracking, dive site identification, location sharing, specifying the type and severity of distress, and smart integration with other government applications.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3176,7 +3135,7 @@ export const services: Service[] = [
     icon: "/icons/services/renting-iron-barrier.svg",
     description:
       "This service enables individuals, institutions, and government entities to rent security barriers from Nigeria Police Force, in accordance with the fees and conditions specified in the rental agreement.",
-    audiences: ["Individuals", "Business"],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3244,7 +3203,7 @@ export const services: Service[] = [
     icon: "/icons/services/annotation-info.svg",
     description:
       "Share information with police to support public and community safety",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3274,7 +3233,7 @@ export const services: Service[] = [
     icon: "/icons/shared/security.svg",
     description:
       "This service aims to enhance home security in Abuja through a smart monitoring system that operates 24/7, connected with the strategic partner “9mobile” to provide instant alerts supported by a unified cellular network.",
-    audiences: ["Individuals"],
+    audiences: ["Residents"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3311,7 +3270,7 @@ export const services: Service[] = [
     icon: "/icons/services/stadium.svg",
     description:
       "This service allows customers to book and use sports facilities at the Nigeria Police Force Officers Club, such as (Artificial Turf Football Field - Turf Football field - Track - Field.)",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Organisations", "Students"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3350,7 +3309,7 @@ export const services: Service[] = [
     icon: "/icons/services/explore-hemaya.svg",
     description:
       "This service enables educational institutions to request awareness programs for students, delivered by specialists from Nigeria Police Force, to enhance their security and social awareness.",
-    audiences: ["Students"],
+    audiences: ["Students", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3380,7 +3339,7 @@ export const services: Service[] = [
     icon: "/icons/services/search-check.svg",
     description:
       "This service enables users to submit their inquiries about the services, procedures and requirements approved by Nigeria Police Force.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: true,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3410,7 +3369,7 @@ export const services: Service[] = [
     icon: "/icons/services/supplier-application.svg",
     description:
       "This service aims to enable users to register in the Nigeria Police Force's approved suppliers directory and conduct transactions electronically.",
-    audiences: ["Business"],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3442,7 +3401,7 @@ export const services: Service[] = [
     icon: "/icons/services/supplier-application.svg",
     description:
       "A service for business suppliers, allows registration for police's tenders",
-    audiences: ["Business"],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3476,7 +3435,7 @@ export const services: Service[] = [
     icon: "/icons/services/clock-02.svg",
     description:
       "A Service to request immediate support from specialized teams",
-    audiences: ["Individuals", "Visitors", "Students"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3534,7 +3493,7 @@ export const services: Service[] = [
     icon: "/icons/services/tourist-complain.svg",
     description:
       "This service provides dedicated support to tourists visiting Federal Capital Territory by receiving and addressing tourism-related inquiries, reports, and complaints. As it ensures guidance, coordination, and assistance through official Nigeria Police Force channels to help maintain a safe and positive tourism experience.",
-    audiences: ["Visitors"],
+    audiences: ["Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3579,7 +3538,7 @@ export const services: Service[] = [
     icon: "/icons/services/simple-accident-report.svg",
     description:
       "To obtain official report on a traffic accident for various legal purposes",
-    audiences: ["Individuals"],
+    audiences: ["Drivers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3604,7 +3563,7 @@ export const services: Service[] = [
     icon: "/icons/services/traffic-status-certificate.svg",
     description:
       "This service enables users to obtain a clearance certificate confirming that the vehicle owner has settled all traffic violations and that there are no recorded accidents, traffic points, or active restrictions in Abuja against the vehicle or the driver’s license.",
-    audiences: ["Individuals", "Visitors", "Business"],
+    audiences: ["Drivers", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3660,7 +3619,7 @@ export const services: Service[] = [
     icon: "/icons/services/traffic-clearance-certificate.svg",
     description:
       "This service enables users to obtain a certificate detailing the vehicle’s traffic record, including fines, penalty points, and registered accidents, along with the driver’s involvement in each.",
-    audiences: ["Individuals"],
+    audiences: ["Drivers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3711,7 +3670,7 @@ export const services: Service[] = [
     icon: "/icons/services/traffic-services.svg",
     description:
       "This service aims to enable drivers holding driving licenses issued from Abuja, and who have accumulated traffic points on their licenses to enroll in specialized traffic safety training courses to benefit from a reduction in the points recorded against them.",
-    audiences: ["Individuals", "Business"],
+    audiences: ["Drivers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3795,7 +3754,7 @@ export const services: Service[] = [
     icon: "/icons/services/twimc-certificate.svg",
     description:
       "This service enables users to obtain an official certificate that outlines the facts and circumstances recorded in reports of damage, natural disasters, or traffic accidents. The certificate specifies the status of the parties involved and the resulting damages, enabling users to complete the necessary legal procedures with relevant entities such as judicial authorities and insurance companies.",
-    audiences: ["Individuals", "Visitors", "Business"],
+    audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: 7,
     ninAuthOnly: false,
@@ -3857,7 +3816,7 @@ export const services: Service[] = [
     icon: "/icons/services/twimc-inmate-certificate.svg",
     description:
       "This service aims to enable the inmate, their sponsor, or a family member (upon the inmate’s approval) to obtain an official “To Whom It May Concern” certificate confirming the completion or ongoing execution of the judicial sentence in Abuja’s correctional and penal institutions. The certificate is valid for a period of time, facilitating the completion of official, financial, and social transactions in accordance with applicable regulations.",
-    audiences: ["Individuals", "Business"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3919,7 +3878,7 @@ export const services: Service[] = [
     icon: "/icons/services/unknown-accident-report.svg",
     description:
       "This service enables vehicle owners or drivers, whose vehicles are damaged by an unknown party, to obtain an accident report allowing them to repair their damaged vehicle.",
-    audiences: ["Individuals", "Visitors", "Business"],
+    audiences: ["Drivers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -3970,7 +3929,7 @@ export const services: Service[] = [
     icon: "/icons/services/detainee-visit-request.svg",
     description:
       "This service provides the necessary permit for virtual meetings with detainees or inmates held within the Federal Capital Territory, in accordance with applicable procedures and regulations.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: 3,
     ninAuthOnly: true,
@@ -4008,7 +3967,7 @@ export const services: Service[] = [
     icon: "/icons/services/volunteer-platform.svg",
     description:
       "This service enables members of the community, whether Nigeria Police Force employees or the public, to volunteer with Nigeria Police Force by registering for available opportunities on the Nigeria Police Force Volunteer Platform.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Students", "Police officers"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -4043,7 +4002,7 @@ export const services: Service[] = [
     icon: "/icons/services/women-protection.svg",
     description:
       "This service aims to provide protection and support for women who are at risk or under threat of any form of psychological or physical violence, neglect, or violation of rights, ensuring the preservation of their legal, social, and human rights.",
-    audiences: ["Individuals"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -4085,7 +4044,7 @@ export const services: Service[] = [
     icon: "/icons/services/file-labor-complaint.svg",
     description:
       "This service aims to enable workers in the business sector to submit individual or collective complaints against the companies or institutions they work for, related to wages, working conditions, labor accommodation, or health and safety requirement.",
-    audiences: ["Business"],
+    audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -4131,7 +4090,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/manage-search.svg",
     description: "",
-    audiences: [],
+    audiences: ["Organisations"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
@@ -4158,4 +4117,122 @@ export const serviceCategoryNames = [
   "Business and Corporates",
   "Community Engagement",
   "Emergency and Response",
+];
+
+/**
+ * The order of the services page when nobody is searching (the most used
+ * row sits above it). Urgent before routine, everyone before specialists:
+ * danger, crime, the tasks most people come for, then follow-ups, documents,
+ * and the services for lawyers, businesses and staff. Related services sit
+ * together so the reader can scan a group. Every service is listed; npm test
+ * fails when one is added without a place here.
+ */
+export const serviceImportance = [
+  // Danger now: the reader may be at risk this minute.
+  "emergency-case-request-sos",
+  "support-and-emergency-response",
+  "critical-care-response",
+  "share-security-information",
+  "women-protection",
+  "child-protection",
+  "human-trafficking",
+  // Reporting a crime.
+  "report-criminal-complaint",
+  "open-criminal-case",
+  "ecrime",
+  "ecrime-101364",
+  // The tasks most people come for.
+  "police-clearance-certificate",
+  "fine-payment",
+  "pay-traffic-fines",
+  // On the road.
+  "traffic-accident-reports",
+  "minor-traffic-accident-report",
+  "unknown-accident-report",
+  "reckless-driver",
+  "report-a-vehicle-or-driver",
+  "vehicle-obstruction",
+  "traffic-training-courses",
+  // Lost and found.
+  "lost-and-found",
+  "report-lost-item",
+  "report-found-item",
+  // Following up on something already started.
+  "inquiries-and-follow-up",
+  "application-status",
+  "submit-inquiry",
+  "financial-cases",
+  "document-inquiry",
+  "fast-track",
+  "service-attachment",
+  // Certificates.
+  "request-a-certificate",
+  "traffic-clearance-certificate",
+  "traffic-status-certificate",
+  "twimc-certificate",
+  "twimc-inmate-certificate",
+  // Permits, most personal first.
+  "request-a-permit",
+  "detainee-visit",
+  "hqvisit",
+  "corpse-entry",
+  "vehicle-color-change",
+  "night-work-permit",
+  "close-road",
+  "sailing-permit",
+  // Support for particular people, and talking to the police.
+  "report-bounce-cheques",
+  "persons-with-disabilities",
+  "tourist-police",
+  "labour-complaint",
+  "neighborhood-police",
+  "share-information",
+  "request-to-contact-the-police",
+  "leaders-at-your-service",
+  // Homes and events.
+  "smart-home-security",
+  "event-security",
+  "on-site-police-support",
+  "barriers-request",
+  // Lawyers.
+  "law-office-registration",
+  "lawyer-poa",
+  "poa-association",
+  "lawyer-search-suspension-letter",
+  // Businesses, banks and embassies.
+  "report-bounce-cheques-bank",
+  "ecocrime",
+  "destroy-explosives",
+  "gold-management",
+  "diplomatic-affairs-services",
+  "diplomatic-services",
+  "diplomatic-exchange",
+  "suppliers-services",
+  "supplier-application",
+  "public-tender",
+  // Jobs, talks and training.
+  "apply-for-a-job",
+  "job-seekers",
+  "request-a-lecture-or-training-course",
+  "drug-awareness-lecture",
+  "student-awareness",
+  "seminar-request",
+  "contact-police-scientists-council",
+  // Joining in.
+  "community-activities-participation",
+  "volunteer-platform",
+  "activity-request",
+  "request-sports-facility",
+  "museum-visit",
+  // Police staff and retirees.
+  "npf-personnel-welfare-and-support",
+  "medical-treatment-extension",
+  "retirees-services",
+  // Pages that describe a programme rather than do a task, or whose content is unclear.
+  "faris",
+  "a-proactive-approach-to-ensures-public-safety",
+  "e-crime-supports-digital-well-being",
+  "digital-experience-for-lost-found",
+  "on-the-go",
+  "wps-statistics",
 ];

@@ -98,3 +98,12 @@ for (const doc of seedDocuments)
   assert.ok(ids.has(doc.request), `seed document request: ${doc.request}`);
 
 console.log("search, catalogue and seeds ok");
+
+// --- services page order -------------------------------------------------
+// Every service has exactly one place in the importance order.
+{
+  const { serviceImportance } = await import("../app/content-services.ts");
+  const slugs = services.map((s) => s.slug);
+  assert.deepEqual([...serviceImportance].sort(), [...slugs].sort());
+  assert.equal(new Set(serviceImportance).size, serviceImportance.length);
+}

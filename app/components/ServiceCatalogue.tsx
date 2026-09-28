@@ -15,7 +15,6 @@ import {
 } from "react";
 import type { Service } from "../content-services";
 import {
-  ArrowDown,
   ArrowRight,
   CardIcon,
   ClockIcon,
@@ -32,24 +31,22 @@ export type ServiceRow = Pick<
   | "category"
   | "icon"
   | "description"
-  | "audiences"
   | "mostUsed"
   | "feeSummary"
   | "turnaround"
->;
-
-const AUDIENCES = ["Individuals", "Visitors", "Business", "Students"];
+> & { importance: number };
 
 /**
  * All 92 services on one page.
  *
  * The search sits in the page head (ServiceSearch, sharing the query
- * through ServiceQuery). Here, one grid: the most used first, then by name.
- * Search and the package chips do the finding, so no A-to-Z index.
+ * through ServiceQuery). Here, the most used first in their own row, then
+ * the rest by importance. Search and the package chips do the finding, so no
+ * A-to-Z index.
  *
  * Filtering runs on the rows the page sent down. They stay in English so
- * category and audience compare against the same values in every language;
- * t() translates them at render.
+ * the package compares against the same values in every language; t()
+ * translates them at render.
  */
 export default function ServiceCatalogue({
   services,
@@ -71,7 +68,6 @@ export default function ServiceCatalogue({
     const wanted = params.get("package");
     return wanted && categories.includes(wanted) ? wanted : "";
   });
-  const [audience, setAudience] = useState("");
 
   // The site search does the matching (both languages, hooks, typos) and the
   // ranking; its order is this grid's order while there is a query.
@@ -90,30 +86,33 @@ export default function ServiceCatalogue({
       services.filter(
         (s) =>
           (!category || s.category === category) &&
-          (!audience || s.audiences.includes(audience)) &&
           (!q || rank.has(s.slug)),
       ),
-    [services, q, rank, category, audience],
+    [services, q, rank, category],
   );
 
-  const filtered = Boolean(q || category || audience);
+  const filtered = Boolean(q || category);
 
-  // Best match first while searching; otherwise most used first, then by the
-  // name the reader sees (Hausa sorts as Hausa).
+  // Best match first while searching; otherwise most used first, then by
+  // importance, then by the name the reader sees (Hausa sorts as Hausa).
   const sorted = useMemo(
     () =>
       [...visible].sort((a, b) =>
         q
           ? rank.get(a.slug)! - rank.get(b.slug)!
           : Number(b.mostUsed) - Number(a.mostUsed) ||
+            a.importance - b.importance ||
             t(a.name).localeCompare(t(b.name), lang),
       ),
     [visible, q, rank, t, lang],
   );
+  // Only while browsing: a search or filter ranks its own results.
+  const featured = filtered ? [] : sorted.filter((s) => s.mostUsed);
+  const rest = filtered ? sorted : sorted.filter((s) => !s.mostUsed);
+
   const clear = () => {
     setQuery("");
     setCategory("");
-    setAudience("");
     // Otherwise a reload would restore the package from the URL.
     if (params.get("package")) router.replace("/app/services");
   };
@@ -131,52 +130,26 @@ export default function ServiceCatalogue({
     <>
       <div className="bg-white pb-(--npf-section-y)">
         <div className="npf-container">
-          {/* One toolbar: packages on the left, who you are on the right. */}
-          <div className="grid gap-4 rounded-tile bg-npf-cloud p-3 md:p-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start lg:gap-8">
-            <PackageTabs
-              label={t("Package")}
-              chips={chips}
-              value={category}
-              onChange={setCategory}
-            />
+          <PackageTabs
+            label={t("Package")}
+            chips={chips}
+            value={category}
+            onChange={setCategory}
+          />
 
-            <div className="flex items-center gap-3 border-t border-npf-ink/10 pt-3 lg:border-0 lg:pt-0">
-              <label
-                htmlFor={`${id}-aud`}
-                className="npf-small font-medium whitespace-nowrap text-npf-body"
-              >
-                {t("I am")}
-              </label>
-              <span className="npf-select-wrap">
-                <select
-                  id={`${id}-aud`}
-                  value={audience}
-                  data-active={audience ? "" : undefined}
-                  onChange={(e) => setAudience(e.target.value)}
-                  className="npf-select not-data-active:bg-white"
-                >
-                  <option value="">{t("Anyone")}</option>
-                  {AUDIENCES.map((name) => (
-                    <option key={name} value={name}>
-                      {t(name)}
-                    </option>
-                  ))}
-                </select>
-                <ArrowDown className="npf-select-arrow" />
-              </span>
-            </div>
-          </div>
-
-          {/* The result, said plainly, and while browsing a jump to any letter. */}
-          <div className="mt-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
-            <p className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-              <span aria-live="polite" className="npf-h4 text-npf-blue-deep">
-                <span className="tabular-nums">{visible.length}</span>{" "}
-                <span className="npf-body font-sans font-normal tracking-normal text-npf-steel">
+          {/* Once anything is filtered, the count and a way back. */}
+          <p
+            aria-live="polite"
+            className="flex items-baseline gap-x-4 not-empty:mt-6"
+          >
+            {filtered ? (
+              <>
+                <span className="npf-body text-npf-steel">
+                  <span className="font-semibold text-npf-blue-deep tabular-nums">
+                    {visible.length}
+                  </span>{" "}
                   {t("of {total} services", { total: services.length })}
                 </span>
-              </span>
-              {filtered ? (
                 <button
                   type="button"
                   onClick={clear}
@@ -184,9 +157,9 @@ export default function ServiceCatalogue({
                 >
                   {t("Clear filters")}
                 </button>
-              ) : null}
-            </p>
-          </div>
+              </>
+            ) : null}
+          </p>
 
           {visible.length === 0 ? (
             <div className="mt-12 flex flex-col items-center rounded-tile bg-npf-paper px-6 py-16 text-center">
@@ -215,13 +188,46 @@ export default function ServiceCatalogue({
             </div>
           ) : null}
 
-          <ul className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {sorted.map((service) => (
-              <li key={service.slug}>
-                <ServiceCard service={service} />
-              </li>
-            ))}
-          </ul>
+          {/* While browsing, the few most people come for lead in their own
+              row; everything else follows by importance. */}
+          {featured.length ? (
+            <section aria-labelledby={`${id}-top`} className="mt-10">
+              <h2 id={`${id}-top`} className="npf-h4 text-npf-blue-deep">
+                {t("Most used")}
+              </h2>
+              {/* Short on a phone: five full cards would fill the screen. */}
+              <ul className="mt-5 grid gap-4 max-sm:[&_[data-desc]]:hidden md:grid-cols-2 lg:grid-cols-6">
+                {featured.map((service, i) => (
+                  <li
+                    key={service.slug}
+                    className={`${i < 2 ? "lg:col-span-3" : "lg:col-span-2"} md:last:odd:col-span-2 lg:last:odd:col-span-2`}
+                  >
+                    <ServiceCard service={service} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+
+          {rest.length ? (
+            <section
+              aria-labelledby={featured.length ? `${id}-all` : undefined}
+              className={featured.length ? "mt-16" : "mt-8"}
+            >
+              {featured.length ? (
+                <h2 id={`${id}-all`} className="npf-h4 text-npf-blue-deep">
+                  {t("All services")}
+                </h2>
+              ) : null}
+              <ul className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {rest.map((service) => (
+                  <li key={service.slug}>
+                    <ServiceCard service={service} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
         </div>
       </div>
     </>
@@ -279,7 +285,7 @@ function ServiceCard({ service }: { service: ServiceRow }) {
       href={`/app/services/${service.slug}`}
       className="group flex h-full flex-col rounded-card bg-white p-5 ring-1 ring-npf-ink/[0.08] transition-[box-shadow,scale] ring-inset hover:shadow-card active:scale-[0.99] active:duration-(--dur-press)"
     >
-      <span className="flex items-start justify-between gap-4">
+      <span className="flex">
         <span className="grid size-12 shrink-0 place-items-center rounded-chip bg-npf-cloud">
           {service.icon ? (
             <Image
@@ -293,11 +299,6 @@ function ServiceCard({ service }: { service: ServiceRow }) {
             <ServicesIcon className="size-6 text-npf-blue-ink" />
           )}
         </span>
-        {service.mostUsed ? (
-          <span className="rounded-full bg-npf-gold-wash px-2.5 py-1 text-xs font-semibold text-npf-gold">
-            {t("Most used")}
-          </span>
-        ) : null}
       </span>
 
       <span className="npf-h5 mt-4 text-npf-ink transition-colors group-hover:text-npf-blue">
@@ -305,7 +306,7 @@ function ServiceCard({ service }: { service: ServiceRow }) {
       </span>
       {service.description ? (
         // No `block`: line-clamp sets its own display value.
-        <span className="npf-small mt-1.5 line-clamp-2 text-npf-body">
+        <span data-desc className="npf-small mt-1.5 line-clamp-2 text-npf-body">
           {t(service.description)}
         </span>
       ) : null}
@@ -328,9 +329,10 @@ function ServiceCard({ service }: { service: ServiceRow }) {
 }
 
 /**
- * The package filter as soft cloud pills with their counts, the chosen one
- * navy. Wrapping from sm up, a
- * swipe row on a phone that keeps the choice in view.
+ * The packages as pills with their counts, the chosen one navy. From lg up
+ * a four-by-two grid (All plus seven packages), so the rows square off
+ * instead of wrapping ragged; below that, a swipe row that keeps the
+ * choice in view.
  */
 function PackageTabs({
   label,
@@ -362,7 +364,7 @@ function PackageTabs({
       ref={track}
       role="group"
       aria-label={label}
-      className="relative -mx-3 flex gap-2 overflow-x-auto px-3 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+      className="-mx-4 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none] lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0"
     >
       {chips.map((chip) => {
         const on = value === chip.value;
@@ -372,10 +374,10 @@ function PackageTabs({
             type="button"
             aria-pressed={on}
             onClick={() => onChange(chip.value)}
-            className={`inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium whitespace-nowrap transition-[background-color,color,scale] active:scale-[0.97] active:duration-(--dur-press) ${
+            className={`flex min-h-12 shrink-0 items-center justify-between gap-3 rounded-full px-5 text-sm font-medium whitespace-nowrap transition-[background-color,color,box-shadow,scale] active:scale-[0.97] active:duration-(--dur-press) ${
               on
-                ? "bg-npf-blue-deep text-white shadow-[0_6px_14px_-8px_rgb(20_49_95/0.6)]"
-                : "bg-white text-npf-blue-ink ring-1 ring-npf-ink/[0.06] ring-inset hover:bg-npf-chip"
+                ? "bg-npf-blue-deep text-white shadow-[0_8px_18px_-10px_rgb(20_49_95/0.7)]"
+                : "bg-npf-cloud text-npf-blue-ink hover:bg-npf-chip"
             }`}
           >
             {chip.label}
