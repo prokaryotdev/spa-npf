@@ -90,7 +90,7 @@ export default function DataTable<T extends Record<string, unknown>>({
   return (
     <div>
       <div className="mb-6 flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[220px]">
+        <div className="relative flex-1 min-w-55">
           <SearchIcon
             aria-hidden
             className="pointer-events-none absolute top-1/2 start-4 size-5 -translate-y-1/2 text-npf-muted"
@@ -143,7 +143,7 @@ export default function DataTable<T extends Record<string, unknown>>({
         </p>
       </div>
 
-      <div className="overflow-x-auto rounded-card ring-1 ring-black/5">
+      <div className="overflow-x-auto rounded-card ring-1 ring-npf-hairline">
         <table
           style={{ minWidth }}
           className="w-full border-collapse bg-white text-start"
@@ -206,7 +206,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             {slice.map((row, i) => (
               <tr
                 key={current * PAGE + i}
-                className="border-t border-black/5 align-top transition-colors hover:bg-npf-cloud/50"
+                className="border-t border-npf-hairline align-top transition-colors hover:bg-npf-cloud/50"
               >
                 <td className="px-4 py-4 text-sm text-npf-muted tabular-nums">
                   {current * PAGE + i + 1}

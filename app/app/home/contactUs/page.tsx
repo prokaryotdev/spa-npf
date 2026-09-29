@@ -55,7 +55,7 @@ export default async function ContactUsPage() {
             ))}
           </div>
 
-          <div className="mt-6 rounded-tile bg-white p-6 ring-1 ring-black/5">
+          <div className="mt-6 rounded-tile bg-white p-6 ring-1 ring-npf-hairline">
             <h3 className="font-secondary text-lg font-bold text-npf-blue-deep">
               {contactUs.reach.signLanguage.title}
             </h3>

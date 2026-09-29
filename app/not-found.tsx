@@ -36,7 +36,7 @@ export default async function NotFound() {
             <Link
               key={link.href}
               href={link.href}
-              className="inline-flex items-center rounded-full bg-npf-cloud px-6 py-3 font-medium text-npf-blue-ink ring-1 ring-black/5 transition-colors hover:bg-npf-chip"
+              className="inline-flex items-center rounded-full bg-npf-cloud px-6 py-3 font-medium text-npf-blue-ink ring-1 ring-npf-hairline transition-colors hover:bg-npf-chip"
             >
               {t(link.label)}
             </Link>

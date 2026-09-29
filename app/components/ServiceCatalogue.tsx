@@ -258,7 +258,7 @@ export function ServiceSearch() {
       <label htmlFor={`${id}-q`} className="sr-only">
         {t("Search services")}
       </label>
-      <div className="flex h-15 items-center gap-3 rounded-full bg-white px-6 shadow-card ring-1 ring-npf-ink/10 transition-shadow ring-inset focus-within:ring-2 focus-within:ring-npf-blue-mid">
+      <div className="flex h-15 items-center gap-3 rounded-full bg-white px-6 shadow-card ring-1 ring-npf-hairline transition-shadow ring-inset focus-within:ring-2 focus-within:ring-npf-blue-mid">
         <SearchIcon className="size-5 shrink-0 text-npf-blue" />
         <input
           id={`${id}-q`}
@@ -283,7 +283,7 @@ function ServiceCard({ service }: { service: ServiceRow }) {
   return (
     <Link
       href={`/app/services/${service.slug}`}
-      className="group flex h-full flex-col rounded-card bg-white p-5 ring-1 ring-npf-ink/[0.08] transition-[box-shadow,translate,scale] duration-(--dur-hover) ease-(--ease-out) ring-inset hover:-translate-y-0.5 hover:shadow-card hover:ring-transparent active:scale-[0.99] active:duration-(--dur-press) motion-reduce:hover:translate-y-0"
+      className="group flex h-full flex-col rounded-card bg-white p-5 ring-1 ring-npf-hairline transition-[box-shadow,translate,scale] duration-(--dur-hover) ease-(--ease-out) ring-inset hover:-translate-y-0.5 hover:shadow-card hover:ring-transparent active:scale-[0.99] active:duration-(--dur-press) motion-reduce:hover:translate-y-0"
     >
       <span className="flex">
         <span className="grid size-12 shrink-0 place-items-center rounded-chip bg-npf-cloud transition-colors duration-(--dur-hover) group-hover:bg-npf-chip">
@@ -293,7 +293,7 @@ function ServiceCard({ service }: { service: ServiceRow }) {
               alt=""
               width={26}
               height={26}
-              className="size-[26px]"
+              className="size-6.5"
             />
           ) : (
             <ServicesIcon className="size-6 text-npf-blue-ink" />
@@ -312,7 +312,7 @@ function ServiceCard({ service }: { service: ServiceRow }) {
       ) : null}
 
       <span className="mt-auto pt-5">
-        <span className="npf-small flex items-center gap-x-5 border-t border-npf-ink/[0.08] pt-4">
+        <span className="npf-small flex items-center gap-x-5 border-t border-npf-hairline pt-4">
           <span className="inline-flex items-center gap-1.5 font-medium text-npf-ink tabular-nums">
             <CardIcon className="size-4 shrink-0 text-npf-steel" />
             {t(service.feeSummary)}
@@ -321,7 +321,7 @@ function ServiceCard({ service }: { service: ServiceRow }) {
             <ClockIcon className="size-4 shrink-0" />
             {t(service.turnaround)}
           </span>
-          <ArrowRight className="ms-auto size-[18px] shrink-0 text-npf-blue transition-transform group-hover:translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:-translate-x-[3px]" />
+          <ArrowRight className="ms-auto size-4.5 shrink-0 text-npf-blue transition-transform group-hover:translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:-translate-x-[3px]" />
         </span>
       </span>
     </Link>
@@ -376,7 +376,7 @@ function PackageTabs({
             className={`flex min-h-11 shrink-0 items-center gap-2.5 rounded-full ps-4 pe-2 text-sm font-medium whitespace-nowrap ring-1 ring-inset transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) ease-(--ease-out) active:scale-[0.97] active:duration-(--dur-press) ${
               on
                 ? "bg-npf-blue-deep text-white ring-npf-blue-deep"
-                : "bg-white text-npf-body ring-npf-ink/10 hover:text-npf-ink hover:ring-npf-ink/25"
+                : "bg-white text-npf-body ring-npf-hairline hover:text-npf-ink hover:ring-npf-ink/25"
             }`}
           >
             {chip.label}

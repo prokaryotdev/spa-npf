@@ -50,7 +50,7 @@ function CallButton({ onDark }: { onDark: boolean }) {
         up with the caps, a hair above the pill's middle, where the eye reads
         it as centred.
       */}
-      <CallIcon className="size-[18px] shrink-0 translate-y-[1.5px] transition-[rotate] group-hover:-rotate-12" />
+      <CallIcon className="size-4.5 shrink-0 translate-y-[1.5px] transition-[rotate] group-hover:-rotate-12" />
       <span className="flex -translate-y-px items-baseline gap-1.5 leading-none">
         <span className="hidden font-medium text-white/85 lg:inline">
           {t("Emergency")}
@@ -132,7 +132,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
       <header
         className={`fixed top-0 left-0 z-50 w-full border-b transition-[background-color,border-color] duration-(--dur-media) ${
           scrolled
-            ? "border-npf-ink/[0.08] bg-white/90 backdrop-blur-xl"
+            ? "border-npf-hairline bg-white/90 backdrop-blur-xl"
             : "border-white/25 bg-gradient-to-b from-npf-night/60 to-transparent"
         }`}
       >
@@ -178,7 +178,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
           {/* Desktop */}
           <nav
             aria-label={t("Main")}
-            className={`hidden h-[72px] items-center gap-8 xl:flex ${ink}`}
+            className={`hidden h-18 items-center gap-8 xl:flex ${ink}`}
           >
             <Link
               href="/app/home"
@@ -216,7 +216,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                       // pt-2 is the bridge the pointer crosses from the link
                       // to the panel without the hover dropping.
                       <div className="invisible absolute top-full left-1/2 z-50 -translate-x-1/2 translate-y-1 pt-2 opacity-0 transition-[opacity,translate,visibility] group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                        <ul className="w-[320px] rounded-card bg-white p-2 text-npf-ink shadow-raised ring-1 ring-npf-ink/[0.06]">
+                        <ul className="w-80 rounded-card bg-white p-2 text-npf-ink shadow-raised ring-1 ring-npf-hairline">
                           {item.children.map((child) => (
                             <li key={child.label}>
                               <Link
@@ -288,7 +288,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         }}
         className="npf-search-sheet m-0 mt-0 w-full max-w-none bg-transparent p-4 pt-24 md:pt-28"
       >
-        <div className="mx-auto w-full max-w-[680px]">
+        <div className="mx-auto w-full max-w-170">
           {/* Mounted only while open so autoFocus fires on every opening. */}
           {searchOpen ? (
             <ServiceSearch
@@ -352,7 +352,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                 {t(item.label)}
               </Link>
               {item.children ? (
-                <ul className="mt-1 mb-3 ms-4 border-s border-npf-ink/10 ps-3">
+                <ul className="mt-1 mb-3 ms-4 border-s border-npf-hairline ps-3">
                   {item.children.map((child) => (
                     <li key={child.label}>
                       <Link
@@ -373,7 +373,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
           {/* The drawer is the only place a phone can reach the switch. */}
           <LanguageSwitch
             block
-            className="border border-npf-ink/10 py-3 text-npf-ink hover:bg-npf-ink/[0.04]"
+            className="border border-npf-hairline py-3 text-npf-ink hover:bg-npf-cloud"
           />
         </div>
       </dialog>

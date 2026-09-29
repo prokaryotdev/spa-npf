@@ -193,7 +193,7 @@ export default function OpsIncidents() {
                   "Calls, with grade, type, area, status, assigned unit and elapsed time",
                 )}
               </caption>
-              <thead className="npf-ops-thead text-2xs font-medium tracking-[0.08em] text-ops-dim uppercase">
+              <thead className="npf-ops-thead text-2xs font-medium tracking-kicker text-ops-dim uppercase">
                 <tr className="whitespace-nowrap">
                   <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
                     {t("Grade")}
@@ -397,7 +397,7 @@ function Detail({
           type="button"
           onClick={onClose}
           aria-label={t("Close call detail")}
-          className="grid size-7 place-items-center rounded text-ops-dim transition-colors hover:bg-ops-raised hover:text-ops-text"
+          className="grid size-7 place-items-center rounded-chip text-ops-dim transition-colors hover:bg-ops-raised hover:text-ops-text"
         >
           <CloseIcon className="size-4" />
         </button>
@@ -484,7 +484,7 @@ function Detail({
       ) : null}
 
       <div className="mt-5 border-t border-ops-line-soft pt-4">
-        <p className="mb-3 text-2xs tracking-[0.12em] text-ops-dim uppercase">
+        <p className="mb-3 text-2xs tracking-kicker text-ops-dim uppercase">
           {t("Log")}
         </p>
         <ol className="space-y-2 text-xs">
@@ -713,7 +713,7 @@ function Field({
     <div>
       <label
         htmlFor={id}
-        className="mb-1.5 block text-2xs tracking-[0.1em] text-ops-dim uppercase"
+        className="mb-1.5 block text-2xs tracking-kicker text-ops-dim uppercase"
       >
         {label}
       </label>

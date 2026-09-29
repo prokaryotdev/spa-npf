@@ -10,7 +10,7 @@ import type { IncidentStatus, RequestStatus } from "./store";
  * are the only colour on the screen.
  */
 const REQUEST_TONE: Record<RequestStatus, string> = {
-  Submitted: "bg-black/[0.05] text-npf-body",
+  Submitted: "bg-npf-cloud text-npf-body",
   "In Review": "bg-npf-review-wash text-npf-review",
   "Action Needed": "bg-npf-gold-wash text-npf-warn",
   Completed: "bg-npf-ok-soft text-npf-ok",
@@ -21,7 +21,7 @@ const INCIDENT_TONE: Record<IncidentStatus, string> = {
   New: "bg-npf-gold-wash text-npf-warn",
   Dispatched: "bg-npf-review-wash text-npf-review",
   "On Scene": "bg-npf-ok-soft text-npf-ok",
-  Closed: "bg-black/[0.05] text-npf-body",
+  Closed: "bg-npf-cloud text-npf-body",
 };
 
 export function StatusPill({
@@ -57,7 +57,7 @@ export function Card({
 }) {
   const t = useT();
   return (
-    <section className="rounded-tile p-6 ring-1 ring-black/[0.07]">
+    <section className="rounded-tile p-6 ring-1 ring-npf-hairline">
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <h2 className="font-secondary text-lg font-bold text-npf-blue-deep">
           {t(title)}

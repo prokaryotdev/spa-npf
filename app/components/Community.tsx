@@ -34,7 +34,7 @@ export default function Community({
               <div
                 key={item.title}
                 {...reveal(i === last ? 1 : Math.min(i, 3))}
-                className={`grid ${band ? "min-h-[400px] md:col-span-2" : "min-h-[380px]"}`}
+                className={`grid ${band ? "min-h-100 md:col-span-2" : "min-h-95"}`}
               >
                 <article className="npf-tile p-(--npf-pad)">
                   <Image
@@ -50,7 +50,7 @@ export default function Community({
                     aria-hidden
                     className={`npf-tile-shade ${
                       band
-                        ? "lg:bg-[linear-gradient(to_right,rgb(10_21_38/0.92)_0%,rgb(10_21_38/0.6)_35%,transparent_65%)]"
+                        ? "lg:bg-[linear-gradient(to_right,color-mix(in_srgb,var(--color-npf-night)_92%,transparent)_0%,color-mix(in_srgb,var(--color-npf-night)_60%,transparent)_35%,transparent_65%)]"
                         : ""
                     }`}
                   />

@@ -98,7 +98,7 @@ export default function FeedbackForm({
                 className={`flex cursor-pointer flex-col rounded-tile bg-white p-6 ring-1 transition-colors has-[:focus-visible]:ring-2 ${
                   active
                     ? "bg-npf-cloud ring-2 ring-npf-blue"
-                    : "ring-black/5 hover:bg-npf-cloud/50"
+                    : "ring-npf-hairline hover:bg-npf-cloud/50"
                 }`}
               >
                 <span className="flex items-center gap-3">
@@ -126,7 +126,7 @@ export default function FeedbackForm({
         </div>
       </fieldset>
 
-      <div className="mt-8 grid max-w-[760px] gap-5 md:grid-cols-2">
+      <div className="mt-8 grid max-w-190 gap-5 md:grid-cols-2">
         <Field
           id={`${id}-name`}
           name="name"

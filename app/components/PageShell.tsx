@@ -35,10 +35,10 @@ export async function PageShell({
       <main
         id="main-content"
         tabIndex={-1}
-        className="border-b border-npf-ink/10 outline-none"
+        className="border-b border-npf-hairline outline-none"
       >
         <div className="relative overflow-hidden bg-white pt-40 pb-16 md:pt-48">
-          <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 [mask-image:linear-gradient(to_bottom,#000_65%,transparent_90%)] md:size-[1000px] md:opacity-60" />
+          <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 [mask-image:linear-gradient(to_bottom,#000_65%,transparent_90%)] md:size-250 md:opacity-60" />
 
           <div className="npf-container relative">
             <nav aria-label={t("Breadcrumb")} className="mb-6">
@@ -73,7 +73,7 @@ export async function PageShell({
             </nav>
 
             <h1
-              className={`font-secondary leading-[1.15] font-bold text-npf-blue-deep ${
+              className={`font-secondary leading-display font-bold text-npf-blue-deep ${
                 titleSize === "article"
                   ? "max-w-[22ch] text-3xl lg:text-5xl"
                   : "text-4xl lg:text-7xl"

@@ -42,12 +42,12 @@ export default function PortalProfile() {
   }
 
   return (
-    <div className="max-w-[560px]">
+    <div className="max-w-140">
       <h2 className="mb-6 font-secondary text-2xl font-bold text-npf-blue-deep">
         {t("Profile")}
       </h2>
 
-      <dl className="mb-8 divide-y divide-black/[0.07] rounded-card bg-npf-paper px-5">
+      <dl className="mb-8 divide-y divide-npf-hairline rounded-card bg-npf-paper px-5">
         <Row label={t("Full name")} value={t(session.name)} />
         <Row label={t("NIN")} value={session.nin} />
         {session.rank ? (

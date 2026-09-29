@@ -162,7 +162,7 @@ export default function OpsRequests() {
                     {t(request.service)}
                   </h2>
                   <span
-                    className={`shrink-0 rounded px-2 py-0.5 text-xs font-medium ${TONE[request.status]}`}
+                    className={`shrink-0 rounded-chip px-2 py-0.5 text-xs font-medium ${TONE[request.status]}`}
                   >
                     {t(request.status)}
                   </span>

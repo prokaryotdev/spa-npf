@@ -223,8 +223,8 @@ export default function ServiceSearch({
         onSubmit={submit}
         className={`flex items-center ${
           hero
-            ? "gap-[11px] rounded-[26px] bg-white px-4 ring-0 transition-shadow focus-within:ring-2 focus-within:ring-npf-blue-mid"
-            : "gap-3 rounded-card bg-npf-cloud px-4 ring-1 ring-black/5 transition-shadow focus-within:ring-2 focus-within:ring-npf-blue"
+            ? "gap-2.75 rounded-tile bg-white px-4 ring-0 transition-shadow focus-within:ring-2 focus-within:ring-npf-blue-mid"
+            : "gap-3 rounded-card bg-npf-cloud px-4 ring-1 ring-npf-hairline transition-shadow focus-within:ring-2 focus-within:ring-npf-blue"
         }`}
       >
         <SearchIcon aria-hidden className="size-6 shrink-0 text-npf-blue-ink" />
@@ -267,7 +267,7 @@ export default function ServiceSearch({
         <div
           ref={list}
           style={{ maxHeight }}
-          className={`npf-suggest absolute inset-x-0 z-50 overflow-y-auto rounded-card bg-white p-2 text-start shadow-raised ring-1 ring-npf-ink/[0.06] ${
+          className={`npf-suggest absolute inset-x-0 z-50 overflow-y-auto rounded-card bg-white p-2 text-start shadow-raised ring-1 ring-npf-hairline ${
             placement === "up"
               ? "npf-suggest-up bottom-[calc(100%+8px)]"
               : "top-[calc(100%+8px)]"
@@ -276,7 +276,7 @@ export default function ServiceSearch({
           <ul id={listId} role="listbox" aria-label={t("Suggestions")}>
             {groups.map((group) => (
               <li key={group.section} role="presentation">
-                <p className="px-3 pt-3 pb-1.5 text-xs font-medium tracking-[0.08em] text-npf-muted uppercase">
+                <p className="px-3 pt-3 pb-1.5 text-xs font-medium tracking-kicker text-npf-muted uppercase">
                   {t(group.section)}
                 </p>
                 <ul role="presentation">
@@ -305,7 +305,7 @@ export default function ServiceSearch({
                           }}
                           className={`flex items-start gap-3 rounded-chip px-3 py-2.5 transition-colors ${
                             index === active
-                              ? "bg-[rgba(13,160,110,0.09)]"
+                              ? "bg-npf-chip"
                               : "bg-transparent"
                           }`}
                         >
@@ -358,9 +358,9 @@ export default function ServiceSearch({
           ) : null}
 
           {!trimmed && recent.length ? (
-            <div className="mt-1 border-t border-black/[0.07] pt-2">
+            <div className="mt-1 border-t border-npf-hairline pt-2">
               <div className="flex items-center justify-between px-3 pt-1 pb-1.5">
-                <p className="text-xs font-medium tracking-[0.08em] text-npf-muted uppercase">
+                <p className="text-xs font-medium tracking-kicker text-npf-muted uppercase">
                   {t("Recent")}
                 </p>
                 <button
@@ -382,7 +382,7 @@ export default function ServiceSearch({
                     <button
                       type="button"
                       onClick={() => retype(term)}
-                      className="flex w-full items-center gap-3 rounded-chip px-3 py-2 text-left text-title text-npf-body transition-colors hover:bg-black/[0.04]"
+                      className="flex w-full items-center gap-3 rounded-chip px-3 py-2 text-left text-title text-npf-body transition-colors hover:bg-npf-cloud"
                     >
                       <ClockIcon
                         aria-hidden
@@ -397,7 +397,7 @@ export default function ServiceSearch({
           ) : null}
 
           {trimmed && !empty ? (
-            <div className="mt-1 border-t border-black/[0.07] px-3 py-2.5">
+            <div className="mt-1 border-t border-npf-hairline px-3 py-2.5">
               <button
                 type="button"
                 onClick={(e) => submit(e)}

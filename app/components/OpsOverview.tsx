@@ -194,7 +194,7 @@ function More({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link
       href={href}
-      className="inline-flex items-center gap-1.5 rounded text-xs font-medium text-ops-accent transition-opacity hover:opacity-70"
+      className="inline-flex items-center gap-1.5 rounded-chip text-xs font-medium text-ops-accent transition-opacity hover:opacity-70"
     >
       {children}
       <ArrowRight aria-hidden className="size-3.5" />
@@ -241,7 +241,7 @@ function PendingCall({
           <PriorityTag priority={incident.priority} />
           <Link
             href="/app/police/incidents"
-            className="rounded font-secondary text-sm font-bold tabular-nums underline-offset-4 hover:underline"
+            className="rounded-chip font-secondary text-sm font-bold tabular-nums underline-offset-4 hover:underline"
           >
             {incident.id}
           </Link>
@@ -284,7 +284,7 @@ function PendingCall({
               status: "Dispatched",
             });
           }}
-          className="npf-ops-select max-w-[190px] rounded-chip border border-ops-line bg-ops-panel px-2.5 py-1.5 text-xs font-medium outline-none transition-colors hover:border-ops-accent focus:border-ops-accent disabled:opacity-50 disabled:hover:border-ops-line"
+          className="npf-ops-select max-w-47.5 rounded-chip border border-ops-line bg-ops-panel px-2.5 py-1.5 text-xs font-medium outline-none transition-colors hover:border-ops-accent focus:border-ops-accent disabled:opacity-50 disabled:hover:border-ops-line"
         >
           <option value="">
             {free.length

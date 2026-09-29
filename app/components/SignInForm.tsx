@@ -75,7 +75,7 @@ export default function SignInForm() {
   }
 
   return (
-    <div className="max-w-[900px]">
+    <div className="max-w-225">
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         <div>
           <h2 className="font-secondary text-2xl font-bold text-npf-blue-deep">

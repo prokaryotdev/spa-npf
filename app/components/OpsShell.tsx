@@ -197,8 +197,8 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         it is the difference between an instrument and a web page with a
         toolbar on it.
       */}
-      <header className="npf-ops-chrome sticky top-0 z-40 bg-ops-chrome text-white shadow-[0_1px_0_rgba(255,255,255,0.06),0_10px_24px_-12px_rgba(6,18,40,0.55)]">
-        <div className="mx-auto flex h-15 max-w-[1800px] items-center gap-3 px-3 sm:px-4 lg:gap-5 lg:px-5">
+      <header className="npf-ops-chrome sticky top-0 z-40 bg-ops-chrome text-white shadow-raised">
+        <div className="mx-auto flex h-15 max-w-450 items-center gap-3 px-3 sm:px-4 lg:gap-5 lg:px-5">
           <Link
             href="/app/police"
             className="flex shrink-0 items-center gap-3 rounded-chip py-1"
@@ -211,7 +211,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
             >
               <PoliceWordmark className="h-full w-auto" />
             </span>
-            <span className="hidden border-s border-ops-chrome-line ps-3 font-secondary text-2xs leading-tight font-bold tracking-[0.18em] text-ops-chrome-gold uppercase sm:block">
+            <span className="hidden border-s border-ops-chrome-line ps-3 font-secondary text-2xs leading-tight font-bold tracking-kicker text-ops-chrome-gold uppercase sm:block">
               {t("Command")}
               <br />
               {t("& Control")}
@@ -279,13 +279,13 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         <button
           type="button"
           onClick={resetDemo}
-          className="rounded font-medium text-white underline decoration-ops-chrome-gold underline-offset-2 hover:decoration-2"
+          className="rounded-chip font-medium text-white underline decoration-ops-chrome-gold underline-offset-2 hover:decoration-2"
         >
           {t("Reset the demo")}
         </button>
       </p>
 
-      <div className="mx-auto flex w-full max-w-[1800px] flex-1 gap-5 px-3 sm:px-4 lg:px-5">
+      <div className="mx-auto flex w-full max-w-450 flex-1 gap-5 px-3 sm:px-4 lg:px-5">
         <Rail path={path} counts={counts} />
 
         <main
@@ -297,13 +297,13 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         </main>
       </div>
 
-      <footer className="mx-auto flex w-full max-w-[1800px] items-center justify-between gap-4 px-4 py-4 text-2xs text-ops-dim lg:px-5">
+      <footer className="mx-auto flex w-full max-w-450 items-center justify-between gap-4 px-4 py-4 text-2xs text-ops-dim lg:px-5">
         <span>
           {t(session.rank ?? "")} · {t(session.station ?? "")}
         </span>
         <Link
           href="/app/home"
-          className="inline-flex items-center gap-1.5 rounded transition-colors hover:text-ops-accent"
+          className="inline-flex items-center gap-1.5 rounded-chip transition-colors hover:text-ops-accent"
         >
           {t("Public site")}
           <ArrowUpRight className="size-3.5 shrink-0" />
@@ -328,7 +328,7 @@ function Rail({
   return (
     <nav
       aria-label={t("Console")}
-      className="sticky top-[var(--ops-top)] hidden h-fit w-[196px] shrink-0 flex-col gap-1 py-6 lg:flex"
+      className="sticky top-[var(--ops-top)] hidden h-fit w-49 shrink-0 flex-col gap-1 py-6 lg:flex"
     >
       {TABS.map(({ href, label, Icon }) => {
         const active =
@@ -344,11 +344,11 @@ function Rail({
                 : "text-ops-text hover:bg-ops-raised"
             }`}
           >
-            <Icon className="size-[18px] shrink-0" />
+            <Icon className="size-4.5 shrink-0" />
             <span className="truncate">{t(label)}</span>
             {counts[href] ? (
               <span
-                className={`ms-auto rounded px-1.5 py-0.5 text-2xs font-bold tabular-nums ${
+                className={`ms-auto rounded-chip px-1.5 py-0.5 text-2xs font-bold tabular-nums ${
                   active
                     ? "bg-ops-chrome-gold text-ops-chrome"
                     : "bg-ops-raised text-ops-dim"
@@ -402,11 +402,11 @@ function Tabs({
               shipped a navigation bar reading "C… U… R…". The label is the
               part that names the destination; the icon is the decoration.
             */}
-            <Icon className="hidden size-[18px] shrink-0 sm:block" />
+            <Icon className="hidden size-4.5 shrink-0 sm:block" />
             <span className="truncate text-2xs sm:text-xs">{t(short)}</span>
             {counts[href] ? (
               <span
-                className={`rounded px-1 py-0.5 text-2xs font-bold tabular-nums sm:px-1.5 ${
+                className={`rounded-chip px-1 py-0.5 text-2xs font-bold tabular-nums sm:px-1.5 ${
                   active
                     ? "bg-ops-chrome-gold text-ops-chrome"
                     : "bg-ops-chrome-line text-white"
@@ -447,7 +447,7 @@ function ShiftClock() {
         <span className="npf-ops-tick px-px">:</span>
         {time.slice(3)}
       </span>
-      <span className="hidden font-primary text-2xs leading-tight font-medium tracking-[0.1em] text-ops-chrome-dim uppercase sm:inline">
+      <span className="hidden font-primary text-2xs leading-tight font-medium tracking-kicker text-ops-chrome-dim uppercase sm:inline">
         {t("WAT · Shift {shift}", { shift: t(shift) })}
       </span>
     </p>

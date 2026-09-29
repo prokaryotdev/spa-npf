@@ -125,7 +125,7 @@ export default async function ServicePage({
             {facts.map((fact) => (
               <li
                 key={fact.label}
-                className="flex items-center gap-3.5 max-md:last:odd:col-span-2 md:not-first:border-s md:not-first:border-npf-ink/10 md:not-first:ps-10"
+                className="flex items-center gap-3.5 max-md:last:odd:col-span-2 md:not-first:border-s md:not-first:border-npf-hairline md:not-first:ps-10"
               >
                 <span className="hidden size-11 sm:grid shrink-0 place-items-center rounded-chip bg-npf-cloud text-npf-blue-ink">
                   <fact.icon className="size-5" />
@@ -149,7 +149,7 @@ export default async function ServicePage({
                 sits first, help sits last. On a desktop it is one sticky
                 rail beside the reading. */}
             <aside className="max-lg:contents lg:col-start-2 lg:row-start-1 lg:sticky lg:top-28 lg:self-start">
-              <div className="rounded-card bg-white p-6 shadow-card ring-1 ring-npf-ink/[0.06] ring-inset">
+              <div className="rounded-card bg-white p-6 shadow-card ring-1 ring-npf-hairline ring-inset">
                 <div className="flex items-center gap-4">
                   <span className="grid size-12 shrink-0 place-items-center rounded-chip bg-npf-cloud">
                     {service.icon ? (
@@ -158,7 +158,7 @@ export default async function ServicePage({
                         alt=""
                         width={26}
                         height={26}
-                        className="size-[26px]"
+                        className="size-6.5"
                       />
                     ) : (
                       <ServicesIcon className="size-6 text-npf-blue-ink" />
@@ -170,7 +170,7 @@ export default async function ServicePage({
                   <ServiceAction service={service} />
                 </div>
                 {service.ninAuthOnly ? (
-                  <p className="npf-small mt-4 flex items-center justify-center gap-2 border-t border-npf-ink/[0.08] pt-4 text-npf-steel">
+                  <p className="npf-small mt-4 flex items-center justify-center gap-2 border-t border-npf-hairline pt-4 text-npf-steel">
                     <UserCircle className="size-4 shrink-0" />
                     {t("NINAuth sign-in required")}
                   </p>
@@ -185,7 +185,7 @@ export default async function ServicePage({
                   <h2 className="npf-small font-medium text-npf-steel">
                     {t("On this page")}
                   </h2>
-                  <ol className="mt-3 border-s border-npf-ink/10">
+                  <ol className="mt-3 border-s border-npf-hairline">
                     {sections.map((s) => (
                       <li key={s.id}>
                         <a
@@ -210,7 +210,7 @@ export default async function ServicePage({
                     {service.contacts.map((contact) => (
                       <li
                         key={contact}
-                        className="rounded-full bg-white px-3 py-1 text-npf-body ring-1 ring-npf-ink/[0.08] ring-inset"
+                        className="rounded-full bg-white px-3 py-1 text-npf-body ring-1 ring-npf-hairline ring-inset"
                       >
                         {contact}
                       </li>
@@ -233,7 +233,7 @@ export default async function ServicePage({
                   {docGroups.map((doc) => (
                     <div
                       key={doc.label}
-                      className="border-t border-npf-ink/10 py-5 first-of-type:border-t-0 first-of-type:pt-0"
+                      className="border-t border-npf-hairline py-5 first-of-type:border-t-0 first-of-type:pt-0"
                     >
                       <p className="npf-body flex items-center gap-3 font-medium text-npf-ink">
                         <FileIcon className="size-5 shrink-0 text-npf-blue" />
@@ -253,11 +253,11 @@ export default async function ServicePage({
 
               {service.fees.length ? (
                 <Section id="fees" title={t("Fees")}>
-                  <dl className="overflow-hidden rounded-card ring-1 ring-npf-ink/10 ring-inset">
+                  <dl className="overflow-hidden rounded-card ring-1 ring-npf-hairline ring-inset">
                     {service.fees.map((fee) => (
                       <div
                         key={fee.label}
-                        className="flex items-baseline justify-between gap-6 px-5 py-3.5 not-first:border-t not-first:border-npf-ink/[0.07]"
+                        className="flex items-baseline justify-between gap-6 px-5 py-3.5 not-first:border-t not-first:border-npf-hairline"
                       >
                         <dt className="npf-small text-npf-body first-letter:uppercase">
                           {fee.label}
@@ -356,7 +356,7 @@ export default async function ServicePage({
                         return (
                           <li
                             key={channel}
-                            className="npf-small flex min-h-14 items-center gap-3 rounded-card px-4 py-3 font-medium text-npf-ink ring-1 ring-npf-ink/10 ring-inset"
+                            className="npf-small flex min-h-14 items-center gap-3 rounded-card px-4 py-3 font-medium text-npf-ink ring-1 ring-npf-hairline ring-inset"
                           >
                             <Icon className="size-5 shrink-0 text-npf-blue" />
                             {channel}
@@ -375,7 +375,7 @@ export default async function ServicePage({
                         {service.hours.map((hour) => (
                           <div
                             key={hour.label}
-                            className="flex items-baseline justify-between gap-4 border-b border-npf-ink/[0.07] py-3"
+                            className="flex items-baseline justify-between gap-4 border-b border-npf-hairline py-3"
                           >
                             <dt className="npf-small text-npf-body">
                               {hour.label}
@@ -401,7 +401,7 @@ export default async function ServicePage({
                       <li key={item.slug}>
                         <Link
                           href={`/app/services/${item.slug}`}
-                          className="group flex h-full items-center gap-4 rounded-card p-4 ring-1 ring-npf-ink/[0.08] transition-[box-shadow,translate,scale] duration-(--dur-hover) ease-(--ease-out) ring-inset hover:-translate-y-0.5 hover:shadow-card hover:ring-transparent active:scale-[0.99] active:duration-(--dur-press) motion-reduce:hover:translate-y-0"
+                          className="group flex h-full items-center gap-4 rounded-card p-4 ring-1 ring-npf-hairline transition-[box-shadow,translate,scale] duration-(--dur-hover) ease-(--ease-out) ring-inset hover:-translate-y-0.5 hover:shadow-card hover:ring-transparent active:scale-[0.99] active:duration-(--dur-press) motion-reduce:hover:translate-y-0"
                         >
                           <span className="grid size-10 shrink-0 place-items-center rounded-chip bg-npf-cloud transition-colors group-hover:bg-npf-chip">
                             {item.icon ? (
@@ -410,7 +410,7 @@ export default async function ServicePage({
                                 alt=""
                                 width={22}
                                 height={22}
-                                className="size-[22px]"
+                                className="size-5.5"
                               />
                             ) : (
                               <ServicesIcon className="size-5 text-npf-blue-ink" />
@@ -424,7 +424,7 @@ export default async function ServicePage({
                               {item.feeSummary} · {item.turnaround}
                             </span>
                           </span>
-                          <ArrowRight className="size-[18px] shrink-0 text-npf-blue transition-transform group-hover:translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:-translate-x-[3px]" />
+                          <ArrowRight className="size-4.5 shrink-0 text-npf-blue transition-transform group-hover:translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:-translate-x-[3px]" />
                         </Link>
                       </li>
                     ))}
@@ -470,7 +470,7 @@ function Checklist({
 }) {
   return (
     <ul
-      className={`grid gap-x-8 gap-y-2.5 sm:grid-cols-2 ${indent ? "mt-3 ps-8" : ""} ${bordered ? "border-t border-npf-ink/10 pt-5" : ""}`}
+      className={`grid gap-x-8 gap-y-2.5 sm:grid-cols-2 ${indent ? "mt-3 ps-8" : ""} ${bordered ? "border-t border-npf-hairline pt-5" : ""}`}
     >
       {items.map((item) => (
         <li

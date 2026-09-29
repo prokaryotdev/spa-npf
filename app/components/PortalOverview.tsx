@@ -158,7 +158,7 @@ export default function PortalOverview({
         }
       >
         {requests.length ? (
-          <ul className="divide-y divide-black/[0.07]">
+          <ul className="divide-y divide-npf-hairline">
             {requests.slice(0, 4).map((request) => (
               <li
                 key={request.id}
@@ -197,7 +197,7 @@ export default function PortalOverview({
 
       <section
         id="notices"
-        className="scroll-mt-32 rounded-tile p-6 ring-1 ring-black/[0.07]"
+        className="scroll-mt-32 rounded-tile p-6 ring-1 ring-npf-hairline"
       >
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <h2 className="flex items-center gap-2 font-secondary text-lg font-bold text-npf-blue-deep">
@@ -228,7 +228,8 @@ export default function PortalOverview({
                   <span className="font-medium text-npf-ink">
                     {t(notice.title)}
                   </span>
-                  <span className="text-xs text-npf-muted">
+                  {/* Body, not muted: muted drops under 4.5:1 on the chip wash. */}
+                  <span className="text-xs text-npf-body">
                     {format.date(notice.at)}
                   </span>
                 </p>

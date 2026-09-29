@@ -116,7 +116,7 @@ export default function Domains() {
       // A rising scene casts its shadow up onto the one it covers.
       const moving = down > 0 && down < 1;
       horizon.style.opacity = moving ? "1" : "0";
-      layer.style.boxShadow = moving ? "0 -32px 72px rgb(3 8 18 / 0.55)" : "none";
+      layer.style.boxShadow = moving ? "0 -32px 72px color-mix(in srgb, var(--color-npf-night) 55%, transparent)" : "none";
     });
     // The words on screen leave as the next photograph starts to rise, and
     // are gone by the time it is half up, when the next chapter's arrive.

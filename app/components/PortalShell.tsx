@@ -97,7 +97,7 @@ export default function PortalShell({
                         signOut();
                         router.push("/app/home");
                       }}
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-black/10 transition-colors hover:bg-black/[0.04]"
+                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-npf-hairline transition-colors hover:bg-npf-cloud"
                     >
                       <SignOutIcon aria-hidden className="size-4" />
                       {t("Sign out")}
@@ -141,10 +141,10 @@ export default function PortalShell({
                               className={`flex items-center gap-3 rounded-chip px-4 py-2.5 text-sm whitespace-nowrap transition-colors ${
                                 active
                                   ? "bg-npf-chip font-medium text-npf-blue-ink"
-                                  : "text-npf-body hover:bg-black/[0.04]"
+                                  : "text-npf-body hover:bg-npf-cloud"
                               }`}
                             >
-                              <Icon className="size-[18px] shrink-0" />
+                              <Icon className="size-4.5 shrink-0" />
                               {t(label)}
                               {counts[href] ? (
                                 <span className="ms-auto rounded-full bg-npf-blue px-2 py-0.5 text-2xs font-medium text-white tabular-nums">
@@ -175,15 +175,15 @@ function Loading() {
   const t = useT();
   return (
     <div aria-hidden className="animate-pulse">
-      <div className="h-4 w-24 rounded bg-black/[0.06]" />
-      <div className="mt-3 h-10 w-72 rounded bg-black/[0.08]" />
+      <div className="h-4 w-24 rounded-chip bg-npf-cloud-deep" />
+      <div className="mt-3 h-10 w-72 rounded-chip bg-npf-cloud-deep" />
       <div className="mt-10 grid gap-8 lg:grid-cols-[240px_1fr] lg:gap-12">
         <div className="space-y-2">
           {[0, 1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-10 rounded-chip bg-black/[0.05]" />
+            <div key={i} className="h-10 rounded-chip bg-npf-cloud" />
           ))}
         </div>
-        <div className="h-64 rounded-tile bg-black/[0.04]" />
+        <div className="h-64 rounded-tile bg-npf-cloud" />
       </div>
       <span className="sr-only">{t("Loading your account")}</span>
     </div>

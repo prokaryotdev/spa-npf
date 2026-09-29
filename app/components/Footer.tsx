@@ -83,7 +83,7 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
                     aria-hidden
                     className="absolute inset-0 rounded-full ring-2 ring-npf-alert/50 motion-safe:animate-[npf-ring_2.4s_var(--ease-out)_infinite]"
                   />
-                  <PhoneCallIcon className="size-[18px] transition-[rotate] group-hover:-rotate-12" />
+                  <PhoneCallIcon className="size-4.5 transition-[rotate] group-hover:-rotate-12" />
                 </span>
               </span>
             </span>
@@ -115,7 +115,7 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
                   <span className="npf-btn npf-btn-primary">
                     {t("Call")}
                     <span className="npf-btn-disc">
-                      <PhoneCallIcon className="size-[18px] transition-[rotate] group-hover:-rotate-12" />
+                      <PhoneCallIcon className="size-4.5 transition-[rotate] group-hover:-rotate-12" />
                     </span>
                   </span>
                 </a>
@@ -128,14 +128,14 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
       {/* Link columns */}
       <nav
         aria-label={t("Site Map")}
-        className="npf-container grid border-t border-npf-ink/10 py-6 md:grid-cols-3 md:gap-x-10 md:gap-y-12 md:py-16 xl:grid-cols-[1.35fr_1fr_0.85fr_1.15fr_1.15fr]"
+        className="npf-container grid border-t border-npf-hairline py-6 md:grid-cols-3 md:gap-x-10 md:gap-y-12 md:py-16 xl:grid-cols-[1.35fr_1fr_0.85fr_1.15fr_1.15fr]"
       >
         {footerColumns.map((col) => {
           const isOpen = open === col.heading;
           return (
             <div
               key={col.heading}
-              className="border-b border-npf-ink/10 py-2 last:border-none md:border-none md:py-0"
+              className="border-b border-npf-hairline py-2 last:border-none md:border-none md:py-0"
             >
               <h2 className="npf-h5 text-npf-ink md:mb-5">
                 <button
@@ -236,7 +236,7 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
                 required
                 autoComplete="email"
                 placeholder={t("Email address")}
-                className="h-15 w-full rounded-full border border-npf-ink/15 bg-white px-6 text-npf-ink caret-npf-blue transition-[border-color,box-shadow] placeholder:text-npf-muted hover:border-npf-ink/30 focus:border-npf-blue focus:shadow-[0_0_0_4px_rgb(27_63_122/0.12)] focus:outline-none user-invalid:border-npf-alert user-invalid:shadow-[0_0_0_4px_rgb(179_9_0/0.1)] sm:pe-48"
+                className="h-15 w-full rounded-full border border-npf-ink/15 bg-white px-6 text-npf-ink caret-npf-blue transition-[border-color,box-shadow] placeholder:text-npf-muted hover:border-npf-ink/30 focus:border-npf-blue focus:ring-4 focus:ring-npf-blue/12 focus:outline-none user-invalid:border-npf-alert user-invalid:ring-4 user-invalid:ring-npf-alert/10 sm:pe-48"
               />
               <button
                 type="submit"
@@ -244,7 +244,7 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
               >
                 {t("Subscribe")}
                 <span className="npf-btn-disc">
-                  <ArrowRight className="npf-arrow size-[18px] rtl:-scale-x-100" />
+                  <ArrowRight className="npf-arrow size-4.5 rtl:-scale-x-100" />
                 </span>
               </button>
             </form>
@@ -298,7 +298,7 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
       </div>
 
       {/* Legal */}
-      <div className="npf-small npf-container flex flex-col gap-6 border-t border-npf-ink/10 pt-8 pb-12 text-npf-muted lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+      <div className="npf-small npf-container flex flex-col gap-6 border-t border-npf-hairline pt-8 pb-12 text-npf-muted lg:flex-row lg:items-start lg:justify-between lg:gap-12">
         <div className="space-y-2">
           <p className="font-medium text-npf-ink">
             {t(

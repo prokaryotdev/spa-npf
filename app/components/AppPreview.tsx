@@ -33,7 +33,7 @@ export default function AppPreview({
   return (
     <div
       aria-hidden
-      className="relative mx-auto w-[240px] sm:w-[280px] lg:w-[310px] xl:w-[340px]"
+      className="relative mx-auto w-60 sm:w-70 lg:w-77.5 xl:w-85"
     >
       {/* Light and the brand rings, centred on the phone, each ring fainter
           than the one inside it so they fade into the band. */}
@@ -66,7 +66,7 @@ export default function AppPreview({
       <div className="relative rounded-[3.4rem] bg-npf-glass p-[11px] shadow-float ring-[1.5px] ring-npf-steel ring-inset">
         <div className="relative aspect-[9/19.5] overflow-hidden rounded-[2.65rem] bg-npf-night">
           {/* Status bar. */}
-          <div className="absolute inset-x-0 top-0 z-20 flex h-[42px] items-center justify-between px-[11%] text-xs font-semibold text-white tabular-nums sm:text-meta">
+          <div className="absolute inset-x-0 top-0 z-20 flex h-10.5 items-center justify-between px-[11%] text-xs font-semibold text-white tabular-nums sm:text-meta">
             <span>9:41</span>
             <span className="flex items-center gap-1.5">
               <svg viewBox="0 0 17 11" className="h-2.5 w-auto fill-white">
@@ -99,7 +99,7 @@ export default function AppPreview({
               </svg>
             </span>
           </div>
-          <span className="absolute top-2 left-1/2 z-10 h-[26px] w-[32%] -translate-x-1/2 rounded-full bg-black" />
+          <span className="absolute top-2 left-1/2 z-10 h-6.5 w-[32%] -translate-x-1/2 rounded-full bg-npf-glass" />
 
           <div className="@container absolute inset-0 flex flex-col bg-npf-mist text-npf-ink">
             <div className="bg-npf-blue px-[6cqw] pt-[calc(42px+3cqw)] pb-[12cqw] text-white">
@@ -109,7 +109,7 @@ export default function AppPreview({
                   <BellIcon className="size-[4.6cqw]" />
                 </span>
               </div>
-              <p className="mt-[6cqw] font-secondary text-[6.6cqw] leading-tight font-bold tracking-[-0.02em]">
+              <p className="mt-[6cqw] font-secondary text-[6.6cqw] leading-tight font-bold tracking-tight">
                 {t("How can we help?")}
               </p>
             </div>
@@ -142,7 +142,7 @@ export default function AppPreview({
                   {services.slice(0, 4).map((service) => (
                     <li
                       key={service.title}
-                      className="flex flex-col gap-[2cqw] rounded-[3.4cqw] bg-white p-[3.2cqw] ring-1 ring-npf-ink/5"
+                      className="flex flex-col gap-[2cqw] rounded-[3.4cqw] bg-white p-[3.2cqw] ring-1 ring-npf-hairline"
                     >
                       <span className="relative block size-[9cqw]">
                         <Image
@@ -169,7 +169,7 @@ export default function AppPreview({
                   sizes="300px"
                   className="object-cover"
                 />
-                <span className="absolute inset-0 flex flex-col justify-end bg-[linear-gradient(to_top,rgb(10_21_38/0.9),transparent_70%)] p-[3.2cqw] text-white">
+                <span className="absolute inset-0 flex flex-col justify-end bg-[linear-gradient(to_top,color-mix(in_srgb,var(--color-npf-night)_90%,transparent),transparent_70%)] p-[3.2cqw] text-white">
                   <span className="text-[2.6cqw] font-semibold text-npf-gold-soft">
                     {t("News")}
                   </span>
@@ -181,7 +181,7 @@ export default function AppPreview({
             </div>
 
             {/* Tab bar, clear of the home indicator. */}
-            <div className="grid grid-cols-4 border-t border-npf-ink/8 bg-white px-[3cqw] pt-[2.6cqw] pb-[7cqw] text-[2.5cqw] font-semibold text-npf-muted">
+            <div className="grid grid-cols-4 border-t border-npf-hairline bg-white px-[3cqw] pt-[2.6cqw] pb-[7cqw] text-[2.5cqw] font-semibold text-npf-muted">
               {[
                 { label: t("Home"), Icon: ShieldIcon, on: true },
                 { label: t("Services"), Icon: ServicesIcon },
@@ -209,11 +209,11 @@ export default function AppPreview({
           start side, clear of the news headline. */}
       <div
         {...reveal(4)}
-        className="absolute bottom-[19%] -left-[18%] z-10 w-[240px] rounded-card bg-white p-4 text-npf-ink shadow-raised sm:-left-[34%] sm:w-[256px] lg:-left-[40%] xl:-left-[44%]"
+        className="absolute bottom-[19%] -left-[18%] z-10 w-60 rounded-card bg-white p-4 text-npf-ink shadow-raised sm:-left-[34%] sm:w-64 lg:-left-[40%] xl:-left-[44%]"
       >
         <div className="flex items-center gap-3">
           <span className="grid size-9 shrink-0 place-items-center rounded-[10px] bg-npf-blue/10 text-npf-blue">
-            <FileIcon className="size-[18px]" />
+            <FileIcon className="size-4.5" />
           </span>
           <span className="flex min-w-0 flex-col">
             <span className="text-xs text-npf-muted">{t("Your request")}</span>

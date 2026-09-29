@@ -33,7 +33,7 @@ export default function AccountLink({
         className={`inline-flex items-center gap-2 rounded-full bg-npf-blue font-medium whitespace-nowrap text-white transition-colors hover:bg-npf-blue-mid ${shape}`}
       >
         {t("Sign In")}
-        <UserCircle className="size-[18px]" />
+        <UserCircle className="size-4.5" />
       </Link>
     );
 
@@ -47,7 +47,7 @@ export default function AccountLink({
       onClick={onNavigate}
       className={`inline-flex items-center gap-2 rounded-full bg-npf-blue font-medium whitespace-nowrap text-white transition-colors hover:bg-npf-blue-mid ${shape}`}
     >
-      <UserCircle className="size-[18px]" />
+      <UserCircle className="size-4.5" />
       {session.role === "officer" ? t("Console") : first}
     </Link>
   );

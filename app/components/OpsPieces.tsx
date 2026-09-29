@@ -162,10 +162,10 @@ export function OpsPanel({
          * nothing leading; the weight step does the work instead.
          */
         <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-ops-line-soft px-4 py-3">
-          <h2 className="flex items-center gap-2 font-secondary text-title leading-none font-bold tracking-[-0.01em]">
+          <h2 className="flex items-center gap-2 font-secondary text-title leading-none font-bold tracking-tight">
             {t(title)}
             {count !== undefined ? (
-              <span className="rounded bg-ops-raised px-1.5 py-0.5 font-primary text-2xs leading-tight font-medium text-ops-dim tabular-nums">
+              <span className="rounded-chip bg-ops-raised px-1.5 py-0.5 font-primary text-2xs leading-tight font-medium text-ops-dim tabular-nums">
                 {count}
               </span>
             ) : null}
@@ -256,7 +256,7 @@ export function OpsHead({
      */
     <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
       <div className="min-w-0">
-        <h1 className="font-secondary text-stat leading-tight font-bold tracking-[-0.015em]">
+        <h1 className="font-secondary text-stat leading-tight font-bold tracking-tight">
           {title}
         </h1>
         <p className="mt-1 max-w-[70ch] text-meta leading-relaxed text-ops-dim">
@@ -302,7 +302,7 @@ export function OpsSearch({
      * white box — a control sized by what was left over rather than by what
      * anyone types into it.
      */
-    <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-chip border border-ops-line bg-ops-panel px-3 transition-colors sm:max-w-[340px] focus-within:border-ops-accent focus-within:ring-2 focus-within:ring-ops-accent/15">
+    <div className="flex min-w-50 flex-1 items-center gap-2 rounded-chip border border-ops-line bg-ops-panel px-3 transition-colors sm:max-w-85 focus-within:border-ops-accent focus-within:ring-2 focus-within:ring-ops-accent/15">
       <SearchIcon
         aria-hidden
         className="size-4 shrink-0 text-ops-dim"
@@ -388,7 +388,7 @@ export function OpsStatus({ status }: { status: Incident["status"] }) {
   const t = useT();
   return (
     <span
-      className={`inline-flex shrink-0 items-center rounded px-2 py-0.5 text-xs font-medium whitespace-nowrap ${CALL_TONE[status]}`}
+      className={`inline-flex shrink-0 items-center rounded-chip px-2 py-0.5 text-xs font-medium whitespace-nowrap ${CALL_TONE[status]}`}
     >
       {t(CALL_LABEL[status])}
     </span>
@@ -406,7 +406,7 @@ export function UnitStatusTag({ status }: { status: UnitStatus }) {
   const t = useT();
   return (
     <span
-      className={`inline-flex shrink-0 items-center rounded px-2 py-0.5 text-xs font-medium whitespace-nowrap ${UNIT_TONE[status]}`}
+      className={`inline-flex shrink-0 items-center rounded-chip px-2 py-0.5 text-xs font-medium whitespace-nowrap ${UNIT_TONE[status]}`}
     >
       {t(status)}
     </span>
@@ -453,11 +453,11 @@ export function Readout({
           : undefined
       }
     >
-      <dt className="text-2xs font-medium tracking-[0.12em] text-ops-dim uppercase">
+      <dt className="text-2xs font-medium tracking-kicker text-ops-dim uppercase">
         {t(label)}
       </dt>
       <dd
-        className="mt-2 font-secondary text-figure leading-none font-bold tracking-[-0.02em] tabular-nums"
+        className="mt-2 font-secondary text-figure leading-none font-bold tracking-tight tabular-nums"
         style={tone ? { color: tone } : undefined}
       >
         {value}
@@ -484,7 +484,7 @@ export function OpsButton({
 }) {
   const tones = {
     brand:
-      "bg-ops-brand text-white shadow-[0_1px_2px_rgba(16,42,82,0.25)] hover:bg-ops-brand-lift disabled:opacity-40 disabled:shadow-none",
+      "bg-ops-brand text-white shadow-card hover:bg-ops-brand-lift disabled:opacity-40 disabled:shadow-none",
     quiet:
       "border border-ops-line bg-ops-panel text-ops-text hover:border-ops-accent hover:bg-ops-raised disabled:opacity-40",
     danger:

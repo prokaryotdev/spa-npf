@@ -31,10 +31,10 @@ export default function Error({
       <Header solid />
       <main id="main-content" tabIndex={-1} className="outline-none">
         <div className="relative overflow-hidden bg-white pt-40 pb-24 md:pt-48">
-          <div className="pointer-events-none absolute top-0 right-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 md:size-[1000px] md:opacity-60" />
+          <div className="pointer-events-none absolute top-0 right-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 md:size-250 md:opacity-60" />
 
           <div className="npf-container relative">
-            <h1 className="font-secondary text-4xl leading-[1.15] font-bold text-npf-blue-deep lg:text-7xl">
+            <h1 className="font-secondary text-4xl leading-display font-bold text-npf-blue-deep lg:text-7xl">
               {t("Something went wrong")}
             </h1>
             <p className="mt-5 max-w-[70ch] text-base text-npf-body md:text-xl">
@@ -52,7 +52,7 @@ export default function Error({
               </button>
               <Link
                 href="/"
-                className="inline-flex items-center rounded-full bg-npf-cloud px-6 py-3 font-medium text-npf-blue-ink ring-1 ring-black/5 transition-colors hover:bg-npf-chip"
+                className="inline-flex items-center rounded-full bg-npf-cloud px-6 py-3 font-medium text-npf-blue-ink ring-1 ring-npf-hairline transition-colors hover:bg-npf-chip"
               >
                 {t("Back to home")}
               </Link>

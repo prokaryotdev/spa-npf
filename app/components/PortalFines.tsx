@@ -88,7 +88,7 @@ export default function PortalFines() {
               return (
                 <li
                   key={fine.id}
-                  className="rounded-card px-5 py-4 ring-1 ring-black/[0.07]"
+                  className="rounded-card px-5 py-4 ring-1 ring-npf-hairline"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div className="min-w-0 flex-1">
@@ -154,7 +154,7 @@ export default function PortalFines() {
           <h3 className="mb-4 font-secondary text-lg font-bold text-npf-ink">
             {t("Paid")}
           </h3>
-          <ul className="divide-y divide-black/[0.07] rounded-card bg-npf-paper px-5">
+          <ul className="divide-y divide-npf-hairline rounded-card bg-npf-paper px-5">
             {paid.map((fine) => (
               <li
                 key={fine.id}

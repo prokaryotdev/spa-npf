@@ -44,7 +44,7 @@ export default function PortalDocuments() {
           {issued.map((doc) => (
             <li
               key={doc.id}
-              className="flex flex-wrap items-center gap-4 rounded-card px-5 py-4 ring-1 ring-black/[0.07]"
+              className="flex flex-wrap items-center gap-4 rounded-card px-5 py-4 ring-1 ring-npf-hairline"
             >
               <span className="grid size-11 shrink-0 place-items-center rounded-chip bg-npf-cloud text-npf-blue-ink">
                 <FileIcon className="size-5" />
@@ -69,7 +69,7 @@ export default function PortalDocuments() {
                 type="button"
                 disabled
                 title={t("Downloads are not available in this rebuild")}
-                className="inline-flex shrink-0 cursor-not-allowed items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-muted ring-1 ring-black/10"
+                className="inline-flex shrink-0 cursor-not-allowed items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-muted ring-1 ring-npf-hairline"
               >
                 <DownloadIcon aria-hidden className="size-4" />
                 {t("Download")}

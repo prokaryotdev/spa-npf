@@ -48,14 +48,14 @@ export default function PortalRequests() {
       </h2>
 
       <div className="mb-6 flex flex-wrap items-end gap-4">
-        <div className="min-w-[220px] flex-1">
+        <div className="min-w-55 flex-1">
           <label
             htmlFor={`${id}-q`}
             className="mb-1.5 block text-sm font-medium text-npf-ink"
           >
             {t("Find a request")}
           </label>
-          <div className="flex items-center gap-3 rounded-chip bg-npf-cloud px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-npf-blue">
+          <div className="flex items-center gap-3 rounded-chip bg-npf-cloud px-4 ring-1 ring-npf-hairline focus-within:ring-2 focus-within:ring-npf-blue">
             <SearchIcon
               aria-hidden
               className="size-5 shrink-0 text-npf-blue-ink"
@@ -81,7 +81,7 @@ export default function PortalRequests() {
             id={`${id}-s`}
             value={status}
             onChange={(e) => setStatus(e.target.value as RequestStatus | "All")}
-            className="rounded-chip bg-npf-cloud px-4 py-3 text-base text-npf-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-npf-blue"
+            className="rounded-chip bg-npf-cloud px-4 py-3 text-base text-npf-ink ring-1 ring-npf-hairline outline-none focus:ring-2 focus:ring-npf-blue"
           >
             {FILTERS.map((f) => (
               <option key={f} value={f}>
@@ -131,7 +131,7 @@ export default function PortalRequests() {
           return (
             <li
               key={request.id}
-              className="overflow-hidden rounded-card ring-1 ring-black/[0.07]"
+              className="overflow-hidden rounded-card ring-1 ring-npf-hairline"
             >
               <h3>
                 <button
@@ -166,7 +166,7 @@ export default function PortalRequests() {
               {open ? (
                 <div
                   id={`${id}-${request.id}`}
-                  className="border-t border-black/[0.07] px-5 py-5"
+                  className="border-t border-npf-hairline px-5 py-5"
                 >
                   {request.note ? (
                     <p className="mb-4 rounded-chip bg-npf-gold-wash px-4 py-3 text-sm leading-relaxed text-npf-warn">
@@ -182,7 +182,7 @@ export default function PortalRequests() {
                     {/* The rail is drawn once behind the dots, not per row. */}
                     <span
                       aria-hidden
-                      className="absolute top-2 bottom-2 start-[5px] w-px bg-black/20"
+                      className="absolute top-2 bottom-2 start-[5px] w-px bg-npf-line"
                     />
                     {request.timeline
                       .slice()
@@ -191,8 +191,8 @@ export default function PortalRequests() {
                         <li key={step.at + step.label} className="relative">
                           <span
                             aria-hidden
-                            className={`absolute top-1.5 -start-6 size-[11px] rounded-full ring-4 ring-white ${
-                              i === 0 ? "bg-npf-blue" : "bg-black/20"
+                            className={`absolute top-1.5 -start-6 size-2.75 rounded-full ring-4 ring-white ${
+                              i === 0 ? "bg-npf-blue" : "bg-npf-line"
                             }`}
                           />
                           <p className="font-medium text-npf-ink">
@@ -213,14 +213,14 @@ export default function PortalRequests() {
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link
                       href={`/app/services/${request.slug}`}
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-black/10 transition-colors hover:bg-black/[0.04]"
+                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-npf-hairline transition-colors hover:bg-npf-cloud"
                     >
                       {t("About this service")}
                       <ArrowRight aria-hidden className="size-4" />
                     </Link>
                     <Link
                       href="/app/home/contactUs"
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-black/10 transition-colors hover:bg-black/[0.04]"
+                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-npf-hairline transition-colors hover:bg-npf-cloud"
                     >
                       {t("Ask about it")}
                     </Link>

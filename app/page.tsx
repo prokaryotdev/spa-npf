@@ -53,7 +53,7 @@ function SectionHead({
           <Link href={action.href} className="npf-btn npf-btn-primary mt-6">
             {action.label}
             <span className="npf-btn-disc">
-              <ArrowRight className="npf-arrow size-[18px] rtl:-scale-x-100" />
+              <ArrowRight className="npf-arrow size-4.5 rtl:-scale-x-100" />
             </span>
           </Link>
         ) : null}
@@ -90,12 +90,12 @@ export default async function Home() {
             page below. */}
         <section
           aria-labelledby="quick-services"
-          className="relative -mt-px border-b border-npf-blue/15 bg-linear-to-b from-black to-npf-night pt-2 pb-(--npf-head-gap) lg:pb-0"
+          className="relative -mt-px border-b border-npf-blue/15 bg-npf-night pt-2 pb-(--npf-head-gap) lg:pb-0"
         >
           <h2 id="quick-services" className="sr-only">
             {t("Popular services")}
           </h2>
-          <ul className="npf-container mb-0.5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-2 xl:w-[90%] xl:max-w-[1620px]">
+          <ul className="npf-container mb-0.5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-2 xl:w-[90%] xl:max-w-405">
             {quickServices.map((service, i) => (
               <li
                 key={service.title}
@@ -104,7 +104,7 @@ export default async function Home() {
               >
                 <Link
                   href={service.href}
-                  className="npf-card group flex flex-col items-center px-4 pt-6 pb-5 text-center focus-visible:outline-offset-4 focus-visible:outline-npf-gold-soft md:px-5 md:pt-7 md:pb-6 lg:min-h-[242px] lg:rounded-b-none lg:pt-8 lg:pb-10 lg:shadow-none"
+                  className="npf-card group flex flex-col items-center px-4 pt-6 pb-5 text-center focus-visible:outline-offset-4 focus-visible:outline-npf-gold-soft md:px-5 md:pt-7 md:pb-6 lg:min-h-60.5 lg:rounded-b-none lg:pt-8 lg:pb-10 lg:shadow-none"
                 >
                   <span className="relative block size-14 shrink-0 transition-[scale] duration-(--dur-hover) ease-(--ease-out) group-hover:scale-110">
                     <Image
@@ -118,7 +118,7 @@ export default async function Home() {
                   {/* Two lines tall whatever the title (three on the narrow five-up
                       row, where the longest title needs it), so a one-line title and
                       a two-line one start their text on the same line. */}
-                  <span className="npf-h5 mt-4 flex min-h-[2lh] text-[1rem] items-center lg:max-[1400px]:min-h-[3lh] justify-center text-balance text-npf-ink">
+                  <span className="npf-h5 mt-4 flex min-h-[2lh] text-base/snug items-center lg:max-[1400px]:min-h-[3lh] justify-center text-balance text-npf-ink">
                     {service.title}
                   </span>
                   <span className="npf-small mt-2 hidden max-w-[24ch] font-normal text-pretty text-npf-steel sm:block">
@@ -197,7 +197,7 @@ export default async function Home() {
             thing to look at. The blue deepens toward night away from it. */}
         <section
           aria-labelledby="app"
-          className="npf-section relative isolate overflow-hidden bg-npf-blue bg-[radial-gradient(55%_75%_at_78%_45%,rgb(44_95_168/0.9),transparent_70%),linear-gradient(160deg,var(--color-npf-blue)_0%,var(--color-npf-blue-deep)_55%,var(--color-npf-night)_100%)] text-white"
+          className="npf-section relative isolate overflow-hidden bg-npf-blue bg-[radial-gradient(55%_75%_at_78%_45%,color-mix(in_srgb,var(--color-npf-blue-mid)_90%,transparent),transparent_70%),linear-gradient(160deg,var(--color-npf-blue)_0%,var(--color-npf-blue-deep)_55%,var(--color-npf-night)_100%)] text-white"
         >
           <div className="npf-container relative grid items-center gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-12">
             <div>
@@ -216,7 +216,7 @@ export default async function Home() {
               >
                 {appPerks.map(({ Icon, label }) => (
                   <li key={label} className="npf-body flex items-center gap-4 py-4 font-semibold">
-                    <Icon className="size-[22px] shrink-0 text-npf-gold-soft" />
+                    <Icon className="size-5.5 shrink-0 text-npf-gold-soft" />
                     {label}
                   </li>
                 ))}

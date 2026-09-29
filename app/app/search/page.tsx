@@ -33,7 +33,7 @@ export default async function SearchPage({
     >
       <section className="bg-white pb-24">
         <div className="npf-container">
-          <div className="max-w-[680px]">
+          <div className="max-w-170">
             <ServiceSearch
               key={query}
               variant="panel"
@@ -66,7 +66,7 @@ export default async function SearchPage({
             </p>
           ) : null}
 
-          <ul className="mt-8 max-w-[80ch] divide-y divide-black/10">
+          <ul className="mt-8 max-w-[80ch] divide-y divide-npf-hairline">
             {results.map((hit) => (
               <li key={hit.section + hit.title + hit.href}>
                 <Link

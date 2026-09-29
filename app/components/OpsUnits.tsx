@@ -159,7 +159,7 @@ export default function OpsUnits() {
               "Units on duty, with status, elapsed time in that status, and the call they are assigned to",
             )}
           </caption>
-          <thead className="npf-ops-thead text-2xs font-medium tracking-[0.08em] text-ops-dim uppercase">
+          <thead className="npf-ops-thead text-2xs font-medium tracking-kicker text-ops-dim uppercase">
             <tr>
               <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
                 {t("Callsign")}

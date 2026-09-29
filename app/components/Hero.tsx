@@ -107,7 +107,7 @@ export default function Hero() {
   const slide = heroSlides[index];
 
   return (
-    <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-black">
+    <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-npf-night">
       {heroSlides.map((s, i) =>
         !shown.includes(i) ? null : (
           <div
@@ -147,25 +147,25 @@ export default function Hero() {
         photograph out completely. They are now eased black stops sized to the
         thing each one actually protects, and the slide shows between them.
       */}
-      <span className="pointer-events-none absolute top-0 left-0 z-[1] h-[240px] w-full bg-[linear-gradient(to_bottom,rgba(0,0,0,0.72),rgba(0,0,0,0.60)_14%,rgba(0,0,0,0.44)_30%,rgba(0,0,0,0.28)_48%,rgba(0,0,0,0.15)_64%,rgba(0,0,0,0.06)_80%,rgba(0,0,0,0)_100%)]" />
+      <span className="pointer-events-none absolute top-0 left-0 z-[1] h-60 w-full bg-[linear-gradient(to_bottom,color-mix(in_srgb,var(--color-npf-night)_72%,transparent),color-mix(in_srgb,var(--color-npf-night)_60%,transparent)_14%,color-mix(in_srgb,var(--color-npf-night)_44%,transparent)_30%,color-mix(in_srgb,var(--color-npf-night)_28%,transparent)_48%,color-mix(in_srgb,var(--color-npf-night)_15%,transparent)_64%,color-mix(in_srgb,var(--color-npf-night)_6%,transparent)_80%,color-mix(in_srgb,var(--color-npf-night)_0%,transparent)_100%)]" />
 
       {/*
         Cinema vignette: pulls the eye to the middle of the slide and stops the
         corners competing with the wordmark and the controls.
       */}
-      <span className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_88%_72%_at_50%_40%,transparent_32%,rgba(0,0,0,0.10)_52%,rgba(0,0,0,0.24)_70%,rgba(0,0,0,0.42)_86%,rgba(0,0,0,0.58))]" />
+      <span className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_88%_72%_at_50%_40%,transparent_32%,color-mix(in_srgb,var(--color-npf-night)_10%,transparent)_52%,color-mix(in_srgb,var(--color-npf-night)_24%,transparent)_70%,color-mix(in_srgb,var(--color-npf-night)_42%,transparent)_86%,color-mix(in_srgb,var(--color-npf-night)_58%,transparent))]" />
 
       {/* Dims and blurs the slideshow while the search panel is open. */}
       <div
         aria-hidden
-        className={`pointer-events-none absolute inset-0 z-[9] bg-black/50 backdrop-blur-lg transition-opacity duration-(--dur-media) ${
+        className={`pointer-events-none absolute inset-0 z-[9] bg-npf-night/50 backdrop-blur-lg transition-opacity duration-(--dur-media) ${
           searching ? "opacity-100" : "opacity-0"
         }`}
       />
 
       <div className="npf-hero-veil relative z-10 mt-auto w-full pt-24 pb-12 md:pb-6">
         <div className="npf-container">
-          <div className="mx-auto w-full max-w-[832px]">
+          <div className="mx-auto w-full max-w-208">
             {/* The page's one h1 names the site; the slide captions change
                 every six seconds, so they are not headings. While the show
                 runs they stay out of the screen reader's way, and once it is
@@ -179,16 +179,16 @@ export default function Hero() {
                 key={index}
                 className="animate-[reveal-up_var(--dur-media)_var(--ease-out)_both] self-end"
               >
-                <p className="npf-display text-white [text-shadow:0_2px_24px_rgb(0_0_0/0.6)]">
+                <p className="npf-display text-white [text-shadow:0_2px_24px_color-mix(in_srgb,var(--color-npf-night)_60%,transparent)]">
                   {slide.title}
                 </p>
-                <p className="npf-lede mt-3 text-balance text-white/90 [text-shadow:0_1px_16px_rgb(0_0_0/0.6)]">
+                <p className="npf-lede mt-3 text-balance text-white/90 [text-shadow:0_1px_16px_color-mix(in_srgb,var(--color-npf-night)_60%,transparent)]">
                   {slide.subtitle}
                 </p>
               </div>
             </div>
 
-            <div className="mx-auto mb-8 hidden max-w-[656px] lg:block">
+            <div className="mx-auto mb-8 hidden max-w-164 lg:block">
               <ServiceSearch
                 placement="up"
                 // Clear of the header band, which the hero cannot paint over.
@@ -298,7 +298,7 @@ export default function Hero() {
               }
               className="mx-auto hidden size-11 place-items-center md:grid"
             >
-              <span className="relative block h-6 w-[17px] rounded-full border-2 border-white/50">
+              <span className="relative block h-6 w-4.25 rounded-full border-2 border-white/50">
                 <span className="absolute top-[3px] left-1 size-[5px] animate-bob rounded-full bg-white" />
               </span>
             </button>

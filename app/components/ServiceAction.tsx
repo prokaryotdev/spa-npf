@@ -26,7 +26,7 @@ export default function ServiceAction({ service }: { service: Service }) {
     return (
       <span
         aria-hidden
-        className="block h-12 w-full animate-pulse rounded-full bg-black/[0.06]"
+        className="block h-12 w-full animate-pulse rounded-full bg-npf-cloud-deep"
       />
     );
 

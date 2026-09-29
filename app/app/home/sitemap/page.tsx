@@ -63,7 +63,7 @@ export default async function SitemapPage() {
         <div className="npf-container grid gap-10 md:grid-cols-2 xl:grid-cols-3">
           {groups.map((group, i) => (
             <div key={i}>
-              <h2 className="mb-4 border-b border-black/10 pb-3 font-secondary text-lg font-bold text-npf-blue-deep">
+              <h2 className="mb-4 border-b border-npf-hairline pb-3 font-secondary text-lg font-bold text-npf-blue-deep">
                 {t(group.heading)}
                 {group.count ? ` (${group.count})` : null}
               </h2>

@@ -24,13 +24,13 @@ export default async function SearchLoading() {
       <section className="bg-white pb-24" aria-busy="true" aria-live="polite">
         <div className="npf-container">
           <span className="sr-only">{t("Searching…")}</span>
-          <div className="h-[68px] max-w-[680px] animate-pulse rounded-card bg-npf-cloud" />
-          <ul className="mt-8 max-w-[80ch] divide-y divide-black/10">
+          <div className="h-17 max-w-170 animate-pulse rounded-card bg-npf-cloud" />
+          <ul className="mt-8 max-w-[80ch] divide-y divide-npf-hairline">
             {[0, 1, 2, 3, 4].map((i) => (
               <li key={i} className="py-5">
-                <div className="h-3 w-24 animate-pulse rounded bg-black/[0.06]" />
-                <div className="mt-2 h-5 w-2/3 animate-pulse rounded bg-black/[0.08]" />
-                <div className="mt-2 h-4 w-1/2 animate-pulse rounded bg-black/[0.05]" />
+                <div className="h-3 w-24 animate-pulse rounded-chip bg-npf-cloud-deep" />
+                <div className="mt-2 h-5 w-2/3 animate-pulse rounded-chip bg-npf-cloud-deep" />
+                <div className="mt-2 h-4 w-1/2 animate-pulse rounded-chip bg-npf-cloud" />
               </li>
             ))}
           </ul>
