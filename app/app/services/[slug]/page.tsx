@@ -75,7 +75,12 @@ export default async function ServicePage({
   // Documents with their own sub-list stand as groups; bare ones ("CV",
   // "passport") read better as one checklist than as twelve headed boxes.
   const docGroups = service.documents.filter((d) => d.items.length);
-  const docList = service.documents.filter((d) => !d.items.length);
+  // The CMS lists some permits twice; one tick per thing is enough.
+  const docList = [
+    ...new Set(
+      service.documents.filter((d) => !d.items.length).map((d) => d.label),
+    ),
+  ];
   const delivery = splitDelivery(service.delivery);
 
   // The page's sections, in reading order. Only the ones with content are
@@ -227,26 +232,22 @@ export default async function ServicePage({
               ) : null}
             </aside>
 
-            <div className="min-w-0 space-y-16 lg:col-start-1 lg:row-start-1 lg:max-w-[46rem]">
+            <div className="min-w-0 lg:col-start-1 lg:row-start-1 lg:max-w-[46rem] [&>section+section]:mt-12 [&>section+section]:border-t [&>section+section]:border-npf-hairline [&>section+section]:pt-12">
               {service.documents.length ? (
                 <Section id="need" title={t("What you need")}>
                   {docGroups.map((doc) => (
-                    <div
-                      key={doc.label}
-                      className="border-t border-npf-hairline py-5 first-of-type:border-t-0 first-of-type:pt-0"
-                    >
-                      <p className="npf-body flex items-center gap-3 font-medium text-npf-ink">
+                    <div key={doc.label} className="not-first:mt-8">
+                      <p className="npf-body mb-2 flex items-center gap-3 font-medium text-npf-ink">
                         <FileIcon className="size-5 shrink-0 text-npf-blue" />
                         {doc.label}
                       </p>
-                      <Checklist items={doc.items} indent />
+                      <Checklist items={doc.items} />
                     </div>
                   ))}
                   {docList.length ? (
-                    <Checklist
-                      items={docList.map((d) => d.label)}
-                      bordered={docGroups.length > 0}
-                    />
+                    <div className={docGroups.length ? "mt-8" : ""}>
+                      <Checklist items={docList} />
+                    </div>
                   ) : null}
                 </Section>
               ) : null}
@@ -257,12 +258,12 @@ export default async function ServicePage({
                     {service.fees.map((fee) => (
                       <div
                         key={fee.label}
-                        className="flex items-baseline justify-between gap-6 px-5 py-3.5 not-first:border-t not-first:border-npf-hairline"
+                        className="flex items-baseline justify-between gap-6 px-5 py-4 not-first:border-t not-first:border-npf-hairline"
                       >
-                        <dt className="npf-small text-npf-body first-letter:uppercase">
+                        <dt className="npf-body text-npf-body first-letter:uppercase">
                           {fee.label}
                         </dt>
-                        <dd className="npf-small shrink-0 font-semibold text-npf-ink tabular-nums">
+                        <dd className="npf-body shrink-0 font-semibold text-npf-ink tabular-nums">
                           {fee.value}
                         </dd>
                       </div>
@@ -301,15 +302,15 @@ export default async function ServicePage({
 
               {delivery.length ? (
                 <Section id="receive" title={t("How you receive it")}>
-                  <ul className="grid gap-3">
+                  <ul className="divide-y divide-npf-hairline border-y border-npf-hairline">
                     {delivery.map((part) => {
                       const Icon = deliveryIcon(part.label);
                       return (
                         <li
                           key={part.label + part.text}
-                          className="flex gap-4 rounded-card bg-npf-paper p-5"
+                          className="flex gap-4 py-5"
                         >
-                          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white text-npf-blue shadow-card">
+                          <span className="grid size-10 shrink-0 place-items-center rounded-chip bg-npf-cloud text-npf-blue-ink">
                             <Icon className="size-5" />
                           </span>
                           <div className="min-w-0 pt-0.5">
@@ -318,7 +319,7 @@ export default async function ServicePage({
                                 {part.label}
                               </p>
                             ) : null}
-                            <p className="npf-small mt-0.5 text-npf-body">
+                            <p className="npf-body mt-1 text-npf-body">
                               {part.text}
                             </p>
                           </div>
@@ -331,32 +332,34 @@ export default async function ServicePage({
 
               {service.terms.length ? (
                 <Section id="terms" title={t("Terms and conditions")}>
-                  <ul className="space-y-3.5">
-                    {service.terms.map((term) => (
+                  {/* Rules, not a checklist: numbered so one can be quoted
+                      back ("term 4") at a counter or on a call. */}
+                  <ol className="divide-y divide-npf-hairline border-y border-npf-hairline">
+                    {service.terms.map((term, i) => (
                       <li
                         key={term}
-                        className="npf-body flex items-start gap-3.5 text-npf-body"
+                        className="npf-body flex items-baseline gap-4 py-4 text-npf-body"
                       >
-                        <span className="mt-[0.3em] grid size-5 shrink-0 place-items-center rounded-full bg-npf-chip text-npf-blue">
-                          <CheckIcon className="size-3" />
+                        <span className="w-6 shrink-0 font-secondary font-bold text-npf-blue tabular-nums">
+                          {i + 1}
                         </span>
                         {term}
                       </li>
                     ))}
-                  </ul>
+                  </ol>
                 </Section>
               ) : null}
 
               {service.channels.length || service.hours.length ? (
                 <Section id="where" title={t("Where to use it")}>
                   {service.channels.length ? (
-                    <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <ul className="grid gap-x-8 border-t border-npf-hairline sm:grid-cols-2">
                       {service.channels.map((channel) => {
                         const Icon = channelIcon(channel);
                         return (
                           <li
                             key={channel}
-                            className="npf-small flex min-h-14 items-center gap-3 rounded-card px-4 py-3 font-medium text-npf-ink ring-1 ring-npf-hairline ring-inset"
+                            className="npf-body flex min-h-14 items-center gap-3 border-b border-npf-hairline py-3 font-medium text-npf-ink"
                           >
                             <Icon className="size-5 shrink-0 text-npf-blue" />
                             {channel}
@@ -366,21 +369,21 @@ export default async function ServicePage({
                     </ul>
                   ) : null}
                   {service.hours.length ? (
-                    <div className={service.channels.length ? "mt-8" : ""}>
+                    <div className={service.channels.length ? "mt-10" : ""}>
                       <h3 className="npf-body flex items-center gap-2 font-medium text-npf-ink">
-                        <ClockIcon className="size-5 text-npf-steel" />
+                        <ClockIcon className="size-5 text-npf-blue" />
                         {t("Working hours")}
                       </h3>
-                      <dl className="mt-3 max-w-md">
+                      <dl className="mt-3 border-t border-npf-hairline sm:max-w-[calc(50%-1rem)]">
                         {service.hours.map((hour) => (
                           <div
                             key={hour.label}
                             className="flex items-baseline justify-between gap-4 border-b border-npf-hairline py-3"
                           >
-                            <dt className="npf-small text-npf-body">
+                            <dt className="npf-body text-npf-body">
                               {hour.label}
                             </dt>
-                            <dd className="npf-small shrink-0 font-semibold text-npf-ink tabular-nums">
+                            <dd className="npf-body shrink-0 font-semibold text-npf-ink tabular-nums">
                               {hour.value}
                             </dd>
                           </div>
@@ -393,7 +396,7 @@ export default async function ServicePage({
 
               {related.length ? (
                 <section aria-labelledby="related">
-                  <h2 id="related" className="npf-h4 text-npf-blue-deep">
+                  <h2 id="related" className="npf-h3 text-npf-blue-deep">
                     {t("Related services")}
                   </h2>
                   <ul className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -451,7 +454,7 @@ function Section({
 }) {
   return (
     <section id={id} aria-labelledby={`${id}-h`} className="scroll-mt-28">
-      <h2 id={`${id}-h`} className="npf-h4 mb-5 text-npf-blue-deep">
+      <h2 id={`${id}-h`} className="npf-h3 mb-6 text-npf-blue-deep">
         {title}
       </h2>
       {children}
@@ -459,25 +462,15 @@ function Section({
   );
 }
 
-function Checklist({
-  items,
-  indent = false,
-  bordered = false,
-}: {
-  items: string[];
-  indent?: boolean;
-  bordered?: boolean;
-}) {
+function Checklist({ items }: { items: string[] }) {
   return (
-    <ul
-      className={`grid gap-x-8 gap-y-2.5 sm:grid-cols-2 ${indent ? "mt-3 ps-8" : ""} ${bordered ? "border-t border-npf-hairline pt-5" : ""}`}
-    >
+    <ul className="grid gap-x-8 border-t border-npf-hairline sm:grid-cols-2">
       {items.map((item) => (
         <li
           key={item}
-          className="npf-small flex items-start gap-2.5 text-npf-body"
+          className="npf-body flex items-start gap-3 border-b border-npf-hairline py-3 text-npf-ink"
         >
-          <CheckIcon className="mt-[0.2em] size-4 shrink-0 text-npf-blue" />
+          <CheckIcon className="mt-[0.3em] size-4 shrink-0 text-npf-blue" />
           <span className="first-letter:uppercase">{item}</span>
         </li>
       ))}
