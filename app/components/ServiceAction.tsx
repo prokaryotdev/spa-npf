@@ -26,7 +26,7 @@ export default function ServiceAction({ service }: { service: Service }) {
     return (
       <span
         aria-hidden
-        className="block h-[52px] w-full animate-pulse rounded-full bg-black/[0.06]"
+        className="block h-12 w-full animate-pulse rounded-full bg-black/[0.06]"
       />
     );
 
@@ -35,25 +35,29 @@ export default function ServiceAction({ service }: { service: Service }) {
       <>
         <Link
           href={`/app/signin?next=${encodeURIComponent(`/app/services/${service.slug}`)}`}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-npf-blue px-6 py-3.5 font-medium text-white transition-colors hover:bg-npf-blue-mid"
+          className="npf-btn npf-btn-primary w-full ps-6 hover:bg-npf-blue-mid"
         >
-          <UserCircle className="size-5" />
+          <UserCircle className="size-5 shrink-0" />
           {t("Sign in to {action}", {
             action: t(service.action).toLowerCase(),
           })}
-          <ArrowRight className="size-4" />
+          <span className="npf-btn-disc ms-auto">
+            <ArrowRight className="size-4 rtl:-scale-x-100" />
+          </span>
         </Link>
-        <p className="mt-3 text-center text-xs text-npf-steel">
-          {t("Takes about {turnaround} once submitted", {
-            turnaround: t(service.turnaround).toLowerCase(),
-          })}
+        <p className="npf-small mt-3 text-center text-npf-steel">
+          {t(service.turnaround) === t("Instant")
+            ? t("Done as soon as you submit")
+            : t("Takes about {turnaround} once submitted", {
+                turnaround: t(service.turnaround).toLowerCase(),
+              })}
         </p>
       </>
     );
 
   if (justFiled)
     return (
-      <div className="rounded-2xl bg-white p-5 text-center ring-1 ring-npf-blue/25">
+      <div className="rounded-card bg-npf-mist p-5 text-center transition-[opacity,scale] duration-(--dur-media) ease-(--ease-out) starting:scale-[0.97] starting:opacity-0">
         <CheckCircle aria-hidden className="mx-auto size-8 text-npf-blue" />
         <p className="mt-2 font-secondary text-base font-bold text-npf-blue-deep">
           {t("Request opened")}
@@ -67,10 +71,12 @@ export default function ServiceAction({ service }: { service: Service }) {
         </p>
         <Link
           href="/app/portal/requests"
-          className="mt-4 inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
+          className="npf-btn npf-btn-primary mt-4 hover:bg-npf-blue-mid"
         >
           {t("Track it")}
-          <ArrowRight className="size-4" />
+          <span className="npf-btn-disc">
+            <ArrowRight className="size-4 rtl:-scale-x-100" />
+          </span>
         </Link>
       </div>
     );
@@ -80,12 +86,14 @@ export default function ServiceAction({ service }: { service: Service }) {
       <>
         <Link
           href="/app/portal/requests"
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-npf-blue px-6 py-3.5 font-medium text-white transition-colors hover:bg-npf-blue-mid"
+          className="npf-btn npf-btn-primary w-full ps-6 hover:bg-npf-blue-mid"
         >
           {t("Open request {ref}", { ref: existing.id })}
-          <ArrowRight className="size-4" />
+          <span className="npf-btn-disc ms-auto">
+            <ArrowRight className="size-4 rtl:-scale-x-100" />
+          </span>
         </Link>
-        <p className="mt-3 text-center text-xs text-npf-steel">
+        <p className="npf-small mt-3 text-center text-npf-steel">
           {t("You already have this open — status: {status}", {
             status: t(existing.status).toLowerCase(),
           })}
@@ -106,12 +114,14 @@ export default function ServiceAction({ service }: { service: Service }) {
             }).id,
           )
         }
-        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-npf-blue px-6 py-3.5 font-medium text-white transition-colors hover:bg-npf-blue-mid"
+        className="npf-btn npf-btn-primary w-full ps-6 hover:bg-npf-blue-mid"
       >
         {service.action}
-        <ArrowRight className="size-4" />
+        <span className="npf-btn-disc ms-auto">
+          <ArrowRight className="size-4 rtl:-scale-x-100" />
+        </span>
       </button>
-      <p className="mt-3 text-center text-xs text-npf-steel">
+      <p className="npf-small mt-3 text-center text-npf-steel">
         {service.feeSummary === t("Free of Charge")
           ? t("No fee")
           : t("{fee} payable on approval", { fee: service.feeSummary })}{" "}

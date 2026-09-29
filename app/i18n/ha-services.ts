@@ -95,6 +95,7 @@ export const haServices: Record<string, string> = {
   Fees: "Kuɗi",
   Duration: "Tsawon lokaci",
   Payable: "Abin biya",
+  "Payment methods": "Hanyoyin biya",
   "Processed in {turnaround}": "Ana gudanar da shi cikin {turnaround}",
   "Takes about {turnaround} once submitted":
     "Yana ɗaukar kimanin {turnaround} bayan an gabatar",
@@ -102,6 +103,7 @@ export const haServices: Record<string, string> = {
   "No fee": "Babu kuɗi",
   "No Documents Required": "Ba a Buƙatar Takardu",
   Instant: "Nan take",
+  "Done as soon as you submit": "Ana kammalawa da zarar ka gabatar",
   "1 Working Day": "Ranar Aiki 1",
   "2 Working Days": "Ranakun Aiki 2",
   "3 Working Days": "Ranakun Aiki 3",
