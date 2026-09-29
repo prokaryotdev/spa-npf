@@ -86,7 +86,7 @@ export default function PortalShell({
                   <div className="flex flex-wrap items-center gap-3">
                     <Link
                       href="/app/services"
-                      className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
+                      className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
                     >
                       <PlusIcon aria-hidden className="size-4" />
                       {t("New request")}
@@ -97,7 +97,7 @@ export default function PortalShell({
                         signOut();
                         router.push("/app/home");
                       }}
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-npf-hairline transition-colors hover:bg-npf-cloud"
+                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-npf-hairline transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-cloud"
                     >
                       <SignOutIcon aria-hidden className="size-4" />
                       {t("Sign out")}
@@ -122,7 +122,7 @@ export default function PortalShell({
                   </span>
                 </p>
 
-                <div className="grid gap-8 lg:grid-cols-[240px_1fr] lg:gap-12">
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-[240px_1fr] lg:gap-12">
                   <nav
                     aria-label={t("Account")}
                     className="lg:sticky lg:top-28 lg:self-start"
@@ -177,7 +177,7 @@ function Loading() {
     <div aria-hidden className="animate-pulse">
       <div className="h-4 w-24 rounded-chip bg-npf-cloud-deep" />
       <div className="mt-3 h-10 w-72 rounded-chip bg-npf-cloud-deep" />
-      <div className="mt-10 grid gap-8 lg:grid-cols-[240px_1fr] lg:gap-12">
+      <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-[240px_1fr] lg:gap-12">
         <div className="space-y-2">
           {[0, 1, 2, 3, 4].map((i) => (
             <div key={i} className="h-10 rounded-chip bg-npf-cloud" />

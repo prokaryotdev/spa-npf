@@ -256,7 +256,7 @@ export default function ServiceSearch({
         {trimmed ? (
           <button
             type="submit"
-            className="my-2 shrink-0 rounded-chip bg-npf-blue px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
+            className="my-2 shrink-0 rounded-chip bg-npf-blue px-4 py-2 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
           >
             {t("Search")}
           </button>

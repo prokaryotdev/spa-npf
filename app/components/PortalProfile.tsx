@@ -83,7 +83,7 @@ export default function PortalProfile() {
 
         <button
           type="submit"
-          className="self-start rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-colors hover:bg-npf-blue-mid"
+          className="self-start rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
         >
           {t("Save changes")}
         </button>

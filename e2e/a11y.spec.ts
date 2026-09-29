@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { PORTAL_PAGES, signIn } from "./sign-in";
 
 /**
  * WCAG 2.1 A and AA, on every kind of page, in both languages.
@@ -66,6 +67,18 @@ for (const lang of ["en", "ha"] as const) {
       test(`${name} has no WCAG violations`, async ({ page }) => {
         await page.goto(`/${lang}${path === "/" ? "" : path}`);
         // The catalogue and the tables render their rows on the client.
+        await page.waitForLoadState("networkidle");
+        const results = await scan(page);
+        expect(describe(results), describe(results)).toBe("");
+      });
+    }
+
+    // Behind sign-in, so the public list above never reached them: the
+    // portal's notice dates shipped under 4.5:1 without a test noticing.
+    for (const [name, path] of PORTAL_PAGES) {
+      test(`${name} has no WCAG violations`, async ({ page }) => {
+        await signIn(page);
+        await page.goto(`/${lang}${path}`);
         await page.waitForLoadState("networkidle");
         const results = await scan(page);
         expect(describe(results), describe(results)).toBe("");

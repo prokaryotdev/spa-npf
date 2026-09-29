@@ -164,7 +164,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Link
               href="/app/portal"
-              className="rounded-full bg-ops-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-ops-brand-lift"
+              className="rounded-full bg-ops-brand px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-ops-brand-lift"
             >
               {t("Go to my account")}
             </Link>
@@ -174,7 +174,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
                 signOut();
                 router.push("/app/signin?next=/app/police");
               }}
-              className="rounded-full px-5 py-2.5 text-sm font-medium ring-1 ring-ops-line transition-colors hover:bg-ops-raised"
+              className="rounded-full px-5 py-2.5 text-sm font-medium ring-1 ring-ops-line transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-ops-raised"
             >
               {t("Sign in as an officer")}
             </button>

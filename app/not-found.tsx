@@ -27,7 +27,7 @@ export default async function NotFound() {
         <div className="npf-container flex flex-wrap gap-3">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-colors hover:bg-npf-blue-mid"
+            className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
           >
             {t("Back to home")}
             <ArrowRight className="size-4" />
@@ -36,7 +36,7 @@ export default async function NotFound() {
             <Link
               key={link.href}
               href={link.href}
-              className="inline-flex items-center rounded-full bg-npf-cloud px-6 py-3 font-medium text-npf-blue-ink ring-1 ring-npf-hairline transition-colors hover:bg-npf-chip"
+              className="inline-flex items-center rounded-full bg-npf-cloud px-6 py-3 font-medium text-npf-blue-ink ring-1 ring-npf-hairline transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-chip"
             >
               {t(link.label)}
             </Link>

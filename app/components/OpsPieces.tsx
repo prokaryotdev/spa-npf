@@ -463,12 +463,12 @@ export function Readout({
         {value}
       </dd>
       {note ? (
-        <p
+        <dd
           className="mt-1.5 text-2xs leading-tight"
           style={{ color: tone ? tone : "var(--ops-dim)" }}
         >
           {t(note)}
-        </p>
+        </dd>
       ) : null}
     </div>
   );
@@ -500,7 +500,7 @@ export function OpsButton({
     <button
       type="button"
       {...props}
-      className={`inline-flex items-center gap-1.5 rounded-chip px-3 py-2 text-sm font-medium transition-[background-color,border-color,box-shadow,translate] duration-150 enabled:active:translate-y-px disabled:cursor-not-allowed ${tones[tone]} ${className}`}
+      className={`inline-flex items-center gap-1.5 rounded-chip px-3 py-2 text-sm font-medium transition-[background-color,border-color,box-shadow,scale] enabled:active:scale-[0.97] active:duration-(--dur-press) disabled:cursor-not-allowed ${tones[tone]} ${className}`}
     />
   );
 }

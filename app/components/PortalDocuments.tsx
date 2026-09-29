@@ -86,7 +86,7 @@ export default function PortalDocuments() {
           action={
             <Link
               href="/app/services"
-              className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
+              className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
             >
               {t("Browse services")}
               <ArrowRight aria-hidden className="size-4" />

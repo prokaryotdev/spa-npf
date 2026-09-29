@@ -113,7 +113,7 @@ export default function Hero() {
           <div
             key={s.image}
             aria-hidden={i !== index}
-            className={`npf-fade absolute inset-0 transition-opacity duration-[1200ms] ease-in-out ${
+            className={`npf-fade absolute inset-0 transition-opacity duration-(--dur-scene) ease-in-out ${
               i === index ? "opacity-100" : "opacity-0"
             }`}
           >

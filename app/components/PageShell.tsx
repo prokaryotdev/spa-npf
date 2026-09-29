@@ -115,14 +115,14 @@ export async function LinkCard({
   const t = await getT();
   const external = card.href.startsWith("http");
   return (
-    <article className="group/card overflow-hidden rounded-tile bg-white shadow-card transition-transform duration-500 ease-[var(--ease-out)] md:hover:-translate-y-2">
+    <article className="group/card overflow-hidden rounded-tile bg-white shadow-card transition-transform duration-(--dur-hover) ease-out md:hover:-translate-y-2">
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={card.image}
           alt=""
           fill
           sizes="(max-width: 768px) 92vw, 46vw"
-          className="object-cover transition-transform duration-700 ease-[var(--ease-out)] group-hover/card:scale-105"
+          className="object-cover transition-transform duration-(--dur-media) ease-out group-hover/card:scale-105"
         />
       </div>
       <div className="flex flex-col gap-3 p-6 lg:p-8">
@@ -136,7 +136,7 @@ export async function LinkCard({
           href={card.href}
           target={external ? "_blank" : undefined}
           rel={external ? "noopener noreferrer" : undefined}
-          className="mt-1 inline-flex items-center gap-2 self-start rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
+          className="mt-1 inline-flex items-center gap-2 self-start rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
         >
           {t(card.cta)}
           <ArrowRight className="size-4" />

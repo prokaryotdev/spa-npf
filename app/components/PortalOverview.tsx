@@ -69,7 +69,7 @@ export default function PortalOverview({
                   </span>
                   <ChevronRight
                     aria-hidden
-                    className="mt-1 size-5 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-out)] group-hover/row:translate-x-1"
+                    className="mt-1 size-5 shrink-0 text-npf-muted transition-transform duration-(--dur-hover) ease-out group-hover/row:translate-x-1"
                   />
                 </Link>
               </li>
@@ -78,7 +78,7 @@ export default function PortalOverview({
         </section>
       ) : null}
 
-      <dl className="grid gap-3 sm:grid-cols-3">
+      <dl className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <Stat
           label={t("Open requests")}
           value={String(open.length)}
@@ -108,7 +108,7 @@ export default function PortalOverview({
           </Link>
         }
       >
-        <ul className="grid gap-2 sm:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {shortcuts.map((service) => (
             <li key={service.slug}>
               <Link
@@ -137,7 +137,7 @@ export default function PortalOverview({
                 </span>
                 <ChevronRight
                   aria-hidden
-                  className="size-4 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-out)] group-hover/row:translate-x-1"
+                  className="size-4 shrink-0 text-npf-muted transition-transform duration-(--dur-hover) ease-out group-hover/row:translate-x-1"
                 />
               </Link>
             </li>
@@ -185,7 +185,7 @@ export default function PortalOverview({
             action={
               <Link
                 href="/app/services"
-                className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
+                className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
               >
                 {t("Browse services")}
                 <ArrowRight aria-hidden className="size-4" />
@@ -228,8 +228,7 @@ export default function PortalOverview({
                   <span className="font-medium text-npf-ink">
                     {t(notice.title)}
                   </span>
-                  {/* Body, not muted: muted drops under 4.5:1 on the chip wash. */}
-                  <span className="text-xs text-npf-body">
+                  <span className="text-xs text-npf-muted">
                     {format.date(notice.at)}
                   </span>
                 </p>
@@ -261,15 +260,24 @@ function Stat({
   value: string;
   href: string;
 }) {
+  /*
+   * A <dl> may hold only <dt>/<dd> or a <div> of them, so the link cannot
+   * wrap the pair. It sits in the term and stretches over the tile instead,
+   * and the tile wears the link's focus ring.
+   */
   return (
-    <Link
-      href={href}
-      className="rounded-tile bg-npf-cloud px-5 py-5 transition-colors hover:bg-npf-cloud-deep"
-    >
-      <dt className="text-sm text-npf-body">{label}</dt>
+    <div className="relative rounded-tile bg-npf-cloud px-5 py-5 transition-colors hover:bg-npf-cloud-deep has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-npf-blue-mid">
+      <dt className="text-sm text-npf-body">
+        <Link
+          href={href}
+          className="outline-none after:absolute after:inset-0 after:rounded-tile"
+        >
+          {label}
+        </Link>
+      </dt>
       <dd className="mt-1 font-secondary text-2xl font-bold text-npf-blue-deep tabular-nums">
         {value}
       </dd>
-    </Link>
+    </div>
   );
 }

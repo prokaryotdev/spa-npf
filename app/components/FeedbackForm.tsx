@@ -73,7 +73,7 @@ export default function FeedbackForm({
         <button
           type="button"
           onClick={() => setSent(false)}
-          className="mt-5 inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
+          className="mt-5 inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
         >
           {t("Send another")}
           <ArrowRight className="size-4" />
@@ -88,7 +88,7 @@ export default function FeedbackForm({
         <legend className="mb-4 font-secondary text-lg font-bold text-npf-blue-deep">
           {t("What would you like to share?")}
         </legend>
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {kinds.map((k) => {
             const active = kind === k.title;
             const Icon = ICONS[k.title];
@@ -126,7 +126,7 @@ export default function FeedbackForm({
         </div>
       </fieldset>
 
-      <div className="mt-8 grid max-w-190 gap-5 md:grid-cols-2">
+      <div className="mt-8 grid grid-cols-1 max-w-190 gap-5 md:grid-cols-2">
         <Field
           id={`${id}-name`}
           name="name"
@@ -187,7 +187,7 @@ export default function FeedbackForm({
 
       <button
         type="submit"
-        className="mt-6 inline-flex items-center gap-2 rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-colors hover:bg-npf-blue-mid"
+        className="mt-6 inline-flex items-center gap-2 rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
       >
         {t("Send")}
         <ArrowRight className="size-4" />

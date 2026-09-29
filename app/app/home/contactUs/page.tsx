@@ -28,7 +28,7 @@ export default async function ContactUsPage() {
             {contactUs.reach.description}
           </p>
 
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
             {contactUs.reach.lines.map((line) => (
               <div
                 key={line.number}
@@ -98,7 +98,7 @@ export default async function ContactUsPage() {
           </p>
           <Link
             href="/app/services/leaders-at-your-service"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
           >
             {t("Leaders at Your Service")}
             <ArrowRight className="size-4" />

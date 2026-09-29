@@ -611,7 +611,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
             }),
           );
         }}
-        className="grid gap-3 sm:grid-cols-2"
+        className="grid grid-cols-1 gap-3 sm:grid-cols-2"
       >
         <Field id={`${id}-kind`} label={t("Call type")}>
           <select

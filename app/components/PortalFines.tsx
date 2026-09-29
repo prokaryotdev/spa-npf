@@ -130,7 +130,7 @@ export default function PortalFines() {
                             setPaying(null);
                           }, 600);
                         }}
-                        className="mt-3 inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid disabled:cursor-wait disabled:opacity-70"
+                        className="mt-3 inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid disabled:cursor-wait disabled:opacity-70"
                       >
                         <CardIcon aria-hidden className="size-4" />
                         {paying === fine.id ? t("Paying…") : t("Pay now")}

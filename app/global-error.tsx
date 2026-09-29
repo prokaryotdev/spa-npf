@@ -105,7 +105,7 @@ export default function GlobalError({
               style={{
                 marginTop: "2rem",
                 fontSize: "0.875rem",
-                color: "var(--color-npf-muted, #667490)",
+                color: "var(--color-npf-muted, #5c6880)",
               }}
             >
               {t("Reference:")}{" "}

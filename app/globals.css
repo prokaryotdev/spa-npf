@@ -24,7 +24,9 @@
   --color-npf-blue-ink: #17376b;
   --color-npf-ink: #1a2338;
   --color-npf-body: #4a5468;
-  --color-npf-muted: #667490;
+  /* Clears 4.5:1 on every quiet ground, down to the chip wash (4.8:1); the
+     old #667490 passed on white alone and failed on each tint. */
+  --color-npf-muted: #5c6880;
   --color-npf-night: #0a1526;
   /* Community's ground: the crest's gold thinned to paper. */
   --color-npf-sand: #faf6ec;
@@ -319,12 +321,14 @@ html.npf-large-text {
    * Durations. Press answers a click; hover is the default above; media is
    * a photograph easing in, zooming or handing over; reveal is a block
    * arriving on scroll, which travels --reveal-y and staggers by
-   * --reveal-step.
+   * --reveal-step; scene is one full-bleed picture or sky dissolving into
+   * the next, slow on purpose because nothing waits on it.
    */
   --dur-press: 140ms;
   --dur-hover: 200ms;
   --dur-media: 600ms;
   --dur-reveal: 640ms;
+  --dur-scene: 1200ms;
   --reveal-y: 16px;
   --reveal-step: 80ms;
 }
@@ -974,8 +978,8 @@ html.npf-large-text {
   --ops-chrome-dim: #a6bcdd;
   /* Crest gold, legible on the chrome (8.4:1); marker and kicker only. */
   --ops-chrome-gold: var(--color-npf-gold-soft);
-  /* Secondary text, 5.7:1 on the panel, 4.8:1 on --ops-raised — dim, never grey-on-grey. */
-  --ops-dim: #5c6880;
+  /* Secondary text, 5.6:1 on the panel, 4.8:1 on --ops-raised. */
+  --ops-dim: var(--color-npf-muted);
   /* The brand navy, used where it is a fill under white text (10.3:1). */
   --ops-brand: var(--color-npf-blue);
   /* Hover on a light ground means going down, not up. */

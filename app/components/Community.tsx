@@ -26,7 +26,7 @@ export default function Community({
       <div className="npf-container">
         {head}
 
-        <div className="mt-(--npf-head-gap) grid gap-(--npf-gap) md:grid-cols-2">
+        <div className="mt-(--npf-head-gap) grid grid-cols-1 gap-(--npf-gap) md:grid-cols-2">
           {items.map((item, i) => {
             const feature = i === 0;
             const band = feature || i === last;

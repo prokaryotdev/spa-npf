@@ -350,7 +350,7 @@ export default async function ServicePage({
               {service.channels.length || service.hours.length ? (
                 <Section id="where" title={t("Where to use it")}>
                   {service.channels.length ? (
-                    <ul className="grid gap-3 sm:grid-cols-2">
+                    <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       {service.channels.map((channel) => {
                         const Icon = channelIcon(channel);
                         return (
@@ -396,7 +396,7 @@ export default async function ServicePage({
                   <h2 id="related" className="npf-h4 text-npf-blue-deep">
                     {t("Related services")}
                   </h2>
-                  <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                  <ul className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {related.map((item) => (
                       <li key={item.slug}>
                         <Link

@@ -115,7 +115,7 @@ export default function PortalRequests() {
             requests.length ? null : (
               <Link
                 href="/app/services"
-                className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
+                className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
               >
                 {t("Browse services")}
                 <ArrowRight aria-hidden className="size-4" />
@@ -156,7 +156,7 @@ export default function PortalRequests() {
                   <StatusPill status={request.status} />
                   <ChevronDown
                     aria-hidden
-                    className={`size-5 shrink-0 text-npf-muted transition-transform duration-300 ease-[var(--ease-out)] ${
+                    className={`size-5 shrink-0 text-npf-muted transition-transform duration-(--dur-hover) ease-out ${
                       open ? "rotate-180" : ""
                     }`}
                   />
@@ -213,14 +213,14 @@ export default function PortalRequests() {
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link
                       href={`/app/services/${request.slug}`}
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-npf-hairline transition-colors hover:bg-npf-cloud"
+                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-npf-hairline transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-cloud"
                     >
                       {t("About this service")}
                       <ArrowRight aria-hidden className="size-4" />
                     </Link>
                     <Link
                       href="/app/home/contactUs"
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-npf-hairline transition-colors hover:bg-npf-cloud"
+                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-npf-hairline transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-cloud"
                     >
                       {t("Ask about it")}
                     </Link>
@@ -276,7 +276,7 @@ function Reply({ request }: { request: TrackedRequest }) {
       <button
         type="submit"
         disabled={!text.trim()}
-        className="mt-3 inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid disabled:cursor-not-allowed disabled:opacity-40"
+        className="mt-3 inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid disabled:cursor-not-allowed disabled:opacity-40"
       >
         {t("Send reply")}
         <ArrowRight aria-hidden className="size-4" />

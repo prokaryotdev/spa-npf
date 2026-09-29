@@ -89,7 +89,7 @@ export default function SignInForm() {
           <button
             type="button"
             onClick={() => enter(CITIZEN)}
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-colors hover:bg-npf-blue-mid"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
           >
             <UserCircle aria-hidden className="size-5" />
             {t("Continue with NINAuth")}
@@ -114,7 +114,7 @@ export default function SignInForm() {
             <button
               type="button"
               onClick={() => enter(OFFICER)}
-              className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-npf-blue-ink ring-1 ring-npf-blue/25 transition-colors hover:bg-npf-chip"
+              className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-npf-blue-ink ring-1 ring-npf-blue/25 transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-chip"
             >
               {t("Open the operations console")}
               <ArrowRight aria-hidden className="size-4" />
@@ -150,7 +150,7 @@ export default function SignInForm() {
 
             <button
               type="submit"
-              className="rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-colors hover:bg-npf-blue-mid"
+              className="rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
             >
               {t("Sign in")}
             </button>

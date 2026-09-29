@@ -45,14 +45,14 @@ export default function Error({
               <button
                 type="button"
                 onClick={() => retry()}
-                className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-colors hover:bg-npf-blue-mid"
+                className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
               >
                 {t("Try again")}
                 <ArrowRight className="size-4" />
               </button>
               <Link
                 href="/"
-                className="inline-flex items-center rounded-full bg-npf-cloud px-6 py-3 font-medium text-npf-blue-ink ring-1 ring-npf-hairline transition-colors hover:bg-npf-chip"
+                className="inline-flex items-center rounded-full bg-npf-cloud px-6 py-3 font-medium text-npf-blue-ink ring-1 ring-npf-hairline transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-chip"
               >
                 {t("Back to home")}
               </Link>

@@ -79,7 +79,7 @@ export default function Pillars() {
             key={sky}
             aria-hidden
             style={{ backgroundImage: sky }}
-            className={`npf-fade pointer-events-none absolute inset-0 transition-opacity duration-1000 ease-(--ease-in-out) ${
+            className={`npf-fade pointer-events-none absolute inset-0 transition-opacity duration-(--dur-scene) ease-(--ease-in-out) ${
               i === active ? "opacity-100" : "opacity-0"
             }`}
           />
@@ -160,7 +160,7 @@ export default function Pillars() {
                 {/* On Together the halo turns to sunlight behind the family. */}
                 <span
                   aria-hidden
-                  className={`npf-fade pointer-events-none absolute -inset-[22%] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,#ffe3a0_85%,transparent),transparent)] transition-opacity duration-1000 ease-(--ease-in-out) ${
+                  className={`npf-fade pointer-events-none absolute -inset-[22%] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,#ffe3a0_85%,transparent),transparent)] transition-opacity duration-(--dur-scene) ease-(--ease-in-out) ${
                     active === n - 1 ? "opacity-100" : "opacity-0"
                   }`}
                 />
