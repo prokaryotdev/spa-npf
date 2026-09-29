@@ -235,26 +235,34 @@ export default async function ServicePage({
             <div className="min-w-0 lg:col-start-1 lg:row-start-1 lg:max-w-[46rem] [&>section+section]:mt-12 [&>section+section]:border-t [&>section+section]:border-npf-hairline [&>section+section]:pt-12">
               {service.documents.length ? (
                 <Section id="need" title={t("What you need")}>
-                  {docGroups.map((doc) => (
-                    <div key={doc.label} className="not-first:mt-8">
-                      <p className="npf-body mb-2 flex items-center gap-3 font-medium text-npf-ink">
-                        <FileIcon className="size-5 shrink-0 text-npf-blue" />
-                        {doc.label}
-                      </p>
-                      <Checklist items={doc.items} />
-                    </div>
-                  ))}
-                  {docList.length ? (
-                    <div className={docGroups.length ? "mt-8" : ""}>
-                      <Checklist items={docList} />
-                    </div>
-                  ) : null}
+                  {/* A group's label is usually a condition ("From outside
+                      Nigeria"), so it heads its own card: the items plainly
+                      belong to it, and a reader it doesn't apply to can skip
+                      the whole card at once. */}
+                  <div className="space-y-4">
+                    {docGroups.map((doc) => (
+                      <div
+                        key={doc.label}
+                        className="overflow-hidden rounded-card border border-npf-hairline"
+                      >
+                        <h3 className="npf-body border-b border-npf-hairline bg-npf-mist px-5 py-3 font-medium text-npf-blue-deep">
+                          {doc.label}
+                        </h3>
+                        <Checklist items={doc.items} />
+                      </div>
+                    ))}
+                    {docList.length ? (
+                      <div className="rounded-card border border-npf-hairline">
+                        <Checklist items={docList} />
+                      </div>
+                    ) : null}
+                  </div>
                 </Section>
               ) : null}
 
               {service.fees.length ? (
                 <Section id="fees" title={t("Fees")}>
-                  <dl className="overflow-hidden rounded-card ring-1 ring-npf-hairline ring-inset">
+                  <dl className="overflow-hidden rounded-card border border-npf-hairline">
                     {service.fees.map((fee) => (
                       <div
                         key={fee.label}
@@ -272,7 +280,7 @@ export default async function ServicePage({
                         "if", the summary is the cheapest real price, not their
                         sum, and a total that reads "From ₦48,000" is a
                         contradiction. */}
-                    <div className="flex items-baseline justify-between gap-6 bg-npf-mist px-5 py-4">
+                    <div className="flex items-baseline justify-between gap-6 border-t border-npf-hairline bg-npf-mist px-5 py-4">
                       <dt className="npf-body font-medium text-npf-blue-deep">
                         {t("Payable")}
                       </dt>
@@ -464,13 +472,15 @@ function Section({
 
 function Checklist({ items }: { items: string[] }) {
   return (
-    <ul className="grid gap-x-8 border-t border-npf-hairline sm:grid-cols-2">
+    <ul className="divide-y divide-npf-hairline">
       {items.map((item) => (
         <li
           key={item}
-          className="npf-body flex items-start gap-3 border-b border-npf-hairline py-3 text-npf-ink"
+          className="npf-body flex items-start gap-3 px-5 py-3.5 text-npf-ink"
         >
-          <CheckIcon className="mt-[0.3em] size-4 shrink-0 text-npf-blue" />
+          <span className="mt-[0.2em] grid size-5 shrink-0 place-items-center rounded-full bg-npf-blue text-white">
+            <CheckIcon className="size-3" />
+          </span>
           <span className="first-letter:uppercase">{item}</span>
         </li>
       ))}
