@@ -1,6 +1,11 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
-import { PORTAL_PAGES, signIn } from "./sign-in";
+import {
+  POLICE_PAGES,
+  PORTAL_PAGES,
+  signIn,
+  signInAsOfficer,
+} from "./sign-in";
 
 /**
  * WCAG 2.1 A and AA, on every kind of page, in both languages.
@@ -75,9 +80,12 @@ for (const lang of ["en", "ha"] as const) {
 
     // Behind sign-in, so the public list above never reached them: the
     // portal's notice dates shipped under 4.5:1 without a test noticing.
-    for (const [name, path] of PORTAL_PAGES) {
+    for (const [name, path, enter] of [
+      ...PORTAL_PAGES.map(([n, p]) => [n, p, signIn] as const),
+      ...POLICE_PAGES.map(([n, p]) => [`console: ${n}`, p, signInAsOfficer] as const),
+    ]) {
       test(`${name} has no WCAG violations`, async ({ page }) => {
-        await signIn(page);
+        await enter(page);
         await page.goto(`/${lang}${path}`);
         await page.waitForLoadState("networkidle");
         const results = await scan(page);

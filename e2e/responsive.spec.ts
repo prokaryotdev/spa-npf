@@ -1,5 +1,10 @@
 import { expect, test } from "@playwright/test";
-import { PORTAL_PAGES, signIn } from "./sign-in";
+import {
+  POLICE_PAGES,
+  PORTAL_PAGES,
+  signIn,
+  signInAsOfficer,
+} from "./sign-in";
 
 /**
  * The phone. Every screenshot taken while building this site was 1366px wide,
@@ -17,14 +22,17 @@ const PAGES = [
   ["a data table", "/app/home/information/road-speed-limits"],
   ["sign in", "/app/signin"],
   ...PORTAL_PAGES,
+  ...POLICE_PAGES,
 ] as const;
 
 const PORTAL = new Set<string>(PORTAL_PAGES.map(([, path]) => path));
+const POLICE = new Set<string>(POLICE_PAGES.map(([, path]) => path));
 
 for (const lang of ["en", "ha"] as const) {
   for (const [name, path] of PAGES) {
     test(`${name} does not scroll sideways (${lang})`, async ({ page }) => {
       if (PORTAL.has(path)) await signIn(page);
+      if (POLICE.has(path)) await signInAsOfficer(page);
       await page.goto(`/${lang}${path === "/" ? "" : path}`);
       await page.waitForLoadState("networkidle");
 

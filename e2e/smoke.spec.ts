@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { signIn, signInAsOfficer } from "./sign-in";
 
 /**
  * The journeys a visitor actually takes. Each one is here because breaking it
@@ -136,6 +137,25 @@ test.describe("the account half", () => {
   test("the portal is not reachable without signing in", async ({ page }) => {
     await page.goto("/en/app/portal");
     await expect(page).toHaveURL(/\/app\/signin/);
+  });
+
+  test("the console is not reachable without signing in", async ({ page }) => {
+    await page.goto("/en/app/police");
+    await expect(page).toHaveURL(/\/app\/signin/);
+  });
+
+  test("a citizen's session does not open the console", async ({ page }) => {
+    await signIn(page);
+    await page.goto("/en/app/police/incidents");
+    await expect(page.getByText("Force credentials required")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Calls" })).toHaveCount(0);
+  });
+
+  test("an officer lands on the command board", async ({ page }) => {
+    const errors = watchConsole(page);
+    await signInAsOfficer(page);
+    await expect(page.getByRole("heading", { name: "Command board" })).toBeVisible();
+    expect(errors).toEqual([]);
   });
 });
 

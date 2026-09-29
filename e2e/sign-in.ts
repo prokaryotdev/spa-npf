@@ -13,6 +13,21 @@ export async function signIn(page: Page) {
   await expect(page).toHaveURL(/\/en\/app\/portal$/);
 }
 
+/** Signs in as the demo officer, through the console button on the same form. */
+export async function signInAsOfficer(page: Page) {
+  await page.goto("/en/app/signin");
+  await page.getByRole("button", { name: "Open the operations console" }).click();
+  await expect(page).toHaveURL(/\/en\/app\/police$/);
+}
+
+/** Every page of the operations console. */
+export const POLICE_PAGES = [
+  ["the command board", "/app/police"],
+  ["calls", "/app/police/incidents"],
+  ["units", "/app/police/units"],
+  ["requests", "/app/police/requests"],
+] as const;
+
 /** Every portal page, for the specs that walk them all. */
 export const PORTAL_PAGES = [
   ["the portal overview", "/app/portal"],
