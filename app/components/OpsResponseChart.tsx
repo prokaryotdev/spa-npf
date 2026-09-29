@@ -22,7 +22,7 @@ export default function OpsResponseChart() {
       <figcaption className="sr-only">
         {t("Median response time over the last 12 hours, in minutes")}
       </figcaption>
-      <p className="mb-5 text-xs text-[var(--ops-dim)]">
+      <p className="mb-5 text-xs text-ops-dim">
         {t("Call to arrival, last 12 hours. Target {n} minutes.", {
           n: target,
         })}
@@ -32,10 +32,10 @@ export default function OpsResponseChart() {
         {/* Target line, drawn behind the bars and labelled at the end. */}
         <div
           aria-hidden
-          className="absolute inset-x-0 border-t border-dashed border-[var(--ops-line)]"
+          className="absolute inset-x-0 border-t border-dashed border-ops-line"
           style={{ bottom: `${(target / peak) * 100}%` }}
         >
-          <span className="absolute -top-2 end-0 bg-[var(--ops-panel)] ps-2 text-2xs text-[var(--ops-dim)] tabular-nums">
+          <span className="absolute -top-2 end-0 bg-ops-panel ps-2 text-2xs text-ops-dim tabular-nums">
             {target}m
           </span>
         </div>
@@ -81,7 +81,7 @@ export default function OpsResponseChart() {
 
       <ul
         aria-hidden
-        className="mt-2 flex gap-[2px] text-2xs text-[var(--ops-dim)] tabular-nums"
+        className="mt-2 flex gap-[2px] text-2xs text-ops-dim tabular-nums"
       >
         {responseTrend.map((point) => (
           <li key={point.hour} className="flex-1 text-center">
@@ -91,7 +91,7 @@ export default function OpsResponseChart() {
       </ul>
 
       <details className="mt-4">
-        <summary className="cursor-pointer text-xs text-[var(--ops-dim)] transition-colors hover:text-[var(--ops-text)]">
+        <summary className="cursor-pointer text-xs text-ops-dim transition-colors hover:text-ops-text">
           {t("Show the numbers")}
         </summary>
         <table className="mt-3 w-full text-start text-xs">
@@ -100,7 +100,7 @@ export default function OpsResponseChart() {
               "Median response time in minutes, by hour, over the last 12 hours",
             )}
           </caption>
-          <thead className="text-[var(--ops-dim)]">
+          <thead className="text-ops-dim">
             <tr>
               <th scope="col" className="py-1 font-medium">
                 {t("Hour")}
@@ -114,7 +114,7 @@ export default function OpsResponseChart() {
             {responseTrend.map((point) => (
               <tr
                 key={point.hour}
-                className="border-t border-[var(--ops-line)]"
+                className="border-t border-ops-line"
               >
                 <th scope="row" className="py-1.5 font-normal tabular-nums">
                   {point.hour}:00

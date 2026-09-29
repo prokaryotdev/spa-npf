@@ -22,7 +22,7 @@ import { useFormat, useT } from "../i18n/client";
 const QUEUE: RequestStatus[] = ["Submitted", "In Review", "Action Needed"];
 
 const TONE: Record<RequestStatus, string> = {
-  Submitted: "bg-[var(--ops-raised)] text-[var(--ops-dim)]",
+  Submitted: "bg-ops-raised text-ops-dim",
   "In Review": "bg-npf-review-wash text-npf-review",
   "Action Needed": "bg-npf-gold-wash text-npf-warn",
   Completed: "bg-npf-ok-soft text-npf-ok",
@@ -119,7 +119,7 @@ export default function OpsRequests() {
 
         <p
           aria-live="polite"
-          className="ms-auto text-xs text-[var(--ops-dim)] tabular-nums"
+          className="ms-auto text-xs text-ops-dim tabular-nums"
         >
           {t("{shown} of {total} requests", {
             shown: visible.length,
@@ -167,7 +167,7 @@ export default function OpsRequests() {
                     {t(request.status)}
                   </span>
                 </div>
-                <p className="mt-1 text-xs text-[var(--ops-dim)] tabular-nums">
+                <p className="mt-1 text-xs text-ops-dim tabular-nums">
                   {t("{ref} · submitted {date} · {fee} · via {channel}", {
                     ref: request.id,
                     date: format.date(request.submitted),
@@ -177,20 +177,20 @@ export default function OpsRequests() {
                 </p>
               </div>
 
-              <ol className="mt-4 space-y-1.5 border-t border-[var(--ops-line-soft)] pt-3 text-xs">
+              <ol className="mt-4 space-y-1.5 border-t border-ops-line-soft pt-3 text-xs">
                 {request.timeline
                   .slice()
                   .reverse()
                   .slice(0, 3)
                   .map((step) => (
                     <li key={step.at + step.label} className="flex gap-3">
-                      <span className="w-24 shrink-0 text-[var(--ops-dim)] tabular-nums">
+                      <span className="w-24 shrink-0 text-ops-dim tabular-nums">
                         {format.dateTime(step.at)}
                       </span>
                       <span className="min-w-0">
                         <span className="font-medium">{t(step.label)}</span>
                         {step.note ? (
-                          <span className="text-[var(--ops-dim)]">
+                          <span className="text-ops-dim">
                             {" "}
                             — {t(step.note)}
                           </span>
@@ -206,11 +206,11 @@ export default function OpsRequests() {
                     e.preventDefault();
                     ask(request);
                   }}
-                  className="mt-auto border-t border-[var(--ops-line-soft)] pt-4"
+                  className="mt-auto border-t border-ops-line-soft pt-4"
                 >
                   <label
                     htmlFor={`${id}-reason-${request.id}`}
-                    className="block text-xs text-[var(--ops-dim)]"
+                    className="block text-xs text-ops-dim"
                   >
                     {t("What does the applicant need to do?")}
                   </label>
@@ -220,7 +220,7 @@ export default function OpsRequests() {
                     onChange={(e) => setReason(e.target.value)}
                     rows={2}
                     autoFocus
-                    className="mt-2 w-full rounded-chip border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none focus:border-[var(--ops-accent)]"
+                    className="mt-2 w-full rounded-chip border border-ops-line bg-ops-raised px-3 py-2 text-sm outline-none focus:border-ops-accent"
                     placeholder={t(
                       "Upload a clearer copy of the passport photo page.",
                     )}
@@ -249,7 +249,7 @@ export default function OpsRequests() {
                    same OpsButton the Calls board and the Units board use,
                    rather than a second set that looked almost but not quite
                    like them. */
-                <div className="mt-auto flex flex-wrap gap-2 border-t border-[var(--ops-line-soft)] pt-4">
+                <div className="mt-auto flex flex-wrap gap-2 border-t border-ops-line-soft pt-4">
                   {request.status === "Submitted" ? (
                     <OpsButton
                       onClick={() =>

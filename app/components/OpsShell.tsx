@@ -134,10 +134,10 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
   if (!loaded || !session)
     return (
       <div className="npf-ops grid min-h-[100dvh] place-items-center">
-        <p className="flex items-center gap-3 text-sm text-[var(--ops-dim)]">
+        <p className="flex items-center gap-3 text-sm text-ops-dim">
           <ShieldIcon
             aria-hidden
-            className="size-5 animate-pulse text-[var(--ops-accent)]"
+            className="size-5 animate-pulse text-ops-accent"
           />
           {t("Checking credentials…")}
         </p>
@@ -150,12 +150,12 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         <div className="max-w-[46ch] text-center">
           <ShieldIcon
             aria-hidden
-            className="mx-auto size-10 text-[var(--ops-accent)]"
+            className="mx-auto size-10 text-ops-accent"
           />
           <h1 className="mt-4 font-secondary text-2xl font-bold">
             {t("Force credentials required")}
           </h1>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--ops-dim)]">
+          <p className="mt-3 text-sm leading-relaxed text-ops-dim">
             {t(
               "You are signed in as {name}, a public account. The operations console is for Nigeria Police Force personnel.",
               { name: session.name },
@@ -164,7 +164,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Link
               href="/app/portal"
-              className="rounded-full bg-[var(--ops-brand)] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[var(--ops-brand-lift)]"
+              className="rounded-full bg-ops-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-ops-brand-lift"
             >
               {t("Go to my account")}
             </Link>
@@ -174,7 +174,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
                 signOut();
                 router.push("/app/signin?next=/app/police");
               }}
-              className="rounded-full px-5 py-2.5 text-sm font-medium ring-1 ring-[var(--ops-line)] transition-colors hover:bg-[var(--ops-raised)]"
+              className="rounded-full px-5 py-2.5 text-sm font-medium ring-1 ring-ops-line transition-colors hover:bg-ops-raised"
             >
               {t("Sign in as an officer")}
             </button>
@@ -197,7 +197,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         it is the difference between an instrument and a web page with a
         toolbar on it.
       */}
-      <header className="npf-ops-chrome sticky top-0 z-40 bg-[var(--ops-chrome)] text-white shadow-[0_1px_0_rgba(255,255,255,0.06),0_10px_24px_-12px_rgba(6,18,40,0.55)]">
+      <header className="npf-ops-chrome sticky top-0 z-40 bg-ops-chrome text-white shadow-[0_1px_0_rgba(255,255,255,0.06),0_10px_24px_-12px_rgba(6,18,40,0.55)]">
         <div className="mx-auto flex h-15 max-w-[1800px] items-center gap-3 px-3 sm:px-4 lg:gap-5 lg:px-5">
           <Link
             href="/app/police"
@@ -211,7 +211,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
             >
               <PoliceWordmark className="h-full w-auto" />
             </span>
-            <span className="hidden border-s border-[var(--ops-chrome-line)] ps-3 font-secondary text-2xs leading-tight font-bold tracking-[0.18em] text-[var(--ops-chrome-gold)] uppercase sm:block">
+            <span className="hidden border-s border-ops-chrome-line ps-3 font-secondary text-2xs leading-tight font-bold tracking-[0.18em] text-ops-chrome-gold uppercase sm:block">
               {t("Command")}
               <br />
               {t("& Control")}
@@ -221,10 +221,10 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
           <ShiftClock />
 
           <div className="flex shrink-0 items-center gap-2">
-            <span className="hidden items-center gap-2.5 border-s border-[var(--ops-chrome-line)] ps-3 md:flex">
+            <span className="hidden items-center gap-2.5 border-s border-ops-chrome-line ps-3 md:flex">
               <span
                 aria-hidden
-                className="grid size-8 shrink-0 place-items-center rounded-full bg-[var(--ops-chrome-raised)] font-secondary text-xs font-bold tracking-wide text-[var(--ops-chrome-gold)]"
+                className="grid size-8 shrink-0 place-items-center rounded-full bg-ops-chrome-raised font-secondary text-xs font-bold tracking-wide text-ops-chrome-gold"
               >
                 {initials(session.name)}
               </span>
@@ -232,14 +232,14 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
                 <span className="block text-meta font-medium">
                   {t(session.name)}
                 </span>
-                <span className="block text-2xs text-[var(--ops-chrome-dim)]">
+                <span className="block text-2xs text-ops-chrome-dim">
                   {t(session.rank ?? "")} · {t(session.station ?? "")}
                 </span>
               </span>
             </span>
             {/* An officer works a whole shift in here; the language control
                 has to be on this bar, not back on the public site. */}
-            <LanguageSwitch className="border border-[var(--ops-chrome-line)] text-[var(--ops-chrome-dim)] hover:bg-[var(--ops-chrome-raised)] hover:text-white" />
+            <LanguageSwitch className="border border-ops-chrome-line text-ops-chrome-dim hover:bg-ops-chrome-raised hover:text-white" />
             <button
               type="button"
               onClick={() => {
@@ -247,7 +247,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
                 router.push("/app/home");
               }}
               title={t("End shift")}
-              className="grid size-9 place-items-center rounded-chip border border-[var(--ops-chrome-line)] text-[var(--ops-chrome-dim)] transition-colors hover:border-transparent hover:bg-[var(--ops-p1)] hover:text-white"
+              className="grid size-9 place-items-center rounded-chip border border-ops-chrome-line text-ops-chrome-dim transition-colors hover:border-transparent hover:bg-ops-p1 hover:text-white"
             >
               <SignOutIcon className="size-4" />
               <span className="sr-only">{t("End shift")}</span>
@@ -258,7 +258,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         <Tabs
           path={path}
           counts={counts}
-          className="grid h-12 grid-cols-4 gap-1 border-t border-[var(--ops-chrome-line)] px-2 pb-2 sm:flex sm:justify-start sm:gap-1 lg:hidden"
+          className="grid h-12 grid-cols-4 gap-1 border-t border-ops-chrome-line px-2 pb-2 sm:flex sm:justify-start sm:gap-1 lg:hidden"
         />
       </header>
 
@@ -268,10 +268,10 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         the chrome as a hairline and scrolls away with the board rather than
         holding a permanent amber band over the calls underneath it.
       */}
-      <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 bg-[var(--ops-chrome-raised)] px-4 py-1.5 text-center text-2xs leading-relaxed text-[var(--ops-chrome-dim)]">
+      <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 bg-ops-chrome-raised px-4 py-1.5 text-center text-2xs leading-relaxed text-ops-chrome-dim">
         <AlertIcon
           aria-hidden
-          className="size-3.5 shrink-0 text-[var(--ops-chrome-gold)]"
+          className="size-3.5 shrink-0 text-ops-chrome-gold"
         />
         {t(
           "Illustrative data — a rebuild of the Nigeria Police Force website, connected to no operational system.",
@@ -279,7 +279,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         <button
           type="button"
           onClick={resetDemo}
-          className="rounded font-medium text-white underline decoration-[var(--ops-chrome-gold)] underline-offset-2 hover:decoration-2"
+          className="rounded font-medium text-white underline decoration-ops-chrome-gold underline-offset-2 hover:decoration-2"
         >
           {t("Reset the demo")}
         </button>
@@ -297,13 +297,13 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         </main>
       </div>
 
-      <footer className="mx-auto flex w-full max-w-[1800px] items-center justify-between gap-4 px-4 py-4 text-2xs text-[var(--ops-dim)] lg:px-5">
+      <footer className="mx-auto flex w-full max-w-[1800px] items-center justify-between gap-4 px-4 py-4 text-2xs text-ops-dim lg:px-5">
         <span>
           {t(session.rank ?? "")} · {t(session.station ?? "")}
         </span>
         <Link
           href="/app/home"
-          className="inline-flex items-center gap-1.5 rounded transition-colors hover:text-[var(--ops-accent)]"
+          className="inline-flex items-center gap-1.5 rounded transition-colors hover:text-ops-accent"
         >
           {t("Public site")}
           <ArrowUpRight className="size-3.5 shrink-0" />
@@ -340,8 +340,8 @@ function Rail({
             aria-current={active ? "page" : undefined}
             className={`flex items-center gap-3 rounded-chip px-3 py-2.5 text-sm transition-colors ${
               active
-                ? "bg-[var(--ops-chrome)] font-medium text-white"
-                : "text-[var(--ops-text)] hover:bg-[var(--ops-raised)]"
+                ? "bg-ops-chrome font-medium text-white"
+                : "text-ops-text hover:bg-ops-raised"
             }`}
           >
             <Icon className="size-[18px] shrink-0" />
@@ -350,8 +350,8 @@ function Rail({
               <span
                 className={`ms-auto rounded px-1.5 py-0.5 text-2xs font-bold tabular-nums ${
                   active
-                    ? "bg-[var(--ops-chrome-gold)] text-[var(--ops-chrome)]"
-                    : "bg-[var(--ops-raised)] text-[var(--ops-dim)]"
+                    ? "bg-ops-chrome-gold text-ops-chrome"
+                    : "bg-ops-raised text-ops-dim"
                 }`}
               >
                 {counts[href]}
@@ -391,8 +391,8 @@ function Tabs({
             aria-current={active ? "page" : undefined}
             className={`flex h-full min-w-0 items-center justify-center gap-1.5 rounded-chip px-1.5 text-sm whitespace-nowrap transition-colors sm:gap-2 sm:px-2.5 ${
               active
-                ? "bg-[var(--ops-chrome-raised)] font-medium text-white shadow-[inset_0_-2px_0_var(--ops-chrome-gold)]"
-                : "text-[var(--ops-chrome-dim)] hover:bg-[var(--ops-chrome-raised)]/60 hover:text-white"
+                ? "bg-ops-chrome-raised font-medium text-white shadow-[inset_0_-2px_0_var(--ops-chrome-gold)]"
+                : "text-ops-chrome-dim hover:bg-ops-chrome-raised/60 hover:text-white"
             }`}
           >
             {/*
@@ -408,8 +408,8 @@ function Tabs({
               <span
                 className={`rounded px-1 py-0.5 text-2xs font-bold tabular-nums sm:px-1.5 ${
                   active
-                    ? "bg-[var(--ops-chrome-gold)] text-[var(--ops-chrome)]"
-                    : "bg-[var(--ops-chrome-line)] text-white"
+                    ? "bg-ops-chrome-gold text-ops-chrome"
+                    : "bg-ops-chrome-line text-white"
                 }`}
               >
                 {counts[href]}
@@ -438,7 +438,7 @@ function ShiftClock() {
   const shift = mounted ? shiftOf(new Date(now)) : "—";
 
   return (
-    <p className="ms-auto flex shrink-0 items-center gap-2.5 rounded-chip border border-[var(--ops-chrome-line)] bg-[var(--ops-chrome-raised)]/50 px-2.5 py-1.5 sm:px-3">
+    <p className="ms-auto flex shrink-0 items-center gap-2.5 rounded-chip border border-ops-chrome-line bg-ops-chrome-raised/50 px-2.5 py-1.5 sm:px-3">
       <span
         dir="ltr"
         className="flex items-baseline font-secondary text-lg leading-none font-bold tabular-nums"
@@ -447,7 +447,7 @@ function ShiftClock() {
         <span className="npf-ops-tick px-px">:</span>
         {time.slice(3)}
       </span>
-      <span className="hidden font-primary text-2xs leading-tight font-medium tracking-[0.1em] text-[var(--ops-chrome-dim)] uppercase sm:inline">
+      <span className="hidden font-primary text-2xs leading-tight font-medium tracking-[0.1em] text-ops-chrome-dim uppercase sm:inline">
         {t("WAT · Shift {shift}", { shift: t(shift) })}
       </span>
     </p>

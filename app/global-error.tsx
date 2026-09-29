@@ -8,7 +8,8 @@ import { reportError } from "./report-error";
 /**
  * Replaces the root layout when the layout itself throws, so it owns its own
  * document and cannot reuse Header or Footer. Styles are inlined for the same
- * reason — the stylesheet import is best-effort here.
+ * reason — the stylesheet import is best-effort here, so each colour names
+ * its token with the token's own value as the fallback.
  */
 export default function GlobalError({
   error,
@@ -33,8 +34,8 @@ export default function GlobalError({
           placeItems: "center",
           padding: "2rem",
           background: "#fff",
-          color: "#2B3340",
-          fontFamily: "system-ui, -apple-system, Segoe UI, sans-serif",
+          color: "var(--color-npf-ink, #1a2338)",
+          fontFamily: "var(--font-primary, system-ui, sans-serif)",
         }}
       >
         <title>{t("Something went wrong | Nigeria Police Force")}</title>
@@ -44,7 +45,7 @@ export default function GlobalError({
               margin: 0,
               fontSize: "clamp(2rem, 6vw, 3.5rem)",
               lineHeight: 1.15,
-              color: "#0B2244",
+              color: "var(--color-npf-blue-deep, #14315f)",
             }}
           >
             {t("Something went wrong")}
@@ -53,7 +54,7 @@ export default function GlobalError({
             style={{
               marginTop: "1.25rem",
               fontSize: "1.125rem",
-              color: "#4b5563",
+              color: "var(--color-npf-body, #4a5468)",
             }}
           >
             {t("The site failed to load. Trying again often clears it.")}
@@ -73,7 +74,7 @@ export default function GlobalError({
                 border: 0,
                 cursor: "pointer",
                 borderRadius: "9999px",
-                background: "#1B3A66",
+                background: "var(--color-npf-blue, #1b3f7a)",
                 color: "#fff",
                 font: "inherit",
                 fontWeight: 500,
@@ -89,8 +90,8 @@ export default function GlobalError({
               href="/"
               style={{
                 borderRadius: "9999px",
-                background: "#F4F6FA",
-                color: "#0D2444",
+                background: "var(--color-npf-cloud, #f4f6fa)",
+                color: "var(--color-npf-blue-deep, #14315f)",
                 fontWeight: 500,
                 padding: "0.75rem 1.5rem",
                 textDecoration: "none",
@@ -104,7 +105,7 @@ export default function GlobalError({
               style={{
                 marginTop: "2rem",
                 fontSize: "0.875rem",
-                color: "#6b7280",
+                color: "var(--color-npf-muted, #667490)",
               }}
             >
               {t("Reference:")}{" "}

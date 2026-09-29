@@ -67,6 +67,16 @@
   --color-npf-review-wash: #e7e9fc;
   --color-npf-error: #9b1c1c;
   --color-npf-error-wash: #fbe4e4;
+  /* On scene: a teal of its own, so "attending" never reads as "done". */
+  --color-npf-scene: #0b5a54;
+  --color-npf-scene-wash: #d9f1ec;
+  /*
+   * The same two meanings at the weight a block of colour needs: a bar or a
+   * chart segment only has to clear 3:1 on white, and the text-safe inks
+   * above are so far down that a chart drawn in them reads brown.
+   */
+  --color-npf-ok-fill: #1a7f4b;
+  --color-npf-warn-fill: #d97706;
   /* The one hairline for field borders and panel rules. */
   --color-npf-line: #d3dcea;
   /* Quiet grounds inside a white page: a field or panel (cloud, deepening
@@ -78,6 +88,31 @@
   /* The phone in the app band: black glass and the steel of its band. */
   --color-npf-glass: #05080f;
   --color-npf-steel: #5d6d84;
+
+  /*
+   * The police console's roles (set on .npf-ops below), exposed as utilities
+   * so the console writes text-ops-dim rather than text-[var(--ops-dim)].
+   * Inline, so each resolves inside .npf-ops at the point of use.
+   */
+  --color-ops-bg: var(--ops-bg);
+  --color-ops-panel: var(--ops-panel);
+  --color-ops-raised: var(--ops-raised);
+  --color-ops-line: var(--ops-line);
+  --color-ops-line-soft: var(--ops-line-soft);
+  --color-ops-text: var(--ops-text);
+  --color-ops-dim: var(--ops-dim);
+  --color-ops-accent: var(--ops-accent);
+  --color-ops-brand: var(--ops-brand);
+  --color-ops-brand-lift: var(--ops-brand-lift);
+  --color-ops-chrome: var(--ops-chrome);
+  --color-ops-chrome-line: var(--ops-chrome-line);
+  --color-ops-chrome-raised: var(--ops-chrome-raised);
+  --color-ops-chrome-dim: var(--ops-chrome-dim);
+  --color-ops-chrome-gold: var(--ops-chrome-gold);
+  --color-ops-p1: var(--ops-p1);
+  --color-ops-p2: var(--ops-p2);
+  --color-ops-scene: var(--ops-scene);
+  --color-ops-scene-wash: var(--ops-scene-wash);
 
   /*
    * The in-between type steps Tailwind's scale lacks, named so dense UI (the
@@ -105,6 +140,8 @@
    */
   --shadow-card:
     0 1px 2px rgb(10 21 38 / 0.06), 0 10px 28px -14px rgb(10 21 38 / 0.24);
+  /* The console's panel lift, set on .npf-ops. */
+  --shadow-ops: var(--ops-shadow);
   --shadow-raised:
     0 2px 4px rgb(10 21 38 / 0.08), 0 28px 56px -28px rgb(10 21 38 / 0.5);
   --shadow-float:
@@ -909,9 +946,9 @@ html.npf-large-text {
    * on, or a full-width board of white panels reads as one undifferentiated
    * sheet. --ops-raised is the selected/hover step above the panel.
    */
-  --ops-bg: #edf1f8;
+  --ops-bg: var(--color-npf-mist);
   --ops-panel: #ffffff;
-  --ops-raised: #e4eaf6;
+  --ops-raised: var(--color-npf-chip);
   --ops-line: var(--color-npf-line);
   /* A second, fainter rule for divisions inside a panel, where a full
      --ops-line every 44px turns a call queue into graph paper. */
@@ -923,21 +960,21 @@ html.npf-large-text {
    * fitted instrument rather than a web page with a toolbar, and so the one
    * building of the site officers actually work in still wears the badge.
    */
-  --ops-chrome: #102a52;
+  --ops-chrome: var(--color-npf-blue-deep);
   --ops-chrome-line: #24467e;
   --ops-chrome-raised: var(--color-npf-blue);
   /* Secondary type on the chrome, 6.6:1 on --ops-chrome. */
   --ops-chrome-dim: #a6bcdd;
   /* Crest gold, legible on the chrome (8.4:1); marker and kicker only. */
   --ops-chrome-gold: var(--color-npf-gold-soft);
-  /* Secondary text, 5.7:1 on the panel — dim, never grey-on-grey. */
+  /* Secondary text, 5.7:1 on the panel, 4.8:1 on --ops-raised — dim, never grey-on-grey. */
   --ops-dim: #5c6880;
   /* The brand navy, used where it is a fill under white text (10.3:1). */
   --ops-brand: var(--color-npf-blue);
   /* Hover on a light ground means going down, not up. */
   --ops-brand-lift: var(--color-npf-blue-deep);
-  /* The same hue as small text and icons on white (7.8:1). */
-  --ops-accent: #1d4fa3;
+  /* The same hue as small text and icons on white (6.3:1). */
+  --ops-accent: var(--color-npf-blue-mid);
 
   /*
    * Call grades. Never the brand navy — a priority is not a brand moment.
@@ -946,24 +983,24 @@ html.npf-large-text {
    * particular fails badly on white until it is this far down.
    */
   --ops-p1: var(--color-npf-alert);
-  --ops-p2: #b45309;
-  --ops-p3: #0f766e;
-  --ops-p4: #5c6880;
+  --ops-p2: var(--color-npf-warn);
+  --ops-p3: var(--color-npf-scene);
+  --ops-p4: var(--ops-dim);
   /*
    * The same two meanings again, at the weight a block of colour needs rather
    * than the weight small type needs. A bar or a segment only has to clear
    * 3:1 against the panel, and the text-safe amber above is so far down that
    * a chart drawn in it reads brown.
    */
-  --ops-fill-ok: #1a7f4b;
-  --ops-fill-warn: #d97706;
+  --ops-fill-ok: var(--color-npf-ok-fill);
+  --ops-fill-warn: var(--color-npf-warn-fill);
   /* The same "good" green at the weight small type needs: --ops-fill-ok is
      4.5:1 on white and drops under it the moment a tinted cell sits behind
      an 11px note, so a readout says "on the air" in this one. */
   --ops-ok: var(--color-npf-ok);
   /* On scene: --ops-p3's teal as a status chip's ink and wash. */
-  --ops-scene: #0b5a54;
-  --ops-scene-wash: #d9f1ec;
+  --ops-scene: var(--color-npf-scene);
+  --ops-scene-wash: var(--color-npf-scene-wash);
 
   /*
    * Elevation is declared once, and it is shadow. A panel carrying both a

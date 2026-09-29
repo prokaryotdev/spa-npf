@@ -152,7 +152,7 @@ export function OpsPanel({
        * `clip` crops without ever becoming a scrollport, so the heads pin to
        * the page — the only thing that scrolls here.
        */
-      className={`flex min-h-0 flex-col overflow-clip rounded-card bg-[var(--ops-panel)] shadow-[var(--ops-shadow)] ${className}`}
+      className={`flex min-h-0 flex-col overflow-clip rounded-card bg-ops-panel shadow-ops ${className}`}
     >
       {title ? (
         /*
@@ -161,11 +161,11 @@ export function OpsPanel({
          * screen is six things claiming to be the loudest, which leaves
          * nothing leading; the weight step does the work instead.
          */
-        <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[var(--ops-line-soft)] px-4 py-3">
+        <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-ops-line-soft px-4 py-3">
           <h2 className="flex items-center gap-2 font-secondary text-title leading-none font-bold tracking-[-0.01em]">
             {t(title)}
             {count !== undefined ? (
-              <span className="rounded bg-[var(--ops-raised)] px-1.5 py-0.5 font-primary text-2xs leading-tight font-medium text-[var(--ops-dim)] tabular-nums">
+              <span className="rounded bg-ops-raised px-1.5 py-0.5 font-primary text-2xs leading-tight font-medium text-ops-dim tabular-nums">
                 {count}
               </span>
             ) : null}
@@ -220,7 +220,7 @@ export function OpsEmpty({
       </span>
       <p className="text-sm font-medium">{title}</p>
       {hint ? (
-        <p className="max-w-[44ch] text-xs leading-relaxed text-[var(--ops-dim)]">
+        <p className="max-w-[44ch] text-xs leading-relaxed text-ops-dim">
           {hint}
         </p>
       ) : null}
@@ -259,7 +259,7 @@ export function OpsHead({
         <h1 className="font-secondary text-stat leading-tight font-bold tracking-[-0.015em]">
           {title}
         </h1>
-        <p className="mt-1 max-w-[70ch] text-meta leading-relaxed text-[var(--ops-dim)]">
+        <p className="mt-1 max-w-[70ch] text-meta leading-relaxed text-ops-dim">
           {lead}
         </p>
       </div>
@@ -275,7 +275,7 @@ export function OpsHead({
  */
 export function ReadoutStrip({ children }: { children: React.ReactNode }) {
   return (
-    <dl className="flex flex-wrap divide-x divide-[var(--ops-line-soft)] overflow-clip rounded-card bg-[var(--ops-panel)] shadow-[var(--ops-shadow)]">
+    <dl className="flex flex-wrap divide-x divide-ops-line-soft overflow-clip rounded-card bg-ops-panel shadow-ops">
       {children}
     </dl>
   );
@@ -302,10 +302,10 @@ export function OpsSearch({
      * white box — a control sized by what was left over rather than by what
      * anyone types into it.
      */
-    <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-chip border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 transition-colors sm:max-w-[340px] focus-within:border-[var(--ops-accent)] focus-within:ring-2 focus-within:ring-[var(--ops-accent)]/15">
+    <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-chip border border-ops-line bg-ops-panel px-3 transition-colors sm:max-w-[340px] focus-within:border-ops-accent focus-within:ring-2 focus-within:ring-ops-accent/15">
       <SearchIcon
         aria-hidden
-        className="size-4 shrink-0 text-[var(--ops-dim)]"
+        className="size-4 shrink-0 text-ops-dim"
       />
       <label htmlFor={id} className="sr-only">
         {label}
@@ -316,7 +316,7 @@ export function OpsSearch({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-transparent py-2 text-sm outline-none placeholder:text-[var(--ops-dim)]"
+        className="w-full bg-transparent py-2 text-sm outline-none placeholder:text-ops-dim"
       />
     </div>
   );
@@ -324,7 +324,7 @@ export function OpsSearch({
 
 /** The shared look of a `select` sitting in a filter bar. */
 export const OPS_SELECT =
-  "npf-ops-select rounded-chip border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 py-2 text-sm outline-none transition-colors hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)]";
+  "npf-ops-select rounded-chip border border-ops-line bg-ops-panel px-3 py-2 text-sm outline-none transition-colors hover:border-ops-accent focus:border-ops-accent";
 
 /* -------------------------------------------------------------------------
  * Grades and statuses
@@ -372,8 +372,8 @@ export function PriorityTag({
 const CALL_TONE: Record<Incident["status"], string> = {
   New: "bg-npf-gold-wash text-npf-warn",
   Dispatched: "bg-npf-review-wash text-npf-review",
-  "On Scene": "bg-[var(--ops-scene-wash)] text-[var(--ops-scene)]",
-  Closed: "bg-[var(--ops-raised)] text-[var(--ops-dim)]",
+  "On Scene": "bg-ops-scene-wash text-ops-scene",
+  Closed: "bg-ops-raised text-ops-dim",
 };
 
 /** A pending call says "Pending" on the board — "New" is not a state of work. */
@@ -399,7 +399,7 @@ const UNIT_TONE: Record<UnitStatus, string> = {
   Available: "bg-npf-ok-soft text-npf-ok",
   Assigned: "bg-npf-gold-wash text-npf-warn",
   "On Scene": "bg-npf-review-wash text-npf-review",
-  Unavailable: "bg-[var(--ops-raised)] text-[var(--ops-dim)]",
+  Unavailable: "bg-ops-raised text-ops-dim",
 };
 
 export function UnitStatusTag({ status }: { status: UnitStatus }) {
@@ -453,7 +453,7 @@ export function Readout({
           : undefined
       }
     >
-      <dt className="text-2xs font-medium tracking-[0.12em] text-[var(--ops-dim)] uppercase">
+      <dt className="text-2xs font-medium tracking-[0.12em] text-ops-dim uppercase">
         {t(label)}
       </dt>
       <dd
@@ -484,11 +484,11 @@ export function OpsButton({
 }) {
   const tones = {
     brand:
-      "bg-[var(--ops-brand)] text-white shadow-[0_1px_2px_rgba(16,42,82,0.25)] hover:bg-[var(--ops-brand-lift)] disabled:opacity-40 disabled:shadow-none",
+      "bg-ops-brand text-white shadow-[0_1px_2px_rgba(16,42,82,0.25)] hover:bg-ops-brand-lift disabled:opacity-40 disabled:shadow-none",
     quiet:
-      "border border-[var(--ops-line)] bg-[var(--ops-panel)] text-[var(--ops-text)] hover:border-[var(--ops-accent)] hover:bg-[var(--ops-raised)] disabled:opacity-40",
+      "border border-ops-line bg-ops-panel text-ops-text hover:border-ops-accent hover:bg-ops-raised disabled:opacity-40",
     danger:
-      "border border-[var(--ops-p1)]/40 text-[var(--ops-p1)] hover:bg-[var(--ops-p1)]/12 disabled:opacity-40",
+      "border border-ops-p1/40 text-ops-p1 hover:bg-ops-p1/12 disabled:opacity-40",
   };
   return (
     /*

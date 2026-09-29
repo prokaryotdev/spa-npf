@@ -39,7 +39,7 @@ const display = localFont({
  * apple-touch icon rather than getting a named, themed install.
  */
 export const viewport: Viewport = {
-  themeColor: "#12294B",
+  themeColor: "#14315f", // --color-npf-blue-deep; metadata cannot read a CSS variable
   colorScheme: "light",
 };
 

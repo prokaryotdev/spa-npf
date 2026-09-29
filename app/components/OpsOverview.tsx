@@ -194,7 +194,7 @@ function More({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link
       href={href}
-      className="inline-flex items-center gap-1.5 rounded text-xs font-medium text-[var(--ops-accent)] transition-opacity hover:opacity-70"
+      className="inline-flex items-center gap-1.5 rounded text-xs font-medium text-ops-accent transition-opacity hover:opacity-70"
     >
       {children}
       <ArrowRight aria-hidden className="size-3.5" />
@@ -232,7 +232,7 @@ function PendingCall({
          dispatch control alongside the call on a 390px screen left the
          summary about twenty characters wide — three ragged lines of what the
          caller actually said. */
-      className={`npf-ops-row flex flex-col gap-3 border-b border-[var(--ops-line-soft)] px-4 py-3.5 last:border-0 sm:flex-row sm:gap-4 ${
+      className={`npf-ops-row flex flex-col gap-3 border-b border-ops-line-soft px-4 py-3.5 last:border-0 sm:flex-row sm:gap-4 ${
         late ? "npf-ops-overdue" : ""
       }`}
     >
@@ -246,11 +246,11 @@ function PendingCall({
             {incident.id}
           </Link>
           <span className="text-sm font-medium">{t(incident.kind)}</span>
-          <span className="text-sm text-[var(--ops-dim)]">
+          <span className="text-sm text-ops-dim">
             {t(incident.area)}
           </span>
         </div>
-        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[var(--ops-dim)]">
+        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-ops-dim">
           {t(incident.summary)}
         </p>
       </div>
@@ -261,7 +261,7 @@ function PendingCall({
           style={{ color: late ? "var(--ops-p1)" : "var(--ops-text)" }}
         >
           <Elapsed from={incident.reported} />
-          <span className="ms-1.5 font-primary text-2xs font-normal text-[var(--ops-dim)]">
+          <span className="ms-1.5 font-primary text-2xs font-normal text-ops-dim">
             {late
               ? t("over {span}", { span: duration(target * 60_000) })
               : t("of {n}m", { n: target })}
@@ -284,7 +284,7 @@ function PendingCall({
               status: "Dispatched",
             });
           }}
-          className="npf-ops-select max-w-[190px] rounded-chip border border-[var(--ops-line)] bg-[var(--ops-panel)] px-2.5 py-1.5 text-xs font-medium outline-none transition-colors hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)] disabled:opacity-50 disabled:hover:border-[var(--ops-line)]"
+          className="npf-ops-select max-w-[190px] rounded-chip border border-ops-line bg-ops-panel px-2.5 py-1.5 text-xs font-medium outline-none transition-colors hover:border-ops-accent focus:border-ops-accent disabled:opacity-50 disabled:hover:border-ops-line"
         >
           <option value="">
             {free.length
@@ -306,21 +306,21 @@ function PendingCall({
 function RunningCall({ incident }: { incident: Incident }) {
   const t = useT();
   return (
-    <li className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 border-b border-[var(--ops-line-soft)] px-4 py-2.5 transition-colors last:border-0 hover:bg-[var(--ops-raised)]/40">
+    <li className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 border-b border-ops-line-soft px-4 py-2.5 transition-colors last:border-0 hover:bg-ops-raised/40">
       <PriorityTag priority={incident.priority} />
       <span className="font-secondary text-sm font-bold tabular-nums">
         {incident.id}
       </span>
       <span className="min-w-0 flex-1 truncate text-sm">
         {t(incident.kind)}
-        <span className="text-[var(--ops-dim)]"> · {t(incident.area)}</span>
+        <span className="text-ops-dim"> · {t(incident.area)}</span>
       </span>
       <OpsStatus status={incident.status} />
-      <span className="flex items-baseline gap-2 text-xs text-[var(--ops-dim)]">
+      <span className="flex items-baseline gap-2 text-xs text-ops-dim">
         {t(incident.unit ?? "")}
         <Elapsed
           from={incident.onScene ?? incident.dispatched ?? incident.reported}
-          className="font-medium text-[var(--ops-text)]"
+          className="font-medium text-ops-text"
         />
       </span>
     </li>
@@ -369,7 +369,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
             return (
               <tr
                 key={division}
-                className="border-b border-[var(--ops-line-soft)] last:border-0"
+                className="border-b border-ops-line-soft last:border-0"
               >
                 <th
                   scope="row"
@@ -404,7 +404,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
                   }}
                 >
                   {open.length}
-                  <span className="font-normal text-[var(--ops-dim)]">
+                  <span className="font-normal text-ops-dim">
                     /{inDivision.length}
                   </span>
                 </td>
@@ -415,7 +415,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
       </table>
 
       {/* Three colours across twelve tracks earn one line naming them. */}
-      <ul className="flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--ops-line-soft)] bg-[var(--ops-bg)]/50 px-4 py-2 text-2xs text-[var(--ops-dim)]">
+      <ul className="flex flex-wrap gap-x-4 gap-y-1 border-t border-ops-line-soft bg-ops-bg/50 px-4 py-2 text-2xs text-ops-dim">
         {UNIT_KEY.map(([label, fill]) => (
           <li key={label} className="flex items-center gap-1.5">
             <span
@@ -428,7 +428,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
         ))}
       </ul>
 
-      <div className="border-t border-[var(--ops-line-soft)] p-4">
+      <div className="border-t border-ops-line-soft p-4">
         <p className="mb-2.5 font-secondary text-xs font-bold">
           {t("On the air")}
         </p>
@@ -442,7 +442,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
                 <span className="font-secondary font-bold">
                   {t(u.callsign)}
                 </span>
-                <span className="min-w-0 flex-1 truncate text-[var(--ops-dim)]">
+                <span className="min-w-0 flex-1 truncate text-ops-dim">
                   {t(u.area)}
                 </span>
                 <UnitStatusTag status={u.status} />
@@ -450,7 +450,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
             ))}
           </ul>
         ) : (
-          <p className="text-xs text-[var(--ops-p2)]">
+          <p className="text-xs text-ops-p2">
             {t("Every unit is committed. New calls will hold in the queue.")}
           </p>
         )}

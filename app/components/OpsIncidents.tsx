@@ -164,7 +164,7 @@ export default function OpsIncidents() {
 
         <p
           aria-live="polite"
-          className="ms-auto text-xs text-[var(--ops-dim)] tabular-nums"
+          className="ms-auto text-xs text-ops-dim tabular-nums"
         >
           {t("{shown} of {total} calls", {
             shown: visible.length,
@@ -193,7 +193,7 @@ export default function OpsIncidents() {
                   "Calls, with grade, type, area, status, assigned unit and elapsed time",
                 )}
               </caption>
-              <thead className="npf-ops-thead text-2xs font-medium tracking-[0.08em] text-[var(--ops-dim)] uppercase">
+              <thead className="npf-ops-thead text-2xs font-medium tracking-[0.08em] text-ops-dim uppercase">
                 <tr className="whitespace-nowrap">
                   <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
                     {t("Grade")}
@@ -233,10 +233,10 @@ export default function OpsIncidents() {
                       key={incident.id}
                       onClick={() => setSelected(incident.id)}
                       aria-selected={active}
-                      className={`npf-ops-pick cursor-pointer border-b border-[var(--ops-line-soft)] last:border-0 ${
+                      className={`npf-ops-pick cursor-pointer border-b border-ops-line-soft last:border-0 ${
                         active
-                          ? "bg-[var(--ops-raised)]"
-                          : "hover:bg-[var(--ops-raised)]/55"
+                          ? "bg-ops-raised"
+                          : "hover:bg-ops-raised/55"
                       } ${late ? "npf-ops-overdue" : ""}`}
                     >
                       <td className="py-3 pe-3 ps-4 align-top">
@@ -259,17 +259,17 @@ export default function OpsIncidents() {
                       </th>
                       <td className="py-3 pe-3 align-top">
                         <span className="sm:hidden">
-                          <span className="font-secondary text-xs font-bold tabular-nums text-[var(--ops-dim)]">
+                          <span className="font-secondary text-xs font-bold tabular-nums text-ops-dim">
                             {incident.id}
                           </span>{" "}
                         </span>
                         {t(incident.kind)}
-                        <span className="block text-xs text-[var(--ops-dim)]">
+                        <span className="block text-xs text-ops-dim">
                           {t(incident.area)}
                         </span>
                         <span className="mt-1.5 flex flex-wrap items-center gap-2 md:hidden">
                           <OpsStatus status={incident.status} />
-                          <span className="text-2xs text-[var(--ops-dim)]">
+                          <span className="text-2xs text-ops-dim">
                             {incident.unit ? t(incident.unit) : t("No unit")}
                           </span>
                         </span>
@@ -283,7 +283,7 @@ export default function OpsIncidents() {
                             <span className="font-secondary font-bold">
                               {t(incident.unit)}
                             </span>
-                            <span className="block text-[var(--ops-dim)]">
+                            <span className="block text-ops-dim">
                               {t(incident.assignee ?? "")}
                             </span>
                           </>
@@ -304,7 +304,7 @@ export default function OpsIncidents() {
                           from={incident.reported}
                           to={incident.closed}
                         />
-                        <span className="block text-2xs font-normal text-[var(--ops-dim)]">
+                        <span className="block text-2xs font-normal text-ops-dim">
                           {incident.closed
                             ? t("total")
                             : incident.status === "New"
@@ -347,11 +347,11 @@ export default function OpsIncidents() {
               <div className="flex flex-col items-center gap-3 px-2 py-8 text-center">
                 <span
                   aria-hidden
-                  className="grid size-10 place-items-center rounded-full bg-[var(--ops-raised)] text-[var(--ops-accent)]"
+                  className="grid size-10 place-items-center rounded-full bg-ops-raised text-ops-accent"
                 >
                   <RadioIcon className="size-5" />
                 </span>
-                <p className="max-w-[34ch] text-xs leading-relaxed text-[var(--ops-dim)]">
+                <p className="max-w-[34ch] text-xs leading-relaxed text-ops-dim">
                   {t("Pick a row to dispatch it, move it on, or read the log.")}
                 </p>
               </div>
@@ -397,7 +397,7 @@ function Detail({
           type="button"
           onClick={onClose}
           aria-label={t("Close call detail")}
-          className="grid size-7 place-items-center rounded text-[var(--ops-dim)] transition-colors hover:bg-[var(--ops-raised)] hover:text-[var(--ops-text)]"
+          className="grid size-7 place-items-center rounded text-ops-dim transition-colors hover:bg-ops-raised hover:text-ops-text"
         >
           <CloseIcon className="size-4" />
         </button>
@@ -411,7 +411,7 @@ function Detail({
       <h3 className="mt-3 font-secondary text-base font-bold">
         {t(incident.kind)}
       </h3>
-      <p className="mt-0.5 text-sm text-[var(--ops-dim)]">{t(incident.area)}</p>
+      <p className="mt-0.5 text-sm text-ops-dim">{t(incident.area)}</p>
       <p className="mt-3 text-sm leading-relaxed">{t(incident.summary)}</p>
 
       {/*
@@ -421,7 +421,7 @@ function Detail({
       */}
       <Stamps incident={incident} />
 
-      <div className="mt-4 space-y-2.5 border-t border-[var(--ops-line-soft)] pt-4">
+      <div className="mt-4 space-y-2.5 border-t border-ops-line-soft pt-4">
         <Assign
           id={`${id}-unit`}
           label={t("Unit")}
@@ -483,8 +483,8 @@ function Detail({
         </OpsButton>
       ) : null}
 
-      <div className="mt-5 border-t border-[var(--ops-line-soft)] pt-4">
-        <p className="mb-3 text-2xs tracking-[0.12em] text-[var(--ops-dim)] uppercase">
+      <div className="mt-5 border-t border-ops-line-soft pt-4">
+        <p className="mb-3 text-2xs tracking-[0.12em] text-ops-dim uppercase">
           {t("Log")}
         </p>
         <ol className="space-y-2 text-xs">
@@ -495,7 +495,7 @@ function Detail({
               <li key={entry.at + i} className="flex gap-3">
                 <time
                   dateTime={entry.at}
-                  className="w-10 shrink-0 text-[var(--ops-dim)] tabular-nums"
+                  className="w-10 shrink-0 text-ops-dim tabular-nums"
                 >
                   {format.time(entry.at)}
                 </time>
@@ -526,7 +526,7 @@ function Detail({
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder={t("Add to the log")}
-            className="min-w-0 flex-1 rounded-chip border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-xs outline-none placeholder:text-[var(--ops-dim)] focus:border-[var(--ops-accent)]"
+            className="min-w-0 flex-1 rounded-chip border border-ops-line bg-ops-raised px-3 py-2 text-xs outline-none placeholder:text-ops-dim focus:border-ops-accent"
           />
           <OpsButton
             type="submit"
@@ -554,26 +554,26 @@ function Stamps({ incident }: { incident: Incident }) {
   ];
 
   return (
-    <ol className="mt-4 border-t border-[var(--ops-line-soft)] pt-3 text-xs">
+    <ol className="mt-4 border-t border-ops-line-soft pt-3 text-xs">
       {rows.map(([label, at, from]) => (
         <li
           key={label}
           className="flex items-baseline justify-between gap-3 py-1"
         >
-          <span className={at ? "" : "text-[var(--ops-dim)]"}>{t(label)}</span>
+          <span className={at ? "" : "text-ops-dim"}>{t(label)}</span>
           {at ? (
             <span className="flex items-baseline gap-2.5 tabular-nums">
               {from ? (
-                <span className="text-[var(--ops-accent)]" dir="ltr">
+                <span className="text-ops-accent" dir="ltr">
                   +{duration(new Date(at).getTime() - new Date(from).getTime())}
                 </span>
               ) : null}
-              <time dateTime={at} className="text-[var(--ops-dim)]">
+              <time dateTime={at} className="text-ops-dim">
                 {format.time(at)}
               </time>
             </span>
           ) : (
-            <span className="text-[var(--ops-dim)]">—</span>
+            <span className="text-ops-dim">—</span>
           )}
         </li>
       ))}
@@ -697,7 +697,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
 }
 
 const INPUT =
-  "w-full rounded-chip border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none transition-colors placeholder:text-[var(--ops-dim)] hover:border-[var(--ops-accent)]/60 focus:border-[var(--ops-accent)]";
+  "w-full rounded-chip border border-ops-line bg-ops-raised px-3 py-2 text-sm outline-none transition-colors placeholder:text-ops-dim hover:border-ops-accent/60 focus:border-ops-accent";
 const SELECT = `npf-ops-select ${INPUT}`;
 
 function Field({
@@ -713,7 +713,7 @@ function Field({
     <div>
       <label
         htmlFor={id}
-        className="mb-1.5 block text-2xs tracking-[0.1em] text-[var(--ops-dim)] uppercase"
+        className="mb-1.5 block text-2xs tracking-[0.1em] text-ops-dim uppercase"
       >
         {label}
       </label>
@@ -739,14 +739,14 @@ function Assign({
 }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <label htmlFor={id} className="text-xs text-[var(--ops-dim)]">
+      <label htmlFor={id} className="text-xs text-ops-dim">
         {label}
       </label>
       <select
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="npf-ops-select min-w-0 flex-1 rounded-chip border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none transition-colors hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)]"
+        className="npf-ops-select min-w-0 flex-1 rounded-chip border border-ops-line bg-ops-raised px-3 py-2 text-sm outline-none transition-colors hover:border-ops-accent focus:border-ops-accent"
       >
         {placeholder ? <option value="">{placeholder}</option> : null}
         {options.map(([v, text]) => (
