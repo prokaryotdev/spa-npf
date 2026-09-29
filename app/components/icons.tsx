@@ -52,7 +52,7 @@ export const ArrowDown = ({ className }: IconProps) => (
   </svg>
 );
 
-export const CallIcon =({ className }: IconProps) => (
+export const CallIcon = ({ className }: IconProps) => (
   <svg {...base} className={className}>
     <path d="M4.8 3.4h2.4l1.2 3-1.7 1.2a9.6 9.6 0 0 0 5.7 5.7l1.2-1.7 3 1.2v2.4a1.7 1.7 0 0 1-1.9 1.7A14.1 14.1 0 0 1 3.1 5.3a1.7 1.7 0 0 1 1.7-1.9Z" />
     <path d="M14.6 3.2a6.4 6.4 0 0 1 6.2 6.2" />
@@ -242,6 +242,13 @@ export const InboxIcon = ({ className }: IconProps) => (
   <svg {...base} className={className}>
     <path d="M3.2 13.6h4.2l1.5 2.6h6.2l1.5-2.6h4.2" />
     <path d="M5.6 4.4h12.8l2.4 9.2v4.4a2 2 0 0 1-2 2H5.2a2 2 0 0 1-2-2v-4.4Z" />
+  </svg>
+);
+
+export const ChatIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M20 11.6a7.6 7.6 0 0 1-11.2 6.7L4 19.6l1.3-4.4A7.6 7.6 0 1 1 20 11.6Z" />
+    <path d="M8.6 11.6h.01M12.4 11.6h.01M16.2 11.6h.01" />
   </svg>
 );
 

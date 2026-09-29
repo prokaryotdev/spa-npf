@@ -35,7 +35,7 @@ export default function ServiceAction({ service }: { service: Service }) {
       <>
         <Link
           href={`/app/signin?next=${encodeURIComponent(`/app/services/${service.slug}`)}`}
-          className="npf-btn npf-btn-primary w-full ps-6 hover:bg-npf-blue-mid"
+          className="npf-btn npf-btn-primary h-auto min-h-12 w-full py-1.5 ps-6 text-start leading-tight whitespace-normal hover:bg-npf-blue-mid"
         >
           <UserCircle className="size-5 shrink-0" />
           {t("Sign in to {action}", {
@@ -86,7 +86,7 @@ export default function ServiceAction({ service }: { service: Service }) {
       <>
         <Link
           href="/app/portal/requests"
-          className="npf-btn npf-btn-primary w-full ps-6 hover:bg-npf-blue-mid"
+          className="npf-btn npf-btn-primary h-auto min-h-12 w-full py-1.5 ps-6 text-start leading-tight whitespace-normal hover:bg-npf-blue-mid"
         >
           {t("Open request {ref}", { ref: existing.id })}
           <span className="npf-btn-disc ms-auto">
@@ -114,7 +114,7 @@ export default function ServiceAction({ service }: { service: Service }) {
             }).id,
           )
         }
-        className="npf-btn npf-btn-primary w-full ps-6 hover:bg-npf-blue-mid"
+        className="npf-btn npf-btn-primary h-auto min-h-12 w-full py-1.5 ps-6 text-start leading-tight whitespace-normal hover:bg-npf-blue-mid"
       >
         {service.action}
         <span className="npf-btn-disc ms-auto">
