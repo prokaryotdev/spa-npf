@@ -170,45 +170,41 @@ export default async function ServicePage({
         <section className="bg-white pb-(--npf-section-y)">
           <div className="npf-container grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_340px]">
             {/* On a phone the aside dissolves into the column: the action
-                sits first, help sits last. On a desktop the action rides
-                along beside the reading, and help waits at the rail's foot,
-                where the reading ends; pinning both would outgrow a laptop
-                screen and hide help for good. */}
-            <aside className="max-lg:contents lg:col-start-2 lg:row-start-1 lg:flex lg:flex-col">
-              <div className="max-lg:contents lg:flex-1">
-                <div className="max-lg:contents lg:sticky lg:top-28">
-                  <div className="rounded-card bg-white p-6 shadow-card ring-1 ring-npf-hairline ring-inset">
-                    <div className="flex items-center gap-4">
-                      <span className="grid size-12 shrink-0 place-items-center rounded-chip bg-npf-cloud">
-                        {service.icon ? (
-                          <Image
-                            src={service.icon}
-                            alt=""
-                            width={26}
-                            height={26}
-                            className="size-6.5"
-                          />
-                        ) : (
-                          <ServicesIcon className="size-6 text-npf-blue-ink" />
-                        )}
-                      </span>
-                      <p className="npf-h5 text-npf-ink">{service.name}</p>
-                    </div>
-                    <div className="mt-6">
-                      <ServiceAction service={service} />
-                    </div>
-                    {service.ninAuthOnly ? (
-                      <p className="npf-small mt-4 flex items-center justify-center gap-2 border-t border-npf-hairline pt-4 text-npf-steel">
-                        <UserCircle className="size-4 shrink-0" />
-                        {t("NINAuth sign-in required")}
-                      </p>
-                    ) : null}
-                  </div>
+                sits first, help sits last. On a desktop action and help
+                stack as one rail that rides along beside the reading, but
+                only on screens tall enough to hold all of it; on a short
+                laptop a pinned rail would cut help off, so it scrolls. */}
+            <aside className="max-lg:contents lg:col-start-2 lg:row-start-1 lg:self-start lg:[@media(min-height:50rem)]:sticky lg:[@media(min-height:50rem)]:top-28">
+              <div className="rounded-card bg-white p-6 shadow-card ring-1 ring-npf-hairline ring-inset">
+                <div className="flex items-center gap-4">
+                  <span className="grid size-12 shrink-0 place-items-center rounded-chip bg-npf-cloud">
+                    {service.icon ? (
+                      <Image
+                        src={service.icon}
+                        alt=""
+                        width={26}
+                        height={26}
+                        className="size-6.5"
+                      />
+                    ) : (
+                      <ServicesIcon className="size-6 text-npf-blue-ink" />
+                    )}
+                  </span>
+                  <p className="npf-h5 text-npf-ink">{service.name}</p>
                 </div>
+                <div className="mt-6">
+                  <ServiceAction service={service} />
+                </div>
+                {service.ninAuthOnly ? (
+                  <p className="npf-small mt-4 flex items-center justify-center gap-2 border-t border-npf-hairline pt-4 text-npf-steel">
+                    <UserCircle className="size-4 shrink-0" />
+                    {t("NINAuth sign-in required")}
+                  </p>
+                ) : null}
               </div>
 
               {service.contacts.length ? (
-                <div className="order-last overflow-hidden rounded-card border border-npf-hairline lg:mt-10">
+                <div className="order-last overflow-hidden rounded-card border border-npf-hairline lg:mt-6">
                   <h2 className="npf-h5 border-b border-npf-hairline bg-npf-mist px-5 py-3.5 text-npf-blue-deep">
                     {t("Need help")}
                   </h2>
