@@ -32,9 +32,9 @@ export default async function ContactUsPage() {
             {contactUs.reach.lines.map((line) => (
               <div
                 key={line.number}
-                className="flex items-center gap-5 rounded-3xl bg-[#F4F6FA] p-6"
+                className="flex items-center gap-5 rounded-tile bg-npf-cloud p-6"
               >
-                <span className="rounded-2xl bg-white p-4 text-npf-blue-ink">
+                <span className="rounded-card bg-white p-4 text-npf-blue-ink">
                   <PhoneIcon className="size-8" />
                 </span>
                 <div className="min-w-0">
@@ -55,7 +55,7 @@ export default async function ContactUsPage() {
             ))}
           </div>
 
-          <div className="mt-6 rounded-3xl bg-white p-6 ring-1 ring-black/5">
+          <div className="mt-6 rounded-tile bg-white p-6 ring-1 ring-black/5">
             <h3 className="font-secondary text-lg font-bold text-npf-blue-deep">
               {contactUs.reach.signLanguage.title}
             </h3>
@@ -86,7 +86,7 @@ export default async function ContactUsPage() {
       </section>
 
       <section className="bg-white pb-24">
-        <div className="npf-container rounded-3xl bg-[#F4F6FA] p-8 md:p-12">
+        <div className="npf-container rounded-tile bg-npf-cloud p-8 md:p-12">
           <p className="font-secondary text-sm font-bold tracking-wide text-npf-blue-ink uppercase">
             {contactUs.leaders.title}
           </p>

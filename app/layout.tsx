@@ -79,7 +79,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full overflow-x-hidden">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-npf-blue-ink focus:shadow-raised"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[100] focus:rounded-chip focus:bg-white focus:px-4 focus:py-3 focus:text-npf-blue-ink focus:shadow-raised"
         >
           {t("Skip to main content")}
         </a>

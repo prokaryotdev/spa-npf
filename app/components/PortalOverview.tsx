@@ -41,8 +41,8 @@ export default function PortalOverview({
   return (
     <div className="space-y-8">
       {needsYou.length ? (
-        <section className="rounded-3xl bg-[#FFF7E6] p-6">
-          <h2 className="font-secondary text-lg font-bold text-[#6b4a00]">
+        <section className="rounded-tile bg-npf-gold-wash p-6">
+          <h2 className="font-secondary text-lg font-bold text-npf-warn">
             {needsYou.length === 1
               ? t("One request needs something from you")
               : t("{n} requests need something from you", {
@@ -54,7 +54,7 @@ export default function PortalOverview({
               <li key={request.id}>
                 <Link
                   href="/app/portal/requests"
-                  className="group/row flex items-start gap-3 rounded-2xl bg-white px-4 py-3 transition-colors hover:bg-white/70"
+                  className="group/row flex items-start gap-3 rounded-card bg-white px-4 py-3 transition-colors hover:bg-white/70"
                 >
                   <span className="min-w-0 flex-1">
                     <span className="block font-medium text-npf-ink">
@@ -113,7 +113,7 @@ export default function PortalOverview({
             <li key={service.slug}>
               <Link
                 href={`/app/services/${service.slug}`}
-                className="group/row flex items-center gap-3 rounded-2xl bg-[#F4F6FA] px-4 py-3 transition-colors hover:bg-[#DDE6F4]"
+                className="group/row flex items-center gap-3 rounded-card bg-npf-cloud px-4 py-3 transition-colors hover:bg-npf-cloud-deep"
               >
                 {/*
                   A plain <img>, not next/image. These are 24px SVGs already
@@ -197,7 +197,7 @@ export default function PortalOverview({
 
       <section
         id="notices"
-        className="scroll-mt-32 rounded-3xl p-6 ring-1 ring-black/[0.07]"
+        className="scroll-mt-32 rounded-tile p-6 ring-1 ring-black/[0.07]"
       >
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <h2 className="flex items-center gap-2 font-secondary text-lg font-bold text-npf-blue-deep">
@@ -220,8 +220,8 @@ export default function PortalOverview({
             {notices.map((notice) => (
               <li
                 key={notice.id}
-                className={`rounded-2xl px-4 py-3 ${
-                  notice.read ? "bg-[#F9F9F9]" : "bg-[#E8EEF8]"
+                className={`rounded-card px-4 py-3 ${
+                  notice.read ? "bg-npf-paper" : "bg-npf-chip"
                 }`}
               >
                 <p className="flex flex-wrap items-baseline justify-between gap-2">
@@ -263,7 +263,7 @@ function Stat({
   return (
     <Link
       href={href}
-      className="rounded-3xl bg-[#F4F6FA] px-5 py-5 transition-colors hover:bg-[#DDE6F4]"
+      className="rounded-tile bg-npf-cloud px-5 py-5 transition-colors hover:bg-npf-cloud-deep"
     >
       <dt className="text-sm text-npf-body">{label}</dt>
       <dd className="mt-1 font-secondary text-2xl font-bold text-npf-blue-deep tabular-nums">

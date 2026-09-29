@@ -193,7 +193,7 @@ export default function OpsIncidents() {
                   "Calls, with grade, type, area, status, assigned unit and elapsed time",
                 )}
               </caption>
-              <thead className="npf-ops-thead text-[11px] font-medium tracking-[0.08em] text-[var(--ops-dim)] uppercase">
+              <thead className="npf-ops-thead text-2xs font-medium tracking-[0.08em] text-[var(--ops-dim)] uppercase">
                 <tr className="whitespace-nowrap">
                   <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
                     {t("Grade")}
@@ -269,7 +269,7 @@ export default function OpsIncidents() {
                         </span>
                         <span className="mt-1.5 flex flex-wrap items-center gap-2 md:hidden">
                           <OpsStatus status={incident.status} />
-                          <span className="text-[11px] text-[var(--ops-dim)]">
+                          <span className="text-2xs text-[var(--ops-dim)]">
                             {incident.unit ? t(incident.unit) : t("No unit")}
                           </span>
                         </span>
@@ -304,7 +304,7 @@ export default function OpsIncidents() {
                           from={incident.reported}
                           to={incident.closed}
                         />
-                        <span className="block text-[11px] font-normal text-[var(--ops-dim)]">
+                        <span className="block text-2xs font-normal text-[var(--ops-dim)]">
                           {incident.closed
                             ? t("total")
                             : incident.status === "New"
@@ -484,7 +484,7 @@ function Detail({
       ) : null}
 
       <div className="mt-5 border-t border-[var(--ops-line-soft)] pt-4">
-        <p className="mb-3 text-[11px] tracking-[0.12em] text-[var(--ops-dim)] uppercase">
+        <p className="mb-3 text-2xs tracking-[0.12em] text-[var(--ops-dim)] uppercase">
           {t("Log")}
         </p>
         <ol className="space-y-2 text-xs">
@@ -526,7 +526,7 @@ function Detail({
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder={t("Add to the log")}
-            className="min-w-0 flex-1 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-xs outline-none placeholder:text-[var(--ops-dim)] focus:border-[var(--ops-accent)]"
+            className="min-w-0 flex-1 rounded-chip border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-xs outline-none placeholder:text-[var(--ops-dim)] focus:border-[var(--ops-accent)]"
           />
           <OpsButton
             type="submit"
@@ -697,7 +697,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
 }
 
 const INPUT =
-  "w-full rounded-lg border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none transition-colors placeholder:text-[var(--ops-dim)] hover:border-[var(--ops-accent)]/60 focus:border-[var(--ops-accent)]";
+  "w-full rounded-chip border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none transition-colors placeholder:text-[var(--ops-dim)] hover:border-[var(--ops-accent)]/60 focus:border-[var(--ops-accent)]";
 const SELECT = `npf-ops-select ${INPUT}`;
 
 function Field({
@@ -713,7 +713,7 @@ function Field({
     <div>
       <label
         htmlFor={id}
-        className="mb-1.5 block text-[11px] tracking-[0.1em] text-[var(--ops-dim)] uppercase"
+        className="mb-1.5 block text-2xs tracking-[0.1em] text-[var(--ops-dim)] uppercase"
       >
         {label}
       </label>
@@ -746,7 +746,7 @@ function Assign({
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="npf-ops-select min-w-0 flex-1 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none transition-colors hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)]"
+        className="npf-ops-select min-w-0 flex-1 rounded-chip border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none transition-colors hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)]"
       >
         {placeholder ? <option value="">{placeholder}</option> : null}
         {options.map(([v, text]) => (

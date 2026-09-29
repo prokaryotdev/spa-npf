@@ -59,7 +59,7 @@ export default function FeedbackForm({
 
   if (sent) {
     return (
-      <div role="status" className="mt-8 rounded-3xl bg-[#E8EEF8] p-8 md:p-10">
+      <div role="status" className="mt-8 rounded-tile bg-npf-chip p-8 md:p-10">
         <h3 className="font-secondary text-xl font-bold text-npf-blue-deep">
           {t("Thank you — your {kind} has been recorded", {
             kind: t(kind).toLowerCase(),
@@ -95,10 +95,10 @@ export default function FeedbackForm({
             return (
               <label
                 key={k.title}
-                className={`flex cursor-pointer flex-col rounded-3xl bg-white p-6 ring-1 transition-colors has-[:focus-visible]:ring-2 ${
+                className={`flex cursor-pointer flex-col rounded-tile bg-white p-6 ring-1 transition-colors has-[:focus-visible]:ring-2 ${
                   active
-                    ? "bg-[#F4F6FA] ring-2 ring-npf-blue"
-                    : "ring-black/5 hover:bg-[#F9FAFC]"
+                    ? "bg-npf-cloud ring-2 ring-npf-blue"
+                    : "ring-black/5 hover:bg-npf-cloud/50"
                 }`}
               >
                 <span className="flex items-center gap-3">
@@ -108,7 +108,7 @@ export default function FeedbackForm({
                     value={k.title}
                     checked={active}
                     onChange={() => setKind(k.title)}
-                    className="size-4 accent-[#1B3A66]"
+                    className="size-4 accent-npf-blue"
                   />
                   {Icon ? (
                     <Icon className="size-7 shrink-0 text-npf-blue" />
@@ -166,14 +166,14 @@ export default function FeedbackForm({
             aria-describedby={
               errors.message ? `${id}-message-error` : undefined
             }
-            className={`w-full rounded-lg border bg-white px-4 py-3 text-npf-ink outline-none focus:ring-2 focus:ring-npf-blue ${
-              errors.message ? "border-red-600" : "border-[#E4E2E6]"
+            className={`w-full rounded-chip border bg-white px-4 py-3 text-npf-ink outline-none focus:ring-2 focus:ring-npf-blue ${
+              errors.message ? "border-npf-error" : "border-npf-line"
             }`}
           />
           {errors.message ? (
             <p
               id={`${id}-message-error`}
-              className="mt-1.5 text-sm text-red-700"
+              className="mt-1.5 text-sm text-npf-error"
             >
               {errors.message}
             </p>
@@ -181,7 +181,7 @@ export default function FeedbackForm({
         </div>
       </div>
 
-      <p className="mt-6 max-w-[70ch] rounded-2xl bg-[#FFF6E8] p-4 text-sm text-npf-body">
+      <p className="mt-6 max-w-[70ch] rounded-card bg-npf-gold-wash p-4 text-sm text-npf-body">
         {notice}
       </p>
 
@@ -228,12 +228,12 @@ function Field({
         autoComplete={autoComplete}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${id}-error` : undefined}
-        className={`w-full rounded-lg border bg-white px-4 py-3 text-npf-ink outline-none focus:ring-2 focus:ring-npf-blue ${
-          error ? "border-red-600" : "border-[#E4E2E6]"
+        className={`w-full rounded-chip border bg-white px-4 py-3 text-npf-ink outline-none focus:ring-2 focus:ring-npf-blue ${
+          error ? "border-npf-error" : "border-npf-line"
         }`}
       />
       {error ? (
-        <p id={`${id}-error`} className="mt-1.5 text-sm text-red-700">
+        <p id={`${id}-error`} className="mt-1.5 text-sm text-npf-error">
           {error}
         </p>
       ) : null}

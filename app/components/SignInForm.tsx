@@ -101,7 +101,7 @@ export default function SignInForm() {
             })}
           </p>
 
-          <div className="mt-10 rounded-2xl bg-[#F4F6FA] px-5 py-4">
+          <div className="mt-10 rounded-card bg-npf-cloud px-5 py-4">
             <h3 className="flex items-center gap-2 font-secondary text-base font-bold text-npf-blue-deep">
               <ShieldIcon aria-hidden className="size-5" />
               {t("Nigeria Police Force personnel")}
@@ -114,7 +114,7 @@ export default function SignInForm() {
             <button
               type="button"
               onClick={() => enter(OFFICER)}
-              className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-npf-blue-ink ring-1 ring-npf-blue/25 transition-colors hover:bg-[#E8EEF8]"
+              className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-npf-blue-ink ring-1 ring-npf-blue/25 transition-colors hover:bg-npf-chip"
             >
               {t("Open the operations console")}
               <ArrowRight aria-hidden className="size-4" />
@@ -195,13 +195,13 @@ function Field({
         name={id}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${id}-error` : undefined}
-        className={`w-full rounded-lg border bg-white px-4 py-3 text-npf-ink outline-none placeholder:text-npf-muted focus:ring-2 focus:ring-npf-blue ${
-          error ? "border-red-600" : "border-[#E4E2E6]"
+        className={`w-full rounded-chip border bg-white px-4 py-3 text-npf-ink outline-none placeholder:text-npf-muted focus:ring-2 focus:ring-npf-blue ${
+          error ? "border-npf-error" : "border-npf-line"
         }`}
         {...rest}
       />
       {error ? (
-        <p id={`${id}-error`} className="mt-1.5 text-sm text-red-700">
+        <p id={`${id}-error`} className="mt-1.5 text-sm text-npf-error">
           {error}
         </p>
       ) : null}

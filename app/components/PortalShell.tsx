@@ -105,7 +105,7 @@ export default function PortalShell({
                   </div>
                 </div>
 
-                <p className="mb-8 flex items-start gap-3 rounded-2xl bg-[#FFF7E6] px-5 py-4 text-sm leading-relaxed text-[#6b4a00]">
+                <p className="mb-8 flex items-start gap-3 rounded-card bg-npf-gold-wash px-5 py-4 text-sm leading-relaxed text-npf-warn">
                   <AlertIcon aria-hidden className="mt-0.5 size-5 shrink-0" />
                   <span>
                     {t(
@@ -138,16 +138,16 @@ export default function PortalShell({
                             <Link
                               href={href}
                               aria-current={active ? "page" : undefined}
-                              className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm whitespace-nowrap transition-colors ${
+                              className={`flex items-center gap-3 rounded-chip px-4 py-2.5 text-sm whitespace-nowrap transition-colors ${
                                 active
-                                  ? "bg-[#E8EEF8] font-medium text-npf-blue-ink"
+                                  ? "bg-npf-chip font-medium text-npf-blue-ink"
                                   : "text-npf-body hover:bg-black/[0.04]"
                               }`}
                             >
                               <Icon className="size-[18px] shrink-0" />
                               {t(label)}
                               {counts[href] ? (
-                                <span className="ms-auto rounded-full bg-npf-blue px-2 py-0.5 text-[11px] font-medium text-white tabular-nums">
+                                <span className="ms-auto rounded-full bg-npf-blue px-2 py-0.5 text-2xs font-medium text-white tabular-nums">
                                   {counts[href]}
                                 </span>
                               ) : null}
@@ -180,10 +180,10 @@ function Loading() {
       <div className="mt-10 grid gap-8 lg:grid-cols-[240px_1fr] lg:gap-12">
         <div className="space-y-2">
           {[0, 1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-10 rounded-xl bg-black/[0.05]" />
+            <div key={i} className="h-10 rounded-chip bg-black/[0.05]" />
           ))}
         </div>
-        <div className="h-64 rounded-3xl bg-black/[0.04]" />
+        <div className="h-64 rounded-tile bg-black/[0.04]" />
       </div>
       <span className="sr-only">{t("Loading your account")}</span>
     </div>

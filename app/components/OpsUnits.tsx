@@ -159,7 +159,7 @@ export default function OpsUnits() {
               "Units on duty, with status, elapsed time in that status, and the call they are assigned to",
             )}
           </caption>
-          <thead className="npf-ops-thead text-[11px] font-medium tracking-[0.08em] text-[var(--ops-dim)] uppercase">
+          <thead className="npf-ops-thead text-2xs font-medium tracking-[0.08em] text-[var(--ops-dim)] uppercase">
             <tr>
               <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
                 {t("Callsign")}
@@ -251,11 +251,11 @@ function Row({
         */}
         <div className="max-w-[34vw] sm:max-w-[16rem] lg:max-w-none">
           <span className="font-secondary font-bold">{t(unit.callsign)}</span>
-          <span className="block truncate text-[11px] font-normal text-[var(--ops-dim)]">
+          <span className="block truncate text-2xs font-normal text-[var(--ops-dim)]">
             {t(unit.division)}
             <span className="lg:hidden"> · {t(unit.officer)}</span>
           </span>
-          <span className="mt-1 flex items-center gap-x-2 text-[11px] font-normal text-[var(--ops-dim)] lg:hidden">
+          <span className="mt-1 flex items-center gap-x-2 text-2xs font-normal text-[var(--ops-dim)] lg:hidden">
             <span className="sm:hidden">
               <UnitStatusTag status={unit.status} />
             </span>

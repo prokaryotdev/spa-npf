@@ -11,15 +11,15 @@ import type { IncidentStatus, RequestStatus } from "./store";
  */
 const REQUEST_TONE: Record<RequestStatus, string> = {
   Submitted: "bg-black/[0.05] text-npf-body",
-  "In Review": "bg-[#EDE9FB] text-[#4A3B94]",
-  "Action Needed": "bg-[#FFF2D9] text-[#8a5a00]",
+  "In Review": "bg-npf-review-wash text-npf-review",
+  "Action Needed": "bg-npf-gold-wash text-npf-warn",
   Completed: "bg-npf-ok-soft text-npf-ok",
-  Rejected: "bg-[#FDECEC] text-[#9b1c1c]",
+  Rejected: "bg-npf-error-wash text-npf-error",
 };
 
 const INCIDENT_TONE: Record<IncidentStatus, string> = {
-  New: "bg-[#FFF2D9] text-[#8a5a00]",
-  Dispatched: "bg-[#EDE9FB] text-[#4A3B94]",
+  New: "bg-npf-gold-wash text-npf-warn",
+  Dispatched: "bg-npf-review-wash text-npf-review",
   "On Scene": "bg-npf-ok-soft text-npf-ok",
   Closed: "bg-black/[0.05] text-npf-body",
 };
@@ -57,7 +57,7 @@ export function Card({
 }) {
   const t = useT();
   return (
-    <section className="rounded-3xl p-6 ring-1 ring-black/[0.07]">
+    <section className="rounded-tile p-6 ring-1 ring-black/[0.07]">
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <h2 className="font-secondary text-lg font-bold text-npf-blue-deep">
           {t(title)}
@@ -81,7 +81,7 @@ export function Empty({
 }) {
   const t = useT();
   return (
-    <div className="rounded-2xl bg-[#F9F9F9] px-6 py-12 text-center">
+    <div className="rounded-card bg-npf-paper px-6 py-12 text-center">
       <p className="font-secondary text-base font-bold text-npf-ink">
         {t(title)}
       </p>

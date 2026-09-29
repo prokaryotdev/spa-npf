@@ -41,10 +41,10 @@ export default async function SignInPage() {
 function FormSkeleton() {
   return (
     <div aria-hidden className="max-w-[900px] animate-pulse">
-      <div className="h-20 rounded-2xl bg-black/[0.05]" />
+      <div className="h-20 rounded-card bg-black/[0.05]" />
       <div className="mt-8 grid gap-10 lg:grid-cols-2 lg:gap-16">
-        <div className="h-64 rounded-2xl bg-black/[0.04]" />
-        <div className="h-64 rounded-2xl bg-black/[0.04]" />
+        <div className="h-64 rounded-card bg-black/[0.04]" />
+        <div className="h-64 rounded-card bg-black/[0.04]" />
       </div>
     </div>
   );

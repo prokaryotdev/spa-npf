@@ -44,9 +44,9 @@ export default function PortalDocuments() {
           {issued.map((doc) => (
             <li
               key={doc.id}
-              className="flex flex-wrap items-center gap-4 rounded-2xl px-5 py-4 ring-1 ring-black/[0.07]"
+              className="flex flex-wrap items-center gap-4 rounded-card px-5 py-4 ring-1 ring-black/[0.07]"
             >
-              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-[#F4F6FA] text-npf-blue-ink">
+              <span className="grid size-11 shrink-0 place-items-center rounded-chip bg-npf-cloud text-npf-blue-ink">
                 <FileIcon className="size-5" />
               </span>
               <div className="min-w-0 flex-1">

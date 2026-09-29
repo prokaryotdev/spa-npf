@@ -13,12 +13,12 @@ const ARC = 2 * Math.PI * R;
 // Safe, a deeper steel blue for Secure, the gold of the crest for Together.
 // The blues are washes, not glows: the words and the portrait carry the colour.
 const SKIES = [
-  "radial-gradient(60% 70% at 85% 20%, color-mix(in srgb, var(--color-npf-blue-mid) 14%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, #7fb2ff 12%, transparent), transparent 75%), linear-gradient(160deg, #f7faff, var(--color-npf-mist))",
-  "radial-gradient(65% 75% at 80% 30%, color-mix(in srgb, var(--color-npf-blue) 15%, transparent), transparent 70%), radial-gradient(70% 60% at 0% 100%, color-mix(in srgb, #7fb2ff 11%, transparent), transparent 70%), linear-gradient(200deg, #e9f0fb, #f6f8fc)",
+  "radial-gradient(60% 70% at 85% 20%, color-mix(in srgb, var(--color-npf-blue-mid) 14%, transparent), transparent 70%), radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, var(--color-npf-sky) 12%, transparent), transparent 75%), linear-gradient(160deg, var(--color-npf-cloud), var(--color-npf-mist))",
+  "radial-gradient(65% 75% at 80% 30%, color-mix(in srgb, var(--color-npf-blue) 15%, transparent), transparent 70%), radial-gradient(70% 60% at 0% 100%, color-mix(in srgb, var(--color-npf-sky) 11%, transparent), transparent 70%), linear-gradient(200deg, var(--color-npf-chip), var(--color-npf-cloud))",
   // Together is golden hour, the light its portrait was shot in: a low sun
   // behind the ring, warming to apricot at the floor, so the chapter feels
   // like the end of a good day rather than a tinted slide.
-  "radial-gradient(45% 60% at 72% 48%, color-mix(in srgb, var(--color-npf-gold-soft) 55%, transparent), transparent 70%), radial-gradient(90% 60% at 20% 110%, color-mix(in srgb, #f3a86b 10%, transparent), transparent 75%), linear-gradient(175deg, #fffaf0 10%, var(--color-npf-gold-wash) 55%, color-mix(in srgb, #fde9d6 50%, white))",
+  "radial-gradient(45% 60% at 72% 48%, color-mix(in srgb, var(--color-npf-gold-soft) 55%, transparent), transparent 70%), radial-gradient(90% 60% at 20% 110%, color-mix(in srgb, var(--color-npf-apricot) 10%, transparent), transparent 75%), linear-gradient(175deg, var(--color-npf-sand) 10%, var(--color-npf-gold-wash) 55%, color-mix(in srgb, var(--color-npf-apricot) 14%, white))",
 ];
 
 const at = (fn: (a: number) => number, p: number) =>
@@ -133,7 +133,7 @@ export default function Pillars() {
                           ref={(el) => {
                             rules.current[i] = el;
                           }}
-                          className="block h-full origin-left scale-x-0 bg-linear-to-r from-[#5b9bff] to-npf-blue-deep rtl:origin-right rtl:bg-linear-to-l"
+                          className="block h-full origin-left scale-x-0 bg-linear-to-r from-npf-sky to-npf-blue-deep rtl:origin-right rtl:bg-linear-to-l"
                         />
                       </span>
                       <span
@@ -171,7 +171,7 @@ export default function Pillars() {
                 >
                   <defs>
                     <linearGradient id="pillars-arc" gradientUnits="userSpaceOnUse" x1="0" y1="100" x2="100" y2="0">
-                      <stop offset="0" stopColor="#5b9bff" />
+                      <stop offset="0" stopColor="var(--color-npf-sky)" />
                       <stop offset="0.5" stopColor="var(--color-npf-blue-mid)" />
                       <stop offset="1" stopColor="var(--color-npf-blue-deep)" />
                     </linearGradient>

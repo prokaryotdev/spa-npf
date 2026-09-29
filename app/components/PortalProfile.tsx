@@ -47,7 +47,7 @@ export default function PortalProfile() {
         {t("Profile")}
       </h2>
 
-      <dl className="mb-8 divide-y divide-black/[0.07] rounded-2xl bg-[#F9F9F9] px-5">
+      <dl className="mb-8 divide-y divide-black/[0.07] rounded-card bg-npf-paper px-5">
         <Row label={t("Full name")} value={t(session.name)} />
         <Row label={t("NIN")} value={session.nin} />
         {session.rank ? (
@@ -134,13 +134,13 @@ function Field({
         name={id}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${id}-error` : undefined}
-        className={`w-full rounded-lg border bg-white px-4 py-3 text-npf-ink outline-none placeholder:text-npf-muted focus:ring-2 focus:ring-npf-blue ${
-          error ? "border-red-600" : "border-[#E4E2E6]"
+        className={`w-full rounded-chip border bg-white px-4 py-3 text-npf-ink outline-none placeholder:text-npf-muted focus:ring-2 focus:ring-npf-blue ${
+          error ? "border-npf-error" : "border-npf-line"
         }`}
         {...rest}
       />
       {error ? (
-        <p id={`${id}-error`} className="mt-1.5 text-sm text-red-700">
+        <p id={`${id}-error`} className="mt-1.5 text-sm text-npf-error">
           {t(error)}
         </p>
       ) : null}

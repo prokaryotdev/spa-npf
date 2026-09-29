@@ -224,7 +224,7 @@ export default function ServiceSearch({
         className={`flex items-center ${
           hero
             ? "gap-[11px] rounded-[26px] bg-white px-4 ring-0 transition-shadow focus-within:ring-2 focus-within:ring-npf-blue-mid"
-            : "gap-3 rounded-2xl bg-[#F4F6FA] px-4 ring-1 ring-black/5 transition-shadow focus-within:ring-2 focus-within:ring-npf-blue"
+            : "gap-3 rounded-card bg-npf-cloud px-4 ring-1 ring-black/5 transition-shadow focus-within:ring-2 focus-within:ring-npf-blue"
         }`}
       >
         <SearchIcon aria-hidden className="size-6 shrink-0 text-npf-blue-ink" />
@@ -256,7 +256,7 @@ export default function ServiceSearch({
         {trimmed ? (
           <button
             type="submit"
-            className="my-2 shrink-0 rounded-xl bg-npf-blue px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
+            className="my-2 shrink-0 rounded-chip bg-npf-blue px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-npf-blue-mid"
           >
             {t("Search")}
           </button>
@@ -267,7 +267,7 @@ export default function ServiceSearch({
         <div
           ref={list}
           style={{ maxHeight }}
-          className={`npf-suggest absolute inset-x-0 z-50 overflow-y-auto rounded-2xl bg-white p-2 text-start shadow-raised ring-1 ring-npf-ink/[0.06] ${
+          className={`npf-suggest absolute inset-x-0 z-50 overflow-y-auto rounded-card bg-white p-2 text-start shadow-raised ring-1 ring-npf-ink/[0.06] ${
             placement === "up"
               ? "npf-suggest-up bottom-[calc(100%+8px)]"
               : "top-[calc(100%+8px)]"
@@ -303,7 +303,7 @@ export default function ServiceSearch({
                             e.preventDefault();
                             take(hit);
                           }}
-                          className={`flex items-start gap-3 rounded-xl px-3 py-2.5 transition-colors ${
+                          className={`flex items-start gap-3 rounded-chip px-3 py-2.5 transition-colors ${
                             index === active
                               ? "bg-[rgba(13,160,110,0.09)]"
                               : "bg-transparent"
@@ -312,7 +312,7 @@ export default function ServiceSearch({
                           <Glyph hit={hit} />
                           <span className="min-w-0 flex-1">
                             <span
-                              className={`block truncate text-[15px] leading-snug font-medium ${
+                              className={`block truncate text-title leading-snug font-medium ${
                                 index === active
                                   ? "text-npf-blue-ink"
                                   : "text-npf-ink"
@@ -321,7 +321,7 @@ export default function ServiceSearch({
                               <Marked text={hit.title} query={trimmed} />
                             </span>
                             {hit.body ? (
-                              <span className="mt-0.5 block truncate text-[13px] text-npf-muted">
+                              <span className="mt-0.5 block truncate text-meta text-npf-muted">
                                 {hit.body}
                               </span>
                             ) : null}
@@ -382,7 +382,7 @@ export default function ServiceSearch({
                     <button
                       type="button"
                       onClick={() => retype(term)}
-                      className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-[15px] text-npf-body transition-colors hover:bg-black/[0.04]"
+                      className="flex w-full items-center gap-3 rounded-chip px-3 py-2 text-left text-title text-npf-body transition-colors hover:bg-black/[0.04]"
                     >
                       <ClockIcon
                         aria-hidden
@@ -401,7 +401,7 @@ export default function ServiceSearch({
               <button
                 type="button"
                 onClick={(e) => submit(e)}
-                className="flex w-full items-center gap-2 text-left text-[13px] text-npf-body transition-colors hover:text-npf-blue"
+                className="flex w-full items-center gap-2 text-left text-meta text-npf-body transition-colors hover:text-npf-blue"
               >
                 <EnterKeyIcon aria-hidden className="size-4 shrink-0" />
                 {t("See all results for")}
@@ -435,7 +435,7 @@ export default function ServiceSearch({
 function Glyph({ hit }: { hit: SearchHit }) {
   if (hit.icon)
     return (
-      <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-lg bg-[#F4F6FA]">
+      <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-chip bg-npf-cloud">
         <Image
           src={hit.icon}
           alt=""
@@ -446,7 +446,7 @@ function Glyph({ hit }: { hit: SearchHit }) {
       </span>
     );
   return (
-    <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-lg bg-[#F4F6FA] text-npf-blue-ink">
+    <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-chip bg-npf-cloud text-npf-blue-ink">
       <ServicesIcon className="size-4" />
     </span>
   );

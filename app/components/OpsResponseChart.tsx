@@ -35,7 +35,7 @@ export default function OpsResponseChart() {
           className="absolute inset-x-0 border-t border-dashed border-[var(--ops-line)]"
           style={{ bottom: `${(target / peak) * 100}%` }}
         >
-          <span className="absolute -top-2 end-0 bg-[var(--ops-panel)] ps-2 text-[10px] text-[var(--ops-dim)] tabular-nums">
+          <span className="absolute -top-2 end-0 bg-[var(--ops-panel)] ps-2 text-2xs text-[var(--ops-dim)] tabular-nums">
             {target}m
           </span>
         </div>
@@ -69,7 +69,7 @@ export default function OpsResponseChart() {
                   }}
                 />
                 {show ? (
-                  <span className="pointer-events-none absolute inset-x-0 -top-5 text-center text-[11px] font-medium tabular-nums">
+                  <span className="pointer-events-none absolute inset-x-0 -top-5 text-center text-2xs font-medium tabular-nums">
                     {point.minutes}
                   </span>
                 ) : null}
@@ -81,7 +81,7 @@ export default function OpsResponseChart() {
 
       <ul
         aria-hidden
-        className="mt-2 flex gap-[2px] text-[10px] text-[var(--ops-dim)] tabular-nums"
+        className="mt-2 flex gap-[2px] text-2xs text-[var(--ops-dim)] tabular-nums"
       >
         {responseTrend.map((point) => (
           <li key={point.hour} className="flex-1 text-center">

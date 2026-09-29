@@ -55,7 +55,7 @@ export default function PortalRequests() {
           >
             {t("Find a request")}
           </label>
-          <div className="flex items-center gap-3 rounded-xl bg-[#F4F6FA] px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-npf-blue">
+          <div className="flex items-center gap-3 rounded-chip bg-npf-cloud px-4 ring-1 ring-black/5 focus-within:ring-2 focus-within:ring-npf-blue">
             <SearchIcon
               aria-hidden
               className="size-5 shrink-0 text-npf-blue-ink"
@@ -81,7 +81,7 @@ export default function PortalRequests() {
             id={`${id}-s`}
             value={status}
             onChange={(e) => setStatus(e.target.value as RequestStatus | "All")}
-            className="rounded-xl bg-[#F4F6FA] px-4 py-3 text-base text-npf-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-npf-blue"
+            className="rounded-chip bg-npf-cloud px-4 py-3 text-base text-npf-ink ring-1 ring-black/5 outline-none focus:ring-2 focus:ring-npf-blue"
           >
             {FILTERS.map((f) => (
               <option key={f} value={f}>
@@ -131,7 +131,7 @@ export default function PortalRequests() {
           return (
             <li
               key={request.id}
-              className="overflow-hidden rounded-2xl ring-1 ring-black/[0.07]"
+              className="overflow-hidden rounded-card ring-1 ring-black/[0.07]"
             >
               <h3>
                 <button
@@ -139,7 +139,7 @@ export default function PortalRequests() {
                   aria-expanded={open}
                   aria-controls={`${id}-${request.id}`}
                   onClick={() => setOpenId(open ? null : request.id)}
-                  className="flex w-full items-center gap-4 px-5 py-4 text-start transition-colors hover:bg-[#F9F9F9]"
+                  className="flex w-full items-center gap-4 px-5 py-4 text-start transition-colors hover:bg-npf-paper"
                 >
                   <span className="min-w-0 flex-1">
                     <span className="block font-secondary text-base font-bold text-npf-ink">
@@ -169,7 +169,7 @@ export default function PortalRequests() {
                   className="border-t border-black/[0.07] px-5 py-5"
                 >
                   {request.note ? (
-                    <p className="mb-4 rounded-xl bg-[#FFF7E6] px-4 py-3 text-sm leading-relaxed text-[#6b4a00]">
+                    <p className="mb-4 rounded-chip bg-npf-gold-wash px-4 py-3 text-sm leading-relaxed text-npf-warn">
                       {t(request.note)}
                     </p>
                   ) : null}
@@ -271,7 +271,7 @@ function Reply({ request }: { request: TrackedRequest }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder={t("Tell us what you have done, or what you are sending.")}
-        className="w-full rounded-xl border border-[#E4E2E6] bg-white px-4 py-3 text-base leading-relaxed text-npf-ink outline-none placeholder:text-npf-muted focus:ring-2 focus:ring-npf-blue"
+        className="w-full rounded-chip border border-npf-line bg-white px-4 py-3 text-base leading-relaxed text-npf-ink outline-none placeholder:text-npf-muted focus:ring-2 focus:ring-npf-blue"
       />
       <button
         type="submit"

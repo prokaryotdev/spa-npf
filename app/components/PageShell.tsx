@@ -82,7 +82,7 @@ export async function PageShell({
               {t(title)}
             </h1>
             {intro ? (
-              <p className="mt-5 max-w-[70ch] text-base text-neutral-700 md:text-xl">
+              <p className="mt-5 max-w-[70ch] text-base text-npf-body md:text-xl">
                 {t(intro)}
               </p>
             ) : null}
@@ -115,7 +115,7 @@ export async function LinkCard({
   const t = await getT();
   const external = card.href.startsWith("http");
   return (
-    <article className="group/card overflow-hidden rounded-3xl bg-white shadow-card transition-transform duration-500 ease-[var(--ease-out)] md:hover:-translate-y-2">
+    <article className="group/card overflow-hidden rounded-tile bg-white shadow-card transition-transform duration-500 ease-[var(--ease-out)] md:hover:-translate-y-2">
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={card.image}

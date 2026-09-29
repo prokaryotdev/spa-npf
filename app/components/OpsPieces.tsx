@@ -152,7 +152,7 @@ export function OpsPanel({
        * `clip` crops without ever becoming a scrollport, so the heads pin to
        * the page — the only thing that scrolls here.
        */
-      className={`flex min-h-0 flex-col overflow-clip rounded-xl bg-[var(--ops-panel)] shadow-[var(--ops-shadow)] ${className}`}
+      className={`flex min-h-0 flex-col overflow-clip rounded-card bg-[var(--ops-panel)] shadow-[var(--ops-shadow)] ${className}`}
     >
       {title ? (
         /*
@@ -162,10 +162,10 @@ export function OpsPanel({
          * nothing leading; the weight step does the work instead.
          */
         <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[var(--ops-line-soft)] px-4 py-3">
-          <h2 className="flex items-center gap-2 font-secondary text-[15px] leading-none font-bold tracking-[-0.01em]">
+          <h2 className="flex items-center gap-2 font-secondary text-title leading-none font-bold tracking-[-0.01em]">
             {t(title)}
             {count !== undefined ? (
-              <span className="rounded bg-[var(--ops-raised)] px-1.5 py-0.5 font-primary text-[11px] leading-tight font-medium text-[var(--ops-dim)] tabular-nums">
+              <span className="rounded bg-[var(--ops-raised)] px-1.5 py-0.5 font-primary text-2xs leading-tight font-medium text-[var(--ops-dim)] tabular-nums">
                 {count}
               </span>
             ) : null}
@@ -256,10 +256,10 @@ export function OpsHead({
      */
     <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
       <div className="min-w-0">
-        <h1 className="font-secondary text-[22px] leading-tight font-bold tracking-[-0.015em]">
+        <h1 className="font-secondary text-stat leading-tight font-bold tracking-[-0.015em]">
           {title}
         </h1>
-        <p className="mt-1 max-w-[70ch] text-[13px] leading-relaxed text-[var(--ops-dim)]">
+        <p className="mt-1 max-w-[70ch] text-meta leading-relaxed text-[var(--ops-dim)]">
           {lead}
         </p>
       </div>
@@ -275,7 +275,7 @@ export function OpsHead({
  */
 export function ReadoutStrip({ children }: { children: React.ReactNode }) {
   return (
-    <dl className="flex flex-wrap divide-x divide-[var(--ops-line-soft)] overflow-clip rounded-xl bg-[var(--ops-panel)] shadow-[var(--ops-shadow)]">
+    <dl className="flex flex-wrap divide-x divide-[var(--ops-line-soft)] overflow-clip rounded-card bg-[var(--ops-panel)] shadow-[var(--ops-shadow)]">
       {children}
     </dl>
   );
@@ -302,7 +302,7 @@ export function OpsSearch({
      * white box — a control sized by what was left over rather than by what
      * anyone types into it.
      */
-    <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 transition-colors sm:max-w-[340px] focus-within:border-[var(--ops-accent)] focus-within:ring-2 focus-within:ring-[var(--ops-accent)]/15">
+    <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-chip border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 transition-colors sm:max-w-[340px] focus-within:border-[var(--ops-accent)] focus-within:ring-2 focus-within:ring-[var(--ops-accent)]/15">
       <SearchIcon
         aria-hidden
         className="size-4 shrink-0 text-[var(--ops-dim)]"
@@ -324,7 +324,7 @@ export function OpsSearch({
 
 /** The shared look of a `select` sitting in a filter bar. */
 export const OPS_SELECT =
-  "npf-ops-select rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 py-2 text-sm outline-none transition-colors hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)]";
+  "npf-ops-select rounded-chip border border-[var(--ops-line)] bg-[var(--ops-panel)] px-3 py-2 text-sm outline-none transition-colors hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)]";
 
 /* -------------------------------------------------------------------------
  * Grades and statuses
@@ -370,9 +370,9 @@ export function PriorityTag({
 }
 
 const CALL_TONE: Record<Incident["status"], string> = {
-  New: "bg-[#FDF0DC] text-[#8A4B06]",
-  Dispatched: "bg-[#E7E9FC] text-[#36309B]",
-  "On Scene": "bg-[#D9F1EC] text-[#0B5A54]",
+  New: "bg-npf-gold-wash text-npf-warn",
+  Dispatched: "bg-npf-review-wash text-npf-review",
+  "On Scene": "bg-[var(--ops-scene-wash)] text-[var(--ops-scene)]",
   Closed: "bg-[var(--ops-raised)] text-[var(--ops-dim)]",
 };
 
@@ -396,9 +396,9 @@ export function OpsStatus({ status }: { status: Incident["status"] }) {
 }
 
 const UNIT_TONE: Record<UnitStatus, string> = {
-  Available: "bg-[#DCF2E4] text-[#0E6437]",
-  Assigned: "bg-[#FDF0DC] text-[#8A4B06]",
-  "On Scene": "bg-[#E7E9FC] text-[#36309B]",
+  Available: "bg-npf-ok-soft text-npf-ok",
+  Assigned: "bg-npf-gold-wash text-npf-warn",
+  "On Scene": "bg-npf-review-wash text-npf-review",
   Unavailable: "bg-[var(--ops-raised)] text-[var(--ops-dim)]",
 };
 
@@ -453,18 +453,18 @@ export function Readout({
           : undefined
       }
     >
-      <dt className="text-[10px] font-medium tracking-[0.12em] text-[var(--ops-dim)] uppercase">
+      <dt className="text-2xs font-medium tracking-[0.12em] text-[var(--ops-dim)] uppercase">
         {t(label)}
       </dt>
       <dd
-        className="mt-2 font-secondary text-[26px] leading-none font-bold tracking-[-0.02em] tabular-nums"
+        className="mt-2 font-secondary text-figure leading-none font-bold tracking-[-0.02em] tabular-nums"
         style={tone ? { color: tone } : undefined}
       >
         {value}
       </dd>
       {note ? (
         <p
-          className="mt-1.5 text-[11px] leading-tight"
+          className="mt-1.5 text-2xs leading-tight"
           style={{ color: tone ? tone : "var(--ops-dim)" }}
         >
           {t(note)}
@@ -500,7 +500,7 @@ export function OpsButton({
     <button
       type="button"
       {...props}
-      className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-[background-color,border-color,box-shadow,translate] duration-150 enabled:active:translate-y-px disabled:cursor-not-allowed ${tones[tone]} ${className}`}
+      className={`inline-flex items-center gap-1.5 rounded-chip px-3 py-2 text-sm font-medium transition-[background-color,border-color,box-shadow,translate] duration-150 enabled:active:translate-y-px disabled:cursor-not-allowed ${tones[tone]} ${className}`}
     />
   );
 }

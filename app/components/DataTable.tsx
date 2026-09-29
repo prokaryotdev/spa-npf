@@ -104,7 +104,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             }}
             placeholder={t("Search")}
             aria-label={t("Search {what}", { what: t(caption) })}
-            className="w-full rounded-full border border-[#E4E2E6] bg-white py-3 pe-4 ps-12 text-sm text-npf-ink outline-none placeholder:text-npf-muted focus:border-npf-blue"
+            className="w-full rounded-full border border-npf-line bg-white py-3 pe-4 ps-12 text-sm text-npf-ink outline-none placeholder:text-npf-muted focus:border-npf-blue"
           />
         </div>
 
@@ -120,7 +120,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                 setGroup(e.target.value);
                 reset();
               }}
-              className="appearance-none rounded-full border border-[#E4E2E6] bg-white py-3 pe-10 ps-5 text-sm text-npf-ink outline-none focus:border-npf-blue"
+              className="appearance-none rounded-full border border-npf-line bg-white py-3 pe-10 ps-5 text-sm text-npf-ink outline-none focus:border-npf-blue"
             >
               {groups.map((g) => (
                 <option key={g} value={g}>
@@ -143,14 +143,14 @@ export default function DataTable<T extends Record<string, unknown>>({
         </p>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl ring-1 ring-black/5">
+      <div className="overflow-x-auto rounded-card ring-1 ring-black/5">
         <table
           style={{ minWidth }}
           className="w-full border-collapse bg-white text-start"
         >
           <caption className="sr-only">{t(caption)}</caption>
           <thead>
-            <tr className="bg-[#F4F6FA]">
+            <tr className="bg-npf-cloud">
               <th
                 scope="col"
                 className="px-4 py-4 text-sm font-medium text-npf-body"
@@ -206,7 +206,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             {slice.map((row, i) => (
               <tr
                 key={current * PAGE + i}
-                className="border-t border-black/5 align-top transition-colors hover:bg-[#F9FAFC]"
+                className="border-t border-black/5 align-top transition-colors hover:bg-npf-cloud/50"
               >
                 <td className="px-4 py-4 text-sm text-npf-muted tabular-nums">
                   {current * PAGE + i + 1}
@@ -266,7 +266,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             onClick={() => setPage(current - 1)}
             disabled={current === 0}
             aria-label={t("Previous page")}
-            className="grid size-11 place-items-center rounded-[32px] bg-[#EBEBEC] text-[#474B52] transition-all hover:bg-[#4A445914] active:rounded-xl disabled:pointer-events-none disabled:opacity-40"
+            className="grid size-11 place-items-center rounded-tile bg-npf-cloud text-npf-body transition-[background-color,border-radius] hover:bg-npf-cloud-deep active:rounded-chip disabled:pointer-events-none disabled:opacity-40"
           >
             <ChevronLeft className="size-5" />
           </button>
@@ -275,7 +275,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             onClick={() => setPage(current + 1)}
             disabled={current >= pages - 1}
             aria-label={t("Next page")}
-            className="grid size-11 place-items-center rounded-[32px] bg-[#EBEBEC] text-[#474B52] transition-all hover:bg-[#4A445914] active:rounded-xl disabled:pointer-events-none disabled:opacity-40"
+            className="grid size-11 place-items-center rounded-tile bg-npf-cloud text-npf-body transition-[background-color,border-radius] hover:bg-npf-cloud-deep active:rounded-chip disabled:pointer-events-none disabled:opacity-40"
           >
             <ChevronRight className="size-5" />
           </button>

@@ -23,10 +23,10 @@ const QUEUE: RequestStatus[] = ["Submitted", "In Review", "Action Needed"];
 
 const TONE: Record<RequestStatus, string> = {
   Submitted: "bg-[var(--ops-raised)] text-[var(--ops-dim)]",
-  "In Review": "bg-[#E7E9FC] text-[#36309B]",
-  "Action Needed": "bg-[#FDF0DC] text-[#8A4B06]",
-  Completed: "bg-[#DCF2E4] text-[#0E6437]",
-  Rejected: "bg-[#FBE4E4] text-[#9B1C1C]",
+  "In Review": "bg-npf-review-wash text-npf-review",
+  "Action Needed": "bg-npf-gold-wash text-npf-warn",
+  Completed: "bg-npf-ok-soft text-npf-ok",
+  Rejected: "bg-npf-error-wash text-npf-error",
 };
 
 /**
@@ -220,7 +220,7 @@ export default function OpsRequests() {
                     onChange={(e) => setReason(e.target.value)}
                     rows={2}
                     autoFocus
-                    className="mt-2 w-full rounded-lg border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none focus:border-[var(--ops-accent)]"
+                    className="mt-2 w-full rounded-chip border border-[var(--ops-line)] bg-[var(--ops-raised)] px-3 py-2 text-sm outline-none focus:border-[var(--ops-accent)]"
                     placeholder={t(
                       "Upload a clearer copy of the passport photo page.",
                     )}

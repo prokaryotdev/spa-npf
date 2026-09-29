@@ -28,6 +28,10 @@
   --color-npf-night: #0a1526;
   /* Community's ground: the crest's gold thinned to paper. */
   --color-npf-sand: #faf6ec;
+  /* The Pillars skies: a morning blue for the washes and the progress arc,
+     and the low-sun apricot of golden hour. Washes and fills only, never text. */
+  --color-npf-sky: #5b9bff;
+  --color-npf-apricot: #f3a86b;
   /*
    * The eagle-and-horses gold off the Force crest. Accent only — a rule, a
    * kicker, an active marker; never a large fill and never body text, where
@@ -53,6 +57,18 @@
      for a status chip. */
   --color-npf-mist: #eef3fa;
   --color-npf-gold-wash: #fdf3d7;
+  /*
+   * Status inks, shared by the portal and the police console. Each reads at
+   * 6:1 or better on its wash (warn sits on gold-wash). Error is its own red
+   * so the 112 alarm red keeps meaning 112 alone.
+   */
+  --color-npf-warn: #8a4b06;
+  --color-npf-review: #36309b;
+  --color-npf-review-wash: #e7e9fc;
+  --color-npf-error: #9b1c1c;
+  --color-npf-error-wash: #fbe4e4;
+  /* The one hairline for field borders and panel rules. */
+  --color-npf-line: #d3dcea;
   /* Quiet grounds inside a white page: a field or panel (cloud, deepening
      on hover), a neutral inset (paper), and the blue wash of a chip. */
   --color-npf-cloud: #f4f6fa;
@@ -62,6 +78,17 @@
   /* The phone in the app band: black glass and the steel of its band. */
   --color-npf-glass: #05080f;
   --color-npf-steel: #5d6d84;
+
+  /*
+   * The in-between type steps Tailwind's scale lacks, named so dense UI (the
+   * police console, the search panel) stops inventing px sizes. 11px is the
+   * floor: nothing on the site sets smaller.
+   */
+  --text-2xs: 0.6875rem;
+  --text-meta: 0.8125rem;
+  --text-title: 0.9375rem;
+  --text-stat: 1.375rem;
+  --text-figure: 1.625rem;
 
   /*
    * Three radii: chips and badges, white cards, and the photo tiles that
@@ -885,11 +912,11 @@ html.npf-large-text {
   --ops-bg: #edf1f8;
   --ops-panel: #ffffff;
   --ops-raised: #e4eaf6;
-  --ops-line: #d3dcea;
+  --ops-line: var(--color-npf-line);
   /* A second, fainter rule for divisions inside a panel, where a full
      --ops-line every 44px turns a call queue into graph paper. */
   --ops-line-soft: #e7ecf5;
-  --ops-text: #16203a;
+  --ops-text: var(--color-npf-ink);
   /*
    * The chrome. The board stays light — officers read it in daylight — but
    * the frame around it is the Force's own navy, so the console reads as a
@@ -898,17 +925,17 @@ html.npf-large-text {
    */
   --ops-chrome: #102a52;
   --ops-chrome-line: #24467e;
-  --ops-chrome-raised: #1b3f7a;
+  --ops-chrome-raised: var(--color-npf-blue);
   /* Secondary type on the chrome, 6.6:1 on --ops-chrome. */
   --ops-chrome-dim: #a6bcdd;
   /* Crest gold, legible on the chrome (8.4:1); marker and kicker only. */
-  --ops-chrome-gold: #e8cb74;
+  --ops-chrome-gold: var(--color-npf-gold-soft);
   /* Secondary text, 5.7:1 on the panel — dim, never grey-on-grey. */
   --ops-dim: #5c6880;
   /* The brand navy, used where it is a fill under white text (10.3:1). */
-  --ops-brand: #1b3f7a;
+  --ops-brand: var(--color-npf-blue);
   /* Hover on a light ground means going down, not up. */
-  --ops-brand-lift: #14315f;
+  --ops-brand-lift: var(--color-npf-blue-deep);
   /* The same hue as small text and icons on white (7.8:1). */
   --ops-accent: #1d4fa3;
 
@@ -918,7 +945,7 @@ html.npf-large-text {
    * darkened steps of each hue rather than the poster versions: amber in
    * particular fails badly on white until it is this far down.
    */
-  --ops-p1: #c1121f;
+  --ops-p1: var(--color-npf-alert);
   --ops-p2: #b45309;
   --ops-p3: #0f766e;
   --ops-p4: #5c6880;
@@ -933,7 +960,10 @@ html.npf-large-text {
   /* The same "good" green at the weight small type needs: --ops-fill-ok is
      4.5:1 on white and drops under it the moment a tinted cell sits behind
      an 11px note, so a readout says "on the air" in this one. */
-  --ops-ok: #0e6437;
+  --ops-ok: var(--color-npf-ok);
+  /* On scene: --ops-p3's teal as a status chip's ink and wash. */
+  --ops-scene: #0b5a54;
+  --ops-scene-wash: #d9f1ec;
 
   /*
    * Elevation is declared once, and it is shadow. A panel carrying both a

@@ -66,7 +66,7 @@ export default function AppPreview({
       <div className="relative rounded-[3.4rem] bg-npf-glass p-[11px] shadow-float ring-[1.5px] ring-npf-steel ring-inset">
         <div className="relative aspect-[9/19.5] overflow-hidden rounded-[2.65rem] bg-npf-night">
           {/* Status bar. */}
-          <div className="absolute inset-x-0 top-0 z-20 flex h-[42px] items-center justify-between px-[11%] text-xs font-semibold text-white tabular-nums sm:text-[13px]">
+          <div className="absolute inset-x-0 top-0 z-20 flex h-[42px] items-center justify-between px-[11%] text-xs font-semibold text-white tabular-nums sm:text-meta">
             <span>9:41</span>
             <span className="flex items-center gap-1.5">
               <svg viewBox="0 0 17 11" className="h-2.5 w-auto fill-white">
@@ -222,7 +222,7 @@ export default function AppPreview({
             </span>
           </span>
         </div>
-        <ol className="mt-4 grid grid-cols-3 gap-1.5 text-[11px] font-semibold">
+        <ol className="mt-4 grid grid-cols-3 gap-1.5 text-2xs font-semibold">
           {[
             { label: t("Submitted"), state: "done" },
             { label: t("In review"), state: "now" },

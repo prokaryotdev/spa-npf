@@ -37,7 +37,7 @@ export default function Error({
             <h1 className="font-secondary text-4xl leading-[1.15] font-bold text-npf-blue-deep lg:text-7xl">
               {t("Something went wrong")}
             </h1>
-            <p className="mt-5 max-w-[70ch] text-base text-neutral-700 md:text-xl">
+            <p className="mt-5 max-w-[70ch] text-base text-npf-body md:text-xl">
               {t("This page failed to load. Trying again often clears it.")}
             </p>
 
@@ -52,7 +52,7 @@ export default function Error({
               </button>
               <Link
                 href="/"
-                className="inline-flex items-center rounded-full bg-[#F4F6FA] px-6 py-3 font-medium text-npf-blue-ink ring-1 ring-black/5 transition-colors hover:bg-[#E8EEF8]"
+                className="inline-flex items-center rounded-full bg-npf-cloud px-6 py-3 font-medium text-npf-blue-ink ring-1 ring-black/5 transition-colors hover:bg-npf-chip"
               >
                 {t("Back to home")}
               </Link>

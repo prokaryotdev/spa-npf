@@ -41,7 +41,7 @@ export default function PortalFines() {
       </h2>
 
       {unpaid.length ? (
-        <div className="rounded-3xl bg-[#F4F6FA] p-6">
+        <div className="rounded-tile bg-npf-cloud p-6">
           <dl className="flex flex-wrap gap-x-12 gap-y-4">
             <div>
               <dt className="text-sm text-npf-body">{t("Payable today")}</dt>
@@ -67,7 +67,7 @@ export default function PortalFines() {
           <p className="mt-4 flex items-start gap-2 text-sm leading-relaxed text-npf-body">
             <AlertIcon
               aria-hidden
-              className="mt-0.5 size-4 shrink-0 text-[#8a5a00]"
+              className="mt-0.5 size-4 shrink-0 text-npf-warn"
             />
             {t("Paying within {days} days of the issue date takes 25% off.", {
               days: DISCOUNT_DAYS,
@@ -88,7 +88,7 @@ export default function PortalFines() {
               return (
                 <li
                   key={fine.id}
-                  className="rounded-2xl px-5 py-4 ring-1 ring-black/[0.07]"
+                  className="rounded-card px-5 py-4 ring-1 ring-black/[0.07]"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div className="min-w-0 flex-1">
@@ -154,7 +154,7 @@ export default function PortalFines() {
           <h3 className="mb-4 font-secondary text-lg font-bold text-npf-ink">
             {t("Paid")}
           </h3>
-          <ul className="divide-y divide-black/[0.07] rounded-2xl bg-[#F9F9F9] px-5">
+          <ul className="divide-y divide-black/[0.07] rounded-card bg-npf-paper px-5">
             {paid.map((fine) => (
               <li
                 key={fine.id}

@@ -261,7 +261,7 @@ function PendingCall({
           style={{ color: late ? "var(--ops-p1)" : "var(--ops-text)" }}
         >
           <Elapsed from={incident.reported} />
-          <span className="ms-1.5 font-primary text-[11px] font-normal text-[var(--ops-dim)]">
+          <span className="ms-1.5 font-primary text-2xs font-normal text-[var(--ops-dim)]">
             {late
               ? t("over {span}", { span: duration(target * 60_000) })
               : t("of {n}m", { n: target })}
@@ -284,7 +284,7 @@ function PendingCall({
               status: "Dispatched",
             });
           }}
-          className="npf-ops-select max-w-[190px] rounded-lg border border-[var(--ops-line)] bg-[var(--ops-panel)] px-2.5 py-1.5 text-xs font-medium outline-none transition-colors hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)] disabled:opacity-50 disabled:hover:border-[var(--ops-line)]"
+          className="npf-ops-select max-w-[190px] rounded-chip border border-[var(--ops-line)] bg-[var(--ops-panel)] px-2.5 py-1.5 text-xs font-medium outline-none transition-colors hover:border-[var(--ops-accent)] focus:border-[var(--ops-accent)] disabled:opacity-50 disabled:hover:border-[var(--ops-line)]"
         >
           <option value="">
             {free.length
@@ -415,7 +415,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
       </table>
 
       {/* Three colours across twelve tracks earn one line naming them. */}
-      <ul className="flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--ops-line-soft)] bg-[var(--ops-bg)]/50 px-4 py-2 text-[11px] text-[var(--ops-dim)]">
+      <ul className="flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--ops-line-soft)] bg-[var(--ops-bg)]/50 px-4 py-2 text-2xs text-[var(--ops-dim)]">
         {UNIT_KEY.map(([label, fill]) => (
           <li key={label} className="flex items-center gap-1.5">
             <span
