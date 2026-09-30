@@ -1389,6 +1389,9 @@ html.npf-large-text {
   }
   /* A field wrapping an icon and an input, like the search. */
   .npf-field-icon {
+    /* Positioned, so its focus ring paints over a positioned block above it
+       (the page header's white band) instead of being cut off by it. */
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -1403,6 +1406,12 @@ html.npf-large-text {
   }
   .npf-field-icon > input::placeholder {
     color: var(--color-npf-muted);
+  }
+  /* A pill search sits on white with nothing around it, so the plain field's
+     faint halo reads as a thin line. It gets a full, visible ring instead. */
+  .npf-field-icon:focus-within {
+    box-shadow: inset 0 0 0 1.5px var(--color-npf-blue-mid),
+      0 0 0 3px color-mix(in srgb, var(--color-npf-blue-mid) 18%, transparent);
   }
 
   @media (hover: hover) and (pointer: fine) {

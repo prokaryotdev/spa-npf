@@ -160,6 +160,8 @@ export const haPages: Record<string, string> = {
   "The laws the Force works under, what each traffic offence costs, and the speed limit on the roads of the Territory.":
     "Dokokin da Rundunar ke aiki da su, kuɗin kowane laifin hanya, da iyakar gudu a hanyoyin Babban Birnin Tarayya.",
   "Nothing matches “{query}”.": "Babu abin da ya dace da “{query}”.",
+  "Type a word, name or number": "Rubuta kalma, suna ko lamba",
+  "Clear search": "Share bincike",
   "In an emergency, call 112.": "Idan akwai gaggawa, kira 112.",
   "Call 112": "Kira 112",
   "Or go straight to": "Ko ka je kai tsaye zuwa",

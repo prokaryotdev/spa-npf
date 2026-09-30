@@ -1,15 +1,15 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState, type ReactNode } from "react";
 import {
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   ClockIcon,
+  CloseIcon,
   FileIcon,
   SearchIcon,
 } from "./icons";
 import { useT } from "../i18n/client";
+import { escape, fold, near, split } from "../search-text";
 
 export type Column<T> = {
   key: keyof T & string;
@@ -22,11 +22,62 @@ export type Column<T> = {
   width?: string;
 };
 
-const PAGE = 15;
+// "50,000" and "50 000" are one number, the way the rows store it.
+const words = (query: string) =>
+  split(fold(query.replace(/(\d)[,\s](?=\d{3}\b)/g, "$1")));
 
 /**
- * The searchable, sortable, paged table the Information pages are built on.
- * Everything runs on the rows already in the page — there is no query to make.
+ * Marks every place a search word lands in a cell. The cell is folded a
+ * character at a time so a match found in "ƙasa" or "50000" lights up the
+ * "Ƙasa" or "50,000" the reader actually sees.
+ */
+function highlight(text: string, terms: string[]): ReactNode {
+  if (!terms.length) return text;
+  let folded = "";
+  const at: number[] = [];
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    const digitComma =
+      c === "," && /\d/.test(text[i - 1] ?? "") && /\d/.test(text[i + 1] ?? "");
+    const f = digitComma ? "" : /\s/.test(c) ? " " : fold(c);
+    for (const ch of f) {
+      folded += ch;
+      at.push(i);
+    }
+  }
+  const lit = new Array<boolean>(text.length).fill(false);
+  for (const term of terms) {
+    for (let j = folded.indexOf(term); j !== -1; j = folded.indexOf(term, j + 1))
+      for (let k = at[j]; k <= at[j + term.length - 1]; k++) lit[k] = true;
+  }
+  if (!lit.includes(true)) return text;
+  const out: ReactNode[] = [];
+  let start = 0;
+  for (let i = 1; i <= text.length; i++) {
+    if (i < text.length && lit[i] === lit[start]) continue;
+    const part = text.slice(start, i);
+    out.push(
+      lit[start] ? (
+        <mark
+          key={start}
+          className="rounded-[3px] bg-npf-gold-wash text-inherit shadow-[0_0_0_1px_var(--color-npf-gold-soft)] [box-decoration-break:clone]"
+        >
+          {part}
+        </mark>
+      ) : (
+        part
+      ),
+    );
+    start = i;
+  }
+  return out;
+}
+
+/**
+ * The searchable, sortable table the Information pages are built on. Every
+ * row is shown — none of these tables is long enough to be worth paging, and
+ * a reader scanning for their offence should never have to guess which page
+ * it is on. Everything runs on the rows already in the page.
  */
 export default function DataTable<T extends Record<string, unknown>>({
   rows,
@@ -53,7 +104,7 @@ export default function DataTable<T extends Record<string, unknown>>({
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<{ key: string; dir: 1 | -1 } | null>(null);
   const [group, setGroup] = useState("All");
-  const [page, setPage] = useState(0);
+  const input = useRef<HTMLInputElement>(null);
 
   const groups = useMemo(() => {
     if (!filterKey) return [];
@@ -65,18 +116,71 @@ export default function DataTable<T extends Record<string, unknown>>({
     ];
   }, [rows, filterKey]);
 
-  const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    let out = rows.filter((row) => {
-      if (filterKey && group !== "All" && String(row[filterKey]) !== group)
-        return false;
-      if (!q) return true;
-      // Both languages, so an Hausa reader can search the table they see.
-      return columns.some((c) => {
-        const value = String(row[c.key] ?? "");
-        return `${value} ${t(value)}`.toLowerCase().includes(q);
-      });
+  // Each row folded once: its first column (the name a reader searches for)
+  // and everything, in both languages so an Hausa reader can search the
+  // table they see and an English one can too. The category is searched even
+  // though it has no column, so "parking" finds every parking offence.
+  const index = useMemo(() => {
+    const both = (raw: unknown) => {
+      const value = String(raw ?? "");
+      return `${value} ${t(value)}`;
+    };
+    return rows.map((row) => {
+      const head = fold(both(row[columns[0].key]));
+      const all = fold(
+        [...columns.map((c) => c.key), ...(filterKey ? [filterKey] : [])]
+          .map((k) => both(row[k]))
+          .join(" "),
+      );
+      return { row, head, all, words: split(all) };
     });
+  }, [rows, columns, filterKey, t]);
+
+  const terms = useMemo(() => words(query), [query]);
+
+  const visible = useMemo(() => {
+    // Every word has to be in the row. A word the table has nowhere is taken
+    // as a slip and matched one letter off the start of a word, the same
+    // rule as the site search, so "overspeding" still finds speeding.
+    const typo = terms.map((w) => !index.some((r) => r.all.includes(w)));
+    const matches = (r: (typeof index)[number], w: string, i: number) =>
+      r.all.includes(w) ||
+      (typo[i] &&
+        w.length >= 4 &&
+        r.words.some(
+          (x) =>
+            near(x.slice(0, w.length), w) ||
+            near(x.slice(0, w.length + 1), w),
+        ));
+    // Rank by where the words land: the name starting with the whole query,
+    // then each word starting the name, a word in it, anywhere in it, or only
+    // in the other columns.
+    const rank = (r: (typeof index)[number]) => {
+      let total = r.head.startsWith(terms.join(" ")) ? 100 : 0;
+      for (const w of terms) {
+        if (r.head.startsWith(w)) total += 50;
+        else if (new RegExp(`\\b${escape(w)}`).test(r.head)) total += 30;
+        else if (r.head.includes(w)) total += 12;
+        else if (new RegExp(`\\b${escape(w)}`).test(r.all)) total += 6;
+        else total += 3;
+      }
+      return total;
+    };
+
+    let out = index
+      .filter((r) => {
+        if (
+          filterKey &&
+          group !== "All" &&
+          String(r.row[filterKey]) !== group
+        )
+          return false;
+        return terms.every((w, i) => matches(r, w, i));
+      })
+      .map((r) => ({ row: r.row, score: terms.length ? rank(r) : 0 }))
+      // Stable, so equal matches keep the order the table was written in.
+      .sort((a, b) => b.score - a.score)
+      .map((r) => r.row);
     if (sort) {
       const col = columns.find((c) => c.key === sort.key);
       out = [...out].sort((a, b) => {
@@ -89,13 +193,21 @@ export default function DataTable<T extends Record<string, unknown>>({
       });
     }
     return out;
-  }, [rows, columns, query, sort, group, filterKey, t]);
+  }, [index, columns, terms, sort, group, filterKey]);
 
-  const pages = Math.max(1, Math.ceil(visible.length / PAGE));
-  const current = Math.min(page, pages - 1);
-  const slice = visible.slice(current * PAGE, current * PAGE + PAGE);
-
-  const reset = () => setPage(0);
+  const clearButton = (
+    <button
+      type="button"
+      onClick={() => {
+        setQuery("");
+        setGroup("All");
+        input.current?.focus();
+      }}
+      className="npf-small mt-3 font-semibold text-npf-blue underline underline-offset-4 hover:text-npf-blue-deep"
+    >
+      {t("Clear filters")}
+    </button>
+  );
 
   // Figures read as money and counts: 50000 is ₦50,000's number, set with
   // the separators a reader expects.
@@ -103,25 +215,46 @@ export default function DataTable<T extends Record<string, unknown>>({
     const value = String(raw ?? "");
     if (!value) return null;
     if (col.numeric && /^\d{4,}$/.test(value))
-      return Number(value).toLocaleString("en-NG");
-    return t(value);
+      return highlight(Number(value).toLocaleString("en-NG"), terms);
+    return highlight(t(value), terms);
   };
 
   return (
     <div>
       <div className="mb-5 flex flex-wrap items-center gap-3">
-        <div className="npf-field npf-field-icon h-12 min-w-60 flex-1 rounded-full ps-5">
+        <div className="npf-field npf-field-icon h-12 min-w-60 flex-1 rounded-full ps-5 pe-1.5">
           <SearchIcon aria-hidden className="size-5 shrink-0 text-npf-blue" />
           <input
+            ref={input}
             type="search"
             value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              reset();
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape" && query) {
+                e.preventDefault();
+                setQuery("");
+              }
             }}
-            placeholder={t("Search")}
+            placeholder={t("Type a word, name or number")}
             aria-label={t("Search {what}", { what: t(caption) })}
+            autoComplete="off"
+            spellCheck={false}
+            enterKeyHint="search"
+            className="[&::-webkit-search-cancel-button]:appearance-none"
           />
+          {query ? (
+            <button
+              type="button"
+              onClick={() => {
+                setQuery("");
+                input.current?.focus();
+              }}
+              aria-label={t("Clear search")}
+              className="grid size-9 shrink-0 place-items-center rounded-full text-npf-steel transition-colors hover:bg-npf-cloud hover:text-npf-ink focus-visible:outline-2 focus-visible:outline-npf-blue"
+            >
+              <CloseIcon className="size-4.5" />
+            </button>
+          ) : null}
         </div>
 
         {groups.length > 1 ? (
@@ -133,10 +266,7 @@ export default function DataTable<T extends Record<string, unknown>>({
               id="tableGroup"
               value={group}
               data-active={group !== "All" ? "" : undefined}
-              onChange={(e) => {
-                setGroup(e.target.value);
-                reset();
-              }}
+              onChange={(e) => setGroup(e.target.value)}
               className="npf-select h-12"
             >
               {groups.map((g) => (
@@ -160,14 +290,14 @@ export default function DataTable<T extends Record<string, unknown>>({
       {/* A phone gets each row as a card: the first column is its title and
           the rest are labelled figures, so nothing hides off the right edge. */}
       <ol className="divide-y divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline bg-white md:hidden">
-        {slice.map((row, i) => {
+        {visible.map((row, i) => {
           const [head, ...rest] = columns;
           const title = show(head, row[head.key]);
           const href = head.linkKey ? (row[head.linkKey] as string) : null;
           return (
-            <li key={current * PAGE + i} className="flex gap-3 px-4 py-4">
+            <li key={i} className="flex gap-3 px-4 py-4">
               <span className="npf-caption mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink tabular-nums">
-                {current * PAGE + i + 1}
+                {i + 1}
               </span>
               <div className="min-w-0 flex-1">
                 {href ? (
@@ -206,11 +336,12 @@ export default function DataTable<T extends Record<string, unknown>>({
             </li>
           );
         })}
-        {slice.length === 0 ? (
+        {visible.length === 0 ? (
           <li className="px-5 py-12 text-center">
             <p className="npf-body text-npf-body">
               {t("Nothing matches “{query}”.", { query })}
             </p>
+            {clearButton}
           </li>
         ) : null}
       </ol>
@@ -244,14 +375,16 @@ export default function DataTable<T extends Record<string, unknown>>({
                   >
                     <button
                       type="button"
-                      onClick={() => {
+                      // Up, down, then off — back to best match first.
+                      onClick={() =>
                         setSort(
-                          active
-                            ? { key: col.key, dir: sort.dir === 1 ? -1 : 1 }
-                            : { key: col.key, dir: 1 },
-                        );
-                        reset();
-                      }}
+                          !active
+                            ? { key: col.key, dir: 1 }
+                            : sort.dir === 1
+                              ? { key: col.key, dir: -1 }
+                              : null,
+                        )
+                      }
                       className={`group -mx-2 inline-flex min-h-10 items-center gap-1.5 rounded-chip px-2 transition-colors hover:bg-white/70 hover:text-npf-blue ${col.numeric ? "flex-row-reverse text-end" : "text-start"}`}
                     >
                       {t(col.label)}
@@ -272,13 +405,13 @@ export default function DataTable<T extends Record<string, unknown>>({
             </tr>
           </thead>
           <tbody className="divide-y divide-npf-hairline">
-            {slice.map((row, i) => (
+            {visible.map((row, i) => (
               <tr
-                key={current * PAGE + i}
+                key={i}
                 className="align-top transition-colors hover:bg-npf-paper"
               >
                 <td className="npf-small py-4 ps-5 pe-2 text-npf-steel tabular-nums">
-                  {current * PAGE + i + 1}
+                  {i + 1}
                 </td>
                 {columns.map((col) => {
                   const value = show(col, row[col.key]);
@@ -319,7 +452,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                 })}
               </tr>
             ))}
-            {slice.length === 0 ? (
+            {visible.length === 0 ? (
               <tr>
                 <td colSpan={columns.length + 1} className="px-5 py-14">
                   <div className="flex flex-col items-center text-center">
@@ -329,6 +462,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                     <p className="npf-body mt-4 text-npf-body">
                       {t("Nothing matches “{query}”.", { query })}
                     </p>
+                    {clearButton}
                   </div>
                 </td>
               </tr>
@@ -346,31 +480,6 @@ export default function DataTable<T extends Record<string, unknown>>({
         ) : (
           <span />
         )}
-        {pages > 1 ? (
-          <div className="flex items-center gap-2">
-            <span className="npf-small me-2 text-npf-steel tabular-nums">
-              {t("Page {page} of {pages}", { page: current + 1, pages })}
-            </span>
-            <button
-              type="button"
-              onClick={() => setPage(current - 1)}
-              disabled={current === 0}
-              aria-label={t("Previous page")}
-              className="npf-icon-btn"
-            >
-              <ChevronLeft className="size-5 rtl:-scale-x-100" />
-            </button>
-            <button
-              type="button"
-              onClick={() => setPage(current + 1)}
-              disabled={current >= pages - 1}
-              aria-label={t("Next page")}
-              className="npf-icon-btn"
-            >
-              <ChevronRight className="size-5 rtl:-scale-x-100" />
-            </button>
-          </div>
-        ) : null}
       </div>
     </div>
   );
