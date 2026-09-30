@@ -1439,3 +1439,18 @@ html.npf-large-text {
     }
   }
 }
+
+/*
+ * An inner page's one authored moment: its heading block settles in as the
+ * page opens, on the reveal distance and timing the homepage chapters use.
+ * No delay and no fill, so a frozen frame shows the heading, never a blank.
+ */
+@keyframes npf-page-in {
+  from {
+    opacity: 0;
+    translate: 0 var(--reveal-y);
+  }
+}
+.npf-page-in > * {
+  animation: npf-page-in var(--dur-reveal) var(--ease-out);
+}

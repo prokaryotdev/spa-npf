@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LinkCard, PageShell } from "../../../components/PageShell";
+import { reveal } from "../../../components/reveal";
 import { information as informationSource } from "../../../content-pages";
 import { getLocalized, getT } from "../../../i18n/server";
 
@@ -25,8 +26,10 @@ export default async function InformationPage() {
     >
       <section className="bg-white pb-(--npf-section-y)">
         <div className="npf-container grid gap-(--npf-gap) md:grid-cols-2 xl:grid-cols-3">
-          {information.cards.map((card) => (
-            <LinkCard key={card.title} card={card} />
+          {information.cards.map((card, i) => (
+            <div key={card.title} {...reveal(i)}>
+              <LinkCard card={card} />
+            </div>
           ))}
         </div>
       </section>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "./i18n/Link";
 import { PageShell } from "./components/PageShell";
+import { reveal } from "./components/reveal";
 import ServiceSearch from "./components/ServiceSearch";
 import {
   ArrowRight,
@@ -69,8 +70,8 @@ export default async function NotFound() {
         <div className="npf-container">
           <h2 className="npf-h4 text-npf-blue-deep">{t("Or go straight to")}</h2>
           <ul className="mt-5 grid gap-(--npf-gap) sm:grid-cols-2 xl:grid-cols-4">
-            {elsewhere.map(({ label, body, href, Icon }) => (
-              <li key={href}>
+            {elsewhere.map(({ label, body, href, Icon }, i) => (
+              <li key={href} {...reveal(i)}>
                 <Link
                   href={href}
                   className="npf-link-card group flex h-full flex-col p-5"

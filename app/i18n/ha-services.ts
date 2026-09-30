@@ -50,8 +50,11 @@ export const haServices: Record<string, string> = {
     "Babu abin da ya dace. Ka gwada kalma gajera, ko ka duba",
   ". Try a shorter word, or": ". Ka gwada kalma gajera, ko",
   "Related services": "Ayyuka masu alaƙa",
-  "Need help": "Kana buƙatar taimako",
-  "contact us": "tuntuɓe mu",
+  "Need help?": "Kana buƙatar taimako?",
+  "Call or email us about this service.":
+    "Kira mu ko aiko mana da imel game da wannan aikin.",
+  "Call {number}": "Kira {number}",
+  "Email us": "Aiko mana da imel",  "contact us": "tuntuɓe mu",
 
   // --- packages ------------------------------------------------------------
   "Inquiries and Follow-up": "Tambayoyi da Bibiya",

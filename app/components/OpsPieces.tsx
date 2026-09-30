@@ -362,7 +362,7 @@ export function PriorityTag({
         className="npf-ops-dot size-1.5 rounded-full bg-current"
       />
       {priority}
-      <span className={withLabel ? "font-medium opacity-80" : "sr-only"}>
+      <span className={withLabel ? "font-medium" : "sr-only"}>
         {t(label)}
       </span>
     </span>

@@ -2,13 +2,13 @@ import Image from "next/image";
 import Link from "../i18n/Link";
 import Footer from "./Footer";
 import Header from "./Header";
+import RevealObserver from "./RevealObserver";
 import {
   ArrowRight,
   ArrowUpRight,
   CheckIcon,
   ChevronRight,
   InboxIcon,
-  PhoneCallIcon,
 } from "./icons";
 import { getT } from "../i18n/server";
 
@@ -47,7 +47,7 @@ export async function PageShell({
         <div className="relative overflow-hidden bg-white pt-40 pb-16 md:pt-48">
           <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 [mask-image:linear-gradient(to_bottom,#000_65%,transparent_90%)] md:size-250 md:opacity-60" />
 
-          <div className="npf-container relative">
+          <div className="npf-container npf-page-in relative">
             <nav aria-label={t("Breadcrumb")} className="mb-6">
               <ol className="flex flex-wrap items-center gap-1 text-sm text-npf-body">
                 <li className="flex items-center gap-1">
@@ -99,6 +99,7 @@ export async function PageShell({
 
         {children}
       </main>
+      <RevealObserver />
       <Footer />
     </>
   );
@@ -135,6 +136,8 @@ export async function LinkCard({
           alt=""
           fill
           sizes="(max-width: 768px) 92vw, (max-width: 1280px) 46vw, 30vw"
+          // The three cards are the first thing under the heading.
+          loading="eager"
           className="object-cover transition-transform duration-(--dur-media) ease-(--ease-out) group-hover:scale-[1.04] motion-reduce:group-hover:scale-100"
         />
       </div>
@@ -156,6 +159,85 @@ export async function LinkCard({
         </span>
       </div>
     </Link>
+  );
+}
+
+export type HelpRow = {
+  Icon: (props: { className?: string }) => React.ReactNode;
+  label: string;
+  /** Who answers, or the address itself: the line under the action. */
+  note?: string;
+  href: string;
+};
+
+/**
+ * The help card every rail ends with. Help is not the page's action, so it
+ * does not borrow the action card's buttons: each way to reach us is a row,
+ * drawn like "How you receive it", with the whole row as the target and the
+ * number or address in plain sight before anyone presses.
+ */
+export async function HelpCard({
+  title,
+  intro,
+  rows,
+  className = "",
+}: {
+  title: string;
+  intro?: string;
+  rows: HelpRow[];
+  className?: string;
+}) {
+  return (
+    <section
+      aria-label={title}
+      className={`overflow-hidden rounded-card bg-white shadow-card ring-1 ring-npf-hairline ring-inset ${className}`}
+    >
+      <div className="px-5 pt-5 pb-4">
+        <h2 className="npf-h5 text-npf-blue-deep">{title}</h2>
+        {intro ? (
+          <p className="npf-small mt-1 text-npf-body">{intro}</p>
+        ) : null}
+      </div>
+      {rows.length ? (
+        <ul className="divide-y divide-npf-hairline border-t border-npf-hairline">
+          {rows.map((row) => {
+            const body = (
+              <>
+                <span className="npf-disc">
+                  <row.Icon className="size-5" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="npf-body block truncate font-medium text-npf-ink tabular-nums transition-colors group-hover:text-npf-blue">
+                    {row.label}
+                  </span>
+                  {row.note ? (
+                    <span className="npf-small block truncate text-npf-steel">
+                      {row.note}
+                    </span>
+                  ) : null}
+                </span>
+                <ArrowRight className="npf-go" />
+              </>
+            );
+            const cls =
+              "npf-row-link group flex items-center gap-4 px-5 py-4 focus-visible:-outline-offset-2 active:bg-npf-cloud";
+            return (
+              <li key={row.href}>
+                {/^(tel|mailto):/.test(row.href) ? (
+                  <a href={row.href} className={cls}>
+                    {body}
+                  </a>
+                ) : (
+                  <Link href={row.href} className={cls}>
+                    {body}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
+    </section>
   );
 }
 
@@ -211,45 +293,17 @@ export async function LegalSections({
               </ol>
             </nav>
           </div>
-          <div className="order-last overflow-hidden rounded-card border border-npf-hairline lg:mt-10">
-            <h2 className="npf-h5 border-b border-npf-hairline bg-npf-mist px-5 py-3.5 text-npf-blue-deep">
-              {t("Questions about this page?")}
-            </h2>
-            <ul className="divide-y divide-npf-hairline">
-              <li>
-                <a
-                  href="mailto:mail@npf.gov.ng"
-                  className="npf-row-link flex min-h-14 items-center gap-3.5 px-5 py-3"
-                >
-                  <span className="npf-disc size-9">
-                    <InboxIcon className="size-4.5" />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="npf-small block font-medium text-npf-ink">
-                      {t("Email")}
-                    </span>
-                    <span className="npf-small block truncate text-npf-blue">
-                      mail@npf.gov.ng
-                    </span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <Link
-                  href="/app/home/contactUs"
-                  className="npf-row-link flex min-h-14 items-center gap-3.5 px-5 py-3"
-                >
-                  <span className="npf-disc size-9">
-                    <PhoneCallIcon className="size-4.5" />
-                  </span>
-                  <span className="npf-small min-w-0 flex-1 font-medium text-npf-ink">
-                    {t("Contact us")}
-                  </span>
-                  <ArrowRight className="npf-go size-4" />
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <HelpCard
+            className="order-last lg:mt-10"
+            title={t("Questions about this page?")}
+            rows={[
+              {
+                Icon: InboxIcon,
+                label: "mail@npf.gov.ng",
+                href: "mailto:mail@npf.gov.ng",
+              },
+            ]}
+          />
         </aside>
 
         <div className="min-w-0 max-w-[46rem] [&>section+section]:mt-12 [&>section+section]:border-t [&>section+section]:border-npf-hairline [&>section+section]:pt-12">

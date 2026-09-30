@@ -74,7 +74,7 @@ export default function PortalShell({
         <div className="relative min-h-[60vh] overflow-hidden bg-white pt-32 pb-(--npf-section-y) md:pt-40">
           {/* The same morning light every inner page opens under. */}
           <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 [mask-image:linear-gradient(to_bottom,#000_65%,transparent_90%)] md:size-250 md:opacity-60" />
-          <div className="npf-container relative">
+          <div className="npf-container npf-page-in relative">
             {!loaded || !session || !citizen ? (
               <Loading />
             ) : (

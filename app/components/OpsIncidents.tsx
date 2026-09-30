@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { callSources, callTypes, dispatchTarget } from "../content-ops";
 import { useFormat, useT } from "../i18n/client";
 import type { T } from "../i18n/translate";
@@ -72,6 +72,19 @@ export default function OpsIncidents() {
   const [selected, setSelected] = useState<string | null>(null);
   const [taking, setTaking] = useState(false);
 
+  // Below the two-column width the detail stacks under the whole board, so a
+  // tapped call would open out of sight. Bring it up to meet the finger.
+  const detail = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!selected || !window.matchMedia("(max-width: 1023px)").matches)
+      return;
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    detail.current?.scrollIntoView({
+      behavior: still ? "auto" : "smooth",
+      block: "start",
+    });
+  }, [selected]);
+
   /**
    * Both languages are searched: the board holds English reference data but
    * an Hausa-speaking operator types the call type in Hausa.
@@ -109,8 +122,18 @@ export default function OpsIncidents() {
           "Every call of the shift, newest first. Pick a row to dispatch it, move it on, or write the log.",
         )}
         action={
-          <OpsButton tone="brand" onClick={() => setTaking((v) => !v)}>
-            <PlusIcon aria-hidden className="size-4" />
+          // Open, it closes the form: the quiet tone and a cross, so "Cancel"
+          // never wears the plus and the weight of the action it undoes.
+          <OpsButton
+            tone={taking ? "quiet" : "brand"}
+            aria-expanded={taking}
+            onClick={() => setTaking((v) => !v)}
+          >
+            {taking ? (
+              <CloseIcon aria-hidden className="size-4" />
+            ) : (
+              <PlusIcon aria-hidden className="size-4" />
+            )}
             {taking ? t("Cancel") : t("Take a call")}
           </OpsButton>
         }
@@ -335,7 +358,10 @@ export default function OpsIncidents() {
         {/* The detail panel pins under the console chrome rather than to the
             top of the viewport — the page is the scroller now, so `top: 0`
             would slide it up behind the navy bar. */}
-        <div className="lg:sticky lg:top-[calc(var(--ops-top)+1.25rem)] lg:self-start">
+        <div
+          ref={detail}
+          className="scroll-mt-[calc(var(--ops-top)+1rem)] lg:sticky lg:top-[calc(var(--ops-top)+1.25rem)] lg:self-start"
+        >
           {open ? (
             <Detail
               incident={open}

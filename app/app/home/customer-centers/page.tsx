@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageShell } from "../../../components/PageShell";
+import { reveal } from "../../../components/reveal";
 import {
   ArrowUpRight,
   ClockIcon,
@@ -95,8 +96,8 @@ export default async function CustomerCentersPage() {
                 </span>
               </div>
               <ul className="mt-6 grid gap-(--npf-gap) md:grid-cols-2 xl:grid-cols-3">
-                {group.centers.map((center) => (
-                  <li key={center.name}>
+                {group.centers.map((center, i) => (
+                  <li key={center.name} {...reveal(i % 3)}>
                     <Center center={center} t={t} />
                   </li>
                 ))}

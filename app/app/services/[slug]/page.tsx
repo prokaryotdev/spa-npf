@@ -3,12 +3,11 @@ import Image from "next/image";
 import Link from "../../../i18n/Link";
 import { notFound } from "next/navigation";
 import { BreadcrumbLd, ServiceLd } from "../../../components/StructuredData";
-import { PageShell } from "../../../components/PageShell";
+import { HelpCard, PageShell } from "../../../components/PageShell";
 import ServiceAction from "../../../components/ServiceAction";
 import {
   ArrowRight,
   CardIcon,
-  ChatIcon,
   CheckIcon,
   ClockIcon,
   FileIcon,
@@ -23,6 +22,7 @@ import {
 } from "../../../components/icons";
 import { services as servicesSource } from "../../../content-services";
 import { getT, getLocalized } from "../../../i18n/server";
+import type { T } from "../../../i18n/translate";
 
 export function generateStaticParams() {
   return servicesSource.map((service) => ({ slug: service.slug }));
@@ -213,56 +213,15 @@ export default async function ServicePage({
               </div>
 
               {service.contacts.length ? (
-                <div className="order-last overflow-hidden rounded-card border border-npf-hairline lg:mt-10">
-                  <h2 className="npf-h5 border-b border-npf-hairline bg-npf-mist px-5 py-3.5 text-npf-blue-deep">
-                    {t("Need help")}
-                  </h2>
-                  <ul className="divide-y divide-npf-hairline">
-                    {service.contacts.map((name, i) => {
-                      const c = contactFor(source.contacts[i] ?? "");
-                      const body = (
-                        <>
-                          <span className="grid size-9 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink transition-colors group-hover:bg-npf-chip">
-                            <c.Icon className="size-4.5" />
-                          </span>
-                          <span className="min-w-0 flex-1">
-                            <span className="npf-small block font-medium text-npf-ink">
-                              {name}
-                            </span>
-                            {c.value ? (
-                              <span className="npf-small block truncate text-npf-blue tabular-nums group-hover:underline group-hover:underline-offset-2">
-                                {c.value}
-                              </span>
-                            ) : null}
-                          </span>
-                        </>
-                      );
-                      return (
-                        <li key={name}>
-                          {c.href ? (
-                            <a
-                              href={c.href}
-                              className="group flex min-h-14 items-center gap-3.5 px-5 py-3 transition-colors duration-(--dur-hover) hover:bg-npf-paper"
-                            >
-                              {body}
-                            </a>
-                          ) : (
-                            <div className="flex min-h-14 items-center gap-3.5 px-5 py-3">
-                              {body}
-                            </div>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <Link
-                    href="/app/home/contactUs"
-                    className="npf-small group flex min-h-12 items-center justify-between gap-2 border-t border-npf-hairline px-5 font-medium text-npf-blue transition-colors hover:bg-npf-paper hover:text-npf-blue-deep"
-                  >
-                    {t("Contact us")}
-                    <ArrowRight className="size-4 transition-transform group-hover:translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:-translate-x-[3px]" />
-                  </Link>
-                </div>
+                <HelpCard
+                  className="order-last lg:mt-10"
+                  title={t("Need help?")}
+                  intro={t("Call or email us about this service.")}
+                  rows={source.contacts.flatMap((name) => {
+                    const c = contactFor(name, t);
+                    return c ? [c] : [];
+                  })}
+                />
               ) : null}
             </aside>
 
@@ -576,26 +535,26 @@ function deliveryIcon(label: string) {
 
 /**
  * How to reach each help channel the CMS names. The number and address are
- * the ones the privacy policy gives for the Complaint Response Unit; Live
+ * the ones the privacy policy gives for the Complaint Response Unit. Live
  * Chat and the P.O. Box have no details anywhere in the content, so they
- * show as names only until the CMS supplies them.
+ * stay off the card until the CMS supplies them.
  */
-function contactFor(name: string) {
+function contactFor(name: string, t: T) {
   if (name === "Complaint Response Unit")
     return {
       Icon: PhoneCallIcon,
-      value: "0805 700 0001",
+      label: t("Call {number}", { number: "0805 700 0001" }),
+      note: t("Complaint Response Unit"),
       href: "tel:+2348057000001",
     };
   if (name === "Email")
     return {
       Icon: InboxIcon,
-      value: "mail@npf.gov.ng",
+      label: t("Email us"),
+      note: "mail@npf.gov.ng",
       href: "mailto:mail@npf.gov.ng",
     };
-  if (name === "Live Chat") return { Icon: ChatIcon, value: null, href: null };
-  if (name === "P.O. Box") return { Icon: PinIcon, value: null, href: null };
-  return { Icon: PhoneIcon, value: null, href: null };
+  return null;
 }
 
 /** Where a delivery channel lives on this site, when it does. */

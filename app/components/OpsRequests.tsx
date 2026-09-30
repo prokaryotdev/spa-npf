@@ -162,8 +162,12 @@ export default function OpsRequests() {
                     {t(request.service)}
                   </h2>
                   <span
-                    className={`shrink-0 rounded-chip px-2 py-0.5 text-xs font-medium ${TONE[request.status]}`}
+                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full py-0.5 ps-2 pe-2.5 text-xs font-semibold ${TONE[request.status]}`}
                   >
+                    <span
+                      aria-hidden
+                      className="size-1.5 rounded-full bg-current"
+                    />
                     {t(request.status)}
                   </span>
                 </div>
@@ -177,13 +181,25 @@ export default function OpsRequests() {
                 </p>
               </div>
 
-              <ol className="mt-4 space-y-1.5 border-t border-ops-line-soft pt-3 text-xs">
+              {/* The same dotted rail the applicant reads their request on,
+                  newest step on top and the only one in the brand blue. */}
+              <ol className="relative mt-4 space-y-2 border-t border-ops-line-soft pt-3 ps-5 text-xs">
+                <span
+                  aria-hidden
+                  className="absolute top-5 bottom-1.5 start-[4px] w-px bg-ops-line"
+                />
                 {request.timeline
                   .slice()
                   .reverse()
                   .slice(0, 3)
-                  .map((step) => (
-                    <li key={step.at + step.label} className="flex gap-3">
+                  .map((step, i) => (
+                    <li key={step.at + step.label} className="relative flex gap-3">
+                      <span
+                        aria-hidden
+                        className={`absolute top-1 -start-5 size-2.25 rounded-full ring-3 ring-ops-panel ${
+                          i === 0 ? "bg-ops-accent" : "bg-ops-line"
+                        }`}
+                      />
                       <span className="w-24 shrink-0 text-ops-dim tabular-nums">
                         {format.dateTime(step.at)}
                       </span>

@@ -37,7 +37,7 @@ export default function Error({
         <div className="relative overflow-hidden bg-white pt-40 pb-(--npf-section-y) md:pt-48">
           <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 [mask-image:linear-gradient(to_bottom,#000_65%,transparent_90%)] md:size-250 md:opacity-60" />
 
-          <div className="npf-container relative">
+          <div className="npf-container npf-page-in relative">
             <span className="grid size-14 place-items-center rounded-full bg-npf-error-wash text-npf-error">
               <AlertIcon className="size-7" />
             </span>

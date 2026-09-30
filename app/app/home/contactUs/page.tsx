@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "../../../i18n/Link";
 import FeedbackForm from "../../../components/FeedbackForm";
-import { PageShell } from "../../../components/PageShell";
+import { HelpCard, PageShell } from "../../../components/PageShell";
 import {
   AccessibilityIcon,
   ArrowRight,
@@ -142,63 +142,26 @@ export default async function ContactUsPage() {
               </Link>
             </div>
 
-            <div className="overflow-hidden rounded-card border border-npf-hairline">
-              <h2 className="npf-h5 border-b border-npf-hairline bg-npf-mist px-5 py-3.5 text-npf-blue-deep">
-                {t("Other ways to reach us")}
-              </h2>
-              <ul className="divide-y divide-npf-hairline">
-                <li>
-                  <a
-                    href="tel:+2348057000001"
-                    className="npf-row-link flex min-h-14 items-center gap-3.5 px-5 py-3"
-                  >
-                    <span className="npf-disc size-9">
-                      <PhoneCallIcon className="size-4.5" />
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="npf-small block font-medium text-npf-ink">
-                        {t("Complaint Response Unit")}
-                      </span>
-                      <span className="npf-small block text-npf-blue tabular-nums">
-                        0805 700 0001
-                      </span>
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="mailto:mail@npf.gov.ng"
-                    className="npf-row-link flex min-h-14 items-center gap-3.5 px-5 py-3"
-                  >
-                    <span className="npf-disc size-9">
-                      <InboxIcon className="size-4.5" />
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="npf-small block font-medium text-npf-ink">
-                        {t("Email")}
-                      </span>
-                      <span className="npf-small block truncate text-npf-blue">
-                        mail@npf.gov.ng
-                      </span>
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <Link
-                    href="/app/home/customer-centers"
-                    className="npf-row-link flex min-h-14 items-center gap-3.5 px-5 py-3"
-                  >
-                    <span className="npf-disc size-9">
-                      <PinIcon className="size-4.5" />
-                    </span>
-                    <span className="npf-small min-w-0 flex-1 font-medium text-npf-ink">
-                      {t("Customer Centers")}
-                    </span>
-                    <ArrowRight className="npf-go size-4" />
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            <HelpCard
+              title={t("Other ways to reach us")}
+              rows={[
+                {
+                  Icon: PhoneCallIcon,
+                  label: t("Call {number}", { number: "0805 700 0001" }),
+                  href: "tel:+2348057000001",
+                },
+                {
+                  Icon: InboxIcon,
+                  label: "mail@npf.gov.ng",
+                  href: "mailto:mail@npf.gov.ng",
+                },
+                {
+                  Icon: PinIcon,
+                  label: t("Customer Centers"),
+                  href: "/app/home/customer-centers",
+                },
+              ]}
+            />
           </aside>
         </div>
       </section>
