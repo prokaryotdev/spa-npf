@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import {
+  ArrowDown,
   ChevronDown,
   ClockIcon,
   CloseIcon,
@@ -385,19 +386,32 @@ export default function DataTable<T extends Record<string, unknown>>({
                               : null,
                         )
                       }
-                      className={`group -mx-2 inline-flex min-h-10 items-center gap-1.5 rounded-chip px-2 transition-colors hover:bg-white/70 hover:text-npf-blue ${col.numeric ? "flex-row-reverse text-end" : "text-start"}`}
+                      // The sorted column reads as a raised chip on the mist
+                      // header, so which column is in charge is plain at a
+                      // glance, not only from a small arrow.
+                      className={`group -mx-2.5 inline-flex h-9 items-center gap-1.5 rounded-full px-2.5 whitespace-nowrap transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) ease-(--ease-out) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue-mid active:scale-[0.97] ${
+                        active
+                          ? "bg-white text-npf-blue shadow-[0_1px_2px_rgb(26_35_56/0.08),0_0_0_1px_var(--color-npf-hairline)]"
+                          : "hover:bg-white/70 hover:text-npf-blue"
+                      } ${col.numeric ? "flex-row-reverse" : ""}`}
                     >
                       {t(col.label)}
-                      <ChevronDown
+                      <span
                         aria-hidden
-                        className={`size-4 shrink-0 transition-[rotate,opacity] duration-(--dur-hover) ${
-                          active
-                            ? sort.dir === -1
-                              ? "rotate-180 text-npf-blue"
-                              : "text-npf-blue"
-                            : "opacity-35 group-hover:opacity-70"
+                        className={`grid size-5 shrink-0 place-items-center rounded-full transition-colors duration-(--dur-hover) ${
+                          active ? "bg-npf-mist" : ""
                         }`}
-                      />
+                      >
+                        <ArrowDown
+                          className={`size-3.5 transition-[rotate,opacity] duration-200 ease-(--ease-out) ${
+                            active
+                              ? sort.dir === -1
+                                ? "rotate-180"
+                                : ""
+                              : "opacity-30 group-hover:opacity-70 group-focus-visible:opacity-70"
+                          }`}
+                        />
+                      </span>
                     </button>
                   </th>
                 );
