@@ -296,7 +296,10 @@ export default function DataTable<T extends Record<string, unknown>>({
           const title = show(head, row[head.key]);
           const href = head.linkKey ? (row[head.linkKey] as string) : null;
           return (
-            <li key={i} className="flex gap-3 px-4 py-4">
+            <li
+              key={i}
+              className="group/row relative flex gap-3 px-4 py-4 transition-colors has-[a]:active:bg-npf-paper"
+            >
               <span className="npf-caption mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink tabular-nums">
                 {i + 1}
               </span>
@@ -306,7 +309,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="npf-body font-medium text-npf-blue underline-offset-4 hover:underline"
+                    className="npf-body font-medium text-npf-blue outline-none after:absolute after:inset-0 after:content-[''] focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-npf-blue-mid"
                   >
                     {title}
                     <span className="sr-only">
@@ -422,7 +425,9 @@ export default function DataTable<T extends Record<string, unknown>>({
             {visible.map((row, i) => (
               <tr
                 key={i}
-                className="align-top transition-colors hover:bg-npf-paper"
+                // Positioned so a linked cell's link can stretch over the
+                // whole row: the target is the row, not only its words.
+                className="group/row relative align-top transition-colors hover:bg-npf-paper"
               >
                 <td className="npf-small py-4 ps-5 pe-2 text-npf-steel tabular-nums">
                   {i + 1}
@@ -446,11 +451,11 @@ export default function DataTable<T extends Record<string, unknown>>({
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group inline-flex items-start gap-2 font-medium text-npf-blue underline-offset-4 transition-colors hover:text-npf-blue-deep hover:underline"
+                          className="inline-flex items-start gap-2 font-medium text-npf-blue outline-none transition-colors group-hover/row:text-npf-blue-deep after:absolute after:inset-0 after:content-[''] focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-npf-blue-mid"
                         >
                           <FileIcon
                             aria-hidden
-                            className="mt-0.5 size-4.5 shrink-0 text-npf-steel transition-colors group-hover:text-npf-blue"
+                            className="mt-0.5 size-4.5 shrink-0 text-npf-steel transition-colors group-hover/row:text-npf-blue"
                           />
                           {value}
                           <span className="sr-only">
