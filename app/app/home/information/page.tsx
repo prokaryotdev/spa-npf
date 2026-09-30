@@ -15,10 +15,16 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function InformationPage() {
   const information = await getLocalized(informationSource);
+  const t = await getT();
   return (
-    <PageShell title={information.title}>
-      <section className="bg-white pb-24">
-        <div className="npf-container grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+    <PageShell
+      title={information.title}
+      intro={t(
+        "The laws the Force works under, what each traffic offence costs, and the speed limit on the roads of the Territory.",
+      )}
+    >
+      <section className="bg-white pb-(--npf-section-y)">
+        <div className="npf-container grid gap-(--npf-gap) md:grid-cols-2 xl:grid-cols-3">
           {information.cards.map((card) => (
             <LinkCard key={card.title} card={card} />
           ))}

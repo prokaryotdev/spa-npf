@@ -311,7 +311,9 @@ function RunningCall({ incident }: { incident: Incident }) {
       <span className="font-secondary text-sm font-bold tabular-nums">
         {incident.id}
       </span>
-      <span className="min-w-0 flex-1 truncate text-sm">
+      {/* On a phone the call keeps its words and the status drops to a
+          second line, rather than "Theft…" squeezed beside it. */}
+      <span className="min-w-0 flex-1 text-sm max-sm:min-w-[60%] sm:truncate">
         {t(incident.kind)}
         <span className="text-ops-dim"> · {t(incident.area)}</span>
       </span>

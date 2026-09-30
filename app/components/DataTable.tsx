@@ -1,7 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ChevronDown, ChevronLeft, ChevronRight, SearchIcon } from "./icons";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ClockIcon,
+  FileIcon,
+  SearchIcon,
+} from "./icons";
 import { useT } from "../i18n/client";
 
 export type Column<T> = {
@@ -27,6 +34,7 @@ export default function DataTable<T extends Record<string, unknown>>({
   filterKey,
   caption,
   minWidth = "640px",
+  updated,
 }: {
   rows: readonly T[];
   columns: Column<T>[];
@@ -38,6 +46,8 @@ export default function DataTable<T extends Record<string, unknown>>({
    * sit well under this and stay fully readable on a phone.
    */
   minWidth?: string;
+  /** When the figures were last checked, shown under the table. */
+  updated?: string;
 }) {
   const t = useT();
   const [query, setQuery] = useState("");
@@ -87,14 +97,21 @@ export default function DataTable<T extends Record<string, unknown>>({
 
   const reset = () => setPage(0);
 
+  // Figures read as money and counts: 50000 is ₦50,000's number, set with
+  // the separators a reader expects.
+  const show = (col: Column<T>, raw: unknown) => {
+    const value = String(raw ?? "");
+    if (!value) return null;
+    if (col.numeric && /^\d{4,}$/.test(value))
+      return Number(value).toLocaleString("en-NG");
+    return t(value);
+  };
+
   return (
     <div>
-      <div className="mb-6 flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-55">
-          <SearchIcon
-            aria-hidden
-            className="pointer-events-none absolute top-1/2 start-4 size-5 -translate-y-1/2 text-npf-muted"
-          />
+      <div className="mb-5 flex flex-wrap items-center gap-3">
+        <div className="npf-field npf-field-icon h-12 min-w-60 flex-1 rounded-full ps-5">
+          <SearchIcon aria-hidden className="size-5 shrink-0 text-npf-blue" />
           <input
             type="search"
             value={query}
@@ -104,23 +121,23 @@ export default function DataTable<T extends Record<string, unknown>>({
             }}
             placeholder={t("Search")}
             aria-label={t("Search {what}", { what: t(caption) })}
-            className="w-full rounded-full border border-npf-line bg-white py-3 pe-4 ps-12 text-sm text-npf-ink outline-none placeholder:text-npf-muted focus:border-npf-blue"
           />
         </div>
 
         {groups.length > 1 ? (
-          <div className="relative">
+          <span className="npf-select-wrap">
             <label htmlFor="tableGroup" className="sr-only">
               {t("Filter by category")}
             </label>
             <select
               id="tableGroup"
               value={group}
+              data-active={group !== "All" ? "" : undefined}
               onChange={(e) => {
                 setGroup(e.target.value);
                 reset();
               }}
-              className="appearance-none rounded-full border border-npf-line bg-white py-3 pe-10 ps-5 text-sm text-npf-ink outline-none focus:border-npf-blue"
+              className="npf-select h-12"
             >
               {groups.map((g) => (
                 <option key={g} value={g}>
@@ -128,32 +145,84 @@ export default function DataTable<T extends Record<string, unknown>>({
                 </option>
               ))}
             </select>
-            <ChevronDown
-              aria-hidden
-              className="pointer-events-none absolute top-1/2 end-4 size-4 -translate-y-1/2 text-npf-muted"
-            />
-          </div>
+            <ChevronDown aria-hidden className="npf-select-arrow" />
+          </span>
         ) : null}
 
-        <p className="text-sm text-npf-muted" aria-live="polite">
-          {t("{shown} of {total}", {
-            shown: visible.length,
-            total: rows.length,
-          })}
+        <p className="npf-body text-npf-steel" aria-live="polite">
+          <span className="font-semibold text-npf-blue-deep tabular-nums">
+            {visible.length}
+          </span>{" "}
+          / <span className="tabular-nums">{rows.length}</span>
         </p>
       </div>
 
-      <div className="overflow-x-auto rounded-card ring-1 ring-npf-hairline">
-        <table
-          style={{ minWidth }}
-          className="w-full border-collapse bg-white text-start"
-        >
+      {/* A phone gets each row as a card: the first column is its title and
+          the rest are labelled figures, so nothing hides off the right edge. */}
+      <ol className="divide-y divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline bg-white md:hidden">
+        {slice.map((row, i) => {
+          const [head, ...rest] = columns;
+          const title = show(head, row[head.key]);
+          const href = head.linkKey ? (row[head.linkKey] as string) : null;
+          return (
+            <li key={current * PAGE + i} className="flex gap-3 px-4 py-4">
+              <span className="npf-caption mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink tabular-nums">
+                {current * PAGE + i + 1}
+              </span>
+              <div className="min-w-0 flex-1">
+                {href ? (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="npf-body font-medium text-npf-blue underline-offset-4 hover:underline"
+                  >
+                    {title}
+                    <span className="sr-only">
+                      {" "}
+                      {t("(opens in a new window)")}
+                    </span>
+                  </a>
+                ) : (
+                  <p className="npf-body font-medium text-npf-ink">{title}</p>
+                )}
+                <dl className="mt-2 flex flex-wrap gap-2">
+                  {rest.map((col) => {
+                    const value = show(col, row[col.key]);
+                    return value === null ? null : (
+                      <div
+                        key={col.key}
+                        className="npf-small inline-flex items-baseline gap-1.5 rounded-full bg-npf-cloud px-2.5 py-1"
+                      >
+                        <dt className="text-npf-steel">{t(col.label)}</dt>
+                        <dd className="font-semibold text-npf-ink tabular-nums">
+                          {value}
+                        </dd>
+                      </div>
+                    );
+                  })}
+                </dl>
+              </div>
+            </li>
+          );
+        })}
+        {slice.length === 0 ? (
+          <li className="px-5 py-12 text-center">
+            <p className="npf-body text-npf-body">
+              {t("Nothing matches “{query}”.", { query })}
+            </p>
+          </li>
+        ) : null}
+      </ol>
+
+      <div className="overflow-x-auto rounded-card border border-npf-hairline bg-white max-md:hidden">
+        <table style={{ minWidth }} className="w-full border-collapse">
           <caption className="sr-only">{t(caption)}</caption>
           <thead>
-            <tr className="bg-npf-cloud">
+            <tr className="border-b border-npf-hairline bg-npf-mist">
               <th
                 scope="col"
-                className="px-4 py-4 text-sm font-medium text-npf-body"
+                className="npf-small w-14 py-3.5 ps-5 pe-2 text-start font-semibold text-npf-steel"
               >
                 #
               </th>
@@ -171,7 +240,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                         : "none"
                     }
                     style={col.width ? { width: col.width } : undefined}
-                    className={`px-4 py-4 text-sm font-medium text-npf-body ${col.numeric ? "text-end" : ""}`}
+                    className={`npf-small px-4 py-2 font-semibold text-npf-blue-deep last:pe-5 ${col.numeric ? "text-end" : "text-start"}`}
                   >
                     <button
                       type="button"
@@ -183,17 +252,17 @@ export default function DataTable<T extends Record<string, unknown>>({
                         );
                         reset();
                       }}
-                      className="inline-flex items-center gap-1.5 transition-colors hover:text-npf-blue"
+                      className={`group -mx-2 inline-flex min-h-10 items-center gap-1.5 rounded-chip px-2 transition-colors hover:bg-white/70 hover:text-npf-blue ${col.numeric ? "flex-row-reverse text-end" : "text-start"}`}
                     >
                       {t(col.label)}
                       <ChevronDown
                         aria-hidden
-                        className={`size-4 transition-transform ${
+                        className={`size-4 shrink-0 transition-[rotate,opacity] duration-(--dur-hover) ${
                           active
                             ? sort.dir === -1
                               ? "rotate-180 text-npf-blue"
                               : "text-npf-blue"
-                            : "opacity-35"
+                            : "opacity-35 group-hover:opacity-70"
                         }`}
                       />
                     </button>
@@ -202,40 +271,48 @@ export default function DataTable<T extends Record<string, unknown>>({
               })}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-npf-hairline">
             {slice.map((row, i) => (
               <tr
                 key={current * PAGE + i}
-                className="border-t border-npf-hairline align-top transition-colors hover:bg-npf-cloud/50"
+                className="align-top transition-colors hover:bg-npf-paper"
               >
-                <td className="px-4 py-4 text-sm text-npf-muted tabular-nums">
+                <td className="npf-small py-4 ps-5 pe-2 text-npf-steel tabular-nums">
                   {current * PAGE + i + 1}
                 </td>
                 {columns.map((col) => {
-                  const value = String(row[col.key] ?? "—");
+                  const value = show(col, row[col.key]);
                   const href = col.linkKey
                     ? (row[col.linkKey] as string)
                     : null;
                   return (
                     <td
                       key={col.key}
-                      className={`px-4 py-4 text-sm text-npf-ink ${col.numeric ? "text-end tabular-nums" : ""}`}
+                      className={`px-4 py-4 text-title leading-normal text-npf-ink last:pe-5 ${col.numeric ? "text-end font-semibold whitespace-nowrap tabular-nums" : ""}`}
                     >
-                      {href ? (
+                      {value === null ? (
+                        <span aria-label={t("None")} className="text-npf-line">
+                          —
+                        </span>
+                      ) : href ? (
                         <a
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-npf-blue underline-offset-4 transition-colors hover:text-npf-blue-deep hover:underline"
+                          className="group inline-flex items-start gap-2 font-medium text-npf-blue underline-offset-4 transition-colors hover:text-npf-blue-deep hover:underline"
                         >
-                          {t(value)}
+                          <FileIcon
+                            aria-hidden
+                            className="mt-0.5 size-4.5 shrink-0 text-npf-steel transition-colors group-hover:text-npf-blue"
+                          />
+                          {value}
                           <span className="sr-only">
                             {" "}
                             {t("(opens in a new window)")}
                           </span>
                         </a>
                       ) : (
-                        t(value)
+                        value
                       )}
                     </td>
                   );
@@ -244,11 +321,15 @@ export default function DataTable<T extends Record<string, unknown>>({
             ))}
             {slice.length === 0 ? (
               <tr>
-                <td
-                  colSpan={columns.length + 1}
-                  className="px-4 py-16 text-center text-sm text-npf-muted"
-                >
-                  Nothing matches “{query}”.
+                <td colSpan={columns.length + 1} className="px-5 py-14">
+                  <div className="flex flex-col items-center text-center">
+                    <span className="grid size-12 place-items-center rounded-full bg-npf-cloud text-npf-blue">
+                      <SearchIcon className="size-5" />
+                    </span>
+                    <p className="npf-body mt-4 text-npf-body">
+                      {t("Nothing matches “{query}”.", { query })}
+                    </p>
+                  </div>
                 </td>
               </tr>
             ) : null}
@@ -256,31 +337,41 @@ export default function DataTable<T extends Record<string, unknown>>({
         </table>
       </div>
 
-      {pages > 1 ? (
-        <div className="mt-6 flex items-center justify-end gap-2">
-          <span className="me-2 text-sm text-npf-muted">
-            {t("Page {page} of {pages}", { page: current + 1, pages })}
-          </span>
-          <button
-            type="button"
-            onClick={() => setPage(current - 1)}
-            disabled={current === 0}
-            aria-label={t("Previous page")}
-            className="grid size-11 place-items-center rounded-tile bg-npf-cloud text-npf-body transition-[background-color,border-radius] hover:bg-npf-cloud-deep active:rounded-chip disabled:pointer-events-none disabled:opacity-40"
-          >
-            <ChevronLeft className="size-5" />
-          </button>
-          <button
-            type="button"
-            onClick={() => setPage(current + 1)}
-            disabled={current >= pages - 1}
-            aria-label={t("Next page")}
-            className="grid size-11 place-items-center rounded-tile bg-npf-cloud text-npf-body transition-[background-color,border-radius] hover:bg-npf-cloud-deep active:rounded-chip disabled:pointer-events-none disabled:opacity-40"
-          >
-            <ChevronRight className="size-5" />
-          </button>
-        </div>
-      ) : null}
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+        {updated ? (
+          <p className="npf-small inline-flex items-center gap-2 text-npf-steel">
+            <ClockIcon aria-hidden className="size-4" />
+            {updated}
+          </p>
+        ) : (
+          <span />
+        )}
+        {pages > 1 ? (
+          <div className="flex items-center gap-2">
+            <span className="npf-small me-2 text-npf-steel tabular-nums">
+              {t("Page {page} of {pages}", { page: current + 1, pages })}
+            </span>
+            <button
+              type="button"
+              onClick={() => setPage(current - 1)}
+              disabled={current === 0}
+              aria-label={t("Previous page")}
+              className="npf-icon-btn"
+            >
+              <ChevronLeft className="size-5 rtl:-scale-x-100" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setPage(current + 1)}
+              disabled={current >= pages - 1}
+              aria-label={t("Next page")}
+              className="npf-icon-btn"
+            >
+              <ChevronRight className="size-5 rtl:-scale-x-100" />
+            </button>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

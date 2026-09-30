@@ -224,10 +224,13 @@ export default function ServiceSearch({
         className={`flex items-center ${
           hero
             ? "gap-2.75 rounded-tile bg-white px-4 ring-0 transition-shadow focus-within:ring-2 focus-within:ring-npf-blue-mid"
-            : "gap-3 rounded-card bg-npf-cloud px-4 ring-1 ring-npf-hairline transition-shadow focus-within:ring-2 focus-within:ring-npf-blue"
+            : "h-15 gap-3 rounded-full bg-white ps-6 pe-2 shadow-card ring-1 ring-npf-hairline transition-shadow ring-inset focus-within:ring-2 focus-within:ring-npf-blue-mid"
         }`}
       >
-        <SearchIcon aria-hidden className="size-6 shrink-0 text-npf-blue-ink" />
+        <SearchIcon
+          aria-hidden
+          className={`shrink-0 ${hero ? "size-6 text-npf-blue-ink" : "size-5 text-npf-blue"}`}
+        />
         <input
           id={`${id}-input`}
           name="q"
@@ -250,13 +253,17 @@ export default function ServiceSearch({
           className={`w-full flex-grow bg-transparent outline-none focus-visible:outline-none placeholder:text-npf-muted ${
             hero
               ? "py-5 text-sm text-npf-muted [@media(max-height:768px)]:py-3"
-              : "py-4 text-base text-npf-ink"
+              : "h-full text-base text-npf-ink md:text-lg"
           }`}
         />
         {trimmed ? (
           <button
             type="submit"
-            className="my-2 shrink-0 rounded-chip bg-npf-blue px-4 py-2 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
+            className={
+              hero
+                ? "my-2 shrink-0 rounded-chip bg-npf-blue px-4 py-2 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
+                : "npf-btn npf-btn-primary h-11"
+            }
           >
             {t("Search")}
           </button>

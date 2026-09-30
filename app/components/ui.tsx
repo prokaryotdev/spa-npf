@@ -38,34 +38,62 @@ export function StatusPill({
       : REQUEST_TONE[status as RequestStatus];
   return (
     <span
-      className={`inline-flex shrink-0 items-center rounded-full px-2.5 py-1 text-xs font-medium whitespace-nowrap ${tone}`}
+      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full py-1 ps-2 pe-2.5 text-xs font-semibold whitespace-nowrap ${tone}`}
     >
+      <span aria-hidden className="size-1.5 rounded-full bg-current" />
       {t(status)}
     </span>
   );
 }
 
-/** A headed block inside a portal screen. */
+/**
+ * A headed block inside a portal screen, in the service page's grammar: a
+ * white panel ruled by a hairline with its title on the mist. `flush` hands
+ * the body to rows that draw their own padding and dividers.
+ */
 export function Card({
   title,
+  icon,
   action,
+  flush = false,
+  id,
   children,
 }: {
   title: string;
+  icon?: React.ReactNode;
   action?: React.ReactNode;
+  flush?: boolean;
+  id?: string;
   children: React.ReactNode;
 }) {
   const t = useT();
   return (
-    <section className="rounded-tile p-6 ring-1 ring-npf-hairline">
-      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-secondary text-lg font-bold text-npf-blue-deep">
+    <section id={id} className="npf-panel scroll-mt-32">
+      <div className="npf-panel-head">
+        <h2 className="flex items-center gap-2.5">
+          {icon}
           {t(title)}
         </h2>
         {action}
       </div>
-      {children}
+      <div className={flush ? "" : "p-5"}>{children}</div>
     </section>
+  );
+}
+
+/** A quiet text link for a panel's head: "See all", "Mark all read". */
+export function HeadLink({
+  children,
+  ...props
+}: React.ComponentProps<"button">) {
+  return (
+    <button
+      type="button"
+      {...props}
+      className="npf-small -my-2 inline-flex min-h-10 items-center gap-1.5 font-medium text-npf-blue transition-colors hover:text-npf-blue-deep"
+    >
+      {children}
+    </button>
   );
 }
 
@@ -74,21 +102,24 @@ export function Empty({
   title,
   body,
   action,
+  icon,
 }: {
   title: string;
   body: string;
   action?: React.ReactNode;
+  icon?: React.ReactNode;
 }) {
   const t = useT();
   return (
-    <div className="rounded-card bg-npf-paper px-6 py-12 text-center">
-      <p className="font-secondary text-base font-bold text-npf-ink">
-        {t(title)}
-      </p>
-      <p className="mx-auto mt-2 max-w-[46ch] text-sm leading-relaxed text-npf-body">
-        {t(body)}
-      </p>
-      {action ? <div className="mt-5">{action}</div> : null}
+    <div className="flex flex-col items-center rounded-card bg-npf-paper px-6 py-12 text-center">
+      {icon ? (
+        <span className="grid size-14 place-items-center rounded-full bg-white text-npf-blue shadow-card">
+          {icon}
+        </span>
+      ) : null}
+      <p className={`npf-h5 text-npf-ink ${icon ? "mt-5" : ""}`}>{t(title)}</p>
+      <p className="npf-small mt-2 max-w-[46ch] text-npf-body">{t(body)}</p>
+      {action ? <div className="mt-6">{action}</div> : null}
     </div>
   );
 }

@@ -388,8 +388,9 @@ export function OpsStatus({ status }: { status: Incident["status"] }) {
   const t = useT();
   return (
     <span
-      className={`inline-flex shrink-0 items-center rounded-chip px-2 py-0.5 text-xs font-medium whitespace-nowrap ${CALL_TONE[status]}`}
+      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full py-0.5 ps-2 pe-2.5 text-xs font-semibold whitespace-nowrap ${CALL_TONE[status]}`}
     >
+      <span aria-hidden className="size-1.5 rounded-full bg-current" />
       {t(CALL_LABEL[status])}
     </span>
   );
@@ -397,8 +398,9 @@ export function OpsStatus({ status }: { status: Incident["status"] }) {
 
 const UNIT_TONE: Record<UnitStatus, string> = {
   Available: "bg-npf-ok-soft text-npf-ok",
-  Assigned: "bg-npf-gold-wash text-npf-warn",
-  "On Scene": "bg-npf-review-wash text-npf-review",
+  // The same inks as the call it is on: en route is indigo, on scene teal.
+  Assigned: "bg-npf-review-wash text-npf-review",
+  "On Scene": "bg-ops-scene-wash text-ops-scene",
   Unavailable: "bg-ops-raised text-ops-dim",
 };
 
@@ -406,8 +408,9 @@ export function UnitStatusTag({ status }: { status: UnitStatus }) {
   const t = useT();
   return (
     <span
-      className={`inline-flex shrink-0 items-center rounded-chip px-2 py-0.5 text-xs font-medium whitespace-nowrap ${UNIT_TONE[status]}`}
+      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full py-0.5 ps-2 pe-2.5 text-xs font-semibold whitespace-nowrap ${UNIT_TONE[status]}`}
     >
+      <span aria-hidden className="size-1.5 rounded-full bg-current" />
       {t(status)}
     </span>
   );
@@ -453,7 +456,7 @@ export function Readout({
           : undefined
       }
     >
-      <dt className="text-2xs font-medium tracking-kicker text-ops-dim uppercase">
+      <dt className="text-xs font-medium text-ops-dim">
         {t(label)}
       </dt>
       <dd

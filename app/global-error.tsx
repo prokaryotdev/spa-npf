@@ -40,11 +40,35 @@ export default function GlobalError({
       >
         <title>{t("Something went wrong | Nigeria Police Force")}</title>
         <div style={{ maxWidth: "42rem" }}>
+          <svg
+            aria-hidden
+            viewBox="0 0 24 24"
+            width="56"
+            height="56"
+            style={{
+              padding: "14px",
+              borderRadius: "9999px",
+              background: "var(--color-npf-error-wash, #fbe4e4)",
+              color: "var(--color-npf-error, #9b1c1c)",
+              boxSizing: "border-box",
+              marginBottom: "2rem",
+            }}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" />
+          </svg>
           <h1
             style={{
               margin: 0,
               fontSize: "clamp(2rem, 6vw, 3.5rem)",
-              lineHeight: 1.15,
+              lineHeight: 1.08,
+              letterSpacing: "-0.02em",
+              fontWeight: 700,
+              fontFamily: "var(--font-secondary, system-ui, sans-serif)",
               color: "var(--color-npf-blue-deep, #14315f)",
             }}
           >
@@ -77,8 +101,9 @@ export default function GlobalError({
                 background: "var(--color-npf-blue, #1b3f7a)",
                 color: "#fff",
                 font: "inherit",
-                fontWeight: 500,
-                padding: "0.75rem 1.5rem",
+                fontWeight: 700,
+                height: "3rem",
+                padding: "0 1.5rem",
               }}
             >
               {t("Try again")}
@@ -92,12 +117,33 @@ export default function GlobalError({
                 borderRadius: "9999px",
                 background: "var(--color-npf-cloud, #f4f6fa)",
                 color: "var(--color-npf-blue-deep, #14315f)",
-                fontWeight: 500,
-                padding: "0.75rem 1.5rem",
+                fontWeight: 700,
+                display: "inline-flex",
+                alignItems: "center",
+                height: "3rem",
+                padding: "0 1.5rem",
                 textDecoration: "none",
+                boxShadow: "inset 0 0 0 1px rgb(26 35 56 / 0.14)",
               }}
             >
               {t("Back to home")}
+            </a>
+            {/* A broken site must never stand between someone and help. */}
+            <a
+              href="tel:112"
+              style={{
+                borderRadius: "9999px",
+                background: "var(--color-npf-alert, #b30900)",
+                color: "#fff",
+                fontWeight: 700,
+                display: "inline-flex",
+                alignItems: "center",
+                height: "3rem",
+                padding: "0 1.5rem",
+                textDecoration: "none",
+              }}
+            >
+              {t("Call 112")}
             </a>
           </div>
           {error.digest ? (

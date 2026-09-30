@@ -151,17 +151,22 @@ export default async function ServicePage({
             {facts.map((fact) => (
               <div
                 key={fact.label}
-                className="flex items-center gap-3.5 px-5 py-4 md:flex-none md:py-5 md:last:flex-1"
+                className="relative min-w-0 py-4 ps-[4.625rem] pe-5 md:flex-none md:py-5 md:last:flex-1"
               >
-                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink">
-                  <fact.icon className="size-5" />
-                </span>
-                <div className="min-w-0">
-                  <dt className="npf-small text-npf-steel">{fact.label}</dt>
-                  <dd className="npf-h5 text-npf-blue-deep tabular-nums">
-                    {fact.value}
-                  </dd>
-                </div>
+                {/* A <dl> row holds only <dt> and <dd>, so the icon rides in
+                    the term and sits in the row's start padding. */}
+                <dt className="npf-small text-npf-steel">
+                  <span
+                    aria-hidden
+                    className="absolute start-5 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink"
+                  >
+                    <fact.icon className="size-5" />
+                  </span>
+                  {fact.label}
+                </dt>
+                <dd className="npf-h5 text-npf-blue-deep tabular-nums">
+                  {fact.value}
+                </dd>
               </div>
             ))}
           </dl>

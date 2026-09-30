@@ -5,7 +5,13 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "../i18n/Link";
 import { useEffect, useState } from "react";
 import { signIn, useStore, type Session } from "./store";
-import { ArrowRight, ShieldIcon, UserCircle } from "./icons";
+import {
+  AlertIcon,
+  ArrowRight,
+  CheckIcon,
+  ShieldIcon,
+  UserCircle,
+} from "./icons";
 import { useT } from "../i18n/client";
 
 type Errors = { nin?: string; password?: string };
@@ -75,63 +81,60 @@ export default function SignInForm() {
   }
 
   return (
-    <div className="max-w-225">
-      <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-        <div>
-          <h2 className="font-secondary text-2xl font-bold text-npf-blue-deep">
+    <div className="max-w-260">
+      <div className="grid items-start gap-6 lg:grid-cols-2">
+        {/* The fast way in leads, raised like the service page's action. */}
+        <section className="rounded-card bg-white p-6 shadow-card ring-1 ring-npf-hairline ring-inset md:p-8">
+          <span className="grid size-14 place-items-center rounded-full bg-npf-blue text-white">
+            <UserCircle aria-hidden className="size-7" />
+          </span>
+          <h2 className="npf-h4 mt-6 text-npf-blue-deep">
             {t("Sign in with NINAuth")}
           </h2>
-          <p className="mt-3 text-base leading-relaxed text-npf-body">
+          <p className="npf-body mt-2 text-npf-body">
             {t(
               "NINAuth is the national digital identity, and the fastest way in — no separate Nigeria Police Force account needed.",
             )}
           </p>
+          <ul className="npf-small mt-6 space-y-2.5 text-npf-ink">
+            {[
+              "Track your requests",
+              "Settle fines",
+              "Keep your documents",
+            ].map((line) => (
+              <li key={line} className="flex items-center gap-2.5">
+                <span className="grid size-5 shrink-0 place-items-center rounded-full bg-npf-blue text-white">
+                  <CheckIcon aria-hidden className="size-3" />
+                </span>
+                {t(line)}
+              </li>
+            ))}
+          </ul>
           <button
             type="button"
             onClick={() => enter(CITIZEN)}
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
+            className="npf-btn npf-btn-primary mt-8 w-full"
           >
-            <UserCircle aria-hidden className="size-5" />
             {t("Continue with NINAuth")}
-            <ArrowRight aria-hidden className="size-4" />
+            <span className="npf-btn-disc">
+              <ArrowRight
+                aria-hidden
+                className="npf-arrow size-4 rtl:-scale-x-100"
+              />
+            </span>
           </button>
-          <p className="mt-3 text-sm text-npf-muted">
+          <p className="npf-small mt-3 text-center text-npf-steel">
             {t("Opens the sample account for {name}.", {
               name: t(CITIZEN.name),
             })}
           </p>
+        </section>
 
-          <div className="mt-10 rounded-card bg-npf-cloud px-5 py-4">
-            <h3 className="flex items-center gap-2 font-secondary text-base font-bold text-npf-blue-deep">
-              <ShieldIcon aria-hidden className="size-5" />
-              {t("Nigeria Police Force personnel")}
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-npf-body">
-              {t(
-                "Officers reach the operations console with their force credentials.",
-              )}
-            </p>
-            <button
-              type="button"
-              onClick={() => enter(OFFICER)}
-              className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-npf-blue-ink ring-1 ring-npf-blue/25 transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-chip"
-            >
-              {t("Open the operations console")}
-              <ArrowRight aria-hidden className="size-4" />
-            </button>
+        <form noValidate onSubmit={onSubmit} className="npf-panel">
+          <div className="npf-panel-head">
+            <h2>{t("Or use your Nigeria Police Force account")}</h2>
           </div>
-        </div>
-
-        <div>
-          <h2 className="font-secondary text-2xl font-bold text-npf-blue-deep">
-            {t("Or use your Nigeria Police Force account")}
-          </h2>
-
-          <form
-            noValidate
-            onSubmit={onSubmit}
-            className="mt-6 flex flex-col gap-5"
-          >
+          <div className="flex flex-col gap-5 p-6 md:p-8">
             <Field
               id="nin"
               label={t("NIN")}
@@ -147,27 +150,47 @@ export default function SignInForm() {
               autoComplete="current-password"
               error={errors.password}
             />
-
-            <button
-              type="submit"
-              className="rounded-full bg-npf-blue px-6 py-3 font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
-            >
+            <button type="submit" className="npf-btn npf-btn-secondary mt-1 w-full">
               {t("Sign in")}
             </button>
-
-            <p className="text-sm text-npf-muted">
-              {t("No account yet? Every Nigeria Police Force service is listed on the")}{" "}
-              <Link
-                href="/app/services"
-                className="font-medium text-npf-blue underline underline-offset-2"
-              >
-                {t("services page")}
-              </Link>
-              {t(", and most can be started with NINAuth alone.")}
-            </p>
-          </form>
-        </div>
+          </div>
+          <p className="npf-small border-t border-npf-hairline bg-npf-paper px-6 py-4 text-npf-body md:px-8">
+            {t(
+              "No account yet? Every Nigeria Police Force service is listed on the",
+            )}{" "}
+            <Link
+              href="/app/services"
+              className="font-medium text-npf-blue underline underline-offset-2 hover:text-npf-blue-deep"
+            >
+              {t("services page")}
+            </Link>
+            {t(", and most can be started with NINAuth alone.")}
+          </p>
+        </form>
       </div>
+
+      {/* Officers: the console, in the Force's own navy. */}
+      <section className="npf-on-night mt-6 flex flex-wrap items-center gap-x-5 gap-y-4 rounded-card bg-npf-blue-deep px-6 py-5 text-white md:px-8">
+        <span className="grid size-12 shrink-0 place-items-center rounded-full bg-white/10 text-npf-gold-soft">
+          <ShieldIcon aria-hidden className="size-6" />
+        </span>
+        <div className="min-w-0 flex-1 basis-64">
+          <h2 className="npf-h5">{t("Nigeria Police Force personnel")}</h2>
+          <p className="npf-small mt-1 text-white/75">
+            {t(
+              "Officers reach the operations console with their force credentials.",
+            )}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => enter(OFFICER)}
+          className="npf-btn npf-btn-secondary npf-btn-sm"
+        >
+          {t("Open the operations console")}
+          <ArrowRight aria-hidden className="size-4 rtl:-scale-x-100" />
+        </button>
+      </section>
     </div>
   );
 }
@@ -184,10 +207,7 @@ function Field({
 } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <div>
-      <label
-        htmlFor={id}
-        className="mb-1.5 block text-sm font-medium text-npf-ink"
-      >
+      <label htmlFor={id} className="npf-field-label">
         {label}
       </label>
       <input
@@ -195,13 +215,15 @@ function Field({
         name={id}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${id}-error` : undefined}
-        className={`w-full rounded-chip border bg-white px-4 py-3 text-npf-ink outline-none placeholder:text-npf-muted focus:ring-2 focus:ring-npf-blue ${
-          error ? "border-npf-error" : "border-npf-line"
-        }`}
+        className="npf-field"
         {...rest}
       />
       {error ? (
-        <p id={`${id}-error`} className="mt-1.5 text-sm text-npf-error">
+        <p
+          id={`${id}-error`}
+          className="npf-small mt-2 flex items-start gap-1.5 text-npf-error"
+        >
+          <AlertIcon aria-hidden className="mt-0.5 size-4 shrink-0" />
           {error}
         </p>
       ) : null}

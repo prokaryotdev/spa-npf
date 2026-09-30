@@ -25,7 +25,7 @@ export default async function SignInPage() {
         "Sign in to track your requests, settle fines and reach personalised services.",
       )}
     >
-      <section className="bg-white pb-24">
+      <section className="bg-white pb-(--npf-section-y)">
         <div className="npf-container">
           {/* The form reads ?next= to send you back where you came from, and
  useSearchParams needs a boundary for the page to stay static. */}
@@ -40,12 +40,12 @@ export default async function SignInPage() {
 
 function FormSkeleton() {
   return (
-    <div aria-hidden className="max-w-225 animate-pulse">
-      <div className="h-20 rounded-card bg-npf-cloud" />
-      <div className="mt-8 grid gap-10 lg:grid-cols-2 lg:gap-16">
-        <div className="h-64 rounded-card bg-npf-cloud" />
-        <div className="h-64 rounded-card bg-npf-cloud" />
+    <div aria-hidden className="max-w-260 animate-pulse">
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="h-96 rounded-card bg-npf-cloud" />
+        <div className="h-96 rounded-card bg-npf-cloud" />
       </div>
+      <div className="mt-6 h-22 rounded-card bg-npf-cloud" />
     </div>
   );
 }

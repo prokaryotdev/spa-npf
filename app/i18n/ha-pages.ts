@@ -152,4 +152,23 @@ export const haPages: Record<string, string> = {
   Road: "Hanya",
   "Limit km/h": "Iyaka km/h",
   "Enforced at km/h": "Ana aiwatarwa a km/h",
+  // --- page redesign ---------------------------------------------------------
+  "Call {n}": "Kira {n}",
+  "Other ways to reach us": "Wasu hanyoyin tuntuɓar mu",
+  Stations: "Ofisoshi",
+  Open: "A buɗe",
+  "The laws the Force works under, what each traffic offence costs, and the speed limit on the roads of the Territory.":
+    "Dokokin da Rundunar ke aiki da su, kuɗin kowane laifin hanya, da iyakar gudu a hanyoyin Babban Birnin Tarayya.",
+  "Nothing matches “{query}”.": "Babu abin da ya dace da “{query}”.",
+  "In an emergency, call 112.": "Idan akwai gaggawa, kira 112.",
+  "Call 112": "Kira 112",
+  "Or go straight to": "Ko ka je kai tsaye zuwa",
+  "Apply for a certificate, report a crime or pay a fine.":
+    "Nemi takardar shaida, kai rahoton laifi ko biya tara.",
+  "Laws, traffic offences and the speed limits.":
+    "Dokoki, laifuffukan hanya da iyakokin gudu.",
+  "Phone lines, email and feedback.": "Layukan waya, imel da ra'ayoyi.",
+  "Every page on the site, in one list.":
+    "Kowane shafi a shafin, a jeri ɗaya.",
+  "Questions about this page?": "Kana da tambaya game da wannan shafin?",
 };

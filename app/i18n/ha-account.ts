@@ -180,4 +180,11 @@ export const haAccount: Record<string, string> = {
   "Nigeria Police Force App": "Manhajar Rundunar 'Yan Sandan Najeriya",
   "Nigeria Police Force Website": "Shafin Rundunar 'Yan Sandan Najeriya",
   "Divisional Police Station": "Ofishin 'Yan Sanda na Sashe",
+  // --- page redesign ---------------------------------------------------------
+  Identity: "Shaida",
+  "Contact details": "Bayanan tuntuɓa",
+  "All statuses": "Duk matsayi",
+  "Track your requests": "Bi diddigin buƙatunka",
+  "Settle fines": "Biya tara",
+  "Keep your documents": "Ajiye takardunka",
 };

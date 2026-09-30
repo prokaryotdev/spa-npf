@@ -2,7 +2,14 @@ import Image from "next/image";
 import Link from "../i18n/Link";
 import Footer from "./Footer";
 import Header from "./Header";
-import { ArrowRight, ChevronRight } from "./icons";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  CheckIcon,
+  ChevronRight,
+  InboxIcon,
+  PhoneCallIcon,
+} from "./icons";
 import { getT } from "../i18n/server";
 
 /** Breadcrumb + heading, the frame every inner page opens with. */
@@ -98,8 +105,9 @@ export async function PageShell({
 }
 
 /**
- * The tile Open Data and Information are both built from: photo, title, a line
- * of explanation, and a link out.
+ * The tile Information is built from: photo, title, a line of explanation.
+ * The whole card is the link, so the target is the card, not a small pill at
+ * its foot; the cards in a row share a height and their arrows a baseline.
  */
 export async function LinkCard({
   card,
@@ -115,37 +123,39 @@ export async function LinkCard({
   const t = await getT();
   const external = card.href.startsWith("http");
   return (
-    <article className="group/card overflow-hidden rounded-tile bg-white shadow-card transition-transform duration-(--dur-hover) ease-out md:hover:-translate-y-2">
-      <div className="relative aspect-[16/10] overflow-hidden">
+    <Link
+      href={card.href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      className="npf-link-card group flex h-full flex-col overflow-hidden"
+    >
+      <div className="relative aspect-[16/10] overflow-hidden bg-npf-cloud">
         <Image
           src={card.image}
           alt=""
           fill
-          sizes="(max-width: 768px) 92vw, 46vw"
-          className="object-cover transition-transform duration-(--dur-media) ease-out group-hover/card:scale-105"
+          sizes="(max-width: 768px) 92vw, (max-width: 1280px) 46vw, 30vw"
+          className="object-cover transition-transform duration-(--dur-media) ease-(--ease-out) group-hover:scale-[1.04] motion-reduce:group-hover:scale-100"
         />
       </div>
-      <div className="flex flex-col gap-3 p-6 lg:p-8">
-        <h2 className="font-secondary text-xl font-bold text-npf-blue-deep md:text-2xl">
+      <div className="flex flex-1 flex-col p-6 lg:p-7">
+        <h2 className="npf-h4 text-npf-blue-deep transition-colors group-hover:text-npf-blue">
           {t(card.title)}
         </h2>
-        <p className="text-sm leading-relaxed text-npf-body md:text-base">
-          {t(card.body)}
-        </p>
-        <Link
-          href={card.href}
-          target={external ? "_blank" : undefined}
-          rel={external ? "noopener noreferrer" : undefined}
-          className="mt-1 inline-flex items-center gap-2 self-start rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
-        >
+        <p className="npf-body mt-2 mb-6 text-npf-body">{t(card.body)}</p>
+        <span className="npf-small mt-auto flex items-center justify-between gap-3 border-t border-npf-hairline pt-4 font-medium text-npf-blue">
           {t(card.cta)}
-          <ArrowRight className="size-4" />
+          {external ? (
+            <ArrowUpRight className="npf-go" />
+          ) : (
+            <ArrowRight className="npf-go" />
+          )}
           {external ? (
             <span className="sr-only"> {t("(opens in a new window)")}</span>
           ) : null}
-        </Link>
+        </span>
       </div>
-    </article>
+    </Link>
   );
 }
 
@@ -166,78 +176,140 @@ export async function LegalSections({
 }) {
   const t = await getT();
   return (
-    <section className="bg-white pb-24">
-      <div className="npf-container grid gap-10 lg:grid-cols-[260px_1fr] lg:gap-16">
-        <nav
-          aria-label={t("On this page")}
-          className="lg:sticky lg:top-32 lg:self-start"
-        >
-          <h2 className="mb-3 font-secondary text-sm font-bold tracking-wide text-npf-muted uppercase">
-            {t("On this page")}
-          </h2>
-          <ol className="space-y-2 text-sm">
-            {sections.map((s) => (
-              <li key={s.title}>
+    <section className="bg-white pb-(--npf-section-y)">
+      <div className="npf-container grid gap-10 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-16">
+        {/* A long document keeps its contents in reach: numbered, so a
+            clause can be quoted back by number. */}
+        {/* As on the service page: the contents ride along with the
+            reading, and help waits at the rail foot where the reading ends. */}
+        <aside className="max-lg:contents lg:flex lg:flex-col">
+          <div className="lg:flex-1">
+            <nav
+              aria-labelledby="toc"
+              className="overflow-hidden rounded-card border border-npf-hairline lg:sticky lg:top-28"
+            >
+              <h2
+                id="toc"
+                className="npf-h5 border-b border-npf-hairline bg-npf-mist px-5 py-3.5 text-npf-blue-deep"
+              >
+                {t("On this page")}
+              </h2>
+              <ol className="max-h-[calc(100dvh-14rem)] overflow-y-auto py-2 max-lg:max-h-none">
+                {sections.map((s, i) => (
+                  <li key={s.title}>
+                    <a
+                      href={`#${slug(s.title)}`}
+                      className="npf-small group flex items-start gap-3 px-5 py-2 text-npf-body transition-colors hover:bg-npf-paper hover:text-npf-blue"
+                    >
+                      <span className="npf-caption mt-px grid size-5.5 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink tabular-nums transition-colors group-hover:bg-npf-chip">
+                        {i + 1}
+                      </span>
+                      {s.title}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </div>
+          <div className="order-last overflow-hidden rounded-card border border-npf-hairline lg:mt-10">
+            <h2 className="npf-h5 border-b border-npf-hairline bg-npf-mist px-5 py-3.5 text-npf-blue-deep">
+              {t("Questions about this page?")}
+            </h2>
+            <ul className="divide-y divide-npf-hairline">
+              <li>
                 <a
-                  href={`#${slug(s.title)}`}
-                  className="text-npf-body transition-colors hover:text-npf-blue"
+                  href="mailto:mail@npf.gov.ng"
+                  className="npf-row-link flex min-h-14 items-center gap-3.5 px-5 py-3"
                 >
-                  {s.title}
+                  <span className="npf-disc size-9">
+                    <InboxIcon className="size-4.5" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="npf-small block font-medium text-npf-ink">
+                      {t("Email")}
+                    </span>
+                    <span className="npf-small block truncate text-npf-blue">
+                      mail@npf.gov.ng
+                    </span>
+                  </span>
                 </a>
               </li>
-            ))}
-          </ol>
-        </nav>
+              <li>
+                <Link
+                  href="/app/home/contactUs"
+                  className="npf-row-link flex min-h-14 items-center gap-3.5 px-5 py-3"
+                >
+                  <span className="npf-disc size-9">
+                    <PhoneCallIcon className="size-4.5" />
+                  </span>
+                  <span className="npf-small min-w-0 flex-1 font-medium text-npf-ink">
+                    {t("Contact us")}
+                  </span>
+                  <ArrowRight className="npf-go size-4" />
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </aside>
 
-        <div className="max-w-[75ch]">
-          {sections.map((s) => (
+        <div className="min-w-0 max-w-[46rem] [&>section+section]:mt-12 [&>section+section]:border-t [&>section+section]:border-npf-hairline [&>section+section]:pt-12">
+          {sections.map((s, i) => (
             <section
               key={s.title}
-              className="mb-10 scroll-mt-32"
+              className="scroll-mt-28"
               id={slug(s.title)}
+              aria-labelledby={`${slug(s.title)}-h`}
             >
-              <h2 className="mb-4 font-secondary text-2xl font-bold text-npf-blue-deep">
+              <h2
+                id={`${slug(s.title)}-h`}
+                className="npf-h3 flex items-baseline gap-3 text-npf-blue-deep"
+              >
+                <span className="npf-body shrink-0 font-semibold text-npf-steel tabular-nums">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 {s.title}
               </h2>
-              {s.content.map((item, i) =>
-                item.type === "list" ? (
-                  <div key={i}>
-                    {item.intro ? (
-                      <p className="mb-3 text-base leading-relaxed text-npf-body">
-                        {item.intro}
-                      </p>
-                    ) : null}
-                    <ul className="mb-4 space-y-2">
-                      {(item.items ?? []).map((li) => (
-                        <li
-                          key={li}
-                          className="relative ps-6 text-base leading-relaxed text-npf-body before:absolute before:top-[0.6em] before:start-0 before:size-2 before:rounded-full before:bg-npf-blue"
+              <div className="mt-5 space-y-4">
+                {s.content.map((item, j) =>
+                  item.type === "list" ? (
+                    <div key={j}>
+                      {item.intro ? (
+                        <p className="npf-body mb-3 text-npf-body">
+                          {item.intro}
+                        </p>
+                      ) : null}
+                      <ul className="divide-y divide-npf-hairline rounded-card border border-npf-hairline">
+                        {(item.items ?? []).map((li) => (
+                          <li
+                            key={li}
+                            className="npf-body flex items-start gap-3 px-5 py-3.5 text-npf-ink"
+                          >
+                            <span className="mt-[0.2em] grid size-5 shrink-0 place-items-center rounded-full bg-npf-blue text-white">
+                              <CheckIcon className="size-3" />
+                            </span>
+                            <span>{li}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p key={j} className="npf-body text-npf-body">
+                      {item.text}
+                      {item.link ? (
+                        <a
+                          href={item.link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-medium text-npf-blue underline underline-offset-2 hover:text-npf-blue-deep"
                         >
-                          {li}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <p
-                    key={i}
-                    className="mb-4 text-base leading-relaxed text-npf-body"
-                  >
-                    {item.text}
-                    {item.link ? (
-                      <a
-                        href={item.link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-medium text-npf-blue underline underline-offset-2"
-                      >
-                        {item.link.label}
-                      </a>
-                    ) : null}
-                    {item.afterText}
-                  </p>
-                ),
-              )}
+                          {item.link.label}
+                        </a>
+                      ) : null}
+                      {item.afterText}
+                    </p>
+                  ),
+                )}
+              </div>
             </section>
           ))}
         </div>

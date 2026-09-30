@@ -1242,3 +1242,191 @@ html.npf-large-text {
 .npf-on-night :where(a, button, input):focus-visible {
   outline-color: var(--color-npf-gold-soft);
 }
+
+/*
+ * The service page's grammar, lifted into classes so every other screen
+ * speaks it: a white panel ruled by a hairline, its head on the mist, rows
+ * divided by the same hairline, an icon in a cloud disc, and fields drawn
+ * rather than left at the browser's.
+ */
+@layer components {
+  .npf-panel {
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-npf-hairline);
+    background: #fff;
+  }
+  .npf-panel-head {
+    display: flex;
+    min-height: 3.25rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    border-bottom: 1px solid var(--color-npf-hairline);
+    background: var(--color-npf-mist);
+    padding: 0.75rem 1.25rem;
+  }
+  .npf-panel-head > :where(h2, h3) {
+    font-family: var(--font-secondary);
+    font-size: 1.0625rem;
+    line-height: 1.3;
+    font-weight: 700;
+    color: var(--color-npf-blue-deep);
+  }
+  .npf-rows > * + * {
+    border-top: 1px solid var(--color-npf-hairline);
+  }
+  /* A pressable row inside a panel. */
+  .npf-row-link {
+    transition: background-color var(--dur-hover) var(--ease-out);
+  }
+  .npf-disc {
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 9999px;
+    background: var(--color-npf-cloud);
+    color: var(--color-npf-blue-ink);
+    transition: background-color var(--dur-hover) var(--ease-out);
+  }
+  /* The trailing arrow of a link row: it leans toward where it goes. */
+  .npf-go {
+    width: 1.125rem;
+    height: 1.125rem;
+    flex-shrink: 0;
+    color: var(--color-npf-blue);
+    transition: translate var(--dur-hover) var(--ease-out);
+  }
+  .npf-go:dir(rtl) {
+    scale: -1 1;
+  }
+
+  /* The quiet link card: related services, the portal shortcuts. */
+  .npf-link-card {
+    border-radius: var(--radius-card);
+    background: #fff;
+    box-shadow: inset 0 0 0 1px var(--color-npf-hairline);
+    transition-property: box-shadow, translate, scale;
+    transition-duration: var(--dur-hover);
+    transition-timing-function: var(--ease-out);
+  }
+  .npf-link-card:active {
+    scale: 0.99;
+    transition-duration: var(--dur-press);
+  }
+
+  /* The small button, for toolbars and rows: same pill, 40px. */
+  .npf-btn-sm {
+    height: 2.5rem;
+    gap: 0.5rem;
+    padding-inline: 1.125rem;
+    font-size: 0.875rem;
+  }
+  .npf-btn-sm:has(.npf-btn-disc) {
+    padding-inline-end: 0.3125rem;
+  }
+  .npf-btn-sm .npf-btn-disc {
+    width: 1.875rem;
+    height: 1.875rem;
+  }
+
+  /*
+   * Fields. 48px, the chip radius, white with an inked hairline that darkens
+   * under the pointer; focus trades the hairline for the blue ring. An error
+   * (aria-invalid) is the error red, never the 112 red.
+   */
+  .npf-field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    font-weight: 500;
+    color: var(--color-npf-ink);
+  }
+  .npf-hint {
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-npf-muted);
+  }
+  .npf-field {
+    display: block;
+    width: 100%;
+    min-height: 3rem;
+    border-radius: 0.75rem;
+    background: #fff;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--color-npf-ink);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-npf-ink) 16%, transparent);
+    outline: none;
+    transition: box-shadow var(--dur-hover) var(--ease-out),
+      background-color var(--dur-hover) var(--ease-out);
+  }
+  .npf-field::placeholder {
+    color: var(--color-npf-muted);
+  }
+  textarea.npf-field {
+    resize: vertical;
+    min-height: 8rem;
+  }
+  .npf-field:focus,
+  .npf-field:focus-within {
+    box-shadow: inset 0 0 0 2px var(--color-npf-blue-mid),
+      0 0 0 4px color-mix(in srgb, var(--color-npf-blue-mid) 14%, transparent);
+  }
+  .npf-field[aria-invalid="true"] {
+    box-shadow: inset 0 0 0 2px var(--color-npf-error);
+  }
+  .npf-field:disabled,
+  .npf-field[readonly] {
+    background: var(--color-npf-cloud);
+    color: var(--color-npf-body);
+  }
+  /* A field wrapping an icon and an input, like the search. */
+  .npf-field-icon {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-block: 0;
+  }
+  .npf-field-icon > input {
+    min-width: 0;
+    flex: 1;
+    align-self: stretch;
+    background: transparent;
+    outline: none;
+  }
+  .npf-field-icon > input::placeholder {
+    color: var(--color-npf-muted);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .npf-row-link:hover {
+      background: var(--color-npf-paper);
+    }
+    .npf-row-link:hover .npf-disc,
+    .npf-link-card:hover .npf-disc {
+      background: var(--color-npf-chip);
+    }
+    .npf-row-link:hover .npf-go,
+    .npf-link-card:hover .npf-go {
+      translate: 3px 0;
+    }
+    .npf-row-link:hover .npf-go:dir(rtl),
+    .npf-link-card:hover .npf-go:dir(rtl) {
+      translate: -3px 0;
+    }
+    .npf-link-card:hover {
+      translate: 0 -2px;
+      box-shadow: var(--shadow-card);
+    }
+    .npf-field:not(:focus, :focus-within, :disabled, [readonly]):hover {
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-npf-ink) 30%, transparent);
+    }
+  }
+}

@@ -193,7 +193,7 @@ export default function OpsIncidents() {
                   "Calls, with grade, type, area, status, assigned unit and elapsed time",
                 )}
               </caption>
-              <thead className="npf-ops-thead text-2xs font-medium tracking-kicker text-ops-dim uppercase">
+              <thead className="npf-ops-thead text-xs font-semibold text-ops-dim">
                 <tr className="whitespace-nowrap">
                   <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
                     {t("Grade")}
@@ -484,7 +484,7 @@ function Detail({
       ) : null}
 
       <div className="mt-5 border-t border-ops-line-soft pt-4">
-        <p className="mb-3 text-2xs tracking-kicker text-ops-dim uppercase">
+        <p className="mb-3 text-xs font-semibold text-ops-dim">
           {t("Log")}
         </p>
         <ol className="space-y-2 text-xs">
@@ -713,7 +713,7 @@ function Field({
     <div>
       <label
         htmlFor={id}
-        className="mb-1.5 block text-2xs tracking-kicker text-ops-dim uppercase"
+        className="mb-1.5 block text-xs font-semibold text-ops-dim"
       >
         {label}
       </label>

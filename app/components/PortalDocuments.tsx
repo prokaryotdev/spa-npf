@@ -35,25 +35,31 @@ export default function PortalDocuments() {
 
   return (
     <div>
-      <h2 className="mb-6 font-secondary text-2xl font-bold text-npf-blue-deep">
-        {t("Documents")}
-      </h2>
+      <h2 className="npf-h3 text-npf-blue-deep">{t("Documents")}</h2>
+      {issued.length ? (
+        <p className="npf-body mt-2 max-w-[60ch] text-npf-body">
+          {t(
+            "Certificates, permits and receipts appear here as soon as a request is approved.",
+          )}
+        </p>
+      ) : null}
 
       {issued.length ? (
-        <ul className="space-y-3">
+        <ul className="mt-6 divide-y divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline bg-white">
           {issued.map((doc) => (
             <li
               key={doc.id}
-              className="flex flex-wrap items-center gap-4 rounded-card px-5 py-4 ring-1 ring-npf-hairline"
+              className="flex flex-wrap items-center gap-x-4 gap-y-3 px-5 py-4"
             >
-              <span className="grid size-11 shrink-0 place-items-center rounded-chip bg-npf-cloud text-npf-blue-ink">
+              {/* A page with a folded corner: a document, at a glance. */}
+              <span className="relative grid h-12 w-10 shrink-0 place-items-center rounded-[0.375rem] bg-npf-cloud text-npf-blue-ink [clip-path:polygon(0_0,70%_0,100%_22%,100%_100%,0_100%)]">
                 <FileIcon className="size-5" />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="font-secondary text-base font-bold text-npf-ink">
+                <p className="npf-h5 text-npf-ink">
                   {t(doc.name)}
                 </p>
-                <p className="mt-0.5 text-sm text-npf-muted tabular-nums">
+                <p className="npf-small mt-0.5 text-npf-steel tabular-nums">
                   {t("{ref} · issued {date}", {
                     ref: doc.id,
                     date: format.date(doc.issued),
@@ -69,7 +75,7 @@ export default function PortalDocuments() {
                 type="button"
                 disabled
                 title={t("Downloads are not available in this rebuild")}
-                className="inline-flex shrink-0 cursor-not-allowed items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-muted ring-1 ring-npf-hairline"
+                className="npf-btn npf-btn-secondary npf-btn-sm !opacity-60"
               >
                 <DownloadIcon aria-hidden className="size-4" />
                 {t("Download")}
@@ -78,21 +84,26 @@ export default function PortalDocuments() {
           ))}
         </ul>
       ) : (
-        <Empty
-          title={t("No documents yet")}
-          body={t(
-            "Certificates, permits and receipts appear here as soon as a request is approved.",
-          )}
-          action={
-            <Link
-              href="/app/services"
-              className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
-            >
-              {t("Browse services")}
-              <ArrowRight aria-hidden className="size-4" />
-            </Link>
-          }
-        />
+        <div className="mt-6">
+          <Empty
+            icon={<FileIcon className="size-6" />}
+            title={t("No documents yet")}
+            body={t(
+              "Certificates, permits and receipts appear here as soon as a request is approved.",
+            )}
+            action={
+              <Link href="/app/services" className="npf-btn npf-btn-primary">
+                {t("Browse services")}
+                <span className="npf-btn-disc">
+                  <ArrowRight
+                    aria-hidden
+                    className="npf-arrow size-4 rtl:-scale-x-100"
+                  />
+                </span>
+              </Link>
+            }
+          />
+        </div>
       )}
     </div>
   );

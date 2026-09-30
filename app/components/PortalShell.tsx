@@ -66,29 +66,49 @@ export default function PortalShell({
   return (
     <>
       <Header solid />
-      <main id="main-content" tabIndex={-1} className="outline-none">
-        <div className="min-h-[60vh] bg-white pt-32 pb-24 md:pt-40">
-          <div className="npf-container">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="border-b border-npf-hairline outline-none"
+      >
+        <div className="relative min-h-[60vh] overflow-hidden bg-white pt-32 pb-(--npf-section-y) md:pt-40">
+          {/* The same morning light every inner page opens under. */}
+          <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 [mask-image:linear-gradient(to_bottom,#000_65%,transparent_90%)] md:size-250 md:opacity-60" />
+          <div className="npf-container relative">
             {!loaded || !session || !citizen ? (
               <Loading />
             ) : (
               <>
-                <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-                  <div>
-                    <p className="text-sm text-npf-muted">{t("Signed in as")}</p>
-                    <h1 className="mt-1 font-secondary text-3xl leading-tight font-bold text-npf-blue-deep lg:text-5xl">
-                      {t(session.name)}
-                    </h1>
-                    <p className="mt-2 text-sm text-npf-body">
-                      {t("NIN {id}", { id: session.nin })}
-                    </p>
+                <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-6">
+                  <div className="flex min-w-0 items-center gap-4 md:gap-5">
+                    <span
+                      aria-hidden
+                      className="grid size-14 shrink-0 place-items-center rounded-full bg-npf-blue font-secondary text-lg font-bold text-white shadow-card md:size-18 md:text-2xl"
+                    >
+                      {session.name
+                        .split(" ")
+                        .map((w) => w[0])
+                        .slice(0, 2)
+                        .join("")}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="npf-small text-npf-steel">
+                        {t("Signed in as")}
+                      </p>
+                      <h1 className="npf-h2 text-npf-blue-deep">
+                        {t(session.name)}
+                      </h1>
+                      <p className="npf-small mt-1 text-npf-body tabular-nums">
+                        {t("NIN {id}", { id: session.nin })}
+                      </p>
+                    </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-3">
                     <Link
                       href="/app/services"
-                      className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
+                      className="npf-btn npf-btn-primary"
                     >
-                      <PlusIcon aria-hidden className="size-4" />
+                      <PlusIcon aria-hidden className="size-4.5" />
                       {t("New request")}
                     </Link>
                     <button
@@ -97,16 +117,19 @@ export default function PortalShell({
                         signOut();
                         router.push("/app/home");
                       }}
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-npf-hairline transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-cloud"
+                      className="npf-btn npf-btn-secondary"
                     >
-                      <SignOutIcon aria-hidden className="size-4" />
+                      <SignOutIcon aria-hidden className="size-4.5" />
                       {t("Sign out")}
                     </button>
                   </div>
                 </div>
 
-                <p className="mb-8 flex items-start gap-3 rounded-card bg-npf-gold-wash px-5 py-4 text-sm leading-relaxed text-npf-warn">
-                  <AlertIcon aria-hidden className="mt-0.5 size-5 shrink-0" />
+                <p className="npf-small mt-8 flex items-start gap-3 rounded-card bg-npf-gold-wash px-5 py-3.5 text-npf-warn md:items-center">
+                  <AlertIcon
+                    aria-hidden
+                    className="size-4.5 shrink-0 max-md:mt-0.5"
+                  />
                   <span>
                     {t(
                       "Sample account. The requests, fines and documents below are illustrative and live only in this browser.",
@@ -114,7 +137,7 @@ export default function PortalShell({
                     <button
                       type="button"
                       onClick={resetDemo}
-                      className="font-medium underline underline-offset-2"
+                      className="font-semibold underline underline-offset-2 hover:no-underline"
                     >
                       {t("Reset the demo data")}
                     </button>
@@ -122,12 +145,14 @@ export default function PortalShell({
                   </span>
                 </p>
 
-                <div className="grid grid-cols-1 gap-8 lg:grid-cols-[240px_1fr] lg:gap-12">
+                <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-12">
                   <nav
                     aria-label={t("Account")}
                     className="lg:sticky lg:top-28 lg:self-start"
                   >
-                    <ul className="-mx-1 flex gap-1 overflow-x-auto pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:pb-0">
+                    {/* A phone scrolls the tabs as chips; a desktop stacks
+                        them in one ruled panel, like the service rail. */}
+                    <ul className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] lg:mx-0 lg:block lg:divide-y lg:divide-npf-hairline lg:overflow-hidden lg:rounded-card lg:border lg:border-npf-hairline lg:p-0">
                       {TABS.map(({ href, label, Icon }) => {
                         const active =
                           href === "/app/portal"
@@ -138,16 +163,30 @@ export default function PortalShell({
                             <Link
                               href={href}
                               aria-current={active ? "page" : undefined}
-                              className={`flex items-center gap-3 rounded-chip px-4 py-2.5 text-sm whitespace-nowrap transition-colors ${
+                              className={`group flex min-h-11 items-center gap-3 rounded-full ps-2 pe-4 text-sm font-medium whitespace-nowrap ring-1 transition-colors ring-inset lg:min-h-14 lg:rounded-none lg:px-4 lg:ring-0 ${
                                 active
-                                  ? "bg-npf-chip font-medium text-npf-blue-ink"
-                                  : "text-npf-body hover:bg-npf-cloud"
+                                  ? "bg-npf-blue text-white ring-npf-blue lg:bg-npf-mist lg:text-npf-blue-deep"
+                                  : "text-npf-ink ring-npf-hairline hover:bg-npf-paper"
                               }`}
                             >
-                              <Icon className="size-4.5 shrink-0" />
+                              <span
+                                className={`grid size-8 shrink-0 place-items-center rounded-full transition-colors lg:size-9 ${
+                                  active
+                                    ? "bg-white/15 lg:bg-npf-blue lg:text-white"
+                                    : "bg-npf-cloud text-npf-blue-ink group-hover:bg-npf-chip"
+                                }`}
+                              >
+                                <Icon className="size-4.5" />
+                              </span>
                               {t(label)}
                               {counts[href] ? (
-                                <span className="ms-auto rounded-full bg-npf-blue px-2 py-0.5 text-2xs font-medium text-white tabular-nums">
+                                <span
+                                  className={`ms-auto grid h-6 min-w-6 place-items-center rounded-full px-1.5 text-xs font-semibold tabular-nums ${
+                                    active
+                                      ? "bg-white/20 text-white lg:bg-npf-blue"
+                                      : "bg-npf-cloud text-npf-blue-ink lg:bg-npf-blue lg:text-white"
+                                  }`}
+                                >
                                   {counts[href]}
                                 </span>
                               ) : null}
@@ -175,15 +214,20 @@ function Loading() {
   const t = useT();
   return (
     <div aria-hidden className="animate-pulse">
-      <div className="h-4 w-24 rounded-chip bg-npf-cloud-deep" />
-      <div className="mt-3 h-10 w-72 rounded-chip bg-npf-cloud-deep" />
+      <div className="flex items-center gap-5">
+        <div className="size-14 rounded-full bg-npf-cloud-deep md:size-18" />
+        <div>
+          <div className="h-4 w-24 rounded-chip bg-npf-cloud-deep" />
+          <div className="mt-3 h-10 w-72 max-w-[60vw] rounded-chip bg-npf-cloud-deep" />
+        </div>
+      </div>
       <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-[240px_1fr] lg:gap-12">
         <div className="space-y-2">
           {[0, 1, 2, 3, 4].map((i) => (
             <div key={i} className="h-10 rounded-chip bg-npf-cloud" />
           ))}
         </div>
-        <div className="h-64 rounded-tile bg-npf-cloud" />
+        <div className="h-64 rounded-card bg-npf-cloud" />
       </div>
       <span className="sr-only">{t("Loading your account")}</span>
     </div>

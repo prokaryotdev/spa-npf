@@ -20,17 +20,26 @@ export default async function SearchLoading() {
     <PageShell
       title={t("Search")}
       intro={t("Find a service, a news story, an event or a page.")}
+      lead={
+        <div className="mt-8 h-15 max-w-3xl animate-pulse rounded-full bg-npf-cloud md:mt-10" />
+      }
     >
-      <section className="bg-white pb-24" aria-busy="true" aria-live="polite">
+      <section
+        className="bg-white pb-(--npf-section-y)"
+        aria-busy="true"
+        aria-live="polite"
+      >
         <div className="npf-container">
           <span className="sr-only">{t("Searching…")}</span>
-          <div className="h-17 max-w-170 animate-pulse rounded-card bg-npf-cloud" />
-          <ul className="mt-8 max-w-[80ch] divide-y divide-npf-hairline">
+          <div className="h-6 w-48 animate-pulse rounded-chip bg-npf-cloud" />
+          <ul className="mt-5 max-w-3xl divide-y divide-npf-hairline rounded-card border border-npf-hairline">
             {[0, 1, 2, 3, 4].map((i) => (
-              <li key={i} className="py-5">
-                <div className="h-3 w-24 animate-pulse rounded-chip bg-npf-cloud-deep" />
-                <div className="mt-2 h-5 w-2/3 animate-pulse rounded-chip bg-npf-cloud-deep" />
-                <div className="mt-2 h-4 w-1/2 animate-pulse rounded-chip bg-npf-cloud" />
+              <li key={i} className="flex gap-4 px-5 py-5">
+                <div className="size-10 shrink-0 animate-pulse rounded-chip bg-npf-cloud" />
+                <div className="flex-1">
+                  <div className="h-5 w-2/3 animate-pulse rounded-chip bg-npf-cloud-deep" />
+                  <div className="mt-2 h-4 w-1/2 animate-pulse rounded-chip bg-npf-cloud" />
+                </div>
               </li>
             ))}
           </ul>

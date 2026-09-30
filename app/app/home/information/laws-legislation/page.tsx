@@ -22,12 +22,10 @@ export default async function LawsPage() {
       intro={data.description}
       trail={[{ label: "Information", href: "/app/home/information" }]}
     >
-      <section className="bg-white pb-24">
+      <section className="bg-white pb-(--npf-section-y)">
         <div className="npf-container">
-          <p className="mb-6 text-sm text-npf-muted">
-            {t("Page last updated: {date}", { date: t(data.updatedAt) })}
-          </p>
           <DataTable
+            updated={t("Page last updated: {date}", { date: t(data.updatedAt) })}
             caption="Laws and legislation"
             rows={data.rows}
             columns={[

@@ -9,7 +9,14 @@ import {
   type TrackedRequest,
 } from "./store";
 import { Empty, StatusPill } from "./ui";
-import { ArrowRight, ChevronDown, SearchIcon } from "./icons";
+import {
+  AlertIcon,
+  ArrowRight,
+  ChevronDown,
+  FileIcon,
+  InboxIcon,
+  SearchIcon,
+} from "./icons";
 import { useFormat, useT } from "../i18n/client";
 
 const FILTERS: (RequestStatus | "All")[] = [
@@ -43,56 +50,44 @@ export default function PortalRequests() {
 
   return (
     <div>
-      <h2 className="mb-6 font-secondary text-2xl font-bold text-npf-blue-deep">
-        {t("My Requests")}
-      </h2>
+      <h2 className="npf-h3 text-npf-blue-deep">{t("My Requests")}</h2>
 
-      <div className="mb-6 flex flex-wrap items-end gap-4">
-        <div className="min-w-55 flex-1">
-          <label
-            htmlFor={`${id}-q`}
-            className="mb-1.5 block text-sm font-medium text-npf-ink"
-          >
-            {t("Find a request")}
-          </label>
-          <div className="flex items-center gap-3 rounded-chip bg-npf-cloud px-4 ring-1 ring-npf-hairline focus-within:ring-2 focus-within:ring-npf-blue">
-            <SearchIcon
-              aria-hidden
-              className="size-5 shrink-0 text-npf-blue-ink"
-            />
-            <input
-              id={`${id}-q`}
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={t("Service name or reference")}
-              className="w-full bg-transparent py-3 text-base text-npf-ink outline-none placeholder:text-npf-muted"
-            />
-          </div>
+      <div className="mt-6 flex flex-wrap items-center gap-3">
+        <label htmlFor={`${id}-q`} className="sr-only">
+          {t("Find a request")}
+        </label>
+        <div className="npf-field npf-field-icon min-w-60 flex-1 rounded-full ps-5">
+          <SearchIcon aria-hidden className="size-5 shrink-0 text-npf-blue" />
+          <input
+            id={`${id}-q`}
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t("Service name or reference")}
+          />
         </div>
-        <div>
-          <label
-            htmlFor={`${id}-s`}
-            className="mb-1.5 block text-sm font-medium text-npf-ink"
-          >
-            {t("Status")}
-          </label>
+        <label htmlFor={`${id}-s`} className="sr-only">
+          {t("Status")}
+        </label>
+        <span className="npf-select-wrap">
           <select
             id={`${id}-s`}
             value={status}
+            data-active={status !== "All" ? "" : undefined}
             onChange={(e) => setStatus(e.target.value as RequestStatus | "All")}
-            className="rounded-chip bg-npf-cloud px-4 py-3 text-base text-npf-ink ring-1 ring-npf-hairline outline-none focus:ring-2 focus:ring-npf-blue"
+            className="npf-select h-12"
           >
             {FILTERS.map((f) => (
               <option key={f} value={f}>
-                {t(f)}
+                {f === "All" ? t("All statuses") : t(f)}
               </option>
             ))}
           </select>
-        </div>
+          <ChevronDown aria-hidden className="npf-select-arrow" />
+        </span>
       </div>
 
-      <p aria-live="polite" className="mb-4 text-sm text-npf-muted">
+      <p aria-live="polite" className="npf-small mt-5 mb-4 text-npf-steel">
         {t("Showing {shown} of {total} requests", {
           shown: visible.length,
           total: requests.length,
@@ -101,6 +96,7 @@ export default function PortalRequests() {
 
       {visible.length === 0 ? (
         <Empty
+          icon={<InboxIcon className="size-6" />}
           title={requests.length ? t("Nothing matches") : t("No requests yet")}
           body={
             requests.length
@@ -113,12 +109,14 @@ export default function PortalRequests() {
           }
           action={
             requests.length ? null : (
-              <Link
-                href="/app/services"
-                className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
-              >
+              <Link href="/app/services" className="npf-btn npf-btn-primary">
                 {t("Browse services")}
-                <ArrowRight aria-hidden className="size-4" />
+                <span className="npf-btn-disc">
+                  <ArrowRight
+                    aria-hidden
+                    className="npf-arrow size-4 rtl:-scale-x-100"
+                  />
+                </span>
               </Link>
             )
           }
@@ -131,7 +129,7 @@ export default function PortalRequests() {
           return (
             <li
               key={request.id}
-              className="overflow-hidden rounded-card ring-1 ring-npf-hairline"
+              className={`overflow-hidden rounded-card border bg-white transition-[border-color,box-shadow] duration-(--dur-hover) ${open ? "border-transparent shadow-card ring-1 ring-npf-hairline" : "border-npf-hairline"}`}
             >
               <h3>
                 <button
@@ -139,13 +137,16 @@ export default function PortalRequests() {
                   aria-expanded={open}
                   aria-controls={`${id}-${request.id}`}
                   onClick={() => setOpenId(open ? null : request.id)}
-                  className="flex w-full items-center gap-4 px-5 py-4 text-start transition-colors hover:bg-npf-paper"
+                  className="npf-row-link flex w-full items-center gap-4 px-5 py-4 text-start"
                 >
+                  <span className="npf-disc max-sm:hidden">
+                    <FileIcon className="size-5" />
+                  </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block font-secondary text-base font-bold text-npf-ink">
+                    <span className="npf-h5 block text-npf-ink">
                       {t(request.service)}
                     </span>
-                    <span className="mt-0.5 block text-sm text-npf-muted">
+                    <span className="npf-small mt-0.5 block text-npf-steel tabular-nums">
                       {t("{ref} · submitted {date} · {fee}", {
                         ref: request.id,
                         date: format.date(request.submitted),
@@ -156,7 +157,7 @@ export default function PortalRequests() {
                   <StatusPill status={request.status} />
                   <ChevronDown
                     aria-hidden
-                    className={`size-5 shrink-0 text-npf-muted transition-transform duration-(--dur-hover) ease-out ${
+                    className={`size-5 shrink-0 text-npf-blue transition-transform duration-(--dur-hover) ease-out ${
                       open ? "rotate-180" : ""
                     }`}
                   />
@@ -166,10 +167,11 @@ export default function PortalRequests() {
               {open ? (
                 <div
                   id={`${id}-${request.id}`}
-                  className="border-t border-npf-hairline px-5 py-5"
+                  className="border-t border-npf-hairline px-5 py-6 sm:ps-19"
                 >
                   {request.note ? (
-                    <p className="mb-4 rounded-chip bg-npf-gold-wash px-4 py-3 text-sm leading-relaxed text-npf-warn">
+                    <p className="npf-small mb-5 flex items-start gap-2.5 rounded-chip bg-npf-gold-wash px-4 py-3 text-npf-warn">
+                      <AlertIcon aria-hidden className="mt-0.5 size-4 shrink-0" />
                       {t(request.note)}
                     </p>
                   ) : null}
@@ -195,14 +197,14 @@ export default function PortalRequests() {
                               i === 0 ? "bg-npf-blue" : "bg-npf-line"
                             }`}
                           />
-                          <p className="font-medium text-npf-ink">
+                          <p className="npf-body font-medium text-npf-ink">
                             {t(step.label)}
                           </p>
-                          <p className="mt-0.5 text-xs text-npf-muted tabular-nums">
+                          <p className="npf-small mt-0.5 text-npf-steel tabular-nums">
                             {format.dateTime(step.at)}
                           </p>
                           {step.note ? (
-                            <p className="mt-1 text-sm leading-relaxed text-npf-body">
+                            <p className="npf-small mt-1 text-npf-body">
                               {t(step.note)}
                             </p>
                           ) : null}
@@ -210,17 +212,20 @@ export default function PortalRequests() {
                       ))}
                   </ol>
 
-                  <div className="mt-6 flex flex-wrap gap-3">
+                  <div className="mt-6 flex flex-wrap gap-3 border-t border-npf-hairline pt-5">
                     <Link
                       href={`/app/services/${request.slug}`}
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-npf-hairline transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-cloud"
+                      className="npf-btn npf-btn-secondary npf-btn-sm"
                     >
                       {t("About this service")}
-                      <ArrowRight aria-hidden className="size-4" />
+                      <ArrowRight
+                        aria-hidden
+                        className="size-4 rtl:-scale-x-100"
+                      />
                     </Link>
                     <Link
                       href="/app/home/contactUs"
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-npf-ink ring-1 ring-npf-hairline transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-cloud"
+                      className="npf-btn npf-btn-ghost npf-btn-sm text-npf-blue"
                     >
                       {t("Ask about it")}
                     </Link>
@@ -261,7 +266,7 @@ function Reply({ request }: { request: TrackedRequest }) {
     >
       <label
         htmlFor={`${id}-reply`}
-        className="mb-1.5 block text-sm font-medium text-npf-ink"
+        className="npf-field-label"
       >
         {t("Your reply")}
       </label>
@@ -271,15 +276,15 @@ function Reply({ request }: { request: TrackedRequest }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder={t("Tell us what you have done, or what you are sending.")}
-        className="w-full rounded-chip border border-npf-line bg-white px-4 py-3 text-base leading-relaxed text-npf-ink outline-none placeholder:text-npf-muted focus:ring-2 focus:ring-npf-blue"
+        className="npf-field min-h-28"
       />
       <button
         type="submit"
         disabled={!text.trim()}
-        className="mt-3 inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid disabled:cursor-not-allowed disabled:opacity-40"
+        className="npf-btn npf-btn-primary npf-btn-sm mt-3"
       >
         {t("Send reply")}
-        <ArrowRight aria-hidden className="size-4" />
+        <ArrowRight aria-hidden className="size-4 rtl:-scale-x-100" />
       </button>
     </form>
   );

@@ -2,8 +2,16 @@
 
 import Link from "../i18n/Link";
 import { markNoticesRead, useStore } from "./store";
-import { Card, Empty, StatusPill } from "./ui";
-import { ArrowRight, BellIcon, ChevronRight } from "./icons";
+import { Card, Empty, HeadLink, StatusPill } from "./ui";
+import {
+  AlertIcon,
+  ArrowRight,
+  BellIcon,
+  CardIcon,
+  FileIcon,
+  InboxIcon,
+  ServicesIcon,
+} from "./icons";
 import { useFormat, useT } from "../i18n/client";
 
 /** Just enough of a service to draw a shortcut tile. */
@@ -39,38 +47,36 @@ export default function PortalOverview({
   const unread = notices.filter((n) => !n.read);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {needsYou.length ? (
-        <section className="rounded-tile bg-npf-gold-wash p-6">
-          <h2 className="font-secondary text-lg font-bold text-npf-warn">
+        <section className="overflow-hidden rounded-card bg-npf-gold-wash">
+          <h2 className="npf-h5 flex items-center gap-2.5 px-5 pt-4 pb-3 text-npf-warn">
+            <AlertIcon aria-hidden className="size-5 shrink-0" />
             {needsYou.length === 1
               ? t("One request needs something from you")
               : t("{n} requests need something from you", {
                   n: needsYou.length,
                 })}
           </h2>
-          <ul className="mt-4 space-y-3">
+          <ul className="mx-2 mb-2 divide-y divide-npf-hairline overflow-hidden rounded-[0.625rem] bg-white">
             {needsYou.map((request) => (
               <li key={request.id}>
                 <Link
                   href="/app/portal/requests"
-                  className="group/row flex items-start gap-3 rounded-card bg-white px-4 py-3 transition-colors hover:bg-white/70"
+                  className="npf-row-link flex items-center gap-4 px-4 py-3.5"
                 >
                   <span className="min-w-0 flex-1">
-                    <span className="block font-medium text-npf-ink">
+                    <span className="npf-body block font-medium text-npf-ink">
                       {t(request.service)}
                     </span>
-                    <span className="mt-0.5 block text-sm text-npf-body">
+                    <span className="npf-small mt-0.5 block text-npf-body">
                       {t(
                         request.note ??
                           "Open the request to see what is needed.",
                       )}
                     </span>
                   </span>
-                  <ChevronRight
-                    aria-hidden
-                    className="mt-1 size-5 shrink-0 text-npf-muted transition-transform duration-(--dur-hover) ease-out group-hover/row:translate-x-1"
-                  />
+                  <ArrowRight aria-hidden className="npf-go" />
                 </Link>
               </li>
             ))}
@@ -78,42 +84,41 @@ export default function PortalOverview({
         </section>
       ) : null}
 
-      <dl className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <dl className="grid divide-y divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline bg-white sm:grid-cols-3 sm:divide-x sm:divide-y-0">
         <Stat
           label={t("Open requests")}
           value={String(open.length)}
           href="/app/portal/requests"
+          icon={<InboxIcon className="size-5" />}
         />
         <Stat
           label={t("Unpaid fines")}
           value={owed ? format.naira(owed) : t("None")}
           href="/app/portal/fines"
+          icon={<CardIcon className="size-5" />}
         />
         <Stat
           label={t("Unread notices")}
           value={String(unread.length)}
           href="#notices"
+          icon={<BellIcon className="size-5" />}
         />
       </dl>
 
       <Card
         title={t("Start a service")}
         action={
-          <Link
-            href="/app/services"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-npf-blue-ink transition-colors hover:text-npf-blue-deep"
-          >
+          <HeadAnchor href="/app/services">
             {t("All {n} services", { n: serviceCount })}
-            <ArrowRight aria-hidden className="size-4" />
-          </Link>
+          </HeadAnchor>
         }
       >
-        <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {shortcuts.map((service) => (
             <li key={service.slug}>
               <Link
                 href={`/app/services/${service.slug}`}
-                className="group/row flex items-center gap-3 rounded-card bg-npf-cloud px-4 py-3 transition-colors hover:bg-npf-cloud-deep"
+                className="npf-link-card flex h-full items-center gap-3.5 p-3.5"
               >
                 {/*
                   A plain <img>, not next/image. These are 24px SVGs already
@@ -122,23 +127,24 @@ export default function PortalOverview({
                   stopped it hydrating at all: the account stayed on its
                   loading skeleton with no error to say why.
                 */}
-                {service.icon ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={service.icon}
-                    alt=""
-                    width={24}
-                    height={24}
-                    className="size-6 shrink-0"
-                  />
-                ) : null}
-                <span className="min-w-0 flex-1 truncate text-sm font-medium text-npf-ink">
+                <span className="npf-disc rounded-chip">
+                  {service.icon ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={service.icon}
+                      alt=""
+                      width={22}
+                      height={22}
+                      className="size-5.5"
+                    />
+                  ) : (
+                    <ServicesIcon className="size-5" />
+                  )}
+                </span>
+                <span className="npf-small min-w-0 flex-1 font-medium text-npf-ink">
                   {t(service.name)}
                 </span>
-                <ChevronRight
-                  aria-hidden
-                  className="size-4 shrink-0 text-npf-muted transition-transform duration-(--dur-hover) ease-out group-hover/row:translate-x-1"
-                />
+                <ArrowRight aria-hidden className="npf-go size-4" />
               </Link>
             </li>
           ))}
@@ -147,107 +153,129 @@ export default function PortalOverview({
 
       <Card
         title={t("Recent requests")}
+        flush={requests.length > 0}
         action={
-          <Link
-            href="/app/portal/requests"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-npf-blue-ink transition-colors hover:text-npf-blue-deep"
-          >
-            {t("See all")}
-            <ArrowRight aria-hidden className="size-4" />
-          </Link>
+          <HeadAnchor href="/app/portal/requests">{t("See all")}</HeadAnchor>
         }
       >
         {requests.length ? (
           <ul className="divide-y divide-npf-hairline">
             {requests.slice(0, 4).map((request) => (
-              <li
-                key={request.id}
-                className="flex flex-wrap items-center justify-between gap-3 py-3 first:pt-0 last:pb-0"
-              >
-                <div className="min-w-0">
-                  <p className="truncate font-medium text-npf-ink">
-                    {t(request.service)}
-                  </p>
-                  <p className="mt-0.5 text-sm text-npf-muted">
-                    {request.id} · {format.date(request.submitted)}
-                  </p>
-                </div>
-                <StatusPill status={request.status} />
+              <li key={request.id}>
+                <Link
+                  href="/app/portal/requests"
+                  className="npf-row-link flex items-center gap-4 px-5 py-4"
+                >
+                  <span className="npf-disc max-sm:hidden">
+                    <FileIcon className="size-5" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="npf-body block truncate font-medium text-npf-ink">
+                      {t(request.service)}
+                    </span>
+                    <span className="npf-small mt-0.5 block text-npf-steel tabular-nums">
+                      {request.id} · {format.date(request.submitted)}
+                    </span>
+                  </span>
+                  <StatusPill status={request.status} />
+                </Link>
               </li>
             ))}
           </ul>
         ) : (
           <Empty
+            icon={<InboxIcon className="size-6" />}
             title={t("No requests yet")}
             body={t(
               "Anything you apply for shows up here with its reference number and status.",
             )}
             action={
-              <Link
-                href="/app/services"
-                className="inline-flex items-center gap-2 rounded-full bg-npf-blue px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,scale] not-disabled:active:scale-[0.97] active:duration-(--dur-press) hover:bg-npf-blue-mid"
-              >
+              <Link href="/app/services" className="npf-btn npf-btn-primary">
                 {t("Browse services")}
-                <ArrowRight aria-hidden className="size-4" />
+                <span className="npf-btn-disc">
+                  <ArrowRight
+                    aria-hidden
+                    className="npf-arrow size-4 rtl:-scale-x-100"
+                  />
+                </span>
               </Link>
             }
           />
         )}
       </Card>
 
-      <section
+      <Card
         id="notices"
-        className="scroll-mt-32 rounded-tile p-6 ring-1 ring-npf-hairline"
+        title={t("Notices")}
+        icon={<BellIcon aria-hidden className="size-5" />}
+        flush={notices.length > 0}
+        action={
+          unread.length ? (
+            <HeadLink onClick={markNoticesRead}>{t("Mark all read")}</HeadLink>
+          ) : null
+        }
       >
-        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="flex items-center gap-2 font-secondary text-lg font-bold text-npf-blue-deep">
-            <BellIcon aria-hidden className="size-5" />
-            {t("Notices")}
-          </h2>
-          {unread.length ? (
-            <button
-              type="button"
-              onClick={markNoticesRead}
-              className="text-sm font-medium text-npf-blue underline underline-offset-2 transition-colors hover:text-npf-blue-deep"
-            >
-              {t("Mark all read")}
-            </button>
-          ) : null}
-        </div>
-
         {notices.length ? (
-          <ul className="space-y-3">
+          <ul className="divide-y divide-npf-hairline">
             {notices.map((notice) => (
-              <li
-                key={notice.id}
-                className={`rounded-card px-4 py-3 ${
-                  notice.read ? "bg-npf-paper" : "bg-npf-chip"
-                }`}
-              >
-                <p className="flex flex-wrap items-baseline justify-between gap-2">
-                  <span className="font-medium text-npf-ink">
-                    {t(notice.title)}
-                  </span>
-                  <span className="text-xs text-npf-muted">
-                    {format.date(notice.at)}
-                  </span>
-                </p>
-                <p className="mt-1 text-sm leading-relaxed text-npf-body">
-                  {t(notice.body)}
-                </p>
+              <li key={notice.id} className="flex gap-3.5 px-5 py-4">
+                <span
+                  aria-hidden
+                  className={`mt-2 size-2 shrink-0 rounded-full ${
+                    notice.read ? "bg-npf-line" : "bg-npf-blue"
+                  }`}
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                    <span
+                      className={`npf-body text-npf-ink ${notice.read ? "" : "font-semibold"}`}
+                    >
+                      {t(notice.title)}
+                    </span>
+                    <span className="npf-small shrink-0 text-npf-steel tabular-nums">
+                      {format.date(notice.at)}
+                    </span>
+                  </p>
+                  <p className="npf-small mt-1 text-npf-body">
+                    {t(notice.body)}
+                  </p>
+                </div>
               </li>
             ))}
           </ul>
         ) : (
           <Empty
+            icon={<BellIcon className="size-6" />}
             title={t("Nothing to read")}
             body={t(
               "Updates about your requests, fines and documents land here.",
             )}
           />
         )}
-      </section>
+      </Card>
     </div>
+  );
+}
+
+/** A panel head's link: "See all", "All 91 services". */
+function HeadAnchor({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className="npf-small group -my-2 inline-flex min-h-10 items-center gap-1.5 font-medium text-npf-blue transition-colors hover:text-npf-blue-deep"
+    >
+      {children}
+      <ArrowRight
+        aria-hidden
+        className="size-4 transition-transform group-hover:translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:-translate-x-[3px]"
+      />
+    </Link>
   );
 }
 
@@ -255,29 +283,33 @@ function Stat({
   label,
   value,
   href,
+  icon,
 }: {
   label: string;
   value: string;
   href: string;
+  icon: React.ReactNode;
 }) {
   /*
    * A <dl> may hold only <dt>/<dd> or a <div> of them, so the link cannot
-   * wrap the pair. It sits in the term and stretches over the tile instead,
-   * and the tile wears the link's focus ring.
+   * wrap the pair. It sits in the term and stretches over the cell instead,
+   * and the cell wears the link's focus ring.
    */
   return (
-    <div className="relative rounded-tile bg-npf-cloud px-5 py-5 transition-colors hover:bg-npf-cloud-deep has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-npf-blue-mid">
-      <dt className="text-sm text-npf-body">
-        <Link
-          href={href}
-          className="outline-none after:absolute after:inset-0 after:rounded-tile"
+    <div className="group relative min-w-0 py-4 ps-[4.625rem] pe-5 transition-colors hover:bg-npf-paper has-[:focus-visible]:outline-2 has-[:focus-visible]:-outline-offset-2 has-[:focus-visible]:outline-npf-blue-mid">
+      {/* Only <dt> and <dd> may sit in a <dl> row: the icon rides in the term. */}
+      <dt className="npf-small text-npf-steel">
+        <span
+          aria-hidden
+          className="npf-disc absolute start-5 top-1/2 -translate-y-1/2 group-hover:bg-npf-chip"
         >
+          {icon}
+        </span>
+        <Link href={href} className="outline-none after:absolute after:inset-0">
           {label}
         </Link>
       </dt>
-      <dd className="mt-1 font-secondary text-2xl font-bold text-npf-blue-deep tabular-nums">
-        {value}
-      </dd>
+      <dd className="npf-h4 text-npf-blue-deep tabular-nums">{value}</dd>
     </div>
   );
 }
