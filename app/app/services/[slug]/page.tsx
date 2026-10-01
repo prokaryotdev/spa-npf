@@ -7,7 +7,10 @@ import { Facts, HelpCard, PageShell } from "../../../components/PageShell";
 import ServiceAction from "../../../components/ServiceAction";
 import {
   ArrowRight,
-  CardIcon,
+  ArrowUpRight,
+  CreditCardIcon,
+  DebitCardIcon,
+  CashIcon,
   CheckIcon,
   ClockIcon,
   FileIcon,
@@ -17,6 +20,7 @@ import {
   PhoneIcon,
   PinIcon,
   SearchIcon,
+  TapPayIcon,
   ServicesIcon,
   UserCircle,
 } from "../../../components/icons";
@@ -114,6 +118,32 @@ export default async function ServicePage({
       i,
     }))
     .filter((hour) => !usedHours.has(hour.i));
+  // Hours for a place the CMS doesn't list as a channel ("Police Stations")
+  // still say where; only "Other" is just a time.
+  const places = [
+    ...channels,
+    ...otherHours.map((hour) => ({
+      name: hour.label,
+      en: source.hours[hour.i]?.label ?? "",
+      hours: hour.value,
+    })),
+  ].map((place) => {
+    const Icon = place.en === "Other" ? ClockIcon : channelIcon(place.en);
+    return { ...place, Icon, station: Icon === PinIcon };
+  });
+
+  // The CMS numbers a rule's own list by hand ("1. Availability of …") as
+  // terms of their own; numbering those again printed "3  1. …". They fold
+  // under the rule they belong to.
+  const terms = service.terms.reduce<{ text: string; items: string[] }[]>(
+    (all, term) => {
+      const sub = term.match(/^\d+[.)]\s+(.+)/);
+      if (sub && all.length) all[all.length - 1].items.push(sub[1]);
+      else all.push({ text: term, items: [] });
+      return all;
+    },
+    [],
+  );
 
   const facts = [
     { label: t("Fees"), value: service.feeSummary },
@@ -167,54 +197,52 @@ export default async function ServicePage({
         <section className="bg-white pb-(--npf-section-y)">
           <div className="npf-container grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_340px]">
             {/* On a phone the aside dissolves into the column: the action
-                sits first, help sits last. On a desktop the action rides
-                along beside the reading, and help waits at the rail's foot,
-                where the reading ends; pinning both would outgrow a laptop
-                screen and hide help for good. */}
-            <aside className="max-lg:contents lg:col-start-2 lg:row-start-1 lg:flex lg:flex-col">
-              <div className="max-lg:contents lg:flex-1">
-                <div className="max-lg:contents lg:sticky lg:top-28">
-                  <div className="rounded-card bg-white p-6 shadow-card ring-1 ring-npf-hairline ring-inset">
-                    <div className="flex items-center gap-4">
-                      <span className="grid size-12 shrink-0 place-items-center rounded-chip bg-npf-cloud">
-                        {service.icon ? (
-                          <Image
-                            src={service.icon}
-                            alt=""
-                            width={26}
-                            height={26}
-                            className="size-6.5"
-                          />
-                        ) : (
-                          <ServicesIcon className="size-6 text-npf-blue-ink" />
-                        )}
-                      </span>
-                      <p className="npf-h5 text-npf-ink">{service.name}</p>
-                    </div>
-                    <div className="mt-6">
-                      <ServiceAction service={service} />
-                    </div>
-                    {service.ninAuthOnly ? (
-                      <p className="npf-small mt-4 flex items-center justify-center gap-2 border-t border-npf-hairline pt-4 text-npf-steel">
-                        <UserCircle className="size-4 shrink-0" />
-                        {t("NINAuth sign-in required")}
-                      </p>
-                    ) : null}
+                sits first, help sits last. On a desktop help sits right under
+                the action and both ride along beside the reading. They only
+                pin on a screen tall enough to hold both, so help never hides
+                below the fold. */}
+            <aside className="max-lg:contents lg:col-start-2 lg:row-start-1">
+              <div className="max-lg:contents lg:top-28 lg:space-y-6 lg:[@media(min-height:46rem)]:sticky">
+                <div className="rounded-card bg-white p-6 shadow-card ring-1 ring-npf-hairline ring-inset">
+                  <div className="flex items-center gap-4">
+                    <span className="grid size-12 shrink-0 place-items-center rounded-chip bg-npf-cloud">
+                      {service.icon ? (
+                        <Image
+                          src={service.icon}
+                          alt=""
+                          width={26}
+                          height={26}
+                          className="size-6.5"
+                        />
+                      ) : (
+                        <ServicesIcon className="size-6 text-npf-blue-ink" />
+                      )}
+                    </span>
+                    <p className="npf-h5 text-npf-ink">{service.name}</p>
                   </div>
+                  <div className="mt-6">
+                    <ServiceAction service={service} />
+                  </div>
+                  {service.ninAuthOnly ? (
+                    <p className="npf-small mt-4 flex items-center justify-center gap-2 border-t border-npf-hairline pt-4 text-npf-steel">
+                      <UserCircle className="size-4 shrink-0" />
+                      {t("NINAuth sign-in required")}
+                    </p>
+                  ) : null}
                 </div>
-              </div>
 
-              {service.contacts.length ? (
-                <HelpCard
-                  className="order-last lg:mt-10"
-                  title={t("Need help?")}
-                  intro={t("Call or email us about this service.")}
-                  rows={source.contacts.flatMap((name) => {
-                    const c = contactFor(name, t);
-                    return c ? [c] : [];
-                  })}
-                />
-              ) : null}
+                {service.contacts.length ? (
+                  <HelpCard
+                    className="order-last"
+                    title={t("Need help?")}
+                    intro={t("Call or email us about this service.")}
+                    rows={source.contacts.flatMap((name) => {
+                      const c = contactFor(name, t);
+                      return c ? [c] : [];
+                    })}
+                  />
+                ) : null}
+              </div>
             </aside>
 
             <div className="min-w-0 lg:col-start-1 lg:row-start-1 lg:max-w-[46rem] [&>section+section]:mt-12 [&>section+section]:border-t [&>section+section]:border-npf-hairline [&>section+section]:pt-12">
@@ -247,7 +275,8 @@ export default async function ServicePage({
 
               {service.fees.length ? (
                 <Section id="fees" title={t("Fees")}>
-                  <dl className="overflow-hidden rounded-card border border-npf-hairline">
+                  <div className="overflow-hidden rounded-card border border-npf-hairline">
+                  <dl>
                     {service.fees.map((fee) => (
                       <div
                         key={fee.label}
@@ -274,22 +303,34 @@ export default async function ServicePage({
                       </dd>
                     </div>
                   </dl>
+                  {/* The receipt's footer, not a row of buttons: each method is
+                      a bare icon beside its name, with nothing around it to
+                      press. */}
                   {service.payment.length ? (
-                    <ul
-                      aria-label={t("Payment methods")}
-                      className="mt-4 flex flex-wrap items-center gap-2"
-                    >
-                      {service.payment.map((method) => (
-                        <li
-                          key={method}
-                          className="npf-small inline-flex items-center gap-2 rounded-full bg-npf-cloud px-3 py-1.5 text-npf-ink"
-                        >
-                          <CardIcon className="size-4 text-npf-steel" />
-                          {method}
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-npf-hairline px-5 py-4">
+                      <h3 className="npf-body text-npf-body">
+                        {t("Pay with")}
+                      </h3>
+                      <ul
+                        aria-label={t("Payment methods")}
+                        className="flex flex-wrap items-center gap-x-4 gap-y-2.5"
+                      >
+                        {service.payment.map((method, i) => {
+                          const Icon = paymentIcon(source.payment[i] ?? "");
+                          return (
+                            <li
+                              key={method}
+                              className="npf-small inline-flex items-center gap-1.5 font-medium not-first:border-s not-first:border-npf-hairline not-first:ps-4 text-npf-ink"
+                            >
+                              <Icon className="size-5 shrink-0 text-npf-blue-ink" />
+                              {method}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
                   ) : null}
+                  </div>
                 </Section>
               ) : null}
 
@@ -302,37 +343,47 @@ export default async function ServicePage({
                     {delivery.map((part) => {
                       const Icon = deliveryIcon(part.key);
                       const href = deliveryHref(part.key);
+                      // The tile echoes the action card's, so each way reads
+                      // as a thing you have rather than a bullet. The arrow
+                      // sits in a disc of its own: where a row goes somewhere
+                      // it says so before the pointer finds it.
                       const body = (
                         <>
-                          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink transition-colors group-hover:bg-npf-chip">
-                            <Icon className="size-5" />
+                          <span className={tile}>
+                            <Icon className="size-5.5" />
                           </span>
-                          <span className="min-w-0 flex-1 pt-1.5">
+                          <span className="min-w-0 flex-1">
                             {part.label ? (
-                              <span className="npf-body block font-medium text-npf-ink transition-colors group-hover:text-npf-blue">
+                              <span className="npf-body block font-semibold text-npf-ink transition-colors group-hover:text-npf-blue">
                                 {part.label}
                               </span>
                             ) : null}
-                            <span className="npf-small mt-1 block text-npf-body">
-                              {part.text}
+                            <span className="npf-body mt-1 block max-w-[60ch] text-npf-body">
+                              <Named text={part.text} />
                             </span>
                           </span>
                           {href ? (
-                            <ArrowRight className="mt-2.5 size-4.5 shrink-0 text-npf-blue transition-transform group-hover:translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:-translate-x-[3px]" />
+                            <span
+                              aria-hidden
+                              className={`${go} self-center`}
+                            >
+                              <ArrowRight className="npf-go size-4 text-current" />
+                            </span>
                           ) : null}
                         </>
                       );
+                      const row = "flex items-start gap-4 px-5 py-5";
                       return (
                         <li key={part.label + part.text}>
                           {href ? (
                             <Link
                               href={href}
-                              className="group flex gap-4 px-5 py-4 transition-colors duration-(--dur-hover) hover:bg-npf-paper"
+                              className={`npf-row-link group ${row}`}
                             >
                               {body}
                             </Link>
                           ) : (
-                            <div className="flex gap-4 px-5 py-4">{body}</div>
+                            <div className={row}>{body}</div>
                           )}
                         </li>
                       );
@@ -345,16 +396,45 @@ export default async function ServicePage({
                 <Section id="terms" title={t("Terms and conditions")}>
                   {/* Rules, not a checklist: numbered so one can be quoted
                       back ("term 4") at a counter or on a call. */}
-                  <ol className="divide-y divide-npf-hairline rounded-card border border-npf-hairline">
-                    {service.terms.map((term, i) => (
-                      <li
-                        key={term}
-                        className="npf-body flex items-start gap-4 px-5 py-4 text-npf-ink"
-                      >
-                        <span className="npf-caption mt-px grid size-6 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink tabular-nums">
+                  <ol className="divide-y divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline">
+                    {terms.map((term, i) => (
+                      <li key={term.text} className="flex items-start gap-4 px-5 py-5">
+                        <span className={`${tile} npf-h5 tabular-nums`}>
                           {i + 1}
                         </span>
-                        {term}
+                        <div className="npf-body min-w-0 flex-1 pt-[9px] text-npf-ink">
+                          {/^https?:\/\//.test(term.text) ? (
+                            <a
+                              href={term.text}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 font-medium text-npf-blue underline decoration-npf-line underline-offset-4 transition-colors hover:decoration-current"
+                            >
+                              {new URL(term.text).hostname}
+                              <ArrowUpRight aria-hidden className="size-4" />
+                            </a>
+                          ) : (
+                            <p className="max-w-[62ch]">{term.text}</p>
+                          )}
+                          {term.items.length ? (
+                            <ul className="mt-3 grid gap-x-6 gap-y-2 sm:grid-cols-2">
+                              {term.items.map((item) => (
+                                <li
+                                  key={item}
+                                  className="flex items-start gap-2.5 text-npf-body"
+                                >
+                                  <span
+                                    aria-hidden
+                                    className="mt-[0.3em] grid size-4.5 shrink-0 place-items-center rounded-full bg-npf-chip text-npf-blue"
+                                  >
+                                    <CheckIcon className="size-2.5" />
+                                  </span>
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : null}
+                        </div>
                       </li>
                     ))}
                   </ol>
@@ -363,25 +443,20 @@ export default async function ServicePage({
 
               {service.channels.length || service.hours.length ? (
                 <Section id="where" title={t("Where to use it")}>
-                  <ul className="divide-y divide-npf-hairline rounded-card border border-npf-hairline">
-                    {channels.map((channel) => {
-                      const Icon = channelIcon(channel.en);
-                      return (
-                        <Place
-                          key={channel.en}
-                          icon={<Icon className="size-5" />}
-                          name={channel.name}
-                          hours={channel.hours}
-                        />
-                      );
-                    })}
-                    {otherHours.map((hour) => (
+                  {/* Read like the fees: the place on the left, when it is
+                      open on the right, so the eye runs down one column for
+                      "can I go now?". Stations lead on to the finder. */}
+                  <ul className="divide-y divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline">
+                    {places.map(({ Icon, station, ...place }) => (
                       <Place
-                        key={hour.i}
-                        icon={<ClockIcon className="size-5" />}
-                        name={hour.label}
-                        hours={hour.value}
-                        bare
+                        key={place.en}
+                        icon={<Icon className="size-5.5" />}
+                        name={place.name}
+                        note={station ? t("Find a station near you") : null}
+                        href={station ? "/app/home/customer-centers" : null}
+                        hours={place.hours}
+                        gutter={places.some((p) => p.station)}
+                        t={t}
                       />
                     ))}
                   </ul>
@@ -456,53 +531,134 @@ function Section({
   );
 }
 
+/**
+ * The marker every row on this page leads with: a delivery way, a term's
+ * number, a document's tick — so the lists read as one family.
+ */
+const tile =
+  "grid size-10.5 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink transition-colors duration-(--dur-hover) group-hover:bg-npf-chip";
+
+/** The arrow of a row that goes somewhere: a ring that fills on hover. */
+const go =
+  "grid size-9 shrink-0 place-items-center rounded-full text-npf-blue ring-1 ring-npf-hairline transition-colors duration-(--dur-hover) ring-inset group-hover:bg-npf-blue group-hover:text-white group-hover:ring-transparent";
+
+/** The CMS quotes the screens it names ("My Requests"); set them as names. */
+function Named({ text }: { text: string }) {
+  return text.split(/"([^"]+)"/).map((chunk, i) =>
+    i % 2 ? (
+      <span key={i} className="font-medium text-npf-ink">
+        {chunk}
+      </span>
+    ) : (
+      chunk
+    ),
+  );
+}
+
 function Checklist({ items }: { items: string[] }) {
   return (
     <ul className="divide-y divide-npf-hairline">
       {items.map((item) => (
         <li
           key={item}
-          className="npf-body flex items-start gap-3 px-5 py-3.5 text-npf-ink"
+          className="npf-body flex items-start gap-4 px-5 py-4 text-npf-ink"
         >
-          <span className="mt-[0.2em] grid size-5 shrink-0 place-items-center rounded-full bg-npf-blue text-white">
-            <CheckIcon className="size-3" />
+          <span className={tile}>
+            <CheckIcon className="size-5 [stroke-width:2.5]" />
           </span>
-          <span className="first-letter:uppercase">{item}</span>
+          <span className="pt-[9px] first-letter:uppercase">{item}</span>
         </li>
       ))}
     </ul>
   );
 }
 
-/** One row of "Where to use it": a channel, and when it is open. */
+/**
+ * One row of "Where to use it": a place, and when it is open. A short time
+ * sits at the row's end like a fee; a long one ("Monday to Thursday …,
+ * Friday …") is a sentence and reads under the name instead.
+ */
 function Place({
   icon,
   name,
+  note = null,
+  href = null,
   hours,
-  bare = false,
+  gutter = false,
+  t,
 }: {
   icon: React.ReactNode;
   name: string;
+  note?: string | null;
+  href?: string | null;
   hours: string | null;
-  /** The row is itself about hours; no second clock beside them. */
-  bare?: boolean;
+  /** Another row in the list has an arrow; keep its room. */
+  gutter?: boolean;
+  t: T;
 }) {
-  return (
-    <li className="flex items-start gap-4 px-5 py-4">
-      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink">
-        {icon}
+  const always = hours?.trim() === "24/7";
+  const long = !!hours && hours.length > 32;
+  // A short time is a tag at the row's end, so the eye runs down one column
+  // of them for "can I go now?"; always-open gets the green of "yes".
+  const chip =
+    "npf-small inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 font-medium tabular-nums";
+  const time = hours ? (
+    always ? (
+      <span className={`${chip} bg-npf-ok-soft text-npf-ok`}>
+        <span aria-hidden className="size-1.5 rounded-full bg-npf-ok-fill" />
+        {t("Open 24/7")}
       </span>
-      <span className={`min-w-0 flex-1 ${hours ? "pt-0.5" : "pt-2"}`}>
-        <span className="npf-body block font-medium text-npf-ink">{name}</span>
-        {hours ? (
-          <span className="npf-small mt-0.5 flex items-start gap-1.5 text-npf-body tabular-nums">
-            {bare ? null : (
-              <ClockIcon className="mt-[0.2em] size-3.5 shrink-0 text-npf-steel" />
-            )}
-            {hours}
+    ) : long ? (
+      <span className="npf-body mt-1 block max-w-[60ch] text-npf-body tabular-nums">
+        {hours}
+      </span>
+    ) : (
+      <span className={`${chip} bg-npf-cloud text-npf-ink`}>
+        <ClockIcon aria-hidden className="size-3.5 shrink-0 text-npf-steel" />
+        {/* "7:30 - 22:00" is a range; an en dash says so. */}
+        {hours.replace(/\s*-\s*/g, "–")}
+      </span>
+    )
+  ) : null;
+
+  const body = (
+    <>
+      <span className={tile}>{icon}</span>
+      <span
+        className={`flex min-w-0 flex-1 flex-wrap items-center justify-between gap-x-6 gap-y-2 ${long ? "pt-[9px]" : ""}`}
+      >
+        <span className="min-w-0">
+          <span className="npf-body block font-semibold text-npf-ink transition-colors group-hover:text-npf-blue">
+            {name}
           </span>
-        ) : null}
+          {note ? (
+            <span className="npf-body mt-0.5 block text-npf-body">{note}</span>
+          ) : null}
+          {long ? time : null}
+        </span>
+        {long ? null : time}
       </span>
+      {/* Rows without an arrow keep its room, so the times stay one
+          column. */}
+      {href ? (
+        <span aria-hidden className={go}>
+          <ArrowRight className="npf-go size-4 text-current" />
+        </span>
+      ) : gutter ? (
+        <span aria-hidden className="w-9 shrink-0" />
+      ) : null}
+    </>
+  );
+  const row = `flex gap-4 px-5 py-5 ${long ? "items-start" : "items-center"}`;
+  return (
+    <li>
+      {href ? (
+        <Link href={href} className={`npf-row-link group ${row}`}>
+          {body}
+        </Link>
+      ) : (
+        <div className={row}>{body}</div>
+      )}
     </li>
   );
 }
@@ -515,6 +671,14 @@ function channelIcon(channel: string) {
   if (c.includes("station") || c.includes("cent")) return PinIcon;
   if (c.includes("app")) return PhoneIcon;
   return ServicesIcon;
+}
+
+function paymentIcon(method: string) {
+  const m = method.toLowerCase();
+  if (m.includes("cash")) return CashIcon;
+  if (m.includes("pay")) return TapPayIcon;
+  if (m.includes("credit")) return CreditCardIcon;
+  return DebitCardIcon;
 }
 
 function deliveryIcon(label: string) {

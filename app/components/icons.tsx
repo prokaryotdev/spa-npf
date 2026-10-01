@@ -266,6 +266,39 @@ export const CardIcon = ({ className }: IconProps) => (
   </svg>
 );
 
+export const CashIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <rect x="2.8" y="6" width="18.4" height="12" rx="2" />
+    <circle cx="12" cy="12" r="2.4" />
+    <path d="M6 9.5v5M18 9.5v5" />
+  </svg>
+);
+
+/** Card with a chip, so debit and credit stop looking like twins. */
+export const DebitCardIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <rect x="2.8" y="5.2" width="18.4" height="13.6" rx="2.2" />
+    <rect x="6" y="8.6" width="4.2" height="3.4" rx="0.8" />
+    <path d="M6 15.4h2.6M11 15.4h2.6" />
+  </svg>
+);
+
+/** Card with a magnetic stripe and signature line. */
+export const CreditCardIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <rect x="2.8" y="5.2" width="18.4" height="13.6" rx="2.2" />
+    <path d="M2.8 9.4h18.4M6 14.8h5" />
+  </svg>
+);
+
+/** A phone giving off a contactless wave: tap to pay. */
+export const TapPayIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <rect x="3.6" y="3" width="10" height="18" rx="2.2" />
+    <path d="M7.4 17.8h2.4M16.6 9.6a3.4 3.4 0 0 1 0 4.8M19.2 7.2a6.8 6.8 0 0 1 0 9.6" />
+  </svg>
+);
+
 export const ShieldIcon = ({ className }: IconProps) => (
   <svg {...base} className={className}>
     <path d="M12 2.9 4.6 6v5.6c0 4.5 3.1 8.7 7.4 9.7 4.3-1 7.4-5.2 7.4-9.7V6Z" />
