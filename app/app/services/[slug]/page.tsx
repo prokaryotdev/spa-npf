@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "../../../i18n/Link";
 import { notFound } from "next/navigation";
 import { BreadcrumbLd, ServiceLd } from "../../../components/StructuredData";
-import { HelpCard, PageShell } from "../../../components/PageShell";
+import { Facts, HelpCard, PageShell } from "../../../components/PageShell";
 import ServiceAction from "../../../components/ServiceAction";
 import {
   ArrowRight,
@@ -116,12 +116,28 @@ export default async function ServicePage({
     .filter((hour) => !usedHours.has(hour.i));
 
   const facts = [
-    { label: t("Fees"), value: service.feeSummary, icon: CardIcon },
-    { label: t("Duration"), value: service.turnaround, icon: ClockIcon },
+    { label: t("Fees"), value: service.feeSummary },
+    { label: t("Duration"), value: service.turnaround },
     service.beneficiaries.length && {
       label: t("Who it is for"),
-      value: service.beneficiaries.join(", "),
-      icon: UserCircle,
+      // A list, so it reads as one, but not as pills: a pill reads as a
+      // filter to press. Each audience is ticked like the checklist below,
+      // in the same weight as the fee and duration beside it.
+      value: (
+        <ul className="flex flex-wrap gap-x-5 gap-y-1">
+          {service.beneficiaries.map((b) => (
+            <li key={b} className="flex items-center gap-2">
+              <span
+                aria-hidden
+                className="grid size-4.5 shrink-0 place-items-center rounded-full bg-npf-blue text-white"
+              >
+                <CheckIcon className="size-2.5" />
+              </span>
+              {b}
+            </li>
+          ))}
+        </ul>
+      ),
     },
   ].filter((f) => !!f);
 
@@ -145,31 +161,7 @@ export default async function ServicePage({
         trail={[{ label: "Services", href: "/app/services" }]}
         lead={
           // The three answers a visitor came for, before any reading.
-          // One card across the page: the short facts take only their own
-          // width and the audience gets the rest, so it reads on one line.
-          <dl className="mt-8 grid divide-y divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline bg-white md:mt-10 md:flex md:divide-x md:divide-y-0">
-            {facts.map((fact) => (
-              <div
-                key={fact.label}
-                className="relative min-w-0 py-4 ps-[4.625rem] pe-5 md:flex-none md:py-5 md:last:flex-1"
-              >
-                {/* A <dl> row holds only <dt> and <dd>, so the icon rides in
-                    the term and sits in the row's start padding. */}
-                <dt className="npf-small text-npf-steel">
-                  <span
-                    aria-hidden
-                    className="absolute start-5 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink"
-                  >
-                    <fact.icon className="size-5" />
-                  </span>
-                  {fact.label}
-                </dt>
-                <dd className="npf-h5 text-npf-blue-deep tabular-nums">
-                  {fact.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
+          <Facts facts={facts} />
         }
       >
         <section className="bg-white pb-(--npf-section-y)">

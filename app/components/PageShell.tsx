@@ -162,6 +162,37 @@ export async function LinkCard({
   );
 }
 
+/**
+ * The short answers under a page's heading: what it costs, how long, who
+ * for. One bordered, tinted strip across the column; each answer's column
+ * starts from its own width and shares out the rest. The labels name each answer, so there is no icon beside
+ * them to decode. The grid's own colour shows through a 1px gap as the
+ * rule, which holds for any count of cells in any number of rows.
+ */
+export function Facts({
+  facts,
+  className = "",
+}: {
+  facts: { label: string; value: React.ReactNode }[];
+  /** Columns below `md`, where the strip stacks: `max-md:grid-cols-2`. */
+  className?: string;
+}) {
+  return (
+    <dl
+      className={`mt-8 grid max-w-full gap-px overflow-hidden rounded-card border border-npf-line bg-npf-line md:mt-10 md:grid-flow-col ${className}`}
+    >
+      {facts.map((fact) => (
+        <div key={fact.label} className="min-w-0 bg-npf-mist px-6 py-4 md:px-12 md:py-6">
+          <dt className="npf-small font-medium text-npf-steel">{fact.label}</dt>
+          <dd className="npf-h5 mt-1 text-npf-blue-deep tabular-nums">
+            {fact.value}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
 export type HelpRow = {
   Icon: (props: { className?: string }) => React.ReactNode;
   label: string;

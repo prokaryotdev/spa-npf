@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { PageShell } from "../../../components/PageShell";
+import { Facts, PageShell } from "../../../components/PageShell";
 import { reveal } from "../../../components/reveal";
-import {
-  ArrowUpRight,
-  ClockIcon,
-  PinIcon,
-  ServicesIcon,
-  ShieldIcon,
-} from "../../../components/icons";
+import { ArrowUpRight, ClockIcon, PinIcon } from "../../../components/icons";
 import { customerCenters as customerCentersSource } from "../../../content-footer";
 import { getT, getLocalized } from "../../../i18n/server";
 
@@ -36,17 +30,9 @@ export default async function CustomerCentersPage() {
   }));
 
   const facts = [
-    {
-      label: t("Stations"),
-      value: customerCenters.length,
-      icon: PinIcon,
-    },
-    ...groups.map((g) => ({
-      label: g.title,
-      value: g.centers.length,
-      icon: g.kind === "Area Command" ? ShieldIcon : ServicesIcon,
-    })),
-    { label: t("Open"), value: t("24 hours"), icon: ClockIcon },
+    { label: t("Stations"), value: customerCenters.length },
+    ...groups.map((g) => ({ label: g.title, value: g.centers.length })),
+    { label: t("Open"), value: t("24 hours") },
   ];
 
   return (
@@ -55,30 +41,7 @@ export default async function CustomerCentersPage() {
       intro={t(
         "Area Commands and Divisional Headquarters across the Federal Capital Territory, with addresses and opening hours.",
       )}
-      lead={
-        <dl className="mt-8 grid grid-cols-2 divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline bg-white max-md:[&>*:nth-child(-n+2)]:border-b max-md:[&>*:nth-child(odd)]:border-e md:mt-10 md:flex md:divide-x">
-          {facts.map((fact) => (
-            <div
-              key={fact.label}
-              className="relative min-w-0 border-npf-hairline px-5 py-4 sm:ps-[4.625rem] md:flex-1 md:py-5"
-            >
-              {/* Only <dt> and <dd> may sit in a <dl> row: the icon rides in the term. */}
-              <dt className="npf-small text-npf-steel">
-                <span
-                  aria-hidden
-                  className="npf-disc absolute start-5 top-1/2 -translate-y-1/2 max-sm:hidden"
-                >
-                  <fact.icon className="size-5" />
-                </span>
-                {fact.label}
-              </dt>
-              <dd className="npf-h5 text-npf-blue-deep tabular-nums">
-                {fact.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      }
+      lead={<Facts facts={facts} className="max-md:grid-cols-2" />}
     >
       <section className="bg-white pb-(--npf-section-y)">
         <div className="npf-container space-y-16">
