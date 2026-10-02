@@ -119,7 +119,7 @@ export default async function ContactUsPage() {
             </section>
           </div>
 
-          <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
+          <aside className="flex flex-col gap-6 lg:top-28 lg:self-start lg:[@media(min-height:46rem)]:sticky">
             {/* The leadership line, raised like the service page's action. */}
             <div className="rounded-card bg-white p-6 shadow-card ring-1 ring-npf-hairline ring-inset">
               <span className="grid size-12 place-items-center rounded-full bg-npf-blue text-npf-gold-soft">

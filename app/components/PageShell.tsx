@@ -7,6 +7,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   CheckIcon,
+  ChevronDown,
   ChevronRight,
   InboxIcon,
 } from "./icons";
@@ -193,6 +194,22 @@ export function Facts({
   );
 }
 
+/**
+ * The tick a checklist row leads with, on every page that has one: small
+ * and solid, so a list of twelve things reads as twelve things, not twelve
+ * headings.
+ */
+export function Tick() {
+  return (
+    <span
+      aria-hidden
+      className="mt-[0.15em] grid size-5.5 shrink-0 place-items-center rounded-full bg-npf-blue text-white"
+    >
+      <CheckIcon className="size-3 [stroke-width:2.5]" />
+    </span>
+  );
+}
+
 export type HelpRow = {
   Icon: (props: { className?: string }) => React.ReactNode;
   label: string;
@@ -288,6 +305,23 @@ export async function LegalSections({
   sections: { title: string; content: LegalItem[] }[];
 }) {
   const t = await getT();
+  const toc = (
+    <ol className="max-h-[calc(100dvh-14rem)] overflow-y-auto py-2 max-lg:max-h-none">
+      {sections.map((s, i) => (
+        <li key={s.title}>
+          <a
+            href={`#${slug(s.title)}`}
+            className="npf-small group flex items-start gap-3 px-5 py-2 text-npf-body transition-colors hover:bg-npf-paper hover:text-npf-blue"
+          >
+            <span className="npf-caption mt-px grid size-5.5 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink tabular-nums transition-colors group-hover:bg-npf-chip">
+              {i + 1}
+            </span>
+            {s.title}
+          </a>
+        </li>
+      ))}
+    </ol>
+  );
   return (
     <section className="bg-white pb-(--npf-section-y)">
       <div className="npf-container grid gap-10 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-16">
@@ -297,31 +331,33 @@ export async function LegalSections({
             reading, and help waits at the rail foot where the reading ends. */}
         <aside className="max-lg:contents lg:flex lg:flex-col">
           <div className="lg:flex-1">
-            <nav
-              aria-labelledby="toc"
-              className="overflow-hidden rounded-card border border-npf-hairline lg:sticky lg:top-28"
-            >
-              <h2
-                id="toc"
-                className="npf-h5 border-b border-npf-hairline bg-npf-mist px-5 py-3.5 text-npf-blue-deep"
+            {/* On a phone a long contents list would push the document off
+                the first screen, so there it folds shut. */}
+            <details className="group/toc overflow-hidden rounded-card border border-npf-hairline lg:hidden">
+              <summary className="npf-h5 flex cursor-pointer list-none items-center justify-between gap-4 bg-npf-mist px-5 py-3.5 text-npf-blue-deep [&::-webkit-details-marker]:hidden">
+                <span>
+                  {t("On this page")}{" "}
+                  <span className="npf-body font-normal text-npf-steel tabular-nums">
+                    {sections.length}
+                  </span>
+                </span>
+                <ChevronDown className="size-4.5 shrink-0 transition-transform duration-(--dur-hover) group-open/toc:rotate-180" />
+              </summary>
+              <nav
+                aria-label={t("On this page")}
+                className="border-t border-npf-hairline"
               >
+                {toc}
+              </nav>
+            </details>
+            <nav
+              aria-label={t("On this page")}
+              className="overflow-hidden rounded-card border border-npf-hairline max-lg:hidden lg:sticky lg:top-28"
+            >
+              <h2 className="npf-h5 border-b border-npf-hairline bg-npf-mist px-5 py-3.5 text-npf-blue-deep">
                 {t("On this page")}
               </h2>
-              <ol className="max-h-[calc(100dvh-14rem)] overflow-y-auto py-2 max-lg:max-h-none">
-                {sections.map((s, i) => (
-                  <li key={s.title}>
-                    <a
-                      href={`#${slug(s.title)}`}
-                      className="npf-small group flex items-start gap-3 px-5 py-2 text-npf-body transition-colors hover:bg-npf-paper hover:text-npf-blue"
-                    >
-                      <span className="npf-caption mt-px grid size-5.5 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink tabular-nums transition-colors group-hover:bg-npf-chip">
-                        {i + 1}
-                      </span>
-                      {s.title}
-                    </a>
-                  </li>
-                ))}
-              </ol>
+              {toc}
             </nav>
           </div>
           <HelpCard
@@ -369,9 +405,7 @@ export async function LegalSections({
                             key={li}
                             className="npf-body flex items-start gap-3 px-5 py-3.5 text-npf-ink"
                           >
-                            <span className="mt-[0.2em] grid size-5 shrink-0 place-items-center rounded-full bg-npf-blue text-white">
-                              <CheckIcon className="size-3" />
-                            </span>
+                            <Tick />
                             <span>{li}</span>
                           </li>
                         ))}

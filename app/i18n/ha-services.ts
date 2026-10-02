@@ -95,6 +95,8 @@ export const haServices: Record<string, string> = {
   "Working hours": "Lokutan aiki",
   "Open 24/7": "A buɗe 24/7",
   "Terms and conditions": "Sharuɗɗa da ƙa'idoji",
+  "Show {count} more terms": "Nuna ƙarin sharuɗɗa {count}",
+  "Show fewer terms": "Ɓoye sauran sharuɗɗa",
   "Service Fees": "Kuɗin Hidima",
   Fees: "Kuɗi",
   Duration: "Tsawon lokaci",

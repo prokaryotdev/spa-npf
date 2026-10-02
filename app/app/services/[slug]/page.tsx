@@ -3,11 +3,13 @@ import Image from "next/image";
 import Link from "../../../i18n/Link";
 import { notFound } from "next/navigation";
 import { BreadcrumbLd, ServiceLd } from "../../../components/StructuredData";
-import { Facts, HelpCard, PageShell } from "../../../components/PageShell";
+import { Facts, HelpCard, PageShell, Tick } from "../../../components/PageShell";
 import ServiceAction from "../../../components/ServiceAction";
+import ServiceBar from "../../../components/ServiceBar";
 import {
   ArrowRight,
   ArrowUpRight,
+  ChevronDown,
   CreditCardIcon,
   DebitCardIcon,
   CashIcon,
@@ -144,6 +146,8 @@ export default async function ServicePage({
     },
     [],
   );
+  // Four rules read at a glance; past that the first three stand for them.
+  const termsShown = terms.length > 4 ? 3 : terms.length;
 
   const facts = [
     { label: t("Fees"), value: service.feeSummary },
@@ -203,7 +207,10 @@ export default async function ServicePage({
                 below the fold. */}
             <aside className="max-lg:contents lg:col-start-2 lg:row-start-1">
               <div className="max-lg:contents lg:top-28 lg:space-y-6 lg:[@media(min-height:46rem)]:sticky">
-                <div className="rounded-card bg-white p-6 shadow-card ring-1 ring-npf-hairline ring-inset">
+                <div
+                  id="action"
+                  className="scroll-mt-28 rounded-card bg-white p-6 shadow-card ring-1 ring-npf-hairline ring-inset"
+                >
                   <div className="flex items-center gap-4">
                     <span className="grid size-12 shrink-0 place-items-center rounded-chip bg-npf-cloud">
                       {service.icon ? (
@@ -392,55 +399,6 @@ export default async function ServicePage({
                 </Section>
               ) : null}
 
-              {service.terms.length ? (
-                <Section id="terms" title={t("Terms and conditions")}>
-                  {/* Rules, not a checklist: numbered so one can be quoted
-                      back ("term 4") at a counter or on a call. */}
-                  <ol className="divide-y divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline">
-                    {terms.map((term, i) => (
-                      <li key={term.text} className="flex items-start gap-4 px-5 py-5">
-                        <span className={`${tile} npf-h5 tabular-nums`}>
-                          {i + 1}
-                        </span>
-                        <div className="npf-body min-w-0 flex-1 pt-[9px] text-npf-ink">
-                          {/^https?:\/\//.test(term.text) ? (
-                            <a
-                              href={term.text}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 font-medium text-npf-blue underline decoration-npf-line underline-offset-4 transition-colors hover:decoration-current"
-                            >
-                              {new URL(term.text).hostname}
-                              <ArrowUpRight aria-hidden className="size-4" />
-                            </a>
-                          ) : (
-                            <p className="max-w-[62ch]">{term.text}</p>
-                          )}
-                          {term.items.length ? (
-                            <ul className="mt-3 grid gap-x-6 gap-y-2 sm:grid-cols-2">
-                              {term.items.map((item) => (
-                                <li
-                                  key={item}
-                                  className="flex items-start gap-2.5 text-npf-body"
-                                >
-                                  <span
-                                    aria-hidden
-                                    className="mt-[0.3em] grid size-4.5 shrink-0 place-items-center rounded-full bg-npf-chip text-npf-blue"
-                                  >
-                                    <CheckIcon className="size-2.5" />
-                                  </span>
-                                  {item}
-                                </li>
-                              ))}
-                            </ul>
-                          ) : null}
-                        </div>
-                      </li>
-                    ))}
-                  </ol>
-                </Section>
-              ) : null}
-
               {service.channels.length || service.hours.length ? (
                 <Section id="where" title={t("Where to use it")}>
                   {/* Read like the fees: the place on the left, when it is
@@ -460,6 +418,49 @@ export default async function ServicePage({
                       />
                     ))}
                   </ul>
+                </Section>
+              ) : null}
+
+              {terms.length ? (
+                <Section id="terms" title={t("Terms and conditions")}>
+                  {/* Rules, not a checklist: numbered so one can be quoted
+                      back ("term 4") at a counter or on a call. They are
+                      skimmed more than read, so the number is plain and a
+                      long list shows its first rules and folds the rest. */}
+                  <div className="overflow-hidden rounded-card border border-npf-hairline">
+                    <ol className="divide-y divide-npf-hairline">
+                      {terms.slice(0, termsShown).map((term, i) => (
+                        <Term key={term.text} n={i + 1} {...term} />
+                      ))}
+                    </ol>
+                    {terms.length > termsShown ? (
+                      <details className="group/more border-t border-npf-hairline">
+                        <summary className="npf-row-link flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-medium text-npf-blue [&::-webkit-details-marker]:hidden">
+                          <span className="group-open/more:hidden">
+                            {t("Show {count} more terms", {
+                              count: terms.length - termsShown,
+                            })}
+                          </span>
+                          <span className="hidden group-open/more:inline">
+                            {t("Show fewer terms")}
+                          </span>
+                          <ChevronDown className="size-4.5 shrink-0 transition-transform duration-(--dur-hover) group-open/more:rotate-180" />
+                        </summary>
+                        <ol
+                          start={termsShown + 1}
+                          className="divide-y divide-npf-hairline border-t border-npf-hairline"
+                        >
+                          {terms.slice(termsShown).map((term, i) => (
+                            <Term
+                              key={term.text}
+                              n={termsShown + i + 1}
+                              {...term}
+                            />
+                          ))}
+                        </ol>
+                      </details>
+                    ) : null}
+                  </div>
                 </Section>
               ) : null}
 
@@ -507,6 +508,12 @@ export default async function ServicePage({
           </div>
         </section>
       </PageShell>
+      <ServiceBar
+        target="action"
+        fee={service.feeSummary}
+        caption={t("Payable")}
+        label={service.action}
+      />
     </>
   );
 }
@@ -532,8 +539,8 @@ function Section({
 }
 
 /**
- * The marker every row on this page leads with: a delivery way, a term's
- * number, a document's tick — so the lists read as one family.
+ * The marker a row leads with where the row is a thing you have or a place
+ * you go: a delivery way, a channel. Ticks and rule numbers stay smaller.
  */
 const tile =
   "grid size-10.5 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink transition-colors duration-(--dur-hover) group-hover:bg-npf-chip";
@@ -555,21 +562,67 @@ function Named({ text }: { text: string }) {
   );
 }
 
+/**
+ * A document to bring. The tick is small: a list of twelve papers with a
+ * big disc on each reads as twelve headings, and the papers are the point.
+ */
 function Checklist({ items }: { items: string[] }) {
   return (
     <ul className="divide-y divide-npf-hairline">
       {items.map((item) => (
         <li
           key={item}
-          className="npf-body flex items-start gap-4 px-5 py-4 text-npf-ink"
+          className="npf-body flex items-start gap-3 px-5 py-3.5 text-npf-ink"
         >
-          <span className={tile}>
-            <CheckIcon className="size-5 [stroke-width:2.5]" />
-          </span>
-          <span className="pt-[9px] first-letter:uppercase">{item}</span>
+          <Tick />
+          <span className="first-letter:uppercase">{item}</span>
         </li>
       ))}
     </ul>
+  );
+}
+
+/** One rule: a plain number to quote it by, then the rule. */
+function Term({ n, text, items }: { n: number; text: string; items: string[] }) {
+  return (
+    <li className="npf-body flex items-start gap-4 px-5 py-4 text-npf-ink">
+      <span
+        aria-hidden
+        className="w-6 shrink-0 text-end font-semibold text-npf-steel tabular-nums"
+      >
+        {n}
+      </span>
+      <div className="min-w-0 flex-1">
+        {/^https?:\/\//.test(text) ? (
+          <a
+            href={text}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 font-medium text-npf-blue underline decoration-npf-line underline-offset-4 transition-colors hover:decoration-current"
+          >
+            {new URL(text).hostname}
+            <ArrowUpRight aria-hidden className="size-4" />
+          </a>
+        ) : (
+          <p className="max-w-[62ch]">{text}</p>
+        )}
+        {items.length ? (
+          <ul className="mt-3 grid gap-x-6 gap-y-2 sm:grid-cols-2">
+            {items.map((item) => (
+              <li key={item} className="flex items-start gap-2.5 text-npf-body">
+                <span
+                  aria-hidden
+                  className="mt-[0.3em] grid size-4.5 shrink-0 place-items-center rounded-full bg-npf-chip text-npf-blue"
+                >
+                  <CheckIcon className="size-2.5" />
+                </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
+    </li>
   );
 }
 
