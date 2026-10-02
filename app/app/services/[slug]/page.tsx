@@ -652,13 +652,14 @@ function Place({
   const always = hours?.trim() === "24/7";
   const long = !!hours && hours.length > 32;
   // A short time is a tag at the row's end, so the eye runs down one column
-  // of them for "can I go now?"; always-open gets the green of "yes".
+  // of them for "can I go now?"; always-open gets the green of "yes". Both
+  // wear the same clock.
   const chip =
-    "npf-small inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 font-medium tabular-nums";
+    "npf-pill py-1 ps-2 pe-2.5 text-sm leading-5";
   const time = hours ? (
     always ? (
       <span className={`${chip} bg-npf-ok-soft text-npf-ok`}>
-        <span aria-hidden className="size-1.5 rounded-full bg-npf-ok-fill" />
+        <ClockIcon aria-hidden className="size-4 shrink-0 text-npf-ok-fill" />
         {t("Open 24/7")}
       </span>
     ) : long ? (
@@ -667,7 +668,7 @@ function Place({
       </span>
     ) : (
       <span className={`${chip} bg-npf-cloud text-npf-ink`}>
-        <ClockIcon aria-hidden className="size-3.5 shrink-0 text-npf-steel" />
+        <ClockIcon aria-hidden className="size-4 shrink-0 text-npf-steel" />
         {/* "7:30 - 22:00" is a range; an en dash says so. */}
         {hours.replace(/\s*-\s*/g, "–")}
       </span>

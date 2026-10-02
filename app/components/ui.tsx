@@ -37,10 +37,8 @@ export function StatusPill({
       ? INCIDENT_TONE[status as IncidentStatus]
       : REQUEST_TONE[status as RequestStatus];
   return (
-    <span
-      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full py-1 ps-2 pe-2.5 text-xs font-semibold whitespace-nowrap ${tone}`}
-    >
-      <span aria-hidden className="size-1.5 rounded-full bg-current" />
+    <span className={`npf-pill ${tone}`}>
+      <span aria-hidden className="npf-pill-dot" />
       {t(status)}
     </span>
   );

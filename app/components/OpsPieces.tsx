@@ -387,10 +387,8 @@ const CALL_LABEL: Record<Incident["status"], string> = {
 export function OpsStatus({ status }: { status: Incident["status"] }) {
   const t = useT();
   return (
-    <span
-      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full py-0.5 ps-2 pe-2.5 text-xs font-semibold whitespace-nowrap ${CALL_TONE[status]}`}
-    >
-      <span aria-hidden className="size-1.5 rounded-full bg-current" />
+    <span className={`npf-pill ${CALL_TONE[status]}`}>
+      <span aria-hidden className="npf-pill-dot" />
       {t(CALL_LABEL[status])}
     </span>
   );
@@ -407,10 +405,8 @@ const UNIT_TONE: Record<UnitStatus, string> = {
 export function UnitStatusTag({ status }: { status: UnitStatus }) {
   const t = useT();
   return (
-    <span
-      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full py-0.5 ps-2 pe-2.5 text-xs font-semibold whitespace-nowrap ${UNIT_TONE[status]}`}
-    >
-      <span aria-hidden className="size-1.5 rounded-full bg-current" />
+    <span className={`npf-pill ${UNIT_TONE[status]}`}>
+      <span aria-hidden className="npf-pill-dot" />
       {t(status)}
     </span>
   );

@@ -161,13 +161,8 @@ export default function OpsRequests() {
                   <h2 className="font-secondary text-base font-bold">
                     {t(request.service)}
                   </h2>
-                  <span
-                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full py-0.5 ps-2 pe-2.5 text-xs font-semibold ${TONE[request.status]}`}
-                  >
-                    <span
-                      aria-hidden
-                      className="size-1.5 rounded-full bg-current"
-                    />
+                  <span className={`npf-pill ${TONE[request.status]}`}>
+                    <span aria-hidden className="npf-pill-dot" />
                     {t(request.status)}
                   </span>
                 </div>
