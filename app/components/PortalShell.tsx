@@ -14,7 +14,6 @@ import {
   CardIcon,
   FileIcon,
   InboxIcon,
-  PlusIcon,
   ServicesIcon,
   SignOutIcon,
   UserCircle,
@@ -71,7 +70,7 @@ export default function PortalShell({
         tabIndex={-1}
         className="border-b border-npf-hairline outline-none"
       >
-        <div className="relative min-h-[60vh] overflow-hidden bg-white pt-32 pb-(--npf-section-y) md:pt-40">
+        <div className="relative min-h-[60vh] overflow-hidden bg-white pt-28 pb-(--npf-section-y) md:pt-36">
           {/* The same morning light every inner page opens under. */}
           <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 [mask-image:linear-gradient(to_bottom,#000_65%,transparent_90%)] md:size-250 md:opacity-60" />
           <div className="npf-container npf-page-in relative">
@@ -79,76 +78,14 @@ export default function PortalShell({
               <Loading />
             ) : (
               <>
-                <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-6">
-                  <div className="flex min-w-0 items-center gap-4 md:gap-5">
-                    <span
-                      aria-hidden
-                      className="grid size-14 shrink-0 place-items-center rounded-full bg-npf-blue font-secondary text-lg font-bold text-white shadow-card md:size-18 md:text-2xl"
-                    >
-                      {session.name
-                        .split(" ")
-                        .map((w) => w[0])
-                        .slice(0, 2)
-                        .join("")}
-                    </span>
-                    <div className="min-w-0">
-                      <p className="npf-small text-npf-steel">
-                        {t("Signed in as")}
-                      </p>
-                      <h1 className="npf-h2 text-npf-blue-deep">
-                        {t(session.name)}
-                      </h1>
-                      <p className="npf-small mt-1 text-npf-body tabular-nums">
-                        {t("NIN {id}", { id: session.nin })}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <Link
-                      href="/app/services"
-                      className="npf-btn npf-btn-primary"
-                    >
-                      <PlusIcon aria-hidden className="size-4.5" />
-                      {t("New request")}
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        signOut();
-                        router.push("/app/home");
-                      }}
-                      className="npf-btn npf-btn-secondary"
-                    >
-                      <SignOutIcon aria-hidden className="size-4.5" />
-                      {t("Sign out")}
-                    </button>
-                  </div>
-                </div>
-
-                <p className="npf-small mt-8 flex items-start gap-3 rounded-card bg-npf-gold-wash px-5 py-3.5 text-npf-warn md:items-center">
-                  <AlertIcon
-                    aria-hidden
-                    className="size-4.5 shrink-0 max-md:mt-0.5"
-                  />
-                  <span>
-                    {t(
-                      "Sample account. The requests, fines and documents below are illustrative and live only in this browser.",
-                    )}{" "}
-                    <button
-                      type="button"
-                      onClick={resetDemo}
-                      className="font-semibold underline underline-offset-2 hover:no-underline"
-                    >
-                      {t("Reset the demo data")}
-                    </button>
-                    .
-                  </span>
-                </p>
-
-                <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-12">
+                {/* No page-wide header: each screen's own title is the h1.
+                    Who is signed in, the way out and the honesty notice ride
+                    under the tabs on a desktop and after the screen on a
+                    phone, where they are never the reason anyone came. */}
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-[260px_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:gap-y-6">
                   <nav
                     aria-label={t("Account")}
-                    className="lg:sticky lg:top-28 lg:self-start"
+                    className="lg:col-start-1 lg:row-start-1"
                   >
                     {/* A phone scrolls the tabs as chips; a desktop stacks
                         them in one ruled panel, like the service rail. */}
@@ -197,7 +134,64 @@ export default function PortalShell({
                     </ul>
                   </nav>
 
-                  <div className="min-w-0">{children}</div>
+                  <div className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+                    {children}
+                  </div>
+
+                  <aside
+                    aria-label={t("Signed in as")}
+                    className="border-t border-npf-hairline pt-6 lg:col-start-1 lg:row-start-2 lg:self-start lg:border-0 lg:pt-0"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span
+                        aria-hidden
+                        className="grid size-10 shrink-0 place-items-center rounded-full bg-npf-blue font-secondary text-sm font-bold text-white"
+                      >
+                        {session.name
+                          .split(" ")
+                          .map((w) => w[0])
+                          .slice(0, 2)
+                          .join("")}
+                      </span>
+                      <span className="min-w-0">
+                        <span className="npf-body block truncate font-medium text-npf-ink">
+                          {t(session.name)}
+                        </span>
+                        <span className="npf-small block text-npf-steel tabular-nums">
+                          {t("NIN {id}", { id: session.nin })}
+                        </span>
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        signOut();
+                        router.push("/app/home");
+                      }}
+                      className="npf-btn npf-btn-secondary npf-btn-sm mt-4"
+                    >
+                      <SignOutIcon aria-hidden className="size-4" />
+                      {t("Sign out")}
+                    </button>
+                    <p className="npf-small mt-5 flex items-start gap-2 text-npf-steel">
+                      <AlertIcon
+                        aria-hidden
+                        className="mt-0.5 size-4 shrink-0 text-npf-warn"
+                      />
+                      <span>
+                        {t(
+                          "Sample account. Everything here is illustrative and lives only in this browser.",
+                        )}{" "}
+                        <button
+                          type="button"
+                          onClick={resetDemo}
+                          className="font-semibold text-npf-ink underline underline-offset-2 hover:no-underline"
+                        >
+                          {t("Reset the demo data")}
+                        </button>
+                      </span>
+                    </p>
+                  </aside>
                 </div>
               </>
             )}
@@ -214,20 +208,16 @@ function Loading() {
   const t = useT();
   return (
     <div aria-hidden className="animate-pulse">
-      <div className="flex items-center gap-5">
-        <div className="size-14 rounded-full bg-npf-cloud-deep md:size-18" />
-        <div>
-          <div className="h-4 w-24 rounded-chip bg-npf-cloud-deep" />
-          <div className="mt-3 h-10 w-72 max-w-[60vw] rounded-chip bg-npf-cloud-deep" />
-        </div>
-      </div>
-      <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-[240px_1fr] lg:gap-12">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[260px_1fr] lg:gap-12">
         <div className="space-y-2">
           {[0, 1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-10 rounded-chip bg-npf-cloud" />
+            <div key={i} className="h-12 rounded-chip bg-npf-cloud" />
           ))}
         </div>
-        <div className="h-64 rounded-card bg-npf-cloud" />
+        <div>
+          <div className="h-10 w-56 rounded-chip bg-npf-cloud-deep" />
+          <div className="mt-6 h-64 rounded-card bg-npf-cloud" />
+        </div>
       </div>
       <span className="sr-only">{t("Loading your account")}</span>
     </div>

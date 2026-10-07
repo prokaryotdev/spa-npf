@@ -63,21 +63,35 @@ export default async function ServicePage({
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
 
+  const others = services.filter((s) => s.slug !== service.slug);
+  const sameCategory = others.filter(
+    (s) => s.category && s.category === service.category,
+  );
+  // With nothing related and nothing in its category, the page ends on the
+  // most used services, and says so rather than calling them related.
+  const popular = !service.related.length && !sameCategory.length;
   const related = (
     service.related.length
-      ? service.related.map((r) => r.slug)
-      : services
-          .filter(
-            (s) =>
-              s.slug !== service.slug &&
-              s.category &&
-              s.category === service.category,
-          )
+      ? service.related
+          .map((r) => services.find((s) => s.slug === r.slug))
+          .filter((s) => s !== undefined)
+      : // Nothing in the category either: the most used services are a
+        // better way on than an empty end of page.
+        (sameCategory.length ? sameCategory : others.filter((s) => s.mostUsed))
           .slice(0, 4)
-          .map((s) => s.slug)
-  )
-    .map((slug) => services.find((s) => s.slug === slug))
-    .filter((s) => s !== undefined);
+  );
+  const source = servicesSource.find((s) => s.slug === slug)!;
+  // A "View" service with children is a group, not a thing to request: its
+  // children are the page, and there is nothing to sign in for.
+  const hub = source.action === "View" && service.related.length > 0;
+  // The CMS has nothing yet for some services beyond a name and a line.
+  const bare =
+    !service.documents.length &&
+    !service.fees.length &&
+    !service.delivery &&
+    !service.channels.length &&
+    !service.hours.length &&
+    !service.terms.length;
 
   // Documents with their own sub-list stand as groups; bare ones ("CV",
   // "passport") read better as one checklist than as twelve headed boxes.
@@ -90,7 +104,6 @@ export default async function ServicePage({
   ];
   // Icons, links and hours are matched on the English source, so they hold
   // on the Hausa page too; the localized copy only supplies the words.
-  const source = servicesSource.find((s) => s.slug === slug)!;
   const deliverySource = splitDelivery(source.delivery);
   const delivery = splitDelivery(service.delivery).map((part, i) => ({
     ...part,
@@ -180,7 +193,9 @@ export default async function ServicePage({
       {/* Data, not markup: these tell a search engine this page is a
           government service with a provider, an audience and a fee, which is
           what turns a blue link into an answer. */}
-      <ServiceLd service={service} />
+      {/* A group's own "Free of Charge" is a CMS default; its services
+          charge their own fees, so it claims none. */}
+      <ServiceLd service={hub ? { ...service, feeSummary: "" } : service} />
       <BreadcrumbLd
         trail={[
           { name: "Nigeria Police Force", href: "/" },
@@ -194,8 +209,10 @@ export default async function ServicePage({
         titleSize="article"
         trail={[{ label: "Services", href: "/app/services" }]}
         lead={
-          // The three answers a visitor came for, before any reading.
-          <Facts facts={facts} />
+          // The three answers a visitor came for, before any reading. A
+          // group has none of its own: "Free, Instant" there would be wrong
+          // for the certificates under it that cost ₦48,000 and take days.
+          hub ? undefined : <Facts facts={facts} />
         }
       >
         <section className="bg-white pb-(--npf-section-y)">
@@ -228,7 +245,29 @@ export default async function ServicePage({
                     <p className="npf-h5 text-npf-ink">{service.name}</p>
                   </div>
                   <div className="mt-6">
-                    <ServiceAction service={service} />
+                    {hub ? (
+                      <>
+                        <a
+                          href="#choose"
+                          className="npf-btn npf-btn-primary h-auto min-h-12 w-full py-1.5 ps-6 text-start leading-tight hover:bg-npf-blue-mid"
+                        >
+                          {t("Choose a service")}
+                          <span className="npf-btn-disc ms-auto">
+                            <ArrowRight className="size-4 rotate-90" />
+                          </span>
+                        </a>
+                        <p className="npf-small mt-3 text-center text-npf-steel">
+                          {t(
+                            related.length === 1
+                              ? "{count} service in this group"
+                              : "{count} services in this group",
+                            { count: related.length },
+                          )}
+                        </p>
+                      </>
+                    ) : (
+                      <ServiceAction service={service} />
+                    )}
                   </div>
                   {service.ninAuthOnly ? (
                     <p className="npf-small mt-4 flex items-center justify-center gap-2 border-t border-npf-hairline pt-4 text-npf-steel">
@@ -253,6 +292,80 @@ export default async function ServicePage({
             </aside>
 
             <div className="min-w-0 lg:col-start-1 lg:row-start-1 lg:max-w-[46rem] [&>section+section]:mt-12 [&>section+section]:border-t [&>section+section]:border-npf-hairline [&>section+section]:pt-12">
+              {hub ? (
+                <Section id="choose" title={t("Choose a service")}>
+                  {/* The group's children are what the visitor came to pick
+                      from, so they are the page, one per row. */}
+                  <ul className="divide-y divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline">
+                    {related.map((item) => (
+                      <li key={item.slug}>
+                        <Link
+                          href={`/app/services/${item.slug}`}
+                          className="npf-row-link group flex items-center gap-4 px-5 py-5"
+                        >
+                          <span className={tile}>
+                            {item.icon ? (
+                              <Image
+                                src={item.icon}
+                                alt=""
+                                width={22}
+                                height={22}
+                                className="size-5.5"
+                              />
+                            ) : (
+                              <ServicesIcon className="size-5.5" />
+                            )}
+                          </span>
+                          <span className="min-w-0 flex-1">
+                            <span className="npf-body block font-semibold text-npf-ink transition-colors group-hover:text-npf-blue">
+                              {item.name}
+                            </span>
+                            {item.description ? (
+                              <span className="npf-small mt-1 line-clamp-2 max-w-[60ch] text-npf-body">
+                                {item.description}
+                              </span>
+                            ) : null}
+                            <span className="npf-small mt-1 block text-npf-steel tabular-nums">
+                              {item.feeSummary} · {item.turnaround}
+                            </span>
+                          </span>
+                          <span aria-hidden className={go}>
+                            <ArrowRight className="npf-go size-4 text-current" />
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </Section>
+              ) : bare ? (
+                <Section id="how" title={t("How it works")}>
+                  {/* The CMS has no steps for this one yet, but every request
+                      runs the same way through the action card. */}
+                  <ol className="divide-y divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline">
+                    {[
+                      t("Sign in with NINAuth or your Nigeria Police Force account."),
+                      t("Start the request. You get a reference number straight away."),
+                      t('Follow it any time under "My Requests".'),
+                    ].map((step, i) => (
+                      <li
+                        key={step}
+                        className="npf-body flex items-start gap-4 px-5 py-4 text-npf-ink"
+                      >
+                        <span
+                          aria-hidden
+                          className="w-6 shrink-0 text-end font-semibold text-npf-steel tabular-nums"
+                        >
+                          {i + 1}
+                        </span>
+                        <p className="max-w-[62ch]">
+                          <Named text={step} />
+                        </p>
+                      </li>
+                    ))}
+                  </ol>
+                </Section>
+              ) : null}
+
               {service.documents.length ? (
                 <Section id="need" title={t("What you need")}>
                   {/* A group's label is usually a condition ("From outside
@@ -464,10 +577,10 @@ export default async function ServicePage({
                 </Section>
               ) : null}
 
-              {related.length ? (
+              {related.length && !hub ? (
                 <section aria-labelledby="related">
                   <h2 id="related" className="npf-h3 text-npf-blue-deep">
-                    {t("Related services")}
+                    {popular ? t("Popular services") : t("Related services")}
                   </h2>
                   <ul className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {related.map((item) => (
@@ -508,12 +621,14 @@ export default async function ServicePage({
           </div>
         </section>
       </PageShell>
-      <ServiceBar
-        target="action"
-        fee={service.feeSummary}
-        caption={t("Payable")}
-        label={service.action}
-      />
+      {hub ? null : (
+        <ServiceBar
+          target="action"
+          fee={service.feeSummary}
+          caption={t("Payable")}
+          label={service.action}
+        />
+      )}
     </>
   );
 }
@@ -651,26 +766,17 @@ function Place({
 }) {
   const always = hours?.trim() === "24/7";
   const long = !!hours && hours.length > 32;
-  // A short time is a tag at the row's end, so the eye runs down one column
-  // of them for "can I go now?"; always-open gets the green of "yes". Both
-  // wear the same clock.
-  const chip =
-    "npf-pill py-1 ps-2 pe-2.5 text-sm leading-5";
+  // Plain text, no badge: a short time sits at the row's end so the eye runs
+  // down one column of them for "can I go now?".
   const time = hours ? (
-    always ? (
-      <span className={`${chip} bg-npf-ok-soft text-npf-ok`}>
-        <ClockIcon aria-hidden className="size-4 shrink-0 text-npf-ok-fill" />
-        {t("Open 24/7")}
-      </span>
-    ) : long ? (
+    long ? (
       <span className="npf-body mt-1 block max-w-[60ch] text-npf-body tabular-nums">
         {hours}
       </span>
     ) : (
-      <span className={`${chip} bg-npf-cloud text-npf-ink`}>
-        <ClockIcon aria-hidden className="size-4 shrink-0 text-npf-steel" />
+      <span className="npf-body text-npf-body tabular-nums">
         {/* "7:30 - 22:00" is a range; an en dash says so. */}
-        {hours.replace(/\s*-\s*/g, "–")}
+        {always ? t("Open 24/7") : hours.replace(/\s*-\s*/g, "–")}
       </span>
     )
   ) : null;

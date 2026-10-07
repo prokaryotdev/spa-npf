@@ -86,10 +86,6 @@ export const haLegal: Record<string, string> = {
   Complaint: "Ƙorafi",
   "Our IT support team is ready to help you resolve issues quickly and ensure your digital experience with Nigeria Police Force runs smoothly.":
     "Tawagar tallafin fasaharmu a shirye take ta taimaka maka ka warware matsaloli cikin sauri kuma ta tabbatar da cewa amfaninka na dijital da Rundunar 'Yan Sandan Najeriya yana tafiya lami lafiya.",
-  "Leaders at Your Service": "Shugabanni a Hidimarka",
-  "Nigeria Police Force Leadership": "Shugabancin Rundunar 'Yan Sandan Najeriya",
-  "This is a digital service that promotes communication between the senior leadership at Nigeria Police Force and the public. Eliminating all administrative barriers and obstacles to ensure that the leaders respond to queries and remarks accordingly.":
-    "Wannan hidima ce ta dijital da ke ƙarfafa sadarwa tsakanin manyan shugabannin Rundunar 'Yan Sandan Najeriya da jama'a. Tana kawar da duk shingayen gudanarwa domin tabbatar da cewa shugabanni suna amsa tambayoyi da ra'ayoyi yadda ya kamata.",
   "If you have any questions or suggestions regarding our privacy policy, please contact us at ":
     "Idan kana da wata tambaya ko shawara game da manufar sirrinmu, don Allah ka tuntuɓe mu a ",
 
@@ -98,8 +94,6 @@ export const haLegal: Record<string, string> = {
     "Cibiyoyin Ba da Hidima | Rundunar 'Yan Sandan Najeriya",
   "Area Commands and Divisional Headquarters across the Federal Capital Territory, with addresses and opening hours.":
     "Rundunonin Yanki da Hedkwatocin Sassa a faɗin Babban Birnin Tarayya, tare da adireshi da lokutan buɗewa.",
-  "{total} stations · {commands} Area Commands and {divisions} Divisional Headquarters":
-    "Ofisoshi {total} · Rundunonin Yanki {commands} da Hedkwatocin Sassa {divisions}",
   "Area Command": "Rundunar Yanki",
   "{council} Area Council": "Ƙaramar Hukumar {council}",
   "Open: {hours}": "A buɗe: {hours}",

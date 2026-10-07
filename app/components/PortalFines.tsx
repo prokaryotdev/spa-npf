@@ -43,7 +43,7 @@ export default function PortalFines() {
 
   return (
     <div className="space-y-8">
-      <h2 className="npf-h3 text-npf-blue-deep">{t("Fines")}</h2>
+      <h1 className="npf-h3 text-npf-blue-deep">{t("Fines")}</h1>
 
       {unpaid.length ? (
         <div className="overflow-hidden rounded-card border border-npf-hairline bg-white">

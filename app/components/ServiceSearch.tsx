@@ -10,6 +10,8 @@ import {
   type SearchHit,
   type SuggestionGroup,
 } from "../search-index";
+import { terms } from "../search-text";
+import { highlight } from "./DataTable";
 import { ClockIcon, EnterKeyIcon, SearchIcon, ServicesIcon } from "./icons";
 import { useLang, useT } from "../i18n/client";
 import { localize } from "../i18n/localize";
@@ -459,26 +461,7 @@ function Glyph({ hit }: { hit: SearchHit }) {
   );
 }
 
-/** Bolds the part of the title the visitor actually typed. */
+/** Bolds the part of the title the visitor typed, so "kasa" lights "Ƙasa". */
 function Marked({ text, query }: { text: string; query: string }) {
-  const words = query.toLowerCase().split(/\s+/).filter(Boolean);
-  if (!words.length) return <>{text}</>;
-
-  const pattern = new RegExp(
-    `(${words.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`,
-    "gi",
-  );
-  return (
-    <>
-      {text.split(pattern).map((part, i) =>
-        words.includes(part.toLowerCase()) ? (
-          <mark key={i} className="bg-transparent font-bold text-inherit">
-            {part}
-          </mark>
-        ) : (
-          <span key={i}>{part}</span>
-        ),
-      )}
-    </>
-  );
+  return <>{highlight(text, terms(query), "bg-transparent font-bold text-inherit")}</>;
 }

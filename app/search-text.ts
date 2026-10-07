@@ -54,3 +54,32 @@ export function near(a: string, b: string) {
 }
 
 export const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/**
+ * The filter for the small boards (requests, incidents, units): every query
+ * word has to land somewhere in the item's text, in any order, hooks and
+ * accents folded. A word found in no item is taken as a slip and matched one
+ * letter off the start of a word, the same rule as the site search.
+ */
+export function filterBy<T>(items: T[], query: string, text: (item: T) => string) {
+  const words = terms(query);
+  if (!words.length) return items;
+  const index = items.map((item) => {
+    const all = fold(text(item));
+    return { item, all, split: split(all) };
+  });
+  const typo = words.map((w) => !index.some((e) => e.all.includes(w)));
+  return index
+    .filter((e) =>
+      words.every(
+        (w, i) =>
+          e.all.includes(w) ||
+          (typo[i] &&
+            w.length >= 4 &&
+            e.split.some(
+              (x) => near(x.slice(0, w.length), w) || near(x.slice(0, w.length + 1), w),
+            )),
+      ),
+    )
+    .map((e) => e.item);
+}

@@ -135,7 +135,7 @@ export default async function ContactUsPage() {
                 href="/app/services/leaders-at-your-service"
                 className="npf-btn npf-btn-primary mt-6 w-full"
               >
-                {t("Leaders at Your Service")}
+                {t("Report a Police Officer")}
                 <span className="npf-btn-disc">
                   <ArrowRight className="npf-arrow size-4 rtl:-scale-x-100" />
                 </span>

@@ -1,32 +1,37 @@
 /**
  * Copy and assets for the Information hub, captured from the live
- * site the same way the homepage was.
+ * site the same way the homepage was. The offence schedule leads: it is the
+ * one a driver comes looking for. Each card counts what is behind it, from
+ * the rows themselves, so the number can never drift from the page.
  */
+import { lawsLegislation, penaltyPoints, speedLimits } from "./content-sub";
 
 export const information = {
   title: "Information",
   cards: [
     {
-      title: "Laws & Legislation",
-      body: "Our Laws and Legal Frameworks",
-      cta: "Know more",
-      image: "/images/information/laws-and-legislation.jpg",
-      href: "/app/home/information/laws-legislation",
-    },
-    {
       title: "Traffic Offences and Penalties",
       body: "Learn how penalty points and fines impact your traffic record.",
-      cta: "Know more",
+      count: "{count} offences",
+      total: penaltyPoints.rows.length,
       image: "/images/information/traffic-offences.jpg",
       href: "/app/home/information/traffic-offences-and-penalties",
     },
     {
       title: "Road Speed Limits",
-      body: "Abuja applies specific speed limits across its roads to ensure safety and smooth traffic flow. These limits vary depending on the type of road and location",
-      cta: "Know more",
+      body: "Speed limits and enforcement thresholds on the roads of the Federal Capital Territory.",
+      count: "{count} roads",
+      total: speedLimits.rows.length,
       image: "/images/information/street-speed-limits.jpg",
       href: "/app/home/information/road-speed-limits",
     },
+    {
+      title: "Laws & Legislation",
+      body: "The statutes the Nigeria Police Force works under",
+      count: "{count} statutes",
+      total: lawsLegislation.rows.length,
+      image: "/images/information/laws-and-legislation.jpg",
+      href: "/app/home/information/laws-legislation",
+    },
   ],
 };
-

@@ -417,9 +417,9 @@ export const contactUs = {
   },
   leaders: {
     title: "Contact",
-    titleMain: "Nigeria Police Force Leadership",
+    titleMain: "Complaint Response Unit",
     description:
-      "This is a digital service that promotes communication between the senior leadership at Nigeria Police Force and the public. Eliminating all administrative barriers and obstacles to ensure that the leaders respond to queries and remarks accordingly.",
+      "Complaints about how a police officer behaved go to the Complaint Response Unit, which takes them from anywhere in Nigeria, 24 hours a day.",
   },
 };
 

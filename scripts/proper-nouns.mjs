@@ -29,6 +29,8 @@ export const PROPER_NOUNS = new Set([
   "Instagram",
   "App Store",
   "Google Play",
+  "Apple App Store",
+  "NPF-NCCC",
   "App Gallery",
   "AppGallery",
   "My Nigeria Police Force",

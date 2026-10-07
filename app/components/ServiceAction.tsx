@@ -38,9 +38,9 @@ export default function ServiceAction({ service }: { service: Service }) {
           className="npf-btn npf-btn-primary h-auto min-h-12 w-full py-1.5 ps-6 text-start leading-tight whitespace-normal hover:bg-npf-blue-mid"
         >
           <UserCircle className="size-5 shrink-0" />
-          {t("Sign in to {action}", {
-            action: t(service.action).toLowerCase(),
-          })}
+          {/* Not "Sign in to start service": the card already names the
+              service, and the long form wrapped onto two lines. */}
+          {t("Sign in to continue")}
           <span className="npf-btn-disc ms-auto">
             <ArrowRight className="size-4 rtl:-scale-x-100" />
           </span>

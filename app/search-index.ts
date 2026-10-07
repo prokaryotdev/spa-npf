@@ -27,6 +27,11 @@ export type SearchHit = {
 
 const internal = (href: string) => href.startsWith("/");
 
+/** What people call a service when it isn't its official name. Searched, never shown. */
+const ALIASES: Record<string, string> = {
+  "police-clearance-certificate": "police character certificate",
+};
+
 /**
  * The site is small and entirely static, so search is a substring scan over a
  * list built from the same content the pages render. No index, no dependency.
@@ -75,7 +80,7 @@ const entries: SearchHit[] = [
     href: `/app/services/${s.slug}`,
     section: "Services",
     icon: s.icon,
-    tags: s.category ?? undefined,
+    tags: [s.category, ALIASES[s.slug]].filter(Boolean).join(" ") || undefined,
     // The five the CMS flags as most used surface first on an empty query and
     // tie-break above the rest on a partial one.
     weight: s.mostUsed ? 6 : 4,

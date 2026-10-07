@@ -25,10 +25,16 @@ export default async function InformationPage() {
       )}
     >
       <section className="bg-white pb-(--npf-section-y)">
-        <div className="npf-container grid gap-(--npf-gap) md:grid-cols-2 xl:grid-cols-3">
+        {/* One tall lead card, the other two stacked beside it: three
+            equal tiles would say the three pages matter equally. */}
+        <div className="npf-container grid gap-(--npf-gap) lg:grid-cols-[1.35fr_1fr] lg:grid-rows-2">
           {information.cards.map((card, i) => (
-            <div key={card.title} {...reveal(i)}>
-              <LinkCard card={card} />
+            <div
+              key={card.title}
+              {...reveal(i)}
+              className={i === 0 ? "lg:row-span-2" : undefined}
+            >
+              <LinkCard card={card} lead={i === 0} />
             </div>
           ))}
         </div>

@@ -82,7 +82,17 @@ export const haServices: Record<string, string> = {
   Report: "Bayar da Rahoto",
   Proceed: "Ci gaba",
   "Track it": "Bi diddiginsa",
-  "Sign in to {action}": "Ka shiga domin {action}",
+  "Sign in to continue": "Ka shiga don ci gaba",
+  "Choose a service": "Zaɓi aiki",
+  "{count} services in this group": "Ayyuka {count} a wannan rukuni",
+  "{count} service in this group": "Aiki {count} a wannan rukuni",
+  "How it works": "Yadda yake aiki",
+  "Sign in with NINAuth or your Nigeria Police Force account.":
+    "Ka shiga da NINAuth ko asusunka na Rundunar 'Yan Sandan Najeriya.",
+  "Start the request. You get a reference number straight away.":
+    "Fara buƙatar. Za ka sami lambar tuntuɓa nan take.",
+  'Follow it any time under "My Requests".':
+    'Bi diddiginta a kowane lokaci a "Buƙatuna".',
   "NINAuth sign-in required": "Ana buƙatar shiga da NINAuth",
   "Open request {ref}": "Buƙatar da ke buɗe {ref}",
   "You already have this open — status: {status}":
@@ -166,7 +176,6 @@ export const haServices: Record<string, string> = {
   Cash: "Tsabar kuɗi",
   "Credit Card": "Katin Kiredit",
   "Debit Card": "Katin Debit",
-  "Rescue Me app": "Manhajar Ku Cece Ni",
   "Permit Fee": "Kuɗin Izini",
   "Certificate Fees": "Kuɗin Takardar Shaida",
   "Processing Fee": "Kuɗin Sarrafawa",
@@ -781,8 +790,6 @@ export const haServices: Record<string, string> = {
     "Ma'aikacin yana da kwantiragin aiki mai aiki ko izinin hukuma da Ma'aikatar Kwadago da Aikin Yi ta Tarayya ko wasu hukumomin da aka ba izini kamar yankunan 'yanci a Abuja suka bayar.",
   "This service allows Nigerian citizens and residents to obtain a permit for the entry of a deceased person into the country, subject to prior approval from the relevant authorities":
     "Wannan hidima tana ba 'yan ƙasar Najeriya da mazauna damar samun izinin shigar da gawar mamaci cikin ƙasar, bisa amincewar hukumomin da abin ya shafa tun da farko",
-  "This service enables users to provide security or sensitive information and report any activities or incidents suspected of posing a threat to public safety and community security":
-    "Wannan hidima tana ba masu amfani damar bayar da bayanan tsaro ko masu muhimmanci da bayar da rahoton duk wani aiki ko lamarin da ake tuhumar zai iya yin barazana ga tsaron jama'a da al'umma",
   "Nigeria Police Force reserves the right to take all necessary actions to protect its rights, and in line with applicable laws and regulations, without prior consent from the customer":
     "Rundunar 'Yan Sandan Najeriya tana da haƙƙin ɗaukar duk matakan da suka dace domin kare haƙƙoƙinta, bisa dokoki da ƙa'idojin da suke aiki, ba tare da yardar abokin hulɗa tun da farko ba",
   "The certificate is issued to the inmate who has been sentenced to a court order and has served the sentence, or continues to do so in the penal and correctional institutions of Abuja.":
@@ -893,4 +900,32 @@ export const haServices: Record<string, string> = {
     "• **Imel**: Za a aika sigar dijital na izinin zuwa adireshin imel ɗinka da ka yi rajista da zarar an bayar da shi. • **Allon Kai**: Ka shiga asusunka na Rundunar 'Yan Sandan Najeriya, ka je sashen \"Buƙatuna\" a allonka, ka nemi buƙatarka, sannan ka sauke izinin kai tsaye. • **Tambaya Kai Tsaye**: Za ka iya sauke izinin ta hidimar \"Matsayin Buƙata\" ta amfani da lambar tuntuɓarka kaɗai.",
   "• **Email**: The digital version of the certificate will be sent to your registered email address as soon as it is issued. • **Personal Dashboard**: Log in to your Nigeria Police Force account, navigate to \"My Requests\" section in your personal dashboard, search for your request, and then download the certificate directly. • **Direct Inquiry**: You can download the certificate through \"Application Status\" service using only your reference number.":
     "• **Imel**: Za a aika sigar dijital na takardar shaidar zuwa adireshin imel ɗinka da ka yi rajista da zarar an bayar da ita. • **Allon Kai**: Ka shiga asusunka na Rundunar 'Yan Sandan Najeriya, ka je sashen \"Buƙatuna\" a allonka, ka nemi buƙatarka, sannan ka sauke takardar shaidar kai tsaye. • **Tambaya Kai Tsaye**: Za ka iya sauke takardar shaidar ta hidimar \"Matsayin Buƙata\" ta amfani da lambar tuntuɓarka kaɗai.",
+  "Traffic Status Certificate": "Takardar Shaidar Matsayin Zirga-zirga",
+  "HQ Entry Permit": "Izinin Shiga Hedkwata",
+  "Report Lost Item": "Bayar da Rahoton Abin da Ya Ɓata",
+  "Nigeria Police Force Website": "Shafin Rundunar 'Yan Sandan Najeriya",
+  "Request Support": "Nemi Taimako",
+  "Lost & Found": "Ɓatattu da Waɗanda Aka Samu",
+  "Check an Application": "Duba Buƙata",
+  "Follow a POSSAP application, or check that a police document is genuine":
+    "Bi diddigin buƙatar POSSAP, ko ka tabbatar cewa takardar 'yan sanda ta gaske ce",
+  "Complaints about how a police officer behaved go to the Complaint Response Unit, which takes them from anywhere in Nigeria, 24 hours a day.":
+    "Ƙorafe-ƙorafe game da halayen ɗan sanda suna zuwa Sashen Amsa Ƙorafe-ƙorafe, wanda yake karɓar su daga ko'ina a Najeriya, awa 24 a rana.",
+  "Get Help Now": "Nemi Taimako Yanzu",
+  "The Force's National Cybercrime Centre takes reports of online fraud, phishing and cryptocurrency scams, and you can report anonymously":
+    "Cibiyar Yaƙi da Laifukan Intanet ta Ƙasa ta Rundunar tana karɓar rahotannin zamba ta intanet, satar bayanai da zamba ta kuɗin kirifto, kuma za ka iya kai rahoto ba tare da bayyana sunanka ba",
+  "Lost a document or an item? A police extract records the loss, and is often asked for when replacing one, such as a passport":
+    "Ka ɓatar da takarda ko wani abu? Takardar bayanin 'yan sanda tana rubuta asarar, kuma ana yawan neman ta lokacin maye gurbin wani abu, kamar fasfo",
+  "Police Extract": "Takardar Bayanin 'Yan Sanda",
+  "Report a Police Officer": "Kai Ƙarar Ɗan Sanda",
+  // The sample requests on My Requests.
+  "Lost Item Report — receipt": "Rahoton Abin da Ya Ɓata — rasit",
+  "The visit date you chose is a public holiday. Pick another date.":
+    "Ranar ziyarar da ka zaɓa ranar hutun jama'a ce. Ka zaɓi wata rana.",
+  "Matched": "An Samu Daidai",
+  "A matching item was handed in at Asokoro station.":
+    "An miƙa abu mai dacewa a ofishin Asokoro.",
+  "Collected. Case closed.": "An karɓa. An rufe shari'ar.",
+  "Divisional Police Station": "Ofishin 'Yan Sanda na Sashe",
+  "Certificate available to download.": "Ana iya sauke takardar shaida.",
 };

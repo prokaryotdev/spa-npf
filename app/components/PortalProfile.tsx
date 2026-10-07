@@ -43,7 +43,7 @@ export default function PortalProfile() {
 
   return (
     <div className="max-w-160 space-y-6">
-      <h2 className="npf-h3 text-npf-blue-deep">{t("Profile")}</h2>
+      <h1 className="npf-h3 text-npf-blue-deep">{t("Profile")}</h1>
 
       <section className="npf-panel">
         <div className="npf-panel-head">

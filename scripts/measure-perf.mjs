@@ -28,7 +28,7 @@ const PAGES = [
   ["homepage", "/en"],
   ["homepage (ar)", "/ar"],
   ["service catalogue", "/en/app/services"],
-  ["a service", "/en/app/services/police-clearance-certificate"],
+  ["a service", "/en/app/services/police-character-certificate"],
   ["a data table", "/en/app/home/information/traffic-offences-and-penalties"],
 ];
 

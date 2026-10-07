@@ -10,6 +10,7 @@ import {
   CardIcon,
   FileIcon,
   InboxIcon,
+  PlusIcon,
   ServicesIcon,
 } from "./icons";
 import { useFormat, useT } from "../i18n/client";
@@ -48,6 +49,13 @@ export default function PortalOverview({
 
   return (
     <div className="space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h1 className="npf-h3 text-npf-blue-deep">{t("Overview")}</h1>
+        <Link href="/app/services" className="npf-btn npf-btn-primary">
+          <PlusIcon aria-hidden className="size-4.5" />
+          {t("New request")}
+        </Link>
+      </div>
       {needsYou.length ? (
         <section className="overflow-hidden rounded-card bg-npf-gold-wash">
           <h2 className="npf-h5 flex items-center gap-2.5 px-5 pt-4 pb-3 text-npf-warn">

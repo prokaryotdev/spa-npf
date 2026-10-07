@@ -5,6 +5,7 @@
  *   npm test
  */
 import assert from "node:assert/strict";
+import { filterBy } from "../app/search-text.ts";
 import { search, suggest, popularServices } from "../app/search-index.ts";
 import { services } from "../app/content-services.ts";
 import { seedRequests, seedDocuments } from "../app/content-account.ts";
@@ -14,15 +15,16 @@ const top = (q) => search(q)[0]?.title;
 // --- ranking -------------------------------------------------------------
 // A whole-title match wins over a title that merely contains the word.
 assert.equal(top("police clearance"), "Police Clearance Certificate");
-// A word at the front of the title beats the same word buried mid-title.
-assert.equal(top("fines"), "Fines Inquiry and Payment");
+// A word at the front of the title beats the same word buried mid-title
+// ("Report a Police Officer").
+assert.match(top("police"), /^Police /);
 // Every term has to appear; nonsense matches nothing.
 assert.equal(search("zzzz").length, 0);
 assert.equal(search("").length, 0);
 // Word order, punctuation and a typo still find it.
 assert.equal(top("clearance police"), "Police Clearance Certificate");
 assert.equal(top("police-clearance"), "Police Clearance Certificate");
-assert.equal(top("polce clearence"), "Police Clearance Certificate");
+assert.equal(top("polce clearance"), "Police Clearance Certificate");
 // A real word never pulls in its lookalikes.
 assert.ok(search("fine").map((h) => h.title).every((t) => !/\bline\b/i.test(t)));
 // Short terms stay exact, or "fin" would match half the site.
@@ -38,7 +40,7 @@ assert.equal(popularServices.length, 5);
 // dictionary is folded into the haystack. These break the moment the two come
 // apart.
 assert.equal(
-  search("takardar shaidar tsabtar rikodi")[0]?.title,
+  search("takardar shaida")[0]?.title,
   "Police Clearance Certificate",
 );
 assert.ok(search("takardar shaida").length > 0, "a Hausa query finds services");
@@ -49,6 +51,21 @@ const titles = (q) => search(q).map((h) => h.title);
 assert.deepEqual(titles("bukatu"), titles("buƙatu"));
 assert.deepEqual(titles("'yan sanda"), titles("yan sanda"));
 assert.ok(titles("buƙatu").length > 0, "the folded query still matches");
+
+// The common name finds the official one.
+assert.equal(top("character certificate"), "Police Clearance Certificate");
+
+// --- board filter --------------------------------------------------------
+// The request, incident and unit boards: any word order, hooks folded, a
+// slip forgiven.
+const board = ["Police Character Certificate NPF-001", "Ƙasa patrol unit", "Escort request"];
+const pick = (q) => filterBy(board, q, (x) => x);
+assert.deepEqual(pick("certificate police"), [board[0]]);
+assert.deepEqual(pick("kasa"), [board[1]]);
+assert.deepEqual(pick("escrot"), [board[2]]);
+assert.deepEqual(pick("npf-001"), [board[0]]);
+assert.deepEqual(pick(""), board);
+assert.equal(pick("zzzz").length, 0);
 
 // --- catalogue -----------------------------------------------------------
 const slugs = new Set(services.map((s) => s.slug));

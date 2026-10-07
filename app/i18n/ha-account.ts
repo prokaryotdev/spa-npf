@@ -38,8 +38,6 @@ export const haAccount: Record<string, string> = {
     "Taƙaitawa | Rundunar 'Yan Sandan Najeriya Tawa",
   "Track your requests, settle fines, download documents and manage your details.":
     "Ka bi diddigin buƙatunka, ka biya tara, ka sauke takardu kuma ka sarrafa bayananka.",
-  "Sample account. The requests, fines and documents below are illustrative and live only in this browser.":
-    "Asusun samfuri. Buƙatu, tara da takardun da ke ƙasa misali ne kawai, kuma suna nan a wannan burauza kaɗai.",
   "Reset the demo data": "Sake saita bayanan gwaji",
   "Open requests": "Buƙatun da ke buɗe",
   "Unpaid fines": "Tarar da ba a biya ba",
@@ -58,6 +56,8 @@ export const haAccount: Record<string, string> = {
   "My Requests | My Nigeria Police Force":
     "Buƙatuna | Rundunar 'Yan Sandan Najeriya Tawa",
   "New request": "Sabuwar buƙata",
+  "Sample account. Everything here is illustrative and lives only in this browser.":
+    "Asusun samfuri. Duk abin da ke nan misali ne kawai, kuma yana nan a wannan burauza kaɗai.",
   "Find a request": "Nemi buƙata",
   "Service name or reference": "Sunan aiki ko lambar tuntuɓa",
   "No requests yet": "Babu buƙata tukuna",
@@ -70,6 +70,7 @@ export const haAccount: Record<string, string> = {
     "Ka gwada cire tacewar matsayi ko ka nemi lambar tuntuɓa maimakon haka.",
   "Showing {shown} of {total} requests":
     "Ana nuna {shown} daga buƙatu {total}",
+  "{ref} · submitted {date}": "{ref} · an gabatar {date}",
   "{ref} · submitted {date} · {fee}":
     "{ref} · an gabatar {date} · {fee}",
   "About this service": "Game da wannan aikin",
@@ -84,7 +85,6 @@ export const haAccount: Record<string, string> = {
   Completed: "An Kammala",
   "Action Needed": "Ana Buƙatar Mataki",
   "Action needed": "Ana buƙatar mataki",
-  Matched: "An Samu Daidai",
   "One request needs something from you":
     "Buƙata ɗaya tana buƙatar wani abu daga gare ka",
   "{n} requests need something from you":
@@ -93,14 +93,8 @@ export const haAccount: Record<string, string> = {
     "Yana hannun sashen Bayanan Laifuka.",
   "Received by Nigeria Police Force.":
     "Rundunar 'Yan Sandan Najeriya ta karɓa.",
-  "Certificate available to download.": "Ana iya sauke takardar shaida.",
-  "Collected. Case closed.": "An karɓa. An rufe shari'ar.",
-  "A matching item was handed in at Asokoro station.":
-    "An miƙa abu mai dacewa a ofishin Asokoro.",
   "The date you chose falls on a public holiday. Open the request to pick another one.":
     "Ranar da ka zaɓa ta faɗo a ranar hutun jama'a. Ka buɗe buƙatar ka zaɓi wata.",
-  "The visit date you chose is a public holiday. Pick another date.":
-    "Ranar ziyarar da ka zaɓa ranar hutun jama'a ce. Ka zaɓi wata rana.",
 
   // --- fines ---------------------------------------------------------------
   Fines: "Tara",
@@ -139,11 +133,6 @@ export const haAccount: Record<string, string> = {
     "Takardun shaida, izini da rasit suna bayyana nan da zarar an amince da buƙata.",
   "Downloads are not available in this rebuild":
     "Ba a samun sauke fayiloli a wannan sigar",
-  "Police Clearance Certificate": "Takardar Shaidar Tsabtar Rikodi",
-  "Traffic Status Certificate": "Takardar Shaidar Matsayin Zirga-zirga",
-  "HQ Entry Permit": "Izinin Shiga Hedkwata",
-  "Lost Item Report — receipt": "Rahoton Abin da Ya Ɓata — rasit",
-  "Report Lost Item": "Bayar da Rahoton Abin da Ya Ɓata",
   "Free of Charge": "Kyauta",
   "NIN and passport copy accepted.": "Ana karɓar NIN da kwafin fasfo.",
 
@@ -178,13 +167,8 @@ export const haAccount: Record<string, string> = {
   Rank: "Mukami",
   Station: "Ofishi",
   "Nigeria Police Force App": "Manhajar Rundunar 'Yan Sandan Najeriya",
-  "Nigeria Police Force Website": "Shafin Rundunar 'Yan Sandan Najeriya",
-  "Divisional Police Station": "Ofishin 'Yan Sanda na Sashe",
   // --- page redesign ---------------------------------------------------------
   Identity: "Shaida",
   "Contact details": "Bayanan tuntuɓa",
   "All statuses": "Duk matsayi",
-  "Track your requests": "Bi diddigin buƙatunka",
-  "Settle fines": "Biya tara",
-  "Keep your documents": "Ajiye takardunka",
 };

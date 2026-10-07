@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState, type ReactNode } from "react";
+import { Fragment, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   ArrowDown,
   ChevronDown,
@@ -32,7 +32,11 @@ const words = (query: string) =>
  * character at a time so a match found in "ƙasa" or "50000" lights up the
  * "Ƙasa" or "50,000" the reader actually sees.
  */
-function highlight(text: string, terms: string[]): ReactNode {
+export function highlight(
+  text: string,
+  terms: string[],
+  className = "rounded-[3px] bg-npf-gold-wash text-inherit shadow-[0_0_0_1px_var(--color-npf-gold-soft)] [box-decoration-break:clone]",
+): ReactNode {
   if (!terms.length) return text;
   let folded = "";
   const at: number[] = [];
@@ -59,10 +63,7 @@ function highlight(text: string, terms: string[]): ReactNode {
     const part = text.slice(start, i);
     out.push(
       lit[start] ? (
-        <mark
-          key={start}
-          className="rounded-[3px] bg-npf-gold-wash text-inherit shadow-[0_0_0_1px_var(--color-npf-gold-soft)] [box-decoration-break:clone]"
-        >
+        <mark key={start} className={className}>
           {part}
         </mark>
       ) : (
@@ -196,6 +197,17 @@ export default function DataTable<T extends Record<string, unknown>>({
     return out;
   }, [index, columns, terms, sort, group, filterKey]);
 
+  // Left as written, the rows run in their categories, so each category
+  // gets a heading where it starts. A search, a sort or one chosen category
+  // breaks that order or makes the heading say what is already chosen.
+  const groupAt = (i: number) =>
+    filterKey && group === "All" && !terms.length && !sort
+      ? String(visible[i][filterKey] ?? "") !==
+        String(visible[i - 1]?.[filterKey] ?? "")
+        ? t(String(visible[i][filterKey]))
+        : null
+      : null;
+
   const clearButton = (
     <button
       type="button"
@@ -295,9 +307,15 @@ export default function DataTable<T extends Record<string, unknown>>({
           const [head, ...rest] = columns;
           const title = show(head, row[head.key]);
           const href = head.linkKey ? (row[head.linkKey] as string) : null;
+          const heading = groupAt(i);
           return (
+            <Fragment key={i}>
+            {heading ? (
+              <li className="npf-small bg-npf-mist px-4 py-2.5 font-semibold text-npf-blue-deep">
+                {heading}
+              </li>
+            ) : null}
             <li
-              key={i}
               className="group/row relative flex gap-3 px-4 py-4 transition-colors has-[a]:active:bg-npf-paper"
             >
               <span className="npf-caption mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink tabular-nums">
@@ -338,6 +356,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                 </dl>
               </div>
             </li>
+            </Fragment>
           );
         })}
         {visible.length === 0 ? (
@@ -423,8 +442,19 @@ export default function DataTable<T extends Record<string, unknown>>({
           </thead>
           <tbody className="divide-y divide-npf-hairline">
             {visible.map((row, i) => (
+              <Fragment key={i}>
+              {groupAt(i) ? (
+                <tr className="bg-npf-mist">
+                  <th
+                    scope="colgroup"
+                    colSpan={columns.length + 1}
+                    className="npf-small px-5 pt-5 pb-2.5 text-start font-semibold text-npf-blue-deep"
+                  >
+                    {groupAt(i)}
+                  </th>
+                </tr>
+              ) : null}
               <tr
-                key={i}
                 // Positioned so a linked cell's link can stretch over the
                 // whole row: the target is the row, not only its words.
                 className="group/row relative align-top transition-colors hover:bg-npf-paper"
@@ -470,6 +500,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                   );
                 })}
               </tr>
+              </Fragment>
             ))}
             {visible.length === 0 ? (
               <tr>

@@ -58,13 +58,9 @@ export const haHome: Record<string, string> = {
   "Apply for a Certificate or Permit": "Nemi Takardar Shaida ko Izini",
   "Access official documents from the Nigeria Police Force quickly and securely":
     "Ka samu takardun hukuma daga Rundunar 'Yan Sandan Najeriya cikin sauri da aminci",
-  "Inquire & Pay": "Tambaya da Biya",
-  "Stay updated and settle your payments instantly":
-    "Ka ci gaba da sani kuma ka biya kuɗinka nan take",
-  "Request Support": "Nemi Taimako",
-  "Request support on-site, digitally, in seamless steps":
-    "Ka nemi taimako a wurin, ta hanyar dijital, cikin matakai masu sauƙi",
   "Explore More Services": "Duba Ƙarin Ayyuka",
+  "Call 112, or find emergency and response services":
+    "Kira 112, ko nemo ayyukan gaggawa da agaji",
   "Browse and discover more available police services":
     "Ka bincika ka gano ƙarin ayyukan 'yan sanda da ake bayarwa",
 
@@ -83,18 +79,7 @@ export const haHome: Record<string, string> = {
   // --- modern policing -----------------------------------------------------
   "Browse all services": "Duba dukkan ayyuka",
   "Cybercrime Reporting": "Bayar da Rahoton Laifukan Yanar Gizo",
-  "The National Cybercrime Centre receives reports of online fraud, blackmail and identity theft, and works to keep the community safe online":
-    "Cibiyar Laifukan Yanar Gizo ta Ƙasa tana karɓar rahotannin zamba ta yanar gizo, barazana da satar shaidar mutum, tana kuma aiki domin al'umma ta kasance cikin aminci a yanar gizo",
   "Cybercrimes Act 2015": "Dokar Laifukan Yanar Gizo ta 2015",
-  "Lost & Found": "Ɓatattu da Waɗanda Aka Samu",
-  "A paperless and secure way to find what matters, the Lost & Found desk offers a simple and reliable way to report and recover property":
-    "Hanya mai aminci marar takarda don gano abin da ya damu ka; teburin Ɓatattu da Waɗanda Aka Samu yana ba da hanya mai sauƙi kuma abin dogaro ta bayar da rahoto da dawo da dukiya",
-  "Federal Capital Territory Digital Services":
-    "Ayyukan Dijital na Babban Birnin Tarayya",
-  "Rescue Me": "Ku Cece Ni",
-  "Seen something suspicious? Report activity or incidents that could threaten public safety, or share security information with the Force. It is free, and open to residents, visitors and businesses":
-    "Kun ga wani abu da ake zargi? Ku bayar da rahoton ayyuka ko abubuwan da ka iya zama barazana ga lafiyar jama'a, ko ku raba bayanan tsaro da Rundunar. Kyauta ne, kuma a buɗe yake ga mazauna, baƙi da 'yan kasuwa",
-  "National Security Strategy": "Dabarun Tsaro na Ƙasa",
 
   // --- domains -------------------------------------------------------------
   "Protection across land, water and sky": "Kariya a ƙasa, ruwa da sama",
@@ -175,8 +160,8 @@ export const haHome: Record<string, string> = {
     "Rundunar 'Yan Sandan Najeriya, Rundunar FCT",
   "Get help online, without the queue":
     "Samu taimako ta intanet, ba tare da bin layi ba",
-  "Report cybercrime, recover lost property and share security information from your phone or computer.":
-    "Kai rahoton laifukan intanet, nemo kayan da suka ɓace, kuma raba bayanan tsaro daga wayarka ko kwamfutarka.",
+  "Report cybercrime and recover lost property from your phone or computer.":
+    "Kai rahoton laifukan intanet kuma nemo kayan da suka ɓace daga wayarka ko kwamfutarka.",
   "A station close to you": "Ofishin 'yan sanda kusa da kai",
   "From Command Headquarters in Garki to posts in the rural wards, every station takes reports and is staffed around the clock.":
     "Daga Hedikwatar Runduna a Garki zuwa ofisoshi a unguwannin karkara, kowane ofishi yana karɓar rahoto kuma akwai jami'ai a cikinsa dare da rana.",

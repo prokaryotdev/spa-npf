@@ -37,7 +37,7 @@ export type ServiceRow = Pick<
 > & { importance: number };
 
 /**
- * All 92 services on one page.
+ * Every service on one page.
  *
  * The search sits in the page head (ServiceSearch, sharing the query
  * through ServiceQuery). Here, the most used first in their own row, then
@@ -85,8 +85,7 @@ export default function ServiceCatalogue({
     () =>
       services.filter(
         (s) =>
-          (!category || s.category === category) &&
-          (!q || rank.has(s.slug)),
+          (!category || s.category === category) && (!q || rank.has(s.slug)),
       ),
     [services, q, rank, category],
   );
@@ -313,14 +312,19 @@ function ServiceCard({ service }: { service: ServiceRow }) {
 
       <span className="mt-auto pt-5">
         <span className="npf-small flex items-center gap-x-5 border-t border-npf-hairline pt-4">
-          <span className="inline-flex items-center gap-1.5 font-medium text-npf-ink tabular-nums">
-            <CardIcon className="size-4 shrink-0 text-npf-steel" />
-            {t(service.feeSummary)}
-          </span>
-          <span className="inline-flex items-center gap-1.5 text-npf-steel">
-            <ClockIcon className="size-4 shrink-0" />
-            {t(service.turnaround)}
-          </span>
+          {/* Either can be blank where nothing official gives one. */}
+          {service.feeSummary ? (
+            <span className="inline-flex items-center gap-1.5 font-medium text-npf-ink tabular-nums">
+              <CardIcon className="size-4 shrink-0 text-npf-steel" />
+              {t(service.feeSummary)}
+            </span>
+          ) : null}
+          {service.turnaround ? (
+            <span className="inline-flex items-center gap-1.5 text-npf-steel">
+              <ClockIcon className="size-4 shrink-0" />
+              {t(service.turnaround)}
+            </span>
+          ) : null}
           <ArrowRight className="ms-auto size-4.5 shrink-0 text-npf-blue transition-transform group-hover:translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:-translate-x-[3px]" />
         </span>
       </span>
@@ -329,11 +333,11 @@ function ServiceCard({ service }: { service: ServiceRow }) {
 }
 
 /**
- * The packages as quiet outlined pills, each count in a small badge, the
+ * Filter choices as quiet outlined pills, each count in a small badge, the
  * chosen one filled navy. From lg up they wrap at their own width; below
  * that, a swipe row that keeps the choice in view.
  */
-function PackageTabs({
+export function PackageTabs({
   label,
   chips,
   value,

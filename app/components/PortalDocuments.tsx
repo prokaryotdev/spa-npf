@@ -35,7 +35,7 @@ export default function PortalDocuments() {
 
   return (
     <div>
-      <h2 className="npf-h3 text-npf-blue-deep">{t("Documents")}</h2>
+      <h1 className="npf-h3 text-npf-blue-deep">{t("Documents")}</h1>
       {issued.length ? (
         <p className="npf-body mt-2 max-w-[60ch] text-npf-body">
           {t(

@@ -1,5 +1,6 @@
 "use client";
 
+import { filterBy } from "../search-text";
 import { useId, useMemo, useState } from "react";
 import {
   OpsButton,
@@ -45,15 +46,11 @@ export default function OpsRequests() {
   const [reason, setReason] = useState("");
 
   const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return requests.filter((r) => {
-      if (openOnly && !QUEUE.includes(r.status)) return false;
-      if (!q) return true;
-      return [r.id, r.service, t(r.service)]
-        .join(" ")
-        .toLowerCase()
-        .includes(q);
-    });
+    return filterBy(
+      requests.filter((r) => !openOnly || QUEUE.includes(r.status)),
+      query,
+      (r) => [r.id, r.service, t(r.service)].join(" "),
+    );
   }, [requests, query, openOnly, t]);
 
   function ask(request: TrackedRequest) {

@@ -53,10 +53,6 @@ export const haChrome: Record<string, string> = {
   "Search {what}": "Nemi {what}",
   "Filter by category": "Tace da rukuni",
   "All categories": "Duk rukunan",
-  "{shown} of {total}": "{shown} daga {total}",
-  "Page {page} of {pages}": "Shafi na {page} daga {pages}",
-  "Next page": "Shafi na gaba",
-  "Previous page": "Shafi na baya",
 
   // --- feedback form ------------------------------------------------------
   "What would you like to share?": "Me kake son ka bayar?",

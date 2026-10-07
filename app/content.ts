@@ -99,14 +99,14 @@ export const quickServices = [
     icon: "/icons/home/request-for-a-certificate-or-permit.svg",
   },
   {
-    title: "Inquire & Pay",
-    body: "Stay updated and settle your payments instantly",
+    title: "Check an Application",
+    body: "Follow a POSSAP application, or check that a police document is genuine",
     href: "/app/services?package=Inquiries+and+Follow-up",
     icon: "/icons/home/inquire-and-pay.svg",
   },
   {
-    title: "Request Support",
-    body: "Request support on-site, digitally, in seamless steps",
+    title: "Get Help Now",
+    body: "Call 112, or find emergency and response services",
     href: "/app/services?package=Emergency+and+Response",
     icon: "/icons/home/request-support.svg",
   },
@@ -140,7 +140,7 @@ export const smartPolicing: InitiativeCard[] = [
   {
     title: "Cybercrime Reporting",
     href: "/app/services/ecrime",
-    body: "The National Cybercrime Centre receives reports of online fraud, blackmail and identity theft, and works to keep the community safe online",
+    body: "The Force's National Cybercrime Centre takes reports of online fraud, phishing and cryptocurrency scams, and you can report anonymously",
     image: "/images/home/smart-policing/cybercrime-centre.jpg",
     tags: [
       {
@@ -151,31 +151,17 @@ export const smartPolicing: InitiativeCard[] = [
     theme: theme("#0B1526", "#CCDCF2", "#93B9E8"),
   },
   {
-    title: "Lost & Found",
+    title: "Police Extract",
     href: "/app/services/lost-and-found",
-    body: "A paperless and secure way to find what matters, the Lost & Found desk offers a simple and reliable way to report and recover property",
+    body: "Lost a document or an item? A police extract records the loss, and is often asked for when replacing one, such as a passport",
     image: "/images/home/smart-policing/lost-and-found.jpg",
     tags: [
       {
-        label: "Federal Capital Territory Digital Services",
+        label: "POSSAP",
       },
     ],
     more: 2,
     theme: theme("#241748", "#ebe6f7", "#ab99de"),
-  },
-  {
-    title: "Rescue Me",
-    href: "/app/services/share-security-information",
-    body: "Seen something suspicious? Report activity or incidents that could threaten public safety, or share security information with the Force. It is free, and open to residents, visitors and businesses",
-    image: "/images/home/smart-policing/rescue-me.jpg",
-    tags: [
-      {
-        label: "National Security Strategy",
-      },
-    ],
-    more: 1,
-    wide: true,
-    theme: theme("#050F22", "#C4D8F8", "#7FB4FF"),
   },
 ];
 

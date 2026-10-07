@@ -1,5 +1,6 @@
 "use client";
 
+import { filterBy } from "../search-text";
 import { useId, useMemo, useState } from "react";
 import {
   Elapsed,
@@ -54,16 +55,11 @@ export default function OpsUnits() {
   );
 
   const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return units
-      .filter((u) => {
-        if (division && u.division !== division) return false;
-        if (!q) return true;
-        return [u.callsign, u.officer, t(u.officer), u.area, t(u.area)]
-          .join(" ")
-          .toLowerCase()
-          .includes(q);
-      })
+    return filterBy(
+      units.filter((u) => !division || u.division === division),
+      query,
+      (u) => [u.callsign, u.officer, t(u.officer), u.area, t(u.area)].join(" "),
+    )
       .sort(
         (a, b) =>
           ORDER[a.status] - ORDER[b.status] ||

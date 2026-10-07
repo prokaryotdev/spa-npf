@@ -1,5 +1,6 @@
 "use client";
 
+import { filterBy } from "../search-text";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { callSources, callTypes, dispatchTarget } from "../content-ops";
 import { useFormat, useT } from "../i18n/client";
@@ -90,13 +91,14 @@ export default function OpsIncidents() {
    * an Hausa-speaking operator types the call type in Hausa.
    */
   const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return incidents.filter((i) => {
+    const shown = incidents.filter((i) => {
       if (status && i.status !== status) return false;
       if (priority && i.priority !== priority) return false;
       if (unassigned && i.unit) return false;
-      if (!q) return true;
-      return [
+      return true;
+    });
+    return filterBy(shown, query, (i) =>
+      [
         i.id,
         i.kind,
         t(i.kind),
@@ -105,11 +107,8 @@ export default function OpsIncidents() {
         i.assignee ?? "",
         t(i.assignee ?? ""),
         i.unit ?? "",
-      ]
-        .join(" ")
-        .toLowerCase()
-        .includes(q);
-    });
+      ].join(" "),
+    );
   }, [incidents, query, status, priority, unassigned, t]);
 
   const open = incidents.find((i) => i.id === selected) ?? null;

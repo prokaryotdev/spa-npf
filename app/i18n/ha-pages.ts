@@ -14,8 +14,10 @@ export const haPages: Record<string, string> = {
   Information: "Bayani",
   "Information | Nigeria Police Force":
     "Bayani | Rundunar 'Yan Sandan Najeriya",
-  "Know more": "Ƙara sani",
   "Page last updated: {date}": "An sabunta shafin karshe: {date}",
+  "{count} offences": "Laifuka {count}",
+  "{count} roads": "Hanyoyi {count}",
+  "{count} statutes": "Dokoki {count}",
   "Laws and legislation, traffic penalty points, street speed limits, and sustainable development practices.":
     "Dokoki da ƙa'idoji, makin hukuncin zirga-zirga, iyakokin gudu a hanya, da ayyukan cigaba mai dorewa.",
 
@@ -37,7 +39,6 @@ export const haPages: Record<string, string> = {
   "Laws & Legislation | Nigeria Police Force":
     "Dokoki da Ƙa'idoji | Rundunar 'Yan Sandan Najeriya",
   "Laws and legislation": "Dokoki da ƙa'idoji",
-  "Our Laws and Legal Frameworks": "Dokokinmu da Tsarin Shari'armu",
   "The statutes the Nigeria Police Force works under":
     "Dokokin da Rundunar 'Yan Sandan Najeriya ke aiki a ƙarƙashinsu",
   Legislation: "Doka",
@@ -138,18 +139,12 @@ export const haPages: Record<string, string> = {
 
   // --- speed limits --------------------------------------------------------
   "Road Speed Limits": "Iyakokin Gudu a Hanya",
-  "Road speed limits": "Iyakokin gudu a hanya",
   "Road Speed Limits | Nigeria Police Force":
     "Iyakokin Gudu a Hanya | Rundunar 'Yan Sandan Najeriya",
   "Speed limits and enforcement thresholds on the roads of the Federal Capital Territory.":
     "Iyakokin gudu da matakan aiwatarwa a kan hanyoyin Babban Birnin Tarayya.",
   "Speed limits on the roads of the Federal Capital Territory, set by the National Road Traffic Regulations and posted on the road itself. The limit depends on the kind of road and on where it runs.":
     "Iyakokin gudu a kan hanyoyin Babban Birnin Tarayya, waɗanda Ƙa'idojin Zirga-zirga na Ƙasa suka tsara kuma aka sanya su a kan hanyar kanta. Iyakar ta dogara ne da irin hanyar da kuma inda take wucewa.",
-  "Abuja applies specific speed limits across its roads to ensure safety and smooth traffic flow. These limits vary depending on the type of road and location":
-    "Abuja tana sanya iyakokin gudu na musamman a kan hanyoyinta domin tabbatar da aminci da gudanar zirga-zirga cikin sauƙi. Waɗannan iyakoki sun bambanta bisa irin hanyar da wurin",
-  "Abuja applies specific speed limits across its roads to ensure safety and smooth traffic flow. These limits vary depending on the type of road and location.":
-    "Abuja tana sanya iyakokin gudu na musamman a kan hanyoyinta domin tabbatar da aminci da gudanar zirga-zirga cikin sauƙi. Waɗannan iyakoki sun bambanta bisa irin hanyar da wurin.",
-  Road: "Hanya",
   "Limit km/h": "Iyaka km/h",
   "Enforced at km/h": "Ana aiwatarwa a km/h",
   // --- page redesign ---------------------------------------------------------
@@ -165,12 +160,5 @@ export const haPages: Record<string, string> = {
   "In an emergency, call 112.": "Idan akwai gaggawa, kira 112.",
   "Call 112": "Kira 112",
   "Or go straight to": "Ko ka je kai tsaye zuwa",
-  "Apply for a certificate, report a crime or pay a fine.":
-    "Nemi takardar shaida, kai rahoton laifi ko biya tara.",
-  "Laws, traffic offences and the speed limits.":
-    "Dokoki, laifuffukan hanya da iyakokin gudu.",
-  "Phone lines, email and feedback.": "Layukan waya, imel da ra'ayoyi.",
-  "Every page on the site, in one list.":
-    "Kowane shafi a shafin, a jeri ɗaya.",
   "Questions about this page?": "Kana da tambaya game da wannan shafin?",
 };

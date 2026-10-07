@@ -50,9 +50,9 @@ assert.ok(
 
 // --- the work is everyone's ----------------------------------------------
 const filed = submitRequest({
-  slug: "police-clearance-certificate",
-  service: "Police Clearance Certificate",
-  fee: "₦80,000",
+  slug: "police-character-certificate",
+  service: "Police Character Certificate",
+  fee: "Shown on POSSAP before you pay",
 });
 assert.equal(shared().requests[0].id, filed.id, "a request is shared work");
 assert.equal(shared().requests[0].status, "Submitted");

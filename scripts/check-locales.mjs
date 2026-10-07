@@ -35,7 +35,7 @@ const ROUTES = [
   "/app/home/terms-conditions",
   "/app/search?q=police",
   "/app/services",
-  "/app/services/police-clearance-certificate",
+  "/app/services/police-character-certificate",
   "/app/signin",
   "/app/portal",
   "/app/police",

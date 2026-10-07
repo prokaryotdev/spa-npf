@@ -144,7 +144,7 @@ export default async function Home() {
               id="smart-policing"
               title={t("Get help online, without the queue")}
               lede={t(
-                "Report cybercrime, recover lost property and share security information from your phone or computer.",
+                "Report cybercrime and recover lost property from your phone or computer.",
               )}
               action={{ href: "/app/services", label: t("Browse all services") }}
             />

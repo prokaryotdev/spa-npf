@@ -6,7 +6,8 @@ import { reveal } from "./reveal";
 
 /**
  * The online services as a feature-and-pair: the wide initiative stands tall
- * on the start side, the other two stack beside it. Each tile is a real link
+ * on the start side, the others stack beside it (a lone one stands as tall).
+ * Each tile is a real link
  * to its service; the shade comes from the initiative's own ink so the copy
  * always lands on colour.
  */
@@ -30,7 +31,7 @@ export default function ModernPolicing({
         <div
           key={item.title}
           {...reveal(i + 1)}
-          className="grid aspect-[4/5] lg:col-span-5 lg:aspect-auto"
+          className={`grid aspect-[4/5] lg:col-span-5 lg:aspect-auto ${rest.length === 1 ? "md:col-span-2 md:aspect-[16/9] lg:row-span-2" : ""}`}
         >
           <Tile item={item} />
         </div>

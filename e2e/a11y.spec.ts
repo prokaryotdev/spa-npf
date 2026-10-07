@@ -23,7 +23,7 @@ import {
 const PAGES = [
   ["the homepage", "/"],
   ["the service catalogue", "/app/services"],
-  ["a service", "/app/services/police-clearance-certificate"],
+  ["a service", "/app/services/police-character-certificate"],
   ["a data table", "/app/home/information/traffic-offences-and-penalties"],
   ["a legal document", "/app/home/privacy-policy"],
   ["search results", "/app/search?q=certificate"],

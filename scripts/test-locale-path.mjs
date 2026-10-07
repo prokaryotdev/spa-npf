@@ -71,7 +71,7 @@ for (const href of [
 
 // Pages still take a prefix, including slugs full of hyphens.
 for (const href of [
-  "/app/services/police-clearance-certificate",
+  "/app/services/police-character-certificate",
   "/app/home/contactUs",
   "/app/home/information/traffic-offences-and-penalties",
 ]) {
