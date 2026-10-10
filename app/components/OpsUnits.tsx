@@ -11,8 +11,6 @@ import {
   OpsPanel,
   OpsSearch,
   PriorityTag,
-  Readout,
-  ReadoutStrip,
   UnitStatusTag,
   useNow,
 } from "./OpsPieces";
@@ -58,7 +56,19 @@ export default function OpsUnits() {
     return filterBy(
       units.filter((u) => !division || u.division === division),
       query,
-      (u) => [u.callsign, u.officer, t(u.officer), u.area, t(u.area)].join(" "),
+      (u) =>
+        [
+          u.callsign,
+          u.officer,
+          t(u.officer),
+          u.area,
+          t(u.area),
+          u.division,
+          t(u.division),
+          u.status,
+          t(u.status),
+          u.incident ?? "",
+        ].join(" "),
     )
       .sort(
         (a, b) =>
@@ -67,44 +77,9 @@ export default function OpsUnits() {
       );
   }, [units, query, division, t]);
 
-  const free = units.filter((u) => u.status === "Available");
-  const committed = units.filter(
-    (u) => u.status === "Assigned" || u.status === "On Scene",
-  );
-  const off = units.filter((u) => u.status === "Unavailable");
-
   return (
-    <div className="space-y-5">
-      <OpsHead
-        title={t("Units")}
-        lead={t(
-          "Everyone on this shift and what they are on. The clock counts from the last status change.",
-        )}
-      />
-
-      <ReadoutStrip>
-        <Readout
-          label={t("On duty")}
-          value={units.length}
-          note={t("{n} divisions", { n: divisions.length })}
-        />
-        <Readout
-          label={t("Available")}
-          value={free.length}
-          tone={free.length ? "var(--ops-ok)" : "var(--ops-p2)"}
-          note={t("on the air")}
-        />
-        <Readout
-          label={t("Committed")}
-          value={committed.length}
-          note={t("on a call")}
-        />
-        <Readout
-          label={t("Off the air")}
-          value={off.length}
-          note={t("refuelling, training")}
-        />
-      </ReadoutStrip>
+    <div className="space-y-8">
+      <OpsHead title={t("Units")} />
 
       <div className="flex flex-wrap items-center gap-2">
         <OpsSearch
@@ -113,6 +88,7 @@ export default function OpsUnits() {
           placeholder={t("Callsign, officer or area")}
           value={query}
           onChange={setQuery}
+          found={visible.length}
         />
         <label htmlFor={`${id}-div`} className="sr-only">
           {t("Division")}
@@ -235,7 +211,9 @@ function Row({
   const stale = held > STALE_MINUTES && unit.status !== "Available";
 
   return (
-    <tr className="border-b border-ops-line-soft transition-colors last:border-0 hover:bg-ops-raised/50">
+    <tr
+      className="border-b border-ops-line-soft transition-colors last:border-0 hover:bg-white/[0.025]"
+    >
       <th scope="row" className="py-2.5 pe-3 ps-4 align-top">
         {/*
           The folded lines live inside a capped block, not loose in the cell.
@@ -283,7 +261,7 @@ function Row({
       >
         <Elapsed from={unit.since} />
         {stale ? (
-          <span className="sr-only"> {t("— held over 45 minutes")}</span>
+          <span className="sr-only"> {t("(held over 45 minutes)")}</span>
         ) : null}
       </td>
       <td className="hidden py-2.5 pe-3 align-top lg:table-cell">

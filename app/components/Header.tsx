@@ -16,7 +16,7 @@ import {
   AccessibilityIcon,
   ArrowRight,
   CallIcon,
-  ChevronDown,
+  ArrowDown,
   CloseIcon,
   MenuIcon,
   SearchIcon,
@@ -209,7 +209,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                     >
                       {t(item.label)}
                       {item.children ? (
-                        <ChevronDown className="size-4 opacity-70 transition-[rotate] group-hover:rotate-180" />
+                        <ArrowDown className="size-4 opacity-70 transition-[rotate] group-hover:rotate-180" />
                       ) : null}
                     </Link>
                     {item.children ? (
@@ -371,10 +371,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         <div className="mt-8 space-y-3">
           <AccountLink block onNavigate={closeMenu} />
           {/* The drawer is the only place a phone can reach the switch. */}
-          <LanguageSwitch
-            block
-            className="border border-npf-hairline py-3 text-npf-ink hover:bg-npf-cloud"
-          />
+          <LanguageSwitch block />
         </div>
       </dialog>
       </header>

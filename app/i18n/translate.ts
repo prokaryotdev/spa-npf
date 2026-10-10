@@ -1,5 +1,13 @@
 import type { Lang } from "./config";
-import { dictionary } from "./ha";
+import { dictionary as ha } from "./ha";
+import { dictionary as yo } from "./yo";
+import { dictionary as ig } from "./ig";
+
+const DICTIONARIES: Record<Exclude<Lang, "en">, Record<string, string>> = {
+  ha,
+  yo,
+  ig,
+};
 
 /**
  * The dictionary is keyed by the English source string, not by an invented
@@ -20,6 +28,7 @@ const fill = (text: string, vars?: Vars) =>
 export function translate(lang: Lang, text: string, vars?: Vars): string {
   if (typeof text !== "string" || !text) return text;
   if (lang === "en") return fill(text, vars);
+  const dictionary = DICTIONARIES[lang];
   const hit = dictionary[text] ?? dictionary[text.trim()];
   return fill(hit ?? text, vars);
 }

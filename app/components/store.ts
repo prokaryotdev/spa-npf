@@ -122,7 +122,8 @@ type State = {
 //
 // v3 is a content break rather than a shape one, and it is the more dangerous
 // kind. readShared() spreads the saved collections over the fresh ones, so a
-// blob written before the seeds moved from Dubai to the FCT survives every
+// blob written before the seeds moved (Dubai, then the FCT, then the whole
+// country) survives every
 // deploy: the console keeps serving Sheikh Zayed Road and DXB references, and
 // the fixed timestamps in it age into elapsed clocks reading ninety hours.
 // Anyone who opened the console once sees that version forever. Bump the key
@@ -131,7 +132,7 @@ type State = {
 // Exported so scripts/test-store.mjs reads the blob under whatever the
 // current key is: a copy of the string in the test turns the next bump into
 // a failing test rather than a passing one.
-export const KEY = "dp:state:v3";
+export const KEY = "dp:state:v4";
 /**
  * The work lives in localStorage; who is signed in lives in sessionStorage.
  *
@@ -474,7 +475,7 @@ export function logIncident(input: {
     ...state.incidents.map((i) => Number(i.id.split("-")[1]) || 0),
   );
   const created: Incident = {
-    id: `FCT-${n + 1}`,
+    id: `NPF-${n + 1}`,
     ...input,
     reported: at,
     dispatched: null,

@@ -7,8 +7,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   CheckIcon,
-  ChevronDown,
-  ChevronRight,
+  ArrowDown,
   InboxIcon,
 } from "./icons";
 import { getT } from "../i18n/server";
@@ -55,9 +54,9 @@ export async function PageShell({
                   <Link href="/" className={crumb}>
                     {t("Home")}
                   </Link>
-                  <ChevronRight
+                  <ArrowRight
                     aria-hidden
-                    className="size-4 opacity-50 rtl:-scale-x-100"
+                    className="size-3.5 opacity-50 rtl:-scale-x-100"
                   />
                 </li>
                 {trail.map((step) => (
@@ -65,9 +64,9 @@ export async function PageShell({
                     <Link href={step.href} className={crumb}>
                       {t(step.label)}
                     </Link>
-                    <ChevronRight
+                    <ArrowRight
                       aria-hidden
-                      className="size-4 opacity-50 rtl:-scale-x-100"
+                      className="size-3.5 opacity-50 rtl:-scale-x-100"
                     />
                   </li>
                 ))}
@@ -362,7 +361,7 @@ export async function LegalSections({
                     {sections.length}
                   </span>
                 </span>
-                <ChevronDown className="size-4.5 shrink-0 transition-transform duration-(--dur-hover) group-open/toc:rotate-180" />
+                <ArrowDown className="size-4.5 shrink-0 transition-transform duration-(--dur-hover) group-open/toc:rotate-180" />
               </summary>
               <nav
                 aria-label={t("On this page")}

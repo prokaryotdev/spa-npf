@@ -5,7 +5,7 @@ import { localePath } from "./i18n/path";
 import { services } from "./content-services";
 
 const BASE = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://fct.npf.gov.ng"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://npf.gov.ng"
 ).replace(/\/$/, "");
 
 /**

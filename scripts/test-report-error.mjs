@@ -13,7 +13,7 @@ const real = clampReport({
   message: "Cannot read properties of undefined (reading 'slug')",
   stack: "TypeError: ...\n  at ServiceCatalogue",
   digest: "1947283746",
-  url: "https://fct.npf.gov.ng/app/services",
+  url: "https://npf.gov.ng/app/services",
   source: "error-boundary",
 });
 assert.equal(real.message, "Cannot read properties of undefined (reading 'slug')");

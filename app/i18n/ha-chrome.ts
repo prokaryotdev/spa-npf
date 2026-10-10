@@ -29,12 +29,12 @@ export const haChrome: Record<string, string> = {
   "Nigeria Police Force home": "Gidan Rundunar 'Yan Sandan Najeriya",
   "Emergency Numbers": "Lambobin Gaggawa",
   "Search Nigeria Police Force": "Nemi a Rundunar 'Yan Sandan Najeriya",
-  "Nigeria Police Force, FCT Command - Safe Secure Together":
-    "Rundunar 'Yan Sandan Najeriya, Rundunar FCT — Lafiya, Tsaro, Tare",
-  "Together for a safer Abuja tomorrow. Report, apply, inquire and pay, and request support from the Nigeria Police Force in the Federal Capital Territory.":
-    "Tare domin Abuja mai aminci gobe. Ka bayar da rahoto, ka nema, ka tambaya ka biya, kuma ka nemi taimako daga Rundunar 'Yan Sandan Najeriya a Babban Birnin Tarayya.",
-  "© {year} FCT Police Command Headquarters. All Rights Reserved":
-    "© {year} Hedkwatar Rundunar 'Yan Sandan FCT. An Kiyaye Duk Haƙƙoƙi",
+  "Nigeria Police Force - Safe Secure Together":
+    "Rundunar 'Yan Sandan Najeriya — Lafiya, Tsaro, Tare",
+  "Together for a safer Nigeria tomorrow. Report, apply, inquire and pay, and request support from the Nigeria Police Force, wherever you are in the country.":
+    "Tare domin Najeriya mai aminci gobe. Ka bayar da rahoto, ka nema, ka tambaya ka biya, kuma ka nemi taimako daga Rundunar 'Yan Sandan Najeriya, a duk inda kake a ƙasar nan.",
+  "© {year} Nigeria Police Force. All Rights Reserved":
+    "© {year} Rundunar 'Yan Sandan Najeriya. An Kiyaye Duk Haƙƙoƙi",
   "This site is monitored and maintained by Nigeria Police Force.":
     "Rundunar 'Yan Sandan Najeriya ce ke sa ido tare da kula da wannan shafin.",
   "The site is best viewed in a current version of Chrome, Safari, Edge or Firefox":
@@ -42,7 +42,7 @@ export const haChrome: Record<string, string> = {
   "Last modified Date: {date}": "Kwanan sabuntawa na ƙarshe: {date}",
 
   // --- newsletter ---------------------------------------------------------
-  "Get news from the Command": "Samu labarai daga Rundunar",
+  "Get news from the Force": "Samu labarai daga Rundunar",
   "Announcements, safety advice and events, sent to your inbox.":
     "Sanarwa, shawarwarin tsaro da abubuwan da ke tafe, kai tsaye zuwa akwatin imel ɗinka.",
   Subscribe: "Yi rajista",
@@ -81,4 +81,7 @@ export const haChrome: Record<string, string> = {
   "The site failed to load. Trying again often clears it.":
     "Shafin bai buɗe ba. Sau da yawa sake gwadawa yakan warware shi.",
   "Try again": "Sake gwadawa",
+  "Designed and built by": "An tsara kuma an gina ta hannun",
+  "Language": "Harshe",
+  "Language: {name}": "Harshe: {name}",
 };

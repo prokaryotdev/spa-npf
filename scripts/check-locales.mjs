@@ -35,7 +35,7 @@ const ROUTES = [
   "/app/home/terms-conditions",
   "/app/search?q=police",
   "/app/services",
-  "/app/services/police-character-certificate",
+  "/app/services/police-clearance-certificate",
   "/app/signin",
   "/app/portal",
   "/app/police",
@@ -98,7 +98,7 @@ const stripTags = (html) =>
 
 let bad = 0;
 for (const route of ROUTES) {
-  for (const lang of ["en", "ha"]) {
+  for (const lang of ["en", "ha", "yo", "ig"]) {
     // Locale is the first path segment now, not a cookie, so the address
     // itself is what is being checked.
     const url = BASE + (route === "/" ? `/${lang}` : `/${lang}${route}`);
@@ -110,7 +110,7 @@ for (const route of ROUTES) {
     const langOk = m && m[1] === lang;
 
     let leaks = [];
-    if (lang === "ha") {
+    if (lang !== "en") {
       const text = stripTags(html).replace(/\s+/g, " ");
       for (const key of HUNTED) {
         if (ALLOWED.some((a) => key.includes(a))) continue;
@@ -161,29 +161,27 @@ for (const [from, expect] of [
 }
 
 // A prefixed address serves the page itself rather than bouncing again.
-for (const lang of ["en", "ha"]) {
+for (const lang of ["en", "ha", "yo", "ig"]) {
   const res = await fetch(`${BASE}/${lang}/app/services`, {
     redirect: "manual",
   });
   if (res.status !== 200) fail(`/${lang}/app/services should serve, got ${res.status}`);
 }
 
-// The switcher has to offer the other language, as a real link, so it works
+// The switcher has to offer every language, as real links, so it works
 // before hydration and gives the reader an address to copy.
-for (const [lang, offers] of [
-  ["en", "ha"],
-  ["ha", "en"],
-]) {
+for (const lang of ["en", "ha", "yo", "ig"]) {
   const html = await (await fetch(`${BASE}/${lang}/app/services`)).text();
-  if (!html.includes(`href="/${offers}/app/services"`))
-    fail(`the ${lang} page should link to /${offers}/app/services`);
+  for (const offers of ["en", "ha", "yo", "ig"])
+    if (!html.includes(`href="/${offers}/app/services"`))
+      fail(`the ${lang} page should link to /${offers}/app/services`);
 }
 
 // Each page must name both of its addresses, or a crawler never learns the
 // other language exists.
-for (const lang of ["en", "ha"]) {
+for (const lang of ["en", "ha", "yo", "ig"]) {
   const html = await (await fetch(`${BASE}/${lang}/app/services`)).text();
-  for (const other of ["en", "ha"])
+  for (const other of ["en", "ha", "yo", "ig"])
     if (!new RegExp(`hreflang="${other}"[^>]*/${other}/app/services`, "i").test(html))
       fail(`the ${lang} page is missing its ${other} hreflang`);
   if (!new RegExp(`rel="canonical"[^>]*/${lang}/app/services`).test(html))
@@ -193,6 +191,6 @@ for (const lang of ["en", "ha"]) {
 console.log(
   bad
     ? `\n${bad} problem(s) need attention`
-    : "\nall routes ok in both languages",
+    : "\nall routes ok in every language",
 );
 process.exit(bad ? 1 : 0);

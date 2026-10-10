@@ -6,8 +6,9 @@
 
 @theme inline {
   /*
-   * The two brand faces lead, then Hausa-capable fallbacks. Font fallback in
-   * CSS is per character, not per string, so an Hausa page picks up the next
+   * The two brand faces lead, then fallbacks that carry Hausa, Yoruba and
+   * Igbo letters. Font fallback in CSS is per character, not per string, so
+   * a Hausa, Yoruba or Igbo page picks up the next
    * family in the stack for the glyphs Abuja/Bukra's web subsets do not carry
    * while Latin digits and the odd English proper noun stay on brand.
    */
@@ -118,6 +119,12 @@
   --color-ops-p2: var(--ops-p2);
   --color-ops-scene: var(--ops-scene);
   --color-ops-scene-wash: var(--ops-scene-wash);
+  --color-ops-ok: var(--ops-ok);
+  --color-ops-ok-wash: var(--ops-ok-wash);
+  --color-ops-p1-wash: var(--ops-p1-wash);
+  --color-ops-p2-wash: var(--ops-p2-wash);
+  --color-ops-route: var(--ops-route);
+  --color-ops-route-wash: var(--ops-route-wash);
 
   /*
    * The in-between type steps Tailwind's scale lacks, named so dense UI (the
@@ -972,107 +979,94 @@ html.npf-large-text {
  * Operations console. Scoped to .npf-ops so nothing leaks into the site
  * around it.
  *
- * It used to be a dark surface set, on the theory that a control room is
- * read at night. In practice this console is read in daylight on the same
- * desks as the rest of the site, and the dark version made the one building
- * of the Force that officers actually work in look like a different product.
- * So it is a light set now: the paper is the site's own off-white, panels are
- * white, and the navy that carries the brand on the public pages carries it
- * here too.
+ * A dark control-room set. The board is watched through every relief,
+ * night shift included, and on a dark ground the only bright things are the
+ * ones that need a person: a late call, a grade, a free unit. Elevation is a
+ * hairline, not a shadow, because shadows do not read on near-black.
  */
 .npf-ops {
   /*
-   * Three surface steps, not two: the console needs a ground the panels sit
-   * on, or a full-width board of white panels reads as one undifferentiated
-   * sheet. --ops-raised is the selected/hover step above the panel.
+   * The console at night, drawn the way Apple draws a pro app in dark mode:
+   * a near-black window, content on soft raised surfaces that lift with
+   * shadow rather than outline, and the platform system colours for every
+   * meaning. The greys lean a breath toward blue so the board sits with the
+   * Force navy of the crest without turning into a navy page.
    */
-  --ops-bg: var(--color-npf-mist);
-  --ops-panel: #ffffff;
-  --ops-raised: var(--color-npf-chip);
-  --ops-line: var(--color-npf-line);
-  /* A second, fainter rule for divisions inside a panel, where a full
-     --ops-line every 44px turns a call queue into graph paper. */
-  --ops-line-soft: #e7ecf5;
-  --ops-text: var(--color-npf-ink);
-  /*
-   * The chrome. The board stays light — officers read it in daylight — but
-   * the frame around it is the Force's own navy, so the console reads as a
-   * fitted instrument rather than a web page with a toolbar, and so the one
-   * building of the site officers actually work in still wears the badge.
-   */
-  --ops-chrome: var(--color-npf-blue-deep);
-  --ops-chrome-line: #24467e;
-  --ops-chrome-raised: var(--color-npf-blue);
-  /* Secondary type on the chrome, 6.6:1 on --ops-chrome. */
-  --ops-chrome-dim: #a6bcdd;
-  /* Crest gold, legible on the chrome (8.4:1); marker and kicker only. */
-  --ops-chrome-gold: var(--color-npf-gold-soft);
-  /* Secondary text, 5.6:1 on the panel, 4.8:1 on --ops-raised. */
-  --ops-dim: var(--color-npf-muted);
-  /* The brand navy, used where it is a fill under white text (10.3:1). */
-  --ops-brand: var(--color-npf-blue);
-  /* Hover on a light ground means going down, not up. */
-  --ops-brand-lift: var(--color-npf-blue-deep);
-  /* The same hue as small text and icons on white (6.3:1). */
-  --ops-accent: var(--color-npf-blue-mid);
+  --ops-bg: #0b0c10;
+  --ops-panel: #16171c;
+  --ops-raised: #202228;
+  /* Control and divider lines, solid so a 1px gap can draw them. */
+  --ops-line: #2a2c33;
+  /* Separators between rows inside a surface. */
+  --ops-line-soft: #222329;
+  --ops-text: #f2f3f5;
+  /* Secondary text, 6.8:1 on the panel, 6.0:1 on --ops-raised. */
+  --ops-dim: #9a9fab;
 
-  /*
-   * Call grades. Never the brand navy — a priority is not a brand moment.
-   * Every one of these carries small bold text on white, so they are the
-   * darkened steps of each hue rather than the poster versions: amber in
-   * particular fails badly on white until it is this far down.
-   */
-  --ops-p1: var(--color-npf-alert);
-  --ops-p2: var(--color-npf-warn);
-  --ops-p3: var(--color-npf-scene);
+  /* The toolbar is the window itself, frosted. */
+  --ops-chrome: #0b0c10;
+  --ops-chrome-line: #1d1e23;
+  --ops-chrome-raised: #202228;
+  --ops-chrome-dim: #9a9fab;
+  --ops-chrome-gold: #e6c766;
+
+  /* The filled button blue, white on it at 4.6:1. */
+  --ops-brand: #0071e3;
+  --ops-brand-lift: #0077ed;
+  /* System blue for links, icons and focus: 6.4:1 on the panel. */
+  --ops-accent: #409cff;
+  /* The body tone of a two-tone glyph from the /services set. */
+  --ops-glyph: color-mix(in srgb, var(--ops-accent) 38%, transparent);
+
+  /* Call grades: system red, orange, cyan and grey. */
+  --ops-p1: #ff453a;
+  --ops-p2: #ff9f0a;
+  --ops-p3: #64d2ff;
   --ops-p4: var(--ops-dim);
-  /*
-   * The same two meanings again, at the weight a block of colour needs rather
-   * than the weight small type needs. A bar or a segment only has to clear
-   * 3:1 against the panel, and the text-safe amber above is so far down that
-   * a chart drawn in it reads brown.
-   */
-  --ops-fill-ok: var(--color-npf-ok-fill);
-  --ops-fill-warn: var(--color-npf-warn-fill);
-  /* The same "good" green at the weight small type needs: --ops-fill-ok is
-     4.5:1 on white and drops under it the moment a tinted cell sits behind
-     an 11px note, so a readout says "on the air" in this one. */
-  --ops-ok: var(--color-npf-ok);
-  /* On scene: --ops-p3's teal as a status chip's ink and wash. */
-  --ops-scene: var(--color-npf-scene);
-  --ops-scene-wash: var(--color-npf-scene-wash);
+  /* The same meanings as blocks of colour: bars and track segments. */
+  --ops-fill-ok: #30d158;
+  --ops-fill-warn: #ff9f0a;
+  --ops-ok: #30d158;
+  --ops-scene: #63e6be;
+  --ops-scene-wash: rgb(99 230 190 / 0.14);
 
-  /*
-   * Elevation is declared once, and it is shadow. A panel carrying both a
-   * hairline and a shadow is the ghost card — two systems arguing about which
-   * one lifts it, and the reason a board of white rectangles read as a
-   * wireframe. So panels float on a navy-tinted shadow and keep hairlines
-   * strictly for divisions *inside* themselves.
-   */
+  /* Status capsules: each ink with its own wash. En route is indigo, on
+     scene mint, free green, waiting orange, refused red. */
+  --ops-ok-wash: rgb(48 209 88 / 0.14);
+  --ops-p1-wash: rgb(255 69 58 / 0.15);
+  --ops-p2-wash: rgb(255 159 10 / 0.14);
+  --ops-route: #a5a3ff;
+  --ops-route-wash: rgb(165 163 255 / 0.15);
+
+  /* One elevation: a soft drop, with a faint lit rim so a surface still has
+     an edge where the shadow cannot show against the near-black ground. */
   --ops-shadow:
-    0 1px 1px rgba(16, 42, 82, 0.04), 0 2px 6px -1px rgba(16, 42, 82, 0.06),
-    0 8px 20px -8px rgba(16, 42, 82, 0.1);
+    inset 0 1px 0 rgb(255 255 255 / 0.045), 0 0 0 1px rgb(255 255 255 / 0.04),
+    0 1px 2px rgb(0 0 0 / 0.45), 0 10px 30px -14px rgb(0 0 0 / 0.7);
   --ops-shadow-lift:
-    0 1px 1px rgba(16, 42, 82, 0.05), 0 4px 10px -2px rgba(16, 42, 82, 0.09),
-    0 16px 32px -12px rgba(16, 42, 82, 0.16);
+    inset 0 1px 0 rgb(255 255 255 / 0.06), 0 0 0 1px rgb(255 255 255 / 0.07),
+    0 18px 48px -12px rgb(0 0 0 / 0.85);
 
   /*
    * How far down the sticky console chrome ends. Everything that pins under
    * it — the table heads, the call detail panel — offsets by this rather than
    * guessing, so one change to the bar moves them all at once.
    */
-  --ops-top: 6.75rem;
+  --ops-top: 6.25rem;
+  /* Apple radii: 14 on a surface, 8 on a control, capsules for badges. */
+  --radius-card: 14px;
+  --radius-chip: 8px;
 
-  color-scheme: light;
+  color-scheme: dark;
   background: var(--ops-bg);
   color: var(--ops-text);
-  scrollbar-color: var(--color-npf-line) var(--color-npf-chip);
+  scrollbar-color: var(--ops-line) var(--ops-bg);
 }
 /* From here the four destinations fold into the command bar and the frame is
    one row tall. */
 @media (min-width: 1024px) {
   .npf-ops {
-    --ops-top: 3.75rem;
+    --ops-top: 3.25rem;
   }
 }
 /*
@@ -1099,40 +1093,403 @@ html.npf-large-text {
   background: var(--ops-panel);
   box-shadow: inset 0 -1px 0 var(--ops-line);
 }
+/*
+ * A surface on the board: the panel, lifted by the one console shadow. Where
+ * the browser can draw continuous corners (corner-shape), the corner is the
+ * Apple squircle rather than a circular arc; the radius grows to match, so it
+ * reads the same size as the plain fallback.
+ */
+.npf-ops-tile {
+  background: var(--ops-panel);
+  box-shadow: var(--ops-shadow);
+  border-radius: var(--radius-card);
+}
 .npf-ops ::selection {
-  background: var(--color-npf-cloud-deep);
-  color: var(--color-npf-blue-deep);
+  background: rgb(64 156 255 / 0.35);
+  color: #ffffff;
 }
-.npf-ops :where(a, button, input, select, textarea, [tabindex]):focus-visible {
-  outline: 2px solid var(--ops-accent);
-  outline-offset: 2px;
+.npf-ops ::placeholder {
+  color: color-mix(in srgb, var(--ops-dim) 85%, transparent);
 }
-/* Navy chrome: the board's focus ring is too close to it to be seen. */
-.npf-ops-chrome
-  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
-  outline-color: var(--ops-chrome-gold);
+.npf-ops {
+  caret-color: var(--ops-accent);
+  accent-color: var(--ops-accent);
+}
+/* The macOS focus ring: a soft halo of system blue hugging the control. */
+.npf-ops :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid rgb(64 156 255 / 0.55);
+  outline-offset: 1px;
 }
 /*
- * Every select in the console is drawn rather than left at the UA's. The
- * native control ships a grey system chevron in a grey system well belonging
- * to no design system on earth, and on a board where the dispatch decision
- * *is* a select, it was the loudest tell that these screens were assembled
- * rather than built.
+ * Selects are pop-up buttons: a quiet filled control with the arrow, never
+ * the browser's grey well. The fill is the tertiary system fill, the same
+ * one the secondary buttons and the search field sit on.
  */
 .npf-ops-select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235C6880' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  cursor: pointer;
+  background-color: rgb(255 255 255 / 0.07);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239A9FAB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M19 12l-7 7-7-7'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.6rem center;
-  background-size: 0.95rem;
-  padding-inline-end: 1.9rem;
+  background-size: 0.8125rem;
+  padding-inline-end: 1.85rem;
+  transition:
+    background-color 150ms var(--ease-out),
+    box-shadow 150ms var(--ease-out);
+}
+.npf-ops-select:hover:not(:disabled) {
+  background-color: rgb(255 255 255 / 0.11);
 }
 .npf-ops-select:dir(rtl) {
   background-position: left 0.6rem center;
 }
 .npf-ops-select:disabled {
+  cursor: not-allowed;
   background-image: none;
   padding-inline-end: 0.75rem;
+  opacity: 0.5;
+}
+/*
+ * Where the browser can draw the open list (customizable select), it opens
+ * as a macOS menu: a frosted sheet, compact rows, the row under the pointer
+ * lit in system blue with white text, a tick before the current choice. It
+ * stays a real <select>, so keyboard, type-ahead and screen readers keep
+ * working; elsewhere only the closed control is drawn.
+ */
+@supports (appearance: base-select) {
+  .npf-ops-select,
+  .npf-ops-select::picker(select) {
+    appearance: base-select;
+  }
+  .npf-ops-select {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-image: none;
+    padding-inline-end: 0.625rem;
+  }
+  .npf-ops-select::picker-icon {
+    content: "";
+    width: 0.8125rem;
+    height: 0.8125rem;
+    margin-inline-start: auto;
+    background: var(--ops-dim);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M19 12l-7 7-7-7'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    transition: rotate 200ms var(--ease-out);
+  }
+  .npf-ops-select:open {
+    background-color: rgb(255 255 255 / 0.11);
+  }
+  .npf-ops-select:open::picker-icon {
+    rotate: 180deg;
+    background: var(--ops-text);
+  }
+  .npf-ops-select:disabled::picker-icon {
+    display: none;
+  }
+  .npf-ops-select::picker(select) {
+    margin-block: 6px;
+    min-width: anchor-size(width);
+    max-height: min(22rem, 60dvh);
+    padding: 5px;
+    border: none;
+    border-radius: 12px;
+    background: rgb(36 38 44 / 0.86);
+    backdrop-filter: blur(28px) saturate(170%);
+    -webkit-backdrop-filter: blur(28px) saturate(170%);
+    color: var(--ops-text);
+    box-shadow:
+      inset 0 0 0 0.5px rgb(255 255 255 / 0.1),
+      0 0 0 0.5px rgb(0 0 0 / 0.6),
+      0 22px 48px -10px rgb(0 0 0 / 0.75);
+    opacity: 1;
+    scale: 1;
+    transform-origin: top center;
+    transition:
+      opacity 160ms var(--ease-out),
+      scale 160ms var(--ease-out),
+      display 160ms allow-discrete,
+      overlay 160ms allow-discrete;
+  }
+  .npf-ops-select:not(:open)::picker(select) {
+    opacity: 0;
+    scale: 0.97;
+  }
+  @starting-style {
+    .npf-ops-select:open::picker(select) {
+      opacity: 0;
+      scale: 0.97;
+    }
+  }
+  .npf-ops-select option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 1.875rem;
+    padding: 0.25rem 0.625rem 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.8125rem;
+    white-space: nowrap;
+    cursor: default;
+  }
+  .npf-ops-select option[hidden] {
+    display: none;
+  }
+  .npf-ops-select option:hover,
+  .npf-ops-select option:focus-visible {
+    background: var(--ops-brand);
+    color: #fff;
+    outline: none;
+  }
+  .npf-ops-select option::checkmark {
+    width: 0.875rem;
+    color: currentColor;
+  }
+  .npf-ops-select option:not(:checked)::checkmark {
+    visibility: hidden;
+  }
+  .npf-ops-select option:disabled {
+    color: var(--ops-dim);
+    background: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .npf-ops-select::picker(select),
+  .npf-ops-select::picker-icon {
+    transition: none;
+  }
+}
+/* Status badges are capsules in their own hue, set in sentence case. */
+.npf-ops .npf-pill {
+  border-radius: 9999px;
+  padding: 0.1875rem 0.5625rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  box-shadow: none;
+}
+.npf-ops .npf-pill-dot {
+  display: none;
+}
+/* The theme is `inline`, so rounded-card and rounded-chip bake in the
+   site's radii; inside the console they take the console's own. */
+.npf-ops .rounded-card {
+  border-radius: var(--radius-card);
+}
+.npf-ops .rounded-chip {
+  border-radius: var(--radius-chip);
+}
+@supports (corner-shape: squircle) {
+  .npf-ops-tile,
+  .npf-ops .rounded-card {
+    corner-shape: squircle;
+    border-radius: 22px;
+  }
+}
+/*
+ * The board map. Leaflet ships light-theme chrome; here it is the console's:
+ * the tiles sit on the window colour while they load, the zoom buttons are
+ * frosted Apple controls, and the attribution is a quiet caption.
+ */
+.npf-map.leaflet-container {
+  background: #0e1014;
+  font: inherit;
+}
+/* Esri's dark grey canvas, taken down to the console's near-black with a
+   breath of the Force navy, so the beacons are the brightest things on it. */
+.npf-map .npf-map-base {
+  filter: brightness(0.5) contrast(1.25) sepia(0.25) hue-rotate(180deg)
+    saturate(1.6);
+}
+.npf-map .leaflet-pane.leaflet-labels-pane {
+  opacity: 0.7;
+}
+.npf-map .leaflet-control-zoom {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 0 0.5px rgb(255 255 255 / 0.1),
+    0 8px 24px -8px rgb(0 0 0 / 0.7);
+}
+.npf-map .leaflet-control-zoom a {
+  width: 32px;
+  height: 32px;
+  line-height: 30px;
+  border: none;
+  background: rgb(36 38 44 / 0.86);
+  backdrop-filter: blur(20px);
+  color: var(--ops-text);
+  font-weight: 400;
+}
+.npf-map .leaflet-control-zoom a:hover {
+  background: rgb(52 55 63 / 0.92);
+}
+.npf-map .leaflet-control-zoom a + a {
+  border-top: 0.5px solid rgb(255 255 255 / 0.1);
+}
+.npf-map .leaflet-control-attribution {
+  background: rgb(11 12 16 / 0.6);
+  color: var(--ops-dim);
+  font-size: 10px;
+  border-radius: 6px 0 0 0;
+}
+.npf-map .leaflet-control-attribution a {
+  color: var(--ops-dim);
+}
+/* A call: a grade-coloured beacon with its grade printed in it. */
+.npf-map-call {
+  position: relative;
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--c) 22%, transparent);
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--c) 70%, transparent);
+  cursor: pointer;
+  transition: scale 180ms var(--ease-out);
+}
+.npf-map-call b {
+  display: grid;
+  width: 19px;
+  height: 19px;
+  place-items: center;
+  border-radius: 9999px;
+  background: var(--c);
+  color: #0b0c10;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.npf-map-call:hover,
+.npf-map-call.is-lit {
+  scale: 1.18;
+}
+.npf-map-call.is-lit {
+  box-shadow:
+    0 0 0 1.5px var(--c),
+    0 0 0 6px color-mix(in srgb, var(--c) 22%, transparent);
+}
+/* A pending call keeps a slow ring going out until someone is sent. */
+.npf-map-call.is-pending::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 2px var(--c);
+  animation: npf-map-ping 2.2s var(--ease-out) infinite;
+}
+@keyframes npf-map-ping {
+  from {
+    opacity: 0.8;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 2.1;
+  }
+}
+/* A unit: a small dot in its status colour, ringed so it reads on any tile. */
+.npf-map-unit {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: var(--c);
+  box-shadow:
+    0 0 0 2px #0b0c10,
+    0 0 0 3px color-mix(in srgb, var(--c) 45%, transparent);
+}
+.npf-map-unit {
+  transition: scale 180ms var(--ease-out);
+}
+.npf-map-unit.is-lit {
+  scale: 1.5;
+}
+.npf-map-unit.is-lit {
+  box-shadow:
+    0 0 0 2px #0b0c10,
+    0 0 0 4px var(--c),
+    0 0 0 9px color-mix(in srgb, var(--c) 22%, transparent);
+}
+.npf-map-tip.leaflet-tooltip {
+  display: grid;
+  gap: 1px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  background: rgb(36 38 44 / 0.92);
+  backdrop-filter: blur(20px);
+  color: var(--ops-text);
+  font-size: 12px;
+  line-height: 1.35;
+  white-space: nowrap;
+  box-shadow:
+    inset 0 0 0 0.5px rgb(255 255 255 / 0.1),
+    0 10px 24px -8px rgb(0 0 0 / 0.75);
+}
+.npf-map-tip.leaflet-tooltip b {
+  font-weight: 600;
+}
+.npf-map-tip.leaflet-tooltip span {
+  color: var(--ops-dim);
+}
+.npf-map-tip.leaflet-tooltip-top::before {
+  border-top-color: rgb(36 38 44 / 0.92);
+}
+/*
+ * The sheet that floats over the map on a desk-width screen: one frosted
+ * pane holding the call lists, whose own surfaces fall away inside it so
+ * nothing is a card in a card.
+ */
+@media (min-width: 1024px) {
+  .npf-ops-float {
+    background: rgb(22 23 28 / 0.94);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    border-radius: var(--radius-card);
+    box-shadow: var(--ops-shadow-lift);
+  }
+  .npf-ops-float .npf-ops-tile {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+/* The unit sheet floats only where the map is wide enough to keep both. */
+@media (min-width: 1280px) {
+  .npf-ops-float-xl {
+    background: rgb(22 23 28 / 0.94);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    border-radius: var(--radius-card);
+    box-shadow: var(--ops-shadow-lift);
+  }
+  .npf-ops-float-xl .npf-ops-tile {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .npf-map-call.is-pending::after {
+    animation: none;
+  }
+}
+/* A monogram in Force blue, lit from above like a Contacts avatar. */
+.npf-ops-avatar {
+  background: linear-gradient(180deg, #4b7fe0, #1b3f7a);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18);
+}
+/* The board search draws its own clear button, and its box carries the
+   focus ring, so the field inside it does not draw a second one. */
+.npf-ops-search::-webkit-search-cancel-button {
+  display: none;
+}
+.npf-ops .npf-ops-search:focus-visible {
+  outline: none;
 }
 /* The pending queue's newest call arrives rather than appearing. */
 @keyframes npf-ops-row-in {
@@ -1179,43 +1536,69 @@ html.npf-large-text {
   animation: npf-ops-tick 2s steps(1, end) infinite;
 }
 /*
- * A row that can be opened says so before it is clicked: the marker wipes out
- * of the leading edge on hover and stays there once the row is the selected
- * one, so the same three pixels mean "this one" in both states. Drawn as a
- * background rather than a border so it costs the row no layout.
+ * A row that can be opened lifts on hover and stays lifted once selected.
+ * It used to wipe a 3px blue bar in from the leading edge, the last blue on
+ * a graphite board and a coloured side-stripe besides; the surface step
+ * alone says "this one".
  */
 .npf-ops-pick {
-  background-image: linear-gradient(
-    to right,
-    var(--ops-accent) 0 3px,
-    transparent 3px
-  );
-  background-repeat: no-repeat;
-  background-size: 100% 0;
-  background-position: 0 0;
+  transition: background-color 0.15s var(--ease-out);
+}
+/*
+ * A dispatched call carries across the board: its pending row and its
+ * running row share a view-transition name, and the browser moves the one
+ * into the other. Crisp, not floaty: this happens many times a shift.
+ */
+.npf-ops-call {
+  view-transition-class: ops-call;
+}
+::view-transition-group(*.ops-call) {
+  animation-duration: 340ms;
+  animation-timing-function: var(--ease-in-out);
+}
+/* A readout that changes rolls its new value up into place. */
+@keyframes npf-ops-count-in {
+  from {
+    opacity: 0;
+    transform: translateY(40%);
+    filter: blur(3px);
+  }
+}
+.npf-ops-count {
+  animation: npf-ops-count-in 280ms var(--ease-out);
+}
+/* The response chart draws itself once, left to right, as the board opens. */
+@keyframes npf-ops-bar-in {
+  from {
+    opacity: 0;
+    transform: scaleY(0.1);
+  }
+}
+.npf-ops-bar {
+  transform-origin: bottom;
+  animation: npf-ops-bar-in 560ms var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * 30ms);
+}
+/* The rail highlight glides between destinations once it has landed. */
+.npf-ops-pill[data-ready] {
   transition:
-    background-size 0.18s var(--ease-out),
-    background-color 0.18s var(--ease-out);
-}
-.npf-ops-pick:dir(rtl) {
-  background-image: linear-gradient(
-    to left,
-    var(--ops-accent) 0 3px,
-    transparent 3px
-  );
-  background-position: 100% 0;
-}
-.npf-ops-pick:hover,
-.npf-ops-pick[aria-selected="true"] {
-  background-size: 100% 100%;
+    transform 260ms var(--ease-out),
+    height 260ms var(--ease-out),
+    opacity 150ms ease;
 }
 @media (prefers-reduced-motion: reduce) {
   .npf-ops-row,
   .npf-ops-overdue,
   .npf-ops-tick,
-  .npf-ops-pick {
+  .npf-ops-pick,
+  .npf-ops-count,
+  .npf-ops-bar,
+  .npf-ops-pill {
     animation: none;
     transition: none;
+  }
+  ::view-transition-group(*.ops-call) {
+    animation: none;
   }
 }
 
@@ -1482,4 +1865,25 @@ html.npf-large-text {
 }
 .npf-page-in > * {
   animation: npf-page-in var(--dur-reveal) var(--ease-out);
+}
+
+/* The language menu drops from its button: quick, from the corner it hangs
+   off, and never a slide for anyone who asked for less motion. */
+.npf-lang-menu {
+  transform-origin: top right;
+  transition:
+    opacity 160ms var(--ease-out),
+    scale 160ms var(--ease-out);
+  @starting-style {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .npf-lang-menu {
+    transition: opacity 120ms ease;
+    @starting-style {
+      scale: 1;
+    }
+  }
 }

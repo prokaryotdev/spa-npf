@@ -19,21 +19,10 @@ export const SearchIcon = ({ className }: IconProps) => (
   </svg>
 );
 
-export const ChevronDown = ({ className }: IconProps) => (
+export const ArrowLeft = ({ className }: IconProps) => (
   <svg {...base} className={className}>
-    <path d="m6 9.5 6 5.5 6-5.5" />
-  </svg>
-);
-
-export const ChevronLeft = ({ className }: IconProps) => (
-  <svg {...base} className={className}>
-    <path d="M15 5 8 12l7 7" />
-  </svg>
-);
-
-export const ChevronRight = ({ className }: IconProps) => (
-  <svg {...base} className={className}>
-    <path d="m9 5 7 7-7 7" />
+    <path d="M19.5 12h-14" />
+    <path d="M11 6.5 5.5 12l5.5 5.5" />
   </svg>
 );
 

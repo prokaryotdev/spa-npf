@@ -89,6 +89,10 @@ export async function collectWanted(root = ".") {
     const loaded = await import(`${appUrl}${file}`);
     for (const [name, value] of Object.entries(loaded))
       if (typeof value !== "function") walkValue(value, `${file}:${name}`);
+      // The console's sample calls and units are built by a function so their
+      // clocks read fresh, and every line of them is shown on screen.
+      else if (/^seed/.test(name) && value.length === 0)
+        walkValue(value(), `${file}:${name}()`);
   }
 
   const sources = [];

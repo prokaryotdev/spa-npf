@@ -21,7 +21,7 @@ export default async function InformationPage() {
     <PageShell
       title={information.title}
       intro={t(
-        "The laws the Force works under, what each traffic offence costs, and the speed limit on the roads of the Territory.",
+        "The laws the Force works under, what each traffic offence costs, and the speed limit on Nigerian roads.",
       )}
     >
       <section className="bg-white pb-(--npf-section-y)">

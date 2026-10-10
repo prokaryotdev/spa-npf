@@ -9,7 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t("Traffic Offences and Penalties | Nigeria Police Force"),
     description: t(
-      "Fines, penalty points and vehicle confiscation periods for traffic violations in Abuja.",
+      "Fines, penalty points and vehicle confiscation periods for traffic violations in Nigeria.",
     ),
   };
 }

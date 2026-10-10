@@ -1,4 +1,4 @@
-# Nigeria Police Force, FCT Command — front end
+# Nigeria Police Force — front end
 
 A rebuild of a police services website for the Nigeria Police Force's Federal
 Capital Territory Command, in Next.js, bilingual (English / Hausa), with a

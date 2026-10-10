@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t("Road Speed Limits | Nigeria Police Force"),
     description: t(
-      "Speed limits and enforcement thresholds on the roads of the Federal Capital Territory.",
+      "Speed limits and enforcement thresholds on Nigerian roads.",
     ),
   };
 }

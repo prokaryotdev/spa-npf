@@ -88,13 +88,22 @@ export default function ServiceAction({ service }: { service: Service }) {
           href="/app/portal/requests"
           className="npf-btn npf-btn-primary h-auto min-h-12 w-full py-1.5 ps-6 text-start leading-tight whitespace-normal hover:bg-npf-blue-mid"
         >
-          {t("Open request {ref}", { ref: existing.id })}
+          {/* The reference sits in the note below: inside the label it
+              wrapped the button onto two lines. */}
+          {t("Track request")}
           <span className="npf-btn-disc ms-auto">
             <ArrowRight className="size-4 rtl:-scale-x-100" />
           </span>
         </Link>
+        {/* Two short lines, and the reference kept whole: in one sentence
+            it broke at its hyphens and left a ragged second line. */}
         <p className="npf-small mt-3 text-center text-npf-steel">
-          {t("You already have this open — status: {status}", {
+          {t("Already open:")}{" "}
+          <span className="font-secondary font-bold whitespace-nowrap text-npf-ink">
+            {existing.id}
+          </span>
+          <br />
+          {t("Status: {status}", {
             status: t(existing.status).toLowerCase(),
           })}
         </p>

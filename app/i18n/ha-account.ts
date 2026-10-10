@@ -71,8 +71,6 @@ export const haAccount: Record<string, string> = {
   "Showing {shown} of {total} requests":
     "Ana nuna {shown} daga buƙatu {total}",
   "{ref} · submitted {date}": "{ref} · an gabatar {date}",
-  "{ref} · submitted {date} · {fee}":
-    "{ref} · an gabatar {date} · {fee}",
   "About this service": "Game da wannan aikin",
   "Ask about it": "Yi tambaya game da shi",
   "Your reply": "Amsarka",
@@ -118,8 +116,6 @@ export const haAccount: Record<string, string> = {
     "Wuce iyakar gudu da km 20 a cikin awa",
   "Parking in a space reserved for persons with disabilities":
     "Ajiye mota a wurin da aka keɓe wa masu naƙasa",
-  "Nnamdi Azikiwe Expressway, before Junction 3":
-    "Babbar Hanyar Nnamdi Azikiwe, kafin Mahaɗa ta 3",
 
   // --- documents -----------------------------------------------------------
   "Documents | My Nigeria Police Force":
@@ -150,8 +146,8 @@ export const haAccount: Record<string, string> = {
     "An kai Takardar Shaidar Tsabtar Rikodi zuwa bita",
   "Request NPF-2026-4417 is with the Criminal Records department. No action is needed from you.":
     "Buƙatar NPF-2026-4417 tana hannun sashen Bayanan Laifuka. Ba a buƙatar wani mataki daga gare ka.",
-  "Fine TF-88214 was issued on Nnamdi Azikiwe Expressway. Paying within 30 days gets a 25% discount.":
-    "An bayar da tarar TF-88214 a Babbar Hanyar Nnamdi Azikiwe. Biya cikin kwanaki 30 yana samun ragi 25%.",
+  "Fine TF-88214 was issued on Lagos–Ibadan Expressway. Paying within 30 days gets a 25% discount.":
+    "An bayar da tarar TF-88214 a Babbar Hanyar Lagos–Ibadan. Biya cikin kwanaki 30 yana samun ragi 25%.",
 
   // --- profile -------------------------------------------------------------
   Profile: "Bayanan kai",

@@ -66,6 +66,13 @@ assert.deepEqual(pick("escrot"), [board[2]]);
 assert.deepEqual(pick("npf-001"), [board[0]]);
 assert.deepEqual(pick(""), board);
 assert.equal(pick("zzzz").length, 0);
+// A minus drops a word; a hyphen inside one is still part of it.
+assert.deepEqual(pick("-patrol"), [board[0], board[2]]);
+assert.deepEqual(pick("certificate -npf"), []);
+// Quotes hold words together, in order, from the start of a word.
+assert.deepEqual(pick('"patrol unit"'), [board[1]]);
+assert.deepEqual(pick('"unit patrol"'), []);
+assert.deepEqual(pick('"character cert'), [board[0]]);
 
 // --- catalogue -----------------------------------------------------------
 const slugs = new Set(services.map((s) => s.slug));
@@ -123,4 +130,22 @@ console.log("search, catalogue and seeds ok");
   const slugs = services.map((s) => s.slug);
   assert.deepEqual([...serviceImportance].sort(), [...slugs].sort());
   assert.equal(new Set(serviceImportance).size, serviceImportance.length);
+}
+
+// --- board map -----------------------------------------------------------
+// Every seeded call and unit lands on the map, in its own district, and a
+// place the table does not know gets no dot rather than a wrong one.
+{
+  const { placeOf } = await import("../app/components/ops-geo.ts");
+  const { seedIncidents, seedUnits } = await import("../app/content-ops.ts");
+  for (const x of [...seedIncidents(), ...seedUnits()]) {
+    const at = placeOf(x.area, x.id ?? x.callsign);
+    assert.ok(at, `no map position for "${x.area}"`);
+  }
+  const district = placeOf("Sabon Gari, Kano", "a");
+  const city = placeOf("Kano", "a");
+  assert.notDeepEqual(district, city, "Sabon Gari must win over Kano");
+  assert.deepEqual(placeOf("Ikeja, Lagos", "x"), placeOf("Ikeja, Lagos", "x"));
+  assert.equal(placeOf("Somewhere in Atlantis", "x"), null);
+  console.log("board map positions ok");
 }

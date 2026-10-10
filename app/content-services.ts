@@ -31,7 +31,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/shield-01.svg",
     description:
-      "By integrating the latest technologies to counter evolving crime patterns, the Rescue Me initiative ensures a proactive approach to public safety. It encourages residents to report suspicious observations promptly, reinforcing a culture of vigilance and cooperation. This initiative underpins the vision of the Territory and the Federal Ministry of Interior’s pursuit of leadership in security.",
+      "By integrating the latest technologies to counter evolving crime patterns, the Rescue Me initiative ensures a proactive approach to public safety. It encourages residents to report suspicious observations promptly, reinforcing a culture of vigilance and cooperation. This initiative underpins the vision of the Force and the Federal Ministry of Interior’s pursuit of leadership in security.",
     audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
@@ -275,7 +275,7 @@ export const services: Service[] = [
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
     turnaround: "4 Working Days",
     terms: [
-      "The cheque must be received in the Federal Capital Territory",
+      "The cheque must be received in Nigeria",
       "Visit the nearest competent police station to where the cheque was received",
       "The report must be filed by the director of the company named on the business license or their legal representative.",
       "Ensure that the bounced cheque is not among the cheques decriminalised by law and that it does not have existing and payable funds available for disbursement",
@@ -347,7 +347,7 @@ export const services: Service[] = [
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
     turnaround: "4 Working Days",
     terms: [
-      "The cheque must be received in the Federal Capital Territory",
+      "The cheque must be received in Nigeria",
       "Visit the nearest competent police station to where the cheque was received",
       "The report must be filed by the director of the company named on the business license or their legal representative.",
       "Ensure that the bounced cheque is not among the cheques decriminalised by law and that it does not have existing and payable funds available for disbursement",
@@ -361,7 +361,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/change-vehicle-color-permit.svg",
     description:
-      "This service enables customers wishing to change the color of their vehicles registered in the Federal Capital Territory to obtain a permit to do so.",
+      "This service enables customers wishing to change the color of their vehicles registered in Nigeria to obtain a permit to do so.",
     audiences: ["Drivers", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
@@ -413,7 +413,7 @@ export const services: Service[] = [
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
     turnaround: "1 Working Day",
     terms: [
-      "Vehicle must be registered in Abuja",
+      "Vehicle must be registered in Nigeria",
       "Proof of possession/customs paper for non-registered vehicles",
       "Vehicle must be brought to General Department of Criminal Investigations (CID) - Cars Tracking Section if needed",
       "This permit is valid for one month.",
@@ -459,7 +459,7 @@ export const services: Service[] = [
     turnaround: "1 Month",
     terms: [
       "The service is only available to children under 18 years old only.",
-      "Incident must occur in the geographical boundaries of Abuja.",
+      "Incident must occur within Nigeria.",
       "There must be no existing court rulings on the same case.",
       "There must be no dispute about the case with the relevant authorities.",
       "The complaint must be irrelevant to the custody, financial support or visitations.",
@@ -687,7 +687,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/cardiac-support.svg",
     description:
-      "This service aims to enable heart patients and those with critical medical conditions in the Federal Capital Territory to register for priority ambulance dispatch and receive prompt and appropriate medical attention in case of an emergency.",
+      "This service aims to enable heart patients and those with critical medical conditions in Nigeria to register for priority ambulance dispatch and receive prompt and appropriate medical attention in case of an emergency.",
     audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
@@ -775,7 +775,7 @@ export const services: Service[] = [
       "The applicant is fully responsible for any unlawful use or misuse of the provided service.",
       "The applicant acknowledges that the weight entered in the application is an estimated weight, and the actual weight will be accurately determined by the Nigeria Police Force upon approving the request and deliver the shipment to the police.",
       "The applicant declares that all data and information entered in the application are true and complete, and bears full legal responsibility in the event of any incorrect or misleading information.",
-      "The applicant declares to complying with all laws, regulations, and instructions related to the handling and transportation of explosives within the Federal Capital Territory.",
+      "The applicant declares to complying with all laws, regulations, and instructions related to the handling and transportation of explosives within Nigeria.",
     ],
     related: [],
   },
@@ -1204,7 +1204,7 @@ export const services: Service[] = [
         items: [],
       },
       {
-        label: "FCT Department of Tourism's permit",
+        label: "State tourism authority's permit",
         items: [],
       },
       {
@@ -1220,11 +1220,11 @@ export const services: Service[] = [
         items: [],
       },
       {
-        label: "FCT Administration's permit",
+        label: "State government's permit",
         items: [],
       },
       {
-        label: "FCT Sports Council's permit",
+        label: "State sports council's permit",
         items: [],
       },
       {
@@ -1276,7 +1276,7 @@ export const services: Service[] = [
         items: [],
       },
       {
-        label: "Incident time and jurisdiction area (Abuja)",
+        label: "Incident time and state where it happened",
         items: [],
       },
       {
@@ -1305,7 +1305,7 @@ export const services: Service[] = [
     contacts: [],
     turnaround: "Instant",
     terms: [
-      "The incident must have occurred within the geographical boundaries of the Federal Capital Territory",
+      "The incident must have occurred within Nigeria",
     ],
     related: [],
   },
@@ -1462,7 +1462,7 @@ export const services: Service[] = [
       {
         label: "Other",
         value:
-          "General Traffic Department (Garki - Asokoro) from Monday to Thursday 07:30 - 15:30 and on Friday from 07:30 - 12:00…",
+          "Traffic Section at any State Command Headquarters, Monday to Thursday 07:30 - 15:30 and Friday 07:30 - 12:00…",
       },
     ],
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
@@ -1509,7 +1509,7 @@ export const services: Service[] = [
     ],
     contacts: ["Complaint Response Unit", "Email", "Live Chat"],
     turnaround: "Instant",
-    terms: ["Shops must be located within the geographical scope of Abuja."],
+    terms: ["Shops must be located within Nigeria."],
     related: [],
   },
   {
@@ -1519,7 +1519,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/hq-entry-permit.svg",
     description:
-      "This service enables users wishing to visit the FCT Police Command Headquarters building to obtain a time-limited entry permit.",
+      "This service enables users wishing to visit the Force Headquarters building to obtain a time-limited entry permit.",
     audiences: ["Residents", "Foreigners"],
     mostUsed: true,
     dashboardOrder: null,
@@ -2200,7 +2200,7 @@ export const services: Service[] = [
       "The misuse of this certificate will lead to legal action taken against you",
       "The applicant must not be wanted by any authority or have a criminal record, which would prevent  them from obtaining the certificate",
       "If the certificate is requested from outside Nigeria, the applicant must have previously entered Nigeria",
-      "Applicants who do not have an NIN must visit a service center during official working hours in person to have their fingerprints taken (Karu Police Station, Airport Police Station, Lugbe Police Station, Dei-Dei Police Station)",
+      "Applicants who do not have an NIN must visit any Divisional Police Headquarters in person during official working hours to have their fingerprints taken",
       "If the applicant is outside Nigeria and does not have a ten-print fingerprint they must send a ten-print fingerprint copy certified by the Nigerian Embassy",
       "Fees paid and non-refundable",
       "The certificate is valid for 3 months from the date of issuance",
@@ -2481,7 +2481,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/found-item-certificate.svg",
     description:
-      "This service enables individuals and organizations within the Federal Capital Territory to hand over found items to police stations or designated partners participating in the Lost and Found Program. The objective is to facilitate the process of locating and returning lost items to their rightful owners",
+      "This service enables individuals and organizations within Nigeria to hand over found items to police stations or designated partners participating in the Lost and Found Program. The objective is to facilitate the process of locating and returning lost items to their rightful owners",
     audiences: ["Residents", "Foreigners", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
@@ -2515,14 +2515,14 @@ export const services: Service[] = [
       {
         label: "Other",
         value:
-          "Dei-Dei Police Station 7:30 - 22:00 Wuse Police Station 7:30 - 22:00 Airport Police Station 7:30 - 22:00 Karu…",
+          "Any Divisional Police Headquarters, 7:30 - 22:00",
       },
     ],
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
     turnaround: "2 Working Days",
     terms: [
       "In cases where official documents are found by government entities or businesses, they must be handed over to the nearest police station within 48 hours.",
-      "The terms and conditions stipulated in the Lost and Found Regulations issued by the FCT Administration in 2015 apply.",
+      "The Force's procedures for lost and found property apply.",
     ],
     related: [],
   },
@@ -2583,7 +2583,7 @@ export const services: Service[] = [
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
     turnaround: "3 Working Days",
     terms: [
-      "The lost items must be within the geographical boundaries of the Federal Capital Territory",
+      "The lost items must be within Nigeria",
       "The certificate is valid for one month from issuance date",
     ],
     related: [],
@@ -2615,7 +2615,7 @@ export const services: Service[] = [
     ],
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
     turnaround: "1 Working Day",
-    terms: ["Incident must occur within the Federal Capital Territory."],
+    terms: ["Incident must occur within Nigeria."],
     related: [],
   },
   {
@@ -2658,7 +2658,7 @@ export const services: Service[] = [
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
     turnaround: "1 Working Day",
     terms: [
-      "The incident must occur within the geographical boundaries of the Federal Capital Territory.",
+      "The incident must occur within Nigeria.",
     ],
     related: [],
   },
@@ -2854,7 +2854,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/military-tech.svg",
     description:
-      "This service enables individuals, entities, and organizations to request the participation of Nigeria Police Force specialized units, such as the Mounted Police, Music Band, K9 Unit, and Highway Patrols in official events, festivals, and public parades held across the Federal Capital Territory.",
+      "This service enables individuals, entities, and organizations to request the participation of Nigeria Police Force specialized units, such as the Mounted Police, Music Band, K9 Unit, and Highway Patrols in official events, festivals, and public parades held across Nigeria.",
     audiences: ["Organisations", "Students"],
     mostUsed: false,
     dashboardOrder: null,
@@ -2956,7 +2956,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/road-closure-permit.svg",
     description:
-      "This service enables users who have obtained a street closure permit from the FCTA Transport Secretariat to notify Nigeria Police Force of closure periods, enabling the Command and Control Center to know about closed roads while directing patrols to accident sites and reports.",
+      "This service enables users who have obtained a street closure permit from the state transport authority to notify Nigeria Police Force of closure periods, enabling the Command and Control Center to know about closed roads while directing patrols to accident sites and reports.",
     audiences: ["Residents", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
@@ -2966,7 +2966,7 @@ export const services: Service[] = [
     payment: [],
     documents: [
       {
-        label: "Attach the road closure permit issued by the FCTA Transport Secretariat",
+        label: "Attach the road closure permit issued by the state transport authority",
         items: [],
       },
     ],
@@ -3126,7 +3126,7 @@ export const services: Service[] = [
         items: [],
       },
       {
-        label: "Area Council letter",
+        label: "Local Government letter",
         items: [],
       },
     ],
@@ -3154,7 +3154,7 @@ export const services: Service[] = [
       "Barriers must be requested at least 48 hours in advance to confirm the reservation.",
       "Provide the necessary labor to receive the barriers and return them after use.",
       "Submit a refundable deposit or guarantee cheque, to be returned upon proper return of the barriers.",
-      "In case of pitching a tent or closing a road, an official approval from the Area Council or the FCTA Transport Secretariat is mandatory.",
+      "In case of pitching a tent or closing a road, an official approval from the Local Government or the state transport authority is mandatory.",
       "Sign a commitment letter to cover the cost of any lost or damaged barrier.",
       "Applications that fail to follow terms and conditions will not be accepted.",
     ],
@@ -3192,7 +3192,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/shared/security.svg",
     description:
-      "This service aims to enhance home security in Abuja through a smart monitoring system that operates 24/7, connected with the strategic partner “9mobile” to provide instant alerts supported by a unified cellular network.",
+      "This service aims to enhance home security in Nigeria through a smart monitoring system that operates 24/7, connected with the strategic partner “9mobile” to provide instant alerts supported by a unified cellular network.",
     audiences: ["Residents"],
     mostUsed: false,
     dashboardOrder: null,
@@ -3452,7 +3452,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/tourist-complain.svg",
     description:
-      "This service provides dedicated support to tourists visiting Federal Capital Territory by receiving and addressing tourism-related inquiries, reports, and complaints. As it ensures guidance, coordination, and assistance through official Nigeria Police Force channels to help maintain a safe and positive tourism experience.",
+      "This service provides dedicated support to tourists visiting Nigeria by receiving and addressing tourism-related inquiries, reports, and complaints. As it ensures guidance, coordination, and assistance through official Nigeria Police Force channels to help maintain a safe and positive tourism experience.",
     audiences: ["Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
@@ -3483,7 +3483,7 @@ export const services: Service[] = [
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
     turnaround: "5 Working Days",
     terms: [
-      "The incident reported must have occurred in the Federal Capital Territory",
+      "The incident reported must have occurred in Nigeria",
       "The service is limited to tourist-related matters only",
       "Requests must be submitted by tourists or visitors",
       "Matters that irrelevant to Nigeria Police Force Jurisdiction might be forwarded to the relevant authorities",
@@ -3522,7 +3522,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/traffic-status-certificate.svg",
     description:
-      "This service enables users to obtain a clearance certificate confirming that the vehicle owner has settled all traffic violations and that there are no recorded accidents, traffic points, or active restrictions in Abuja against the vehicle or the driver’s license.",
+      "This service enables users to obtain a clearance certificate confirming that the vehicle owner has settled all traffic violations and that there are no recorded accidents, traffic points, or active restrictions in Nigeria against the vehicle or the driver’s license.",
     audiences: ["Drivers", "Organisations"],
     mostUsed: false,
     dashboardOrder: null,
@@ -3561,7 +3561,7 @@ export const services: Service[] = [
       {
         label: "Other",
         value:
-          "General Traffic Department (Garki - Asokoro) from Monday to Thursday 07:30 - 15:30 and on Friday from 07:30 - 12:00",
+          "Traffic Section at any State Command Headquarters, Monday to Thursday 07:30 - 15:30 and Friday 07:30 - 12:00",
       },
     ],
     contacts: ["Complaint Response Unit", "Email", "Live Chat"],
@@ -3617,7 +3617,7 @@ export const services: Service[] = [
     contacts: [],
     turnaround: "Instant",
     terms: [
-      "Driving license must be issued from Abuja",
+      "Driving license must be issued in Nigeria",
       "The certificate is valid for three months from the date of issuance",
     ],
     related: [],
@@ -3629,7 +3629,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/traffic-services.svg",
     description:
-      "This service aims to enable drivers holding driving licenses issued from Abuja, and who have accumulated traffic points on their licenses to enroll in specialized traffic safety training courses to benefit from a reduction in the points recorded against them.",
+      "This service aims to enable drivers holding driving licenses issued in Nigeria, and who have accumulated traffic points on their licenses to enroll in specialized traffic safety training courses to benefit from a reduction in the points recorded against them.",
     audiences: ["Drivers"],
     mostUsed: false,
     dashboardOrder: null,
@@ -3698,7 +3698,7 @@ export const services: Service[] = [
       {
         label: "Police Stations",
         value:
-          "Traffic Institute Department in General Traffic Department - Wuse : 7:30am - 3:30pm",
+          "Traffic Section at any State Command Headquarters: 7:30am - 3:30pm",
       },
     ],
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
@@ -3775,7 +3775,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/twimc-inmate-certificate.svg",
     description:
-      "This service aims to enable the inmate, their sponsor, or a family member (upon the inmate’s approval) to obtain an official “To Whom It May Concern” certificate confirming the completion or ongoing execution of the judicial sentence in Abuja’s correctional and penal institutions. The certificate is valid for a period of time, facilitating the completion of official, financial, and social transactions in accordance with applicable regulations.",
+      "This service aims to enable the inmate, their sponsor, or a family member (upon the inmate’s approval) to obtain an official “To Whom It May Concern” certificate confirming the completion or ongoing execution of the judicial sentence in Nigeria’s correctional and penal institutions. The certificate is valid for a period of time, facilitating the completion of official, financial, and social transactions in accordance with applicable regulations.",
     audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: null,
@@ -3823,7 +3823,7 @@ export const services: Service[] = [
     contacts: ["Complaint Response Unit", "Email", "Live Chat"],
     turnaround: "1 Working Day",
     terms: [
-      "The certificate is issued to the inmate who has been sentenced to a court order and has served the sentence, or continues to do so in the penal and correctional institutions of Abuja.",
+      "The certificate is issued to the inmate who has been sentenced to a court order and has served the sentence, or continues to do so in the penal and correctional institutions of Nigeria.",
       "The certificate is given to the person who has the power of attorney, the guarantor or as per the inmate's request and consent.",
       "Remark: In case the certificate could not be issued due to failing to meet the requirements, the fees paid may not be refunded",
       "The certificate is valid for 1 month from the date of issuance",
@@ -3876,7 +3876,7 @@ export const services: Service[] = [
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
     turnaround: "3 Working Days",
     terms: [
-      "The accident must have occurred within the geographical limits of the Federal Capital Territory.",
+      "The accident must have occurred within Nigeria.",
       "The report is valid for 3 months from the date of issuance",
     ],
     related: [],
@@ -3888,7 +3888,7 @@ export const services: Service[] = [
     category: null,
     icon: "/icons/services/detainee-visit-request.svg",
     description:
-      "This service provides the necessary permit for virtual meetings with detainees or inmates held within the Federal Capital Territory, in accordance with applicable procedures and regulations.",
+      "This service provides the necessary permit for virtual meetings with detainees or inmates held within Nigeria, in accordance with applicable procedures and regulations.",
     audiences: ["Residents", "Foreigners"],
     mostUsed: false,
     dashboardOrder: 3,
@@ -3991,7 +3991,7 @@ export const services: Service[] = [
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
     turnaround: "30 Working Days",
     terms: [
-      "Incident must occur in the geographical boundaries of Abuja",
+      "Incident must occur within Nigeria",
       "There must be no existing court rulings on the same case",
     ],
     related: [],
@@ -4033,11 +4033,11 @@ export const services: Service[] = [
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
     turnaround: "2 Working Days",
     terms: [
-      "The worker's residency permit is issued by the Federal Capital Territory.",
+      "The worker's residency permit is issued in Nigeria.",
       "There are no criminal or absconding reports filed against the Labour by the sponsor.",
       "The Labour has not previously filed a complaint with the Federal Ministry of Labour and Employment.",
       "There is no pending labor dispute before the Labour Court.",
-      "The Labour has a valid employment contract or official permit issued by the Federal Ministry of Labour and Employment or by authorized entities such as the free zones in Abuja.",
+      "The Labour has a valid employment contract or official permit issued by the Federal Ministry of Labour and Employment or by authorized entities such as the free zones in Nigeria.",
       "The labor worker must have no prior engagement in an unlawful employment with the current employer (working with a visitor/tourist visa)",
       "The labor worker must be engaged in an activity that is deemed legitimate in the country and does not constitute an offense or a violation of the law.",
     ],

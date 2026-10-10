@@ -8,8 +8,6 @@ import {
   OpsHead,
   OpsPanel,
   OpsSearch,
-  Readout,
-  ReadoutStrip,
 } from "./OpsPieces";
 import {
   advanceRequest,
@@ -23,11 +21,11 @@ import { useFormat, useT } from "../i18n/client";
 const QUEUE: RequestStatus[] = ["Submitted", "In Review", "Action Needed"];
 
 const TONE: Record<RequestStatus, string> = {
-  Submitted: "bg-ops-raised text-ops-dim",
-  "In Review": "bg-npf-review-wash text-npf-review",
-  "Action Needed": "bg-npf-gold-wash text-npf-warn",
-  Completed: "bg-npf-ok-soft text-npf-ok",
-  Rejected: "bg-npf-error-wash text-npf-error",
+  Submitted: "bg-white/[0.08] text-ops-dim",
+  "In Review": "bg-ops-route-wash text-ops-route",
+  "Action Needed": "bg-ops-p2-wash text-ops-p2",
+  Completed: "bg-ops-ok-wash text-ops-ok",
+  Rejected: "bg-ops-p1-wash text-ops-p1",
 };
 
 /**
@@ -49,7 +47,10 @@ export default function OpsRequests() {
     return filterBy(
       requests.filter((r) => !openOnly || QUEUE.includes(r.status)),
       query,
-      (r) => [r.id, r.service, t(r.service)].join(" "),
+      (r) =>
+        [r.id, r.service, t(r.service), r.status, t(r.status), r.channel].join(
+          " ",
+        ),
     );
   }, [requests, query, openOnly, t]);
 
@@ -62,41 +63,11 @@ export default function OpsRequests() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-8">
       <OpsHead
         title={t("Service requests")}
-        lead={t(
-          "Applications waiting on a decision. Anything you do here appears on the applicant’s own screen within the second.",
-        )}
+        lead={t("What you decide here shows on the applicant’s screen at once.")}
       />
-
-      <ReadoutStrip>
-        <Readout
-          label={t("In the queue")}
-          value={requests.filter((r) => QUEUE.includes(r.status)).length}
-          note={t("awaiting a decision")}
-        />
-        <Readout
-          label={t("With the applicant")}
-          value={requests.filter((r) => r.status === "Action Needed").length}
-          tone={
-            requests.some((r) => r.status === "Action Needed")
-              ? "var(--ops-p2)"
-              : undefined
-          }
-          note={t("we asked for more")}
-        />
-        <Readout
-          label={t("Completed")}
-          value={requests.filter((r) => r.status === "Completed").length}
-          note={t("issued")}
-        />
-        <Readout
-          label={t("Rejected")}
-          value={requests.filter((r) => r.status === "Rejected").length}
-          note={t("conditions not met")}
-        />
-      </ReadoutStrip>
 
       <div className="flex flex-wrap items-center gap-2">
         <OpsSearch
@@ -105,6 +76,7 @@ export default function OpsRequests() {
           placeholder={t("Reference or service")}
           value={query}
           onChange={setQuery}
+          found={visible.length}
         />
         <OpsButton
           tone={openOnly ? "brand" : "quiet"}
@@ -228,7 +200,7 @@ export default function OpsRequests() {
                     onChange={(e) => setReason(e.target.value)}
                     rows={2}
                     autoFocus
-                    className="mt-2 w-full rounded-chip border border-ops-line bg-ops-raised px-3 py-2 text-sm outline-none focus:border-ops-accent"
+                    className="mt-2 w-full px-3 py-2 text-sm rounded-chip bg-white/[0.07] outline-none placeholder:text-ops-dim transition-[background-color,box-shadow] hover:bg-white/[0.09] focus:bg-white/[0.09] focus:shadow-[0_0_0_3px_rgb(64_156_255/0.55)]"
                     placeholder={t(
                       "Upload a clearer copy of the passport photo page.",
                     )}

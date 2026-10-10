@@ -34,7 +34,7 @@ const line = {
   lengthAdjust: "spacingAndGlyphs" as const,
 };
 
-/** Nigeria Police Force, FCT Command — the issued crest plus the lettering. */
+/** Nigeria Police Force — the issued crest plus the lettering. */
 export function PoliceWordmark({ className }: Props) {
   return (
     <span className={`inline-flex items-center ${className ?? ""}`}>
@@ -72,7 +72,7 @@ export function PoliceWordmark({ className }: Props) {
           fontWeight="700"
           textLength="102"
         >
-          FCT COMMAND
+          FEDERAL REPUBLIC OF NIGERIA
         </text>
       </svg>
     </span>

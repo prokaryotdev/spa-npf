@@ -31,18 +31,18 @@ export const haHome: Record<string, string> = {
   "For emergencies only": "Don gaggawa kaɗai",
 
   // --- hero ----------------------------------------------------------------
-  "A week of service across the Federal Capital Territory":
-    "Makon hidima a faɗin Babban Birnin Tarayya",
+  "A week of service in every state of the federation":
+    "Makon hidima a kowace jiha ta ƙasar nan",
   "Serving the nation since 1930": "Muna hidimar al'umma tun 1930",
-  "Police Week in the Federal Capital Territory":
-    "Makon 'Yan Sanda a Babban Birnin Tarayya",
+  "Police Week across Nigeria":
+    "Makon 'Yan Sanda a faɗin Najeriya",
   "96 Years of the Nigeria Police Force":
     "Shekaru 96 na Rundunar 'Yan Sandan Najeriya",
   "Safe and Secure, Together": "Lafiya da Tsaro, Tare",
-  "Together for a safer Abuja tomorrow": "Tare domin Abuja mai aminci gobe",
+  "Together for a safer Nigeria tomorrow": "Tare domin Najeriya mai aminci gobe",
   "Ready on Every Road": "A Shirye a Kowace Hanya",
-  "The FCT Command adds new patrol vehicles to its fleet":
-    "Rundunar FCT ta ƙara sabbin motocin sintiri a cikin jerin motocinta",
+  "New patrol vehicles join the Force's fleet":
+    "Sabbin motocin sintiri sun shiga jerin motocin Rundunar",
   "Next slide": "Hoto na gaba",
   "Previous slide": "Hoto na baya",
   "Play slideshow": "Fara nunin hotuna",
@@ -86,8 +86,8 @@ export const haHome: Record<string, string> = {
   "On the Water": "A Kan Ruwa",
   "Wherever you are, your safety is assured.":
     "Duk inda kake, an tabbatar da amincinka.",
-  "The Marine Police patrol Jabi Lake, the Lower Usuma Dam and the rivers around the Territory, so work and leisure on the water stay safe.":
-    "'Yan Sandan Ruwa suna sintiri a Tafkin Jabi, Madatsar Ruwa ta Lower Usuma da koguna kewaye da Babban Birnin Tarayya, don aiki da shaƙatawa a kan ruwa su kasance cikin aminci.",
+  "The Marine Police patrol the Niger, the Benue, the creeks of the Niger Delta and the Lagos lagoons, so work and travel on the water stay safe.":
+    "'Yan Sandan Ruwa suna sintiri a Kogin Neja, Kogin Binuwai, ƙoramun Yankin Neja Delta da tafkunan Legas, don aiki da tafiya a kan ruwa su kasance cikin aminci.",
   "Sail Safely": "Yi Tafiya Lafiya",
   "On the Ground": "A Kan Ƙasa",
   "Wherever you go, help is close by.": "Duk inda ka je, taimako yana kusa.",
@@ -97,25 +97,25 @@ export const haHome: Record<string, string> = {
   "On The Go": "A Kan Tafiya",
   "Tourist Police": "'Yan Sandan Yawon Buɗe Ido",
   "From the Sky": "Daga Sama",
-  "A watchful eye over the whole Territory.":
-    "Ana sa ido a kan dukan Babban Birnin Tarayya.",
-  "The Police Air Wing and our drone units watch over the Territory from above, holding the highest standards of security.":
-    "Rundunar Jiragen Sama ta 'Yan Sanda da rundunonin jirage marasa matuƙi suna sa ido kan Babban Birnin Tarayya daga sama, suna riƙe da matsayin tsaro mafi girma.",
+  "A watchful eye over the whole country.":
+    "Ana sa ido a kan ƙasar baki ɗaya.",
+  "The Police Air Wing and our drone units watch over the country from above, holding the highest standards of security.":
+    "Rundunar Jiragen Sama ta 'Yan Sanda da rundunonin jirage marasa matuƙi suna sa ido kan ƙasar daga sama, suna riƙe da matsayin tsaro mafi girma.",
   "Air Wing": "Rundunar Jiragen Sama",
 
   // --- station types -------------------------------------------------------
-  "Command Headquarters": "Hedkwatar Rundunar",
-  "Seat of the FCT Police Command at Garki, where the Commissioner of Police coordinates policing across the Territory.":
-    "Mazaunin Rundunar 'Yan Sandan Babban Birnin Tarayya a Garki, inda Kwamishinan 'Yan Sanda ke tsara aikin 'yan sanda a faɗin Babban Birnin Tarayya.",
-  "Area Commands": "Rundunonin Yanki",
-  "Nine Area Commands, each supervising the divisions within its reach.":
-    "Rundunonin Yanki tara, kowanne yana kula da sassan da ke ƙarƙashinsa.",
+  "Force Headquarters": "Hedkwatar Rundunar 'Yan Sanda ta Ƙasa",
+  "Louis Edet House in Abuja, where the Inspector-General of Police directs policing across the federation.":
+    "Gidan Louis Edet a Abuja, inda Sufeto-Janar na 'Yan Sanda ke jagorantar aikin 'yan sanda a faɗin ƙasar.",
+  "State Commands": "Rundunonin Jihohi",
+  "A Command in each of the 36 states and the FCT, each led by a Commissioner of Police.":
+    "Runduna a kowace jiha cikin jihohi 36 da FCT, kowacce ƙarƙashin jagorancin Kwamishinan 'Yan Sanda.",
   "Divisional Headquarters": "Hedkwatar Sashe",
   "Where most people meet the Force: the counter that takes a report, the investigators and the patrol teams.":
     "Inda mafi yawan mutane ke haɗuwa da Rundunar: teburin da ke karɓar rahoto, masu binciken laifuka, da tawagogin sintiri.",
   "Police Posts": "Ofisoshin 'Yan Sanda",
-  "Smaller outposts in the satellite towns and rural wards of the six Area Councils. Each is held by a patrol team.":
-    "Ƙananan ofisoshi da aka kafa a garuruwan kewaye da ƙauyukan Ƙananan Hukumomi shida. Tawagar sintiri ce ke riƙe kowanne.",
+  "Smaller outposts in the towns and rural wards of every state. Each is held by a patrol team.":
+    "Ƙananan ofisoshi a garuruwa da ƙauyukan kowace jiha. Tawagar sintiri ce ke riƙe kowanne.",
   "Marine Police Base": "Sansanin 'Yan Sandan Ruwa",
   "Gives waterside communities a police response on the water, covering the dams, lakes and river crossings a patrol car cannot reach.":
     "Yana ba al'ummomin da ke gefen hanyoyin ruwa damar samun amsa daga 'yan sanda a kan ruwa, yana rufe madatsun ruwa, tafkuna da mashigar koguna waɗanda motar sintiri ba za ta iya kaiwa ba.",
@@ -127,8 +127,8 @@ export const haHome: Record<string, string> = {
     "Ka zauna da PCRC a sashenka, ka gabatar da abin da ke damun titinka, ka kuma taimaka wajen tsara yadda ake gudanar da aikin 'yan sanda a unguwarka.",
   "Committee Results": "Sakamakon Kwamitin",
   "Safer Neighbourhood Watch": "Tsaron Unguwa Mai Aminci",
-  "Volunteer with the Nigeria Police Force to create real change. Support programmes that build trust, shared responsibility and a safer Territory for all. Make a difference, together!":
-    "Ka yi aikin sa kai tare da Rundunar 'Yan Sandan Najeriya domin kawo sauyi na gaske. Ka goyi bayan shirye-shiryen da ke gina amana, alhakin haɗin gwiwa da Babban Birnin Tarayya mai aminci ga kowa. Ka kawo sauyi, tare!",
+  "Volunteer with the Nigeria Police Force to create real change. Support programmes that build trust, shared responsibility and a safer Nigeria for all. Make a difference, together!":
+    "Ka yi aikin sa kai tare da Rundunar 'Yan Sandan Najeriya domin kawo sauyi na gaske. Ka goyi bayan shirye-shiryen da ke gina amana, alhakin haɗin gwiwa da Najeriya mai aminci ga kowa. Ka kawo sauyi, tare!",
   "Explore Volunteer Opportunities": "Duba Damarmakin Aikin Sa Kai",
   "Police Children Schools": "Makarantun Yaran 'Yan Sanda",
   "A long-standing undertaking of the Force, the Nigeria Police Children Schools make sure every child of our personnel has access to good education. The schools blend academic achievement with personal growth and skills development in a supportive environment.":
@@ -156,19 +156,17 @@ export const haHome: Record<string, string> = {
   "Apply for certificates and permits": "Nemi takardun shaida da izini",
   "Follow every request to the end": "Bi diddigin kowace buƙata har ƙarshe",
   // --- section heads -------------------------------------------------------
-  "Nigeria Police Force, FCT Command":
-    "Rundunar 'Yan Sandan Najeriya, Rundunar FCT",
   "Get help online, without the queue":
     "Samu taimako ta intanet, ba tare da bin layi ba",
-  "Report cybercrime and recover lost property from your phone or computer.":
-    "Kai rahoton laifukan intanet kuma nemo kayan da suka ɓace daga wayarka ko kwamfutarka.",
+  "Apply for a clearance certificate, report cybercrime and record lost property from your phone or computer.":
+    "Nemi takardar shaidar tsabtar rikodi, kai rahoton laifukan intanet kuma rubuta kayan da suka ɓace daga wayarka ko kwamfutarka.",
   "A station close to you": "Ofishin 'yan sanda kusa da kai",
-  "From Command Headquarters in Garki to posts in the rural wards, every station takes reports and is staffed around the clock.":
-    "Daga Hedikwatar Runduna a Garki zuwa ofisoshi a unguwannin karkara, kowane ofishi yana karɓar rahoto kuma akwai jami'ai a cikinsa dare da rana.",
+  "From Force Headquarters in Abuja to posts in the rural wards of every state, every station takes reports and is staffed around the clock.":
+    "Daga Hedkwatar Rundunar a Abuja zuwa ofisoshi a unguwannin karkara na kowace jiha, kowane ofishi yana karɓar rahoto kuma akwai jami'ai a cikinsa dare da rana.",
   "Policing with the community, not just for it":
     "Aikin 'yan sanda tare da al'umma, ba don ita kaɗai ba",
-  "Committees, volunteers, schools, sport and heritage: the ways the Force and the people of the FCT work side by side.":
-    "Kwamitoci, masu aikin sa-kai, makarantu, wasanni da al'adu: hanyoyin da Rundunar da mutanen FCT ke aiki kafaɗa da kafaɗa.",
+  "Committees, volunteers, schools, sport and heritage: the ways the Force and the people of Nigeria work side by side.":
+    "Kwamitoci, masu aikin sa-kai, makarantu, wasanni da al'adu: hanyoyin da Rundunar da mutanen Najeriya ke aiki kafaɗa da kafaɗa.",
   "How can we help?": "Ta yaya za mu taimaka?",
   News: "Labarai",
   "Your request": "Buƙatarka",

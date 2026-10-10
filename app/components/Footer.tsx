@@ -13,7 +13,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   CheckIcon,
-  ChevronDown,
+  ArrowDown,
   InboxIcon,
   PhoneCallIcon,
   SocialIcon,
@@ -145,7 +145,7 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
                   className="flex min-h-11 w-full items-center justify-between text-start md:pointer-events-none md:min-h-0"
                 >
                   {col.heading}
-                  <ChevronDown
+                  <ArrowDown
                     className={`size-5 transition-[rotate] md:hidden ${isOpen ? "rotate-180" : ""}`}
                   />
                 </button>
@@ -194,7 +194,7 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
             </span>
             <div className="min-w-0 flex-1">
               <h2 id="footer-newsletter" className="npf-h4 mb-1.5 text-npf-ink">
-                {t("Get news from the Command")}
+                {t("Get news from the Force")}
               </h2>
               <p className="npf-body">
                 {t(
@@ -302,7 +302,7 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
         <div className="space-y-2">
           <p className="font-medium text-npf-ink">
             {t(
-              "© {year} FCT Police Command Headquarters. All Rights Reserved",
+              "© {year} Nigeria Police Force. All Rights Reserved",
               {
                 year: process.env.NEXT_PUBLIC_BUILD_YEAR ?? "",
               },
@@ -326,6 +326,18 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
               {t("Last modified Date: {date}", {
                 date: format.date(process.env.NEXT_PUBLIC_BUILD_DATE ?? ""),
               })}
+            </span>
+            <span>
+              {t("Designed and built by")}{" "}
+              <a
+                href="https://www.cloudbrella.ng/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-npf-body decoration-npf-gold underline-offset-4 transition-colors hover:text-npf-blue hover:underline"
+              >
+                Cloudbrella
+                <span className="sr-only"> {t("(opens in a new window)")}</span>
+              </a>
             </span>
           </p>
         </div>

@@ -58,7 +58,7 @@ const logLine = (
  * The calls board: every call of the shift, and the panel where one is worked.
  *
  * The table leads with the grade and the clock rather than the reference
- * number, because nobody scans a board looking for FCT-4417 — they scan it
+ * number, because nobody scans a board looking for NPF-4417; they scan it
  * looking for the oldest P1 with nobody on it.
  */
 export default function OpsIncidents() {
@@ -70,15 +70,21 @@ export default function OpsIncidents() {
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
   const [unassigned, setUnassigned] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);
+  // A beacon clicked on the board map arrives as ?call=NPF-4416 and opens
+  // that call. The console only renders after the credential check, in the
+  // browser, so reading the address here never runs on the server.
+  const [selected, setSelected] = useState<string | null>(() =>
+    typeof window === "undefined"
+      ? null
+      : new URLSearchParams(window.location.search).get("call"),
+  );
   const [taking, setTaking] = useState(false);
 
   // Below the two-column width the detail stacks under the whole board, so a
   // tapped call would open out of sight. Bring it up to meet the finger.
   const detail = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!selected || !window.matchMedia("(max-width: 1023px)").matches)
-      return;
+    if (!selected || !window.matchMedia("(max-width: 1023px)").matches) return;
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     detail.current?.scrollIntoView({
       behavior: still ? "auto" : "smooth",
@@ -107,6 +113,13 @@ export default function OpsIncidents() {
         i.assignee ?? "",
         t(i.assignee ?? ""),
         i.unit ?? "",
+        // The grade and the state as the board prints them, so "p1",
+        // "urgent" or "en route" in the box finds what the tags say.
+        i.priority,
+        PRIORITY[i.priority].label,
+        t(PRIORITY[i.priority].label),
+        STATUS_LABEL[i.status],
+        t(STATUS_LABEL[i.status]),
       ].join(" "),
     );
   }, [incidents, query, status, priority, unassigned, t]);
@@ -114,12 +127,9 @@ export default function OpsIncidents() {
   const open = incidents.find((i) => i.id === selected) ?? null;
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-8">
       <OpsHead
         title={t("Calls")}
-        lead={t(
-          "Every call of the shift, newest first. Pick a row to dispatch it, move it on, or write the log.",
-        )}
         action={
           // Open, it closes the form: the quiet tone and a cross, so "Cancel"
           // never wears the plus and the weight of the action it undoes.
@@ -158,6 +168,7 @@ export default function OpsIncidents() {
           placeholder={t("Reference, type, area, officer or callsign")}
           value={query}
           onChange={setQuery}
+          found={visible.length}
         />
 
         <Filter
@@ -195,9 +206,9 @@ export default function OpsIncidents() {
         </p>
       </div>
 
-      <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_336px] 2xl:grid-cols-[minmax(0,1fr)_380px]">
+      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_336px] 2xl:grid-cols-[minmax(0,1fr)_380px]">
         {/* min-w-0: without it the table's min-content width shoves the
- detail panel off the page. */}
+            detail panel off the page. */}
         <div className="min-w-0">
           <OpsPanel flush>
             {/*
@@ -215,33 +226,33 @@ export default function OpsIncidents() {
                   "Calls, with grade, type, area, status, assigned unit and elapsed time",
                 )}
               </caption>
-              <thead className="npf-ops-thead text-xs font-semibold text-ops-dim">
+              <thead className="npf-ops-thead text-xs text-ops-dim">
                 <tr className="whitespace-nowrap">
-                  <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
+                  <th scope="col" className="py-3 pe-3 ps-5 font-medium">
                     {t("Grade")}
                   </th>
                   <th
                     scope="col"
-                    className="hidden py-2.5 pe-3 font-medium sm:table-cell"
+                    className="hidden py-3 pe-4 font-medium sm:table-cell"
                   >
                     {t("Ref")}
                   </th>
-                  <th scope="col" className="w-full py-2.5 pe-3 font-medium">
+                  <th scope="col" className="w-full py-3 pe-4 font-medium">
                     {t("Type / area")}
                   </th>
                   <th
                     scope="col"
-                    className="hidden py-2.5 pe-3 font-medium md:table-cell"
+                    className="hidden py-3 pe-4 font-medium md:table-cell"
                   >
                     {t("Status")}
                   </th>
                   <th
                     scope="col"
-                    className="hidden py-2.5 pe-3 font-medium md:table-cell"
+                    className="hidden py-3 pe-4 font-medium md:table-cell"
                   >
                     {t("Unit")}
                   </th>
-                  <th scope="col" className="py-2.5 pe-4 text-end font-medium">
+                  <th scope="col" className="py-3 pe-5 text-end font-medium">
                     {t("Elapsed")}
                   </th>
                 </tr>
@@ -256,17 +267,15 @@ export default function OpsIncidents() {
                       onClick={() => setSelected(incident.id)}
                       aria-selected={active}
                       className={`npf-ops-pick cursor-pointer border-b border-ops-line-soft last:border-0 ${
-                        active
-                          ? "bg-ops-raised"
-                          : "hover:bg-ops-raised/55"
+                        active ? "bg-ops-accent/[0.16]" : "hover:bg-white/[0.03]"
                       } ${late ? "npf-ops-overdue" : ""}`}
                     >
-                      <td className="py-3 pe-3 ps-4 align-top">
+                      <td className="py-3.5 pe-3 ps-5 align-top">
                         <PriorityTag priority={incident.priority} />
                       </td>
                       <th
                         scope="row"
-                        className="hidden py-3 pe-3 align-top font-normal whitespace-nowrap sm:table-cell"
+                        className="hidden py-3.5 pe-4 align-top font-normal whitespace-nowrap sm:table-cell"
                       >
                         <button
                           type="button"
@@ -274,19 +283,19 @@ export default function OpsIncidents() {
                             e.stopPropagation();
                             setSelected(incident.id);
                           }}
-                          className="font-secondary font-bold tabular-nums underline-offset-4 hover:underline"
+                          className="rounded-sm pt-0.5 text-xs text-ops-dim tabular-nums underline-offset-4 transition-colors hover:text-ops-text hover:underline"
                         >
                           {incident.id}
                         </button>
                       </th>
-                      <td className="py-3 pe-3 align-top">
+                      <td className="py-3.5 pe-4 align-top font-medium">
                         <span className="sm:hidden">
-                          <span className="font-secondary text-xs font-bold tabular-nums text-ops-dim">
+                          <span className="text-xs font-normal tabular-nums text-ops-dim">
                             {incident.id}
                           </span>{" "}
                         </span>
                         {t(incident.kind)}
-                        <span className="block text-xs text-ops-dim">
+                        <span className="mt-0.5 block text-xs font-normal text-ops-dim">
                           {t(incident.area)}
                         </span>
                         <span className="mt-1.5 flex flex-wrap items-center gap-2 md:hidden">
@@ -296,16 +305,16 @@ export default function OpsIncidents() {
                           </span>
                         </span>
                       </td>
-                      <td className="hidden py-3 pe-3 align-top md:table-cell">
+                      <td className="hidden py-3.5 pe-4 align-top md:table-cell">
                         <OpsStatus status={incident.status} />
                       </td>
-                      <td className="hidden py-3 pe-3 align-top text-xs whitespace-nowrap md:table-cell">
+                      <td className="hidden py-3.5 pe-4 align-top text-xs whitespace-nowrap md:table-cell">
                         {incident.unit ? (
                           <>
-                            <span className="font-secondary font-bold">
+                            <span className="text-sm font-medium">
                               {t(incident.unit)}
                             </span>
-                            <span className="block text-ops-dim">
+                            <span className="mt-0.5 block text-ops-dim">
                               {t(incident.assignee ?? "")}
                             </span>
                           </>
@@ -319,22 +328,26 @@ export default function OpsIncidents() {
                         )}
                       </td>
                       <td
-                        className="py-3 pe-4 text-end align-top font-medium whitespace-nowrap"
+                        className="py-3.5 pe-5 text-end align-top font-medium whitespace-nowrap tabular-nums"
                         style={late ? { color: "var(--ops-p1)" } : undefined}
                       >
                         <Elapsed
                           from={incident.reported}
                           to={incident.closed}
                         />
-                        <span className="block text-2xs font-normal text-ops-dim">
-                          {incident.closed
-                            ? t("total")
-                            : incident.status === "New"
-                              ? t("of {n}m", {
+                        {/* Only what changes the reading: the target a
+                            waiting call is racing, or that a clock stopped.
+                            "since call" under every running row said the
+                            column head again, twelve times. */}
+                        {incident.closed || incident.status === "New" ? (
+                          <span className="mt-0.5 block text-2xs font-normal text-ops-dim">
+                            {incident.closed
+                              ? t("total")
+                              : t("of {n}m", {
                                   n: dispatchTarget[incident.priority],
-                                })
-                              : t("since call")}
-                        </span>
+                                })}
+                          </span>
+                        ) : null}
                       </td>
                     </tr>
                   );
@@ -372,7 +385,7 @@ export default function OpsIncidents() {
               <div className="flex flex-col items-center gap-3 px-2 py-8 text-center">
                 <span
                   aria-hidden
-                  className="grid size-10 place-items-center rounded-full bg-ops-raised text-ops-accent"
+                  className="grid size-12 place-items-center rounded-full bg-white/[0.06] text-ops-accent"
                 >
                   <RadioIcon className="size-5" />
                 </span>
@@ -422,7 +435,7 @@ function Detail({
           type="button"
           onClick={onClose}
           aria-label={t("Close call detail")}
-          className="grid size-7 place-items-center rounded-chip text-ops-dim transition-colors hover:bg-ops-raised hover:text-ops-text"
+          className="grid size-7 place-items-center rounded-full bg-white/[0.07] text-ops-dim transition-colors hover:bg-white/[0.12] hover:text-ops-text"
         >
           <CloseIcon className="size-4" />
         </button>
@@ -509,9 +522,7 @@ function Detail({
       ) : null}
 
       <div className="mt-5 border-t border-ops-line-soft pt-4">
-        <p className="mb-3 text-xs font-semibold text-ops-dim">
-          {t("Log")}
-        </p>
+        <p className="mb-3 text-xs font-semibold text-ops-dim">{t("Log")}</p>
         <ol className="space-y-2 text-xs">
           {incident.log
             .slice()
@@ -551,7 +562,7 @@ function Detail({
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder={t("Add to the log")}
-            className="min-w-0 flex-1 rounded-chip border border-ops-line bg-ops-raised px-3 py-2 text-xs outline-none placeholder:text-ops-dim focus:border-ops-accent"
+            className="min-w-0 flex-1 px-3 py-2 text-[0.8125rem] rounded-chip bg-white/[0.07] outline-none placeholder:text-ops-dim transition-[background-color,box-shadow] hover:bg-white/[0.09] focus:bg-white/[0.09] focus:shadow-[0_0_0_3px_rgb(64_156_255/0.55)]"
           />
           <OpsButton
             type="submit"
@@ -675,7 +686,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
             value={area}
             onChange={(e) => setArea(e.target.value)}
             required
-            placeholder={t("Wuse 1")}
+            placeholder={t("Ikeja, Lagos")}
             className={INPUT}
           />
         </Field>
@@ -722,7 +733,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
 }
 
 const INPUT =
-  "w-full rounded-chip border border-ops-line bg-ops-raised px-3 py-2 text-sm outline-none transition-colors placeholder:text-ops-dim hover:border-ops-accent/60 focus:border-ops-accent";
+  "w-full px-3 py-2 text-sm rounded-chip bg-white/[0.07] outline-none placeholder:text-ops-dim transition-[background-color,box-shadow] hover:bg-white/[0.09] focus:bg-white/[0.09] focus:shadow-[0_0_0_3px_rgb(64_156_255/0.55)]";
 const SELECT = `npf-ops-select ${INPUT}`;
 
 function Field({
@@ -763,15 +774,17 @@ function Assign({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3">
-      <label htmlFor={id} className="text-xs text-ops-dim">
+    // A form row in a settings pane: labels in one column, so the three
+    // pop-up buttons start on the same edge.
+    <div className="grid grid-cols-[3.75rem_minmax(0,1fr)] items-center gap-3">
+      <label htmlFor={id} className="text-[0.8125rem] text-ops-dim">
         {label}
       </label>
       <select
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="npf-ops-select min-w-0 flex-1 rounded-chip border border-ops-line bg-ops-raised px-3 py-2 text-sm outline-none transition-colors hover:border-ops-accent focus:border-ops-accent"
+        className="npf-ops-select h-9 min-w-0 flex-1 rounded-chip px-3 text-sm font-medium outline-none"
       >
         {placeholder ? <option value="">{placeholder}</option> : null}
         {options.map(([v, text]) => (

@@ -92,64 +92,12 @@ export const haLegal: Record<string, string> = {
   // --- customer centres ----------------------------------------------------
   "Customer Centers | Nigeria Police Force":
     "Cibiyoyin Ba da Hidima | Rundunar 'Yan Sandan Najeriya",
-  "Area Commands and Divisional Headquarters across the Federal Capital Territory, with addresses and opening hours.":
-    "Rundunonin Yanki da Hedkwatocin Sassa a faɗin Babban Birnin Tarayya, tare da adireshi da lokutan buɗewa.",
-  "Area Command": "Rundunar Yanki",
-  "{council} Area Council": "Ƙaramar Hukumar {council}",
+  "Force Headquarters and the Police Command of every state and the FCT, with where to find each one.":
+    "Hedkwatar Rundunar da Rundunar 'Yan Sanda ta kowace jiha da FCT, tare da inda za a same su.",
   "Open: {hours}": "A buɗe: {hours}",
   "24 hours": "Sa'o'i 24",
   "Open in Maps": "Buɗe a Taswira",
   "(opens in a new window)": "(yana buɗewa a sabon taga)",
-
-  // --- what each station covers -------------------------------------------
-  "The senior command for the city centre, supervising the Garki, Wuse, Maitama and Asokoro divisions. It holds the Command's central charge office and the desks that take reports the divisions refer upward.":
-    "Babbar rundunar tsakiyar birni, tana kula da sassan Garki, Wuse, Maitama da Asokoro. Tana riƙe da babban ofishin tuhuma na Rundunar da teburan da ke karɓar rahotannin da sassan ke tura sama.",
-  "Covers the Gwagwalada Area Council and the university town around it, including the stretch of the Abuja–Lokoja highway that runs through the council.":
-    "Tana kula da Ƙaramar Hukumar Gwagwalada da garin jami'a da ke kewaye da ita, ciki har da sashen babbar hanyar Abuja–Lokoja da ke ratsa ƙaramar hukumar.",
-  "Responsible for Bwari town, Dutse-Alhaji and the hill settlements north of the city, with a standing patrol on the Bwari–Dutse road.":
-    "Tana da alhakin garin Bwari, Dutse-Alhaji da ƙauyukan tuddai da ke arewacin birnin, tare da sintiri na dindindin a hanyar Bwari–Dutse.",
-  "One of the busiest commands in the Territory, covering Kubwa, Byazhin and the expressway that carries the morning traffic into the city.":
-    "Ɗaya daga cikin rundunonin da suka fi aiki a Babban Birnin Tarayya, tana kula da Kubwa, Byazhin da babbar hanyar da ke ɗaukar zirga-zirgar safe zuwa cikin birni.",
-  "Covers the eastern corridor at the Nasarawa boundary — Nyanya, Karu, Jikwoyi and Karshi — where the Territory's largest commuter population lives.":
-    "Tana kula da yankin gabas a iyakar Nasarawa — Nyanya, Karu, Jikwoyi da Karshi — inda mafi yawan masu tafiya aiki a Babban Birnin Tarayya ke zaune.",
-  "Covers the Kuje Area Council, its farm settlements and the road that links the council to the airport corridor.":
-    "Tana kula da Ƙaramar Hukumar Kuje, ƙauyukan gonakinta da hanyar da ta haɗa ƙaramar hukumar da yankin filin jirgin sama.",
-  "One of the oldest divisions in the Territory, serving Areas 1 to 11, the ministries around them and the Garki market.":
-    "Ɗaya daga cikin tsofaffin sassa a Babban Birnin Tarayya, tana ba da hidima ga Area 1 zuwa 11, ma'aikatun da ke kewaye da su da kasuwar Garki.",
-  "Serves the Wuse zones and the Wuse market, and runs the beat that covers the banks and offices along Aminu Kano Crescent.":
-    "Tana ba da hidima ga yankunan Wuse da kasuwar Wuse, kuma tana gudanar da sintirin da ke rufe bankuna da ofisoshi a Aminu Kano Crescent.",
-  "Covers Wuse II and the embassies, hotels and night-time economy along Adetokunbo Ademola Crescent.":
-    "Tana kula da Wuse II da ofisoshin jakadanci, otal-otal da harkokin dare a Adetokunbo Ademola Crescent.",
-  "Serves Maitama, Mpape and the diplomatic quarter, working closely with the Command's protection duties.":
-    "Tana ba da hidima ga Maitama, Mpape da unguwar jakadanci, tana aiki kafaɗa da kafaɗa da ayyukan kariya na Rundunar.",
-  "Covers Asokoro and Guzape, including the residences of government officials and the approach roads to the Presidential Villa.":
-    "Tana kula da Asokoro da Guzape, ciki har da gidajen jami'an gwamnati da hanyoyin shiga Fadar Shugaban Ƙasa.",
-  "Serves Utako, the Utako market and the motor park, and the office blocks along the Jabi–Utako link.":
-    "Tana ba da hidima ga Utako, kasuwar Utako da tashar motoci, da ginin ofisoshi a hanyar Jabi–Utako.",
-  "Covers the Jabi district, the lake front and the shopping centre, and runs the marine patrol point on Jabi Lake.":
-    "Tana kula da gundumar Jabi, gefen tafki da cibiyar sayayya, kuma tana gudanar da wurin sintirin ruwa a Tafkin Jabi.",
-  "Serves Life Camp, Kado and the Nigeria Police Force estates around them.":
-    "Tana ba da hidima ga Life Camp, Kado da gidajen Rundunar 'Yan Sandan Najeriya da ke kewaye da su.",
-  "Covers Gwarinpa, the largest housing estate in West Africa, and the district roads running through its seven avenues.":
-    "Tana kula da Gwarinpa, babbar unguwar gidaje mafi girma a Yammacin Afirka, da hanyoyin gundumar da ke ratsa manyan titunanta bakwai.",
-  "Serves Karmo and the settlements along the Kubwa expressway service lanes.":
-    "Tana ba da hidima ga Karmo da ƙauyukan da ke gefen hanyoyin sabis na babbar hanyar Kubwa.",
-  "Covers Dei-Dei, its timber and building-materials markets, and the heavy-goods traffic that feeds them.":
-    "Tana kula da Dei-Dei, kasuwannin katako da kayan gini, da zirga-zirgar manyan motocin kaya da ke kai musu kaya.",
-  "Serves Zuba, the market and the junction where the Abuja–Kaduna and Abuja–Lokoja roads meet.":
-    "Tana ba da hidima ga Zuba, kasuwar da mahaɗar da hanyoyin Abuja–Kaduna da Abuja–Lokoja ke haɗuwa.",
-  "Covers Dutse-Alhaji, Kubwa village and the surrounding settlements on the northern approach.":
-    "Tana kula da Dutse-Alhaji, ƙauyen Kubwa da ƙauyukan da ke kewaye a hanyar shiga ta arewa.",
-  "Serves Lugbe, Pyakasa and the airport road corridor, including the service lanes either side of the expressway.":
-    "Tana ba da hidima ga Lugbe, Pyakasa da yankin hanyar filin jirgin sama, ciki har da hanyoyin sabis a bangarorin biyu na babbar hanyar.",
-  "Covers Apo, Gudu and the legislative quarters, and the mechanic village at Apo.":
-    "Tana kula da Apo, Gudu da unguwar 'yan majalisa, da ƙauyen makanikai a Apo.",
-  "Serves Durumi, Area 1 and the Games Village, and the roads that connect them to the city centre.":
-    "Tana ba da hidima ga Durumi, Area 1 da Games Village, da hanyoyin da suka haɗa su da tsakiyar birni.",
-  "Covers Nyanya town and the bus terminals that move commuters between the Territory and Nasarawa State every morning.":
-    "Tana kula da garin Nyanya da tashoshin bas da ke ɗaukar masu tafiya aiki tsakanin Babban Birnin Tarayya da Jihar Nasarawa kowace safiya.",
-  "Based at the airport, covering the terminals, the cargo area and the airport road, and working alongside aviation security on the airside.":
-    "Tana zaune a filin jirgin sama, tana kula da tashoshi, yankin kaya da hanyar filin jirgin, kuma tana aiki tare da tsaron jiragen sama a gefen jiragen.",
 
   // --- the service agreement's promises -----------------------------------
   "An entity pledged to make customers happy":
@@ -207,8 +155,8 @@ export const haLegal: Record<string, string> = {
     "Duk bayanan da ake buƙata daga mai amfani, a wannan Shafin, za a yi amfani da su kawai bisa manufar sirri da aka bayyana a ƙasa. Rundunar 'Yan Sandan Najeriya ba za ta taɓa neman wani bayani mara amfani ba.",
   "Nigeria Police Force Website includes public pages that can be browsed by all users, without having to provide any personal data with the exception of data collected by cookies when used (see details below). The Site also contains secured pages that require registration to be accessed, using the form \"request a user registration\", in the open public pages.":
     "Shafin Rundunar 'Yan Sandan Najeriya ya ƙunshi shafuka na jama'a da duk masu amfani za su iya buɗewa, ba tare da bayar da wani bayanin mutum ba, sai dai bayanan da kuki ke tattarawa idan an yi amfani da su (duba cikakken bayani a ƙasa). Shafin kuma yana ɗauke da shafuka masu tsaro da ke buƙatar rajista kafin a shiga, ta amfani da fom ɗin \"neman rajistar mai amfani\", a cikin shafukan jama'a.",
-  "Privacy Policy, set forth in this document, applies to Nigeria Police Force Website (fct.npf.gov.ng) and to the information collected by this Site only. This Policy also applies to all employees of Nigeria Police Force, apart from their place of work, and also to all the concerned suppliers’ employees, irrespective of the place of whoever manages Nigeria Police Force Website, which can obtain personal data of the users.":
-    "Manufar Sirri, kamar yadda aka bayyana a wannan takarda, ta shafi Shafin Rundunar 'Yan Sandan Najeriya (fct.npf.gov.ng) da bayanan da wannan Shafin kaɗai ke tattarawa. Wannan Manufa kuma ta shafi duk ma'aikatan Rundunar 'Yan Sandan Najeriya, ba tare da la'akari da wurin aikinsu ba, da kuma duk ma'aikatan masu samar da kayayyaki, ba tare da la'akari da wurin duk wanda ke kula da Shafin Rundunar 'Yan Sandan Najeriya ba, waɗanda za su iya samun bayanan mutum na masu amfani.",
+  "Privacy Policy, set forth in this document, applies to Nigeria Police Force Website (npf.gov.ng) and to the information collected by this Site only. This Policy also applies to all employees of Nigeria Police Force, apart from their place of work, and also to all the concerned suppliers’ employees, irrespective of the place of whoever manages Nigeria Police Force Website, which can obtain personal data of the users.":
+    "Manufar Sirri, kamar yadda aka bayyana a wannan takarda, ta shafi Shafin Rundunar 'Yan Sandan Najeriya (npf.gov.ng) da bayanan da wannan Shafin kaɗai ke tattarawa. Wannan Manufa kuma ta shafi duk ma'aikatan Rundunar 'Yan Sandan Najeriya, ba tare da la'akari da wurin aikinsu ba, da kuma duk ma'aikatan masu samar da kayayyaki, ba tare da la'akari da wurin duk wanda ke kula da Shafin Rundunar 'Yan Sandan Najeriya ba, waɗanda za su iya samun bayanan mutum na masu amfani.",
   "Nigeria Police Force Website contains links to other websites that are provided only as service information and they are subject to their own privacy policy. Nigeria Police Force is not responsible for any content available at these sites. Therefore, we advise you to have access to the privacy policies of those websites, which you visited through Nigeria Police Force Website to determine the site-based practices there.":
     "Shafin Rundunar 'Yan Sandan Najeriya yana ɗauke da hanyoyin zuwa wasu shafuka da aka bayar a matsayin bayanin hidima kawai, kuma suna ƙarƙashin manufofin sirrin kansu. Rundunar 'Yan Sandan Najeriya ba ta da alhakin wani abu da ke kan waɗannan shafuka. Saboda haka, muna ba ka shawara ka duba manufofin sirrin waɗannan shafuka da ka ziyarta ta Shafin Rundunar 'Yan Sandan Najeriya domin sanin yadda suke aiki.",
   "Users should note that Nigeria Police Force does not promote these sites neither it is sure of the contents or the products and services they offer. Nigeria Police Force shall not exercise any authority whatsoever over the sites that are not owned or managed by it. Nigeria Police Force is not responsible for protecting any information/data that the user provide when visiting those sites, including information security and privacy practices of these sites.":
@@ -277,4 +225,14 @@ export const haLegal: Record<string, string> = {
     "Domin tabbatar da cewa ka samu hidimomin \"Rundunar 'Yan Sandan Najeriya\" da ke buƙatar biyan kuɗi ta lantarki, bisa doka kuma cikin aminci, ka guji biyan kuɗi ta hannun wani ko ta amfani da katin banki ko cire kuɗi kai tsaye da/ko amfani da wasu hanyoyin biyan kuɗi na wasu mutane, ba tare da yardarsu ba.",
   "In case of violation of the above and/or complaint from the rightful owner of the means of electronic payment used, the client (whether natural or legal person) is subject to legal accountability and is punished by imprisonment and payment of fine, or by either, in accordance with sections 24 to 27 of the Cybercrimes (Prohibition, Prevention, etc.) Act, 2015, without prejudice to the right of Nigeria Police Force in exercising all means of legal protection and rights available and/or granted to it under the law.":
     "Idan aka karya abin da ke sama da/ko aka samu ƙorafi daga mai hanyar biyan kuɗi ta lantarki da aka yi amfani da ita, ana tuhumar mai amfani (ko mutum ne ko kamfani) bisa doka kuma ana hukunta shi da ɗaurin kurkuku da biyan tara, ko ɗaya daga cikinsu, bisa sashe na 24 zuwa 27 na Dokar Laifukan Yanar Gizo ta 2015, ba tare da hana Rundunar 'Yan Sandan Najeriya amfani da duk hanyoyin kariya da haƙƙoƙin da doka ta ba ta ba.",
+  "North Central": "Arewa ta Tsakiya",
+  "North East": "Arewa maso Gabas",
+  "North West": "Arewa maso Yamma",
+  "South East": "Kudu maso Gabas",
+  "South South": "Kudu maso Kudu",
+  "South West": "Kudu maso Yamma",
+  "Roads in towns and built-up areas": "Hanyoyi a cikin garuruwa da wuraren da gine-gine suka yi yawa",
+  "Commands": "Rundunoni",
+  "Zones": "Shiyyoyi",
+  "{state} State Command": "Rundunar 'Yan Sandan Jihar {state}",
 };

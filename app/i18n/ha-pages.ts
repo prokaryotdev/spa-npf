@@ -55,8 +55,8 @@ export const haPages: Record<string, string> = {
     "Ka san yadda makin hukunci da tara ke shafar rikodin zirga-zirgarka",
   "Learn how penalty points and fines impact your traffic record.":
     "Ka san yadda makin hukunci da tara ke shafar rikodin zirga-zirgarka.",
-  "Fines, penalty points and vehicle confiscation periods for traffic violations in Abuja.":
-    "Tara, makin hukunci da lokutan kwace mota saboda laifukan zirga-zirga a Abuja.",
+  "Fines, penalty points and vehicle confiscation periods for traffic violations in Nigeria.":
+    "Tara, makin hukunci da lokutan kwace mota saboda laifukan zirga-zirga a Najeriya.",
   Offence: "Laifi",
   "Fine (₦)": "Tara (₦)",
   "Penalty points": "Makin hukunci",
@@ -141,19 +141,18 @@ export const haPages: Record<string, string> = {
   "Road Speed Limits": "Iyakokin Gudu a Hanya",
   "Road Speed Limits | Nigeria Police Force":
     "Iyakokin Gudu a Hanya | Rundunar 'Yan Sandan Najeriya",
-  "Speed limits and enforcement thresholds on the roads of the Federal Capital Territory.":
-    "Iyakokin gudu da matakan aiwatarwa a kan hanyoyin Babban Birnin Tarayya.",
-  "Speed limits on the roads of the Federal Capital Territory, set by the National Road Traffic Regulations and posted on the road itself. The limit depends on the kind of road and on where it runs.":
-    "Iyakokin gudu a kan hanyoyin Babban Birnin Tarayya, waɗanda Ƙa'idojin Zirga-zirga na Ƙasa suka tsara kuma aka sanya su a kan hanyar kanta. Iyakar ta dogara ne da irin hanyar da kuma inda take wucewa.",
+  "Speed limits and enforcement thresholds on Nigerian roads.":
+    "Iyakokin gudu da matakan aiwatarwa a kan hanyoyin Najeriya.",
+  "Speed limits on Nigerian roads, set by the National Road Traffic Regulations and posted on the road itself. The limit depends on the kind of road and on where it runs.":
+    "Iyakokin gudu a kan hanyoyin Najeriya, waɗanda Ƙa'idojin Zirga-zirga na Ƙasa suka tsara kuma aka sanya su a kan hanyar kanta. Iyakar ta dogara ne da irin hanyar da kuma inda take wucewa.",
   "Limit km/h": "Iyaka km/h",
   "Enforced at km/h": "Ana aiwatarwa a km/h",
   // --- page redesign ---------------------------------------------------------
   "Call {n}": "Kira {n}",
   "Other ways to reach us": "Wasu hanyoyin tuntuɓar mu",
-  Stations: "Ofisoshi",
   Open: "A buɗe",
-  "The laws the Force works under, what each traffic offence costs, and the speed limit on the roads of the Territory.":
-    "Dokokin da Rundunar ke aiki da su, kuɗin kowane laifin hanya, da iyakar gudu a hanyoyin Babban Birnin Tarayya.",
+  "The laws the Force works under, what each traffic offence costs, and the speed limit on Nigerian roads.":
+    "Dokokin da Rundunar ke aiki da su, kuɗin kowane laifin hanya, da iyakar gudu a hanyoyin Najeriya.",
   "Nothing matches “{query}”.": "Babu abin da ya dace da “{query}”.",
   "Type a word, name or number": "Rubuta kalma, suna ko lamba",
   "Clear search": "Share bincike",

@@ -3,7 +3,6 @@
 import { Fragment, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   ArrowDown,
-  ChevronDown,
   ClockIcon,
   CloseIcon,
   FileIcon,
@@ -288,7 +287,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                 </option>
               ))}
             </select>
-            <ChevronDown aria-hidden className="npf-select-arrow" />
+            <ArrowDown aria-hidden className="npf-select-arrow" />
           </span>
         ) : null}
 

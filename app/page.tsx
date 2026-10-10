@@ -144,7 +144,7 @@ export default async function Home() {
               id="smart-policing"
               title={t("Get help online, without the queue")}
               lede={t(
-                "Report cybercrime and recover lost property from your phone or computer.",
+                "Apply for a clearance certificate, report cybercrime and record lost property from your phone or computer.",
               )}
               action={{ href: "/app/services", label: t("Browse all services") }}
             />
@@ -166,7 +166,7 @@ export default async function Home() {
               id="sps"
               title={t("A station close to you")}
               lede={t(
-                "From Command Headquarters in Garki to posts in the rural wards, every station takes reports and is staffed around the clock.",
+                "From Force Headquarters in Abuja to posts in the rural wards of every state, every station takes reports and is staffed around the clock.",
               )}
               action={{
                 href: "/app/home/customer-centers",
@@ -186,7 +186,7 @@ export default async function Home() {
               id="community"
               title={t("Policing with the community, not just for it")}
               lede={t(
-                "Committees, volunteers, schools, sport and heritage: the ways the Force and the people of the FCT work side by side.",
+                "Committees, volunteers, schools, sport and heritage: the ways the Force and the people of Nigeria work side by side.",
               )}
             />
           }

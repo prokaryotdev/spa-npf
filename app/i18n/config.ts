@@ -1,15 +1,15 @@
 /**
- * Locale is the first path segment: /en/app/services, /ha/app/services.
+ * Locale is the first path segment: /en/app/services, /yo/app/services.
  *
  * English is the official language of Nigeria and the language the Force
- * publishes in; Hausa is the language most widely spoken in the Federal
- * Capital Territory and the surrounding states, so a resident who reads
- * Hausa first should be able to reach every page in it.
+ * publishes in. Hausa, Yoruba and Igbo are the three most widely spoken
+ * languages in the country, so a resident who reads one of them first should
+ * be able to reach every page in it.
  *
- * Both scripts are Latin, so there is no direction to switch — unlike a
- * right-to-left pairing, one set of layout rules serves both languages.
+ * All four are written in Latin letters, so there is no direction to switch:
+ * one set of layout rules serves every language.
  */
-export const LANGS = ["en", "ha"] as const;
+export const LANGS = ["en", "ha", "yo", "ig"] as const;
 export type Lang = (typeof LANGS)[number];
 
 export const DEFAULT_LANG: Lang = "en";
@@ -24,16 +24,12 @@ export const isLang = (value: unknown): value is Lang =>
 export const LANG_LABEL: Record<Lang, string> = {
   en: "English",
   ha: "Hausa",
-};
-
-/** What the switcher says: the language it will take you to. */
-export const LANG_SWITCH_LABEL: Record<Lang, string> = {
-  en: "Hausa",
-  ha: "English",
+  yo: "Yorùbá",
+  ig: "Igbo",
 };
 
 /**
- * Both languages format through `en-NG`, and the Hausa half of that is a
+ * Every language formats through `en-NG`, and the Hausa half of that is a
  * deliberate choice rather than an oversight.
  *
  * Node ships full ICU and knows `ha-NG`, so the server renders "5 Jan, 2026"
@@ -51,4 +47,6 @@ export const LANG_SWITCH_LABEL: Record<Lang, string> = {
 export const INTL_LOCALE: Record<Lang, string> = {
   en: "en-NG",
   ha: "en-NG",
+  yo: "en-NG",
+  ig: "en-NG",
 };

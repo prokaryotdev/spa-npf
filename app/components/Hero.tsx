@@ -10,7 +10,7 @@ import {
 } from "react";
 import { heroSlides as heroSlidesSource } from "../content";
 import ServiceSearch from "./ServiceSearch";
-import { ChevronLeft, ChevronRight, PauseIcon, PlayIcon } from "./icons";
+import { ArrowLeft, ArrowRight, PauseIcon, PlayIcon } from "./icons";
 import { useT, useLocalized } from "../i18n/client";
 
 const INTERVAL = 6000;
@@ -170,7 +170,7 @@ export default function Hero() {
                 every six seconds, so they are not headings. While the show
                 runs they stay out of the screen reader's way, and once it is
                 paused a caption the visitor moves to is read out. */}
-            <h1 className="sr-only">{t("Nigeria Police Force, FCT Command")}</h1>
+            <h1 className="sr-only">{"Nigeria Police Force"}</h1>
             <div
               aria-live={running ? "off" : "polite"}
               className="mb-6 grid min-h-[5.5rem] text-center md:mb-8"
@@ -206,7 +206,7 @@ export default function Hero() {
                 aria-label={t("Previous slide")}
                 className={control}
               >
-                <ChevronLeft className="size-5" />
+                <ArrowLeft className="size-5" />
               </button>
 
               <button
@@ -282,7 +282,7 @@ export default function Hero() {
                 aria-label={t("Next slide")}
                 className={control}
               >
-                <ChevronRight className="size-5" />
+                <ArrowRight className="size-5" />
               </button>
             </div>
 

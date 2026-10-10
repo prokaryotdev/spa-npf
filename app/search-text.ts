@@ -62,14 +62,40 @@ export const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
  * letter off the start of a word, the same rule as the site search.
  */
 export function filterBy<T>(items: T[], query: string, text: (item: T) => string) {
-  const words = terms(query);
-  if (!words.length) return items;
+  // Two operator moves on top of the plain words: "road traffic" in quotes
+  // has to appear as that run of words, and -closed drops anything with
+  // "closed" in it. A hyphen inside a word (NPF-4416) is not a minus.
+  const phrases: string[] = [];
+  const rest = query.replace(/"([^"]*)"?/g, (_, p: string) => {
+    const run = terms(p).join(" ");
+    if (run) phrases.push(run);
+    return " ";
+  });
+  const minus: string[] = [];
+  const plain = rest
+    .split(/\s+/)
+    .filter((w) => {
+      if (w.length > 1 && w[0] === "-") {
+        minus.push(...terms(w.slice(1)));
+        return false;
+      }
+      return true;
+    })
+    .join(" ");
+  const words = terms(plain);
+  if (!words.length && !phrases.length && !minus.length) return items;
   const index = items.map((item) => {
     const all = fold(text(item));
-    return { item, all, split: split(all) };
+    const parts = split(all);
+    return { item, all, split: parts, run: ` ${parts.join(" ")} ` };
   });
   const typo = words.map((w) => !index.some((e) => e.all.includes(w)));
   return index
+    .filter(
+      (e) =>
+        phrases.every((p) => e.run.includes(` ${p}`)) &&
+        !minus.some((m) => e.all.includes(m)),
+    )
     .filter((e) =>
       words.every(
         (w, i) =>

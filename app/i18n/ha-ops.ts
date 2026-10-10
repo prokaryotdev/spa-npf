@@ -23,43 +23,28 @@ export const haOps: Record<string, string> = {
     "Layin lamurra, tura jami'ai da buƙatun hidima.",
   "WAT · Shift {shift}": "WAT · Aikin {shift}",
   "End shift": "Kammala aiki",
-  "Public site": "Shafin jama'a",
   Requests: "Buƙatu",
+  "Duty officer": "Jami'in aiki",
+  "{n} open": "{n} a buɗe",
+  "{n} open, {w} waiting": "{n} a buɗe, {w} na jira",
+  "{n} available": "{n} a shirye",
+  "{n} pending": "{n} na jira",
   "Checking credentials…": "Ana duba shaida…",
   "Force credentials required": "Ana buƙatar shaidar Rundunar",
   "You are signed in as {name}, a public account. The operations console is for Nigeria Police Force personnel.":
     "Ka shiga a matsayin {name}, asusun jama'a. Allon ayyuka na ma'aikatan Rundunar 'Yan Sandan Najeriya ne.",
   "Go to my account": "Je zuwa asusuna",
   "Sign in as an officer": "Shiga a matsayin jami'i",
-  "Reset the demo": "Sake saita gwajin",
-  "Illustrative data — a rebuild of the Nigeria Police Force website, connected to no operational system.":
-    "Bayanan misali — sake gina shafin Rundunar 'Yan Sandan Najeriya, ba a haɗa shi da wani tsarin aiki na gaske ba.",
 
   // --- board ---------------------------------------------------------------
   "Status board": "Allon matsayi",
-  "Live picture for Wuse control. Grades run P1 immediate to P4 scheduled.":
-    "Hoto kai tsaye na ɗakin kula na Wuse. Matakai suna tafiya daga P1 na gaggawa zuwa P4 na jadawali.",
-  "Show the numbers": "Nuna lambobin",
-  "In the queue": "A cikin layi",
   "{n} waiting": "{n} suna jira",
-  "queue clear": "layi a sarari",
-  "unassigned calls": "kiran da ba a ba wa kowa ba",
-  "dispatch now": "tura yanzu",
   "dispatch within {n}m": "tura cikin mintuna {n}",
-  "Past target": "Wuce manufa",
-  "all within target": "duka cikin manufa",
   "over {span}": "sama da {span}",
-  "On the air": "Kan aiki",
-  "on the air": "kan aiki",
   "Off the air": "Ba kan aiki",
   "Back on the air": "An dawo kan aiki",
-  "units on the air": "rundunonin da ke kan aiki",
   "{n} free": "{n} a sake",
   "{n} committed": "{n} kan aiki",
-  "units committed": "rundunonin da ke kan aiki",
-  Committed: "Kan aiki",
-  "Every unit is committed. New calls will hold in the queue.":
-    "Duk rundunonin suna kan aiki. Sabbin kira za su jira a layi.",
   "Queue clear": "Layi a sarari",
   "Every call that came in has a unit on it. A new one lands here the second the desk takes it.":
     "Kowane kiran da ya shigo yana da rundunar da ke kansa. Sabo zai sauka nan daƙiƙar da tebur ya karɓe shi.",
@@ -68,19 +53,6 @@ export const haOps: Record<string, string> = {
     "Babu rundunar da ke kan wani kira a yanzu. Ka tura ɗaya daga layin jira na sama.",
   "Nothing is waiting on a decision. Turn off “Open only” to read the ones already settled.":
     "Babu abin da ke jiran hukunci. Ka kashe “Buɗaɗɗu kaɗai” don karanta waɗanda aka riga aka warware.",
-  "{n} calls closed": "An rufe kira {n}",
-  "Response time": "Lokacin amsawa",
-  "Median dispatch": "Matsakaicin turawa",
-  "Call to arrival, last 12 hours. Target {n} minutes.":
-    "Daga kira zuwa isowa, awanni 12 na ƙarshe. Manufa mintuna {n}.",
-  "Median response time over the last 12 hours, in minutes":
-    "Matsakaicin lokacin amsawa a awanni 12 na ƙarshe, da mintuna",
-  "Median response time in minutes, by hour, over the last 12 hours":
-    "Matsakaicin lokacin amsawa da mintuna, bisa awa, a awanni 12 na ƙarshe",
-  "{hour}:00 — {minutes} minutes": "{hour}:00 — mintuna {minutes}",
-  Hour: "Awa",
-  Minutes: "Mintuna",
-  "{n} divisions": "Sassa {n}",
   "Every division": "Kowane sashe",
   "Units on duty by division, with how many are available":
     "Rundunonin da ke kan aiki bisa sashe, da yawan waɗanda ke a sake",
@@ -103,8 +75,6 @@ export const haOps: Record<string, string> = {
   "Widen the grade or status filter, or clear the search box, to see the rest of the shift.":
     "Ka faɗaɗa taceƙar daraja ko matsayi, ko ka share akwatin bincike, don ganin sauran aikin.",
   "{shown} of {total} calls": "{shown} daga kira {total}",
-  "Every call of the shift, newest first. Pick a row to dispatch it, move it on, or write the log.":
-    "Kowane kira na aikin, sabo na farko. Ka zaɓi layi don ka tura shi, ka ci gaba da shi, ko ka rubuta bayanin.",
   "Calls, with grade, type, area, status, assigned unit and elapsed time":
     "Kira, tare da mataki, nau'i, yanki, matsayi, rundunar da aka ba da kuma lokacin da ya wuce",
   "Pick a row to dispatch it, move it on, or read the log.":
@@ -115,7 +85,7 @@ export const haOps: Record<string, string> = {
   "Received via": "An karɓa ta",
   "Put it in the queue": "Sanya shi a layi",
   "Dispatch {ref} to a unit": "Tura {ref} zuwa runduna",
-  "Dispatch — {n} free": "Tura — {n} a sake",
+  "Dispatch · {n} free": "Tura · {n} a sake",
   "No unit free": "Babu rundunar da ke a sake",
   "No unit": "Babu runduna",
   "Not dispatched": "Ba a tura ba",
@@ -132,7 +102,6 @@ export const haOps: Record<string, string> = {
   Location: "Wuri",
   Elapsed: "Lokacin da ya wuce",
   "of {n}m": "daga mintuna {n}",
-  "since call": "tun kira",
   /*
    * The status pills. These reach `t()` through a lookup table rather than as
    * literals, so the coverage test never asked for them and every Hausa board
@@ -143,7 +112,6 @@ export const haOps: Record<string, string> = {
   Immediate: "Nan take",
   Routine: "Na yau da kullum",
   Scheduled: "Na jadawali",
-  "— held over 45 minutes": "— an riƙe sama da mintuna 45",
 
   // --- call types and sources ---------------------------------------------
   "Road traffic collision": "Karon mota a hanya",
@@ -170,10 +138,7 @@ export const haOps: Record<string, string> = {
   Callsign: "Lambar rediyo",
   Officer: "Jami'i",
   Status: "Matsayi",
-  "On duty": "Kan aiki",
   "On call": "A shirye",
-  "on a call": "kan kira",
-  Available: "A sake",
   Waiting: "Yana jira",
   Running: "Yana tafiya",
   Pending: "Yana jira",
@@ -185,14 +150,9 @@ export const haOps: Record<string, string> = {
   "{shown} of {total} units": "{shown} daga rundunoni {total}",
   "Units on duty, with status, elapsed time in that status, and the call they are assigned to":
     "Rundunonin da ke kan aiki, tare da matsayi, lokacin da aka ɗauka a wannan matsayi, da kiran da aka ba su",
-  "Everyone on this shift and what they are on. The clock counts from the last status change.":
-    "Duk wanda ke kan wannan aikin da abin da yake yi. Agogo yana ƙidaya tun canjin matsayi na ƙarshe.",
-  "refuelling, training": "cika mai, horo",
 
   // --- service requests ----------------------------------------------------
   "Service requests": "Buƙatun hidima",
-  "Applications waiting on a decision. Anything you do here appears on the applicant’s own screen within the second.":
-    "Buƙatun da ke jiran hukunci. Duk abin da ka yi nan yana bayyana a allon mai neman cikin daƙiƙa ɗaya.",
   "Filter requests": "Tace buƙatu",
   "Reference or service": "Lambar tuntuɓa ko aiki",
   "No request matches that search":
@@ -208,12 +168,51 @@ export const haOps: Record<string, string> = {
   "Upload a clearer copy of the passport photo page.":
     "Ka ɗora kwafi mai haske na shafin hoton fasfo.",
   "Send to applicant": "Aika wa mai neman",
-  "With the applicant": "Yana hannun mai neman",
-  "we asked for more": "mun nemi ƙari",
-  "awaiting a decision": "yana jiran hukunci",
-  "conditions not met": "ba a cika sharuɗɗa ba",
   Approve: "Amince",
   Reject: "Ƙi",
-  Rejected: "An ƙi",
   Cancel: "Soke",
+  "Live picture": "Hoto kai tsaye",
+  "Map of open calls and units": "Taswirar kiran da ke buɗe da rundunoni",
+  "Late": "Sun makara",
+  "Units free": "Rundunoni a shirye",
+  "What you decide here shows on the applicant’s screen at once.": "Abin da ka yanke a nan yana bayyana a allon mai nema nan take.",
+  "(held over 45 minutes)": "(sun wuce minti 45)",
+  "New": "Sabo",
+  "On Scene": "A wurin",
+  "Dispatched": "An tura",
+  "Closed": "An rufe",
+  "Available": "A shirye",
+  "Unavailable": "Ba a samu ba",
+  "Assigned": "An ba shi aiki",
+  "Patrol": "Sintiri",
+  "Marine": "Na Ruwa",
+  "Free": "A shirye",
+  "Committed": "Kan aiki",
+  "Ibadan, refuelling": "Ibadan, cika mai",
+  "Abuja, standby": "Abuja, a shirye",
+  "Jos, training": "Jos, horo",
+  "Call received via {source}.": "An karɓi kira ta {source}.",
+  "Dispatched — {unit}.": "An tura: {unit}.",
+  "Arrived on scene — {unit}.": "Ya isa wurin: {unit}.",
+  "Call closed — {unit}.": "An rufe kira: {unit}.",
+  "Two parties in a physical altercation outside a retail unit. Caller reports one party holding a bottle.": "Mutane biyu suna faɗa a wajen shago. Mai kira ya ce ɗaya yana riƙe da kwalba.",
+  "Caller still on the line. Ambulance notified.": "Mai kira yana kan layi har yanzu. An sanar da motar asibiti.",
+  "Three vehicles, second lane blocked. No injuries reported. FRSC notified for the lane closure.": "Motoci uku, layi na biyu ya toshe. Ba a ba da rahoton rauni ba. An sanar da FRSC don rufe layin.",
+  "Two further callers reporting the same collision.": "Ƙarin masu kira biyu suna ba da rahoton haɗarin guda.",
+  "Handbag taken from a parked vehicle. CCTV available on site.": "An ɗauki jaka daga motar da aka ajiye. Akwai CCTV a wurin.",
+  "Store manager pulling camera footage for the last hour.": "Manajan shago yana fitar da bidiyon kyamara na awa ta ƙarshe.",
+  "Adult missing since the previous evening. Family at the address, enquiries ongoing.": "Babba ya ɓace tun jiya da yamma. Iyali suna gidan, ana ci gaba da bincike.",
+  "Last seen at the motor park on the evening bus to Zaria.": "An gan shi na ƙarshe a tashar mota a motar yamma zuwa Zaria.",
+  "Vehicle parked across a loading bay for six hours.": "An ajiye mota a gaban wurin lodi na awa shida.",
+  "Supplier invoice interception at a freight company.": "An tare takardar kuɗin mai kawo kaya a kamfanin jigilar kaya.",
+  "Complainant asked to preserve the original email headers.": "An nemi mai ƙara ya adana asalin bayanan imel.",
+  "Repeat complaint about late construction work.": "Ƙorafi da aka maimaita game da aikin gini da dare.",
+  "Fourth report from this address this month.": "Rahoto na huɗu daga wannan adireshi a wannan watan.",
+  "Child reunited with family after fourteen minutes.": "An haɗa yaro da iyalinsa bayan mintuna goma sha huɗu.",
+  "Reunited with the mother at the information desk.": "An haɗa shi da mahaifiyarsa a teburin bayanai.",
+  "Goods recovered, complainant declined to press charges.": "An gano kayan, mai ƙara ya ƙi kai ƙara.",
+  "Passenger boat towed in after engine failure.": "An ja jirgin fasinja zuwa gaci bayan injin ya lalace.",
+  "Minor collision cleared through the self-report service.": "An warware ƙaramin haɗari ta hanyar hidimar rahoton kai.",
+  "Recruitment scam reported by three complainants in one week.": "Mutane uku sun ba da rahoton zamba ta ɗaukar aiki a mako ɗaya.",
+  "Referred to the cybercrime investigation desk.": "An tura shi zuwa teburin binciken laifukan intanet.",
 };

@@ -1,4 +1,4 @@
-import { headers } from "next/headers";
+﻿import { headers } from "next/headers";
 import type { Service } from "../content-services";
 
 /**
@@ -18,7 +18,7 @@ import type { Service } from "../content-services";
  */
 
 const BASE = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://fct.npf.gov.ng"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://npf.gov.ng"
 ).replace(/\/$/, "");
 
 /**
@@ -43,18 +43,22 @@ async function Ld({ data }: { data: unknown }) {
 }
 
 /** The force itself, on every page, so the knowledge panel has something to use. */
+/** The Force's own name in each language, for search engines. */
+const NAME: Record<string, string> = {
+  ha: "Rundunar 'Yan Sandan Najeriya",
+  yo: "Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà",
+  ig: "Ndị Uwe Ojii Naịjirịa",
+};
+
 export async function OrganisationLd({ lang }: { lang: string }) {
   return (
     <Ld
       data={{
         "@context": "https://schema.org",
         "@type": "GovernmentOrganization",
-        name:
-          lang === "ha"
-            ? "Rundunar 'Yan Sandan Najeriya"
-            : "Nigeria Police Force",
+        name: NAME[lang] ?? "Nigeria Police Force",
         url: BASE,
-        areaServed: { "@type": "City", name: "Abuja" },
+        areaServed: { "@type": "Country", name: "Nigeria" },
         parentOrganization: {
           "@type": "GovernmentOrganization",
           name: "Federal Republic of Nigeria",
@@ -71,7 +75,7 @@ export async function OrganisationLd({ lang }: { lang: string }) {
             telephone: "+234-805-700-0001",
             contactType: "customer service",
             areaServed: "NG",
-            availableLanguage: ["en", "ha"],
+            availableLanguage: ["en", "ha", "yo", "ig"],
           },
         ],
       }}
@@ -95,7 +99,7 @@ export async function ServiceLd({ service }: { service: Service }) {
           name: "Nigeria Police Force",
           url: BASE,
         },
-        areaServed: { "@type": "City", name: "Abuja" },
+        areaServed: { "@type": "Country", name: "Nigeria" },
         audience: service.audiences?.length
           ? service.audiences.map((a) => ({ "@type": "Audience", audienceType: a }))
           : undefined,

@@ -94,9 +94,9 @@ export const haServices: Record<string, string> = {
   'Follow it any time under "My Requests".':
     'Bi diddiginta a kowane lokaci a "Buƙatuna".',
   "NINAuth sign-in required": "Ana buƙatar shiga da NINAuth",
-  "Open request {ref}": "Buƙatar da ke buɗe {ref}",
-  "You already have this open — status: {status}":
-    "Kana da wannan a buɗe — matsayi: {status}",
+  "Track request": "Bi diddigin buƙata",
+  "Already open:": "Na nan a buɗe:",
+  "Status: {status}": "Matsayi: {status}",
   "Request opened": "An buɗe buƙata",
   "What you need": "Abin da kake buƙata",
   "Who it is for": "Wanda aka yi shi domin sa",
@@ -247,17 +247,17 @@ export const haServices: Record<string, string> = {
   " Family declaration (family information)": " Sanarwar iyali (bayanan iyali)",
   "family declaration": "sanarwar iyali",
   "Copy of previous residence visa": "Kwafin bizar zama ta baya",
-  "Area Council letter": "Wasiƙar Ƙaramar Hukuma",
+  "Local Government letter": "Wasiƙar Ƙaramar Hukuma",
   "FRSC permit": "Izinin FRSC",
   "FRSC letter": "Wasiƙar FRSC",
   "FRSC permit (if filming is on the road)":
     "Izinin FRSC (idan ana ɗaukar hoto a kan hanya)",
   "FRSC permit (if the event will take place on a road)":
     "Izinin FRSC (idan taron zai gudana a kan hanya)",
-  "FCT Sports Council's permit": "Izinin Hukumar Wasanni ta FCT",
-  "FCT Administration's permit": "Izinin Hukumar FCT",
-  "FCT Department of Tourism's permit":
-    "Izinin Sashen Yawon Buɗe Ido na FCT",
+  "State sports council's permit": "Izinin hukumar wasanni ta jiha",
+  "State government's permit": "Izinin gwamnatin jiha",
+  "State tourism authority's permit":
+    "Izinin hukumar yawon buɗe ido ta jiha",
   "Nigeria Security and Civil Defence Corps permit":
     "Izinin Hukumar Tsaron Farar Hula ta Najeriya",
   "National Film and Video Censors Board permit":
@@ -423,14 +423,14 @@ export const haServices: Record<string, string> = {
     "Babban Sashen Haƙƙin Ɗan Adam 7:30 – 15:30",
   "General Department of Organization Protective Security and Emergency 7:30 -15:30":
     "Babban Sashen Tsaron Kariya na Ƙungiyoyi da Gaggawa 7:30 – 15:30",
-  "Traffic Institute Department in General Traffic Department - Wuse : 7:30am - 3:30pm":
-    "Sashen Cibiyar Zirga-zirga a Babban Sashen Zirga-zirga — Wuse: 7:30 na safe – 3:30 na yamma",
-  "General Traffic Department (Garki - Asokoro) from Monday to Thursday 07:30 - 15:30 and on Friday from 07:30 - 12:00":
-    "Babban Sashen Zirga-zirga (Garki – Asokoro) daga Litinin zuwa Alhamis 07:30 – 15:30 kuma ranar Juma'a daga 07:30 – 12:00",
-  "General Traffic Department (Garki - Asokoro) from Monday to Thursday 07:30 - 15:30 and on Friday from 07:30 - 12:00…":
-    "Babban Sashen Zirga-zirga (Garki – Asokoro) daga Litinin zuwa Alhamis 07:30 – 15:30 kuma ranar Juma'a daga 07:30 – 12:00…",
-  "Dei-Dei Police Station 7:30 - 22:00 Wuse Police Station 7:30 - 22:00 Airport Police Station 7:30 - 22:00 Karu…":
-    "Ofishin 'Yan Sandan Dei-Dei 7:30 – 22:00, Ofishin 'Yan Sandan Wuse 7:30 – 22:00, Ofishin 'Yan Sandan Filin Jirgi 7:30 – 22:00, Karu…",
+  "Traffic Section at any State Command Headquarters: 7:30am - 3:30pm":
+    "Sashen Zirga-zirga a kowace Hedkwatar Rundunar Jiha: 7:30 na safe – 3:30 na yamma",
+  "Traffic Section at any State Command Headquarters, Monday to Thursday 07:30 - 15:30 and Friday 07:30 - 12:00":
+    "Sashen Zirga-zirga a kowace Hedkwatar Rundunar Jiha, Litinin zuwa Alhamis 07:30 – 15:30 da Juma'a 07:30 – 12:00",
+  "Traffic Section at any State Command Headquarters, Monday to Thursday 07:30 - 15:30 and Friday 07:30 - 12:00…":
+    "Sashen Zirga-zirga a kowace Hedkwatar Rundunar Jiha, Litinin zuwa Alhamis 07:30 – 15:30 da Juma'a 07:30 – 12:00…",
+  "Any Divisional Police Headquarters, 7:30 - 22:00":
+    "Kowace Hedkwatar Sashen 'Yan Sanda, 7:30 – 22:00",
 
   // --- who and where -------------------------------------------------------
   "from Outside Nigeria": "daga Wajen Najeriya",
@@ -494,8 +494,8 @@ export const haServices: Record<string, string> = {
     "Ana bayar da wannan hidima ga yara ƙasa da shekara 18 kaɗai.",
   "The applicant must have a driver's license": "Dole mai neman ya kasance da lasisin tuƙi",
   "Must possess a valid driving license.": "Dole ya kasance da lasisin tuƙi mai aiki.",
-  "Driving license must be issued from Abuja": "Dole a bayar da lasisin tuƙi daga Abuja",
-  "Vehicle must be registered in Abuja": "Dole a yi wa motar rajista a Abuja",
+  "Driving license must be issued in Nigeria": "Dole a bayar da lasisin tuƙi a Najeriya",
+  "Vehicle must be registered in Nigeria": "Dole a yi wa motar rajista a Najeriya",
   "The applicant must have a clear criminal record":
     "Dole mai neman ya kasance da rikodin laifi mai tsafta",
   "The criminal record must be clear of any offenses or violations.":
@@ -543,30 +543,28 @@ export const haServices: Record<string, string> = {
     "Takardar shaidar tana aiki har watanni uku daga ranar bayar da ita.",
   "The report is valid for 3 months from the date of issuance":
     "Rahoton yana aiki har watanni uku daga ranar bayar da shi",
-  "Incident must occur within the Federal Capital Territory.":
-    "Dole lamarin ya faru a cikin Babban Birnin Tarayya.",
-  "Incident must occur in the geographical boundaries of Abuja":
-    "Dole lamarin ya faru a cikin iyakokin ƙasa na Abuja",
-  "Incident must occur in the geographical boundaries of Abuja.":
-    "Dole lamarin ya faru a cikin iyakokin ƙasa na Abuja.",
-  "The incident reported must have occurred in the Federal Capital Territory":
-    "Dole lamarin da aka bayar da rahotonsa ya faru a Babban Birnin Tarayya",
-  "The incident must occur within the geographical boundaries of the Federal Capital Territory.":
-    "Dole lamarin ya faru a cikin iyakokin ƙasa na Babban Birnin Tarayya.",
-  "The incident must have occurred within the geographical boundaries of the Federal Capital Territory":
-    "Dole lamarin ya faru a cikin iyakokin ƙasa na Babban Birnin Tarayya",
-  "The accident must have occurred within the geographical limits of the Federal Capital Territory.":
-    "Dole haɗarin ya faru a cikin iyakokin ƙasa na Babban Birnin Tarayya.",
+  "Incident must occur within Nigeria.":
+    "Dole lamarin ya faru a cikin Najeriya.",
+  "Incident must occur within Nigeria":
+    "Dole lamarin ya faru a cikin Najeriya",
+  "The incident reported must have occurred in Nigeria":
+    "Dole lamarin da aka bayar da rahotonsa ya faru a Najeriya",
+  "The incident must occur within Nigeria.":
+    "Dole lamarin ya faru a cikin Najeriya.",
+  "The incident must have occurred within Nigeria":
+    "Dole lamarin ya faru a cikin Najeriya",
+  "The accident must have occurred within Nigeria.":
+    "Dole haɗarin ya faru a cikin Najeriya.",
   "Request can only be made for accidents that occurred within the geographical limits of the":
     "Ana iya yin buƙata ne kawai don haɗuran da suka faru a cikin iyakokin ƙasa na",
-  "The lost items must be within the geographical boundaries of the Federal Capital Territory":
-    "Dole abubuwan da suka ɓace su kasance a cikin iyakokin ƙasa na Babban Birnin Tarayya",
-  "The cheque must be received in the Federal Capital Territory":
-    "Dole a karɓi cak ɗin a Babban Birnin Tarayya",
-  "Shops must be located within the geographical scope of Abuja.":
-    "Dole shaguna su kasance a cikin iyakokin ƙasa na Abuja.",
-  "Incident time and jurisdiction area (Abuja)":
-    "Lokacin lamarin da yankin hukuncin (Abuja)",
+  "The lost items must be within Nigeria":
+    "Dole abubuwan da suka ɓace su kasance a cikin Najeriya",
+  "The cheque must be received in Nigeria":
+    "Dole a karɓi cak ɗin a Najeriya",
+  "Shops must be located within Nigeria.":
+    "Dole shaguna su kasance a cikin Najeriya.",
+  "Incident time and state where it happened":
+    "Lokacin lamarin da jihar da ya faru",
   "There must be an open report at the police station.":
     "Dole a sami rahoton da ke buɗe a ofishin 'yan sanda.",
   "There must be no existing court rulings on the same case":
@@ -581,8 +579,8 @@ export const haServices: Record<string, string> = {
     "Babu rikicin ma'aikata da ke jiran hukunci a Kotun Ma'aikata.",
   "There are no criminal or absconding reports filed against the Labour by the sponsor.":
     "Babu rahotannin laifi ko gudu da mai ɗaukar aiki ya shigar kan ma'aikacin.",
-  "The worker's residency permit is issued by the Federal Capital Territory.":
-    "Babban Birnin Tarayya ne ke bayar da izinin zaman ma'aikacin.",
+  "The worker's residency permit is issued in Nigeria.":
+    "An bayar da izinin zaman ma'aikacin a Najeriya.",
   "Applications that fail to follow terms and conditions will not be accepted.":
     "Ba za a karɓi buƙatun da ba su bi sharuɗɗa da ƙa'idoji ba.",
   "The applicant is responsible for ensuring the accuracy of the information submitted":
@@ -662,8 +660,8 @@ export const haServices: Record<string, string> = {
     "Rahoton shari'a na kwanan nan mai cikakken bayani da ke nuna tsarin jinya da jimillar kuɗi",
   "Any evidence or documentation related to the lost item (if available)":
     "Duk wata shaida ko takarda da ta shafi abin da ya ɓace (idan akwai)",
-  "Attach the road closure permit issued by the FCTA Transport Secretariat":
-    "Ka haɗa izinin rufe hanya da Sakatariyar Sufuri ta FCTA ta bayar",
+  "Attach the road closure permit issued by the state transport authority":
+    "Ka haɗa izinin rufe hanya da hukumar sufuri ta jiha ta bayar",
   " Official letter from the company in Hausa requesting to file a bounced cheque complaint":
     " Wasiƙar hukuma daga kamfanin cikin Hausa na neman shigar da ƙorafin cak ɗin da ya faskara",
   "An official letter from the event organizer, addressed to the Head of the Events Security Committee, containing the following:":
@@ -696,8 +694,8 @@ export const haServices: Record<string, string> = {
     "Ƙungiyoyi (Hukumomin Gwamnati da Kamfanoni): Dole a bayar da cikakken rahoton abubuwan da aka samu",
   "Matters that irrelevant to Nigeria Police Force Jurisdiction might be forwarded to the relevant authorities":
     "Ana iya tura al'amuran da ba su shafi ikon Rundunar 'Yan Sandan Najeriya ba zuwa hukumomin da abin ya shafa",
-  "In case of pitching a tent or closing a road, an official approval from the Area Council or the FCTA Transport Secretariat is mandatory.":
-    "Idan za a kafa laima ko a rufe hanya, wajibi ne a samu amincewar hukuma daga Ƙaramar Hukuma ko Sakatariyar Sufuri ta FCTA.",
+  "In case of pitching a tent or closing a road, an official approval from the Local Government or the state transport authority is mandatory.":
+    "Idan za a kafa laima ko a rufe hanya, wajibi ne a samu amincewar hukuma daga Ƙaramar Hukuma ko hukumar sufuri ta jiha.",
   "Lawyers can visit inmates on Thursday’s mornings of each week, through (virtual meeting) based on prior request and approval":
     "Lauyoyi na iya ziyartar 'yan kurkuku safiyar kowace Alhamis, ta (taron kan layi) bisa buƙata da amincewa da aka yi tun da farko",
   "The report must be filed by the director of the company named on the business license or their legal representative.":
@@ -714,8 +712,8 @@ export const haServices: Record<string, string> = {
     "Ana ba da takardar shaidar ga wanda ke da wakilcin shari'a, mai lamuni ko bisa buƙata da yardar ɗan kurkukun.",
   "Remark: In case the certificate could not be issued due to failing to meet the requirements, the fees paid may not be refunded":
     "Lura: Idan ba a iya bayar da takardar shaidar ba saboda rashin cika sharuɗɗa, ana iya rashin mayar da kuɗin da aka biya",
-  "The terms and conditions stipulated in the Lost and Found Regulations issued by the FCT Administration in 2015 apply.":
-    "Sharuɗɗa da ƙa'idojin da aka bayyana a Ƙa'idojin Ɓatattu da Waɗanda Aka Samu da Hukumar FCT ta fitar a 2015 suna aiki.",
+  "The Force's procedures for lost and found property apply.":
+    "Hanyoyin Rundunar na kayan da suka ɓace da waɗanda aka samu suna aiki.",
   "The permit is intended for carrying out maintenance work, inventory, or installing billboards or cinematography":
     "Ana nufin izinin don gudanar da aikin gyara, ƙidayar kaya, ko sanya allunan talla ko ɗaukar fim",
   "Barriers must be requested at least 48 hours in advance to confirm the reservation.":
@@ -734,8 +732,8 @@ export const haServices: Record<string, string> = {
     "Hidima da masu neman aiki za su iya sanin guraben aiki a Rundunar 'Yan Sandan Najeriya su kuma nema.",
   "This service enables lawyers to securely obtain formal, digitally-signed powers of attorney from their clients.":
     "Wannan hidima tana ba lauyoyi damar samun wakilcin shari'a na hukuma da aka sa wa hannu ta dijital daga abokan cinikinsu cikin aminci.",
-  "This service enables users wishing to visit the FCT Police Command Headquarters building to obtain a time-limited entry permit.":
-    "Wannan hidima tana ba masu son ziyartar ginin Hedkwatar Rundunar 'Yan Sandan FCT damar samun izinin shiga na ɗan lokaci.",
+  "This service enables users wishing to visit the Force Headquarters building to obtain a time-limited entry permit.":
+    "Wannan hidima tana ba masu son ziyartar ginin Hedkwatar Rundunar 'Yan Sanda ta Ƙasa damar samun izinin shiga na ɗan lokaci.",
   "This service enables users to submit their inquiries about the services, procedures and requirements approved by Nigeria Police Force.":
     "Wannan hidima tana ba masu amfani damar gabatar da tambayoyinsu game da ayyuka, hanyoyin aiki da abubuwan da Rundunar 'Yan Sandan Najeriya ta amince da su.",
   "This service enables customers to obtain a permit to visit the Nigeria Police Force Museum and view its collections and security history.":
@@ -746,8 +744,8 @@ export const haServices: Record<string, string> = {
     "Wannan hidima tana nufin ba masu amfani damar yin rajista a jerin masu kawo kaya da Rundunar 'Yan Sandan Najeriya ta amince da su da gudanar da mu'amala ta lantarki.",
   "This service allows users to submit a request to hire a lecturer or request to give a lecture with the help of a lecturer from Nigeria Police Force.":
     "Wannan hidima tana ba masu amfani damar gabatar da buƙatar ɗaukar malamin lacca ko neman a yi lacca da taimakon malami daga Rundunar 'Yan Sandan Najeriya.",
-  "This service enables customers wishing to change the color of their vehicles registered in the Federal Capital Territory to obtain a permit to do so.":
-    "Wannan hidima tana ba abokan hulɗa da ke son canza launin motocinsu da aka yi wa rajista a Babban Birnin Tarayya damar samun izinin yin hakan.",
+  "This service enables customers wishing to change the color of their vehicles registered in Nigeria to obtain a permit to do so.":
+    "Wannan hidima tana ba abokan hulɗa da ke son canza launin motocinsu da aka yi wa rajista a Najeriya damar samun izinin yin hakan.",
   "• **Email**: The digital version of the permit will be sent to your registered email address as soon as it is issued.":
     "• **Imel**: Za a aika sigar dijital na izinin zuwa adireshin imel ɗinka da ka yi rajista da zarar an bayar da shi.",
   "• **Email**: The digital version of the certificate will be sent to your registered email address as soon as it is issued.":
@@ -782,18 +780,18 @@ export const haServices: Record<string, string> = {
     "Dole kada mai neman ya kasance da hukuncin kotu a kansa kan laifukan da suka shafi mutunci ko amana kuma kada a taɓa kore shi daga rundunonin tsaro saboda kowane dalili",
   "This service enables customers to report vehicles obstructing their movement, with the vehicle owner automatically notified via a warning SMS to move the vehicle immediately.":
     "Wannan hidima tana ba abokan hulɗa damar bayar da rahoton motocin da suka toshe musu hanya, kuma ana sanar da mai motar ta atomatik da saƙon gargaɗi don ya kawar da motar nan take.",
-  "The applicant declares to complying with all laws, regulations, and instructions related to the handling and transportation of explosives within the Federal Capital Territory.":
-    "Mai neman ya yi alƙawarin bin duk dokoki, ƙa'idoji da umarnin da suka shafi riƙewa da jigilar kayan fashewa a cikin Babban Birnin Tarayya.",
+  "The applicant declares to complying with all laws, regulations, and instructions related to the handling and transportation of explosives within Nigeria.":
+    "Mai neman ya yi alƙawarin bin duk dokoki, ƙa'idoji da umarnin da suka shafi riƙewa da jigilar kayan fashewa a cikin Najeriya.",
   "This service aims to enable organizations involved in drug control to meet their needs by conducting training courses or organizing specialized field workshops on drug control.":
     "Wannan hidima tana nufin ba ƙungiyoyin da ke yaƙi da ƙwayoyi damar biyan buƙatunsu ta hanyar gudanar da kwasa-kwasan horo ko shirya bita na musamman a fagen yaƙi da ƙwayoyi.",
-  "The Labour has a valid employment contract or official permit issued by the Federal Ministry of Labour and Employment or by authorized entities such as the free zones in Abuja.":
-    "Ma'aikacin yana da kwantiragin aiki mai aiki ko izinin hukuma da Ma'aikatar Kwadago da Aikin Yi ta Tarayya ko wasu hukumomin da aka ba izini kamar yankunan 'yanci a Abuja suka bayar.",
+  "The Labour has a valid employment contract or official permit issued by the Federal Ministry of Labour and Employment or by authorized entities such as the free zones in Nigeria.":
+    "Ma'aikacin yana da kwantiragin aiki mai aiki ko izinin hukuma da Ma'aikatar Kwadago da Aikin Yi ta Tarayya ko wasu hukumomin da aka ba izini kamar yankunan 'yanci a Najeriya suka bayar.",
   "This service allows Nigerian citizens and residents to obtain a permit for the entry of a deceased person into the country, subject to prior approval from the relevant authorities":
     "Wannan hidima tana ba 'yan ƙasar Najeriya da mazauna damar samun izinin shigar da gawar mamaci cikin ƙasar, bisa amincewar hukumomin da abin ya shafa tun da farko",
   "Nigeria Police Force reserves the right to take all necessary actions to protect its rights, and in line with applicable laws and regulations, without prior consent from the customer":
     "Rundunar 'Yan Sandan Najeriya tana da haƙƙin ɗaukar duk matakan da suka dace domin kare haƙƙoƙinta, bisa dokoki da ƙa'idojin da suke aiki, ba tare da yardar abokin hulɗa tun da farko ba",
-  "The certificate is issued to the inmate who has been sentenced to a court order and has served the sentence, or continues to do so in the penal and correctional institutions of Abuja.":
-    "Ana bayar da takardar shaidar ga ɗan kurkukun da kotu ta yanke wa hukunci kuma ya kammala hukuncin, ko yana ci gaba da yin sa a gidajen gyaran hali na Abuja.",
+  "The certificate is issued to the inmate who has been sentenced to a court order and has served the sentence, or continues to do so in the penal and correctional institutions of Nigeria.":
+    "Ana bayar da takardar shaidar ga ɗan kurkukun da kotu ta yanke wa hukunci kuma ya kammala hukuncin, ko yana ci gaba da yin sa a gidajen gyaran hali na Najeriya.",
   "This service allows customers to book and use sports facilities at the Nigeria Police Force Officers Club, such as (Artificial Turf Football Field - Turf Football field - Track - Field.)":
     "Wannan hidima tana ba abokan hulɗa damar yin ajiya da amfani da wuraren wasanni a Kulob ɗin Jami'an Rundunar 'Yan Sandan Najeriya, kamar (Filin Ƙwallon Ƙafa na Ciyawar Roba — Filin Ƙwallon Ƙafa na Ciyawa — Hanyar Gudu — Filin Wasa.)",
   "In line with Nigeria’s National Development Plan 2021–2025 and the Federal Ministry of Interior’s 2023 –2026 digital security goals, report cybercrime and help create a safer digital space.":
@@ -802,8 +800,8 @@ export const haServices: Record<string, string> = {
     "Wannan hidima tana ba cibiyoyin ilimi damar neman shirye-shiryen wayar da kai ga ɗalibai, waɗanda ƙwararru daga Rundunar 'Yan Sandan Najeriya ke gabatarwa, domin ƙarfafa wayewarsu ta tsaro da zamantakewa.",
   "This service enables gold traders to submit security verification requests for gold purchase transactions, to ensure that the gold being sold is not linked to any criminal cases or offenses.":
     "Wannan hidima tana ba 'yan kasuwar zinariya damar gabatar da buƙatun tabbatar da tsaro kan sayen zinariya, domin tabbatar da cewa zinariyar da ake sayarwa ba ta da alaƙa da wata shari'ar laifi.",
-  "This service provides the necessary permit for virtual meetings with detainees or inmates held within the Federal Capital Territory, in accordance with applicable procedures and regulations.":
-    "Wannan hidima tana bayar da izinin da ake buƙata don taron kan layi da waɗanda ake tsare ko 'yan kurkuku a cikin Babban Birnin Tarayya, bisa hanyoyin aiki da ƙa'idojin da suke aiki.",
+  "This service provides the necessary permit for virtual meetings with detainees or inmates held within Nigeria, in accordance with applicable procedures and regulations.":
+    "Wannan hidima tana bayar da izinin da ake buƙata don taron kan layi da waɗanda ake tsare ko 'yan kurkuku a cikin Najeriya, bisa hanyoyin aiki da ƙa'idojin da suke aiki.",
   "This service enables users to obtain a certificate detailing the vehicle’s traffic record, including fines, penalty points, and registered accidents, along with the driver’s involvement in each.":
     "Wannan hidima tana ba masu amfani damar samun takardar shaida mai cikakken bayanin rikodin zirga-zirgar mota, ciki har da tara, makin hukunci, da haɗuran da aka rubuta, tare da hannun direban a kowanne.",
   "This service enables users to attach the required documents to support their applications or electronic transactions with Nigeria Police Force . It allows relevant files to be uploaded directly .":
@@ -820,20 +818,20 @@ export const haServices: Record<string, string> = {
     "Wannan hidima tana ba mutanen da laifuka daban-daban suka shafa damar shigar da ƙorafi ga hukumomin da abin ya shafa, waɗanda za su tura shari'ar ga hukumomin shari'a domin tabbatar da haƙƙoƙinsu",
   "This service allows individuals impacted by various types of criminal offenses to file complaints to the competent authorities who then refer the cases to the judicial authorities to ensure their rights are upheld.":
     "Wannan hidima tana ba mutanen da laifuka daban-daban suka shafa damar shigar da ƙorafi ga hukumomin da abin ya shafa, waɗanda za su tura shari'ar ga hukumomin shari'a domin tabbatar da haƙƙoƙinsu.",
-  "This service aims to enhance home security in Abuja through a smart monitoring system that operates 24/7, connected with the strategic partner “9mobile” to provide instant alerts supported by a unified cellular network.":
-    "Wannan hidima tana nufin ƙarfafa tsaron gida a Abuja ta tsarin sa ido na zamani da ke aiki sa'o'i 24, wanda aka haɗa da abokin huldar dabaru “9mobile” domin bayar da faɗakarwa nan take ta hanyar sadarwar salula guda ɗaya.",
+  "This service aims to enhance home security in Nigeria through a smart monitoring system that operates 24/7, connected with the strategic partner “9mobile” to provide instant alerts supported by a unified cellular network.":
+    "Wannan hidima tana nufin ƙarfafa tsaron gida a Najeriya ta tsarin sa ido na zamani da ke aiki sa'o'i 24, wanda aka haɗa da abokin huldar dabaru “9mobile” domin bayar da faɗakarwa nan take ta hanyar sadarwar salula guda ɗaya.",
   "This service enables users to submit criminal complaints of all kinds and to coordinate with the competent authorities to refer the complaint file to the judicial authorities after verifying the validity of the complaint.":
     "Wannan hidima tana ba masu amfani damar shigar da ƙorafe-ƙorafen laifuka iri-iri da haɗa kai da hukumomin da abin ya shafa domin tura fayil ɗin ƙorafin ga hukumomin shari'a bayan tabbatar da ingancin ƙorafin.",
   "This service aims to enhance direct communication between Nigeria Police Force senior leadership and the public, allowing leaders to respond to inquiries and feedback within their functional and administrative responsibilities":
     "Wannan hidima tana nufin ƙarfafa sadarwa kai tsaye tsakanin manyan shugabannin Rundunar 'Yan Sandan Najeriya da jama'a, tana ba shugabanni damar amsa tambayoyi da ra'ayoyi cikin nauyin aikinsu da na gudanarwa",
-  "Applicants who do not have an NIN must visit a service center during official working hours in person to have their fingerprints taken (Karu Police Station, Airport Police Station, Lugbe Police Station, Dei-Dei Police Station)":
-    "Masu nema waɗanda ba su da NIN dole su ziyarci cibiyar hidima a lokacin aiki na hukuma da kansu domin a ɗauki zanan yatsunsu (Ofishin 'Yan Sandan Karu, Ofishin 'Yan Sandan Filin Jirgi, Ofishin 'Yan Sandan Lugbe, Ofishin 'Yan Sandan Dei-Dei)",
+  "Applicants who do not have an NIN must visit any Divisional Police Headquarters in person during official working hours to have their fingerprints taken":
+    "Masu nema waɗanda ba su da NIN dole su ziyarci kowace Hedkwatar Sashen 'Yan Sanda da kansu a lokacin aiki domin a ɗauki zanen yatsunsu",
   "This service enables members of the community, whether Nigeria Police Force employees or the public, to volunteer with Nigeria Police Force by registering for available opportunities on the Nigeria Police Force Volunteer Platform.":
     "Wannan hidima tana ba mutanen al'umma, ko ma'aikatan Rundunar 'Yan Sandan Najeriya ne ko jama'a, damar yin aikin sa kai da Rundunar ta hanyar yin rajista a guraben da ake da su a Dandalin Aikin Sa Kai na Rundunar.",
   "This service discusses the most critical issues, challenges and developments in drug control. It examines the topic from multiple perspectives with a team of specialists, aiming to develop solutions and recommendations for these concerns.":
     "Wannan hidima tana tattauna muhimman batutuwa, ƙalubale da ci gaba a fagen yaƙi da ƙwayoyi. Tana duba maudu'in daga fuskoki daban-daban tare da tawagar ƙwararru, da nufin samar da mafita da shawarwari kan waɗannan damuwa.",
-  "This service aims to enable heart patients and those with critical medical conditions in the Federal Capital Territory to register for priority ambulance dispatch and receive prompt and appropriate medical attention in case of an emergency.":
-    "Wannan hidima tana nufin ba marasa lafiyar zuciya da masu manyan cututtuka a Babban Birnin Tarayya damar yin rajista domin fifikon turo motar asibiti da samun kulawar likita cikin gaggawa idan aka sami gaggawa.",
+  "This service aims to enable heart patients and those with critical medical conditions in Nigeria to register for priority ambulance dispatch and receive prompt and appropriate medical attention in case of an emergency.":
+    "Wannan hidima tana nufin ba marasa lafiyar zuciya da masu manyan cututtuka a Najeriya damar yin rajista domin fifikon turo motar asibiti da samun kulawar likita cikin gaggawa idan aka sami gaggawa.",
   "The applicant acknowledges that the weight entered in the application is an estimated weight, and the actual weight will be accurately determined by the Nigeria Police Force upon approving the request and deliver the shipment to the police.":
     "Mai neman ya amince cewa nauyin da ya shigar a buƙatar kimanin nauyi ne, kuma Rundunar 'Yan Sandan Najeriya za ta auna ainihin nauyin daidai idan ta amince da buƙatar aka kuma kai kayan ga 'yan sanda.",
   "The service is for companies wishing to register as one of the suppliers in the Nigeria Police Force Supplier Registry, which will allow them to access tenders, receive tender award notices, and deal with Nigeria Police Force electronically":
@@ -848,48 +846,48 @@ export const haServices: Record<string, string> = {
     "Wannan hidima tana nufin ba ma'aikatan ɓangaren kasuwanci damar shigar da ƙorafi ɗaya-ɗaya ko na haɗin gwiwa kan kamfanonin da suke aiki da su, game da albashi, yanayin aiki, masaukin ma'aikata, ko buƙatun lafiya da aminci.",
   "Embracing the National Digital Economy Policy and the paperless government drive, the Lost & Found service ensures a fully digital experience that eliminates bureaucracy and promotes sustainability, reinforced by the Blockchain's security and transparency":
     "Da rungumar Manufar Tattalin Arzikin Dijital ta Ƙasa da yunƙurin gwamnati marar takarda, hidimar Ɓatattu da Waɗanda Aka Samu tana tabbatar da gogewa ta dijital cikakke wadda ke kawar da jan aiki tana kuma inganta dorewa, wanda tsaro da gaskiyar Blockchain ke ƙarfafawa",
-  "This service aims to enable drivers holding driving licenses issued from Abuja, and who have accumulated traffic points on their licenses to enroll in specialized traffic safety training courses to benefit from a reduction in the points recorded against them.":
-    "Wannan hidima tana nufin ba direbobin da ke da lasisin tuƙi da aka bayar daga Abuja, waɗanda suka tara makin zirga-zirga a lasisinsu, damar shiga kwasa-kwasan horo na musamman kan tsaron hanya domin amfana da ragin makin da aka rubuta a kansu.",
+  "This service aims to enable drivers holding driving licenses issued in Nigeria, and who have accumulated traffic points on their licenses to enroll in specialized traffic safety training courses to benefit from a reduction in the points recorded against them.":
+    "Wannan hidima tana nufin ba direbobin da ke da lasisin tuƙi da aka bayar a Najeriya, waɗanda suka tara makin zirga-zirga a lasisinsu, damar shiga kwasa-kwasan horo na musamman kan tsaron hanya domin amfana da ragin makin da aka rubuta a kansu.",
   "This service enables users to report lost property or hand over found items to Nigeria Police Force for restoration to their rightful owners following verification. It also allows them to track their application status and obtain an official ‘Loss Certificate’":
     "Wannan hidima tana ba masu amfani damar bayar da rahoton dukiyar da ta ɓace ko miƙa abubuwan da aka samu ga Rundunar 'Yan Sandan Najeriya domin mayar da su ga masu su bayan tabbatarwa. Tana kuma ba su damar bin matsayin buƙatarsu da samun 'Takardar Shaidar Ɓatawa' ta hukuma",
   "This service allows individuals to report the loss of their belongings or personal items and ensures communication with the owner if the item is found. With the option to request Lost certificate (subject to a fees), which can be used with other official entities.":
     "Wannan hidima tana ba mutane damar bayar da rahoton ɓatar da kayansu ko kayan kansu kuma tana tabbatar da tuntuɓar mai shi idan an sami abin. Tare da damar neman Takardar Shaidar Ɓatawa (bisa kuɗi), wadda za a iya amfani da ita a wasu hukumomin gwamnati.",
-  "This service enables users to obtain a clearance certificate confirming that the vehicle owner has settled all traffic violations and that there are no recorded accidents, traffic points, or active restrictions in Abuja against the vehicle or the driver’s license.":
-    "Wannan hidima tana ba masu amfani damar samun takardar shaidar tsabta da ke tabbatar da cewa mai motar ya biya duk laifukan zirga-zirga kuma babu haɗurran da aka rubuta, makin zirga-zirga, ko takunkumi mai aiki a Abuja kan motar ko lasisin direban.",
+  "This service enables users to obtain a clearance certificate confirming that the vehicle owner has settled all traffic violations and that there are no recorded accidents, traffic points, or active restrictions in Nigeria against the vehicle or the driver’s license.":
+    "Wannan hidima tana ba masu amfani damar samun takardar shaidar tsabta da ke tabbatar da cewa mai motar ya biya duk laifukan zirga-zirga kuma babu haɗurran da aka rubuta, makin zirga-zirga, ko takunkumi mai aiki a Najeriya kan motar ko lasisin direban.",
   "This service enables users to book an appointment in advance before visiting service centers to complete their transactions in person. It also allows them to modify or cancel their appointment, ensuring a more flexible experience that saves time and eliminates waiting":
     "Wannan hidima tana ba masu amfani damar yin ajiyar lokaci tun da farko kafin ziyartar cibiyoyin hidima domin kammala mu'amalarsu da kansu. Tana kuma ba su damar canza ko soke lokacin, tana tabbatar da gogewa mai sauƙi wadda ke ceton lokaci tana kawar da jira",
   "This service enables health authorities and medical centers to submit requests for extending the treatment period of Nigeria Police Force patients receiving medical care abroad, ensuring the continuity of care in accordance with approved medical reports and recommendations.":
     "Wannan hidima tana ba hukumomin lafiya da cibiyoyin likita damar gabatar da buƙatar ƙara lokacin jinyar marasa lafiya na Rundunar 'Yan Sandan Najeriya da ke samun kulawa a ƙasashen waje, tana tabbatar da ci gaba da kulawa bisa rahotannin likita da shawarwarin da aka amince da su.",
   "This service aims to enable Persons with Disabilities with physical, hearing, or visual disabilities across all Nigeria to register and subscribe, ensuring they granted priority in ambulance dispatch and provided with a fast and appropriate response in emergency situations.":
     "Wannan hidima tana nufin ba masu naƙasa ta jiki, ta ji, ko ta gani a faɗin Najeriya damar yin rajista da biyan kuɗi, tana tabbatar da an ba su fifiko wajen turo motar asibiti kuma an ba su amsa mai sauri da ta dace a lokacin gaggawa.",
-  "This service enables users who have obtained a street closure permit from the FCTA Transport Secretariat to notify Nigeria Police Force of closure periods, enabling the Command and Control Center to know about closed roads while directing patrols to accident sites and reports.":
-    "Wannan hidima tana ba masu amfani da suka samu izinin rufe titi daga Sakatariyar Sufuri ta FCTA damar sanar da Rundunar 'Yan Sandan Najeriya lokutan rufewa, tana ba Cibiyar Umarni da Kula damar sanin hanyoyin da aka rufe yayin tura sintiri zuwa wuraren haɗari da rahotanni.",
+  "This service enables users who have obtained a street closure permit from the state transport authority to notify Nigeria Police Force of closure periods, enabling the Command and Control Center to know about closed roads while directing patrols to accident sites and reports.":
+    "Wannan hidima tana ba masu amfani da suka samu izinin rufe titi daga hukumar sufuri ta jiha damar sanar da Rundunar 'Yan Sandan Najeriya lokutan rufewa, tana ba Cibiyar Umarni da Kula damar sanin hanyoyin da aka rufe yayin tura sintiri zuwa wuraren haɗari da rahotanni.",
   "Through this service, Lawyers can apply for Restriction release Certificate from Nigeria Police Force Head Quarter, to follow up on procedures for lifting circulars and security restrictions on individuals or license plates, after settling the client's legal and financial status.":
     "Ta wannan hidima, lauyoyi za su iya neman Takardar Shaidar Ɗage Takunkumi daga Hedkwatar Rundunar 'Yan Sandan Najeriya, domin bibiyar hanyoyin ɗage sanarwa da takunkuman tsaro kan mutane ko lambobin mota, bayan warware matsayin shari'a da na kuɗi na abokin ciniki.",
   "This service enables police officers and financial institutions to handle banking information through the Economic Crimes Operations Center, which serves as a vital link between the victim and the banking sector, with the aim of halting fraudulent transactions and identifying the perpetrators.":
     "Wannan hidima tana ba jami'an 'yan sanda da cibiyoyin kuɗi damar sarrafa bayanan banki ta Cibiyar Ayyukan Laifukan Tattalin Arziki, wadda ke zama muhimmiyar haɗi tsakanin wanda aka yi wa laifi da ɓangaren banki, da nufin dakatar da mu'amalar zamba da gano waɗanda suka aikata.",
-  "This service enables individuals, entities, and organizations to request the participation of Nigeria Police Force specialized units, such as the Mounted Police, Music Band, K9 Unit, and Highway Patrols in official events, festivals, and public parades held across the Federal Capital Territory.":
-    "Wannan hidima tana ba mutane, hukumomi da ƙungiyoyi damar neman shigar rundunonin Rundunar 'Yan Sandan Najeriya na musamman, kamar 'Yan Sandan Dawakai, Ƙungiyar Kiɗa, Rundunar Karnuka (K9), da Sintirin Babbar Hanya a tarukan hukuma, bukukuwa da faretin jama'a a faɗin Babban Birnin Tarayya.",
+  "This service enables individuals, entities, and organizations to request the participation of Nigeria Police Force specialized units, such as the Mounted Police, Music Band, K9 Unit, and Highway Patrols in official events, festivals, and public parades held across Nigeria.":
+    "Wannan hidima tana ba mutane, hukumomi da ƙungiyoyi damar neman shigar rundunonin Rundunar 'Yan Sandan Najeriya na musamman, kamar 'Yan Sandan Dawakai, Ƙungiyar Kiɗa, Rundunar Karnuka (K9), da Sintirin Babbar Hanya a tarukan hukuma, bukukuwa da faretin jama'a a faɗin Najeriya.",
   "This service aims to provide an immediate and comprehensive response to cases involving children exposed to any form of physical or psychological abuse or neglect, by offering the necessary protection and support to ensure their safety and safeguard their rights in accordance with applicable laws.":
     "Wannan hidima tana nufin bayar da amsa nan take kuma cikakkiya ga lamurran da suka shafi yaran da aka yi wa kowace irin cutarwa ta jiki ko ta hankali ko sakaci, ta hanyar bayar da kariya da tallafin da ake buƙata domin tabbatar da amincinsu da kare haƙƙoƙinsu bisa dokokin da suke aiki.",
-  "This service enables individuals and organizations within the Federal Capital Territory to hand over found items to police stations or designated partners participating in the Lost and Found Program. The objective is to facilitate the process of locating and returning lost items to their rightful owners":
-    "Wannan hidima tana ba mutane da ƙungiyoyi a cikin Babban Birnin Tarayya damar miƙa abubuwan da suka samu ga ofisoshin 'yan sanda ko abokan huldar da ke cikin Shirin Ɓatattu da Waɗanda Aka Samu. Manufar ita ce sauƙaƙa gano da mayar da abubuwan da suka ɓace ga masu su",
+  "This service enables individuals and organizations within Nigeria to hand over found items to police stations or designated partners participating in the Lost and Found Program. The objective is to facilitate the process of locating and returning lost items to their rightful owners":
+    "Wannan hidima tana ba mutane da ƙungiyoyi a cikin Najeriya damar miƙa abubuwan da suka samu ga ofisoshin 'yan sanda ko abokan huldar da ke cikin Shirin Ɓatattu da Waɗanda Aka Samu. Manufar ita ce sauƙaƙa gano da mayar da abubuwan da suka ɓace ga masu su",
   "This service enables individuals to report suspected cases or practices related to human trafficking such as labor exploitation, sexual exploitation, or organ trafficking. It also aims to protect the privacy of individuals and ensure that information reaches the competent authorities in a secure and safe manner.":
     "Wannan hidima tana ba mutane damar bayar da rahoton lamurra ko ayyukan da ake tuhuma da alaƙa da fataucin mutane kamar cin zarafin ma'aikata, cin zarafin jima'i, ko fataucin gaɓoɓin jiki. Tana kuma nufin kare sirrin mutane da tabbatar da bayanin ya isa ga hukumomin da abin ya shafa cikin aminci.",
   "This service aims to strengthen community policing by enabling residents to communicate directly with police officers through an interactive neighborhood platform, report concerns and suggestions, and collaborate in addressing local issues, thereby enhancing security, safety, and quality of life within the community.":
     "Wannan hidima tana nufin ƙarfafa aikin 'yan sanda na al'umma ta hanyar ba mazauna damar sadarwa kai tsaye da jami'an 'yan sanda ta dandalin unguwa, bayar da rahoton damuwa da shawarwari, da haɗa kai wajen magance matsalolin cikin gida, ta haka ana ƙarfafa tsaro, aminci da ingancin rayuwa a cikin al'umma.",
-  "This service provides dedicated support to tourists visiting Federal Capital Territory by receiving and addressing tourism-related inquiries, reports, and complaints. As it ensures guidance, coordination, and assistance through official Nigeria Police Force channels to help maintain a safe and positive tourism experience.":
-    "Wannan hidima tana bayar da tallafi na musamman ga masu yawon buɗe ido da ke ziyartar Babban Birnin Tarayya ta karɓa da magance tambayoyi, rahotanni da ƙorafe-ƙorafen da suka shafi yawon buɗe ido. Tana tabbatar da jagora, haɗin kai da taimako ta hanyoyin hukuma na Rundunar 'Yan Sandan Najeriya domin kiyaye gogewar yawon buɗe ido mai aminci.",
+  "This service provides dedicated support to tourists visiting Nigeria by receiving and addressing tourism-related inquiries, reports, and complaints. As it ensures guidance, coordination, and assistance through official Nigeria Police Force channels to help maintain a safe and positive tourism experience.":
+    "Wannan hidima tana bayar da tallafi na musamman ga masu yawon buɗe ido da ke ziyartar Najeriya ta karɓa da magance tambayoyi, rahotanni da ƙorafe-ƙorafen da suka shafi yawon buɗe ido. Tana tabbatar da jagora, haɗin kai da taimako ta hanyoyin hukuma na Rundunar 'Yan Sandan Najeriya domin kiyaye gogewar yawon buɗe ido mai aminci.",
   "This service enables drivers of vehicles involved in minor or moderate traffic accidents without injuries, whether at fault or affected, to obtain an official report that allows them to proceed with insurance claims and complete the necessary procedures, provided the accident is not linked to a criminal case or that the driver was under the influence of alcohol.":
     "Wannan hidima tana ba direbobin motocin da suka yi ƙananan haɗura ko matsakaita ba tare da rauni ba, ko su ne suka yi laifi ko abin ya shafe su, damar samun rahoton hukuma da zai ba su damar ci gaba da neman inshora da kammala hanyoyin da ake buƙata, muddin haɗarin ba shi da alaƙa da shari'ar laifi ko direban bai sha giya ba.",
-  "By integrating the latest technologies to counter evolving crime patterns, the Rescue Me initiative ensures a proactive approach to public safety. It encourages residents to report suspicious observations promptly, reinforcing a culture of vigilance and cooperation. This initiative underpins the vision of the Territory and the Federal Ministry of Interior’s pursuit of leadership in security.":
-    "Ta haɗa sabbin fasahohi domin yaƙar salon laifuka masu sauyawa, shirin Ku Cece Ni yana tabbatar da hanyar shirin gaba ga tsaron jama'a. Yana ƙarfafa mazauna su bayar da rahoton abin da suke tuhuma da wuri, yana ƙarfafa al'adar sa ido da haɗin kai. Wannan shiri yana ƙarfafa hangen nesa na Babban Birnin Tarayya da ƙoƙarin Ma'aikatar Cikin Gida ta Tarayya na jagoranci a fagen tsaro.",
+  "By integrating the latest technologies to counter evolving crime patterns, the Rescue Me initiative ensures a proactive approach to public safety. It encourages residents to report suspicious observations promptly, reinforcing a culture of vigilance and cooperation. This initiative underpins the vision of the Force and the Federal Ministry of Interior’s pursuit of leadership in security.":
+    "Ta haɗa sabbin fasahohi domin yaƙar salon laifuka masu sauyawa, shirin Ku Cece Ni yana tabbatar da hanyar shirin gaba ga tsaron jama'a. Yana ƙarfafa mazauna su bayar da rahoton abin da suke tuhuma da wuri, yana ƙarfafa al'adar sa ido da haɗin kai. Wannan shiri yana ƙarfafa hangen nesa na Rundunar da ƙoƙarin Ma'aikatar Cikin Gida ta Tarayya na jagoranci a fagen tsaro.",
   "This service enables users to obtain an official certificate that outlines the facts and circumstances recorded in reports of damage, natural disasters, or traffic accidents. The certificate specifies the status of the parties involved and the resulting damages, enabling users to complete the necessary legal procedures with relevant entities such as judicial authorities and insurance companies.":
     "Wannan hidima tana ba masu amfani damar samun takardar shaida ta hukuma da ke bayyana gaskiya da yanayin da aka rubuta a rahotannin lalacewa, bala'o'i, ko haɗurran zirga-zirga. Takardar tana bayyana matsayin ɓangarorin da abin ya shafa da lalacewar da ta biyo baya, tana ba masu amfani damar kammala hanyoyin shari'a da ake buƙata da hukumomin da abin ya shafa kamar hukumomin shari'a da kamfanonin inshora.",
   "This service enables users to register their marine trips and expected locations, and to request assistance in emergency situations. The system automatically sends alerts for delayed trips. The service also offers various features such as trip tracking, dive site identification, location sharing, specifying the type and severity of distress, and smart integration with other government applications.":
     "Wannan hidima tana ba masu amfani damar yin rajistar tafiye-tafiyensu a kan ruwa da wuraren da suke nufi, da neman taimako a lokacin gaggawa. Tsarin yana aika faɗakarwa ta atomatik don tafiye-tafiyen da suka yi jinkiri. Hidimar kuma tana bayar da abubuwa daban-daban kamar bin diddigin tafiya, gano wurin nutsewa, raba wuri, bayyana nau'i da tsananin matsala, da haɗi mai hankali da sauran manhajojin gwamnati.",
-  "This service aims to enable the inmate, their sponsor, or a family member (upon the inmate’s approval) to obtain an official “To Whom It May Concern” certificate confirming the completion or ongoing execution of the judicial sentence in Abuja’s correctional and penal institutions. The certificate is valid for a period of time, facilitating the completion of official, financial, and social transactions in accordance with applicable regulations.":
-    "Wannan hidima tana nufin ba ɗan kurkuku, mai ɗaukar nauyinsa, ko wani daga iyalinsa (bisa amincewar ɗan kurkukun) damar samun takardar shaidar hukuma ta “Ga Duk Wanda Abin Ya Shafa” da ke tabbatar da kammalawa ko ci gaba da zartar da hukuncin kotu a gidajen gyaran hali na Abuja. Takardar tana aiki na wani ɗan lokaci, tana sauƙaƙa kammala mu'amalar hukuma, ta kuɗi da ta zamantakewa bisa ƙa'idojin da suke aiki.",
+  "This service aims to enable the inmate, their sponsor, or a family member (upon the inmate’s approval) to obtain an official “To Whom It May Concern” certificate confirming the completion or ongoing execution of the judicial sentence in Nigeria’s correctional and penal institutions. The certificate is valid for a period of time, facilitating the completion of official, financial, and social transactions in accordance with applicable regulations.":
+    "Wannan hidima tana nufin ba ɗan kurkuku, mai ɗaukar nauyinsa, ko wani daga iyalinsa (bisa amincewar ɗan kurkukun) damar samun takardar shaidar hukuma ta “Ga Duk Wanda Abin Ya Shafa” da ke tabbatar da kammalawa ko ci gaba da zartar da hukuncin kotu a gidajen gyaran hali na Najeriya. Takardar tana aiki na wani ɗan lokaci, tana sauƙaƙa kammala mu'amalar hukuma, ta kuɗi da ta zamantakewa bisa ƙa'idojin da suke aiki.",
   "This service enables Nigeria Police Force retirees to access a comprehensive package of dedicated services designed to strengthen communication and facilitate their access to various benefits. The services include the issuance and renewal of military and civil identification cards, issuance and renewal of the “POSSAP” card, military health insurance, medical treatment and equipment requests, issuance of different types of service certificates, and home visit arrangements for senior citizens and individuals unable to attend in person.":
     "Wannan hidima tana ba masu ritaya na Rundunar 'Yan Sandan Najeriya damar samun cikakken ƙunshin ayyuka na musamman da aka tsara domin ƙarfafa sadarwa da sauƙaƙa musu samun amfanoni daban-daban. Ayyukan sun haɗa da bayarwa da sabunta katunan shaida na soja da na farar hula, bayarwa da sabunta katin “POSSAP”, inshorar lafiya ta soja, buƙatun jinya da kayan aiki, bayar da takardun shaidar aiki iri-iri, da shirya ziyarar gida ga tsofaffi da waɗanda ba za su iya zuwa da kansu ba.",
   "A service to inquire about traffic violations, including the following: • Traffic Fines Payment: A service that enables the settlement of traffic violations registered against a vehicle plate, driving licence, or traffic code. • Traffic Fines Instalments: A service that allows for the payment of traffic violations in monthly instalments via direct debit or credit card, subject to applicable terms and conditions. • Pay Against Impound: A service that allows for the payment of a daily fee to waive a vehicle’s impoundment period, provided no legal restrictions apply. • Smart…":
@@ -917,14 +915,16 @@ export const haServices: Record<string, string> = {
   "Lost a document or an item? A police extract records the loss, and is often asked for when replacing one, such as a passport":
     "Ka ɓatar da takarda ko wani abu? Takardar bayanin 'yan sanda tana rubuta asarar, kuma ana yawan neman ta lokacin maye gurbin wani abu, kamar fasfo",
   "Police Extract": "Takardar Bayanin 'Yan Sanda",
+  "Need proof you have no criminal record in Nigeria? Apply online and the certificate comes to your email, usually within 5 working days":
+    "Kana buƙatar shaidar cewa ba ka da rikodin laifi a Najeriya? Nema ta intanet, kuma takardar shaidar za ta zo maka ta imel, yawanci cikin kwanakin aiki 5",
   "Report a Police Officer": "Kai Ƙarar Ɗan Sanda",
   // The sample requests on My Requests.
   "Lost Item Report — receipt": "Rahoton Abin da Ya Ɓata — rasit",
   "The visit date you chose is a public holiday. Pick another date.":
     "Ranar ziyarar da ka zaɓa ranar hutun jama'a ce. Ka zaɓi wata rana.",
   "Matched": "An Samu Daidai",
-  "A matching item was handed in at Asokoro station.":
-    "An miƙa abu mai dacewa a ofishin Asokoro.",
+  "A matching item was handed in at Ikeja station.":
+    "An miƙa abu mai dacewa a ofishin Ikeja.",
   "Collected. Case closed.": "An karɓa. An rufe shari'ar.",
   "Divisional Police Station": "Ofishin 'Yan Sanda na Sashe",
   "Certificate available to download.": "Ana iya sauke takardar shaida.",

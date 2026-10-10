@@ -1,5 +1,5 @@
 /**
- * Content for the Nigeria Police Force, Federal Capital Territory Command.
+ * Content for the Nigeria Police Force.
  * Card palettes are the per-card CSS custom properties each card ships.
  */
 
@@ -64,8 +64,8 @@ export const navigation = [
 
 export const heroSlides = [
   {
-    title: "Police Week in the Federal Capital Territory",
-    subtitle: "A week of service across the Federal Capital Territory",
+    title: "Police Week across Nigeria",
+    subtitle: "A week of service in every state of the federation",
     image: "/images/home/hero/parade.jpg",
   },
   {
@@ -75,12 +75,12 @@ export const heroSlides = [
   },
   {
     title: "Safe and Secure, Together",
-    subtitle: "Together for a safer Abuja tomorrow",
+    subtitle: "Together for a safer Nigeria tomorrow",
     image: "/images/home/hero/community.jpg",
   },
   {
     title: "Ready on Every Road",
-    subtitle: "The FCT Command adds new patrol vehicles to its fleet",
+    subtitle: "New patrol vehicles join the Force's fleet",
     image: "/images/shared/fleet.jpg",
   },
 ];
@@ -138,6 +138,15 @@ export const pillars = [
 
 export const smartPolicing: InitiativeCard[] = [
   {
+    title: "Police Clearance Certificate",
+    href: "/app/services/police-clearance-certificate",
+    body: "Need proof you have no criminal record in Nigeria? Apply online and the certificate comes to your email, usually within 5 working days",
+    image: "/images/home/smart-policing/police-clearance.jpg",
+    tags: [],
+    wide: true,
+    theme: theme("#050F22", "#C4D8F8", "#7FB4FF"),
+  },
+  {
     title: "Cybercrime Reporting",
     href: "/app/services/ecrime",
     body: "The Force's National Cybercrime Centre takes reports of online fraud, phishing and cryptocurrency scams, and you can report anonymously",
@@ -189,7 +198,7 @@ export const domains = [
     id: "shore",
     title: "On the Water",
     lead: "Wherever you are, your safety is assured.",
-    body: "The Marine Police patrol Jabi Lake, the Lower Usuma Dam and the rivers around the Territory, so work and leisure on the water stay safe.",
+    body: "The Marine Police patrol the Niger, the Benue, the creeks of the Niger Delta and the Lagos lagoons, so work and travel on the water stay safe.",
     background: "/images/home/domains/boat.jpg",
     backgroundMobile: "/images/home/domains/boat-mobile.jpg",
     shade: "30 20 12",
@@ -198,8 +207,8 @@ export const domains = [
   {
     id: "sky",
     title: "From the Sky",
-    lead: "A watchful eye over the whole Territory.",
-    body: "The Police Air Wing and our drone units watch over the Territory from above, holding the highest standards of security.",
+    lead: "A watchful eye over the whole country.",
+    body: "The Police Air Wing and our drone units watch over the country from above, holding the highest standards of security.",
     background: "/images/home/domains/drone.jpg",
     backgroundMobile: "/images/home/domains/drone-mobile.jpg",
     shade: "13 29 54",
@@ -212,16 +221,16 @@ const station = theme("#0A1526", "#C4D8F8", "#7FB4FF");
 
 export const smartPoliceStations: InitiativeCard[] = [
   {
-    title: "Command Headquarters",
-    body: "Seat of the FCT Police Command at Garki, where the Commissioner of Police coordinates policing across the Territory.",
+    title: "Force Headquarters",
+    body: "Louis Edet House in Abuja, where the Inspector-General of Police directs policing across the federation.",
     image: "/images/home/smart-stations/command-headquarters.jpg",
     href: "/app/home/customer-centers",
     tags: [],
     theme: station,
   },
   {
-    title: "Area Commands",
-    body: "Nine Area Commands, each supervising the divisions within its reach.",
+    title: "State Commands",
+    body: "A Command in each of the 36 states and the FCT, each led by a Commissioner of Police.",
     image: "/images/home/smart-stations/area-commands.jpg",
     href: "/app/home/customer-centers",
     tags: [],
@@ -237,7 +246,7 @@ export const smartPoliceStations: InitiativeCard[] = [
   },
   {
     title: "Police Posts",
-    body: "Smaller outposts in the satellite towns and rural wards of the six Area Councils. Each is held by a patrol team.",
+    body: "Smaller outposts in the towns and rural wards of every state. Each is held by a patrol team.",
     image: "/images/home/smart-stations/police-posts.jpg",
     href: "/app/home/customer-centers",
     tags: [],
@@ -265,7 +274,7 @@ export const community: InitiativeCard[] = [
   },
   {
     title: "Safer Neighbourhood Watch",
-    body: "Volunteer with the Nigeria Police Force to create real change. Support programmes that build trust, shared responsibility and a safer Territory for all. Make a difference, together!",
+    body: "Volunteer with the Nigeria Police Force to create real change. Support programmes that build trust, shared responsibility and a safer Nigeria for all. Make a difference, together!",
     image: "/images/home/community/neighbourhood-watch.jpg",
     tags: [
       {

@@ -49,7 +49,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     // Lets article pages emit absolute og:image URLs; override per deployment.
     metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL ?? "https://fct.npf.gov.ng",
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://npf.gov.ng",
     ),
     // One address per page per language, each naming the other. Without
     // these a crawler has no way to learn the Hausa page exists.
@@ -59,9 +59,9 @@ export async function generateMetadata(): Promise<Metadata> {
         LANGS.map((l) => [l, localePath(path, l)]),
       ),
     },
-    title: t("Nigeria Police Force, FCT Command - Safe Secure Together"),
+    title: t("Nigeria Police Force - Safe Secure Together"),
     description: t(
-      "Together for a safer Abuja tomorrow. Report, apply, inquire and pay, and request support from the Nigeria Police Force in the Federal Capital Territory.",
+      "Together for a safer Nigeria tomorrow. Report, apply, inquire and pay, and request support from the Nigeria Police Force, wherever you are in the country.",
     ),
   };
 }

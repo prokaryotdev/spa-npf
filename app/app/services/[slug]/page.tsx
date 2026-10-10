@@ -9,7 +9,7 @@ import ServiceBar from "../../../components/ServiceBar";
 import {
   ArrowRight,
   ArrowUpRight,
-  ChevronDown,
+  ArrowDown,
   CreditCardIcon,
   DebitCardIcon,
   CashIcon,
@@ -557,7 +557,7 @@ export default async function ServicePage({
                           <span className="hidden group-open/more:inline">
                             {t("Show fewer terms")}
                           </span>
-                          <ChevronDown className="size-4.5 shrink-0 transition-transform duration-(--dur-hover) group-open/more:rotate-180" />
+                          <ArrowDown className="size-4.5 shrink-0 transition-transform duration-(--dur-hover) group-open/more:rotate-180" />
                         </summary>
                         <ol
                           start={termsShown + 1}

@@ -19,7 +19,7 @@ export const information = {
     },
     {
       title: "Road Speed Limits",
-      body: "Speed limits and enforcement thresholds on the roads of the Federal Capital Territory.",
+      body: "Speed limits and enforcement thresholds on Nigerian roads.",
       count: "{count} roads",
       total: speedLimits.rows.length,
       image: "/images/information/street-speed-limits.jpg",

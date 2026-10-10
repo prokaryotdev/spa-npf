@@ -6,8 +6,8 @@ export const privacyPolicy = {
       content: [
         {
           link: {
-            href: "https://fct.npf.gov.ng",
-            label: "fct.npf.gov.ng",
+            href: "https://npf.gov.ng",
+            label: "npf.gov.ng",
           },
           text: 'The Nigeria Police Force is committed to protecting the rights of visitors to its Website and to maintaining the confidentiality of personal information that is used in this Website. Privacy Policy aims to clarify the approach of the Nigeria Police Force, and the obligations; with respect to the collection, use, distribution, retention, destruction and dissemination (collectively called, "use" or "usage" or their derivatives) of personal information or data (collectively called, "data") which is collected on The Nigeria Police Force eServices Website at ',
           type: "paragraph",
@@ -40,7 +40,7 @@ export const privacyPolicy = {
       title: "Policy Scope",
       content: [
         {
-          text: "Privacy Policy, set forth in this document, applies to Nigeria Police Force Website (fct.npf.gov.ng) and to the information collected by this Site only. This Policy also applies to all employees of Nigeria Police Force, apart from their place of work, and also to all the concerned suppliers’ employees, irrespective of the place of whoever manages Nigeria Police Force Website, which can obtain personal data of the users.",
+          text: "Privacy Policy, set forth in this document, applies to Nigeria Police Force Website (npf.gov.ng) and to the information collected by this Site only. This Policy also applies to all employees of Nigeria Police Force, apart from their place of work, and also to all the concerned suppliers’ employees, irrespective of the place of whoever manages Nigeria Police Force Website, which can obtain personal data of the users.",
           type: "paragraph",
         },
         {
@@ -424,273 +424,78 @@ export const contactUs = {
 };
 
 /**
- * The Command's public counters: the Area Commands that supervise a slice of
- * the Territory, and the Divisional Headquarters where a report is actually
- * taken. Addresses and coverage are real; the photographs are placeholders.
+ * Where to find the Force: its national headquarters, and the Police Command
+ * of every state and the FCT. Each Command is headquartered in its state
+ * capital and led by a Commissioner of Police. Street addresses are left out
+ * on purpose: the map link searches for the Command in its capital rather
+ * than pin a street this file cannot vouch for.
  */
-export const customerCenters = [
-  {
-    name: "Central Area Command",
-    address: "Area 10, Garki",
-    area: "Abuja Municipal",
-    about:
-      "The senior command for the city centre, supervising the Garki, Wuse, Maitama and Asokoro divisions. It holds the Command's central charge office and the desks that take reports the divisions refer upward.",
-    kind: "Area Command",
-    timing: "24 hours",
-    image: "/images/customer-centers/central-area-command.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.035,7.49",
-  },
-  {
-    name: "Gwagwalada Area Command",
-    address: "Secretariat Road, Gwagwalada",
-    area: "Gwagwalada",
-    about:
-      "Covers the Gwagwalada Area Council and the university town around it, including the stretch of the Abuja–Lokoja highway that runs through the council.",
-    kind: "Area Command",
-    timing: "24 hours",
-    image: "/images/customer-centers/gwagwalada-area-command.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=8.943,7.08",
-  },
-  {
-    name: "Bwari Area Command",
-    address: "Kubwa Road, Bwari",
-    area: "Bwari",
-    about:
-      "Responsible for Bwari town, Dutse-Alhaji and the hill settlements north of the city, with a standing patrol on the Bwari–Dutse road.",
-    kind: "Area Command",
-    timing: "24 hours",
-    image: "/images/customer-centers/bwari-area-command.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.282,7.38",
-  },
-  {
-    name: "Kubwa Area Command",
-    address: "Phase 2, Kubwa",
-    area: "Bwari",
-    about:
-      "One of the busiest commands in the Territory, covering Kubwa, Byazhin and the expressway that carries the morning traffic into the city.",
-    kind: "Area Command",
-    timing: "24 hours",
-    image: "/images/customer-centers/kubwa-area-command.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.156,7.326",
-  },
-  {
-    name: "Karu Area Command",
-    address: "Nyanya–Karu Road, Nyanya",
-    area: "Abuja Municipal",
-    about:
-      "Covers the eastern corridor at the Nasarawa boundary — Nyanya, Karu, Jikwoyi and Karshi — where the Territory's largest commuter population lives.",
-    kind: "Area Command",
-    timing: "24 hours",
-    image: "/images/customer-centers/karu-area-command.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.01,7.59",
-  },
-  {
-    name: "Kuje Area Command",
-    address: "Kuje Town, off Kuje Road",
-    area: "Kuje",
-    about:
-      "Covers the Kuje Area Council, its farm settlements and the road that links the council to the airport corridor.",
-    kind: "Area Command",
-    timing: "24 hours",
-    image: "/images/customer-centers/kuje-area-command.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=8.879,7.227",
-  },
-  {
-    name: "Garki Division",
-    address: "Area 3, Garki",
-    area: "Abuja Municipal",
-    about:
-      "One of the oldest divisions in the Territory, serving Areas 1 to 11, the ministries around them and the Garki market.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/garki-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.0333,7.4833",
-  },
-  {
-    name: "Wuse Division",
-    address: "Zone 3, Wuse",
-    area: "Abuja Municipal",
-    about:
-      "Serves the Wuse zones and the Wuse market, and runs the beat that covers the banks and offices along Aminu Kano Crescent.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/wuse-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.0667,7.4667",
-  },
-  {
-    name: "Wuse II Division",
-    address: "Nouakchott Street, Wuse II",
-    area: "Abuja Municipal",
-    about:
-      "Covers Wuse II and the embassies, hotels and night-time economy along Adetokunbo Ademola Crescent.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/wuse-ii-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.0765,7.474",
-  },
-  {
-    name: "Maitama Division",
-    address: "Lungi Street, Maitama",
-    area: "Abuja Municipal",
-    about:
-      "Serves Maitama, Mpape and the diplomatic quarter, working closely with the Command's protection duties.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/maitama-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.085,7.49",
-  },
-  {
-    name: "Asokoro Division",
-    address: "Yakubu Gowon Crescent, Asokoro",
-    area: "Abuja Municipal",
-    about:
-      "Covers Asokoro and Guzape, including the residences of government officials and the approach roads to the Presidential Villa.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/asokoro-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.04,7.52",
-  },
-  {
-    name: "Utako Division",
-    address: "Ekukinam Street, Utako",
-    area: "Abuja Municipal",
-    about:
-      "Serves Utako, the Utako market and the motor park, and the office blocks along the Jabi–Utako link.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/utako-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.07,7.438",
-  },
-  {
-    name: "Jabi Division",
-    address: "Jabi District, off Bala Sokoto Way",
-    area: "Abuja Municipal",
-    about:
-      "Covers the Jabi district, the lake front and the shopping centre, and runs the marine patrol point on Jabi Lake.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/jabi-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.064,7.427",
-  },
-  {
-    name: "Life Camp Division",
-    address: "Life Camp, Gwarinpa",
-    area: "Abuja Municipal",
-    about:
-      "Serves Life Camp, Kado and the Nigeria Police Force estates around them.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/life-camp-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.093,7.423",
-  },
-  {
-    name: "Gwarinpa Division",
-    address: "3rd Avenue, Gwarinpa Estate",
-    area: "Abuja Municipal",
-    about:
-      "Covers Gwarinpa, the largest housing estate in West Africa, and the district roads running through its seven avenues.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/gwarinpa-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.108,7.405",
-  },
-  {
-    name: "Karmo Division",
-    address: "Karmo Village, off Kubwa Expressway",
-    area: "Abuja Municipal",
-    about:
-      "Serves Karmo and the settlements along the Kubwa expressway service lanes.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/karmo-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.098,7.445",
-  },
-  {
-    name: "Dei-Dei Division",
-    address: "Dei-Dei Building Materials Market",
-    area: "Abuja Municipal",
-    about:
-      "Covers Dei-Dei, its timber and building-materials markets, and the heavy-goods traffic that feeds them.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/dei-dei-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.12,7.33",
-  },
-  {
-    name: "Zuba Division",
-    address: "Zuba Market Road, Zuba",
-    area: "Gwagwalada",
-    about:
-      "Serves Zuba, the market and the junction where the Abuja–Kaduna and Abuja–Lokoja roads meet.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/zuba-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.112,7.226",
-  },
-  {
-    name: "Dutse-Alhaji Division",
-    address: "Dutse-Alhaji, off Bwari Road",
-    area: "Bwari",
-    about:
-      "Covers Dutse-Alhaji, Kubwa village and the surrounding settlements on the northern approach.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/dutse-alhaji-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.133,7.355",
-  },
-  {
-    name: "Lugbe Division",
-    address: "FHA Estate, Lugbe",
-    area: "Abuja Municipal",
-    about:
-      "Serves Lugbe, Pyakasa and the airport road corridor, including the service lanes either side of the expressway.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/lugbe-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=8.988,7.372",
-  },
-  {
-    name: "Apo Division",
-    address: "Apo Legislative Quarters, Apo",
-    area: "Abuja Municipal",
-    about:
-      "Covers Apo, Gudu and the legislative quarters, and the mechanic village at Apo.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/apo-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=8.995,7.46",
-  },
-  {
-    name: "Durumi Division",
-    address: "Durumi District, off Ahmadu Bello Way",
-    area: "Abuja Municipal",
-    about:
-      "Serves Durumi, Area 1 and the Games Village, and the roads that connect them to the city centre.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/durumi-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.011,7.472",
-  },
-  {
-    name: "Nyanya Division",
-    address: "Nyanya–Karu Road, Nyanya",
-    area: "Abuja Municipal",
-    about:
-      "Covers Nyanya town and the bus terminals that move commuters between the Territory and Nasarawa State every morning.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/nyanya-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.006,7.572",
-  },
-  {
-    name: "Airport Division",
-    address: "Nnamdi Azikiwe International Airport",
-    area: "Abuja Municipal",
-    about:
-      "Based at the airport, covering the terminals, the cargo area and the airport road, and working alongside aviation security on the airside.",
-    kind: "Divisional Headquarters",
-    timing: "24 hours",
-    image: "/images/customer-centers/airport-division.jpg",
-    map: "https://www.google.com/maps/search/?api=1&query=9.0068,7.2632",
-  },
+const mapSearch = (q: string) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+
+export const forceHeadquarters = {
+  name: "Force Headquarters",
+  address: "Louis Edet House, Shehu Shagari Way, Area 11, Garki, Abuja",
+  map: mapSearch("Louis Edet House, Force Headquarters, Abuja"),
+};
+
+/** The six geopolitical zones, in the order the page lists them. */
+export const zones = [
+  "North Central",
+  "North East",
+  "North West",
+  "South East",
+  "South South",
+  "South West",
+];
+
+const command = (state: string, city: string, zone: string) => ({
+  state,
+  city,
+  zone,
+  map: mapSearch(
+    state === "FCT"
+      ? "FCT Police Command Headquarters, Abuja"
+      : `${state} State Police Command Headquarters, ${city}`,
+  ),
+});
+
+export const stateCommands = [
+  command("Benue", "Makurdi", "North Central"),
+  command("FCT", "Abuja", "North Central"),
+  command("Kogi", "Lokoja", "North Central"),
+  command("Kwara", "Ilorin", "North Central"),
+  command("Nasarawa", "Lafia", "North Central"),
+  command("Niger", "Minna", "North Central"),
+  command("Plateau", "Jos", "North Central"),
+  command("Adamawa", "Yola", "North East"),
+  command("Bauchi", "Bauchi", "North East"),
+  command("Borno", "Maiduguri", "North East"),
+  command("Gombe", "Gombe", "North East"),
+  command("Taraba", "Jalingo", "North East"),
+  command("Yobe", "Damaturu", "North East"),
+  command("Jigawa", "Dutse", "North West"),
+  command("Kaduna", "Kaduna", "North West"),
+  command("Kano", "Kano", "North West"),
+  command("Katsina", "Katsina", "North West"),
+  command("Kebbi", "Birnin Kebbi", "North West"),
+  command("Sokoto", "Sokoto", "North West"),
+  command("Zamfara", "Gusau", "North West"),
+  command("Abia", "Umuahia", "South East"),
+  command("Anambra", "Awka", "South East"),
+  command("Ebonyi", "Abakaliki", "South East"),
+  command("Enugu", "Enugu", "South East"),
+  command("Imo", "Owerri", "South East"),
+  command("Akwa Ibom", "Uyo", "South South"),
+  command("Bayelsa", "Yenagoa", "South South"),
+  command("Cross River", "Calabar", "South South"),
+  command("Delta", "Asaba", "South South"),
+  command("Edo", "Benin City", "South South"),
+  command("Rivers", "Port Harcourt", "South South"),
+  command("Ekiti", "Ado-Ekiti", "South West"),
+  command("Lagos", "Ikeja", "South West"),
+  command("Ogun", "Abeokuta", "South West"),
+  command("Ondo", "Akure", "South West"),
+  command("Osun", "Osogbo", "South West"),
+  command("Oyo", "Ibadan", "South West"),
 ];

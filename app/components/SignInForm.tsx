@@ -32,7 +32,7 @@ const OFFICER: Session = {
   phone: "+234 803 987 6543",
   role: "officer",
   rank: "Inspector",
-  station: "Wuse Police Station",
+  station: "Ikeja Divisional Police Headquarters",
 };
 
 /** A National Identification Number is eleven digits; spaces are tolerated. */

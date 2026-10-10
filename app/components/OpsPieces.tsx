@@ -1,10 +1,11 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { dispatchTarget } from "../content-ops";
 import { useT } from "../i18n/client";
 import { useHydrated } from "./store";
-import { CheckIcon, SearchIcon } from "./icons";
+import { CheckIcon, CloseIcon, SearchIcon } from "./icons";
+import { FindGlyph } from "./ops-glyphs";
 import type { Incident, Priority, UnitStatus } from "./store";
 
 /* -------------------------------------------------------------------------
@@ -142,30 +143,19 @@ export function OpsPanel({
 }) {
   const t = useT();
   return (
-    <section
-      /*
-       * `overflow-clip`, not `overflow-hidden`. Both round off a flush table's
-       * corners, but `hidden` makes the panel a scroll container, and a scroll
-       * container captures every sticky descendant: the column heads inside
-       * stopped pinning to the viewport and parked themselves 60px down the
-       * panel instead, with the first row of calls sliding underneath them.
-       * `clip` crops without ever becoming a scrollport, so the heads pin to
-       * the page — the only thing that scrolls here.
-       */
-      className={`flex min-h-0 flex-col overflow-clip rounded-card bg-ops-panel shadow-ops ${className}`}
-    >
+    <section className={`flex min-h-0 flex-col ${className}`}>
       {title ? (
         /*
-         * Sentence case, not the small-caps the console used to set every
-         * panel, label and column head in. Six shouting headings on one
-         * screen is six things claiming to be the loudest, which leaves
-         * nothing leading; the weight step does the work instead.
+         * The title sits above its surface, the way a grouped list is
+         * labelled in an Apple app: the heading names the group, the count
+         * follows it in secondary text, and the surface below carries only
+         * the rows. No band, no rule, no caps.
          */
-        <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-ops-line-soft px-4 py-3">
-          <h2 className="flex items-center gap-2 font-secondary text-title leading-none font-bold tracking-tight">
+        <div className="flex min-h-7 shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 px-1 pb-2.5">
+          <h2 className="flex items-baseline gap-2 font-secondary text-[1.0625rem] leading-tight font-bold tracking-[-0.01em]">
             {t(title)}
             {count !== undefined ? (
-              <span className="rounded-chip bg-ops-raised px-1.5 py-0.5 font-primary text-2xs leading-tight font-medium text-ops-dim tabular-nums">
+              <span className="font-primary text-sm font-normal tracking-normal text-ops-dim tabular-nums">
                 {count}
               </span>
             ) : null}
@@ -173,7 +163,16 @@ export function OpsPanel({
           {action}
         </div>
       ) : null}
-      <div className={`min-h-0 ${flush ? "" : "p-4"} ${bodyClassName}`}>
+      <div
+        /*
+         * `overflow-clip`, not `overflow-hidden`. Both round off a flush
+         * table's corners, but `hidden` makes the surface a scroll container,
+         * and a scroll container captures every sticky descendant: the column
+         * heads stopped pinning to the viewport and parked 60px down the
+         * panel instead. `clip` crops without ever becoming a scrollport.
+         */
+        className={`npf-ops-tile min-h-0 flex-1 overflow-clip ${flush ? "" : "p-4 sm:p-5"} ${bodyClassName}`}
+      >
         {children}
       </div>
     </section>
@@ -204,21 +203,21 @@ export function OpsEmpty({
     <div className="flex flex-col items-center gap-3 px-6 py-12 text-center">
       <span
         aria-hidden
-        className="grid size-10 place-items-center rounded-full"
+        className="grid size-12 place-items-center rounded-full"
         style={{
           background: ok
-            ? "color-mix(in srgb, var(--ops-fill-ok) 12%, transparent)"
-            : "var(--ops-raised)",
-          color: ok ? "var(--ops-fill-ok)" : "var(--ops-dim)",
+            ? "color-mix(in srgb, var(--ops-fill-ok) 14%, transparent)"
+            : "rgb(255 255 255 / 0.06)",
+          color: ok ? "var(--ops-fill-ok)" : "var(--ops-text)",
         }}
       >
         {ok ? (
-          <CheckIcon className="size-5" />
+          <CheckIcon className="size-5.5" />
         ) : (
-          <SearchIcon className="size-5" />
+          <FindGlyph className="size-7" />
         )}
       </span>
-      <p className="text-sm font-medium">{title}</p>
+      <p className="font-secondary text-base font-bold">{title}</p>
       {hint ? (
         <p className="max-w-[44ch] text-xs leading-relaxed text-ops-dim">
           {hint}
@@ -244,24 +243,25 @@ export function OpsHead({
   action,
 }: {
   title: string;
-  lead: string;
+  lead?: string;
   action?: React.ReactNode;
 }) {
   return (
     /*
-     * The title is 22px, not 26. On a console the screen name is the least
-     * surprising thing on the screen — the officer chose it a second ago —
-     * and setting it as the largest type on the board put the loudest voice
-     * on the one element carrying no information.
+     * An Apple large title: bold, tightly tracked, with the lead in
+     * secondary text under it. It is the one big voice on the screen, and the
+     * board below steps down from it rather than competing.
      */
-    <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+    <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
       <div className="min-w-0">
-        <h1 className="font-secondary text-stat leading-tight font-bold tracking-tight">
+        <h1 className="font-secondary text-[1.75rem] leading-[1.15] font-bold tracking-[-0.025em] sm:text-[2rem]">
           {title}
         </h1>
-        <p className="mt-1 max-w-[70ch] text-meta leading-relaxed text-ops-dim">
-          {lead}
-        </p>
+        {lead ? (
+          <p className="mt-1.5 max-w-[68ch] text-sm leading-relaxed text-ops-dim">
+            {lead}
+          </p>
+        ) : null}
       </div>
       {action}
     </header>
@@ -269,62 +269,125 @@ export function OpsHead({
 }
 
 /**
- * The band of readouts at the top of a board. Its children stretch, because
- * a five-number strip that stops two thirds of the way across a wide board
- * reads as an unfinished row rather than as a line of instruments.
+ * The search box shared by the three filterable boards.
+ *
+ * Built for a desk worked from the keyboard: "/" jumps into it from anywhere
+ * on the board, Escape clears it, and a cleared box hands focus back. The
+ * matching itself (filterBy) takes any word order, forgives a slip, folds
+ * Hausa hooks, holds "quoted words" together and drops -minus words.
  */
-export function ReadoutStrip({ children }: { children: React.ReactNode }) {
-  return (
-    <dl className="flex flex-wrap divide-x divide-ops-line-soft overflow-clip rounded-card bg-ops-panel shadow-ops">
-      {children}
-    </dl>
-  );
-}
-
-/** The search box shared by the three filterable boards. */
 export function OpsSearch({
   id,
   label,
   placeholder,
   value,
   onChange,
+  found,
 }: {
   id: string;
   label: string;
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
+  /** How many rows the query leaves, so a dead end shows on the box. */
+  found?: number;
 }) {
+  const t = useT();
+  const input = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
+      const at = e.target;
+      if (
+        at instanceof Element &&
+        at.closest("input, textarea, select, [contenteditable='true']")
+      )
+        return;
+      e.preventDefault();
+      input.current?.focus();
+      input.current?.select();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const dead = value.trim() !== "" && found === 0;
+
   return (
     /*
-     * Capped at 340px. It used to be `flex-1` against a short row of filters,
+     * Capped at 360px. It used to be `flex-1` against a short row of filters,
      * so on the Units board a single search field ran 870px across an empty
-     * white box — a control sized by what was left over rather than by what
-     * anyone types into it.
+     * box — a control sized by what was left over rather than by what anyone
+     * types into it.
      */
-    <div className="flex min-w-50 flex-1 items-center gap-2 rounded-chip border border-ops-line bg-ops-panel px-3 transition-colors sm:max-w-85 focus-within:border-ops-accent focus-within:ring-2 focus-within:ring-ops-accent/15">
+    <div
+      className={`group flex h-9 min-w-50 flex-1 items-center gap-2 rounded-[10px] bg-white/[0.07] ps-2.5 pe-1.5 transition-[background-color,box-shadow] duration-150 sm:max-w-90 hover:bg-white/[0.09] focus-within:bg-white/[0.09] ${
+        dead
+          ? "shadow-[0_0_0_1.5px_rgb(255_69_58/0.75)]"
+          : "focus-within:shadow-[0_0_0_3px_rgb(64_156_255/0.55)]"
+      }`}
+    >
       <SearchIcon
         aria-hidden
-        className="size-4 shrink-0 text-ops-dim"
+        className={`size-4 shrink-0 transition-colors ${dead ? "text-ops-p1" : "text-ops-dim"}`}
       />
       <label htmlFor={id} className="sr-only">
         {label}
       </label>
       <input
+        ref={input}
         id={id}
         type="search"
         value={value}
+        autoComplete="off"
+        spellCheck={false}
+        enterKeyHint="search"
+        aria-invalid={dead || undefined}
+        aria-keyshortcuts="/"
         onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Escape" && value) {
+            e.preventDefault();
+            onChange("");
+          }
+        }}
         placeholder={placeholder}
-        className="w-full bg-transparent py-2 text-sm outline-none placeholder:text-ops-dim"
+        className="npf-ops-search h-full w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-ops-dim focus-visible:outline-none"
       />
+      {value ? (
+        <button
+          type="button"
+          onClick={() => {
+            onChange("");
+            input.current?.focus();
+          }}
+          className="group/clear grid size-6 shrink-0 place-items-center rounded-full"
+        >
+          {/* The filled clear mark of a system search field. */}
+          <span
+            aria-hidden
+            className="grid size-4 place-items-center rounded-full bg-ops-dim/70 text-ops-panel transition-colors group-hover/clear:bg-ops-text"
+          >
+            <CloseIcon className="size-2.5" />
+          </span>
+          <span className="sr-only">{t("Clear search")}</span>
+        </button>
+      ) : (
+        <kbd
+          aria-hidden
+          className="hidden h-5 min-w-5 shrink-0 place-items-center rounded-[5px] bg-white/[0.08] px-1 font-primary text-2xs font-medium text-ops-dim sm:grid"
+        >
+          /
+        </kbd>
+      )}
     </div>
   );
 }
 
 /** The shared look of a `select` sitting in a filter bar. */
 export const OPS_SELECT =
-  "npf-ops-select rounded-chip border border-ops-line bg-ops-panel px-3 py-2 text-sm outline-none transition-colors hover:border-ops-accent focus:border-ops-accent";
+  "npf-ops-select h-9 rounded-chip px-3 text-sm font-medium outline-none";
 
 /* -------------------------------------------------------------------------
  * Grades and statuses
@@ -353,16 +416,22 @@ export function PriorityTag({
   const t = useT();
   const { token, label } = PRIORITY[priority];
   return (
-    <span
-      className="inline-flex shrink-0 items-center gap-2 text-xs font-bold whitespace-nowrap"
-      style={{ color: token }}
-    >
+    /*
+     * The grade is a chip in its own hue, not a dot beside a word. The dot
+     * put a second coloured mark on every row next to the status pill's own,
+     * and two dots a row is noise; one tinted chip is the grade at a glance.
+     */
+    <span className="inline-flex shrink-0 items-center gap-2 text-xs whitespace-nowrap">
       <span
-        aria-hidden
-        className="npf-ops-dot size-1.5 rounded-full bg-current"
-      />
-      {priority}
-      <span className={withLabel ? "font-medium" : "sr-only"}>
+        className="grid h-5 min-w-7 place-items-center rounded-[6px] px-1.5 text-2xs font-bold tabular-nums"
+        style={{
+          color: token,
+          background: `color-mix(in srgb, ${token} 17%, transparent)`,
+        }}
+      >
+        {priority}
+      </span>
+      <span className={withLabel ? "font-medium text-ops-dim" : "sr-only"}>
         {t(label)}
       </span>
     </span>
@@ -370,10 +439,10 @@ export function PriorityTag({
 }
 
 const CALL_TONE: Record<Incident["status"], string> = {
-  New: "bg-npf-gold-wash text-npf-warn",
-  Dispatched: "bg-npf-review-wash text-npf-review",
+  New: "bg-ops-p2-wash text-ops-p2",
+  Dispatched: "bg-ops-route-wash text-ops-route",
   "On Scene": "bg-ops-scene-wash text-ops-scene",
-  Closed: "bg-ops-raised text-ops-dim",
+  Closed: "bg-white/[0.08] text-ops-dim",
 };
 
 /** A pending call says "Pending" on the board — "New" is not a state of work. */
@@ -395,11 +464,11 @@ export function OpsStatus({ status }: { status: Incident["status"] }) {
 }
 
 const UNIT_TONE: Record<UnitStatus, string> = {
-  Available: "bg-npf-ok-soft text-npf-ok",
+  Available: "bg-ops-ok-wash text-ops-ok",
   // The same inks as the call it is on: en route is indigo, on scene teal.
-  Assigned: "bg-npf-review-wash text-npf-review",
+  Assigned: "bg-ops-route-wash text-ops-route",
   "On Scene": "bg-ops-scene-wash text-ops-scene",
-  Unavailable: "bg-ops-raised text-ops-dim",
+  Unavailable: "bg-white/[0.08] text-ops-dim",
 };
 
 export function UnitStatusTag({ status }: { status: UnitStatus }) {
@@ -412,68 +481,7 @@ export function UnitStatusTag({ status }: { status: UnitStatus }) {
   );
 }
 
-/* -------------------------------------------------------------------------
- * Readouts
- * ---------------------------------------------------------------------- */
-
-/**
- * One number on the status strip. Deliberately not a card: these are a single
- * band of readouts, and boxing each one would make four panels out of a line
- * of type an officer reads left to right in under a second.
- */
-export function Readout({
-  label,
-  value,
-  note,
-  tone,
-}: {
-  label: string;
-  value: React.ReactNode;
-  note?: string;
-  tone?: string;
-}) {
-  const t = useT();
-  return (
-    /*
-     * basis + grow: the strip fills the board's width at any count, and the
-     * readouts wrap to a second line rather than crushing on a laptop.
-     *
-     * A toned readout tints its whole cell, faintly, in its own hue. Five
-     * numbers set identically is five numbers with no order to read them in;
-     * the one that means "act now" has to be the one the eye lands on, and a
-     * red numeral alone on white was not winning that against four black ones
-     * the same size.
-     */
-    <div
-      className="relative flex-1 basis-[150px] px-4 py-3.5 sm:px-5"
-      style={
-        tone
-          ? { background: `color-mix(in srgb, ${tone} 6%, transparent)` }
-          : undefined
-      }
-    >
-      <dt className="text-xs font-medium text-ops-dim">
-        {t(label)}
-      </dt>
-      <dd
-        className="mt-2 font-secondary text-figure leading-none font-bold tracking-tight tabular-nums"
-        style={tone ? { color: tone } : undefined}
-      >
-        {value}
-      </dd>
-      {note ? (
-        <dd
-          className="mt-1.5 text-2xs leading-tight"
-          style={{ color: tone ? tone : "var(--ops-dim)" }}
-        >
-          {t(note)}
-        </dd>
-      ) : null}
-    </div>
-  );
-}
-
-/** Buttons in the console. Square-cornered: this is a tool, not a brochure. */
+/** Buttons in the console: Apple push buttons, filled, 8px corners. */
 export function OpsButton({
   tone = "quiet",
   className = "",
@@ -483,11 +491,11 @@ export function OpsButton({
 }) {
   const tones = {
     brand:
-      "bg-ops-brand text-white shadow-card hover:bg-ops-brand-lift disabled:opacity-40 disabled:shadow-none",
+      "bg-ops-brand text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.12)] hover:bg-ops-brand-lift disabled:opacity-40 disabled:shadow-none",
     quiet:
-      "border border-ops-line bg-ops-panel text-ops-text hover:border-ops-accent hover:bg-ops-raised disabled:opacity-40",
+      "bg-white/[0.08] text-ops-text hover:bg-white/[0.12] disabled:opacity-40",
     danger:
-      "border border-ops-p1/40 text-ops-p1 hover:bg-ops-p1/12 disabled:opacity-40",
+      "bg-ops-p1/15 text-[#ff6961] hover:bg-ops-p1/22 disabled:opacity-40",
   };
   return (
     /*
@@ -499,7 +507,7 @@ export function OpsButton({
     <button
       type="button"
       {...props}
-      className={`inline-flex items-center gap-1.5 rounded-chip px-3 py-2 text-sm font-medium transition-[background-color,border-color,box-shadow,scale] enabled:active:scale-[0.97] active:duration-(--dur-press) disabled:cursor-not-allowed ${tones[tone]} ${className}`}
+      className={`inline-flex h-9 items-center gap-1.5 rounded-chip px-3.5 text-sm font-medium whitespace-nowrap transition-[background-color,border-color,box-shadow,scale] enabled:active:scale-[0.97] active:duration-(--dur-press) disabled:cursor-not-allowed ${tones[tone]} ${className}`}
     />
   );
 }
