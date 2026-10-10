@@ -878,7 +878,7 @@ function deliveryHref(label: string) {
   const l = label.toLowerCase();
   if (l.includes("dashboard")) return "/app/portal/requests";
   if (l.includes("inquiry") || l.includes("status"))
-    return "/app/services/application-status";
+    return "/app/track";
   return null;
 }
 

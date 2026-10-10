@@ -19,6 +19,7 @@ import {
   SearchIcon,
 } from "./icons";
 import { useFormat, useT } from "../i18n/client";
+import { commandLabel, divisionLabel, line } from "./Where";
 
 /** What needs the applicant first, then what is moving, then what is done. */
 const ORDER: RequestStatus[] = [
@@ -180,6 +181,12 @@ export default function PortalRequests() {
                           date: format.date(request.submitted),
                         })}
                       </span>
+                      {request.where ? (
+                        <span className="npf-small mt-0.5 block text-npf-body">
+                          {commandLabel(t, request.where.state)} ·{" "}
+                          {divisionLabel(t, request.where.lga)}
+                        </span>
+                      ) : null}
                     </span>
                     {/* Points on along the reading line, turns down once open. */}
                     <ArrowRight
@@ -248,12 +255,33 @@ export default function PortalRequests() {
                             {/* The open ask already sits above, in amber. */}
                             {step.note && step.note !== request.note ? (
                               <p className="npf-small mt-1 text-npf-body">
-                                {t(step.note)}
+                                {line(t, step.note, undefined, request.where)}
                               </p>
                             ) : null}
                           </li>
                         ))}
                     </ol>
+
+                    {request.answers?.length || request.documents?.length ? (
+                      <dl className="npf-small mt-6 grid gap-x-6 gap-y-2 rounded-card bg-npf-paper p-4 sm:grid-cols-[10rem_minmax(0,1fr)]">
+                        {request.answers?.map((a) => (
+                          <div key={a.label} className="contents">
+                            <dt className="text-npf-steel">{t(a.label)}</dt>
+                            <dd className="break-words whitespace-pre-line text-npf-ink">
+                              {t(a.value)}
+                            </dd>
+                          </div>
+                        ))}
+                        {request.documents?.length ? (
+                          <>
+                            <dt className="text-npf-steel">{t("Documents")}</dt>
+                            <dd className="break-words text-npf-ink">
+                              {request.documents.map((d) => d.file).join(", ")}
+                            </dd>
+                          </>
+                        ) : null}
+                      </dl>
+                    ) : null}
 
                     <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-npf-hairline pt-5">
                       <p className="npf-small text-npf-body">

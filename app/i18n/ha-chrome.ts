@@ -35,11 +35,6 @@ export const haChrome: Record<string, string> = {
     "Tare domin Najeriya mai aminci gobe. Ka bayar da rahoto, ka nema, ka tambaya ka biya, kuma ka nemi taimako daga Rundunar 'Yan Sandan Najeriya, a duk inda kake a ƙasar nan.",
   "© {year} Nigeria Police Force. All Rights Reserved":
     "© {year} Rundunar 'Yan Sandan Najeriya. An Kiyaye Duk Haƙƙoƙi",
-  "This site is monitored and maintained by Nigeria Police Force.":
-    "Rundunar 'Yan Sandan Najeriya ce ke sa ido tare da kula da wannan shafin.",
-  "The site is best viewed in a current version of Chrome, Safari, Edge or Firefox":
-    "Ana kallon shafin da kyau a sabon salon Chrome, Safari, Edge ko Firefox",
-  "Last modified Date: {date}": "Kwanan sabuntawa na ƙarshe: {date}",
 
   // --- newsletter ---------------------------------------------------------
   "Get news from the Force": "Samu labarai daga Rundunar",

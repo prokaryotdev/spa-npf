@@ -21,7 +21,6 @@ export const haHome: Record<string, string> = {
   "Laws and Legislation": "Dokoki da Ƙa'idoji",
   "Traffic and Accidents": "Zirga-zirga da Haɗura",
   "Business and Corporate": "Kasuwanci da Kamfanoni",
-  "Federal Ministry of Interior": "Ma'aikatar Cikin Gida ta Tarayya",
   "Federal Road Safety Corps": "Hukumar Kula da Hanyoyi ta Tarayya",
 
   // --- emergency numbers --------------------------------------------------
@@ -52,9 +51,6 @@ export const haHome: Record<string, string> = {
 
   // --- quick services ------------------------------------------------------
   "Popular services": "Ayyukan da aka fi amfani da su",
-  "Make a Report": "Bayar da Rahoto",
-  "Report a crime or submit your complaint directly":
-    "Ka bayar da rahoton laifi ko ka gabatar da ƙorafinka kai tsaye",
   "Apply for a Certificate or Permit": "Nemi Takardar Shaida ko Izini",
   "Access official documents from the Nigeria Police Force quickly and securely":
     "Ka samu takardun hukuma daga Rundunar 'Yan Sandan Najeriya cikin sauri da aminci",

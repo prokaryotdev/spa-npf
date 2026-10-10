@@ -42,12 +42,6 @@ export const yoChrome: Record<string, string> = {
     "Forúkọ sílẹ̀",
   "© {year} Nigeria Police Force. All Rights Reserved":
     "© {year} Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà. Gbogbo Ẹ̀tọ́ wà ní Ìpamọ́",
-  "This site is monitored and maintained by Nigeria Police Force.":
-    "Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà ló ń ṣàbójútó tí ó sì ń tọ́jú ojú-òpó yìí.",
-  "The site is best viewed in a current version of Chrome, Safari, Edge or Firefox":
-    "Ojú-òpó yìí dára jùlọ ní ẹ̀yà tuntun Chrome, Safari, Edge tàbí Firefox",
-  "Last modified Date: {date}":
-    "Ọjọ́ Àtúnṣe Kẹ́yìn: {date}",
   "Designed and built by":
     "Àgbékalẹ̀ àti ìkọ́lé láti ọwọ́",
   "Open menu":

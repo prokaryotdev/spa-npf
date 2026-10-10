@@ -3,6 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { seedFines, seedNotices, seedRequests } from "../content-account";
 import { seedIncidents, seedUnits } from "../content-ops";
+import type { Jurisdiction } from "../geo";
 
 /**
  * The whole of the app's "backend": one object in localStorage, read through
@@ -24,6 +25,14 @@ export type Session = {
   /** Officers carry a rank and a station; citizens do not. */
   rank?: string;
   station?: string;
+  /**
+   * The command an officer's desk answers for: "Lagos", "FCT". Absent for a
+   * Force Headquarters desk, which sees every command and narrows the view
+   * with `viewing`.
+   */
+  command?: string;
+  /** The command this tab's console is showing. Absent means all of them. */
+  viewing?: string;
 };
 
 export type RequestStatus =
@@ -40,6 +49,14 @@ export type TrackedRequest = {
   channel: string;
   note?: string;
   timeline: { at: string; label: string; note?: string }[];
+  /** The command and division that own the request. */
+  where?: Jurisdiction;
+  /** What the applicant wrote, in order: purpose, contact and the rest. */
+  answers?: { label: string; value: string }[];
+  /** Files attached, by the document each one answers. */
+  documents?: { label: string; file: string }[];
+  /** The call on the board, when the request is a crime report. */
+  incident?: string;
 };
 
 export type Fine = {
@@ -85,6 +102,20 @@ export type Incident = {
   unit: string | null;
   summary: string;
   source: string;
+  /** The command and division the call belongs to. */
+  where: Jurisdiction;
+  /** When it happened, if that was before it was reported. */
+  occurred?: string;
+  /**
+   * Who reported it. `null` for an anonymous report, so nobody spends ten
+   * minutes looking for a callback number that is not there; absent for a
+   * call the desk took itself.
+   */
+  reporter?: { name: string; phone: string; safeToCall: boolean } | null;
+  /** "Yes", "No" or "Not sure": whether anyone is hurt. */
+  injuries?: string;
+  /** Evidence the reporter attached, by file name. */
+  evidence?: string[];
   /**
    * What was written on the call, oldest first. A line the system writes is
    * stored as its English pattern plus the values that fill it, so the board
@@ -98,7 +129,10 @@ export type UnitStatus = "Available" | "Assigned" | "On Scene" | "Unavailable";
 
 export type Unit = {
   callsign: string;
-  division: string;
+  /** Patrol, Traffic, Marine…: what kind of unit, not where it is. */
+  section: string;
+  /** The command the unit belongs to. It is only sent to that command's calls. */
+  state: string;
   officer: string;
   status: UnitStatus;
   /** Last status change — the elapsed clock on the board counts from here. */
@@ -132,7 +166,7 @@ type State = {
 // Exported so scripts/test-store.mjs reads the blob under whatever the
 // current key is: a copy of the string in the test turns the next bump into
 // a failing test rather than a passing one.
-export const KEY = "dp:state:v4";
+export const KEY = "dp:state:v5";
 /**
  * The work lives in localStorage; who is signed in lives in sessionStorage.
  *
@@ -289,11 +323,14 @@ export function submitRequest(input: {
   service: string;
   fee: string;
   channel?: string;
-  note?: string;
+  where?: Jurisdiction;
+  answers?: TrackedRequest["answers"];
+  documents?: TrackedRequest["documents"];
+  incident?: string;
 }): TrackedRequest {
   const at = now();
   const created: TrackedRequest = {
-    id: reference("DP"),
+    id: reference("NPF"),
     slug: input.slug,
     service: input.service,
     status: "Submitted",
@@ -301,12 +338,108 @@ export function submitRequest(input: {
     updated: at,
     fee: input.fee,
     channel: input.channel ?? "Nigeria Police Force Website",
-    note: input.note,
-    timeline: [{ at, label: "Submitted", note: "Received by Nigeria Police Force." }],
+    where: input.where,
+    answers: input.answers,
+    documents: input.documents,
+    incident: input.incident,
+    timeline: [
+      input.where
+        ? {
+            at,
+            label: "Submitted",
+            note: "Sent to {command}, {division}.",
+          }
+        : { at, label: "Submitted", note: "Received by Nigeria Police Force." },
+    ],
   };
   write({ ...state, requests: [created, ...state.requests] });
   return created;
 }
+
+/**
+ * A crime reported by a member of the public. One write puts the call on
+ * the board of the command it happened in and, for a signed-in reporter,
+ * a request in their account that follows it — the same reference on both,
+ * so the officer and the reporter quote the same number to each other.
+ */
+export function fileReport(input: {
+  kind: string;
+  priority: Priority;
+  where: Jurisdiction;
+  summary: string;
+  occurred?: string;
+  reporter: Incident["reporter"];
+  injuries: string;
+  evidence: string[];
+}): Incident {
+  const incident = logIncident({
+    kind: input.kind,
+    priority: input.priority,
+    area: input.where.address || input.where.lga,
+    summary: input.summary,
+    source: "Website report",
+    where: input.where,
+    occurred: input.occurred,
+    reporter: input.reporter,
+    injuries: input.injuries,
+    evidence: input.evidence,
+  });
+  if (state.session?.role === "citizen") {
+    const at = now();
+    const created: TrackedRequest = {
+      id: incident.id,
+      slug: "open-criminal-case",
+      service: "File Criminal Complaint",
+      status: "Submitted",
+      submitted: at,
+      updated: at,
+      fee: "Free of Charge",
+      channel: "Nigeria Police Force Website",
+      where: input.where,
+      incident: incident.id,
+      answers: [
+        { label: "What happened", value: input.kind },
+        { label: "What you told us", value: input.summary },
+      ],
+      documents: input.evidence.map((file) => ({ label: "Evidence", file })),
+      timeline: [
+        { at, label: "Submitted", note: "Sent to {command}, {division}." },
+      ],
+    };
+    write({ ...state, requests: [created, ...state.requests] });
+  }
+  return incident;
+}
+
+/** Look a reference up from the public tracker: a request, or a report. */
+export function findReference(ref: string) {
+  const id = ref.trim().toUpperCase();
+  return {
+    request: state.requests.find((r) => r.id.toUpperCase() === id) ?? null,
+    incident: state.incidents.find((i) => i.id.toUpperCase() === id) ?? null,
+  };
+}
+
+/**
+ * Which command this tab's console shows. A command desk is held to its
+ * own; a Force Headquarters desk can look at any, or at all of them.
+ */
+export function setViewing(command: string | undefined) {
+  if (!state.session || state.session.command) return;
+  write({ ...state, session: { ...state.session, viewing: command } });
+}
+
+/** The command a console tab is showing, or null for every command. */
+export const viewingOf = (session: Session | null) =>
+  session?.command ?? session?.viewing ?? null;
+
+/**
+ * The values a routing line is written with. Stored as the state and LGA,
+ * not as the finished names, so the line reads in whichever language the
+ * person opening it uses: see routeLabels in ./Where.
+ */
+export const routeVars = (where?: Jurisdiction) =>
+  where ? { state: where.state, lga: where.lga } : undefined;
 
 /**
  * Moving a request, from either side. The officer decides one; the applicant
@@ -376,6 +509,31 @@ export function updateIncident(id: string, patch: Partial<Incident>) {
   if (!before) return;
   const after: Incident = { ...before, ...patch };
 
+  // A call sent to the wrong command goes back to that command's pending
+  // queue with nobody on it: a Lagos unit cannot attend in Kano.
+  const moved =
+    patch.where &&
+    (patch.where.state !== before.where.state ||
+      patch.where.lga !== before.where.lga);
+  if (moved) {
+    if (patch.where!.state !== before.where.state && before.status !== "Closed") {
+      patch = { ...patch, unit: null, status: "New" };
+      after.unit = null;
+      after.assignee = null;
+      after.status = "New";
+      after.dispatched = null;
+      after.onScene = null;
+    }
+    after.log = [
+      ...after.log,
+      {
+        at,
+        text: "Transferred to {command}, {division}.",
+        vars: routeVars(after.where),
+      },
+    ];
+  }
+
   if (patch.status && patch.status !== before.status) {
     if (patch.status === "Dispatched") after.dispatched ??= at;
     if (patch.status === "On Scene") {
@@ -402,6 +560,36 @@ export function updateIncident(id: string, patch: Partial<Incident>) {
   write({
     ...state,
     incidents: state.incidents.map((i) => (i.id === id ? after : i)),
+    // The reporter's copy follows the call, in the words a reporter needs:
+    // not "Dispatched — Patrol 12" but that officers are on it.
+    requests: state.requests.map((r) => {
+      if (r.incident !== id) return r;
+      const lines: TrackedRequest["timeline"] = [];
+      let status = r.status;
+      if (moved)
+        lines.push({ at, label: "Transferred", note: "Sent to {command}, {division}." });
+      if (patch.status && patch.status !== before.status) {
+        if (after.status === "Dispatched" || after.status === "On Scene") {
+          if (r.status !== "In Review")
+            lines.push({ at, label: "Officers assigned" });
+          status = "In Review";
+        } else if (after.status === "Closed") {
+          lines.push({ at, label: "Case closed" });
+          status = "Completed";
+        } else if (r.status === "Completed") {
+          lines.push({ at, label: "Reopened" });
+          status = "Submitted";
+        }
+      }
+      if (!lines.length) return r;
+      return {
+        ...r,
+        status,
+        updated: at,
+        where: after.where,
+        timeline: [...r.timeline, ...lines],
+      };
+    }),
     units: state.units.map((u) => {
       if (!touched.has(u.callsign)) return u;
       // The unit that just left the call goes back on the air.
@@ -462,13 +650,15 @@ export function setUnitStatus(callsign: string, status: UnitStatus) {
 }
 
 /** A new call taken at the desk. Lands at the top of the pending queue. */
-export function logIncident(input: {
-  kind: string;
-  priority: Priority;
-  area: string;
-  summary: string;
-  source: string;
-}): Incident {
+export function logIncident(
+  input: Pick<
+    Incident,
+    "kind" | "priority" | "area" | "summary" | "source" | "where"
+  > &
+    Partial<
+      Pick<Incident, "occurred" | "reporter" | "injuries" | "evidence">
+    >,
+): Incident {
   const at = now();
   const n = Math.max(
     4400,
@@ -489,6 +679,11 @@ export function logIncident(input: {
         at,
         text: "Call received via {source}.",
         vars: { source: input.source },
+      },
+      {
+        at,
+        text: "Routed to {command}, {division}.",
+        vars: routeVars(input.where),
       },
     ],
   };

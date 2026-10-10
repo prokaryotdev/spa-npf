@@ -1,12 +1,37 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
 import { dispatchTarget } from "../content-ops";
 import { useT } from "../i18n/client";
-import { useHydrated } from "./store";
+import { useHydrated, useStore, viewingOf } from "./store";
 import { CheckIcon, CloseIcon, SearchIcon } from "./icons";
 import { FindGlyph } from "./ops-glyphs";
 import type { Incident, Priority, UnitStatus } from "./store";
+
+/* -------------------------------------------------------------------------
+ * The command in view
+ * ---------------------------------------------------------------------- */
+
+/**
+ * The store, narrowed to the command this desk is looking at. Every console
+ * screen reads through this, so a Kano desk never counts, sees or sends a
+ * Lagos unit, and a Force Headquarters desk sees the whole country until it
+ * picks one command.
+ */
+export function useScoped() {
+  const store = useStore();
+  const viewing = viewingOf(store.session);
+  return useMemo(() => {
+    if (!viewing) return { ...store, viewing };
+    return {
+      ...store,
+      viewing,
+      incidents: store.incidents.filter((i) => i.where.state === viewing),
+      units: store.units.filter((u) => u.state === viewing),
+      requests: store.requests.filter((r) => r.where?.state === viewing),
+    };
+  }, [store, viewing]);
+}
 
 /* -------------------------------------------------------------------------
  * The clock
@@ -115,13 +140,8 @@ export function isOverdue(incident: Incident, now: number) {
  * ---------------------------------------------------------------------- */
 
 /**
- * A block of the console.
- *
- * Elevation is declared once and it is the shadow. These panels used to carry
- * a 1px hairline and nothing else, which on a pale blue ground made a board
- * of white rectangles read as a wireframe of itself — the outline said
- * "container" and nothing said "surface". Now the hairlines work strictly
- * inside a panel, dividing its rows, and the shadow does the lifting.
+ * A panel of the dashboard: one white tile, its title bar inside it over a
+ * hairline, the rows or the content below.
  */
 export function OpsPanel({
   title,
@@ -143,19 +163,21 @@ export function OpsPanel({
 }) {
   const t = useT();
   return (
-    <section className={`flex min-h-0 flex-col ${className}`}>
+    /*
+     * `overflow-clip`, not `overflow-hidden`. Both round off a flush table's
+     * corners, but `hidden` makes the tile a scroll container, and a scroll
+     * container captures every sticky descendant: the column heads would
+     * park inside the panel instead of pinning under the bar.
+     */
+    <section
+      className={`npf-ops-tile flex min-h-0 flex-col overflow-clip ${className}`}
+    >
       {title ? (
-        /*
-         * The title sits above its surface, the way a grouped list is
-         * labelled in an Apple app: the heading names the group, the count
-         * follows it in secondary text, and the surface below carries only
-         * the rows. No band, no rule, no caps.
-         */
-        <div className="flex min-h-7 shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 px-1 pb-2.5">
-          <h2 className="flex items-baseline gap-2 font-secondary text-[1.0625rem] leading-tight font-bold tracking-[-0.01em]">
+        <div className="flex min-h-14 shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-ops-line-soft px-5 py-2.5">
+          <h2 className="flex items-center gap-2.5 font-secondary text-base leading-tight font-bold text-npf-ink">
             {t(title)}
             {count !== undefined ? (
-              <span className="font-primary text-sm font-normal tracking-normal text-ops-dim tabular-nums">
+              <span className="rounded-full bg-npf-cloud px-2 py-0.5 font-primary text-xs font-semibold text-npf-blue-ink tabular-nums">
                 {count}
               </span>
             ) : null}
@@ -164,14 +186,7 @@ export function OpsPanel({
         </div>
       ) : null}
       <div
-        /*
-         * `overflow-clip`, not `overflow-hidden`. Both round off a flush
-         * table's corners, but `hidden` makes the surface a scroll container,
-         * and a scroll container captures every sticky descendant: the column
-         * heads stopped pinning to the viewport and parked 60px down the
-         * panel instead. `clip` crops without ever becoming a scrollport.
-         */
-        className={`npf-ops-tile min-h-0 flex-1 overflow-clip ${flush ? "" : "p-4 sm:p-5"} ${bodyClassName}`}
+        className={`min-h-0 flex-1 ${flush ? "" : "p-5"} ${bodyClassName}`}
       >
         {children}
       </div>
@@ -207,8 +222,8 @@ export function OpsEmpty({
         style={{
           background: ok
             ? "color-mix(in srgb, var(--ops-fill-ok) 14%, transparent)"
-            : "rgb(255 255 255 / 0.06)",
-          color: ok ? "var(--ops-fill-ok)" : "var(--ops-text)",
+            : "var(--ops-fill)",
+          color: ok ? "var(--ops-fill-ok)" : "var(--color-npf-blue-ink)",
         }}
       >
         {ok ? (
@@ -254,11 +269,11 @@ export function OpsHead({
      */
     <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
       <div className="min-w-0">
-        <h1 className="font-secondary text-[1.75rem] leading-[1.15] font-bold tracking-[-0.025em] sm:text-[2rem]">
+        <h1 className="font-secondary text-2xl leading-tight font-bold tracking-[-0.015em] text-npf-ink sm:text-[1.75rem]">
           {title}
         </h1>
         {lead ? (
-          <p className="mt-1.5 max-w-[68ch] text-sm leading-relaxed text-ops-dim">
+          <p className="npf-small mt-1 max-w-[68ch] text-npf-steel">
             {lead}
           </p>
         ) : null}
@@ -322,15 +337,15 @@ export function OpsSearch({
      * types into it.
      */
     <div
-      className={`group flex h-9 min-w-50 flex-1 items-center gap-2 rounded-[10px] bg-white/[0.07] ps-2.5 pe-1.5 transition-[background-color,box-shadow] duration-150 sm:max-w-90 hover:bg-white/[0.09] focus-within:bg-white/[0.09] ${
+      className={`group flex h-11 min-w-50 flex-1 items-center gap-2.5 rounded-full bg-white ps-4 pe-2 ring-inset transition-[box-shadow] duration-150 sm:max-w-90 ${
         dead
-          ? "shadow-[0_0_0_1.5px_rgb(255_69_58/0.75)]"
-          : "focus-within:shadow-[0_0_0_3px_rgb(64_156_255/0.55)]"
+          ? "ring-2 ring-npf-alert/70"
+          : "ring-1 ring-npf-hairline hover:ring-npf-ink/20 focus-within:ring-2 focus-within:ring-npf-blue-mid"
       }`}
     >
       <SearchIcon
         aria-hidden
-        className={`size-4 shrink-0 transition-colors ${dead ? "text-ops-p1" : "text-ops-dim"}`}
+        className={`size-4.5 shrink-0 transition-colors ${dead ? "text-ops-p1" : "text-npf-blue"}`}
       />
       <label htmlFor={id} className="sr-only">
         {label}
@@ -353,7 +368,7 @@ export function OpsSearch({
           }
         }}
         placeholder={placeholder}
-        className="npf-ops-search h-full w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-ops-dim focus-visible:outline-none"
+        className="npf-ops-search h-full w-full min-w-0 bg-transparent text-sm text-npf-ink outline-none placeholder:text-npf-steel focus-visible:outline-none"
       />
       {value ? (
         <button
@@ -367,7 +382,7 @@ export function OpsSearch({
           {/* The filled clear mark of a system search field. */}
           <span
             aria-hidden
-            className="grid size-4 place-items-center rounded-full bg-ops-dim/70 text-ops-panel transition-colors group-hover/clear:bg-ops-text"
+            className="grid size-4 place-items-center rounded-full bg-npf-steel/70 text-white transition-colors group-hover/clear:bg-npf-ink"
           >
             <CloseIcon className="size-2.5" />
           </span>
@@ -376,7 +391,7 @@ export function OpsSearch({
       ) : (
         <kbd
           aria-hidden
-          className="hidden h-5 min-w-5 shrink-0 place-items-center rounded-[5px] bg-white/[0.08] px-1 font-primary text-2xs font-medium text-ops-dim sm:grid"
+          className="hidden h-5 min-w-5 shrink-0 place-items-center rounded-[5px] bg-ops-fill px-1 font-primary text-2xs font-medium text-ops-dim sm:grid"
         >
           /
         </kbd>
@@ -387,7 +402,7 @@ export function OpsSearch({
 
 /** The shared look of a `select` sitting in a filter bar. */
 export const OPS_SELECT =
-  "npf-ops-select h-9 rounded-chip px-3 text-sm font-medium outline-none";
+  "npf-ops-select h-11 rounded-full px-4 text-sm font-medium outline-none";
 
 /* -------------------------------------------------------------------------
  * Grades and statuses
@@ -442,7 +457,7 @@ const CALL_TONE: Record<Incident["status"], string> = {
   New: "bg-ops-p2-wash text-ops-p2",
   Dispatched: "bg-ops-route-wash text-ops-route",
   "On Scene": "bg-ops-scene-wash text-ops-scene",
-  Closed: "bg-white/[0.08] text-ops-dim",
+  Closed: "bg-ops-fill text-ops-dim",
 };
 
 /** A pending call says "Pending" on the board — "New" is not a state of work. */
@@ -468,7 +483,7 @@ const UNIT_TONE: Record<UnitStatus, string> = {
   // The same inks as the call it is on: en route is indigo, on scene teal.
   Assigned: "bg-ops-route-wash text-ops-route",
   "On Scene": "bg-ops-scene-wash text-ops-scene",
-  Unavailable: "bg-white/[0.08] text-ops-dim",
+  Unavailable: "bg-ops-fill text-ops-dim",
 };
 
 export function UnitStatusTag({ status }: { status: UnitStatus }) {
@@ -481,7 +496,7 @@ export function UnitStatusTag({ status }: { status: UnitStatus }) {
   );
 }
 
-/** Buttons in the console: Apple push buttons, filled, 8px corners. */
+/** Buttons in the console: the site's pill shape, filled. */
 export function OpsButton({
   tone = "quiet",
   className = "",
@@ -491,11 +506,11 @@ export function OpsButton({
 }) {
   const tones = {
     brand:
-      "bg-ops-brand text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.12)] hover:bg-ops-brand-lift disabled:opacity-40 disabled:shadow-none",
+      "bg-ops-brand text-white hover:bg-ops-brand-lift disabled:opacity-40",
     quiet:
-      "bg-white/[0.08] text-ops-text hover:bg-white/[0.12] disabled:opacity-40",
+      "bg-ops-fill text-ops-text hover:bg-ops-fill-hover disabled:opacity-40",
     danger:
-      "bg-ops-p1/15 text-[#ff6961] hover:bg-ops-p1/22 disabled:opacity-40",
+      "bg-npf-error-wash text-ops-p1 hover:bg-[#f7d3d3] disabled:opacity-40",
   };
   return (
     /*
@@ -507,7 +522,7 @@ export function OpsButton({
     <button
       type="button"
       {...props}
-      className={`inline-flex h-9 items-center gap-1.5 rounded-chip px-3.5 text-sm font-medium whitespace-nowrap transition-[background-color,border-color,box-shadow,scale] enabled:active:scale-[0.97] active:duration-(--dur-press) disabled:cursor-not-allowed ${tones[tone]} ${className}`}
+      className={`inline-flex h-10 items-center gap-1.5 rounded-full px-4 text-sm font-medium whitespace-nowrap transition-[background-color,border-color,box-shadow,scale] enabled:active:scale-[0.97] active:duration-(--dur-press) disabled:cursor-not-allowed ${tones[tone]} ${className}`}
     />
   );
 }

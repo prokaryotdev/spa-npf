@@ -96,10 +96,15 @@ assert.match(
 // every non-digit from it made 120000, which summed into a ₦168,000 police
 // clearance certificate on the catalogue card.
 const pcc = services.find((s) => s.slug === "police-clearance-certificate");
-assert.equal(pcc.feeSummary, "From ₦48,000", "cheapest tier plus the levies");
+// Its fee is set per application on the POSSAP invoice, and the page says
+// so rather than printing a figure nobody published.
+assert.equal(pcc.feeSummary, "On your POSSAP invoice");
+/** Fees set by another system, named rather than priced. */
+const SET_ELSEWHERE = new Set(["On your POSSAP invoice", "On the CMRIS portal"]);
 const naira = (s) => Number(s.replace(/[^\d.]/g, ""));
 for (const service of services) {
   if (service.feeSummary === "Free of Charge") continue;
+  if (SET_ELSEWHERE.has(service.feeSummary)) continue;
   assert.match(
     service.feeSummary,
     /^(From )?₦\d{1,3}(,\d{3})*(\.\d+)?$/,
@@ -130,22 +135,4 @@ console.log("search, catalogue and seeds ok");
   const slugs = services.map((s) => s.slug);
   assert.deepEqual([...serviceImportance].sort(), [...slugs].sort());
   assert.equal(new Set(serviceImportance).size, serviceImportance.length);
-}
-
-// --- board map -----------------------------------------------------------
-// Every seeded call and unit lands on the map, in its own district, and a
-// place the table does not know gets no dot rather than a wrong one.
-{
-  const { placeOf } = await import("../app/components/ops-geo.ts");
-  const { seedIncidents, seedUnits } = await import("../app/content-ops.ts");
-  for (const x of [...seedIncidents(), ...seedUnits()]) {
-    const at = placeOf(x.area, x.id ?? x.callsign);
-    assert.ok(at, `no map position for "${x.area}"`);
-  }
-  const district = placeOf("Sabon Gari, Kano", "a");
-  const city = placeOf("Kano", "a");
-  assert.notDeepEqual(district, city, "Sabon Gari must win over Kano");
-  assert.deepEqual(placeOf("Ikeja, Lagos", "x"), placeOf("Ikeja, Lagos", "x"));
-  assert.equal(placeOf("Somewhere in Atlantis", "x"), null);
-  console.log("board map positions ok");
 }

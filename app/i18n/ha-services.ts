@@ -928,4 +928,135 @@ export const haServices: Record<string, string> = {
   "Collected. Case closed.": "An karɓa. An rufe shari'ar.",
   "Divisional Police Station": "Ofishin 'Yan Sanda na Sashe",
   "Certificate available to download.": "Ana iya sauke takardar shaida.",
+  // --- real NPF services: POSSAP, CMR, PSC, CRU ---------------------------
+  "Police Service Commission":
+    "Hukumar Kula da Aikin 'Yan Sanda",
+  "Join the Nigeria Police Force":
+    "Shiga Rundunar 'Yan Sandan Najeriya",
+  "Constables are recruited by the Police Service Commission in national recruitment exercises. Applications are made online on the Commission's portal while an exercise is open. Recruitment is free: no payment is ever required.":
+    "Hukumar Kula da Aikin 'Yan Sanda ce ke ɗaukar kuratan 'yan sanda a shirye-shiryen ɗaukar ma'aikata na ƙasa. Ana yin nema ta intanet a shafin Hukumar yayin da shirin yake buɗe. Ɗaukar aiki kyauta ne: ba a taɓa neman wani biya.",
+  "National Identification Number (NIN)":
+    "Lambar Shaidar Ɗan Ƙasa (NIN)",
+  "WAEC, NECO or equivalent result":
+    "Sakamakon WAEC, NECO ko makamancinsa",
+  "Police Service Commission portal":
+    "Shafin Hukumar Kula da Aikin 'Yan Sanda",
+  "Set by each recruitment exercise":
+    "Kowane shirin ɗaukar aiki ne ke tsara shi",
+  "Nigerian citizen by birth, with a National Identification Number.":
+    "Ɗan Najeriya ta haihuwa, mai Lambar Shaidar Ɗan Ƙasa.",
+  "Aged 18 to 25 (the range in the 2022 exercise).":
+    "Shekaru 18 zuwa 25 (iyakar a shirin 2022).",
+  "At least five credits, including English and Mathematics, in WAEC, NECO or equivalent, in no more than two sittings.":
+    "Aƙalla kiredit biyar, ciki har da Turanci da Lissafi, a WAEC, NECO ko makamancinsa, a zama bai fi biyu ba.",
+  "Minimum height 1.67 m for men and 1.64 m for women; men need a chest of at least 86 cm.":
+    "Mafi ƙarancin tsawo m 1.67 ga maza da m 1.64 ga mata; maza suna buƙatar ƙirji aƙalla cm 86.",
+  "Of good character, with no criminal conviction.":
+    "Mai kyawawan halaye, ba tare da hukuncin laifi ba.",
+  "Requirements are set for each exercise. Check the Commission's announcement before applying.":
+    "Ana tsara buƙatu ne ga kowane shiri. Duba sanarwar Hukumar kafin ka nema.",
+  "Police Escort and Guard Services":
+    "Ayyukan Rakiya da Gadi na 'Yan Sanda",
+  "Supernumerary Police":
+    "'Yan Sandan Ƙari (SPY)",
+  "Report a Missing Person":
+    "Kai Rahoton Mutumin da Ya Ɓace",
+  "Report Sexual or Gender-Based Violence":
+    "Kai Rahoton Cin Zarafin Jima'i ko na Jinsi",
+  "Complaint Against a Police Officer":
+    "Ƙorafi Kan Jami'in 'Yan Sanda",
+  "CID Clearance Certificate":
+    "Takardar Shaidar Wanke Laifi ta CID",
+  "Police Investigation Report":
+    "Rahoton Binciken 'Yan Sanda",
+  "Tinted Glass Permit":
+    "Izinin Gilashin Mota Mai Duhu",
+  "Firearm Licence":
+    "Lasisin Mallakar Bindiga",
+  "A Police Extract is the Force's written record of a report you made, such as a lost document or item. Agencies that replace lost documents commonly ask for one. It is applied for through POSSAP, the Force's portal for paid services.":
+    "Takardar Police Extract ita ce rubutaccen bayanin Rundunar na rahoton da ka kai, kamar takarda ko kayan da suka ɓace. Hukumomin da ke maye gurbin takardun da suka ɓace kan nema. Ana nema ta POSSAP, shafin Rundunar na ayyukan da ake biya.",
+  "What was lost or what happened, with the date and place":
+    "Abin da ya ɓace ko abin da ya faru, tare da kwanan wata da wuri",
+  "Depends on the case":
+    "Ya danganta da lamarin",
+  "The extract is the record of a report, so the loss or incident is reported first.":
+    "Takardar ita ce bayanin rahoto, don haka ana fara kai rahoton asarar ko abin da ya faru.",
+  "Driving a vehicle with tinted glass needs a permit under the Motor Vehicles (Prohibition of Tinted Glass) Act. A permit is issued only for good cause, such as a medical or security reason, and is applied for through POSSAP.":
+    "Tuƙa mota mai gilashi mai duhu yana buƙatar izini a ƙarƙashin Dokar Motoci (Hana Gilashi Mai Duhu). Ana ba da izini ne kawai saboda kyakkyawan dalili, kamar na lafiya ko na tsaro, kuma ana nema ta POSSAP.",
+  "Vehicle particulars: plate, chassis and engine numbers":
+    "Bayanan mota: lambar mota, lambar chassis da ta injin",
+  "Evidence of the reason for the permit, such as a medical report":
+    "Shaidar dalilin izinin, kamar rahoton likita",
+  "Apply only on possap.gov.ng. Ignore anyone offering permits through other channels.":
+    "Ka nema a possap.gov.ng kawai. Kada ka saurari duk wanda ke bayar da izini ta wasu hanyoyi.",
+  "Individuals and organisations can request police escort or guard services through POSSAP. The service is charged according to the Force's tariff and billed on the POSSAP invoice.":
+    "Mutane da ƙungiyoyi za su iya neman rakiya ko gadi na 'yan sanda ta POSSAP. Ana cajin sabis ɗin bisa jadawalin kuɗin Rundunar kuma ana bayyana shi a takardar biyan POSSAP.",
+  "Who or what is to be protected, where, and for how long":
+    "Wane ne ko me za a kare, a ina, kuma har yaushe",
+  "Owning a firearm in Nigeria needs a licence under the Firearms Act. A licence is not granted as of right: it is at the discretion of the President or the Inspector-General of Police. Applications are made through POSSAP.":
+    "Mallakar bindiga a Najeriya yana buƙatar lasisi a ƙarƙashin Dokar Bindigogi. Ba a ba da lasisi a matsayin haƙƙi ba: ya rataya ne ga ra'ayin Shugaban Ƙasa ko Sufeto-Janar na 'Yan Sanda. Ana nema ta POSSAP.",
+  "A licence can be refused without a reason being given.":
+    "Ana iya ƙin ba da lasisi ba tare da bayyana dalili ba.",
+  "Anyone convicted of an offence involving violence or the threat of violence in the previous five years cannot be granted a licence.":
+    "Duk wanda aka same shi da laifin da ya shafi tashin hankali ko barazanar tashin hankali a cikin shekaru biyar da suka gabata ba za a ba shi lasisi ba.",
+  "A clearance certificate from the Force Criminal Investigation Department, one of the paid certificates applied for through POSSAP. The requirements for your case are shown on POSSAP when you apply.":
+    "Takardar shaidar wanke laifi daga Sashen Binciken Manyan Laifuka na Rundunar, ɗaya daga cikin takardun da ake biya ana nema ta POSSAP. Ana nuna buƙatun lamarinka a POSSAP lokacin da ka nema.",
+  "A copy of the report of a police investigation, applied for through POSSAP among the Force's paid services.":
+    "Kwafin rahoton binciken 'yan sanda, ana nema ta POSSAP cikin ayyukan Rundunar da ake biya.",
+  "The case reference and the station or command that investigated it":
+    "Lambar shari'ar da ofishin 'yan sanda ko rundunar da ta bincika",
+  "Ministries, agencies, banks and companies can apply for supernumerary police officers to guard their property. Once a request is approved, the organisation pays for the officers' training and their pay for the period they are engaged.":
+    "Ma'aikatu, hukumomi, bankuna da kamfanoni za su iya neman 'yan sandan ƙari don gadin dukiyoyinsu. Da zarar an amince da buƙatar, ƙungiyar za ta biya horon jami'an da albashinsu na tsawon lokacin da suke aiki.",
+  "A description of the property and why officers are needed":
+    "Bayanin dukiyar da dalilin da ake buƙatar jami'ai",
+  "Apply to the Inspector-General of Police or to the Commissioner of Police of the state, describing the property and the circumstances.":
+    "Nemi ga Sufeto-Janar na 'Yan Sanda ko Kwamishinan 'Yan Sanda na jihar, kana bayyana dukiyar da yanayin.",
+  "You may be asked for any other information the Inspector-General requires.":
+    "Ana iya tambayar ka duk wani bayani da Sufeto-Janar ke buƙata.",
+  "Central Motor Registry (e-CMR)":
+    "Rijistar Motoci ta Tsakiya (e-CMR)",
+  "Vehicle owners (cars, buses, trucks and motorcycles) register their vehicles with the Force's Central Motor Registry and receive a Motor Vehicle Information Certificate. The register helps the police confirm that a vehicle is genuine and who owns it.":
+    "Masu motoci (motocin hawa, bas, manyan motoci da babura) suna yi wa motocinsu rijista a Rijistar Motoci ta Tsakiya ta Rundunar kuma suna samun Takardar Bayanin Mota. Rijistar tana taimaka wa 'yan sanda su tabbatar motar ta gaske ce da kuma wanda ya mallake ta.",
+  "Registration fee":
+    "Kuɗin rijista",
+  "Shown on the CMRIS portal":
+    "Ana nuna shi a shafin CMRIS",
+  "On the CMRIS portal":
+    "A shafin CMRIS",
+  "Online, on the CMRIS portal":
+    "Ta intanet, a shafin CMRIS",
+  "CMRIS portal (cmris.npf.gov.ng)":
+    "Shafin CMRIS (cmris.npf.gov.ng)",
+  "Update the record when the owner, plate number, engine or chassis changes.":
+    "Sabunta bayanin idan mai motar, lambar mota, injin ko chassis ya canza.",
+  "In 2024 the Inspector-General suspended enforcement of the e-CMR certificate and told officers not to demand it from motorists.":
+    "A shekarar 2024 Sufeto-Janar ya dakatar da tilasta takardar e-CMR kuma ya umurci jami'ai kada su nemi ta daga masu mota.",
+  "If an officer asked you for money, mistreated you or refused to help, complain to the Force's Complaint Response Unit by phone, by WhatsApp or with this form. You can also petition the Police Service Commission, the body that disciplines police officers.":
+    "Idan jami'i ya nemi kuɗi daga gare ka, ya wulakanta ka ko ya ƙi taimaka maka, kai ƙorafi ga Sashen Amsa Ƙorafi na Rundunar ta waya, ta WhatsApp ko da wannan fom. Za ka iya kuma kai koke ga Hukumar Kula da Aikin 'Yan Sanda, hukumar da ke ladabtar da jami'an 'yan sanda.",
+  "Photos, video or receipts (if available)":
+    "Hotuna, bidiyo ko rasidai (idan akwai)",
+  "Give the date, time and place, and what happened. Name the officer, or give their number or the vehicle plate, if you can.":
+    "Bayar da kwanan wata, lokaci da wuri, da abin da ya faru. Ambaci sunan jami'in, ko lambarsa ko lambar mota, idan za ka iya.",
+  "A petition to the Police Service Commission is a letter to its Chairman setting out what happened, with any evidence attached.":
+    "Koke ga Hukumar Kula da Aikin 'Yan Sanda wasiƙa ce zuwa ga Shugabanta da ke bayyana abin da ya faru, tare da duk wata shaida a haɗe.",
+  "Report someone who has not come home and cannot be reached. There is no waiting period: report as soon as you are worried.":
+    "Kai rahoton wanda bai dawo gida ba kuma ba a iya samunsa. Babu lokacin jira: kai rahoto da zarar ka damu.",
+  "A recent photograph (if available)":
+    "Hoton kwanan nan (idan akwai)",
+  "Note what they were wearing, where they were last seen, and who they were with.":
+    "Ka lura da abin da yake sanye da shi, inda aka gan shi na ƙarshe, da wanda yake tare da shi.",
+  "Report rape, sexual assault, domestic violence or abuse. State Commands have Gender Units, and in 2020 the Inspector-General sent specialised investigators to gender desks across the country.":
+    "Kai rahoton fyaɗe, cin zarafin jima'i, cin zarafi a gida ko wulakanci. Rundunonin jihohi suna da Sassan Jinsi, kuma a 2020 Sufeto-Janar ya tura ƙwararrun masu bincike zuwa teburan jinsi a faɗin ƙasar.",
+  "Say if it is not safe for officers to call you at home.":
+    "Ka faɗa idan ba lafiya ba ne jami'ai su kira ka a gida.",
+  "We will tell you in your account and by email at each step.":
+    "Za mu sanar da kai a asusunka da ta imel a kowane mataki.",
+  "Apply on the {name} portal":
+    "Nema a shafin {name}",
+  "Opens in a new window. Recruitment is free.":
+    "Yana buɗewa a sabon taga. Ɗaukar aiki kyauta ne.",
+  "Go to the recruitment portal":
+    "Je zuwa shafin ɗaukar aiki",
+  "Run by the {name}. Opens in a new window.":
+    "Hukumar {name} ce ke gudanarwa. Yana buɗewa a sabon taga.",
 };

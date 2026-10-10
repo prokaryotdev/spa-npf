@@ -100,8 +100,6 @@ export const igHome: Record<string, string> = {
     "Iwu na Ụkpụrụ",
   "Friendly Websites":
     "Weebụsaịtị Enyi",
-  "Federal Ministry of Interior":
-    "Ministri Ime Obodo nke Gọọmentị Etiti",
   "Federal Road Safety Corps":
     "Ụlọ Ọrụ Nchekwa Okporo Ụzọ Etiti (FRSC)",
   "Police Week across Nigeria":
@@ -136,10 +134,6 @@ export const igHome: Record<string, string> = {
     "Ọnụ",
   "Connecting hearts, building trust. Stronger as one.":
     "Na-ejikọ obi, na-ewu ntụkwasị obi. Anyị siri ike karịa mgbe anyị dị n'otu.",
-  "Make a Report":
-    "Kọọ Akụkọ",
-  "Report a crime or submit your complaint directly":
-    "Kọọ mpụ ma ọ bụ zipu mkpesa gị ozugbo",
   "Apply for a Certificate or Permit":
     "Rịọ Asambodo ma ọ bụ Akwụkwọ Ikike",
   "Access official documents from the Nigeria Police Force quickly and securely":

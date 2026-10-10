@@ -23,7 +23,9 @@ import {
 const PAGES = [
   ["the homepage", "/"],
   ["the service catalogue", "/app/services"],
-  ["a service", "/app/services/police-character-certificate"],
+  ["a service", "/app/services/police-clearance-certificate"],
+  ["reporting a crime", "/app/report"],
+  ["tracking a reference", "/app/track?ref=NPF-4417"],
   ["a data table", "/app/home/information/traffic-offences-and-penalties"],
   ["a legal document", "/app/home/privacy-policy"],
   ["search results", "/app/search?q=certificate"],

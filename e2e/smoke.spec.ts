@@ -59,7 +59,9 @@ test.describe("the public site", () => {
 
   test("the language switch keeps you on the same page", async ({ page }) => {
     await page.goto("/ha/app/home/information/laws-legislation");
-    await page.getByRole("link", { name: /Switch to English/i }).click();
+    // Four languages now, so the switch is a menu: open it, pick English.
+    await page.locator("header details > summary").first().click();
+    await page.getByRole("link", { name: "English", exact: true }).first().click();
     // Same page, other language — not dumped back on the homepage, which is
     // what every naive implementation of this does.
     await expect(page).toHaveURL(

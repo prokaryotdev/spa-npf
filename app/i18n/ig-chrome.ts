@@ -42,12 +42,6 @@ export const igChrome: Record<string, string> = {
     "Debanye aha",
   "© {year} Nigeria Police Force. All Rights Reserved":
     "© {year} Ndị Uwe Ojii Naịjirịa. Echekwara Ikike Niile",
-  "This site is monitored and maintained by Nigeria Police Force.":
-    "Ndị Uwe Ojii Naịjirịa na-elekọta ma na-echekwa saịtị a.",
-  "The site is best viewed in a current version of Chrome, Safari, Edge or Firefox":
-    "A na-ahụ saịtị a nke ọma na ụdị ọhụrụ nke Chrome, Safari, Edge ma ọ bụ Firefox",
-  "Last modified Date: {date}":
-    "Ụbọchị Mgbanwe Ikpeazụ: {date}",
   "Designed and built by":
     "Onye haziri ma wuo ya:",
   "Open menu":

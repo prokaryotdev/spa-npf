@@ -100,8 +100,6 @@ export const yoHome: Record<string, string> = {
     "Òfin àti Ìlànà",
   "Friendly Websites":
     "Àwọn Ojú-òpó Ọ̀rẹ́",
-  "Federal Ministry of Interior":
-    "Ilé-iṣẹ́ Ìjọba Àpapọ̀ fún Ọ̀rọ̀ Abẹ́lé",
   "Federal Road Safety Corps":
     "Ẹgbẹ́ Ààbò Ojú Ọ̀nà Àpapọ̀",
   "Police Week across Nigeria":
@@ -136,10 +134,6 @@ export const yoHome: Record<string, string> = {
     "Papọ̀",
   "Connecting hearts, building trust. Stronger as one.":
     "Ń so ọkàn pọ̀, ń kọ́ ìgbẹ́kẹ̀lé. A lágbára jù bí a bá wà papọ̀.",
-  "Make a Report":
-    "Fi Ìròyìn Ránṣẹ́",
-  "Report a crime or submit your complaint directly":
-    "Fi ìwà ọ̀daràn sùn tàbí fi ẹ̀sùn rẹ ránṣẹ́ tààrà",
   "Apply for a Certificate or Permit":
     "Béèrè fún Ìwé-ẹ̀rí tàbí Ìwé-àṣẹ",
   "Access official documents from the Nigeria Police Force quickly and securely":

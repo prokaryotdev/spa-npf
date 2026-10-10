@@ -27,7 +27,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
   for (const column of footerColumns)
     for (const link of column.links)
-      if (!("external" in link && link.external)) paths.add(link.href);
+      // A filtered view (?package=) is the services page again, not a page.
+      if (!("external" in link && link.external) && !link.href.includes("?"))
+        paths.add(link.href);
   for (const link of legalLinks) paths.add(link.href);
 
   // Both languages, each entry naming the other, because a page a crawler

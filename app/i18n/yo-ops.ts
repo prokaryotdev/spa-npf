@@ -54,8 +54,6 @@ export const yoOps: Record<string, string> = {
     "Gba ìpè",
   "Filter calls":
     "Ṣàlẹ̀mọ́ ìpè",
-  "Reference, type, area, officer or callsign":
-    "Ìtọ́kasí, irú, agbègbè, ọlọ́pàá tàbí orúkọ ẹ̀ka",
   "Status":
     "Ipò",
   "Any status":
@@ -108,8 +106,6 @@ export const yoOps: Record<string, string> = {
     "Irú ìpè",
   "dispatch within {n}m":
     "fi ránṣẹ́ láàárín ìṣẹ́jú {n}",
-  "Area":
-    "Agbègbè",
   "Received via":
     "A gbà á nípasẹ̀",
   "What was reported":
@@ -118,8 +114,6 @@ export const yoOps: Record<string, string> = {
     "Ohun tí olùpè ṣàlàyé, ní ọ̀rọ̀ ara rẹ̀ bí o bá ti lè ṣe é.",
   "Put it in the queue":
     "Fi sí ìlà",
-  "Map of open calls and units":
-    "Máàpù àwọn ìpè tí ó ṣí àti àwọn ẹ̀ka",
   "Command board":
     "Pátákó Àṣẹ",
   "Waiting":
@@ -128,8 +122,6 @@ export const yoOps: Record<string, string> = {
     "Ti pẹ́",
   "Units free":
     "Ẹ̀ka tó wà lófo",
-  "Live picture":
-    "Àwòrán lọ́wọ́lọ́wọ́",
   "Pending":
     "Ń dúró de ẹ̀ka",
   "{n} waiting":
@@ -160,8 +152,6 @@ export const yoOps: Record<string, string> = {
     "{n} wà lófo",
   "Status board":
     "Pátákó ipò",
-  "Units on duty by division, with how many are available":
-    "Àwọn ẹ̀ka lẹ́nu iṣẹ́ ní ìpín kọ̀ọ̀kan, pẹ̀lú iye tí ó wà lófo",
   "Immediate":
     "Lẹ́sẹ̀kẹsẹ̀",
   "Urgent":
@@ -224,8 +214,6 @@ export const yoOps: Record<string, string> = {
     "Wọlé gẹ́gẹ́ bí ọlọ́pàá",
   "Command":
     "Àṣẹ",
-  "& Control":
-    "& Ìṣàkóso",
   "End shift":
     "Parí ìyípo iṣẹ́",
   "Duty officer":
@@ -238,8 +226,6 @@ export const yoOps: Record<string, string> = {
     "Orúkọ ẹ̀ka, ọlọ́pàá tàbí agbègbè",
   "Division":
     "Ìpín",
-  "Every division":
-    "Gbogbo ìpín",
   "{shown} of {total} units":
     "{shown} nínú ẹ̀ka {total}",
   "Units on duty, with status, elapsed time in that status, and the call they are assigned to":
@@ -256,8 +242,6 @@ export const yoOps: Record<string, string> = {
     "Gbé lọ sí",
   "No unit matches that filter":
     "Kò sí ẹ̀ka tó bá àlẹ̀mọ́ yẹn mu",
-  "Clear the search box or pick every division to see the whole shift again.":
-    "Pa àpótí wíwá rẹ́ tàbí yan gbogbo ìpín láti tún rí gbogbo ìyípo iṣẹ́.",
   "(held over 45 minutes)":
     "(ó ti lò ju ìṣẹ́jú 45 lọ)",
   "Arrived":

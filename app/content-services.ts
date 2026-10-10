@@ -25,31 +25,6 @@ export type Service = {
 
 export const services: Service[] = [
   {
-    slug: "a-proactive-approach-to-ensures-public-safety",
-    name: "A proactive approach to ensures public safety",
-    action: "Start Service",
-    category: null,
-    icon: "/icons/services/shield-01.svg",
-    description:
-      "By integrating the latest technologies to counter evolving crime patterns, the Rescue Me initiative ensures a proactive approach to public safety. It encourages residents to report suspicious observations promptly, reinforcing a culture of vigilance and cooperation. This initiative underpins the vision of the Force and the Federal Ministry of Interior’s pursuit of leadership in security.",
-    audiences: ["Residents", "Foreigners"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: [],
-    channels: [],
-    delivery: "",
-    hours: [],
-    contacts: [],
-    turnaround: "Instant",
-    terms: [],
-    related: [],
-  },
-  {
     slug: "application-status",
     name: "Application Status",
     action: "Inquire",
@@ -91,90 +66,58 @@ export const services: Service[] = [
     terms: [],
     related: [],
   },
+  // Source: Police Service Commission (psc.gov.ng); TheCable 2022; 2026 exercise
   {
-    slug: "apply-for-a-job",
-    name: "Apply for a Job",
-    action: "Start Service",
     category: "Community Engagement",
-    icon: "/icons/services/job-vacancies.svg",
-    description:
-      "A service enables job seekers to apply to vacancies at Nigeria Police Force",
-    audiences: ["Residents", "Students"],
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
+    delivery: "",
+    related: [],
+    contacts: [],
+    slug: "apply-for-a-job",
+    name: "Join the Nigeria Police Force",
+    action: "Apply",
+    icon: "/icons/services/job-vacancies.svg",
+    description: "Constables are recruited by the Police Service Commission in national recruitment exercises. Applications are made online on the Commission's portal while an exercise is open. Recruitment is free: no payment is ever required.",
+    audiences: [
+      "Residents",
+      "Students"
+    ],
     fees: [],
     feeSummary: "Free of Charge",
     payment: [],
     documents: [
       {
-        label: "CV",
-        items: [],
+        label: "National Identification Number (NIN)",
+        items: []
       },
       {
-        label: "passport",
-        items: [],
-      },
-      {
-        label: "NIN",
-        items: [],
-      },
-      {
-        label: "family declaration",
-        items: [],
-      },
-      {
-        label: "driving license (if available)",
-        items: [],
-      },
-      {
-        label: "personal photo",
-        items: [],
-      },
-      {
-        label: "birth certificate",
-        items: [],
-      },
-      {
-        label: "academic qualification",
-        items: [],
-      },
-      {
-        label: "experience certificates (if available)",
-        items: [],
-      },
-      {
-        label: "police clearance certificate",
-        items: [],
-      },
-      {
-        label: "required English language certificates",
-        items: [],
-      },
-      {
-        label: "NYSC certificate or exemption",
-        items: [],
-      },
+        label: "WAEC, NECO or equivalent result",
+        items: []
+      }
     ],
-    beneficiaries: ["Individuals"],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website"],
-    delivery: "",
+    beneficiaries: [
+      "Individuals"
+    ],
+    channels: [
+      "Police Service Commission portal"
+    ],
     hours: [
       {
         label: "Digital Channels",
-        value: "24/7",
-      },
+        value: "24/7"
+      }
     ],
-    contacts: [],
-    turnaround: "1 Month",
+    turnaround: "Set by each recruitment exercise",
     terms: [
-      "The applicant must be at least 18 years old.",
-      "Must hold a high school diploma or higher, officially accredited.",
-      "Must possess a valid driving license.",
-      "The criminal record must be clear of any offenses or violations.",
-      "Must have successfully completed NYSC or hold an official exemption.",
-    ],
-    related: [],
+      "Nigerian citizen by birth, with a National Identification Number.",
+      "Aged 18 to 25 (the range in the 2022 exercise).",
+      "At least five credits, including English and Mathematics, in WAEC, NECO or equivalent, in no more than two sittings.",
+      "Minimum height 1.67 m for men and 1.64 m for women; men need a chest of at least 86 cm.",
+      "Of good character, with no criminal conviction.",
+      "Requirements are set for each exercise. Check the Commission's announcement before applying."
+    ]
   },
   {
     slug: "service-attachment",
@@ -355,72 +298,6 @@ export const services: Service[] = [
     related: [],
   },
   {
-    slug: "vehicle-color-change",
-    name: "Change Vehicle Color Permit",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/change-vehicle-color-permit.svg",
-    description:
-      "This service enables customers wishing to change the color of their vehicles registered in Nigeria to obtain a permit to do so.",
-    audiences: ["Drivers", "Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [
-      {
-        label: "Permit Fee",
-        value: "₦40,000",
-      },
-      {
-        label: "Processing fee",
-        value: "₦4,000",
-      },
-      {
-        label: "Technology levy",
-        value: "₦4,000",
-      },
-    ],
-    feeSummary: "₦48,000",
-    payment: ["Debit Card", "Credit Card", "Apple Pay"],
-    documents: [
-      {
-        label: "NIN",
-        items: [],
-      },
-      {
-        label: "Vehicle's number",
-        items: [],
-      },
-      {
-        label: "Proof of possession/customs paper",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals", "Business Sector", "Governmental Entities"],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website"],
-    delivery:
-      '**Email**: The digital version of the permit will be sent to your registered email address as soon as it is issued. **Personal Dashboard**: Log in to your Nigeria Police Force account, navigate to "My Requests" section in your personal dashboard, search for your request, and then download the permit directly. **Direct Inquiry**: You can download the permit through "Application Status" service using only your reference number.',
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "1 Working Day",
-    terms: [
-      "Vehicle must be registered in Nigeria",
-      "Proof of possession/customs paper for non-registered vehicles",
-      "Vehicle must be brought to General Department of Criminal Investigations (CID) - Cars Tracking Section if needed",
-      "This permit is valid for one month.",
-    ],
-    related: [],
-  },
-  {
     slug: "child-protection",
     name: "Child Protection",
     action: "Request Support",
@@ -467,41 +344,6 @@ export const services: Service[] = [
     related: [],
   },
   {
-    slug: "financial-cases",
-    name: "Circulars and travel bans",
-    action: "Inquire",
-    category: null,
-    icon: "/icons/services/travel-ban-01.svg",
-    description:
-      "This service enables users to inquire about circulars related to financial cases and travel bans issued against them by the competent security authorities.",
-    audiences: ["Residents", "Foreigners", "Organisations"],
-    mostUsed: true,
-    dashboardOrder: 5,
-    ninAuthOnly: true,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: ["Individuals", "Business Sector"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Divisional Police Stations",
-      "Police Stations",
-    ],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "Instant",
-    terms: [],
-    related: [],
-  },
-  {
     slug: "community-activities-participation",
     name: "Community Activities Participation",
     action: "View",
@@ -534,151 +376,6 @@ export const services: Service[] = [
         slug: "activity-request",
       },
     ],
-  },
-  {
-    slug: "contact-police-scientists-council",
-    name: "Contact Police Research Council",
-    action: "Start Service",
-    category: null,
-    icon: "/icons/services/police-museum-visit-permit.svg",
-    description:
-      "This service allows users to submit a request to hire a lecturer or request to give a lecture with the help of a lecturer from Nigeria Police Force.",
-    audiences: ["Residents", "Organisations", "Students"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "An official letter from the requesting party",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals", "Business Sector"],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "3 Working Days",
-    terms: [],
-    related: [],
-  },
-  {
-    slug: "corpse-entry",
-    name: "Corpse Entry Permit",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/corpse-entry-permit-2.svg",
-    description:
-      "This service allows Nigerian citizens and residents to obtain a permit for the entry of a deceased person into the country, subject to prior approval from the relevant authorities",
-    audiences: ["Residents", "Foreigners"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label:
-          "Death Certificate certified by the competent authorities outside Nigeria",
-        items: [],
-      },
-      {
-        label: "Copy of the Bill of Lading",
-        items: [],
-      },
-      {
-        label: "Deceased ID copy or Passport copy",
-        items: [],
-      },
-      {
-        label: "Official letter from the Nigerian consulate",
-        items: [],
-      },
-      {
-        label: "Copy of the applicant's NIN",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Divisional Police Stations",
-    ],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "1 Working Day",
-    terms: [
-      "A family member or their legal representative must be present in person if applying at the Police statoin.",
-      "The permit is valid for 1 month from the date of issuance",
-    ],
-    related: [],
-  },
-  {
-    slug: "lawyer-search-suspension-letter",
-    name: "Criminal Circulars Suspension",
-    action: "Proceed",
-    category: null,
-    icon: "/icons/services/check-circle.svg",
-    description:
-      "Through this service, Lawyers can apply for Restriction release Certificate from Nigeria Police Force Head Quarter, to follow up on procedures for lifting circulars and security restrictions on individuals or license plates, after settling the client's legal and financial status.",
-    audiences: ["Organisations"],
-    mostUsed: false,
-    dashboardOrder: 6,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "Power of Attorney (POA)",
-        items: [],
-      },
-      {
-        label: "Clearance Certificate",
-        items: [],
-      },
-      {
-        label: "Court's ruling",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals"],
-    channels: ["Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Police Stations",
-        value: "7:30 - 22:00",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "2 Working Days",
-    terms: [],
-    related: [],
   },
   {
     slug: "critical-care-response",
@@ -780,141 +477,6 @@ export const services: Service[] = [
     related: [],
   },
   {
-    slug: "digital-experience-for-lost-found",
-    name: "Digital Experience for Lost & Found",
-    action: "Start Service",
-    category: null,
-    icon: "/icons/services/lost.svg",
-    description:
-      "Embracing the National Digital Economy Policy and the paperless government drive, the Lost & Found service ensures a fully digital experience that eliminates bureaucracy and promotes sustainability, reinforced by the Blockchain's security and transparency",
-    audiences: ["Residents", "Foreigners"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: [],
-    channels: [],
-    delivery: "",
-    hours: [],
-    contacts: [],
-    turnaround: "Instant",
-    terms: [],
-    related: [],
-  },
-  {
-    slug: "diplomatic-affairs-services",
-    name: "Diplomatic Affairs Services",
-    action: "View",
-    category: "Business and Corporates",
-    icon: "/icons/services/diplomatic-services.svg",
-    description:
-      "A service that provides security support and facilities to diplomatic entities",
-    audiences: ["Foreigners", "Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: [],
-    channels: [],
-    delivery: "",
-    hours: [],
-    contacts: [],
-    turnaround: "Instant",
-    terms: [],
-    related: [
-      {
-        name: "Diplomatic Services",
-        slug: "diplomatic-services",
-      },
-      {
-        name: "Diplomatic Information Exchange",
-        slug: "diplomatic-exchange",
-      },
-    ],
-  },
-  {
-    slug: "diplomatic-exchange",
-    name: "Diplomatic Information Exchange",
-    action: "Start Service",
-    category: null,
-    icon: "/icons/services/diplomatic-exe-1.svg",
-    description:
-      "This service enables diplomatic corps to get information related to their citizens, through the General Department of Criminal Investigation of the Nigeria Police Force.",
-    audiences: ["Foreigners", "Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: true,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: ["Governmental Entities", "Diplomatic Organizations"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Divisional Police Stations",
-    ],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat"],
-    turnaround: "1 Working Day",
-    terms: [],
-    related: [],
-  },
-  {
-    slug: "diplomatic-services",
-    name: "Diplomatic Services",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/diplomatic-line.svg",
-    description:
-      "This service enables diplomatic corps to get information related to their citizens, through the General Department of Criminal Investigation of the Nigeria Police Force.",
-    audiences: ["Foreigners", "Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: ["Diplomatic Organizations"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Divisional Police Stations",
-    ],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat"],
-    turnaround: "Instant",
-    terms: [],
-    related: [],
-  },
-  {
     slug: "document-inquiry",
     name: "Document Verification",
     action: "Apply",
@@ -945,41 +507,6 @@ export const services: Service[] = [
     related: [],
   },
   {
-    slug: "leaders-at-your-service",
-    name: "NPF Leaders At Your Service",
-    action: "Inquire",
-    category: null,
-    icon: "/icons/services/leaders-at-your-service.svg",
-    description:
-      "This service aims to enhance direct communication between Nigeria Police Force senior leadership and the public, allowing leaders to respond to inquiries and feedback within their functional and administrative responsibilities",
-    audiences: ["Residents", "Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "Documents relevant to the inquiry or remark",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals", "Business Sector"],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat"],
-    turnaround: "5 Working Days",
-    terms: [],
-    related: [],
-  },
-  {
     slug: "npf-personnel-welfare-and-support",
     name: "NPF Personnel Welfare and Support",
     action: "View",
@@ -1003,10 +530,6 @@ export const services: Service[] = [
     turnaround: "Instant",
     terms: [],
     related: [
-      {
-        name: "Medical Treatment Extension",
-        slug: "medical-treatment-extension",
-      },
       {
         name: "Retirees Support",
         slug: "retirees-services",
@@ -1047,31 +570,6 @@ export const services: Service[] = [
     ],
     contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
     turnaround: "1 Working Day",
-    terms: [],
-    related: [],
-  },
-  {
-    slug: "e-crime-supports-digital-well-being",
-    name: "Cybercrime supports digital well-being",
-    action: "Start Service",
-    category: null,
-    icon: "/icons/services/e-crime-2.svg",
-    description:
-      "In line with Nigeria’s National Development Plan 2021–2025 and the Federal Ministry of Interior’s 2023 –2026 digital security goals, report cybercrime and help create a safer digital space.",
-    audiences: ["Residents", "Foreigners", "Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: [],
-    channels: [],
-    delivery: "",
-    hours: [],
-    contacts: [],
-    turnaround: "Instant",
     terms: [],
     related: [],
   },
@@ -1256,90 +754,6 @@ export const services: Service[] = [
     related: [],
   },
   {
-    slug: "faris",
-    name: "Gallantry Award",
-    action: "Start Service",
-    category: "Business and Corporates",
-    icon: "/icons/services/bank-fraud-2.svg",
-    description:
-      "A centralised digital platform enabling rapid, coordinated response between public and private sectors to minimise financial fraud losses and protect customer funds.",
-    audiences: ["Organisations", "Police officers"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: true,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "Fraudulent transaction details",
-        items: [],
-      },
-      {
-        label: "Incident time and state where it happened",
-        items: [],
-      },
-      {
-        label: "Method used in the fraud",
-        items: [],
-      },
-      {
-        label: "Transferred amount and destination",
-        items: [],
-      },
-      {
-        label:
-          "Transfer instrument (IBAN – Credit Card – Transaction ID [Crypto])",
-        items: [],
-      },
-    ],
-    beneficiaries: [],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website", "Call Centre"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-    ],
-    contacts: [],
-    turnaround: "Instant",
-    terms: [
-      "The incident must have occurred within Nigeria",
-    ],
-    related: [],
-  },
-  {
-    slug: "fast-track",
-    name: "Fast Track",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/fast-track.svg",
-    description:
-      "This service enables users to book an appointment in advance before visiting service centers to complete their transactions in person. It also allows them to modify or cancel their appointment, ensuring a more flexible experience that saves time and eliminates waiting",
-    audiences: ["Residents", "Foreigners"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: true,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: ["Individuals"],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "Instant",
-    terms: [],
-    related: [],
-  },
-  {
     slug: "open-criminal-case",
     name: "File Criminal Complaint",
     action: "Report",
@@ -1348,7 +762,7 @@ export const services: Service[] = [
     description:
       "This service enables users to submit criminal complaints of all kinds and to coordinate with the competent authorities to refer the complaint file to the judicial authorities after verifying the validity of the complaint.",
     audiences: ["Residents", "Foreigners", "Organisations"],
-    mostUsed: false,
+    mostUsed: true,
     dashboardOrder: 4,
     ninAuthOnly: false,
     fees: [],
@@ -1474,89 +888,6 @@ export const services: Service[] = [
     related: [],
   },
   {
-    slug: "gold-management",
-    name: "Gold Trade Security Audit",
-    action: "Request Support",
-    category: null,
-    icon: "/icons/services/gold-management.svg",
-    description:
-      "This service enables gold traders to submit security verification requests for gold purchase transactions, to ensure that the gold being sold is not linked to any criminal cases or offenses.",
-    audiences: ["Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "Trade license",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Gold Shops"],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat"],
-    turnaround: "Instant",
-    terms: ["Shops must be located within Nigeria."],
-    related: [],
-  },
-  {
-    slug: "hqvisit",
-    name: "HQ Entry Permit",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/hq-entry-permit.svg",
-    description:
-      "This service enables users wishing to visit the Force Headquarters building to obtain a time-limited entry permit.",
-    audiences: ["Residents", "Foreigners"],
-    mostUsed: true,
-    dashboardOrder: null,
-    ninAuthOnly: true,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "NIN",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Divisional Police Stations",
-    ],
-    delivery:
-      "• **Email**: The digital version of the permit will be sent to your registered email address as soon as it is issued.",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat"],
-    turnaround: "1 Working Day",
-    terms: [],
-    related: [],
-  },
-  {
     slug: "inquiries-and-follow-up",
     name: "Inquiries and Follow-up",
     action: "View",
@@ -1585,10 +916,6 @@ export const services: Service[] = [
         slug: "document-inquiry",
       },
       {
-        name: "Fast Track",
-        slug: "fast-track",
-      },
-      {
         name: "Submit an Inquiry",
         slug: "submit-inquiry",
       },
@@ -1597,71 +924,10 @@ export const services: Service[] = [
         slug: "service-attachment",
       },
       {
-        name: "Circulars and travel bans",
-        slug: "financial-cases",
-      },
-      {
         name: "Application Status",
         slug: "application-status",
       },
     ],
-  },
-  {
-    slug: "job-seekers",
-    name: "Job Seekers",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/job-vacancies.svg",
-    description:
-      "A service through which job seekers can learn about vacancies in Nigeria Police Force and apply accordingly.",
-    audiences: ["Residents", "Students"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "Curriculum Vitae",
-        items: [
-          "Passport + NIN (valid)",
-          "NIN (Valid)",
-          "Family declaration (family information)",
-          " Family declaration (family information)",
-          "Driver's License (if available)",
-          "Coloured Personal Photo",
-          "Birth Certificate",
-          "Experience Certificates (if applicable)",
-          "Police Clearance Certificate",
-          "Certificates of educational qualification certified by official authorities",
-          " WAEC or NECO English at credit level, or TOEFL with a grade of at least 500, or IELTS with a grade of at least 5 (for inspectors)",
-          "WAEC or NECO English at credit level, or TOEFL with a grade of at least 400, or IELTS with a grade of at least 4 (for officers)",
-          "NYSC discharge certificate or certificate of exemption (To Whom It May Concern) for males",
-        ],
-      },
-    ],
-    beneficiaries: ["Individuals"],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat"],
-    turnaround: "1 Month",
-    terms: [
-      "The applicant must not be under 18 years old and not above 28 years old",
-      "The applicant's height must not be less than 165cm for males and not less than 155 for females",
-      "The applicant must hold a high school certificate or higher certified by the official authorities",
-      "The applicant must have a driver's license",
-      "The applicant must have a clear criminal record",
-      "The applicant must have completed NYSC or hold an official exemption",
-      "The applicant must have no court rulings against them for crimes against honor or faithfulness and must not have been previously dismissed from the armed forces for any reason",
-    ],
-    related: [],
   },
   {
     slug: "lost-and-found",
@@ -1685,46 +951,6 @@ export const services: Service[] = [
     hours: [],
     contacts: [],
     turnaround: "Instant",
-    terms: [],
-    related: [],
-  },
-  {
-    slug: "medical-treatment-extension",
-    name: "Medical Treatment Extension",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/medical-aid-support.svg",
-    description:
-      "This service enables health authorities and medical centers to submit requests for extending the treatment period of Nigeria Police Force patients receiving medical care abroad, ensuring the continuity of care in accordance with approved medical reports and recommendations.",
-    audiences: ["Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "A copy of the treatment approval issued by Nigeria Police Force",
-        items: [],
-      },
-      {
-        label:
-          "A recent and detailed case report illustrating the treatment plan and total cost",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals", "Abroad Health Authorities"],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "3 Working Days",
     terms: [],
     related: [],
   },
@@ -1825,100 +1051,6 @@ export const services: Service[] = [
     related: [],
   },
   {
-    slug: "night-work-permit",
-    name: "Night Work Permit",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/night-work-permit.svg",
-    description:
-      "This service enables users to obtain a temporary permit for night time work to perform specific tasks within shops or banks, whether in enclosed shopping centers or outside of regular working hours.",
-    audiences: ["Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [
-      {
-        label: "Permit Fee",
-        value: "₦40,000",
-      },
-      {
-        label: "processing fee",
-        value: "₦4,000",
-      },
-      {
-        label: "technology levy",
-        value: "₦4,000",
-      },
-    ],
-    feeSummary: "₦48,000",
-    payment: ["Debit Card", "Credit Card", "Apple Pay", "Cash"],
-    documents: [
-      {
-        label: "Establishment's Permit/ Shopping Mall permit",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Business Sector"],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website"],
-    delivery:
-      "• **Email**: The digital version of the permit will be sent to your registered email address as soon as it is issued.",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Police Stations",
-        value: "7:30 - 22:00",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "1 Working Day",
-    terms: [
-      "The permit is intended for carrying out maintenance work, inventory, or installing billboards or cinematography",
-      "This permit may not be used for commercial activities",
-      "The permit is valid for a maximum of fourteen days from the start date specified in the application.",
-    ],
-    related: [],
-  },
-  {
-    slug: "ecocrime",
-    name: "OCEC",
-    action: "Start Service",
-    category: "Business and Corporates",
-    icon: "/icons/services/bank-fraud.svg",
-    description:
-      "This service enables police officers and financial institutions to handle banking information through the Economic Crimes Operations Center, which serves as a vital link between the victim and the banking sector, with the aim of halting fraudulent transactions and identifying the perpetrators.",
-    audiences: ["Organisations", "Police officers"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: [
-      "Individuals",
-      "Business Sector",
-      "Police Officers",
-      "Banking Sector",
-    ],
-    channels: ["Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat"],
-    turnaround: "5 Working Days",
-    terms: [
-      "Confidentiality (bank data may only be disclosed for investigation purposes)",
-    ],
-    related: [],
-  },
-  {
     slug: "on-site-police-support",
     name: "On-Site Police Support",
     action: "View",
@@ -1943,12 +1075,12 @@ export const services: Service[] = [
     terms: [],
     related: [
       {
-        name: "Security Barriers Rental",
-        slug: "barriers-request",
+        name: "Police Escort and Guard Services",
+        slug: "escort-and-guard",
       },
       {
-        name: "Gold Trade Security Audit",
-        slug: "gold-management",
+        name: "Supernumerary Police",
+        slug: "supernumerary-police",
       },
       {
         name: "Destroy Explosive Materials",
@@ -1959,31 +1091,6 @@ export const services: Service[] = [
         slug: "event-security",
       },
     ],
-  },
-  {
-    slug: "on-the-go",
-    name: "On-The-Go",
-    action: "Start Service",
-    category: null,
-    icon: "/icons/shared/car.svg",
-    description:
-      "Nigeria Police Force pledges to act swiftly on government directives by eliminating unnecessary procedures, cutting timelines by no less than 50%, and removing redundant requirements, ensuring a more streamlined and efficient experience for society.",
-    audiences: ["Residents", "Foreigners", "Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: [],
-    channels: [],
-    delivery: "",
-    hours: [],
-    contacts: [],
-    turnaround: "Instant",
-    terms: [],
-    related: [],
   },
   {
     slug: "pay-traffic-fines",
@@ -2045,165 +1152,49 @@ export const services: Service[] = [
     related: [],
   },
   {
-    slug: "poa-association",
-    name: "POA Association",
-    action: "Proceed",
-    category: null,
-    icon: "/icons/services/supplier-application.svg",
-    description:
-      "This service enables lawyers to associate Powers of Attorney with registered reports to formally establish their capacity to act on behalf of clients.",
-    audiences: ["Organisations"],
-    mostUsed: false,
-    dashboardOrder: 2,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "No Documents Required",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals"],
-    channels: ["Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "1 Working Day",
-    terms: [],
-    related: [],
-  },
-  {
-    slug: "lawyer-poa",
-    name: "POA e-Signature",
-    action: "Proceed",
-    category: null,
-    icon: "/icons/services/supplier-application-2.svg",
-    description:
-      "This service enables lawyers to securely obtain formal, digitally-signed powers of attorney from their clients.",
-    audiences: ["Organisations"],
-    mostUsed: false,
-    dashboardOrder: 1,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "No Documents Required",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals"],
-    channels: ["Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Police Stations",
-        value: "7:30 - 22:00",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "1 Working Day",
-    terms: [
-      "The applicant is fully responsible for any unlawful use or misuse of the provided service.",
-      "Nigeria Police Force reserves the right to take all necessary actions to protect its rights, and in line with applicable laws and regulations, without prior consent from the customer",
-      "The applicant declares that all data and information entered in the application are true and complete, and bears full legal responsibility in the event of any incorrect or misleading information.",
-    ],
-    related: [],
-  },
-  {
     slug: "police-clearance-certificate",
     name: "Police Clearance Certificate",
     action: "Apply",
-    category: null,
+    category: "Permits and Certificates",
     icon: "/icons/services/police-clearance-certificate.svg",
+    // Sourced from POSSAP (possap.gov.ng) and the Force's own launch
+    // announcements. Fee amounts are set per application on the POSSAP
+    // invoice, so none is printed here.
     description:
-      "This service aims to enable individuals to obtain a certificate proving that they have no criminal record within the Federal Republic of Nigeria.",
+      "The Police Character Certificate states whether you have a criminal record in Nigeria. It is asked for by embassies, employers and schools, and is applied for through POSSAP, the Force's portal for paid services.",
     audiences: ["Residents", "Foreigners", "Students"],
     mostUsed: true,
     dashboardOrder: null,
     ninAuthOnly: false,
     fees: [
       {
-        label: "Citizen",
-        value: "₦40,000",
-      },
-      {
-        label: "Resident",
-        value: "₦80,000",
-      },
-      {
-        label: "from Outside Nigeria",
-        value: "₦120,000",
-      },
-      {
-        label: "Processing and Technology Levies",
-        value: "₦8,000",
-      },
-      {
-        label: "Additional fee if applied through service centers in person",
-        value: "₦40,000",
+        label: "Application and processing fee",
+        value: "Shown on your POSSAP invoice",
       },
     ],
-    feeSummary: "From ₦48,000",
-    payment: ["Debit Card", "Credit Card", "Apple Pay", "Cash"],
+    feeSummary: "On your POSSAP invoice",
+    payment: ["Online, through the POSSAP invoice"],
     documents: [
       {
-        label: "From outside Nigeria",
-        items: [
-          "Personal photo",
-          "Passport copy",
-          "Copy of previous residence visa",
-        ],
+        label: "NIN, BVN or international passport",
+        items: [],
       },
     ],
     beneficiaries: ["Individuals"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Call Centre",
-      "Divisional Police Stations",
-      "Police Stations",
-    ],
-    delivery:
-      '• **Email**: The digital version of the certificate will be sent to your registered email address as soon as it is issued. • **Personal Dashboard**: Log in to your Nigeria Police Force account, navigate to "My Requests" section in your personal dashboard, search for your request, and then download the certificate directly. • **Direct Inquiry**: You can download the certificate through "Application Status" service using only your reference number.',
+    channels: ["POSSAP", "State Police Commands"],
+    delivery: "",
     hours: [
       {
         label: "Digital Channels",
         value: "24/7",
       },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-      {
-        label: "Police Stations",
-        value: "7:30 am-10:00 pm",
-      },
     ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "5 Working Days",
+    contacts: ["Complaint Response Unit"],
+    turnaround: "At least 72 hours",
     terms: [
-      "You can apply through a valid or expired NIN",
-      "The applicant is responsible for ensuring the accuracy of the information submitted",
-      "The misuse of this certificate will lead to legal action taken against you",
-      "The applicant must not be wanted by any authority or have a criminal record, which would prevent  them from obtaining the certificate",
-      "If the certificate is requested from outside Nigeria, the applicant must have previously entered Nigeria",
-      "Applicants who do not have an NIN must visit any Divisional Police Headquarters in person during official working hours to have their fingerprints taken",
-      "If the applicant is outside Nigeria and does not have a ten-print fingerprint they must send a ten-print fingerprint copy certified by the Nigerian Embassy",
-      "Fees paid and non-refundable",
-      "The certificate is valid for 3 months from the date of issuance",
+      "Most of the application is online. You then go to the command or formation you chose for your fingerprints and photograph to be taken.",
+      "Pay only through the invoice POSSAP gives you for the application. The fee is not refundable.",
+      "Your personal and residence details must be accurate; a mismatch with your NIN, BVN or passport delays the certificate.",
     ],
     related: [],
   },
@@ -2369,41 +1360,6 @@ export const services: Service[] = [
     related: [],
   },
   {
-    slug: "law-office-registration",
-    name: "Registration of law firms",
-    action: "Start Service",
-    category: "Business and Corporates",
-    icon: "/icons/services/group-question.svg",
-    description:
-      "This service enables law firms to register with Nigeria Police Force, granting authorized access to the Lawyers’ Dashboard and its suite of specialized legal services",
-    audiences: ["Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "Professional License",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Law Firms"],
-    channels: ["Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "1 Working Day",
-    terms: [],
-    related: [],
-  },
-  {
     slug: "report-a-vehicle-or-driver",
     name: "Report a Vehicle or Driver",
     action: "View",
@@ -2460,6 +1416,18 @@ export const services: Service[] = [
     turnaround: "Instant",
     terms: [],
     related: [
+      {
+        name: "Report a Missing Person",
+        slug: "missing-person",
+      },
+      {
+        name: "Report Sexual or Gender-Based Violence",
+        slug: "gender-based-violence",
+      },
+      {
+        name: "Complaint Against a Police Officer",
+        slug: "complaint-against-officer",
+      },
       {
         name: "Bounce Cheque Report",
         slug: "report-bounce-cheques",
@@ -2535,7 +1503,7 @@ export const services: Service[] = [
     description:
       "This service allows individuals to report the loss of their belongings or personal items and ensures communication with the owner if the item is found. With the option to request Lost certificate (subject to a fees), which can be used with other official entities.",
     audiences: ["Residents", "Foreigners"],
-    mostUsed: false,
+    mostUsed: true,
     dashboardOrder: null,
     ninAuthOnly: false,
     fees: [
@@ -2726,24 +1694,20 @@ export const services: Service[] = [
     terms: [],
     related: [
       {
+        name: "Police Extract",
+        slug: "police-extract",
+      },
+      {
+        name: "CID Clearance Certificate",
+        slug: "cid-clearance",
+      },
+      {
+        name: "Police Investigation Report",
+        slug: "investigation-report",
+      },
+      {
         name: "Police Clearance Certificate",
         slug: "police-clearance-certificate",
-      },
-      {
-        name: "TWIMC Inmate Certificate",
-        slug: "twimc-inmate-certificate",
-      },
-      {
-        name: "TWIMC Certificate",
-        slug: "twimc-certificate",
-      },
-      {
-        name: "Traffic Status Certificate",
-        slug: "traffic-status-certificate",
-      },
-      {
-        name: "Traffic Clearance Certificate",
-        slug: "traffic-clearance-certificate",
       },
     ],
   },
@@ -2771,10 +1735,6 @@ export const services: Service[] = [
     turnaround: "Instant",
     terms: [],
     related: [
-      {
-        name: "Traffic Training Courses",
-        slug: "traffic-training-courses",
-      },
       {
         name: "Drug Awareness Lecture",
         slug: "drug-awareness-lecture",
@@ -2814,32 +1774,20 @@ export const services: Service[] = [
     terms: [],
     related: [
       {
-        name: "Change Vehicle Color Permit",
-        slug: "vehicle-color-change",
+        name: "Tinted Glass Permit",
+        slug: "tinted-glass-permit",
+      },
+      {
+        name: "Firearm Licence",
+        slug: "firearm-licence",
       },
       {
         name: "Police Museum Visit Permit",
         slug: "museum-visit",
       },
       {
-        name: "Sailing Permit",
-        slug: "sailing-permit",
-      },
-      {
-        name: "HQ Entry Permit",
-        slug: "hqvisit",
-      },
-      {
         name: "Road Closure Permit",
         slug: "close-road",
-      },
-      {
-        name: "Corpse Entry Permit",
-        slug: "corpse-entry",
-      },
-      {
-        name: "Night Work Permit",
-        slug: "night-work-permit",
       },
       {
         name: "Visit a Detainee or Inmate Permit",
@@ -2909,14 +1857,6 @@ export const services: Service[] = [
     turnaround: "Instant",
     terms: [],
     related: [
-      {
-        name: "Contact Police Research Council",
-        slug: "contact-police-scientists-council",
-      },
-      {
-        name: "NPF Leaders At Your Service",
-        slug: "leaders-at-your-service",
-      },
     ],
   },
   {
@@ -2999,168 +1939,6 @@ export const services: Service[] = [
     related: [],
   },
   {
-    slug: "sailing-permit",
-    name: "Sailing Permit",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/sail-safely.svg",
-    description:
-      "This service enables users to register their marine trips and expected locations, and to request assistance in emergency situations. The system automatically sends alerts for delayed trips. The service also offers various features such as trip tracking, dive site identification, location sharing, specifying the type and severity of distress, and smart integration with other government applications.",
-    audiences: ["Residents", "Foreigners"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "The vessel's details (plate number + plate code)",
-        items: [],
-      },
-      {
-        label: "The user's email address",
-        items: [],
-      },
-      {
-        label: "Driver's license",
-        items: [],
-      },
-      {
-        label: "Identifying the destination",
-        items: [],
-      },
-      {
-        label: "Identifying the date and time of departure",
-        items: [],
-      },
-      {
-        label: "Identifying the port of departure",
-        items: [],
-      },
-      {
-        label: "Identifying the port of arrival",
-        items: [],
-      },
-      {
-        label: "Identifying the trip's date and time of completion",
-        items: [],
-      },
-      {
-        label: "Vehicle driver's details (NIN)",
-        items: [],
-      },
-      {
-        label: "Crew's details (NINs)",
-        items: [],
-      },
-      {
-        label: "Passengers' details (NINs)",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Divisional Police Stations",
-    ],
-    delivery:
-      "• **Email**: The digital version of the permit will be sent to your registered email address as soon as it is issued.",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "Instant",
-    terms: [
-      "Register for the service or log in through NINAuth",
-      "The following must be confirmed and duly accepted as responsibilities",
-      "1. Availability of a First Aid kit",
-      "2. Availability of life jackets",
-      "3. Availability of fire extinguisher",
-      "4. Availability of a life ring",
-      "5. The presence and proper operation of the maritime tracking system",
-      "6. The functionality of the navigational light",
-      "7. Adherence to the marked limits of the waterway",
-    ],
-    related: [],
-  },
-  {
-    slug: "barriers-request",
-    name: "Security Barriers Rental",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/renting-iron-barrier.svg",
-    description:
-      "This service enables individuals, institutions, and government entities to rent security barriers from Nigeria Police Force, in accordance with the fees and conditions specified in the rental agreement.",
-    audiences: ["Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [
-      {
-        label: "per day for each barrier",
-        value: "₦10,000",
-      },
-      {
-        label: "technology levy",
-        value: "₦4,000",
-      },
-      {
-        label: "processing fee",
-        value: "₦4,000",
-      },
-    ],
-    feeSummary: "₦18,000",
-    payment: [],
-    documents: [
-      {
-        label: "FRSC letter",
-        items: [],
-      },
-      {
-        label: "Local Government letter",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals", "Business Sector", "Governmental Entities"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Divisional Police Stations",
-    ],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Other",
-        value:
-          "General Department of Organization Protective Security and Emergency 7:30 -15:30",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat"],
-    turnaround: "2 Working Days",
-    terms: [
-      "Barriers must be requested at least 48 hours in advance to confirm the reservation.",
-      "Provide the necessary labor to receive the barriers and return them after use.",
-      "Submit a refundable deposit or guarantee cheque, to be returned upon proper return of the barriers.",
-      "In case of pitching a tent or closing a road, an official approval from the Local Government or the state transport authority is mandatory.",
-      "Sign a commitment letter to cover the cost of any lost or damaged barrier.",
-      "Applications that fail to follow terms and conditions will not be accepted.",
-    ],
-    related: [],
-  },
-  {
     slug: "share-information",
     name: "Share Information",
     action: "View",
@@ -3182,82 +1960,6 @@ export const services: Service[] = [
     hours: [],
     contacts: [],
     turnaround: "Instant",
-    terms: [],
-    related: [],
-  },
-  {
-    slug: "smart-home-security",
-    name: "Smart Home Security",
-    action: "Apply",
-    category: null,
-    icon: "/icons/shared/security.svg",
-    description:
-      "This service aims to enhance home security in Nigeria through a smart monitoring system that operates 24/7, connected with the strategic partner “9mobile” to provide instant alerts supported by a unified cellular network.",
-    audiences: ["Residents"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "NIN slip",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals"],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "5 Working Days",
-    terms: [
-      "https://safehome.npf.gov.ng/en/terms-and-conditions.html",
-    ],
-    related: [],
-  },
-  {
-    slug: "request-sports-facility",
-    name: "Sport Facilities Booking",
-    action: "Start Service",
-    category: "Business and Corporates",
-    icon: "/icons/services/stadium.svg",
-    description:
-      "This service allows customers to book and use sports facilities at the Nigeria Police Force Officers Club, such as (Artificial Turf Football Field - Turf Football field - Track - Field.)",
-    audiences: ["Residents", "Organisations", "Students"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [
-      {
-        label: "Letter from the requesting party",
-        items: [],
-      },
-      {
-        label: "Schedule of events",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals", "Governmental Entities", "School Students"],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "5 Working Days",
     terms: [],
     related: [],
   },
@@ -3431,64 +2133,7 @@ export const services: Service[] = [
         name: "Provide Care for Human Trafficking Victims",
         slug: "human-trafficking",
       },
-      {
-        name: "Worker’s Voice",
-        slug: "labour-complaint",
-      },
-      {
-        name: "Tourists Support",
-        slug: "tourist-police",
-      },
-      {
-        name: "Smart Home Security",
-        slug: "smart-home-security",
-      },
     ],
-  },
-  {
-    slug: "tourist-police",
-    name: "Tourists Support",
-    action: "Request Support",
-    category: null,
-    icon: "/icons/services/tourist-complain.svg",
-    description:
-      "This service provides dedicated support to tourists visiting Nigeria by receiving and addressing tourism-related inquiries, reports, and complaints. As it ensures guidance, coordination, and assistance through official Nigeria Police Force channels to help maintain a safe and positive tourism experience.",
-    audiences: ["Foreigners"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: ["Individuals"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Call Centre",
-      "Divisional Police Stations",
-      "Police Stations",
-    ],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "5 Working Days",
-    terms: [
-      "The incident reported must have occurred in Nigeria",
-      "The service is limited to tourist-related matters only",
-      "Requests must be submitted by tourists or visitors",
-      "Matters that irrelevant to Nigeria Police Force Jurisdiction might be forwarded to the relevant authorities",
-    ],
-    related: [],
   },
   {
     slug: "traffic-accident-reports",
@@ -3513,321 +2158,6 @@ export const services: Service[] = [
     contacts: [],
     turnaround: "Instant",
     terms: [],
-    related: [],
-  },
-  {
-    slug: "traffic-clearance-certificate",
-    name: "Traffic Clearance Certificate",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/traffic-status-certificate.svg",
-    description:
-      "This service enables users to obtain a clearance certificate confirming that the vehicle owner has settled all traffic violations and that there are no recorded accidents, traffic points, or active restrictions in Nigeria against the vehicle or the driver’s license.",
-    audiences: ["Drivers", "Organisations"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [
-      {
-        label: "processing fee",
-        value: "₦4,000",
-      },
-      {
-        label: "technology levy",
-        value: "₦4,000",
-      },
-    ],
-    feeSummary: "₦8,000",
-    payment: ["Debit Card", "Credit Card", "Apple Pay"],
-    documents: [],
-    beneficiaries: ["Individuals", "Business Sector", "Governmental Entities"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Call Centre",
-      "Divisional Police Stations",
-    ],
-    delivery:
-      "• **Email**: The digital version of the certificate will be sent to your registered email address as soon as it is issued.",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-      {
-        label: "Other",
-        value:
-          "Traffic Section at any State Command Headquarters, Monday to Thursday 07:30 - 15:30 and Friday 07:30 - 12:00",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat"],
-    turnaround: "Instant",
-    terms: [
-      "The certificate is valid for three months from the date of issuance.",
-    ],
-    related: [],
-  },
-  {
-    slug: "traffic-status-certificate",
-    name: "Traffic Status Certificate",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/traffic-clearance-certificate.svg",
-    description:
-      "This service enables users to obtain a certificate detailing the vehicle’s traffic record, including fines, penalty points, and registered accidents, along with the driver’s involvement in each.",
-    audiences: ["Drivers"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [
-      {
-        label: "Processing fee",
-        value: "₦4,000",
-      },
-      {
-        label: "technology levy",
-        value: "₦4,000",
-      },
-    ],
-    feeSummary: "₦8,000",
-    payment: ["Debit Card", "Credit Card", "Apple Pay"],
-    documents: [],
-    beneficiaries: ["Individuals"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Divisional Police Stations",
-    ],
-    delivery:
-      "• **Email**: The digital version of the certificate will be sent to your registered email address as soon as it is issued.",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-    ],
-    contacts: [],
-    turnaround: "Instant",
-    terms: [
-      "Driving license must be issued in Nigeria",
-      "The certificate is valid for three months from the date of issuance",
-    ],
-    related: [],
-  },
-  {
-    slug: "traffic-training-courses",
-    name: "Traffic Training Courses",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/traffic-services.svg",
-    description:
-      "This service aims to enable drivers holding driving licenses issued in Nigeria, and who have accumulated traffic points on their licenses to enroll in specialized traffic safety training courses to benefit from a reduction in the points recorded against them.",
-    audiences: ["Drivers"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [
-      {
-        label: "Service Fees",
-        value: "₦320,000",
-      },
-      {
-        label: "Processing Fees",
-        value: "₦4,000",
-      },
-      {
-        label: "Technology Levies",
-        value: "₦4,000",
-      },
-    ],
-    feeSummary: "₦328,000",
-    payment: ["Debit Card", "Credit Card", "Apple Pay"],
-    documents: [
-      {
-        label: "Course details (Individuals)",
-        items: [
-          "NIN",
-          "Traffic Code",
-          "Course name",
-          "Proposed time for the course",
-          "Course Language",
-          "Email Address",
-          "Remarks",
-        ],
-      },
-      {
-        label: "Course details (Business sector)",
-        items: [
-          "Course's name",
-          "Course's location",
-          "Proposed start date of the course",
-          "Proposed end date of the course",
-          "Traffic code",
-          "Company's name",
-          "Proposed course time",
-          "Meals",
-        ],
-      },
-      {
-        label: "Coordinator's information (Business sector)",
-        items: [
-          "NIN",
-          "Name",
-          "Phone Number",
-          "Email Address",
-          "Remarks",
-        ],
-      },
-    ],
-    beneficiaries: ["Individuals", "Business Sector"],
-    channels: ["Nigeria Police Force App", "Nigeria Police Force Website"],
-    delivery: "",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Police Stations",
-        value:
-          "Traffic Section at any State Command Headquarters: 7:30am - 3:30pm",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "Instant",
-    terms: [],
-    related: [],
-  },
-  {
-    slug: "twimc-certificate",
-    name: "TWIMC Certificate",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/twimc-certificate.svg",
-    description:
-      "This service enables users to obtain an official certificate that outlines the facts and circumstances recorded in reports of damage, natural disasters, or traffic accidents. The certificate specifies the status of the parties involved and the resulting damages, enabling users to complete the necessary legal procedures with relevant entities such as judicial authorities and insurance companies.",
-    audiences: ["Residents", "Foreigners", "Organisations"],
-    mostUsed: false,
-    dashboardOrder: 7,
-    ninAuthOnly: false,
-    fees: [
-      {
-        label: "Certificate Fees",
-        value: "₦30,000",
-      },
-      {
-        label: "Technology Levy",
-        value: "₦4,000",
-      },
-      {
-        label: "stamp duty",
-        value: "₦4,000",
-      },
-      {
-        label:
-          "An additional fee if the application is submitted in person at a police station",
-        value: "₦40,000",
-      },
-    ],
-    feeSummary: "From ₦38,000",
-    payment: ["Debit Card", "Credit Card", "Apple Pay"],
-    documents: [],
-    beneficiaries: ["Individuals", "Business Sector", "Governmental Entities"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Divisional Police Stations",
-      "Police Stations",
-    ],
-    delivery:
-      "• **Email**: The digital version of the certificate will be sent to your registered email address as soon as it is issued.",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-      {
-        label: "Police Stations",
-        value: "7:30 - 22:00",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat"],
-    turnaround: "2 Working Days",
-    terms: [],
-    related: [],
-  },
-  {
-    slug: "twimc-inmate-certificate",
-    name: "TWIMC Inmate Certificate",
-    action: "Apply",
-    category: null,
-    icon: "/icons/services/twimc-inmate-certificate.svg",
-    description:
-      "This service aims to enable the inmate, their sponsor, or a family member (upon the inmate’s approval) to obtain an official “To Whom It May Concern” certificate confirming the completion or ongoing execution of the judicial sentence in Nigeria’s correctional and penal institutions. The certificate is valid for a period of time, facilitating the completion of official, financial, and social transactions in accordance with applicable regulations.",
-    audiences: ["Residents", "Foreigners"],
-    mostUsed: false,
-    dashboardOrder: null,
-    ninAuthOnly: false,
-    fees: [
-      {
-        label: "processing fee",
-        value: "₦4,000",
-      },
-      {
-        label: "technology levy",
-        value: "₦4,000",
-      },
-    ],
-    feeSummary: "₦8,000",
-    payment: ["Debit Card", "Credit Card", "Apple Pay"],
-    documents: [
-      {
-        label: "Attach a copy of the approved attorney/guarantee",
-        items: [],
-      },
-      {
-        label: "Passport copy",
-        items: [],
-      },
-    ],
-    beneficiaries: ["Individuals", "Business Sector"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Divisional Police Stations",
-    ],
-    delivery:
-      "• **Email**: The digital version of the certificate will be sent to your registered email address as soon as it is issued.",
-    hours: [
-      {
-        label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
-    ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat"],
-    turnaround: "1 Working Day",
-    terms: [
-      "The certificate is issued to the inmate who has been sentenced to a court order and has served the sentence, or continues to do so in the penal and correctional institutions of Nigeria.",
-      "The certificate is given to the person who has the power of attorney, the guarantor or as per the inmate's request and consent.",
-      "Remark: In case the certificate could not be issued due to failing to meet the requirements, the fees paid may not be refunded",
-      "The certificate is valid for 1 month from the date of issuance",
-    ],
     related: [],
   },
   {
@@ -3996,76 +2326,619 @@ export const services: Service[] = [
     ],
     related: [],
   },
+  // Source: POSSAP (possap.gov.ng); TheCable, POSSAP launch
   {
-    slug: "labour-complaint",
-    name: "Worker’s Voice",
-    action: "Report",
-    category: null,
-    icon: "/icons/services/file-labor-complaint.svg",
-    description:
-      "This service aims to enable workers in the business sector to submit individual or collective complaints against the companies or institutions they work for, related to wages, working conditions, labor accommodation, or health and safety requirement.",
-    audiences: ["Residents", "Foreigners"],
+    category: "Permits and Certificates",
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
-    fees: [],
-    feeSummary: "Free of Charge",
-    payment: [],
-    documents: [],
-    beneficiaries: ["Individuals"],
-    channels: [
-      "Nigeria Police Force App",
-      "Nigeria Police Force Website",
-      "Call Centre",
-      "Divisional Police Stations",
-    ],
     delivery: "",
+    related: [],
+    contacts: [
+      "Complaint Response Unit"
+    ],
+    slug: "police-extract",
+    name: "Police Extract",
+    action: "Apply",
+    icon: "/icons/services/lost-certificate.svg",
+    description: "A Police Extract is the Force's written record of a report you made, such as a lost document or item. Agencies that replace lost documents commonly ask for one. It is applied for through POSSAP, the Force's portal for paid services.",
+    audiences: [
+      "Residents",
+      "Foreigners",
+      "Organisations"
+    ],
+    fees: [
+      {
+        label: "Application and processing fee",
+        value: "Shown on your POSSAP invoice"
+      }
+    ],
+    feeSummary: "On your POSSAP invoice",
+    payment: [
+      "Online, through the POSSAP invoice"
+    ],
+    documents: [
+      {
+        label: "NIN, BVN or international passport",
+        items: []
+      },
+      {
+        label: "What was lost or what happened, with the date and place",
+        items: []
+      }
+    ],
+    beneficiaries: [
+      "Individuals",
+      "Business Sector"
+    ],
+    channels: [
+      "POSSAP",
+      "State Police Commands"
+    ],
     hours: [
       {
         label: "Digital Channels",
-        value: "24/7",
-      },
-      {
-        label: "Divisional Police Stations",
-        value: "24/7",
-      },
+        value: "24/7"
+      }
     ],
-    contacts: ["Complaint Response Unit", "Email", "Live Chat", "P.O. Box"],
-    turnaround: "2 Working Days",
+    turnaround: "Depends on the case",
     terms: [
-      "The worker's residency permit is issued in Nigeria.",
-      "There are no criminal or absconding reports filed against the Labour by the sponsor.",
-      "The Labour has not previously filed a complaint with the Federal Ministry of Labour and Employment.",
-      "There is no pending labor dispute before the Labour Court.",
-      "The Labour has a valid employment contract or official permit issued by the Federal Ministry of Labour and Employment or by authorized entities such as the free zones in Nigeria.",
-      "The labor worker must have no prior engagement in an unlawful employment with the current employer (working with a visitor/tourist visa)",
-      "The labor worker must be engaged in an activity that is deemed legitimate in the country and does not constitute an offense or a violation of the law.",
-    ],
-    related: [],
+      "The extract is the record of a report, so the loss or incident is reported first.",
+      "Pay only through the invoice POSSAP gives you for the application. The fee is not refundable."
+    ]
   },
+  // Source: VON / BusinessDay / Federal Ministry of Information, 2025; Leadership
   {
-    slug: "wps-statistics",
-    name: "Summit Statistics",
-    action: "Start Service",
-    category: null,
-    icon: "/icons/services/manage-search.svg",
-    description: "",
-    audiences: ["Organisations"],
+    category: "Permits and Certificates",
     mostUsed: false,
     dashboardOrder: null,
     ninAuthOnly: false,
+    delivery: "",
+    related: [],
+    contacts: [
+      "Complaint Response Unit"
+    ],
+    slug: "tinted-glass-permit",
+    name: "Tinted Glass Permit",
+    action: "Apply",
+    icon: "/icons/services/drive-mode.svg",
+    description: "Driving a vehicle with tinted glass needs a permit under the Motor Vehicles (Prohibition of Tinted Glass) Act. A permit is issued only for good cause, such as a medical or security reason, and is applied for through POSSAP.",
+    audiences: [
+      "Residents",
+      "Organisations"
+    ],
+    fees: [
+      {
+        label: "Application and processing fee",
+        value: "Shown on your POSSAP invoice"
+      }
+    ],
+    feeSummary: "On your POSSAP invoice",
+    payment: [
+      "Online, through the POSSAP invoice"
+    ],
+    documents: [
+      {
+        label: "NIN, BVN or international passport",
+        items: []
+      },
+      {
+        label: "Vehicle particulars: plate, chassis and engine numbers",
+        items: []
+      },
+      {
+        label: "Evidence of the reason for the permit, such as a medical report",
+        items: []
+      }
+    ],
+    beneficiaries: [
+      "Individuals",
+      "Business Sector"
+    ],
+    channels: [
+      "POSSAP",
+      "State Police Commands"
+    ],
+    hours: [
+      {
+        label: "Digital Channels",
+        value: "24/7"
+      }
+    ],
+    turnaround: "At least 72 hours",
+    terms: [
+      "Apply only on possap.gov.ng. Ignore anyone offering permits through other channels.",
+      "Most of the application is online. You then go to the command or formation you chose for your fingerprints and photograph to be taken.",
+      "Pay only through the invoice POSSAP gives you for the application. The fee is not refundable."
+    ]
+  },
+  // Source: TheCable; Ripples Nigeria; POSSAP
+  {
+    category: "Business and Corporates",
+    mostUsed: false,
+    dashboardOrder: null,
+    ninAuthOnly: false,
+    delivery: "",
+    related: [],
+    contacts: [
+      "Complaint Response Unit"
+    ],
+    slug: "escort-and-guard",
+    name: "Police Escort and Guard Services",
+    action: "Request Support",
+    icon: "/icons/services/shield-01.svg",
+    description: "Individuals and organisations can request police escort or guard services through POSSAP. The service is charged according to the Force's tariff and billed on the POSSAP invoice.",
+    audiences: [
+      "Residents",
+      "Foreigners",
+      "Organisations"
+    ],
+    fees: [
+      {
+        label: "Application and processing fee",
+        value: "Shown on your POSSAP invoice"
+      }
+    ],
+    feeSummary: "On your POSSAP invoice",
+    payment: [
+      "Online, through the POSSAP invoice"
+    ],
+    documents: [
+      {
+        label: "NIN, BVN or international passport",
+        items: []
+      },
+      {
+        label: "Who or what is to be protected, where, and for how long",
+        items: []
+      }
+    ],
+    beneficiaries: [
+      "Individuals",
+      "Business Sector",
+      "Governmental Entities"
+    ],
+    channels: [
+      "POSSAP",
+      "State Police Commands"
+    ],
+    hours: [
+      {
+        label: "Digital Channels",
+        value: "24/7"
+      }
+    ],
+    turnaround: "Depends on the case",
+    terms: [
+      "Pay only through the invoice POSSAP gives you for the application. The fee is not refundable."
+    ]
+  },
+  // Source: TheCable; Firearms Act (commentary, streetlawyernaija.com)
+  {
+    category: "Permits and Certificates",
+    mostUsed: false,
+    dashboardOrder: null,
+    ninAuthOnly: false,
+    delivery: "",
+    related: [],
+    contacts: [
+      "Complaint Response Unit"
+    ],
+    slug: "firearm-licence",
+    name: "Firearm Licence",
+    action: "Apply",
+    icon: "/icons/services/military-tech.svg",
+    description: "Owning a firearm in Nigeria needs a licence under the Firearms Act. A licence is not granted as of right: it is at the discretion of the President or the Inspector-General of Police. Applications are made through POSSAP.",
+    audiences: [
+      "Residents",
+      "Organisations"
+    ],
+    fees: [
+      {
+        label: "Application and processing fee",
+        value: "Shown on your POSSAP invoice"
+      }
+    ],
+    feeSummary: "On your POSSAP invoice",
+    payment: [
+      "Online, through the POSSAP invoice"
+    ],
+    documents: [
+      {
+        label: "NIN, BVN or international passport",
+        items: []
+      }
+    ],
+    beneficiaries: [
+      "Individuals",
+      "Business Sector"
+    ],
+    channels: [
+      "POSSAP",
+      "State Police Commands"
+    ],
+    hours: [
+      {
+        label: "Digital Channels",
+        value: "24/7"
+      }
+    ],
+    turnaround: "Depends on the case",
+    terms: [
+      "A licence can be refused without a reason being given.",
+      "Anyone convicted of an offence involving violence or the threat of violence in the previous five years cannot be granted a licence.",
+      "Pay only through the invoice POSSAP gives you for the application. The fee is not refundable."
+    ]
+  },
+  // Source: POSSAP service list
+  {
+    category: "Permits and Certificates",
+    mostUsed: false,
+    dashboardOrder: null,
+    ninAuthOnly: false,
+    delivery: "",
+    related: [],
+    contacts: [
+      "Complaint Response Unit"
+    ],
+    slug: "cid-clearance",
+    name: "CID Clearance Certificate",
+    action: "Apply",
+    icon: "/icons/services/certificate-03.svg",
+    description: "A clearance certificate from the Force Criminal Investigation Department, one of the paid certificates applied for through POSSAP. The requirements for your case are shown on POSSAP when you apply.",
+    audiences: [
+      "Residents",
+      "Foreigners",
+      "Organisations"
+    ],
+    fees: [
+      {
+        label: "Application and processing fee",
+        value: "Shown on your POSSAP invoice"
+      }
+    ],
+    feeSummary: "On your POSSAP invoice",
+    payment: [
+      "Online, through the POSSAP invoice"
+    ],
+    documents: [
+      {
+        label: "NIN, BVN or international passport",
+        items: []
+      }
+    ],
+    beneficiaries: [
+      "Individuals",
+      "Business Sector"
+    ],
+    channels: [
+      "POSSAP"
+    ],
+    hours: [
+      {
+        label: "Digital Channels",
+        value: "24/7"
+      }
+    ],
+    turnaround: "Depends on the case",
+    terms: [
+      "Pay only through the invoice POSSAP gives you for the application. The fee is not refundable."
+    ]
+  },
+  // Source: TheCable, POSSAP service list
+  {
+    category: "Permits and Certificates",
+    mostUsed: false,
+    dashboardOrder: null,
+    ninAuthOnly: false,
+    delivery: "",
+    related: [],
+    contacts: [
+      "Complaint Response Unit"
+    ],
+    slug: "investigation-report",
+    name: "Police Investigation Report",
+    action: "Apply",
+    icon: "/icons/services/manage-search.svg",
+    description: "A copy of the report of a police investigation, applied for through POSSAP among the Force's paid services.",
+    audiences: [
+      "Residents",
+      "Organisations"
+    ],
+    fees: [
+      {
+        label: "Application and processing fee",
+        value: "Shown on your POSSAP invoice"
+      }
+    ],
+    feeSummary: "On your POSSAP invoice",
+    payment: [
+      "Online, through the POSSAP invoice"
+    ],
+    documents: [
+      {
+        label: "NIN, BVN or international passport",
+        items: []
+      },
+      {
+        label: "The case reference and the station or command that investigated it",
+        items: []
+      }
+    ],
+    beneficiaries: [
+      "Individuals",
+      "Business Sector"
+    ],
+    channels: [
+      "POSSAP",
+      "State Police Commands"
+    ],
+    hours: [
+      {
+        label: "Digital Channels",
+        value: "24/7"
+      }
+    ],
+    turnaround: "Depends on the case",
+    terms: [
+      "Pay only through the invoice POSSAP gives you for the application. The fee is not refundable."
+    ]
+  },
+  // Source: TheNigeriaLawyer; npf.gov.ng
+  {
+    category: "Business and Corporates",
+    mostUsed: false,
+    dashboardOrder: null,
+    ninAuthOnly: false,
+    delivery: "",
+    related: [],
+    contacts: [
+      "Complaint Response Unit"
+    ],
+    slug: "supernumerary-police",
+    name: "Supernumerary Police",
+    action: "Apply",
+    icon: "/icons/services/event-security.svg",
+    description: "Ministries, agencies, banks and companies can apply for supernumerary police officers to guard their property. Once a request is approved, the organisation pays for the officers' training and their pay for the period they are engaged.",
+    audiences: [
+      "Organisations"
+    ],
+    fees: [
+      {
+        label: "Application and processing fee",
+        value: "Shown on your POSSAP invoice"
+      }
+    ],
+    feeSummary: "On your POSSAP invoice",
+    payment: [
+      "Online, through the POSSAP invoice"
+    ],
+    documents: [
+      {
+        label: "A description of the property and why officers are needed",
+        items: []
+      }
+    ],
+    beneficiaries: [
+      "Business Sector",
+      "Governmental Entities"
+    ],
+    channels: [
+      "POSSAP",
+      "State Police Commands"
+    ],
+    hours: [
+      {
+        label: "Digital Channels",
+        value: "24/7"
+      }
+    ],
+    turnaround: "Depends on the case",
+    terms: [
+      "Apply to the Inspector-General of Police or to the Commissioner of Police of the state, describing the property and the circumstances.",
+      "You may be asked for any other information the Inspector-General requires."
+    ]
+  },
+  // Source: cmris.npf.gov.ng; Techpoint, TheCable 2024
+  {
+    category: "Traffic Services",
+    mostUsed: false,
+    dashboardOrder: null,
+    ninAuthOnly: false,
+    delivery: "",
+    related: [],
+    contacts: [
+      "Complaint Response Unit"
+    ],
+    slug: "central-motor-registry",
+    name: "Central Motor Registry (e-CMR)",
+    action: "Apply",
+    icon: "/icons/services/traffic-services.svg",
+    description: "Vehicle owners (cars, buses, trucks and motorcycles) register their vehicles with the Force's Central Motor Registry and receive a Motor Vehicle Information Certificate. The register helps the police confirm that a vehicle is genuine and who owns it.",
+    audiences: [
+      "Residents",
+      "Organisations"
+    ],
+    fees: [
+      {
+        label: "Registration fee",
+        value: "Shown on the CMRIS portal"
+      }
+    ],
+    feeSummary: "On the CMRIS portal",
+    payment: [
+      "Online, on the CMRIS portal"
+    ],
+    documents: [
+      {
+        label: "NIN, BVN or international passport",
+        items: []
+      },
+      {
+        label: "Vehicle particulars: plate, chassis and engine numbers",
+        items: []
+      }
+    ],
+    beneficiaries: [
+      "Individuals",
+      "Business Sector",
+      "Governmental Entities"
+    ],
+    channels: [
+      "CMRIS portal (cmris.npf.gov.ng)"
+    ],
+    hours: [
+      {
+        label: "Digital Channels",
+        value: "24/7"
+      }
+    ],
+    turnaround: "Depends on the case",
+    terms: [
+      "Update the record when the owner, plate number, engine or chassis changes.",
+      "In 2024 the Inspector-General suspended enforcement of the e-CMR certificate and told officers not to demand it from motorists."
+    ]
+  },
+  // Source: LawPadi; Business Post; Guardian; CAPPA
+  {
+    category: "Criminal Reports and Complaints",
+    mostUsed: false,
+    dashboardOrder: null,
+    ninAuthOnly: false,
+    delivery: "",
+    related: [],
+    contacts: [
+      "Complaint Response Unit"
+    ],
+    slug: "complaint-against-officer",
+    name: "Complaint Against a Police Officer",
+    action: "Report",
+    icon: "/icons/services/tourist-complain.svg",
+    description: "If an officer asked you for money, mistreated you or refused to help, complain to the Force's Complaint Response Unit by phone, by WhatsApp or with this form. You can also petition the Police Service Commission, the body that disciplines police officers.",
+    audiences: [
+      "Residents",
+      "Foreigners",
+      "Organisations"
+    ],
+    fees: [],
+    feeSummary: "Free of Charge",
+    payment: [],
+    documents: [
+      {
+        label: "Photos, video or receipts (if available)",
+        items: []
+      }
+    ],
+    beneficiaries: [
+      "Individuals",
+      "Business Sector"
+    ],
+    channels: [
+      "Nigeria Police Force Website",
+      "Complaint Response Unit"
+    ],
+    hours: [
+      {
+        label: "Digital Channels",
+        value: "24/7"
+      }
+    ],
+    turnaround: "Instant",
+    terms: [
+      "Give the date, time and place, and what happened. Name the officer, or give their number or the vehicle plate, if you can.",
+      "A petition to the Police Service Commission is a letter to its Chairman setting out what happened, with any evidence attached.",
+      "Reporting is free. No officer may ask you for money to take a report, to investigate it, or for bail."
+    ]
+  },
+  // Source: Report form advice (see content-report.ts)
+  {
+    category: "Criminal Reports and Complaints",
+    mostUsed: false,
+    dashboardOrder: null,
+    ninAuthOnly: false,
+    delivery: "",
+    related: [],
+    contacts: [
+      "Complaint Response Unit"
+    ],
+    slug: "missing-person",
+    name: "Report a Missing Person",
+    action: "Report",
+    icon: "/icons/services/search-check.svg",
+    description: "Report someone who has not come home and cannot be reached. There is no waiting period: report as soon as you are worried.",
+    audiences: [
+      "Residents",
+      "Foreigners"
+    ],
+    fees: [],
+    feeSummary: "Free of Charge",
+    payment: [],
+    documents: [
+      {
+        label: "A recent photograph (if available)",
+        items: []
+      }
+    ],
+    beneficiaries: [
+      "Individuals"
+    ],
+    channels: [
+      "Nigeria Police Force Website",
+      "Divisional Police Stations"
+    ],
+    hours: [
+      {
+        label: "Digital Channels",
+        value: "24/7"
+      }
+    ],
+    turnaround: "Instant",
+    terms: [
+      "Note what they were wearing, where they were last seen, and who they were with."
+    ]
+  },
+  // Source: Leadership 2025 (Bauchi Gender Unit); IGP directive 2020
+  {
+    category: "Criminal Reports and Complaints",
+    mostUsed: false,
+    dashboardOrder: null,
+    ninAuthOnly: false,
+    delivery: "",
+    related: [],
+    contacts: [
+      "Complaint Response Unit"
+    ],
+    slug: "gender-based-violence",
+    name: "Report Sexual or Gender-Based Violence",
+    action: "Report",
+    icon: "/icons/services/heart-hand.svg",
+    description: "Report rape, sexual assault, domestic violence or abuse. State Commands have Gender Units, and in 2020 the Inspector-General sent specialised investigators to gender desks across the country.",
+    audiences: [
+      "Residents",
+      "Foreigners"
+    ],
     fees: [],
     feeSummary: "Free of Charge",
     payment: [],
     documents: [],
-    beneficiaries: [],
-    channels: [],
-    delivery: "",
-    hours: [],
-    contacts: [],
+    beneficiaries: [
+      "Individuals"
+    ],
+    channels: [
+      "Nigeria Police Force Website",
+      "Divisional Police Stations"
+    ],
+    hours: [
+      {
+        label: "Digital Channels",
+        value: "24/7"
+      }
+    ],
     turnaround: "Instant",
-    terms: [],
-    related: [],
+    terms: [
+      "You can ask for a female officer. Try not to wash or change clothes before a medical examination, and keep what you were wearing.",
+      "Say if it is not safe for officers to call you at home."
+    ]
   },
 ];
 
@@ -4095,13 +2968,17 @@ export const serviceImportance = [
   "women-protection",
   "child-protection",
   "human-trafficking",
+  "gender-based-violence",
+  "missing-person",
   // Reporting a crime.
   "report-criminal-complaint",
   "open-criminal-case",
   "ecrime",
   "ecrime-101364",
+  "complaint-against-officer",
   // The tasks most people come for.
   "police-clearance-certificate",
+  "police-extract",
   "fine-payment",
   "pay-traffic-fines",
   // On the road.
@@ -4110,8 +2987,8 @@ export const serviceImportance = [
   "unknown-accident-report",
   "reckless-driver",
   "report-a-vehicle-or-driver",
+  "central-motor-registry",
   "vehicle-obstruction",
-  "traffic-training-courses",
   // Lost and found.
   "lost-and-found",
   "report-lost-item",
@@ -4120,78 +2997,49 @@ export const serviceImportance = [
   "inquiries-and-follow-up",
   "application-status",
   "submit-inquiry",
-  "financial-cases",
   "document-inquiry",
-  "fast-track",
   "service-attachment",
   // Certificates.
   "request-a-certificate",
-  "traffic-clearance-certificate",
-  "traffic-status-certificate",
-  "twimc-certificate",
-  "twimc-inmate-certificate",
+  "cid-clearance",
+  "investigation-report",
   // Permits, most personal first.
   "request-a-permit",
+  "tinted-glass-permit",
+  "firearm-licence",
   "detainee-visit",
-  "hqvisit",
-  "corpse-entry",
-  "vehicle-color-change",
-  "night-work-permit",
   "close-road",
-  "sailing-permit",
   // Support for particular people, and talking to the police.
   "report-bounce-cheques",
   "persons-with-disabilities",
-  "tourist-police",
-  "labour-complaint",
   "neighborhood-police",
   "share-information",
   "request-to-contact-the-police",
-  "leaders-at-your-service",
   // Homes and events.
-  "smart-home-security",
   "event-security",
   "on-site-police-support",
-  "barriers-request",
+  "escort-and-guard",
+  "supernumerary-police",
   // Lawyers.
-  "law-office-registration",
-  "lawyer-poa",
-  "poa-association",
-  "lawyer-search-suspension-letter",
   // Businesses, banks and embassies.
   "report-bounce-cheques-bank",
-  "ecocrime",
   "destroy-explosives",
-  "gold-management",
-  "diplomatic-affairs-services",
-  "diplomatic-services",
-  "diplomatic-exchange",
   "suppliers-services",
   "supplier-application",
   "public-tender",
   // Jobs, talks and training.
   "apply-for-a-job",
-  "job-seekers",
   "request-a-lecture-or-training-course",
   "drug-awareness-lecture",
   "student-awareness",
   "seminar-request",
-  "contact-police-scientists-council",
   // Joining in.
   "community-activities-participation",
   "volunteer-platform",
   "activity-request",
-  "request-sports-facility",
   "museum-visit",
   // Police staff and retirees.
   "npf-personnel-welfare-and-support",
-  "medical-treatment-extension",
   "retirees-services",
   // Pages that describe a programme rather than do a task, or whose content is unclear.
-  "faris",
-  "a-proactive-approach-to-ensures-public-safety",
-  "e-crime-supports-digital-well-being",
-  "digital-experience-for-lost-found",
-  "on-the-go",
-  "wps-statistics",
 ];

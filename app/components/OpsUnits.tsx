@@ -13,11 +13,12 @@ import {
   PriorityTag,
   UnitStatusTag,
   useNow,
+  useScoped,
 } from "./OpsPieces";
 import {
   setUnitStatus,
   updateIncident,
-  useStore,
+  type Incident,
   type Unit,
   type UnitStatus,
 } from "./store";
@@ -42,19 +43,19 @@ const ORDER: Record<UnitStatus, number> = {
 export default function OpsUnits() {
   const t = useT();
   const id = useId();
-  const { units, incidents } = useStore();
+  const { units, incidents, viewing } = useScoped();
   const now = useNow();
   const [query, setQuery] = useState("");
-  const [division, setDivision] = useState("");
+  const [section, setSection] = useState("");
 
-  const divisions = useMemo(
-    () => [...new Set(units.map((u) => u.division))],
+  const sections = useMemo(
+    () => [...new Set(units.map((u) => u.section))],
     [units],
   );
 
   const visible = useMemo(() => {
     return filterBy(
-      units.filter((u) => !division || u.division === division),
+      units.filter((u) => !section || u.section === section),
       query,
       (u) =>
         [
@@ -63,8 +64,9 @@ export default function OpsUnits() {
           t(u.officer),
           u.area,
           t(u.area),
-          u.division,
-          t(u.division),
+          u.section,
+          t(u.section),
+          u.state,
           u.status,
           t(u.status),
           u.incident ?? "",
@@ -75,7 +77,7 @@ export default function OpsUnits() {
           ORDER[a.status] - ORDER[b.status] ||
           a.callsign.localeCompare(b.callsign),
       );
-  }, [units, query, division, t]);
+  }, [units, query, section, t]);
 
   return (
     <div className="space-y-8">
@@ -91,16 +93,16 @@ export default function OpsUnits() {
           found={visible.length}
         />
         <label htmlFor={`${id}-div`} className="sr-only">
-          {t("Division")}
+          {t("Section")}
         </label>
         <select
           id={`${id}-div`}
-          value={division}
-          onChange={(e) => setDivision(e.target.value)}
+          value={section}
+          onChange={(e) => setSection(e.target.value)}
           className={OPS_SELECT}
         >
-          <option value="">{t("Every division")}</option>
-          {divisions.map((d) => (
+          <option value="">{t("Every section")}</option>
+          {sections.map((d) => (
             <option key={d} value={d}>
               {t(d)}
             </option>
@@ -175,6 +177,7 @@ export default function OpsUnits() {
                 unit={unit}
                 incident={incidents.find((i) => i.id === unit.incident) ?? null}
                 now={now}
+                showState={!viewing}
               />
             ))}
           </tbody>
@@ -185,7 +188,7 @@ export default function OpsUnits() {
             tone="none"
             title={t("No unit matches that filter")}
             hint={t(
-              "Clear the search box or pick every division to see the whole shift again.",
+              "Clear the search box or pick every section to see the whole shift again.",
             )}
           />
         ) : null}
@@ -201,10 +204,12 @@ function Row({
   unit,
   incident,
   now,
+  showState,
 }: {
   unit: Unit;
-  incident: ReturnType<typeof useStore>["incidents"][number] | null;
+  incident: Incident | null;
   now: number;
+  showState: boolean;
 }) {
   const t = useT();
   const held = now ? (now - new Date(unit.since).getTime()) / 60_000 : 0;
@@ -212,7 +217,7 @@ function Row({
 
   return (
     <tr
-      className="border-b border-ops-line-soft transition-colors last:border-0 hover:bg-white/[0.025]"
+      className="border-b border-ops-line-soft transition-colors last:border-0 hover:bg-ops-hover"
     >
       <th scope="row" className="py-2.5 pe-3 ps-4 align-top">
         {/*
@@ -228,7 +233,8 @@ function Row({
             {t(unit.callsign)}
           </span>
           <span className="block truncate text-2xs font-normal text-ops-dim">
-            {t(unit.division)}
+            {t(unit.section)}
+            {showState ? ` · ${unit.state}` : ""}
             <span className="lg:hidden"> · {t(unit.officer)}</span>
           </span>
           <span className="mt-1 flex items-center gap-x-2 text-2xs font-normal text-ops-dim lg:hidden">

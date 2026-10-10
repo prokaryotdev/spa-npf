@@ -19,7 +19,7 @@ import {
   SocialIcon,
 } from "./icons";
 import { PoliceWordmark } from "./Wordmark";
-import { useT, useLocalized, useFormat } from "../i18n/client";
+import { useT, useLocalized } from "../i18n/client";
 
 const socials = ["Facebook", "Youtube", "Twitter", "Instagram"] as const;
 
@@ -40,7 +40,6 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
   const [lead, ...others] = useLocalized(emergencyNumbersSource);
   const footerColumns = useLocalized(footerColumnsSource);
   const legalLinks = useLocalized(legalLinksSource);
-  const format = useFormat();
   const storeBadges = useLocalized(storeBadgesSource);
   const t = useT();
   const [open, setOpen] = useState<string | null>(null);
@@ -252,29 +251,72 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
         </div>
       </div>
 
-      {/* Sign-off: the crest, where to follow us, where to get the app */}
+      {/* Sign-off: the crest with its builder's credit, where to follow us */}
       <div className="npf-container flex flex-col gap-8 pt-14 pb-10 md:flex-row md:items-center md:justify-between">
-        <span
-          role="img"
-          aria-label={t("Nigeria Police Force")}
-          className="text-npf-blue"
-        >
-          <PoliceWordmark className="h-14 w-auto md:h-16" />
-        </span>
-        <div className="flex flex-wrap items-center gap-x-8 gap-y-5">
-          <div className="flex gap-2">
-            {socials.map((name) => (
-              // ponytail: home until the real profiles are known.
-              <Link
-                key={name}
-                href="/"
-                aria-label={name}
-                className="npf-icon-btn"
-              >
-                <SocialIcon name={name} className="size-5" />
-              </Link>
+        {/* The builder's credit sits beside the crest, split off by a
+            hairline, so it reads as a signature rather than small print. */}
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+          <span
+            role="img"
+            aria-label={t("Nigeria Police Force")}
+            className="text-npf-blue"
+          >
+            <PoliceWordmark className="h-14 w-auto md:h-16" />
+          </span>
+          <span aria-hidden className="h-12 w-px bg-npf-hairline" />
+          <a
+            href="https://www.cloudbrella.ng/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col gap-0.5"
+          >
+            <span className="npf-small text-npf-muted">
+              {t("Designed and built by")}
+            </span>
+            <span className="npf-h5 inline-flex items-center gap-1 text-npf-ink decoration-npf-gold underline-offset-4 transition-colors group-hover:text-npf-blue group-hover:underline">
+              Cloudbrella
+              <ArrowUpRight className="size-4 shrink-0 transition-[translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100" />
+            </span>
+            <span className="sr-only"> {t("(opens in a new window)")}</span>
+          </a>
+        </div>
+        <div className="flex gap-2">
+          {socials.map((name) => (
+            // ponytail: home until the real profiles are known.
+            <Link
+              key={name}
+              href="/"
+              aria-label={name}
+              className="npf-icon-btn"
+            >
+              <SocialIcon name={name} className="size-5" />
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Legal */}
+      <div className="npf-small npf-container flex flex-col gap-6 border-t border-npf-hairline pt-8 pb-12 text-npf-muted lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+        <p className="font-medium text-npf-ink">
+          {t("© {year} Nigeria Police Force. All Rights Reserved", {
+            year: process.env.NEXT_PUBLIC_BUILD_YEAR ?? "",
+          })}
+        </p>
+        {/* Legal links, with the store badges under them, close the right
+            edge; the crest and its credit hold the left one above. */}
+        <div className="flex shrink-0 flex-col gap-5 lg:items-end">
+          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+            {legalLinks.map((link) => (
+              <li key={link.label}>
+                <Link
+                  href={link.href}
+                  className="text-npf-body decoration-npf-gold underline-offset-4 transition-colors hover:text-npf-blue hover:underline"
+                >
+                  {link.label}
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
           {showApps ? (
             <div className="flex flex-wrap gap-2.5">
               {storeBadges.map((badge) => (
@@ -295,64 +337,6 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
             </div>
           ) : null}
         </div>
-      </div>
-
-      {/* Legal */}
-      <div className="npf-small npf-container flex flex-col gap-6 border-t border-npf-hairline pt-8 pb-12 text-npf-muted lg:flex-row lg:items-start lg:justify-between lg:gap-12">
-        <div className="space-y-2">
-          <p className="font-medium text-npf-ink">
-            {t(
-              "© {year} Nigeria Police Force. All Rights Reserved",
-              {
-                year: process.env.NEXT_PUBLIC_BUILD_YEAR ?? "",
-              },
-            )}
-          </p>
-          <p className="flex flex-wrap gap-x-5 gap-y-1">
-            <span>
-              {t(
-                "This site is monitored and maintained by Nigeria Police Force.",
-              )}
-            </span>
-            {/* The line this replaces named IE11 first. Microsoft retired it
-                in 2022, and this site uses CSS it could never have rendered,
-                so the advice was both stale and wrong. */}
-            <span>
-              {t(
-                "The site is best viewed in a current version of Chrome, Safari, Edge or Firefox",
-              )}
-            </span>
-            <span>
-              {t("Last modified Date: {date}", {
-                date: format.date(process.env.NEXT_PUBLIC_BUILD_DATE ?? ""),
-              })}
-            </span>
-            <span>
-              {t("Designed and built by")}{" "}
-              <a
-                href="https://www.cloudbrella.ng/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-npf-body decoration-npf-gold underline-offset-4 transition-colors hover:text-npf-blue hover:underline"
-              >
-                Cloudbrella
-                <span className="sr-only"> {t("(opens in a new window)")}</span>
-              </a>
-            </span>
-          </p>
-        </div>
-        <ul className="flex shrink-0 flex-wrap gap-x-6 gap-y-2">
-          {legalLinks.map((link) => (
-            <li key={link.label}>
-              <Link
-                href={link.href}
-                className="text-npf-body decoration-npf-gold underline-offset-4 transition-colors hover:text-npf-blue hover:underline"
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
       </div>
     </footer>
   );

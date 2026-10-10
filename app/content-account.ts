@@ -1,4 +1,8 @@
 import type { Fine, Notice, TrackedRequest } from "./components/store";
+import { jurisdiction } from "./geo";
+
+/** The sample applicant lives in Ikeja, so their requests sit with Lagos. */
+const home = jurisdiction("Lagos", "Ikeja", "14 Allen Avenue, Ikeja");
 
 /**
  * Sample rows for the signed-in portal. Nothing here came from Nigeria Police Force —
@@ -12,12 +16,13 @@ import type { Fine, Notice, TrackedRequest } from "./components/store";
 export const seedRequests: TrackedRequest[] = [
   {
     id: "NPF-2026-4417",
+    where: home,
     slug: "police-clearance-certificate",
     service: "Police Clearance Certificate",
     status: "In Review",
     submitted: "2026-09-08T09:12:00.000Z",
     updated: "2026-09-11T14:40:00.000Z",
-    fee: "₦88,000",
+    fee: "On your POSSAP invoice",
     channel: "Nigeria Police Force Website",
     timeline: [
       {
@@ -39,8 +44,9 @@ export const seedRequests: TrackedRequest[] = [
   },
   {
     id: "NPF-2026-4102",
-    slug: "hqvisit",
-    service: "HQ Entry Permit",
+    where: home,
+    slug: "museum-visit",
+    service: "Police Museum Visit Permit",
     status: "Action Needed",
     submitted: "2026-09-02T11:30:00.000Z",
     updated: "2026-09-05T10:15:00.000Z",
@@ -58,6 +64,7 @@ export const seedRequests: TrackedRequest[] = [
   },
   {
     id: "NPF-2026-3866",
+    where: home,
     slug: "report-lost-item",
     service: "Report Lost Item",
     status: "Completed",
@@ -81,12 +88,13 @@ export const seedRequests: TrackedRequest[] = [
   },
   {
     id: "NPF-2026-3401",
-    slug: "traffic-status-certificate",
-    service: "Traffic Status Certificate",
+    where: home,
+    slug: "police-clearance-certificate",
+    service: "Police Clearance Certificate",
     status: "Completed",
     submitted: "2026-07-30T07:10:00.000Z",
     updated: "2026-07-30T07:12:00.000Z",
-    fee: "₦48,000",
+    fee: "On your POSSAP invoice",
     channel: "Divisional Police Station",
     timeline: [
       { at: "2026-07-30T07:10:00.000Z", label: "Submitted" },
@@ -157,7 +165,7 @@ export const seedNotices: Notice[] = [
 export const seedDocuments = [
   {
     id: "DOC-4411",
-    name: "Traffic Status Certificate",
+    name: "Police Clearance Certificate",
     issued: "2026-07-30T07:12:00.000Z",
     expires: "2027-07-30T00:00:00.000Z",
     request: "NPF-2026-3401",

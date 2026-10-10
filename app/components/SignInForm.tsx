@@ -13,6 +13,8 @@ import {
   UserCircle,
 } from "./icons";
 import { useT } from "../i18n/client";
+import { STATES } from "../geo";
+import { commandLabel } from "./Where";
 
 type Errors = { nin?: string; password?: string };
 
@@ -32,8 +34,22 @@ const OFFICER: Session = {
   phone: "+234 803 987 6543",
   role: "officer",
   rank: "Inspector",
-  station: "Ikeja Divisional Police Headquarters",
+  station: "Force Control Room, Force Headquarters, Abuja",
 };
+
+/**
+ * The desk an officer signs in to. Force Headquarters sees every command;
+ * a State Command desk sees its own. The real sign-in reads this from the
+ * officer's posting, not a menu.
+ */
+const deskSession = (command: string): Session =>
+  command
+    ? {
+        ...OFFICER,
+        command,
+        station: `${command === "FCT" ? "FCT" : command} Command Control Room`,
+      }
+    : OFFICER;
 
 /** A National Identification Number is eleven digits; spaces are tolerated. */
 const NIN = /^\d{11}$/;
@@ -44,6 +60,7 @@ export default function SignInForm() {
   const params = useSearchParams();
   const { session, loaded } = useStore();
   const [errors, setErrors] = useState<Errors>({});
+  const [desk, setDesk] = useState("");
 
   const next = params.get("next");
   const target = (role: Session["role"]) =>
@@ -68,16 +85,16 @@ export default function SignInForm() {
     const password = String(data.get("password") ?? "");
 
     const next: Errors = {};
-    if (!nin) next.nin = "Enter your NIN.";
+    if (!nin) next.nin = t("Enter your NIN.");
     else if (!NIN.test(nin.replace(/\s+/g, "")))
-      next.nin = "A NIN is eleven digits, like 12345678901.";
-    if (!password) next.password = "Enter your password.";
+      next.nin = t("A NIN is eleven digits, like 12345678901.");
+    if (!password) next.password = t("Enter your password.");
     else if (password.length < 8)
-      next.password = "Passwords are at least 8 characters.";
+      next.password = t("Passwords are at least 8 characters.");
 
     setErrors(next);
     if (Object.keys(next).length) return;
-    enter({ ...CITIZEN, nin });
+    enter({ ...CITIZEN, nin: nin.replace(/\s+/g, "") });
   }
 
   return (
@@ -182,9 +199,25 @@ export default function SignInForm() {
             )}
           </p>
         </div>
+        <label htmlFor="desk" className="sr-only">
+          {t("Desk")}
+        </label>
+        <select
+          id="desk"
+          value={desk}
+          onChange={(e) => setDesk(e.target.value)}
+          className="h-10 max-w-full min-w-0 rounded-full bg-white/10 px-4 text-sm font-medium text-white ring-1 ring-white/25 ring-inset outline-none focus-visible:ring-2 focus-visible:ring-white [&>option]:text-npf-ink"
+        >
+          <option value="">{t("Force Headquarters · all commands")}</option>
+          {STATES.map((s) => (
+            <option key={s.name} value={s.name}>
+              {commandLabel(t, s.name)}
+            </option>
+          ))}
+        </select>
         <button
           type="button"
-          onClick={() => enter(OFFICER)}
+          onClick={() => enter(deskSession(desk))}
           className="npf-btn npf-btn-secondary npf-btn-sm"
         >
           {t("Open the operations console")}

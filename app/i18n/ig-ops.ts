@@ -54,8 +54,6 @@ export const igOps: Record<string, string> = {
     "Nabata oku",
   "Filter calls":
     "Zachaa oku",
-  "Reference, type, area, officer or callsign":
-    "Ntụaka, ụdị, mpaghara, onye uwe ojii ma ọ bụ aha otu",
   "Status":
     "Ọnọdụ",
   "Any status":
@@ -108,8 +106,6 @@ export const igOps: Record<string, string> = {
     "Ụdị oku",
   "dispatch within {n}m":
     "zipu n'ime nkeji {n}",
-  "Area":
-    "Mpaghara",
   "Received via":
     "Enwetara ya site na",
   "What was reported":
@@ -118,8 +114,6 @@ export const igOps: Record<string, string> = {
     "Ihe onye kpọrọ kọwara, n'okwu ya ebe ị nwere ike.",
   "Put it in the queue":
     "Tinye ya n'ahịrị",
-  "Map of open calls and units":
-    "Map oku mepere emepe na otu ndị ọrụ",
   "Command board":
     "Bọọdụ Iwu",
   "Waiting":
@@ -128,8 +122,6 @@ export const igOps: Record<string, string> = {
     "Agafeela",
   "Units free":
     "Otu nọ efu",
-  "Live picture":
-    "Foto ugbu a",
   "Pending":
     "Na-eche otu",
   "{n} waiting":
@@ -160,8 +152,6 @@ export const igOps: Record<string, string> = {
     "{n} nọ efu",
   "Status board":
     "Bọọdụ ọnọdụ",
-  "Units on duty by division, with how many are available":
-    "Otu nọ n'ọrụ site na ngalaba, ya na ole nọ efu",
   "Immediate":
     "Ozugbo",
   "Urgent":
@@ -224,8 +214,6 @@ export const igOps: Record<string, string> = {
     "Banye dịka onye uwe ojii",
   "Command":
     "Iwu",
-  "& Control":
-    "& Njikwa",
   "End shift":
     "Kwụsị oge ọrụ",
   "Duty officer":
@@ -238,8 +226,6 @@ export const igOps: Record<string, string> = {
     "Aha otu, onye uwe ojii ma ọ bụ mpaghara",
   "Division":
     "Ngalaba",
-  "Every division":
-    "Ngalaba niile",
   "{shown} of {total} units":
     "{shown} n'ime otu {total}",
   "Units on duty, with status, elapsed time in that status, and the call they are assigned to":
@@ -256,8 +242,6 @@ export const igOps: Record<string, string> = {
     "Bufee na",
   "No unit matches that filter":
     "Ọ dịghị otu dabara nzacha ahụ",
-  "Clear the search box or pick every division to see the whole shift again.":
-    "Kpochapụ igbe nchọta ma ọ bụ họrọ ngalaba niile iji hụ oge ọrụ niile ọzọ.",
   "(held over 45 minutes)":
     "(ọ gafeela nkeji 45)",
   "Arrived":

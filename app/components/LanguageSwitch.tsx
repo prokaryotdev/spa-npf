@@ -24,14 +24,11 @@ import { CheckIcon, GlobeIcon } from "./icons";
 export default function LanguageSwitch({
   className = "",
   block = false,
-  tone = "light",
 }: {
   /** Skin for the button on the surface it sits on. */
   className?: string;
   /** The mobile drawer: every language laid out, no menu to open. */
   block?: boolean;
-  /** The menu's own surface: the public site is light, the console dark. */
-  tone?: "light" | "dark";
 }) {
   const lang = useLang();
   const t = useT();
@@ -87,7 +84,6 @@ export default function LanguageSwitch({
       </nav>
     );
 
-  const dark = tone === "dark";
   return (
     <details ref={menu} className="group relative">
       <summary
@@ -98,11 +94,7 @@ export default function LanguageSwitch({
         <span>{LANG_LABEL[lang]}</span>
       </summary>
       <ul
-        className={`npf-lang-menu absolute end-0 top-[calc(100%+0.5rem)] z-50 min-w-44 rounded-[14px] p-1.5 ${
-          dark
-            ? "bg-[#1e1f25] text-ops-text shadow-[0_12px_32px_rgb(0_0_0/0.5),0_0_0_1px_rgb(255_255_255/0.08)]"
-            : "bg-white text-npf-ink shadow-[0_12px_32px_rgb(20_49_95/0.16),0_0_0_1px_rgb(20_49_95/0.08)]"
-        }`}
+        className="npf-lang-menu absolute end-0 top-[calc(100%+0.5rem)] z-50 min-w-44 rounded-[14px] bg-white p-1.5 text-npf-ink shadow-[0_12px_32px_rgb(20_49_95/0.16),0_0_0_1px_rgb(20_49_95/0.08)]"
       >
         {options.map(({ code, href, current }) => (
           <li key={code}>
@@ -113,7 +105,7 @@ export default function LanguageSwitch({
               aria-current={current ? "true" : undefined}
               className={`flex items-center justify-between gap-6 rounded-[9px] px-3 py-2 text-sm transition-colors ${
                 current ? "font-semibold" : ""
-              } ${dark ? "hover:bg-[#0a84ff] hover:text-white" : "hover:bg-npf-cloud"}`}
+              } hover:bg-npf-cloud`}
             >
               {LANG_LABEL[code]}
               {current ? (

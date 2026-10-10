@@ -189,6 +189,16 @@ export const PROPER_NOUNS = new Set([
   "Cybercrime 01",
   "ASP O. Nwosu",
   "Wuse 1",
+  "Insp. B. Adebayo",
+  "Sgt. T. Olaniyan",
+  "Cpl. U. Abdullahi",
+  "Cybercrime 03",
+  "Highway 02",
+  "Patrol 31",
+  "Nassarawa GRA, Kano",
+  "Sagamu Interchange",
+  "Zaria",
+  "14 Allen Avenue, Ikeja",
 
   // Labels and values that are the same string in both languages.
   "A – Z",

@@ -8,7 +8,6 @@
 export const haOps: Record<string, string> = {
   // --- shell ---------------------------------------------------------------
   Command: "Umarni",
-  "& Control": "da Kula",
   "Command board": "Allon umarni",
   /* The tab strip passes its short label through a table, so `t()` never
      sees it as a literal and the coverage test never asked for this one. */
@@ -53,9 +52,6 @@ export const haOps: Record<string, string> = {
     "Babu rundunar da ke kan wani kira a yanzu. Ka tura ɗaya daga layin jira na sama.",
   "Nothing is waiting on a decision. Turn off “Open only” to read the ones already settled.":
     "Babu abin da ke jiran hukunci. Ka kashe “Buɗaɗɗu kaɗai” don karanta waɗanda aka riga aka warware.",
-  "Every division": "Kowane sashe",
-  "Units on duty by division, with how many are available":
-    "Rundunonin da ke kan aiki bisa sashe, da yawan waɗanda ke a sake",
 
   // --- calls ---------------------------------------------------------------
   Calls: "Kira",
@@ -69,8 +65,6 @@ export const haOps: Record<string, string> = {
   "Any status": "Kowane matsayi",
   "Call type": "Nau'in kira",
   "Type / area": "Nau'i / yanki",
-  "Reference, type, area, officer or callsign":
-    "Lambar tuntuɓa, nau'i, yanki, jami'i ko lambar rediyo",
   "No call matches those filters": "Babu kiran da ya dace da waɗannan taceƙa",
   "Widen the grade or status filter, or clear the search box, to see the rest of the shift.":
     "Ka faɗaɗa taceƙar daraja ko matsayi, ko ka share akwatin bincike, don ganin sauran aikin.",
@@ -98,7 +92,6 @@ export const haOps: Record<string, string> = {
   Add: "Ƙara",
   Ref: "Lamba",
   Grade: "Mataki",
-  Area: "Yanki",
   Location: "Wuri",
   Elapsed: "Lokacin da ya wuce",
   "of {n}m": "daga mintuna {n}",
@@ -145,8 +138,6 @@ export const haOps: Record<string, string> = {
   "Filter units": "Tace rundunoni",
   "Callsign, officer or area": "Lambar rediyo, jami'i ko yanki",
   "No unit matches that filter": "Babu rundunar da ta dace da wannan taceƙa",
-  "Clear the search box or pick every division to see the whole shift again.":
-    "Ka share akwatin bincike ko ka zaɓi kowace sashe don sake ganin dukan aikin.",
   "{shown} of {total} units": "{shown} daga rundunoni {total}",
   "Units on duty, with status, elapsed time in that status, and the call they are assigned to":
     "Rundunonin da ke kan aiki, tare da matsayi, lokacin da aka ɗauka a wannan matsayi, da kiran da aka ba su",
@@ -171,8 +162,6 @@ export const haOps: Record<string, string> = {
   Approve: "Amince",
   Reject: "Ƙi",
   Cancel: "Soke",
-  "Live picture": "Hoto kai tsaye",
-  "Map of open calls and units": "Taswirar kiran da ke buɗe da rundunoni",
   "Late": "Sun makara",
   "Units free": "Rundunoni a shirye",
   "What you decide here shows on the applicant’s screen at once.": "Abin da ka yanke a nan yana bayyana a allon mai nema nan take.",

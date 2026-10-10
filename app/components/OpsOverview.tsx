@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "../i18n/Link";
-import { useId, useState } from "react";
+import { useId } from "react";
 import { flushSync } from "react-dom";
 import { dispatchTarget } from "../content-ops";
-import OpsMap from "./OpsMap";
 import {
   Elapsed,
   OpsEmpty,
@@ -15,28 +14,35 @@ import {
   duration,
   isOverdue,
   useNow,
+  useScoped,
 } from "./OpsPieces";
-import { updateIncident, useStore, type Incident, type Unit } from "./store";
-import { useRouter } from "../i18n/Link";
-import { ArrowRight } from "./icons";
-import { useT } from "../i18n/client";
+import { updateIncident, type Incident, type Unit } from "./store";
+import { placeOf } from "../geo";
+import {
+  AlertIcon,
+  ArrowRight,
+  ClockIcon,
+  PhoneCallIcon,
+  RadioIcon,
+  UserCircle,
+} from "./icons";
+import { useFormat, useT } from "../i18n/client";
 
 /**
  * The command board. It answers the four questions a duty supervisor asks on
  * walking into the room, in the order they ask them: what is waiting, what is
  * late, who is running, and who is free.
  *
- * Pending calls come first and everything else is secondary, because an
- * unassigned call is the only thing on this screen that is actively getting
- * worse while nobody looks at it.
+ * Laid out like /services: the title, a mist strip of the four numbers, then
+ * the queues in white cards. Pending calls lead, wide, because an unassigned
+ * call is the only thing on this screen that is actively getting worse while
+ * nobody looks at it; the unit roll-up rides beside them on a desk.
  */
 export default function OpsOverview() {
   const t = useT();
-  const { incidents, units } = useStore();
+  const { incidents, units } = useScoped();
   const now = useNow();
-  const router = useRouter();
-  /* The call the officer is pointing at, on the list or on the map. */
-  const [focus, setFocus] = useState<string | null>(null);
+  const format = useFormat();
 
   const pending = incidents
     .filter((i) => i.status === "New")
@@ -52,58 +58,70 @@ export default function OpsOverview() {
   const free = units.filter((u) => u.status === "Available");
 
   return (
-    <div className="space-y-8">
-      {/*
-        The title and the three numbers a supervisor needs on walking in:
-        what is waiting, what is late, and who is free. Set as a line beside
-        the title rather than a row of tiles, so the map stays the stage.
-      */}
+    <div className="space-y-6">
       <OpsHead
         title={t("Command board")}
-        action={
-          <dl className="flex items-baseline gap-6 sm:gap-8">
-            <Count label={t("Waiting")} value={pending.length} />
-            <Count
-              label={t("Late")}
-              value={overdue.length}
-              alert={overdue.length > 0}
-            />
-            <Count
-              label={t("Units free")}
-              value={`${free.length}/${units.length}`}
-            />
-          </dl>
-        }
+        lead={now ? format.date(new Date(now).toISOString().slice(0, 10)) : undefined}
       />
 
       {/*
-        The live picture. On a desk the map fills the stage and the call
-        lists float over its left edge in one frosted sheet, with the unit
-        roll-up over its right edge on a wide screen; the officer reads the
-        city and the queue in one look. Below 1024px the same blocks stack
-        under a shorter map, in the order a phone needs them.
+        The four headline tiles. Each number carries the breakdown a
+        supervisor asks for next (which grades are waiting, who is en route
+        and who is on scene, how the units split) so the tile answers the
+        follow-up without a click. Red only when something is late.
       */}
-      {/* The map stage and the unit sheet share one frame, so on a wide
-          screen the sheet can float over the stage and below that it
-          follows it in the flow instead of hiding under the map. */}
-      <div className="relative">
-      <section
-        aria-label={t("Live picture")}
-        className="relative lg:h-[max(560px,calc(100dvh-var(--ops-top)-10.5rem))]"
-      >
-        <div className="npf-ops-tile isolate h-[min(58vh,460px)] overflow-clip lg:absolute lg:inset-0 lg:h-auto">
-          <OpsMap
-            incidents={incidents}
-            units={units}
-            focus={focus}
-            sheets
-            onPick={(id) =>
-              router.push(`/app/police/incidents?call=${encodeURIComponent(id)}`)
-            }
-          />
-        </div>
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+        <Kpi label={t("Waiting")} value={pending.length} Icon={PhoneCallIcon}>
+          <GradeMix calls={pending} />
+        </Kpi>
+        <Kpi
+          label={t("Late")}
+          value={overdue.length}
+          Icon={overdue.length ? AlertIcon : ClockIcon}
+          alert={overdue.length > 0}
+        >
+          <GradeMix calls={overdue} />
+        </Kpi>
+        <Kpi label={t("Running")} value={running.length} Icon={RadioIcon}>
+          {(["Dispatched", "On Scene"] as const).map((status) => {
+            const n = running.filter((i) => i.status === status).length;
+            return n ? (
+              <span key={status} className="inline-flex items-center gap-1.5">
+                <OpsStatus status={status} />
+                <span className="font-semibold text-npf-ink tabular-nums">
+                  {n}
+                </span>
+              </span>
+            ) : null;
+          })}
+        </Kpi>
+        <Kpi
+          label={t("Units free")}
+          value={
+            <>
+              {free.length}
+              <span className="text-[0.6em] font-semibold text-npf-steel">
+                /{units.length}
+              </span>
+            </>
+          }
+          Icon={UserCircle}
+        >
+          {/* One segment per unit, in the colours the Units panel names. */}
+          <span aria-hidden className="flex h-2 w-full gap-0.5">
+            {units.map((u) => (
+              <span
+                key={u.callsign}
+                className="flex-1 rounded-full transition-[background-color] duration-500 ease-(--ease-out)"
+                style={{ background: UNIT_FILL[u.status] }}
+              />
+            ))}
+          </span>
+        </Kpi>
+      </div>
 
-        <div className="npf-ops-float @container mt-8 space-y-8 lg:absolute lg:start-4 lg:top-4 lg:bottom-4 lg:z-[500] lg:mt-0 lg:w-[23rem] lg:space-y-5 lg:overflow-y-auto lg:overscroll-contain lg:p-2 lg:pt-4">
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_24rem] xl:items-start">
+        <div className="@container min-w-0 space-y-4">
           <OpsPanel
             title={t("Pending")}
             count={
@@ -111,7 +129,6 @@ export default function OpsOverview() {
                 ? t("{n} waiting", { n: pending.length })
                 : undefined
             }
-            className="lg:[&>div:first-child]:px-3"
             flush
           >
             {pending.length ? (
@@ -122,7 +139,6 @@ export default function OpsOverview() {
                     incident={incident}
                     units={units}
                     late={isOverdue(incident, now)}
-                    onFocus={setFocus}
                   />
                 ))}
               </ul>
@@ -144,17 +160,12 @@ export default function OpsOverview() {
                 : undefined
             }
             action={<More href="/app/police/incidents">{t("All calls")}</More>}
-            className="lg:[&>div:first-child]:px-3"
             flush
           >
             {running.length ? (
               <ul>
                 {running.map((incident) => (
-                  <RunningCall
-                    key={incident.id}
-                    incident={incident}
-                    onFocus={setFocus}
-                  />
+                  <RunningCall key={incident.id} incident={incident} />
                 ))}
               </ul>
             ) : (
@@ -168,9 +179,8 @@ export default function OpsOverview() {
           </OpsPanel>
         </div>
 
-      </section>
-
-        <div className="npf-ops-float-xl mt-8 xl:absolute xl:end-4 xl:top-4 xl:z-[500] xl:mt-0 xl:max-h-[calc(100%-2rem)] xl:w-72 xl:overflow-y-auto xl:overscroll-contain xl:p-2 xl:pt-4 xl:[&>section>div:first-child]:px-3">
+        {/* Pinned beside the queues only where the screen is tall enough. */}
+        <div className="xl:[@media(min-height:46rem)]:sticky xl:[@media(min-height:46rem)]:top-[calc(var(--ops-top)+1.5rem)]">
           <UnitBoard units={units} />
         </div>
       </div>
@@ -180,28 +190,64 @@ export default function OpsOverview() {
 
 /* ------------------------------------------------------------------------ */
 
-/** One of the board's three headline numbers. Red only when it means act. */
-function Count({
+/**
+ * A headline tile: the label, its icon, the number, and one line of
+ * breakdown under it. Red only when it means act.
+ */
+function Kpi({
   label,
   value,
+  Icon,
   alert = false,
+  children,
 }: {
   label: string;
   value: React.ReactNode;
+  Icon: (props: { className?: string }) => React.ReactNode;
   alert?: boolean;
+  children?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col-reverse">
-      <dt className="text-xs text-ops-dim">{label}</dt>
-      <dd
-        key={String(value)}
-        className="npf-ops-count font-secondary text-[1.625rem] leading-none font-bold tracking-[-0.02em] tabular-nums"
-        style={alert ? { color: "var(--ops-p1)" } : undefined}
+    <section
+      aria-label={label}
+      className={`npf-ops-tile flex min-w-0 flex-col p-4 sm:p-5 ${alert ? "bg-[linear-gradient(180deg,var(--color-npf-error-wash),#fff_70%)]" : ""}`}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <h2 className="text-sm font-medium text-npf-steel">{label}</h2>
+        <span
+          aria-hidden
+          className={`grid size-9 shrink-0 place-items-center rounded-full sm:size-10 ${
+            alert ? "bg-npf-alert text-white" : "bg-npf-cloud text-npf-blue-ink"
+          }`}
+        >
+          <Icon className="size-4.5 sm:size-5" />
+        </span>
+      </div>
+      <p
+        key={String(typeof value === "object" ? "" : value)}
+        className="npf-ops-count -mt-1 font-secondary text-[2rem] leading-none font-bold tracking-[-0.02em] tabular-nums sm:text-[2.5rem]"
+        style={{ color: alert ? "var(--ops-p1)" : "var(--color-npf-blue-deep)" }}
       >
         {value}
-      </dd>
-    </div>
+      </p>
+      <div className="mt-4 flex min-h-6 flex-wrap items-center gap-x-3 gap-y-1.5 text-xs">
+        {children}
+      </div>
+    </section>
   );
+}
+
+/** How a set of calls splits by grade: one tag and a count per grade held. */
+function GradeMix({ calls }: { calls: Incident[] }) {
+  const grades = (["P1", "P2", "P3", "P4"] as const)
+    .map((p) => [p, calls.filter((c) => c.priority === p).length] as const)
+    .filter(([, n]) => n);
+  return grades.map(([p, n]) => (
+    <span key={p} className="inline-flex items-center gap-1.5">
+      <PriorityTag priority={p} withLabel={false} />
+      <span className="font-semibold text-npf-ink tabular-nums">{n}</span>
+    </span>
+  ));
 }
 
 /** The link out of a panel to the board that owns the same data in full. */
@@ -209,12 +255,12 @@ function More({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link
       href={href}
-      className="group inline-flex items-center gap-1.5 rounded-chip text-xs font-medium text-ops-accent transition-opacity hover:opacity-80"
+      className="group npf-small -my-2 inline-flex min-h-11 items-center gap-1.5 font-medium text-npf-blue underline-offset-4 transition-colors hover:text-npf-blue-deep hover:underline"
     >
       {children}
       <ArrowRight
         aria-hidden
-        className="size-3.5 transition-transform duration-200 ease-(--ease-out) group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5"
+        className="size-4 transition-transform duration-200 ease-(--ease-out) group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5"
       />
     </Link>
   );
@@ -234,16 +280,17 @@ function PendingCall({
   incident,
   units,
   late,
-  onFocus,
 }: {
   incident: Incident;
   units: Unit[];
   late: boolean;
-  onFocus: (id: string | null) => void;
 }) {
   const t = useT();
   const id = useId();
-  const free = units.filter((u) => u.status === "Available");
+  // Its own command's units only, even on a national desk.
+  const free = units.filter(
+    (u) => u.status === "Available" && u.state === incident.where.state,
+  );
   const target = dispatchTarget[incident.priority];
 
   return (
@@ -252,12 +299,10 @@ function PendingCall({
          dispatch control alongside the call on a 390px screen left the
          summary about twenty characters wide — three ragged lines of what the
          caller actually said. */
-      className={`npf-ops-row npf-ops-call flex flex-col gap-3 border-b border-ops-line-soft px-5 py-4 transition-colors last:border-0 hover:bg-white/[0.04] @md:flex-row @md:gap-4 ${
+      className={`npf-ops-row npf-ops-call flex flex-col gap-3 border-b border-ops-line-soft px-5 py-4 transition-colors last:border-0 hover:bg-ops-hover @md:flex-row @md:gap-4 ${
         late ? "npf-ops-overdue" : ""
       }`}
       style={{ viewTransitionName: `call-${incident.id}` }}
-      onMouseEnter={() => onFocus(incident.id)}
-      onMouseLeave={() => onFocus(null)}
     >
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
@@ -270,7 +315,7 @@ function PendingCall({
           </Link>
           <span className="text-sm font-medium">{t(incident.kind)}</span>
           <span className="text-sm text-ops-dim">
-            {t(incident.area)}
+            {placeOf(t(incident.area), incident.where)}
           </span>
         </div>
         <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-ops-dim">
@@ -314,7 +359,7 @@ function PendingCall({
               document.startViewTransition(() => flushSync(send));
             else send();
           }}
-          className="npf-ops-select h-8 max-w-50 rounded-chip px-3 text-[0.8125rem] font-medium outline-none"
+          className="npf-ops-select h-10 max-w-56 rounded-full px-4 text-sm font-medium outline-none"
         >
           {/* The prompt, not a choice: it names the control and stays out
               of the list. */}
@@ -335,22 +380,14 @@ function PendingCall({
 }
 
 /** A call that already has a unit. Read-only here; worked on the Calls board. */
-function RunningCall({
-  incident,
-  onFocus,
-}: {
-  incident: Incident;
-  onFocus: (id: string | null) => void;
-}) {
+function RunningCall({ incident }: { incident: Incident }) {
   const t = useT();
   return (
     <li
-      className="npf-ops-call flex flex-wrap items-baseline gap-x-2.5 gap-y-1 border-b border-ops-line-soft px-5 py-3 transition-colors last:border-0 hover:bg-white/[0.04]"
+      className="npf-ops-call flex flex-wrap items-baseline gap-x-2.5 gap-y-1 border-b border-ops-line-soft px-5 py-3 transition-colors last:border-0 hover:bg-ops-hover"
       /* The same name as its pending row, which is what lets a dispatch
          carry the row across the board. */
       style={{ viewTransitionName: `call-${incident.id}` }}
-      onMouseEnter={() => onFocus(incident.id)}
-      onMouseLeave={() => onFocus(null)}
     >
       <PriorityTag priority={incident.priority} />
       <span className="font-secondary text-sm font-bold tabular-nums">
@@ -360,7 +397,7 @@ function RunningCall({
           second line, rather than "Theft…" squeezed beside it. */}
       <span className="min-w-0 flex-1 text-sm @max-md:min-w-[60%] @md:truncate">
         {t(incident.kind)}
-        <span className="text-ops-dim"> · {t(incident.area)}</span>
+        <span className="text-ops-dim"> · {placeOf(t(incident.area), incident.where)}</span>
       </span>
       <OpsStatus status={incident.status} />
       <span className="flex items-baseline gap-2 text-xs text-ops-dim">
@@ -399,7 +436,7 @@ const UNIT_KEY = [
  */
 function UnitBoard({ units }: { units: Unit[] }) {
   const t = useT();
-  const divisions = [...new Set(units.map((u) => u.division))];
+  const divisions = [...new Set(units.map((u) => u.section))];
   const free = units.filter((u) => u.status === "Available");
 
   return (
@@ -411,11 +448,11 @@ function UnitBoard({ units }: { units: Unit[] }) {
     >
       <table className="w-full text-sm">
         <caption className="sr-only">
-          {t("Units on duty by division, with how many are available")}
+          {t("Units on duty by section, with how many are available")}
         </caption>
         <tbody>
           {divisions.map((division) => {
-            const inDivision = units.filter((u) => u.division === division);
+            const inDivision = units.filter((u) => u.section === division);
             const open = inDivision.filter((u) => u.status === "Available");
             return (
               <tr

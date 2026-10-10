@@ -26,6 +26,10 @@ import { PROPER_NOUNS } from "./proper-nouns.mjs";
 const SKIP = new Set([
   "slug", "id", "icon", "href", "src", "image", "img", "logo", "cover",
   "file", "url", "email", "website", "color", "theme", "background",
+  // A jurisdiction (app/geo.ts) is place names: the state, the LGA, the
+  // division named after it and the street. Display sites build the
+  // translated "{lga} Division" themselves.
+  "where",
 ]);
 
 /** A string a reader sees, rather than a path, a code or a date. */

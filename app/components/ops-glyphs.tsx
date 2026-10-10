@@ -1,8 +1,7 @@
 /**
- * The /services icon set, re-inked for the dark console. The light site draws
- * them in two tones, a blue body (#4F86D9) under a navy line (#0C2340); on the
- * console the line becomes currentColor and the body a wash of the accent, so
- * one family of pictures runs from the public site into the control room.
+ * The /services icon set, drawn the way the site draws it: a blue body
+ * (#4F86D9, as --ops-glyph) under a line in currentColor, so one family of
+ * pictures runs from the public site into the control room.
  * Generated from public/icons/services/*.svg.
  */
 

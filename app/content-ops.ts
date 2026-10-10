@@ -1,4 +1,6 @@
 import type { Incident, Unit } from "./components/store";
+import { jurisdiction as at_ } from "./geo";
+import { reportKinds } from "./content-report";
 
 /**
  * Sample rows for the operations console. Nothing here is real Nigeria Police Force
@@ -26,6 +28,7 @@ type Seed = Omit<
 const SEEDS: Seed[] = [
   {
     id: "NPF-4417",
+    where: at_("Lagos", "Ikeja"),
     kind: "Assault",
     priority: "P1",
     area: "Ikeja, Lagos",
@@ -40,6 +43,7 @@ const SEEDS: Seed[] = [
   },
   {
     id: "NPF-4416",
+    where: at_("Ogun", "Ikenne"),
     kind: "Road traffic collision",
     priority: "P2",
     area: "Lagos–Ibadan Expressway, Ogere",
@@ -54,6 +58,7 @@ const SEEDS: Seed[] = [
   },
   {
     id: "NPF-4415",
+    where: at_("FCT", "Abuja Municipal"),
     kind: "Theft",
     priority: "P2",
     area: "Wuse Market, Abuja",
@@ -67,6 +72,7 @@ const SEEDS: Seed[] = [
   },
   {
     id: "NPF-4414",
+    where: at_("Kano", "Fagge"),
     kind: "Missing person",
     priority: "P2",
     area: "Sabon Gari, Kano",
@@ -81,6 +87,7 @@ const SEEDS: Seed[] = [
   },
   {
     id: "NPF-4413",
+    where: at_("Rivers", "Port Harcourt"),
     kind: "Suspicious vehicle",
     priority: "P3",
     area: "Trans-Amadi, Port Harcourt",
@@ -94,6 +101,7 @@ const SEEDS: Seed[] = [
   },
   {
     id: "NPF-4412",
+    where: at_("Enugu", "Enugu North"),
     kind: "Fraud report",
     priority: "P2",
     area: "Independence Layout, Enugu",
@@ -107,6 +115,7 @@ const SEEDS: Seed[] = [
   },
   {
     id: "NPF-4411",
+    where: at_("Oyo", "Ibadan North"),
     kind: "Noise disturbance",
     priority: "P4",
     area: "Bodija, Ibadan",
@@ -120,6 +129,7 @@ const SEEDS: Seed[] = [
   },
   {
     id: "NPF-4410",
+    where: at_("Edo", "Oredo"),
     kind: "Lost child",
     priority: "P1",
     area: "Ring Road, Benin City",
@@ -133,6 +143,7 @@ const SEEDS: Seed[] = [
   },
   {
     id: "NPF-4409",
+    where: at_("Plateau", "Jos South"),
     kind: "Shoplifting",
     priority: "P4",
     area: "Rayfield, Jos",
@@ -146,6 +157,7 @@ const SEEDS: Seed[] = [
   },
   {
     id: "NPF-4408",
+    where: at_("Rivers", "Bonny"),
     kind: "Marine assistance",
     priority: "P3",
     area: "Bonny River, Rivers",
@@ -159,6 +171,7 @@ const SEEDS: Seed[] = [
   },
   {
     id: "NPF-4407",
+    where: at_("Kaduna", "Zaria"),
     kind: "Road traffic collision",
     priority: "P3",
     area: "Kaduna–Kano Expressway, Zaria",
@@ -172,13 +185,14 @@ const SEEDS: Seed[] = [
   },
   {
     id: "NPF-4406",
+    where: at_("Lagos", "Eti-Osa"),
     kind: "Cybercrime report",
     priority: "P3",
     area: "Victoria Island, Lagos",
     at: [281, 274, null, 236],
     status: "Closed",
-    assignee: "Insp. N. Aliyu",
-    unit: "Cybercrime 01",
+    assignee: "Insp. B. Adebayo",
+    unit: "Cybercrime 03",
     summary: "Recruitment scam reported by three complainants in one week.",
     source: "Cybercrime",
     notes: [[240, "Referred to the cybercrime investigation desk."]],
@@ -239,18 +253,21 @@ type UnitSeed = Omit<Unit, "since"> & { sinceMins: number };
  * drift apart.
  */
 const UNITS: UnitSeed[] = [
-  { callsign: "Patrol 04", division: "Patrol", officer: "Cpl. H. Suleiman", status: "On Scene", sinceMins: 12, incident: "NPF-4415", area: "Wuse, Abuja" },
-  { callsign: "Patrol 09", division: "Patrol", officer: "Cpl. F. Adeyemi", status: "Available", sinceMins: 119, incident: null, area: "Lekki, Lagos" },
-  { callsign: "Patrol 12", division: "Patrol", officer: "Sgt. R. Okafor", status: "Available", sinceMins: 6, incident: null, area: "Ikeja, Lagos" },
-  { callsign: "Patrol 17", division: "Patrol", officer: "Insp. S. Bello", status: "On Scene", sinceMins: 24, incident: "NPF-4414", area: "Sabon Gari, Kano" },
-  { callsign: "Patrol 21", division: "Patrol", officer: "Sgt. M. Danladi", status: "Available", sinceMins: 108, incident: null, area: "Benin City" },
-  { callsign: "Patrol 26", division: "Patrol", officer: "Cpl. K. Ogundipe", status: "Unavailable", sinceMins: 41, incident: null, area: "Ibadan, refuelling" },
-  { callsign: "Traffic 07", division: "Traffic", officer: "Sgt. A. Garba", status: "Assigned", sinceMins: 44, incident: "NPF-4413", area: "Port Harcourt" },
-  { callsign: "Traffic 11", division: "Traffic", officer: "Cpl. M. Eze", status: "Available", sinceMins: 17, incident: null, area: "Lagos–Ibadan Expressway" },
-  { callsign: "Marine 02", division: "Marine", officer: "Sgt. Y. Musa", status: "Available", sinceMins: 142, incident: null, area: "Bonny River" },
-  { callsign: "Air Wing 01", division: "Air Wing", officer: "ASP O. Nwosu", status: "Available", sinceMins: 203, incident: null, area: "Abuja, standby" },
-  { callsign: "K9 03", division: "K9", officer: "Cpl. T. Yakubu", status: "Unavailable", sinceMins: 88, incident: null, area: "Jos, training" },
-  { callsign: "Cybercrime 01", division: "Cybercrime", officer: "Insp. N. Aliyu", status: "Assigned", sinceMins: 58, incident: "NPF-4412", area: "Enugu" },
+  { callsign: "Patrol 04", state: "FCT", section: "Patrol", officer: "Cpl. H. Suleiman", status: "On Scene", sinceMins: 12, incident: "NPF-4415", area: "Wuse, Abuja" },
+  { callsign: "Patrol 09", state: "Lagos", section: "Patrol", officer: "Cpl. F. Adeyemi", status: "Available", sinceMins: 119, incident: null, area: "Lekki, Lagos" },
+  { callsign: "Patrol 12", state: "Lagos", section: "Patrol", officer: "Sgt. R. Okafor", status: "Available", sinceMins: 6, incident: null, area: "Ikeja, Lagos" },
+  { callsign: "Patrol 17", state: "Kano", section: "Patrol", officer: "Insp. S. Bello", status: "On Scene", sinceMins: 24, incident: "NPF-4414", area: "Sabon Gari, Kano" },
+  { callsign: "Patrol 21", state: "Edo", section: "Patrol", officer: "Sgt. M. Danladi", status: "Available", sinceMins: 108, incident: null, area: "Benin City" },
+  { callsign: "Patrol 26", state: "Oyo", section: "Patrol", officer: "Cpl. K. Ogundipe", status: "Unavailable", sinceMins: 41, incident: null, area: "Ibadan, refuelling" },
+  { callsign: "Traffic 07", state: "Rivers", section: "Traffic", officer: "Sgt. A. Garba", status: "Assigned", sinceMins: 44, incident: "NPF-4413", area: "Port Harcourt" },
+  { callsign: "Traffic 11", state: "Kaduna", section: "Traffic", officer: "Cpl. M. Eze", status: "Available", sinceMins: 17, incident: null, area: "Zaria" },
+  { callsign: "Marine 02", state: "Rivers", section: "Marine", officer: "Sgt. Y. Musa", status: "Available", sinceMins: 142, incident: null, area: "Bonny River" },
+  { callsign: "Air Wing 01", state: "FCT", section: "Air Wing", officer: "ASP O. Nwosu", status: "Available", sinceMins: 203, incident: null, area: "Abuja, standby" },
+  { callsign: "K9 03", state: "Plateau", section: "K9", officer: "Cpl. T. Yakubu", status: "Unavailable", sinceMins: 88, incident: null, area: "Jos, training" },
+  { callsign: "Cybercrime 01", state: "Enugu", section: "Cybercrime", officer: "Insp. N. Aliyu", status: "Assigned", sinceMins: 58, incident: "NPF-4412", area: "Enugu" },
+  { callsign: "Cybercrime 03", state: "Lagos", section: "Cybercrime", officer: "Insp. B. Adebayo", status: "Available", sinceMins: 236, incident: null, area: "Victoria Island, Lagos" },
+  { callsign: "Highway 02", state: "Ogun", section: "Highway Patrol", officer: "Sgt. T. Olaniyan", status: "Available", sinceMins: 33, incident: null, area: "Sagamu Interchange" },
+  { callsign: "Patrol 31", state: "Kano", section: "Patrol", officer: "Cpl. U. Abdullahi", status: "Available", sinceMins: 52, incident: null, area: "Nassarawa GRA, Kano" },
 ];
 
 export const seedUnits = (): Unit[] =>
@@ -261,17 +278,14 @@ export const seedUnits = (): Unit[] =>
 
 /** Call types the desk can log, in the order the desk reaches for them. */
 export const callTypes = [
-  "Road traffic collision",
-  "Assault",
-  "Theft",
-  "Suspicious vehicle",
-  "Missing person",
-  "Noise disturbance",
-  "Fraud report",
-  "Cybercrime report",
-  "Marine assistance",
-  "Lost child",
-  "Shoplifting",
+  ...new Set([
+    "Road traffic collision",
+    ...reportKinds.map((k) => k.kind),
+    "Noise disturbance",
+    "Marine assistance",
+    "Lost child",
+    "Shoplifting",
+  ]),
 ];
 
 export const callSources = [

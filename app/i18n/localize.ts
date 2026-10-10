@@ -43,6 +43,8 @@ const SKIP = new Set([
   "section",
   "role",
   "callsign",
+  // Place names, and compared: a translated state finds no command.
+  "where",
 ]);
 
 /**

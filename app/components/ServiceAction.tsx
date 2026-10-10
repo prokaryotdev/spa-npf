@@ -1,11 +1,16 @@
 "use client";
 
 import Link from "../i18n/Link";
-import { useState } from "react";
 import type { Service } from "../content-services";
-import { submitRequest, useStore } from "./store";
-import { ArrowRight, CheckCircle, UserCircle } from "./icons";
+import { useStore } from "./store";
+import { AlertIcon, ArrowRight, ArrowUpRight, UserCircle } from "./icons";
 import { useT } from "../i18n/client";
+import {
+  externalPortals,
+  openEndedTurnaround,
+  reportSlug,
+} from "../content-report";
+
 
 /**
  * The button at the top of a service page. Signed out it hands over to
@@ -16,11 +21,73 @@ import { useT } from "../i18n/client";
 export default function ServiceAction({ service }: { service: Service }) {
   const t = useT();
   const { session, requests, loaded } = useStore();
-  const [justFiled, setJustFiled] = useState<string | null>(null);
+  const report = reportSlug(service.slug);
+  const apply = `/app/services/${service.slug}/apply`;
 
   const existing = requests.find(
-    (r) => r.slug === service.slug && r.status !== "Completed",
+    (r) =>
+      r.slug === service.slug &&
+      r.status !== "Completed" &&
+      r.status !== "Rejected",
   );
+
+  // Run by another body on its own site: say whose, and go there.
+  const portal = externalPortals[service.slug];
+  if (portal)
+    return (
+      <>
+        <a
+          href={portal.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="npf-btn npf-btn-primary h-auto min-h-12 w-full py-1.5 ps-6 text-start leading-tight whitespace-normal hover:bg-npf-blue-mid"
+        >
+          {t("Go to the recruitment portal")}
+          <span className="npf-btn-disc ms-auto">
+            <ArrowUpRight className="size-4 rtl:-scale-x-100" />
+          </span>
+        </a>
+        <p className="npf-small mt-3 text-center text-npf-steel">
+          {t("Run by the {name}. Opens in a new window.", {
+            name: t(portal.name),
+          })}
+        </p>
+      </>
+    );
+
+  // Tracking a reference needs no account either.
+  if (report === "/app/track")
+    return (
+      <Link
+        href={report}
+        className="npf-btn npf-btn-primary h-auto min-h-12 w-full py-1.5 ps-6 text-start leading-tight whitespace-normal hover:bg-npf-blue-mid"
+      >
+        {t("Track a reference")}
+        <span className="npf-btn-disc ms-auto">
+          <ArrowRight className="size-4 rtl:-scale-x-100" />
+        </span>
+      </Link>
+    );
+
+  // Reporting a crime is open to everyone, signed in or not.
+  if (report)
+    return (
+      <>
+        <Link
+          href={report}
+          className="npf-btn npf-btn-primary h-auto min-h-12 w-full py-1.5 ps-6 text-start leading-tight whitespace-normal hover:bg-npf-blue-mid"
+        >
+          {t("Report it now")}
+          <span className="npf-btn-disc ms-auto">
+            <ArrowRight className="size-4 rtl:-scale-x-100" />
+          </span>
+        </Link>
+        <p className="npf-small mt-3 flex items-start justify-center gap-1.5 text-center text-npf-steel">
+          <AlertIcon aria-hidden className="mt-0.5 size-4 shrink-0 text-npf-alert" />
+          {t("In an emergency, call 112.")}
+        </p>
+      </>
+    );
 
   if (!loaded)
     return (
@@ -34,7 +101,7 @@ export default function ServiceAction({ service }: { service: Service }) {
     return (
       <>
         <Link
-          href={`/app/signin?next=${encodeURIComponent(`/app/services/${service.slug}`)}`}
+          href={`/app/signin?next=${encodeURIComponent(apply)}`}
           className="npf-btn npf-btn-primary h-auto min-h-12 w-full py-1.5 ps-6 text-start leading-tight whitespace-normal hover:bg-npf-blue-mid"
         >
           <UserCircle className="size-5 shrink-0" />
@@ -48,37 +115,13 @@ export default function ServiceAction({ service }: { service: Service }) {
         <p className="npf-small mt-3 text-center text-npf-steel">
           {t(service.turnaround) === t("Instant")
             ? t("Done as soon as you submit")
-            : t("Takes about {turnaround} once submitted", {
+            : openEndedTurnaround.has(service.turnaround)
+              ? t(service.turnaround)
+              : t("Takes about {turnaround} once submitted", {
                 turnaround: t(service.turnaround).toLowerCase(),
               })}
         </p>
       </>
-    );
-
-  if (justFiled)
-    return (
-      <div className="rounded-card bg-npf-mist p-5 text-center transition-[opacity,scale] duration-(--dur-media) ease-(--ease-out) starting:scale-[0.97] starting:opacity-0">
-        <CheckCircle aria-hidden className="mx-auto size-8 text-npf-blue" />
-        <p className="mt-2 font-secondary text-base font-bold text-npf-blue-deep">
-          {t("Request opened")}
-        </p>
-        <p className="mt-1 text-sm text-npf-body">
-          {t("Quote reference")}{" "}
-          <span className="font-secondary font-bold text-npf-ink">
-            {justFiled}
-          </span>
-          .
-        </p>
-        <Link
-          href="/app/portal/requests"
-          className="npf-btn npf-btn-primary mt-4 hover:bg-npf-blue-mid"
-        >
-          {t("Track it")}
-          <span className="npf-btn-disc">
-            <ArrowRight className="size-4 rtl:-scale-x-100" />
-          </span>
-        </Link>
-      </div>
     );
 
   if (existing)
@@ -112,24 +155,15 @@ export default function ServiceAction({ service }: { service: Service }) {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() =>
-          setJustFiled(
-            submitRequest({
-              slug: service.slug,
-              service: service.name,
-              fee: service.feeSummary,
-            }).id,
-          )
-        }
+      <Link
+        href={apply}
         className="npf-btn npf-btn-primary h-auto min-h-12 w-full py-1.5 ps-6 text-start leading-tight whitespace-normal hover:bg-npf-blue-mid"
       >
         {service.action}
         <span className="npf-btn-disc ms-auto">
           <ArrowRight className="size-4 rtl:-scale-x-100" />
         </span>
-      </button>
+      </Link>
       <p className="npf-small mt-3 text-center text-npf-steel">
         {service.feeSummary === t("Free of Charge")
           ? t("No fee")

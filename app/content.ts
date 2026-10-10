@@ -40,8 +40,9 @@ const theme = (ink: string, tint: string, edge: string): CardTheme => ({
 
 export const navigation = [
   { label: "Home", href: "/app/home" },
+  { label: "Report a Crime", href: "/app/report" },
   { label: "Services", href: "/app/services" },
-  { label: "Application Status", href: "/app/services/application-status" },
+  { label: "Track a Reference", href: "/app/track" },
   {
     label: "Information",
     href: "/app/home/information",
@@ -87,9 +88,9 @@ export const heroSlides = [
 
 export const quickServices = [
   {
-    title: "Make a Report",
-    body: "Report a crime or submit your complaint directly",
-    href: "/app/services?package=Criminal+Reports+and+Complaints",
+    title: "Report a Crime",
+    body: "Tell the State Command where it happened. You can stay anonymous",
+    href: "/app/report",
     icon: "/icons/home/reports-and-complaints-suite.svg",
   },
   {
@@ -99,9 +100,9 @@ export const quickServices = [
     icon: "/icons/home/request-for-a-certificate-or-permit.svg",
   },
   {
-    title: "Check an Application",
-    body: "Follow a POSSAP application, or check that a police document is genuine",
-    href: "/app/services?package=Inquiries+and+Follow-up",
+    title: "Track a Reference",
+    body: "Follow a report or an application with its reference number",
+    href: "/app/track",
     icon: "/icons/home/inquire-and-pay.svg",
   },
   {
@@ -337,20 +338,21 @@ export const footerColumns = [
   {
     heading: "Packages",
     links: [
-      { label: "Inquiries and Follow-up", href: "/app/services" },
-      { label: "Criminal Reports and Complaints", href: "/app/services" },
-      { label: "Permits and Certificates", href: "/app/services" },
-      { label: "Traffic and Accidents", href: "/app/services" },
-      { label: "Business and Corporate", href: "/app/services" },
-      { label: "Community Engagement", href: "/app/services" },
-      { label: "Emergency and Response", href: "/app/services" },
+      { label: "Inquiries and Follow-up", href: "/app/services?package=Inquiries+and+Follow-up" },
+      { label: "Criminal Reports and Complaints", href: "/app/services?package=Criminal+Reports+and+Complaints" },
+      { label: "Permits and Certificates", href: "/app/services?package=Permits+and+Certificates" },
+      { label: "Traffic and Accidents", href: "/app/services?package=Traffic+Services" },
+      { label: "Business and Corporate", href: "/app/services?package=Business+and+Corporates" },
+      { label: "Community Engagement", href: "/app/services?package=Community+Engagement" },
+      { label: "Emergency and Response", href: "/app/services?package=Emergency+and+Response" },
     ],
   },
   {
     heading: "Quick links",
     links: [
       { label: "All Services", href: "/app/services" },
-      { label: "Application Status", href: "/app/services/application-status" },
+      { label: "Report a Crime", href: "/app/report" },
+      { label: "Track a Reference", href: "/app/track" },
       { label: "Information", href: "/app/home/information" },
       { label: "My Account", href: "/app/portal" },
     ],
@@ -394,8 +396,8 @@ export const footerColumns = [
         external: true,
       },
       {
-        label: "Federal Ministry of Interior",
-        href: "https://interior.gov.ng/",
+        label: "Federal Ministry of Police Affairs",
+        href: "https://policeaffairs.gov.ng/",
         external: true,
       },
       {

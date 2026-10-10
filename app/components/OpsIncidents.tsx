@@ -19,11 +19,13 @@ import {
   duration,
   isOverdue,
   useNow,
+  useScoped,
 } from "./OpsPieces";
+import { STATES, jurisdiction, placeOf, stateNamed } from "../geo";
+import { commandLabel, divisionLabel, line } from "./Where";
 import {
   logIncident,
   updateIncident,
-  useStore,
   type Incident,
   type IncidentStatus,
   type Priority,
@@ -47,12 +49,7 @@ const PRIORITIES: Priority[] = ["P1", "P2", "P3", "P4"];
 const logLine = (
   t: T,
   entry: { text: string; vars?: Record<string, string> },
-) =>
-  t(
-    entry.text,
-    entry.vars &&
-      Object.fromEntries(Object.entries(entry.vars).map(([k, v]) => [k, t(v)])),
-  );
+) => line(t, entry.text, entry.vars);
 
 /**
  * The calls board: every call of the shift, and the panel where one is worked.
@@ -64,7 +61,7 @@ const logLine = (
 export default function OpsIncidents() {
   const t = useT();
   const id = useId();
-  const { incidents, units } = useStore();
+  const { incidents, units, viewing } = useScoped();
   const now = useNow();
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("");
@@ -110,6 +107,8 @@ export default function OpsIncidents() {
         t(i.kind),
         i.area,
         t(i.area),
+        i.where.state,
+        i.where.lga,
         i.assignee ?? "",
         t(i.assignee ?? ""),
         i.unit ?? "",
@@ -124,6 +123,7 @@ export default function OpsIncidents() {
     );
   }, [incidents, query, status, priority, unassigned, t]);
 
+  // A call can leave this desk's view by being transferred; its panel goes too.
   const open = incidents.find((i) => i.id === selected) ?? null;
 
   return (
@@ -150,6 +150,7 @@ export default function OpsIncidents() {
 
       {taking ? (
         <TakeCall
+          viewing={viewing}
           onDone={(created) => {
             setTaking(false);
             setSelected(created.id);
@@ -165,7 +166,7 @@ export default function OpsIncidents() {
         <OpsSearch
           id={`${id}-q`}
           label={t("Filter calls")}
-          placeholder={t("Reference, type, area, officer or callsign")}
+          placeholder={t("Reference, type, area, LGA, officer or callsign")}
           value={query}
           onChange={setQuery}
           found={visible.length}
@@ -267,7 +268,7 @@ export default function OpsIncidents() {
                       onClick={() => setSelected(incident.id)}
                       aria-selected={active}
                       className={`npf-ops-pick cursor-pointer border-b border-ops-line-soft last:border-0 ${
-                        active ? "bg-ops-accent/[0.16]" : "hover:bg-white/[0.03]"
+                        active ? "bg-npf-mist" : "hover:bg-ops-hover"
                       } ${late ? "npf-ops-overdue" : ""}`}
                     >
                       <td className="py-3.5 pe-3 ps-5 align-top">
@@ -296,7 +297,7 @@ export default function OpsIncidents() {
                         </span>
                         {t(incident.kind)}
                         <span className="mt-0.5 block text-xs font-normal text-ops-dim">
-                          {t(incident.area)}
+                          {placeOf(t(incident.area), incident.where, !viewing)}
                         </span>
                         <span className="mt-1.5 flex flex-wrap items-center gap-2 md:hidden">
                           <OpsStatus status={incident.status} />
@@ -376,6 +377,7 @@ export default function OpsIncidents() {
         >
           {open ? (
             <Detail
+              key={open.id}
               incident={open}
               units={units}
               onClose={() => setSelected(null)}
@@ -385,7 +387,7 @@ export default function OpsIncidents() {
               <div className="flex flex-col items-center gap-3 px-2 py-8 text-center">
                 <span
                   aria-hidden
-                  className="grid size-12 place-items-center rounded-full bg-white/[0.06] text-ops-accent"
+                  className="grid size-12 place-items-center rounded-full bg-ops-fill text-ops-accent"
                 >
                   <RadioIcon className="size-5" />
                 </span>
@@ -422,10 +424,16 @@ function Detail({
   const format = useFormat();
   const id = useId();
   const [note, setNote] = useState("");
+  const [moving, setMoving] = useState(false);
+  // Only the call's own command's units: the list a national desk sees is
+  // every unit in the country, and a Lagos car cannot attend in Kano.
   const free = units.filter(
-    (u) => u.status === "Available" || u.callsign === incident.unit,
+    (u) =>
+      u.state === incident.where.state &&
+      (u.status === "Available" || u.callsign === incident.unit),
   );
   const next = NEXT[incident.status];
+  const { reporter } = incident;
 
   return (
     <OpsPanel
@@ -435,7 +443,7 @@ function Detail({
           type="button"
           onClick={onClose}
           aria-label={t("Close call detail")}
-          className="grid size-7 place-items-center rounded-full bg-white/[0.07] text-ops-dim transition-colors hover:bg-white/[0.12] hover:text-ops-text"
+          className="grid size-7 place-items-center rounded-full bg-ops-fill text-ops-dim transition-colors hover:bg-ops-fill-hover hover:text-ops-text"
         >
           <CloseIcon className="size-4" />
         </button>
@@ -449,8 +457,70 @@ function Detail({
       <h3 className="mt-3 font-secondary text-base font-bold">
         {t(incident.kind)}
       </h3>
-      <p className="mt-0.5 text-sm text-ops-dim">{t(incident.area)}</p>
-      <p className="mt-3 text-sm leading-relaxed">{t(incident.summary)}</p>
+      <p className="mt-0.5 text-sm text-ops-dim">
+        {placeOf(t(incident.area), incident.where)}
+      </p>
+      <p className="mt-3 text-sm leading-relaxed whitespace-pre-line">
+        {t(incident.summary)}
+      </p>
+
+      {/* Who owns the call and who to ring back: the two questions a desk
+          asks of a call it did not take itself. */}
+      <dl className="mt-4 grid grid-cols-[6.5rem_minmax(0,1fr)] gap-x-3 gap-y-1.5 border-t border-ops-line-soft pt-3 text-xs">
+        <dt className="text-ops-dim">{t("Command")}</dt>
+        <dd className="font-medium">{commandLabel(t, incident.where.state)}</dd>
+        <dt className="text-ops-dim">{t("Division")}</dt>
+        <dd>{divisionLabel(t, incident.where.lga)}</dd>
+        {incident.occurred ? (
+          <>
+            <dt className="text-ops-dim">{t("Happened")}</dt>
+            <dd className="tabular-nums">{format.dateTime(incident.occurred)}</dd>
+          </>
+        ) : null}
+        {incident.injuries ? (
+          <>
+            <dt className="text-ops-dim">{t("Injuries")}</dt>
+            <dd
+              className={incident.injuries === "Yes" ? "font-semibold" : ""}
+              style={incident.injuries === "Yes" ? { color: "var(--ops-p1)" } : undefined}
+            >
+              {t(incident.injuries)}
+            </dd>
+          </>
+        ) : null}
+        {reporter !== undefined ? (
+          <>
+            <dt className="text-ops-dim">{t("Reporter")}</dt>
+            <dd>
+              {reporter ? (
+                <>
+                  {reporter.name} ·{" "}
+                  {reporter.safeToCall ? (
+                    <a
+                      href={`tel:${reporter.phone}`}
+                      className="font-medium text-ops-accent underline-offset-2 hover:underline"
+                    >
+                      {reporter.phone}
+                    </a>
+                  ) : (
+                    <span style={{ color: "var(--ops-p2)" }} className="font-medium">
+                      {t("Do not call — not safe")}
+                    </span>
+                  )}
+                </>
+              ) : (
+                t("Anonymous")
+              )}
+            </dd>
+          </>
+        ) : null}
+        {incident.evidence?.length ? (
+          <>
+            <dt className="text-ops-dim">{t("Evidence")}</dt>
+            <dd className="break-words">{incident.evidence.join(", ")}</dd>
+          </>
+        ) : null}
+      </dl>
 
       {/*
         The four stamps of a call, as a run of times with the gap between
@@ -502,6 +572,20 @@ function Detail({
           }
         />
       </div>
+
+      {incident.status !== "Closed" ? (
+        moving ? (
+          <Transfer incident={incident} onDone={() => setMoving(false)} />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setMoving(true)}
+            className="mt-3 text-xs font-medium text-ops-accent underline-offset-4 hover:underline"
+          >
+            {t("Wrong command or division? Transfer the call")}
+          </button>
+        )
+      ) : null}
 
       {next ? (
         <OpsButton
@@ -562,7 +646,7 @@ function Detail({
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder={t("Add to the log")}
-            className="min-w-0 flex-1 px-3 py-2 text-[0.8125rem] rounded-chip bg-white/[0.07] outline-none placeholder:text-ops-dim transition-[background-color,box-shadow] hover:bg-white/[0.09] focus:bg-white/[0.09] focus:shadow-[0_0_0_3px_rgb(64_156_255/0.55)]"
+            className="min-w-0 flex-1 px-3 py-2 text-[0.8125rem] rounded-chip bg-white text-npf-ink ring-1 ring-npf-ink/15 ring-inset outline-none placeholder:text-npf-steel transition-[box-shadow] hover:ring-npf-ink/30 focus:ring-2 focus:ring-npf-blue-mid"
           />
           <OpsButton
             type="submit"
@@ -618,7 +702,13 @@ function Stamps({ incident }: { incident: Incident }) {
 }
 
 /** The call-taking form. What the desk fills in while the caller is talking. */
-function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
+function TakeCall({
+  onDone,
+  viewing,
+}: {
+  onDone: (created: Incident) => void;
+  viewing: string | null;
+}) {
   const t = useT();
   const id = useId();
   // State holds the English value the store records; only the option text is
@@ -628,8 +718,11 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
   const [area, setArea] = useState("");
   const [summary, setSummary] = useState("");
   const [source, setSource] = useState(callSources[0]);
+  // A command desk logs calls in its own command; a national desk picks one.
+  const [state, setState] = useState(viewing ?? "");
+  const [lga, setLga] = useState("");
 
-  const ready = area.trim() && summary.trim();
+  const ready = area.trim() && summary.trim() && state && lga;
 
   return (
     <OpsPanel title={t("Take a call")}>
@@ -644,6 +737,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
               area: area.trim(),
               summary: summary.trim(),
               source,
+              where: jurisdiction(state, lga, area.trim()),
             }),
           );
         }}
@@ -680,13 +774,24 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
           </select>
         </Field>
 
-        <Field id={`${id}-area`} label={t("Area")}>
+        <PlacePicker
+          id={id}
+          state={state}
+          lga={lga}
+          lockState={Boolean(viewing)}
+          onChange={(s, l) => {
+            setState(s);
+            setLga(l);
+          }}
+        />
+
+        <Field id={`${id}-area`} label={t("Street or landmark")}>
           <input
             id={`${id}-area`}
             value={area}
             onChange={(e) => setArea(e.target.value)}
             required
-            placeholder={t("Ikeja, Lagos")}
+            placeholder={t("Allen Avenue, by the filling station")}
             className={INPUT}
           />
         </Field>
@@ -733,7 +838,7 @@ function TakeCall({ onDone }: { onDone: (created: Incident) => void }) {
 }
 
 const INPUT =
-  "w-full px-3 py-2 text-sm rounded-chip bg-white/[0.07] outline-none placeholder:text-ops-dim transition-[background-color,box-shadow] hover:bg-white/[0.09] focus:bg-white/[0.09] focus:shadow-[0_0_0_3px_rgb(64_156_255/0.55)]";
+  "w-full px-3 py-2 text-sm rounded-chip bg-white text-npf-ink ring-1 ring-npf-ink/15 ring-inset outline-none placeholder:text-npf-steel transition-[box-shadow] hover:ring-npf-ink/30 focus:ring-2 focus:ring-npf-blue-mid";
 const SELECT = `npf-ops-select ${INPUT}`;
 
 function Field({
@@ -784,7 +889,7 @@ function Assign({
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="npf-ops-select h-9 min-w-0 flex-1 rounded-chip px-3 text-sm font-medium outline-none"
+        className="npf-ops-select h-11 min-w-0 flex-1 rounded-full px-4 text-sm font-medium outline-none"
       >
         {placeholder ? <option value="">{placeholder}</option> : null}
         {options.map(([v, text]) => (
@@ -831,5 +936,119 @@ function Filter({
         ))}
       </select>
     </>
+  );
+}
+
+/** State and LGA as two console selects; the state is fixed on a command desk. */
+function PlacePicker({
+  id,
+  state,
+  lga,
+  lockState,
+  onChange,
+}: {
+  id: string;
+  state: string;
+  lga: string;
+  lockState?: boolean;
+  onChange: (state: string, lga: string) => void;
+}) {
+  const t = useT();
+  const lgas = stateNamed(state)?.lgas ?? [];
+  return (
+    <>
+      <Field id={`${id}-state`} label={t("State")}>
+        <select
+          id={`${id}-state`}
+          value={state}
+          disabled={lockState}
+          onChange={(e) => onChange(e.target.value, "")}
+          className={SELECT}
+        >
+          <option value="">{t("Choose a state")}</option>
+          {STATES.map((s) => (
+            <option key={s.name} value={s.name}>
+              {commandLabel(t, s.name)}
+            </option>
+          ))}
+        </select>
+      </Field>
+      <Field id={`${id}-lga`} label={t("Local Government Area")}>
+        <select
+          id={`${id}-lga`}
+          value={lga}
+          disabled={!state}
+          onChange={(e) => onChange(state, e.target.value)}
+          className={SELECT}
+        >
+          <option value="">
+            {state
+              ? t("Choose one of {n} areas", { n: lgas.length })
+              : t("Choose a state first")}
+          </option>
+          {lgas.map((l) => (
+            <option key={l} value={l}>
+              {l}
+            </option>
+          ))}
+        </select>
+      </Field>
+    </>
+  );
+}
+
+/**
+ * Moving a call to the command or division it belongs to. Across a state
+ * line the unit is stood down and the call goes back to pending there.
+ */
+function Transfer({
+  incident,
+  onDone,
+}: {
+  incident: Incident;
+  onDone: () => void;
+}) {
+  const t = useT();
+  const id = useId();
+  const [state, setState] = useState(incident.where.state);
+  const [lga, setLga] = useState(incident.where.lga);
+  const changed = state !== incident.where.state || lga !== incident.where.lga;
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!changed || !lga) return;
+        updateIncident(incident.id, {
+          where: jurisdiction(state, lga, incident.where.address),
+        });
+        onDone();
+      }}
+      className="mt-4 grid gap-3 rounded-chip bg-ops-fill p-3"
+    >
+      <p className="text-xs font-semibold">{t("Transfer the call")}</p>
+      <PlacePicker
+        id={id}
+        state={state}
+        lga={lga}
+        onChange={(s, l) => {
+          setState(s);
+          setLga(l);
+        }}
+      />
+      {state !== incident.where.state && incident.unit ? (
+        <p className="text-xs" style={{ color: "var(--ops-p2)" }}>
+          {t(
+            "{unit} will be stood down: units only attend calls in their own command.",
+            { unit: incident.unit },
+          )}
+        </p>
+      ) : null}
+      <div className="flex gap-2">
+        <OpsButton type="submit" tone="brand" disabled={!changed || !lga}>
+          {t("Transfer")}
+        </OpsButton>
+        <OpsButton onClick={onDone}>{t("Cancel")}</OpsButton>
+      </div>
+    </form>
   );
 }

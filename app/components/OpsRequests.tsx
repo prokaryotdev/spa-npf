@@ -8,10 +8,12 @@ import {
   OpsHead,
   OpsPanel,
   OpsSearch,
+  useScoped,
 } from "./OpsPieces";
+import Link from "../i18n/Link";
+import { commandLabel, divisionLabel, line } from "./Where";
 import {
   advanceRequest,
-  useStore,
   type RequestStatus,
   type TrackedRequest,
 } from "./store";
@@ -21,7 +23,7 @@ import { useFormat, useT } from "../i18n/client";
 const QUEUE: RequestStatus[] = ["Submitted", "In Review", "Action Needed"];
 
 const TONE: Record<RequestStatus, string> = {
-  Submitted: "bg-white/[0.08] text-ops-dim",
+  Submitted: "bg-ops-fill text-ops-dim",
   "In Review": "bg-ops-route-wash text-ops-route",
   "Action Needed": "bg-ops-p2-wash text-ops-p2",
   Completed: "bg-ops-ok-wash text-ops-ok",
@@ -37,10 +39,13 @@ export default function OpsRequests() {
   const t = useT();
   const format = useFormat();
   const id = useId();
-  const { requests } = useStore();
+  const { requests, viewing } = useScoped();
   const [query, setQuery] = useState("");
   const [openOnly, setOpenOnly] = useState(true);
-  const [asking, setAsking] = useState<string | null>(null);
+  // Asking for more and refusing both need a sentence the applicant reads.
+  const [asking, setAsking] = useState<{ id: string; reject: boolean } | null>(
+    null,
+  );
   const [reason, setReason] = useState("");
 
   const visible = useMemo(() => {
@@ -48,16 +53,24 @@ export default function OpsRequests() {
       requests.filter((r) => !openOnly || QUEUE.includes(r.status)),
       query,
       (r) =>
-        [r.id, r.service, t(r.service), r.status, t(r.status), r.channel].join(
-          " ",
-        ),
+        [
+          r.id,
+          r.service,
+          t(r.service),
+          r.status,
+          t(r.status),
+          r.channel,
+          r.where?.state ?? "",
+          r.where?.lga ?? "",
+        ].join(" "),
     );
   }, [requests, query, openOnly, t]);
 
   function ask(request: TrackedRequest) {
     const note = reason.trim();
     if (!note) return;
-    advanceRequest(request.id, "Action Needed", note);
+    if (asking?.reject) advanceRequest(request.id, "Rejected", note);
+    else advanceRequest(request.id, "Action Needed", note);
     setAsking(null);
     setReason("");
   }
@@ -143,6 +156,39 @@ export default function OpsRequests() {
                     channel: t(request.channel),
                   })}
                 </p>
+                {request.where ? (
+                  <p className="mt-1 text-xs">
+                    <span className="font-medium">
+                      {commandLabel(t, request.where.state)}
+                    </span>
+                    <span className="text-ops-dim">
+                      {" · "}
+                      {divisionLabel(t, request.where.lga)}
+                    </span>
+                  </p>
+                ) : viewing ? null : (
+                  <p className="mt-1 text-xs text-ops-dim">
+                    {t("No command set: route it before deciding.")}
+                  </p>
+                )}
+                {request.answers?.length || request.documents?.length ? (
+                  <dl className="mt-3 grid grid-cols-[6.5rem_minmax(0,1fr)] gap-x-3 gap-y-1 rounded-chip bg-ops-fill p-3 text-xs">
+                    {request.answers?.map((a) => (
+                      <div key={a.label} className="contents">
+                        <dt className="text-ops-dim">{t(a.label)}</dt>
+                        <dd className="line-clamp-3 break-words">{t(a.value)}</dd>
+                      </div>
+                    ))}
+                    {request.documents?.length ? (
+                      <>
+                        <dt className="text-ops-dim">{t("Documents")}</dt>
+                        <dd className="break-words">
+                          {request.documents.map((d) => d.file).join(", ")}
+                        </dd>
+                      </>
+                    ) : null}
+                  </dl>
+                ) : null}
               </div>
 
               {/* The same dotted rail the applicant reads their request on,
@@ -172,7 +218,7 @@ export default function OpsRequests() {
                         {step.note ? (
                           <span className="text-ops-dim">
                             {" "}
-                            — {t(step.note)}
+                            — {line(t, step.note, undefined, request.where)}
                           </span>
                         ) : null}
                       </span>
@@ -180,7 +226,7 @@ export default function OpsRequests() {
                   ))}
               </ol>
 
-              {asking === request.id ? (
+              {asking?.id === request.id ? (
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -192,7 +238,9 @@ export default function OpsRequests() {
                     htmlFor={`${id}-reason-${request.id}`}
                     className="block text-xs text-ops-dim"
                   >
-                    {t("What does the applicant need to do?")}
+                    {asking.reject
+                      ? t("Why is it refused? The applicant reads this.")
+                      : t("What does the applicant need to do?")}
                   </label>
                   <textarea
                     id={`${id}-reason-${request.id}`}
@@ -200,18 +248,20 @@ export default function OpsRequests() {
                     onChange={(e) => setReason(e.target.value)}
                     rows={2}
                     autoFocus
-                    className="mt-2 w-full px-3 py-2 text-sm rounded-chip bg-white/[0.07] outline-none placeholder:text-ops-dim transition-[background-color,box-shadow] hover:bg-white/[0.09] focus:bg-white/[0.09] focus:shadow-[0_0_0_3px_rgb(64_156_255/0.55)]"
-                    placeholder={t(
-                      "Upload a clearer copy of the passport photo page.",
-                    )}
+                    className="mt-2 w-full px-3 py-2 text-sm rounded-chip bg-white text-npf-ink ring-1 ring-npf-ink/15 ring-inset outline-none placeholder:text-npf-steel transition-[box-shadow] hover:ring-npf-ink/30 focus:ring-2 focus:ring-npf-blue-mid"
+                    placeholder={
+                      asking.reject
+                        ? t("The applicant is not resident in this command.")
+                        : t("Upload a clearer copy of the passport photo page.")
+                    }
                   />
                   <div className="mt-3 flex gap-2">
                     <OpsButton
                       type="submit"
-                      tone="brand"
+                      tone={asking.reject ? "danger" : "brand"}
                       disabled={!reason.trim()}
                     >
-                      {t("Send to applicant")}
+                      {asking.reject ? t("Refuse") : t("Send to applicant")}
                     </OpsButton>
                     <OpsButton
                       onClick={() => {
@@ -230,7 +280,16 @@ export default function OpsRequests() {
                    rather than a second set that looked almost but not quite
                    like them. */
                 <div className="mt-auto flex flex-wrap gap-2 border-t border-ops-line-soft pt-4">
-                  {request.status === "Submitted" ? (
+                  {/* A crime report is worked as a call, not decided here. */}
+                  {request.incident ? (
+                    <Link
+                      href={`/app/police/incidents?call=${request.incident}`}
+                      className="inline-flex min-h-10 items-center rounded-full bg-ops-fill px-4 text-sm font-medium text-ops-accent transition-colors hover:bg-ops-fill-hover"
+                    >
+                      {t("Open the call on the board")}
+                    </Link>
+                  ) : null}
+                  {!request.incident && request.status === "Submitted" ? (
                     <OpsButton
                       onClick={() =>
                         advanceRequest(
@@ -243,7 +302,7 @@ export default function OpsRequests() {
                       {t("Start review")}
                     </OpsButton>
                   ) : null}
-                  {QUEUE.includes(request.status) ? (
+                  {!request.incident && QUEUE.includes(request.status) ? (
                     <>
                       <OpsButton
                         tone="brand"
@@ -258,18 +317,14 @@ export default function OpsRequests() {
                         <CheckIcon aria-hidden className="size-4" />
                         {t("Approve")}
                       </OpsButton>
-                      <OpsButton onClick={() => setAsking(request.id)}>
+                      <OpsButton
+                        onClick={() => setAsking({ id: request.id, reject: false })}
+                      >
                         {t("Ask for more")}
                       </OpsButton>
                       <OpsButton
                         tone="danger"
-                        onClick={() =>
-                          advanceRequest(
-                            request.id,
-                            "Rejected",
-                            "Did not meet the service conditions.",
-                          )
-                        }
+                        onClick={() => setAsking({ id: request.id, reject: true })}
                       >
                         {t("Reject")}
                       </OpsButton>

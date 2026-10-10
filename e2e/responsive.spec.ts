@@ -18,7 +18,9 @@ import {
 const PAGES = [
   ["the homepage", "/"],
   ["the service catalogue", "/app/services"],
-  ["a service", "/app/services/police-character-certificate"],
+  ["a service", "/app/services/police-clearance-certificate"],
+  ["reporting a crime", "/app/report"],
+  ["tracking a reference", "/app/track"],
   ["a data table", "/app/home/information/road-speed-limits"],
   ["sign in", "/app/signin"],
   ...PORTAL_PAGES,
