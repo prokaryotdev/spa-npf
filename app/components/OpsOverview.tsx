@@ -73,7 +73,12 @@ export default function OpsOverview() {
     <div className="space-y-6">
       <OpsHead
         title={t("Command board")}
-        lead={now ? format.date(new Date(now).toISOString().slice(0, 10)) : undefined}
+        lead={[
+          now ? format.date(new Date(now).toISOString().slice(0, 10)) : null,
+          viewing ?? session?.command ?? t("All commands"),
+        ]
+          .filter(Boolean)
+          .join(" · ")}
         action={
           <OpsFigures
             figures={[
@@ -226,7 +231,7 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
         ) : null
       }
     >
-      <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 2xl:grid-cols-6">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 xl:grid-cols-6">
         {zones.map((zone) => {
           const tiles = STATES.filter((s) => s.zone === zone).map((s) => {
             const sum = tally(
@@ -245,10 +250,10 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
               aria-label={t(zone)}
               className={`min-w-0 ${tiles.some((x) => x.busy) ? "" : "max-sm:hidden"}`}
             >
-              <h3 className="mb-2 truncate text-xs font-semibold text-npf-steel">
+              <h3 className="mb-2.5 truncate border-b border-ops-line-soft pb-2 font-secondary text-sm font-bold text-npf-ink">
                 {t(zone)}
               </h3>
-              <ul className="grid gap-1.5">
+              <ul className="grid gap-1">
                 {tiles.map(({ s, sum, busy }) => (
                   <li key={s.name} className={busy ? "" : "max-sm:hidden"}>
                     <Tile
@@ -377,7 +382,7 @@ function Tile({
     : late
       ? "bg-ops-p1-wash text-npf-ink ring-1 ring-inset ring-[color-mix(in_srgb,var(--ops-p1)_30%,transparent)] hover:ring-[color-mix(in_srgb,var(--ops-p1)_55%,transparent)]"
       : quiet
-        ? "text-npf-steel ring-1 ring-inset ring-npf-hairline hover:bg-white hover:text-npf-ink"
+        ? "text-npf-steel hover:bg-npf-mist hover:text-npf-ink"
         : "bg-white text-npf-ink ring-1 ring-inset ring-npf-line hover:ring-npf-blue-mid/50";
   const figure = chosen
     ? "#fff"
@@ -396,7 +401,7 @@ function Tile({
          units. Only a tile with work open grows to carry the figure, so
          the busy commands stand taller than the rest of the zone. */
       className={`flex w-full flex-col justify-between rounded-xl px-3 text-start transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) active:scale-[0.97] active:duration-(--dur-press) ${
-        quiet && !chosen ? "min-h-10 py-2" : "min-h-16 gap-1.5 py-2.5"
+        quiet && !chosen ? "min-h-9 py-1.5" : "min-h-16 gap-1.5 py-2.5 shadow-[0_6px_16px_-12px_var(--color-npf-blue-deep)]"
       } ${surface}`}
     >
       <span className="flex w-full items-center justify-between gap-2">

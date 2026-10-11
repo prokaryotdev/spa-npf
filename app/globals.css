@@ -1092,6 +1092,35 @@ html.npf-large-text {
   box-shadow: var(--ops-shadow);
   border-radius: var(--radius-card);
 }
+/*
+ * The command board's title band: the homepage hero's night-to-Force-blue,
+ * with a low wash of sky light from the top corner so it reads as lit, not
+ * as a flat swatch.
+ */
+.npf-ops-band {
+  background:
+    radial-gradient(60rem 22rem at 100% 0%, color-mix(in srgb, var(--color-npf-sky) 22%, transparent), transparent 70%),
+    linear-gradient(135deg, var(--color-npf-night) 0%, var(--color-npf-blue-deep) 55%, var(--color-npf-blue) 100%);
+  box-shadow: 0 18px 40px -28px var(--color-npf-night);
+  /* The figure tones callers pass, lifted to read on navy. */
+  --ops-p1: var(--color-npf-alert-soft);
+  --ops-p2: var(--color-npf-gold-soft);
+  --ops-ok: #7fe0a8;
+  --ops-fill-ok: #7fe0a8;
+  --ops-dim: rgb(255 255 255 / 0.6);
+}
+/* A brand button on navy would vanish into it; on the band it turns white. */
+.npf-ops-band .bg-ops-brand {
+  background: #fff;
+  color: var(--color-npf-blue-deep);
+}
+.npf-ops-band .bg-ops-brand:hover {
+  background: var(--color-npf-mist);
+}
+.npf-ops-band ::selection {
+  background: var(--color-npf-gold-soft);
+  color: var(--color-npf-night);
+}
 .npf-ops ::selection {
   background: var(--color-npf-chip);
   color: var(--color-npf-blue-deep);

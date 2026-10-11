@@ -319,22 +319,24 @@ export function OpsHead({
 }) {
   return (
     /*
-     * An Apple large title: bold, tightly tracked, with the lead in
-     * secondary text under it. It is the one big voice on the screen, and the
-     * board below steps down from it rather than competing.
+     * The console's one dark moment: the homepage hero's navy, carrying a
+     * large title and the screen's figures. It is the one big voice on the
+     * screen, and the board below steps down from it rather than competing.
      */
-    <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
-      <div className="min-w-0">
-        <h1 className="font-secondary text-2xl leading-tight font-bold tracking-[-0.015em] text-npf-ink sm:text-[1.75rem]">
-          {title}
-        </h1>
-        {lead ? (
-          <p className="npf-small mt-1 max-w-[68ch] text-npf-steel">
-            {lead}
-          </p>
-        ) : null}
+    <header className="npf-ops-band relative isolate overflow-clip rounded-(--radius-card) px-6 py-7 text-white sm:px-8 sm:py-8">
+      <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
+        <div className="min-w-0">
+          <h1 className="font-secondary text-3xl leading-[1.05] font-bold tracking-[-0.025em] text-balance sm:text-[2.5rem]">
+            {title}
+          </h1>
+          {lead ? (
+            <p className="npf-small mt-2 max-w-[68ch] text-white/75">
+              {lead}
+            </p>
+          ) : null}
+        </div>
+        {action}
       </div>
-      {action}
     </header>
   );
 }
@@ -351,18 +353,20 @@ export function OpsFigures({
   figures: { label: string; value: number; of?: number; tone?: string }[];
 }) {
   return (
-    <dl className="flex flex-wrap items-end gap-x-7 gap-y-3">
+    /* On a phone the figures share one row in equal columns, labels
+       wrapping under them, instead of the fourth dropping to a line alone. */
+    <dl className="grid w-full grid-flow-col auto-cols-fr items-start gap-x-4 sm:flex sm:items-end sm:w-auto sm:flex-wrap sm:gap-x-10 sm:gap-y-4">
       {figures.map(({ label, value, of, tone }) => (
-        <div key={label} className="flex flex-col-reverse">
-          <dt className="text-xs font-medium text-npf-steel">{label}</dt>
+        <div key={label} className="flex flex-col-reverse gap-1.5">
+          <dt className="text-xs leading-snug font-medium text-white/70">{label}</dt>
           <dd
             key={value}
-            className="npf-ops-count font-secondary text-[1.75rem] leading-none font-bold tracking-[-0.02em] tabular-nums"
-            style={{ color: tone ?? "var(--color-npf-blue-deep)" }}
+            className="npf-ops-count font-secondary text-[2rem] leading-none font-bold tracking-[-0.03em] tabular-nums sm:text-5xl"
+            style={{ color: tone }}
           >
             {value}
             {of !== undefined ? (
-              <span className="text-base text-npf-steel">/{of}</span>
+              <span className="text-xl text-white/60">/{of}</span>
             ) : null}
           </dd>
         </div>
