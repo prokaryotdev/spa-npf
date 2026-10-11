@@ -218,9 +218,10 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
   return (
     <OpsPanel
       title={t("Commands")}
+      flush
       action={
         <span className="flex items-center gap-5">
-          <Legend units={true} />
+          <Legend />
           {chosen ? (
           <button
             type="button"
@@ -234,7 +235,12 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
         </span>
       }
     >
-      <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 xl:grid-cols-6">
+      {/* One strip per zone, ruled off from the next: the zone and what it
+          owes on the left, its commands on the right. Every strip is the
+          same width with the same auto-fill tracks, so the cells line up in
+          columns down the whole board. A quiet command is bare text; only a
+          busy one is a filled cell, so it is found before it is read. */}
+      <div className="divide-y divide-ops-line-soft">
         {zones.map((zone) => {
           const tiles = STATES.filter((s) => s.zone === zone).map((s) => {
             const sum = tally(
@@ -245,18 +251,26 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
             const busy = !!(sum.waiting || sum.running) || chosen === s.name;
             return { s, sum, busy };
           });
+          const zoneSum = tiles.reduce(
+            (a, { sum }) => ({
+              waiting: a.waiting + sum.waiting,
+              late: a.late + sum.late,
+              running: a.running + sum.running,
+            }),
+            { waiting: 0, late: 0, running: 0 },
+          );
           /* On a phone the quiet commands, and a zone with none busy, step
-             off: thirty-seven tiles is a long scroll to reach the queue. */
+             off: thirty-seven chips is a long scroll to reach the queue. */
           return (
             <section
               key={zone}
               aria-label={t(zone)}
-              className={`min-w-0 ${tiles.some((x) => x.busy) ? "" : "max-sm:hidden"}`}
+              className={`grid grid-cols-[6.5rem_minmax(0,1fr)] items-start gap-x-4 px-5 py-2.5 sm:grid-cols-[9.5rem_minmax(0,1fr)] sm:gap-x-6 ${
+                tiles.some((x) => x.busy) ? "" : "max-sm:hidden"
+              }`}
             >
-              <h3 className="mb-2.5 truncate border-b border-ops-line-soft pb-2 font-secondary text-sm font-bold text-npf-ink">
-                {t(zone)}
-              </h3>
-              <ul className="grid gap-0.5">
+              <ZoneHead name={t(zone)} sum={zoneSum} />
+              <ul className="grid grid-cols-[repeat(auto-fill,minmax(7rem,1fr))] gap-1.5">
                 {tiles.map(({ s, sum, busy }) => (
                   <li key={s.name} className={busy ? "" : "max-sm:hidden"}>
                     <Tile
@@ -317,7 +331,7 @@ function DivisionMosaic({
       title={t("Divisions")}
       action={
         <span className="flex items-center gap-5">
-          <Legend units={false} />
+          <Legend />
           {chosen ? (
           <button
             type="button"
@@ -331,7 +345,7 @@ function DivisionMosaic({
         </span>
       }
     >
-      <ul className="grid grid-cols-2 gap-x-4 gap-y-0.5 sm:grid-cols-3 xl:grid-cols-5">
+      <ul className="flex flex-wrap gap-2">
         {divisions.map(({ name, tally }) => (
           <li key={name}>
             <Tile
@@ -383,22 +397,23 @@ function Tile({
       });
 
   /*
-   * Every command is one row of the same height, so the six zones line up
-   * row for row and the eye runs down a column, not round a staircase of
-   * cards. The fill says how bad it is: red when a call is late, amber while
-   * one waits, a white rim while units are out, nothing when quiet. The
-   * figures sit in fixed slots at the end (waiting, running, units free), so
-   * they read as columns across the whole board.
+   * A cell, in alphabetical place so a command is always where the officer
+   * last saw it. The fill says how bad it is: red when a call is late, amber
+   * while one waits, a pale Force-blue wash while units are out. A quiet cell
+   * has no fill and no outline, only steel text: thirty outlined boxes made
+   * the quiet commands as loud as the busy ones. Units free stays in the
+   * spoken label and on the Units panel; on every cell it was noise.
    */
   const surface = chosen
     ? "bg-ops-brand font-semibold text-white shadow-[0_6px_16px_-8px_var(--color-npf-blue-deep)]"
     : late
-      ? "bg-ops-p1-wash font-semibold text-npf-ink hover:ring-1 hover:ring-ops-p1/40 hover:ring-inset"
+      ? "bg-ops-p1-wash font-semibold text-npf-ink hover:bg-[color-mix(in_srgb,var(--ops-p1)_14%,white)]"
       : waiting
-        ? "bg-ops-p2-wash font-semibold text-npf-ink hover:ring-1 hover:ring-ops-p2/40 hover:ring-inset"
+        ? "bg-ops-p2-wash font-semibold text-npf-ink hover:bg-[color-mix(in_srgb,var(--ops-p2)_16%,white)]"
         : running
-          ? "bg-white font-medium text-npf-ink ring-1 ring-npf-line ring-inset hover:ring-npf-blue-mid/50"
-          : "text-npf-steel hover:bg-npf-mist hover:text-npf-ink";
+          ? "bg-npf-mist font-medium text-npf-ink hover:bg-npf-chip"
+          : "text-npf-steel hover:bg-npf-cloud hover:text-npf-ink";
+  const counted = !!(waiting || running);
 
   return (
     <button
@@ -407,30 +422,65 @@ function Tile({
       aria-label={label}
       title={label}
       onClick={onChoose}
-      className={`flex h-10 w-full items-center gap-1.5 rounded-lg ps-3 pe-2 text-start text-sm transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) active:scale-[0.97] active:duration-(--dur-press) ${surface}`}
+      /* The counts sit at the cell's end, so down a column of cells they
+         form one edge to scan. A long name gives way before a count does;
+         the whole name is in the title and the spoken label. */
+      className={`inline-flex h-11 w-full min-w-0 items-center justify-between gap-2 rounded-lg ps-3 pe-2 text-sm whitespace-nowrap transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) active:scale-[0.97] active:duration-(--dur-press) sm:h-10 ${surface}`}
     >
-      <span className="min-w-0 flex-1 truncate leading-tight">{name}</span>
-      <span aria-hidden className="flex shrink-0 items-center gap-0.5 tabular-nums">
-        <Count n={waiting} kind={late ? "late" : "waiting"} chosen={chosen} />
-        <Count n={running} kind="running" chosen={chosen} />
-        {hasUnits ? (
-          <span
-            className={`w-8 text-end text-2xs font-medium ${
-              chosen ? "text-white/85" : free ? "text-npf-steel" : "text-npf-steel/60"
-            }`}
-          >
-            {free}/{units}
-          </span>
-        ) : null}
-      </span>
+      <span className="truncate">{name}</span>
+      {counted ? (
+        <span aria-hidden className="flex shrink-0 items-center gap-1 tabular-nums">
+          <Count n={waiting} kind={late ? "late" : "waiting"} chosen={chosen} />
+          <Count n={running} kind="running" chosen={chosen} />
+        </span>
+      ) : null}
     </button>
   );
 }
 
 /**
- * A figure in its fixed slot on a row. Waiting and late are solid, running is
- * an outline, so the two read apart by shape as well as colour; an empty slot
- * keeps its width so the column under it stays straight.
+ * The calls a zone owes, said in words under its name: waiting first, the
+ * late share of it next, then running. A quiet zone says its queue is clear
+ * and steps back to steel.
+ */
+function ZoneHead({
+  name,
+  sum,
+}: {
+  name: string;
+  sum: { waiting: number; late: number; running: number };
+}) {
+  const t = useT();
+  const parts = [
+    sum.waiting ? t("{n} waiting", { n: sum.waiting }) : null,
+    sum.late ? t("{n} late", { n: sum.late }) : null,
+    sum.running ? t("{n} running", { n: sum.running }) : null,
+  ].filter(Boolean);
+  return (
+    /* Beside its commands on a phone too: stacked above them, a zone with
+       one busy command spent a whole extra line on its name. */
+    <div className="pt-1 sm:pt-0.5">
+      <h3
+        className={`font-secondary text-sm leading-tight font-bold ${
+          parts.length ? "text-npf-ink" : "text-npf-steel"
+        }`}
+      >
+        {name}
+      </h3>
+      <p
+        className={`mt-1 text-xs tabular-nums ${
+          sum.late ? "font-semibold text-npf-ink" : "text-npf-steel"
+        }`}
+      >
+        {parts.length ? parts.join(", ") : t("Queue clear")}
+      </p>
+    </div>
+  );
+}
+
+/**
+ * A figure on a chip. Waiting and late are solid, running is an outline, so
+ * the two read apart by shape as well as colour.
  */
 function Count({
   n,
@@ -450,22 +500,19 @@ function Count({
       : kind === "waiting"
         ? "bg-ops-p2 text-white"
         : "text-npf-blue-ink ring-1 ring-npf-blue-mid/45 ring-inset";
+  if (!n) return null;
   return (
-    <span className="grid w-6 place-items-center">
-      {n ? (
-        <span
-          key={n}
-          className={`npf-ops-count grid h-5 min-w-5 place-items-center rounded-full px-1 text-2xs leading-none font-bold ${tone}`}
-        >
-          {n}
-        </span>
-      ) : null}
+    <span
+      key={n}
+      className={`npf-ops-count grid h-5 min-w-5 place-items-center rounded-full px-1 text-2xs leading-none font-bold ${tone}`}
+    >
+      {n}
     </span>
   );
 }
 
-/** What the slots at the end of each row mean, said once over the board. */
-function Legend({ units }: { units: boolean }) {
+/** What the figures on a chip mean, said once over the board. */
+function Legend() {
   const t = useT();
   const key = (mark: string, label: string) => (
     <span className="flex items-center gap-1.5">
@@ -481,12 +528,6 @@ function Legend({ units }: { units: boolean }) {
       {key("bg-ops-p1", t("Late"))}
       {key("bg-ops-p2", t("Waiting"))}
       {key("ring-1 ring-npf-blue-mid/45 ring-inset", t("Running"))}
-      {units ? (
-        <span className="flex items-center gap-1.5">
-          <span className="text-2xs font-medium tabular-nums">1/2</span>
-          {t("Units free")}
-        </span>
-      ) : null}
     </span>
   );
 }
