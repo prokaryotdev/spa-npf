@@ -588,8 +588,12 @@ function PendingCall({
       }`}
       style={{ viewTransitionName: `call-${incident.id}` }}
     >
+      {/* Three lines in a fixed order on every row: what (grade, reference,
+          type), where, what the caller said. Letting the place run on after
+          the type put it on line one for a short place and line two for a
+          long one, so no two rows read the same. */}
       <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
           <PriorityTag priority={incident.priority} />
           <Link
             href={`/app/police/incidents?call=${incident.id}`}
@@ -597,17 +601,22 @@ function PendingCall({
           >
             {incident.id}
           </Link>
-          <span className="text-sm font-medium">{t(incident.kind)}</span>
-          <span className="text-sm text-ops-dim">
-            {placeOf(t(incident.area), incident.where)}
+          <span className="text-sm font-semibold text-npf-ink">
+            {t(incident.kind)}
           </span>
         </div>
+        <p className="mt-1 text-sm text-npf-body">
+          {placeOf(t(incident.area), incident.where)}
+        </p>
         <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-ops-dim">
           {t(incident.summary)}
         </p>
       </div>
 
-      <div className="flex shrink-0 items-center justify-between gap-3 @md:flex-col @md:items-end @md:gap-2">
+      {/* One fixed-width column: the clock, its bar and the control share
+          the same edges, so down the queue they read as three straight
+          lines instead of a bar shorter than the button under it. */}
+      <div className="flex shrink-0 items-center justify-between gap-3 @md:w-44 @md:flex-col @md:items-stretch @md:gap-2">
         <span className="flex flex-col gap-1.5 @md:items-end">
           <span
             className="font-secondary text-sm leading-none font-bold"
@@ -620,7 +629,7 @@ function PendingCall({
                 : t("of {n}m", { n: target })}
             </span>
           </span>
-          <TargetBar incident={incident} now={now} />
+          <TargetBar incident={incident} now={now} className="w-28 @md:w-full" />
         </span>
 
         <label htmlFor={id} className="sr-only">
@@ -644,7 +653,7 @@ function PendingCall({
                out of one list and into the other. */
             withTransition(send);
           }}
-          className="npf-ops-select h-10 max-w-56 rounded-full px-4 text-sm font-medium outline-none"
+          className="npf-ops-select h-10 max-w-56 rounded-full px-4 text-sm font-medium outline-none @md:max-w-none"
         >
           {/* The prompt, not a choice: it names the control and stays out
               of the list. */}
@@ -669,32 +678,46 @@ function RunningCall({ incident }: { incident: Incident }) {
   const t = useT();
   return (
     <li
-      className="npf-ops-call flex flex-wrap items-baseline gap-x-2.5 gap-y-1 border-b border-ops-line-soft px-5 py-3 transition-colors last:border-0 hover:bg-ops-hover"
+      className="npf-ops-call flex flex-col gap-2 border-b border-ops-line-soft px-5 py-3 transition-colors last:border-0 hover:bg-ops-hover @md:flex-row @md:items-center @md:gap-4"
       /* The same name as its pending row, which is what lets a dispatch
          carry the row across the board. */
       style={{ viewTransitionName: `call-${incident.id}` }}
     >
-      <PriorityTag priority={incident.priority} />
-      <Link
-        href={`/app/police/incidents?call=${incident.id}`}
-        className="rounded-chip font-secondary text-sm font-bold tabular-nums underline-offset-4 hover:underline"
-      >
-        {incident.id}
-      </Link>
-      {/* On a phone the call keeps its words and the status drops to a
-          second line, rather than "Theft…" squeezed beside it. */}
-      <span className="min-w-0 flex-1 text-sm @max-md:min-w-[60%] @md:truncate">
-        {t(incident.kind)}
-        <span className="text-ops-dim"> · {placeOf(t(incident.area), incident.where)}</span>
-      </span>
-      <OpsStatus status={incident.status} />
-      <span className="flex items-baseline gap-2 text-xs text-ops-dim">
-        {t(incident.unit ?? "")}
+      {/* The same two lines as a pending call, what then where, so a call
+          reads the same before and after dispatch and a long place is
+          never cut off. */}
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+          <PriorityTag priority={incident.priority} />
+          <Link
+            href={`/app/police/incidents?call=${incident.id}`}
+            className="rounded-chip font-secondary text-sm font-bold tabular-nums underline-offset-4 hover:underline"
+          >
+            {incident.id}
+          </Link>
+          <span className="text-sm font-semibold text-npf-ink">
+            {t(incident.kind)}
+          </span>
+        </div>
+        <p className="mt-1 text-sm text-npf-body">
+          {placeOf(t(incident.area), incident.where)}
+        </p>
+      </div>
+      {/* Status, unit and clock in fixed slots from a tablet up, so they
+          stand in three columns down the list whatever the pill or the
+          callsign says. */}
+      <div className="flex shrink-0 items-center gap-2.5">
+        <span className="flex @md:min-w-24">
+          <OpsStatus status={incident.status} />
+        </span>
+        <span className="truncate text-xs text-ops-dim @md:w-24">
+          {t(incident.unit ?? "")}
+        </span>
         <Elapsed
           from={incident.onScene ?? incident.dispatched ?? incident.reported}
-          className="font-medium text-ops-text"
+          className="ms-auto text-xs font-semibold text-ops-text @md:min-w-12 @md:text-end"
         />
-      </span>
+      </div>
     </li>
   );
 }

@@ -1171,7 +1171,11 @@ html.npf-large-text {
   cursor: not-allowed;
   background-image: none;
   padding-inline-end: 0.75rem;
-  opacity: 0.5;
+  /* A plain statement, not a greyed-out button: at half opacity "No unit
+     free" read as broken rather than as the news it is. */
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px var(--color-npf-line);
+  color: var(--ops-dim);
 }
 /*
  * Where the browser can draw the open list (customizable select), it opens
