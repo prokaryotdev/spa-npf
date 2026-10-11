@@ -2,7 +2,13 @@
 
 import { filterBy } from "../search-text";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { callSources, callTypes, dispatchTarget } from "../content-ops";
+import { useSearchParams } from "next/navigation";
+import {
+  callOutcomes,
+  callSources,
+  callTypes,
+  dispatchTarget,
+} from "../content-ops";
 import { useFormat, useT } from "../i18n/client";
 import type { T } from "../i18n/translate";
 import {
@@ -70,14 +76,17 @@ export default function OpsIncidents() {
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
   const [unassigned, setUnassigned] = useState(false);
-  // A beacon clicked on the board map arrives as ?call=NPF-4416 and opens
-  // that call. The console only renders after the credential check, in the
-  // browser, so reading the address here never runs on the server.
-  const [selected, setSelected] = useState<string | null>(() =>
-    typeof window === "undefined"
-      ? null
-      : new URLSearchParams(window.location.search).get("call"),
-  );
+  // A link from the board, a unit or a request arrives as ?call=NPF-4416
+  // and opens that call. Read through the router, not window.location: on a
+  // client-side navigation the address has not changed yet when this first
+  // renders, so every such link used to land on the board with nothing open.
+  const asked = useSearchParams().get("call");
+  const [selected, setSelected] = useState<string | null>(asked);
+  const [seen, setSeen] = useState(asked);
+  if (asked !== seen) {
+    setSeen(asked);
+    setSelected(asked);
+  }
   const [taking, setTaking] = useState(false);
 
   // Below the two-column width the detail stacks under the whole board, so a
@@ -115,6 +124,8 @@ export default function OpsIncidents() {
         i.assignee ?? "",
         t(i.assignee ?? ""),
         i.unit ?? "",
+        i.outcome ?? "",
+        t(i.outcome ?? ""),
         // The grade and the state as the board prints them, so "p1",
         // "urgent" or "en route" in the box finds what the tags say.
         i.priority,
@@ -347,6 +358,11 @@ export default function OpsIncidents() {
                       </td>
                       <td className="hidden py-3.5 pe-4 align-top md:table-cell">
                         <OpsStatus status={incident.status} />
+                        {incident.outcome ? (
+                          <span className="mt-1 block text-2xs whitespace-nowrap text-ops-dim">
+                            {t(incident.outcome)}
+                          </span>
+                        ) : null}
                       </td>
                       <td className="hidden py-3.5 pe-4 align-top text-xs whitespace-nowrap md:table-cell">
                         {incident.unit ? (
@@ -480,6 +496,9 @@ function Detail({
   const id = useId();
   const [note, setNote] = useState("");
   const [moving, setMoving] = useState(false);
+  // A call closes through its outcome, never straight from a button: the
+  // shift report counts what the shift achieved, not only how fast it moved.
+  const [closing, setClosing] = useState(false);
   // Only the call's own command's units: the list a national desk sees is
   // every unit in the country, and a Lagos car cannot attend in Kano.
   const free = units.filter(
@@ -569,6 +588,12 @@ function Detail({
             </dd>
           </>
         ) : null}
+        {incident.outcome ? (
+          <>
+            <dt className="text-ops-dim">{t("Outcome")}</dt>
+            <dd className="font-medium">{t(incident.outcome)}</dd>
+          </>
+        ) : null}
         {incident.evidence?.length ? (
           <>
             <dt className="text-ops-dim">{t("Evidence")}</dt>
@@ -614,7 +639,9 @@ function Detail({
           value={incident.status}
           options={STATUSES.map((s) => [s, t(STATUS_LABEL[s])])}
           onChange={(s) =>
-            updateIncident(incident.id, { status: s as IncidentStatus })
+            s === "Closed"
+              ? setClosing(true)
+              : updateIncident(incident.id, { status: s as IncidentStatus })
           }
         />
         <Assign
@@ -642,10 +669,16 @@ function Detail({
         )
       ) : null}
 
-      {next ? (
+      {closing ? (
+        <CloseCall incident={incident} onDone={() => setClosing(false)} />
+      ) : next ? (
         <OpsButton
           tone="brand"
-          onClick={() => updateIncident(incident.id, { status: next[0] })}
+          onClick={() =>
+            next[0] === "Closed"
+              ? setClosing(true)
+              : updateIncident(incident.id, { status: next[0] })
+          }
           className="mt-4 w-full justify-center"
         >
           {t(next[1])}
@@ -714,6 +747,58 @@ function Detail({
         </form>
       </div>
     </OpsPanel>
+  );
+}
+
+/**
+ * Closing a call: pick how it ended, then close. The outcome goes on the
+ * call, into its log, and onto the shift report.
+ */
+function CloseCall({
+  incident,
+  onDone,
+}: {
+  incident: Incident;
+  onDone: () => void;
+}) {
+  const t = useT();
+  const id = useId();
+  const [outcome, setOutcome] = useState("");
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!outcome) return;
+        updateIncident(incident.id, { status: "Closed", outcome });
+        onDone();
+      }}
+      className="mt-4 grid gap-3 rounded-chip bg-ops-fill p-3"
+    >
+      <label htmlFor={`${id}-outcome`} className="text-xs font-semibold">
+        {t("How did the call end?")}
+      </label>
+      <select
+        id={`${id}-outcome`}
+        value={outcome}
+        required
+        autoFocus
+        onChange={(e) => setOutcome(e.target.value)}
+        className={SELECT}
+      >
+        <option value="">{t("Choose an outcome")}</option>
+        {callOutcomes.map((o) => (
+          <option key={o} value={o}>
+            {t(o)}
+          </option>
+        ))}
+      </select>
+      <div className="flex gap-2">
+        <OpsButton type="submit" tone="brand" disabled={!outcome}>
+          {t("Close call")}
+        </OpsButton>
+        <OpsButton onClick={onDone}>{t("Cancel")}</OpsButton>
+      </div>
+    </form>
   );
 }
 

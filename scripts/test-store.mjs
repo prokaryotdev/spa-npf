@@ -24,7 +24,7 @@ globalThis.window = {
   removeEventListener: () => {},
 };
 
-const { KEY, signIn, submitRequest, advanceRequest, signOut, subscribe } =
+const { KEY, signIn, submitRequest, advanceRequest, signOut, subscribe, updateIncident } =
   await import("../app/components/store.ts");
 
 // subscribe() is what hydrates the module from storage; nothing reads until
@@ -139,5 +139,23 @@ assert.equal(
 );
 assert.ok(!("session" in shared()), "and neither one leaked into shared work");
 
+// --- a call closes with its outcome, and reopening takes it back ----------
+const call = () => shared().incidents.find((i) => i.id === "NPF-4415");
+updateIncident("NPF-4415", { status: "Closed", outcome: "Arrest made" });
+assert.equal(call().outcome, "Arrest made", "the outcome lands on the call");
+assert.ok(
+  call().log.some((l) => l.text === "Outcome: {outcome}." && l.vars.outcome === "Arrest made"),
+  "and in its log",
+);
+assert.equal(
+  shared().units.find((u) => u.callsign === "Patrol 04").status,
+  "Available",
+  "the unit goes back on the air",
+);
+updateIncident("NPF-4415", { status: "On Scene" });
+assert.equal(call().outcome, undefined, "reopening clears the outcome");
+assert.equal(call().closed, null, "and the closing stamp");
+
 console.log("store: session per tab, work shared — ok");
+console.log("store: a call closes with its outcome — ok");
 console.log("store: two tabs, two roles, one queue — ok");

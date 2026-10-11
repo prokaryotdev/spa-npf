@@ -21,7 +21,8 @@ A national police front end built around real Force structure: Force HQ → 37 S
 
 ## Operating Context
 
-- Console has four queues: Command board, Calls, Units, Requests.
+- Console has four queues (Command board, Calls, Units, Requests) and a printable Shift report counted from the same calls.
+- A call closes with an outcome (`callOutcomes` in `app/content-ops.ts`); a call that lands from another tab raises an alert and a tone for P1/P2.
 - Call grades P1–P4 with dispatch targets (`app/content-ops.ts`); three eight-hour reliefs (A from 06:00 WAT); West Africa Time throughout.
 - Officers dispatch from the queue, transfer calls between commands, and decide service requests.
 - No backend yet: everything lives in `app/components/store.ts` (localStorage); `docs/API-CONTRACT.md` is the contract for the real one.

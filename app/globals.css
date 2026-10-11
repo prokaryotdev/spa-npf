@@ -1050,7 +1050,13 @@ html.npf-large-text {
   background: var(--ops-bg);
   color: var(--ops-text);
 }
-/* From here the four destinations fold into the command bar and the frame is
+/* Below 640px the tab row is icon-over-word, 0.5rem taller. */
+@media (max-width: 639px) {
+  .npf-ops {
+    --ops-top: 8rem;
+  }
+}
+/* From here the five destinations fold into the command bar and the frame is
    one row tall. */
 @media (min-width: 1024px) {
   .npf-ops {
@@ -1652,5 +1658,31 @@ html.npf-large-text {
     @starting-style {
       scale: 1;
     }
+  }
+}
+
+/*
+ * The shift report on paper: the console chrome is hidden by print:hidden,
+ * and the navy band turns to ink on white, since most printers drop
+ * background colour and would leave white figures on nothing.
+ */
+@media print {
+  .npf-ops {
+    background: #fff;
+  }
+  .npf-ops-band {
+    background: none;
+    box-shadow: none;
+    color: var(--color-npf-ink);
+    padding: 0;
+    --ops-p1: var(--color-npf-alert);
+    --ops-ok: var(--color-npf-ok);
+    --ops-dim: var(--color-npf-steel);
+  }
+  .npf-ops-band :is(dt, p, span) {
+    color: var(--color-npf-steel);
+  }
+  .npf-ops-tile {
+    break-inside: avoid;
   }
 }

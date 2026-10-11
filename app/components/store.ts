@@ -116,6 +116,8 @@ export type Incident = {
   injuries?: string;
   /** Evidence the reporter attached, by file name. */
   evidence?: string[];
+  /** How the call ended, chosen as it closes: one of `callOutcomes`. */
+  outcome?: string;
   /**
    * What was written on the call, oldest first. A line the system writes is
    * stored as its English pattern plus the values that fill it, so the board
@@ -166,7 +168,7 @@ type State = {
 // Exported so scripts/test-store.mjs reads the blob under whatever the
 // current key is: a copy of the string in the test turns the next bump into
 // a failing test rather than a passing one.
-export const KEY = "dp:state:v5";
+export const KEY = "dp:state:v6";
 /**
  * The work lives in localStorage; who is signed in lives in sessionStorage.
  *
@@ -541,10 +543,19 @@ export function updateIncident(id: string, patch: Partial<Incident>) {
       after.onScene ??= at;
     }
     if (patch.status === "Closed") after.closed = at;
-    // Reopening a closed call clears the closing stamp, or its age freezes.
-    if (before.status === "Closed" && patch.status !== "Closed")
+    // Reopening a closed call clears the closing stamp, or its age freezes,
+    // and its outcome, or the shift report counts a live call as finished.
+    if (before.status === "Closed" && patch.status !== "Closed") {
       after.closed = null;
+      after.outcome = undefined;
+    }
     after.log = [...after.log, { at, ...statusLine(patch.status, after.unit) }];
+    if (patch.status === "Closed" && after.outcome)
+      after.log.push({
+        at,
+        text: "Outcome: {outcome}.",
+        vars: { outcome: after.outcome },
+      });
   }
 
   if (patch.unit !== undefined && patch.unit !== before.unit)

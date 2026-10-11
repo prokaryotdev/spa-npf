@@ -140,6 +140,7 @@ const SEEDS: Seed[] = [
     summary: "Child reunited with family after fourteen minutes.",
     source: "112 call",
     notes: [[109, "Reunited with the mother at the information desk."]],
+    outcome: "Resolved at scene",
   },
   {
     id: "NPF-4409",
@@ -154,6 +155,7 @@ const SEEDS: Seed[] = [
     summary: "Goods recovered, complainant declined to press charges.",
     source: "Walk-in",
     notes: [],
+    outcome: "Resolved at scene",
   },
   {
     id: "NPF-4408",
@@ -168,6 +170,7 @@ const SEEDS: Seed[] = [
     summary: "Passenger boat towed in after engine failure.",
     source: "112 call",
     notes: [],
+    outcome: "Resolved at scene",
   },
   {
     id: "NPF-4407",
@@ -182,6 +185,7 @@ const SEEDS: Seed[] = [
     summary: "Minor collision cleared through the self-report service.",
     source: "Nigeria Police Force App",
     notes: [],
+    outcome: "Resolved at scene",
   },
   {
     id: "NPF-4406",
@@ -196,7 +200,27 @@ const SEEDS: Seed[] = [
     summary: "Recruitment scam reported by three complainants in one week.",
     source: "Cybercrime",
     notes: [[240, "Referred to the cybercrime investigation desk."]],
+    outcome: "Referred for investigation",
   },
+  // The earlier part of the last twelve hours, closed, so the shift report
+  // has a shift to report on. Each unit is one from its own command's roster.
+  { id: "NPF-4405", where: at_("Lagos", "Alimosho"), kind: "Burglary", priority: "P2", area: "Egbeda, Alimosho", at: [312, 305, 290, 248], status: "Closed", assignee: "Cpl. F. Adeyemi", unit: "Patrol 09", summary: "Shop shutter found forced at opening time. Owner listing what was taken.", source: "112 call", notes: [], outcome: "Report taken" },
+  { id: "NPF-4404", where: at_("FCT", "Bwari"), kind: "Vehicle theft", priority: "P2", area: "Kubwa, Bwari", at: [338, 331, 318, 281], status: "Closed", assignee: "Cpl. H. Suleiman", unit: "Patrol 04", summary: "Saloon car taken from outside a residence overnight.", source: "Website report", notes: [], outcome: "Report taken" },
+  { id: "NPF-4403", where: at_("Kano", "Kano Municipal"), kind: "Assault", priority: "P1", area: "Kofar Mata, Kano", at: [365, 361, 352, 318], status: "Closed", assignee: "Cpl. U. Abdullahi", unit: "Patrol 31", summary: "Fight at a market stall. One man injured, the other held by traders.", source: "112 call", notes: [], outcome: "Arrest made" },
+  { id: "NPF-4402", where: at_("Rivers", "Obio/Akpor"), kind: "Armed robbery", priority: "P1", area: "Rumuokoro, Obio/Akpor", at: [392, 385, 371, 322], status: "Closed", assignee: "Sgt. A. Garba", unit: "Traffic 07", summary: "Two men with a gun took phones from a filling station attendant and left on a motorcycle.", source: "112 call", notes: [], outcome: "Referred for investigation" },
+  { id: "NPF-4401", where: at_("Lagos", "Surulere"), kind: "Domestic violence", priority: "P1", area: "Aguda, Surulere", at: [418, 415, 404, 371], status: "Closed", assignee: "Sgt. R. Okafor", unit: "Patrol 12", summary: "Neighbour reports shouting and a woman calling for help.", source: "112 call", notes: [], outcome: "Arrest made" },
+  { id: "NPF-4400", where: at_("Enugu", "Enugu South"), kind: "Threats or intimidation", priority: "P3", area: "Uwani, Enugu", at: [445, 431, null, 389], status: "Closed", assignee: "Insp. N. Aliyu", unit: "Cybercrime 01", summary: "Threatening text messages from a former business partner.", source: "Walk-in", notes: [], outcome: "Advice given" },
+  { id: "NPF-4399", where: at_("Kaduna", "Kaduna North"), kind: "Road traffic collision", priority: "P2", area: "Ahmadu Bello Way, Kaduna", at: [471, 457, 446, 410], status: "Closed", assignee: "Cpl. M. Eze", unit: "Traffic 11", summary: "Two cars at the junction, one lane blocked.", source: "Nigeria Police Force App", notes: [], outcome: "Resolved at scene" },
+  { id: "NPF-4398", where: at_("Ogun", "Abeokuta South"), kind: "Road traffic collision", priority: "P3", area: "Lafenwa, Abeokuta", at: [496, 482, 470, 441], status: "Closed", assignee: "Sgt. T. Olaniyan", unit: "Highway 02", summary: "Tanker and bus in contact at the roundabout. FRSC took over the scene.", source: "112 call", notes: [], outcome: "Handed to another agency" },
+  { id: "NPF-4397", where: at_("Oyo", "Ibadan North"), kind: "Suspicious activity", priority: "P3", area: "Agodi, Ibadan", at: [524, 509, 497, 478], status: "Closed", assignee: "Cpl. K. Ogundipe", unit: "Patrol 26", summary: "Men seen checking parked cars along the road.", source: "Website report", notes: [], outcome: "No offence disclosed" },
+  { id: "NPF-4396", where: at_("Edo", "Egor"), kind: "Theft", priority: "P3", area: "Uselu, Benin City", at: [553, 534, 520, 487], status: "Closed", assignee: "Sgt. M. Danladi", unit: "Patrol 21", summary: "Generator taken from a church compound.", source: "Walk-in", notes: [], outcome: "Report taken" },
+  { id: "NPF-4395", where: at_("FCT", "Gwagwalada"), kind: "Missing person", priority: "P2", area: "Gwagwalada, FCT", at: [579, 571, 556, 503], status: "Closed", assignee: "Cpl. H. Suleiman", unit: "Patrol 04", summary: "Elderly man missing from home since the morning.", source: "112 call", notes: [], outcome: "Resolved at scene" },
+  { id: "NPF-4394", where: at_("Lagos", "Lagos Island"), kind: "Drug offence", priority: "P3", area: "Idumota, Lagos Island", at: [606, 588, 574, 530], status: "Closed", assignee: "Cpl. F. Adeyemi", unit: "Patrol 09", summary: "Drugs reported being sold from a kiosk.", source: "Nigeria Police Force App", notes: [], outcome: "Arrest made" },
+  { id: "NPF-4393", where: at_("Plateau", "Jos North"), kind: "Vandalism", priority: "P4", area: "Terminus, Jos", at: [634, 571, 552, 520], status: "Closed", assignee: "Cpl. T. Yakubu", unit: "K9 03", summary: "Streetlight cables cut along the market road.", source: "Website report", notes: [], outcome: "Report taken" },
+  { id: "NPF-4392", where: at_("Kano", "Fagge"), kind: "Noise disturbance", priority: "P4", area: "Sabon Gari, Kano", at: [661, 618, 603, 594], status: "Closed", assignee: "Insp. S. Bello", unit: "Patrol 17", summary: "Loud generator and music from an event hall.", source: "112 call", notes: [], outcome: "Advice given" },
+  { id: "NPF-4391", where: at_("Rivers", "Port Harcourt"), kind: "Marine assistance", priority: "P2", area: "Borokiri, Port Harcourt", at: [688, 681, 659, 612], status: "Closed", assignee: "Sgt. Y. Musa", unit: "Marine 02", summary: "Fishing boat adrift with two people on board.", source: "112 call", notes: [], outcome: "Resolved at scene" },
+  { id: "NPF-4390", where: at_("Lagos", "Eti-Osa"), kind: "Fraud report", priority: "P3", area: "Lekki Phase 1", at: [702, 688, null, 640], status: "Closed", assignee: "Insp. B. Adebayo", unit: "Cybercrime 03", summary: "Payment sent for a car advertised online that does not exist.", source: "Cybercrime", notes: [], outcome: "Referred for investigation" },
+  { id: "NPF-4389", where: at_("Lagos", "Kosofe"), kind: "Assault", priority: "P2", area: "Ketu, Kosofe", at: [715, 709, 701, 668], status: "Closed", assignee: "Sgt. R. Okafor", unit: "Patrol 12", summary: "Report of a man being beaten at a bus stop.", source: "112 call", notes: [], outcome: "No offence disclosed" },
 ];
 
 export const seedIncidents = (): Incident[] =>
@@ -240,6 +264,15 @@ export const seedIncidents = (): Incident[] =>
                 text: "Call closed — {unit}.",
                 vars: { unit: rest.unit ?? "" },
               },
+              ...(rest.outcome
+                ? [
+                    {
+                      at: minutesAgo(c),
+                      text: "Outcome: {outcome}.",
+                      vars: { outcome: rest.outcome },
+                    },
+                  ]
+                : []),
             ]),
       ] as Incident["log"]
     ).sort((a, b) => a.at.localeCompare(b.at)),
@@ -295,6 +328,22 @@ export const callSources = [
   "Walk-in",
   "Website report",
   "Cybercrime",
+];
+
+/**
+ * How a call can end. Chosen as it closes, so the shift report can say what
+ * the shift achieved and not only how fast it moved.
+ */
+export const callOutcomes = [
+  "Arrest made",
+  "Report taken",
+  "Referred for investigation",
+  "Resolved at scene",
+  "Advice given",
+  "Handed to another agency",
+  "No offence disclosed",
+  "False or hoax call",
+  "Duplicate call",
 ];
 
 /**

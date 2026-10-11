@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "../i18n/Link";
 import { filterBy } from "../search-text";
 import { useId, useMemo, useState } from "react";
 import {
@@ -275,21 +276,27 @@ function UnitCard({
           A unit on a call is cleared from the call, not from here: clearing
           it here would leave the incident showing a unit that has gone.
         */}
-        {incident ? (
+        {incident?.status === "Dispatched" ? (
           <OpsButton
             tone="brand"
             onClick={() =>
               withTransition(() =>
-                updateIncident(incident.id, {
-                  status:
-                    incident.status === "Dispatched" ? "On Scene" : "Closed",
-                }),
+                updateIncident(incident.id, { status: "On Scene" }),
               )
             }
             className="h-9 shrink-0 !px-3.5 !text-xs"
           >
-            {incident.status === "Dispatched" ? t("Arrived") : t("Clear call")}
+            {t("Arrived")}
           </OpsButton>
+        ) : incident ? (
+          // Clearing asks how the call ended, and that question lives on the
+          // call, so this opens it rather than closing it blind.
+          <Link
+            href={`/app/police/incidents?call=${incident.id}`}
+            className="inline-flex h-9 shrink-0 items-center rounded-full bg-ops-brand px-3.5 text-xs font-medium text-white transition-colors hover:bg-ops-brand-lift"
+          >
+            {t("Clear call")}
+          </Link>
         ) : (
           <OpsButton
             tone={off ? "brand" : "ghost"}

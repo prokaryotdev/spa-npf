@@ -4,18 +4,19 @@ import Link from "../i18n/Link";
 import { usePathname } from "next/navigation";
 import { stripLocale } from "../i18n/path";
 import { useRouter } from "../i18n/Link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import LanguageSwitch from "./LanguageSwitch";
-import { setViewing, signOut } from "./store";
+import { KEY, setViewing, signOut, type Incident } from "./store";
 import { STATES } from "../geo";
 import { commandLabel } from "./Where";
-import { useMounted, useNow, useScoped } from "./OpsPieces";
+import { PriorityTag, useMounted, useNow, useScoped } from "./OpsPieces";
 import { useT } from "../i18n/client";
 import { PoliceWordmark } from "./Wordmark";
-import { ArrowDown, ShieldIcon, SignOutIcon } from "./icons";
+import { ArrowDown, CloseIcon, ShieldIcon, SignOutIcon } from "./icons";
 import {
   BoardGlyph,
   CallsGlyph,
+  ReportGlyph,
   RequestsGlyph,
   UnitsGlyph,
 } from "./ops-glyphs";
@@ -44,6 +45,12 @@ const TABS = [
     label: "Requests",
     short: "Requests",
     Icon: RequestsGlyph,
+  },
+  {
+    href: "/app/police/report",
+    label: "Shift report",
+    short: "Report",
+    Icon: ReportGlyph,
   },
 ];
 
@@ -140,6 +147,14 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
     },
   };
 
+  // The tab title carries the waiting count, so a desk working in another
+  // window still sees a call land.
+  useEffect(() => {
+    if (!loaded || !officer) return;
+    const base = document.title.replace(/^(d+) /, "");
+    document.title = waiting ? `(${waiting}) ${base}` : base;
+  }, [loaded, officer, waiting, path]);
+
   const endShift = () => {
     signOut();
     router.push("/app/home");
@@ -208,8 +223,8 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         onEnd={endShift}
       />
 
-      <div className="flex min-h-[100dvh] flex-col lg:ps-68">
-        <header className="sticky top-0 z-40 border-b border-npf-hairline bg-white/90 backdrop-blur-xl">
+      <div className="flex min-h-[100dvh] flex-col lg:ps-68 print:ps-0">
+        <header className="sticky top-0 z-40 print:hidden border-b border-npf-hairline bg-white/90 backdrop-blur-xl">
           <div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
             {/* The crest lives in the sidebar on a desk; on a phone it
                 heads the bar, badge only, so the command picker beside it
@@ -233,6 +248,18 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
             />
 
             <ShiftClock />
+
+            {/* Every call, unit and officer on these boards is seeded from
+                app/content-ops.ts. Said once, on the bar, so nobody reads a
+                sample call as a real one. Delete with app/backend.ts once
+                store.ts talks to the API. */}
+            <span
+              title={t("Calls, units and officers here are sample data until the console is connected to the Force's systems.")}
+              className="npf-pill shrink-0 bg-ops-p2-wash text-ops-p2 max-sm:hidden"
+            >
+              <span aria-hidden className="npf-pill-dot" />
+              {t("Sample data")}
+            </span>
 
             <div className="flex shrink-0 items-center gap-2 max-sm:ms-auto">
               {/* An officer works a whole shift in here; the language control
@@ -259,6 +286,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         >
           {children}
         </main>
+        <NewCalls viewing={viewing} />
       </div>
     </div>
   );
@@ -303,7 +331,7 @@ function Sidebar({
 }) {
   const t = useT();
   return (
-    <aside className="fixed inset-y-0 start-0 z-50 hidden w-68 flex-col border-e border-npf-hairline bg-white lg:flex">
+    <aside className="fixed inset-y-0 start-0 z-50 hidden w-68 flex-col border-e border-npf-hairline bg-white lg:flex print:hidden">
       <Link
         href="/app/police"
         className="flex h-16 shrink-0 items-center border-b border-npf-hairline px-6 text-npf-blue-deep"
@@ -406,9 +434,12 @@ function Tabs({
 }) {
   const t = useT();
   return (
+    /* Five destinations in one row, never a strip to swipe: below 640px
+       each is an icon over a short word, the way a phone's own tab bar
+       fits five, and the count rides on the icon. */
     <nav
       aria-label={t("Console")}
-      className="mx-auto flex max-w-450 gap-2 px-4 pb-3 sm:px-6 lg:hidden"
+      className="mx-auto grid max-w-450 grid-cols-5 gap-1.5 px-4 pb-3 sm:flex sm:gap-2 sm:px-6 lg:hidden"
     >
       {TABS.map(({ href, short, Icon }) => {
         const active = isHere(href, path);
@@ -418,20 +449,37 @@ function Tabs({
             key={href}
             href={href}
             aria-current={active ? "page" : undefined}
-            className={`flex min-h-11 min-w-0 flex-auto items-center justify-center gap-1.5 rounded-full px-2.5 text-sm font-medium whitespace-nowrap ring-1 transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) ring-inset active:scale-[0.97] active:duration-(--dur-press) sm:gap-2 ${
+            className={`flex min-h-13 min-w-0 flex-col items-center justify-center gap-0.5 rounded-xl px-1 text-sm font-medium whitespace-nowrap ring-1 transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) ring-inset active:scale-[0.97] active:duration-(--dur-press) sm:min-h-11 sm:flex-auto sm:flex-row sm:gap-2 sm:rounded-full sm:px-2.5 ${
               active
                 ? "bg-npf-blue text-white ring-npf-blue"
                 : "bg-white text-npf-ink ring-npf-hairline hover:bg-npf-paper"
             }`}
           >
-            {/* On a narrow phone the word stays and the icon goes: the label
-                names the destination, the icon only decorates it. */}
-            <Icon className="hidden size-5 shrink-0 sm:block" />
-            <span className="truncate text-xs sm:text-sm">{t(short)}</span>
+            <span className="relative">
+              <Icon className="size-5 shrink-0" />
+              {count?.n ? (
+                <span
+                  title={count.note}
+                  className={`absolute -end-2.5 -top-1.5 grid h-4 min-w-4 place-items-center rounded-full px-1 text-[0.625rem] leading-none font-semibold tabular-nums ring-2 sm:hidden ${
+                    count.alert
+                      ? "bg-npf-alert text-white ring-white"
+                      : active
+                        ? "bg-white text-npf-blue ring-npf-blue"
+                        : "bg-npf-cloud text-npf-blue-ink ring-white"
+                  }`}
+                >
+                  <span aria-hidden>{count.n}</span>
+                  <span className="sr-only">{count.note}</span>
+                </span>
+              ) : null}
+            </span>
+            <span className="max-w-full truncate text-2xs sm:text-sm">
+              {t(short)}
+            </span>
             {count?.n ? (
               <span
-                title={count.note}
-                className={`grid h-5 min-w-5 place-items-center rounded-full px-1 text-2xs font-semibold tabular-nums ${
+                aria-hidden
+                className={`hidden h-5 min-w-5 place-items-center rounded-full px-1 text-2xs font-semibold tabular-nums sm:grid ${
                   count.alert
                     ? "bg-npf-alert text-white"
                     : active
@@ -439,8 +487,7 @@ function Tabs({
                       : "bg-npf-cloud text-npf-blue-ink"
                 }`}
               >
-                <span aria-hidden>{count.n}</span>
-                <span className="sr-only">{count.note}</span>
+                {count.n}
               </span>
             ) : null}
           </Link>
@@ -530,4 +577,102 @@ function CommandPicker({
       </span>
     </div>
   );
+}
+
+/**
+ * A call that lands from somewhere else — a citizen's report, another desk —
+ * while the officer is looking at a different screen. The storage event only
+ * fires for writes made in another tab, so a call this desk took itself never
+ * announces itself back. Urgent grades also sound a short tone.
+ */
+function NewCalls({ viewing }: { viewing: string | null }) {
+  const t = useT();
+  const [calls, setCalls] = useState<Incident[]>([]);
+
+  useEffect(() => {
+    const ids = (raw: string | null) => {
+      try {
+        return (JSON.parse(raw ?? "{}").incidents ?? []) as Incident[];
+      } catch {
+        return [];
+      }
+    };
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== KEY) return;
+      const before = new Set(ids(e.oldValue).map((i) => i.id));
+      const landed = ids(e.newValue).filter(
+        (i) =>
+          !before.has(i.id) &&
+          i.status === "New" &&
+          (!viewing || i.where.state === viewing),
+      );
+      if (!landed.length) return;
+      setCalls((c) => [...landed, ...c].slice(0, 3));
+      if (landed.some((i) => i.priority === "P1" || i.priority === "P2"))
+        chime();
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, [viewing]);
+
+  const dismiss = (id: string) =>
+    setCalls((c) => c.filter((i) => i.id !== id));
+
+  return (
+    <div
+      aria-live="assertive"
+      className="fixed end-4 bottom-4 z-50 grid w-[min(24rem,calc(100vw-2rem))] gap-2 print:hidden"
+    >
+      {calls.map((call) => (
+        <div
+          key={call.id}
+          className="npf-ops-tile npf-page-in flex items-start gap-3 p-4"
+          style={{ boxShadow: "var(--ops-shadow), var(--shadow-raised)" }}
+        >
+          <PriorityTag priority={call.priority} />
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold text-npf-ink">
+              {t("New call {ref}", { ref: call.id })}
+            </p>
+            <p className="mt-0.5 truncate text-xs text-ops-dim">
+              {t(call.kind)} · {commandLabel(t, call.where.state)}
+            </p>
+            <Link
+              href={`/app/police/incidents?call=${call.id}`}
+              onClick={() => dismiss(call.id)}
+              className="mt-2 inline-flex h-9 items-center rounded-full bg-ops-brand px-3.5 text-xs font-medium text-white hover:bg-ops-brand-lift"
+            >
+              {t("Open the call")}
+            </Link>
+          </div>
+          <button
+            type="button"
+            onClick={() => dismiss(call.id)}
+            aria-label={t("Dismiss")}
+            className="grid size-7 shrink-0 place-items-center rounded-full bg-ops-fill text-ops-dim hover:bg-ops-fill-hover hover:text-ops-text"
+          >
+            <CloseIcon className="size-4" />
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Two short tones. Silent where the browser has not allowed sound yet. */
+function chime() {
+  try {
+    const ctx = new AudioContext();
+    [880, 660].forEach((hz, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.frequency.value = hz;
+      gain.gain.setValueAtTime(0.12, ctx.currentTime + i * 0.18);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.18 + 0.16);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(ctx.currentTime + i * 0.18);
+      osc.stop(ctx.currentTime + i * 0.18 + 0.17);
+    });
+    setTimeout(() => ctx.close(), 600);
+  } catch {}
 }

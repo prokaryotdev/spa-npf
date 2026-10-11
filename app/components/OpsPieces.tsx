@@ -350,12 +350,21 @@ export function OpsHead({
 export function OpsFigures({
   figures,
 }: {
-  figures: { label: string; value: number; of?: number; tone?: string }[];
+  /** A count, or a ready-made reading such as a median time. */
+  figures: { label: string; value: number | string; of?: number; tone?: string }[];
 }) {
   return (
     /* On a phone the figures share one row in equal columns, labels
-       wrapping under them, instead of the fourth dropping to a line alone. */
-    <dl className="grid w-full grid-flow-col auto-cols-fr items-start gap-x-4 sm:flex sm:items-end sm:w-auto sm:flex-wrap sm:gap-x-10 sm:gap-y-4">
+       wrapping under them, instead of the fourth dropping to a line alone.
+       A reading wider than a count ("7 min") gets a 2×2 grid instead, or the
+       four run into each other at 390px. */
+    <dl
+      className={`grid w-full items-start gap-x-4 sm:flex sm:items-end sm:w-auto sm:flex-wrap sm:gap-x-10 sm:gap-y-4 ${
+        figures.some((f) => typeof f.value === "string")
+          ? "grid-cols-2 gap-y-5"
+          : "grid-flow-col auto-cols-fr"
+      }`}
+    >
       {figures.map(({ label, value, of, tone }) => (
         <div key={label} className="flex flex-col-reverse gap-1.5">
           <dt className="text-xs leading-snug font-medium text-white/70">{label}</dt>
