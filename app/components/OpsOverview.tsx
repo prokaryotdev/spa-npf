@@ -731,6 +731,14 @@ const UNIT_FILL: Record<Unit["status"], string> = {
   Unavailable: "color-mix(in srgb, var(--ops-dim) 45%, transparent)",
 };
 
+/** The order a section's track is drawn in: what can go first. */
+const UNIT_ORDER: Record<Unit["status"], number> = {
+  Available: 0,
+  Assigned: 1,
+  "On Scene": 1,
+  Unavailable: 2,
+};
+
 const UNIT_KEY = [
   { label: "Free", fill: "var(--ops-fill-ok)" },
   { label: "Committed", fill: "var(--ops-fill-warn)" },
@@ -783,25 +791,27 @@ function UnitBoard({ units }: { units: Unit[] }) {
                       committed, off the air — so the row is readable without
                       counting and the colours mean the same thing they mean
                       on the status pills. */}
+                  {/* Free first, then committed, then off the air, so the
+                      green run from the start is the answer. Each unit has
+                      at most 1.5rem, so a one-car section draws a short
+                      track instead of one as long as a fleet of seven. */}
                   <span
                     aria-hidden
                     className="flex h-1.5 gap-0.5"
                   >
-                    {inDivision.map((u) => (
+                    {[...inDivision]
+                      .sort((a, b) => UNIT_ORDER[a.status] - UNIT_ORDER[b.status])
+                      .map((u) => (
                       <span
                         key={u.callsign}
-                        className="flex-1 rounded-full transition-[background-color] duration-500 ease-(--ease-out)"
+                        className="max-w-6 flex-1 rounded-full transition-[background-color] duration-500 ease-(--ease-out)"
                         style={{ background: UNIT_FILL[u.status] }}
                       />
                     ))}
                   </span>
                 </td>
-                <td
-                  className="py-2.5 pe-5 text-end text-xs font-bold whitespace-nowrap tabular-nums"
-                  style={{
-                    color: open.length ? "var(--ops-fill-ok)" : "var(--ops-p2)",
-                  }}
-                >
+                {/* Ink, not status colour: the track already says it. */}
+                <td className="py-2.5 pe-5 text-end text-xs font-bold whitespace-nowrap text-npf-ink tabular-nums">
                   {open.length}
                   <span className="font-normal text-ops-dim">
                     /{inDivision.length}
