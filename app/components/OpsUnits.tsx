@@ -161,7 +161,10 @@ export default function OpsUnits() {
           />
         </OpsPanel>
       ) : (
-        <div className="grid items-start gap-x-4 gap-y-6 md:grid-cols-2 2xl:grid-cols-4">
+        /* All four lanes side by side from a desk width, like the wall
+           board: in two columns the long Available lane left a hole beside
+           En route and pushed On scene and Off the air below the fold. */
+        <div className="grid items-start gap-x-4 gap-y-6 md:grid-cols-2 xl:grid-cols-4">
           {LANES.map((lane) => {
             const inLane = visible.filter((u) => u.status === lane.status);
             return (
@@ -230,7 +233,7 @@ function UnitCard({
 
   return (
     <li
-      className={`npf-ops-call flex flex-col gap-3 rounded-xl p-4 ${
+      className={`npf-ops-call flex flex-col gap-2.5 rounded-xl p-3.5 ${
         off ? "ring-1 ring-npf-hairline ring-inset" : "bg-white ring-1 ring-npf-line ring-inset"
       }`}
       style={{ viewTransitionName: `unit-${unit.callsign.replace(/\W/g, "")}` }}
@@ -247,9 +250,20 @@ function UnitCard({
             {showState ? ` · ${unit.state}` : ""}
           </p>
         </div>
+        {/* A free unit's clock is how long it has stood by, which nobody
+            acts on, so it steps back; a committed unit's clock is the one a
+            supervisor reads. */}
         <span
-          className="shrink-0 font-secondary text-sm font-bold"
-          style={{ color: stale ? "var(--ops-p2)" : "var(--ops-text)" }}
+          className={`shrink-0 font-secondary text-sm ${
+            unit.status === "Available" ? "font-medium" : "font-bold"
+          }`}
+          style={{
+            color: stale
+              ? "var(--ops-p2)"
+              : unit.status === "Available"
+                ? "var(--ops-dim)"
+                : "var(--ops-text)",
+          }}
         >
           <Elapsed from={unit.since} />
           {stale ? (
