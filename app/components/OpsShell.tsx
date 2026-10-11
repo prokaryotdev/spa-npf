@@ -212,10 +212,12 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
         <header className="sticky top-0 z-40 border-b border-npf-hairline bg-white/90 backdrop-blur-xl">
           <div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
             {/* The crest lives in the sidebar on a desk; on a phone it
-                heads the bar. */}
+                heads the bar, badge only, so the command picker beside it
+                keeps room for its own name instead of running under the
+                lettering. */}
             <Link
               href="/app/police"
-              className="flex shrink-0 items-center rounded-chip py-1 text-npf-blue-deep lg:hidden"
+              className="flex shrink-0 items-center rounded-chip py-1 text-npf-blue-deep lg:hidden max-sm:[&_svg]:hidden"
             >
               <span
                 role="img"
@@ -232,7 +234,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
 
             <ShiftClock />
 
-            <div className="flex shrink-0 items-center gap-2">
+            <div className="flex shrink-0 items-center gap-2 max-sm:ms-auto">
               {/* An officer works a whole shift in here; the language control
                   has to be on this bar, not back on the public site. */}
               <LanguageSwitch />
@@ -365,8 +367,14 @@ function Sidebar({
             <span className="block truncate text-sm font-medium text-npf-ink">
               {t(officer.name)}
             </span>
+            {/* Rank over station, each on its own line: "Inspector · Force
+                Control Room" on one line ran out of rail and ended in an
+                ellipsis, cutting off where the officer sits. */}
             <span className="block truncate text-xs text-npf-steel">
-              {t(officer.rank ?? "")} · {t(officer.station ?? "")}
+              {t(officer.rank ?? "")}
+            </span>
+            <span className="line-clamp-2 text-xs text-npf-steel">
+              {t(officer.station ?? "")}
             </span>
           </span>
           <button
@@ -455,7 +463,10 @@ function ShiftClock() {
   const shift = mounted ? shiftOf(new Date(now)) : "-";
 
   return (
-    <p className="ms-auto flex shrink-0 items-baseline gap-2 px-1">
+    /* Off on a phone: crest, command, language and the way out already fill
+       390px, and with the clock as well the command picker was squeezed
+       until its arrow sat on top of its own name. */
+    <p className="ms-auto flex shrink-0 items-baseline gap-2 px-1 max-sm:hidden">
       <span
         dir="ltr"
         className="flex items-baseline font-secondary text-base leading-none font-bold text-npf-ink tabular-nums"

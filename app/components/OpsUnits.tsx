@@ -7,13 +7,14 @@ import {
   OPS_SELECT,
   OpsButton,
   OpsEmpty,
+  OpsFigures,
   OpsHead,
   OpsPanel,
   OpsSearch,
   PriorityTag,
-  UnitStatusTag,
   useNow,
   useScoped,
+  withTransition,
 } from "./OpsPieces";
 import {
   setUnitStatus,
@@ -24,21 +25,31 @@ import {
 } from "./store";
 import { useT } from "../i18n/client";
 
-const ORDER: Record<UnitStatus, number> = {
-  Available: 0,
-  Assigned: 1,
-  "On Scene": 2,
-  Unavailable: 3,
-};
+/**
+ * The four lanes of the duty board, in the order a dispatcher reads them:
+ * who can go, who is going, who is there, who is off. Each carries the ink
+ * its status pill wears everywhere else in the console.
+ */
+const LANES: { status: UnitStatus; label: string; ink: string }[] = [
+  { status: "Available", label: "Available", ink: "var(--ops-fill-ok)" },
+  { status: "Assigned", label: "En route", ink: "var(--ops-route)" },
+  { status: "On Scene", label: "On scene", ink: "var(--ops-scene)" },
+  {
+    status: "Unavailable",
+    label: "Off the air",
+    ink: "color-mix(in srgb, var(--ops-dim) 60%, transparent)",
+  },
+];
 
 /**
- * The unit status monitor — the second half of a dispatch console, and the
- * half this one was missing.
+ * The unit status board, laid out like the magnetic duty board on a
+ * control-room wall: a lane per status, a card per unit, and a unit that
+ * changes status travels to its new lane. The question a dispatcher brings
+ * here is "who can I send", and the first lane answers it before anything
+ * is read.
  *
- * Every real CAD puts this beside the call queue for one reason: the queue
- * says what needs doing and this says who can do it. The column that matters
- * most is the clock, because a unit that has been on scene for fifty minutes
- * on a P4 is the thing a supervisor is looking for.
+ * The clock on each card matters most after that: a unit fifty minutes on
+ * scene at a P4 is what a supervisor is looking for, so it turns amber.
  */
 export default function OpsUnits() {
   const t = useT();
@@ -71,17 +82,35 @@ export default function OpsUnits() {
           t(u.status),
           u.incident ?? "",
         ].join(" "),
-    )
-      .sort(
-        (a, b) =>
-          ORDER[a.status] - ORDER[b.status] ||
-          a.callsign.localeCompare(b.callsign),
-      );
+    ).sort((a, b) => a.callsign.localeCompare(b.callsign));
   }, [units, query, section, t]);
 
+  const count = (s: UnitStatus) => units.filter((u) => u.status === s).length;
+
   return (
-    <div className="space-y-8">
-      <OpsHead title={t("Units")} />
+    <div className="space-y-6">
+      <OpsHead
+        title={t("Units")}
+        action={
+          <OpsFigures
+            figures={[
+              {
+                label: t("Available"),
+                value: count("Available"),
+                of: units.length,
+                tone: "var(--ops-ok)",
+              },
+              { label: t("En route"), value: count("Assigned") },
+              { label: t("On scene"), value: count("On Scene") },
+              {
+                label: t("Off the air"),
+                value: count("Unavailable"),
+                tone: "var(--ops-dim)",
+              },
+            ]}
+          />
+        }
+      />
 
       <div className="flex flex-wrap items-center gap-2">
         <OpsSearch
@@ -120,70 +149,8 @@ export default function OpsUnits() {
         </p>
       </div>
 
-      <OpsPanel flush>
-        {/*
-          No sideways scroller. Below `lg` the officer, the call and the
-          location fold into the callsign's own cell, so a phone still shows
-          every unit with its status, its clock and the control that changes
-          it, rather than a 760px table swiped one column at a time.
-        */}
-        <table className="w-full text-start text-sm">
-          <caption className="sr-only">
-            {t(
-              "Units on duty, with status, elapsed time in that status, and the call they are assigned to",
-            )}
-          </caption>
-          <thead className="npf-ops-thead text-xs font-semibold text-ops-dim">
-            <tr>
-              <th scope="col" className="py-2.5 pe-3 ps-4 font-medium">
-                {t("Callsign")}
-              </th>
-              <th
-                scope="col"
-                className="hidden py-2.5 pe-3 font-medium lg:table-cell"
-              >
-                {t("Officer")}
-              </th>
-              <th
-                scope="col"
-                className="hidden py-2.5 pe-3 font-medium sm:table-cell"
-              >
-                {t("Status")}
-              </th>
-              <th scope="col" className="py-2.5 pe-3 text-end font-medium">
-                {t("Elapsed")}
-              </th>
-              <th
-                scope="col"
-                className="hidden py-2.5 pe-3 font-medium lg:table-cell"
-              >
-                {t("On call")}
-              </th>
-              <th
-                scope="col"
-                className="hidden py-2.5 pe-3 font-medium lg:table-cell"
-              >
-                {t("Location")}
-              </th>
-              <th scope="col" className="py-2.5 pe-4 text-end font-medium">
-                {t("Move to")}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {visible.map((unit) => (
-              <Row
-                key={unit.callsign}
-                unit={unit}
-                incident={incidents.find((i) => i.id === unit.incident) ?? null}
-                now={now}
-                showState={!viewing}
-              />
-            ))}
-          </tbody>
-        </table>
-
-        {visible.length === 0 ? (
+      {visible.length === 0 ? (
+        <OpsPanel>
           <OpsEmpty
             tone="none"
             title={t("No unit matches that filter")}
@@ -191,8 +158,48 @@ export default function OpsUnits() {
               "Clear the search box or pick every section to see the whole shift again.",
             )}
           />
-        ) : null}
-      </OpsPanel>
+        </OpsPanel>
+      ) : (
+        <div className="grid items-start gap-x-4 gap-y-6 md:grid-cols-2 2xl:grid-cols-4">
+          {LANES.map((lane) => {
+            const inLane = visible.filter((u) => u.status === lane.status);
+            return (
+              <section key={lane.status} aria-label={t(lane.label)}>
+                <h2 className="mb-2.5 flex items-center gap-2 px-1 font-secondary text-base font-bold text-npf-ink">
+                  <span
+                    aria-hidden
+                    className="size-2.5 rounded-full"
+                    style={{ background: lane.ink }}
+                  />
+                  {t(lane.label)}
+                  <span className="ms-auto font-primary text-sm font-semibold text-npf-steel tabular-nums">
+                    {inLane.length}
+                  </span>
+                </h2>
+                {inLane.length ? (
+                  <ul className="grid gap-2">
+                    {inLane.map((unit) => (
+                      <UnitCard
+                        key={unit.callsign}
+                        unit={unit}
+                        incident={
+                          incidents.find((i) => i.id === unit.incident) ?? null
+                        }
+                        now={now}
+                        showState={!viewing}
+                      />
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="rounded-xl px-4 py-5 text-center text-xs text-npf-steel ring-1 ring-npf-hairline ring-inset">
+                    {t("None")}
+                  </p>
+                )}
+              </section>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
@@ -200,7 +207,11 @@ export default function OpsUnits() {
 /** A unit sitting in one status for longer than this wants a welfare check. */
 const STALE_MINUTES = 45;
 
-function Row({
+/**
+ * One unit on the board: callsign and clock on top, who and where under
+ * them, the call it is on, and the one control that moves it on.
+ */
+function UnitCard({
   unit,
   incident,
   now,
@@ -214,111 +225,85 @@ function Row({
   const t = useT();
   const held = now ? (now - new Date(unit.since).getTime()) / 60_000 : 0;
   const stale = held > STALE_MINUTES && unit.status !== "Available";
+  const off = unit.status === "Unavailable";
 
   return (
-    <tr
-      className="border-b border-ops-line-soft transition-colors last:border-0 hover:bg-ops-hover"
+    <li
+      className={`npf-ops-call flex flex-col gap-3 rounded-xl p-4 ${
+        off ? "ring-1 ring-npf-hairline ring-inset" : "bg-white ring-1 ring-npf-line ring-inset"
+      }`}
+      style={{ viewTransitionName: `unit-${unit.callsign.replace(/\W/g, "")}` }}
     >
-      <th scope="row" className="py-2.5 pe-3 ps-4 align-top">
-        {/*
-          The folded lines live inside a capped block, not loose in the cell.
-          A table cell ignores max-width under auto layout, so the `truncate`
-          on a long standby location made the column as wide as "Bill Clinton
-          Drive — standby" and pushed the status control clean off the panel
-          edge — where `overflow-clip` cropped it with no scrollbar to find it
-          by. Capped here, the same text ellipsises instead.
-        */}
-        <div className="max-w-[34vw] sm:max-w-[16rem] lg:max-w-none">
-          <span className="font-secondary font-bold lg:whitespace-nowrap">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="font-secondary text-base leading-tight font-bold text-npf-ink">
             {t(unit.callsign)}
-          </span>
-          <span className="block truncate text-2xs font-normal text-ops-dim">
+          </p>
+          <p className="mt-0.5 truncate text-xs text-ops-dim">
+            {t(unit.officer)}
+            {" · "}
             {t(unit.section)}
             {showState ? ` · ${unit.state}` : ""}
-            <span className="lg:hidden"> · {t(unit.officer)}</span>
-          </span>
-          <span className="mt-1 flex items-center gap-x-2 text-2xs font-normal text-ops-dim lg:hidden">
-            <span className="sm:hidden">
-              <UnitStatusTag status={unit.status} />
-            </span>
-            {incident ? (
-              <>
-                <PriorityTag priority={incident.priority} />
-                <span className="shrink-0 font-secondary font-bold tabular-nums">
-                  {incident.id}
-                </span>
-              </>
-            ) : null}
-            <span className="truncate">{t(unit.area)}</span>
-          </span>
+          </p>
         </div>
-      </th>
-      <td className="hidden py-2.5 pe-3 align-top whitespace-nowrap text-ops-dim lg:table-cell">
-        {t(unit.officer)}
-      </td>
-      {/* Callsign, clock and control are what a phone has room for; the
-          status pill folds up into the callsign block below 640px. */}
-      <td className="hidden py-2.5 pe-3 align-top sm:table-cell">
-        <UnitStatusTag status={unit.status} />
-      </td>
-      <td
-        className="py-2.5 pe-3 text-end align-top font-medium whitespace-nowrap"
-        style={stale ? { color: "var(--ops-p2)" } : undefined}
-      >
-        <Elapsed from={unit.since} />
-        {stale ? (
-          <span className="sr-only"> {t("(held over 45 minutes)")}</span>
-        ) : null}
-      </td>
-      <td className="hidden py-2.5 pe-3 align-top lg:table-cell">
-        {incident ? (
-          <span className="flex items-center gap-2 whitespace-nowrap">
-            <PriorityTag priority={incident.priority} />
-            <span className="font-secondary text-xs font-bold tabular-nums">
-              {incident.id}
-            </span>
+        <span
+          className="shrink-0 font-secondary text-sm font-bold"
+          style={{ color: stale ? "var(--ops-p2)" : "var(--ops-text)" }}
+        >
+          <Elapsed from={unit.since} />
+          {stale ? (
+            <span className="sr-only"> {t("(held over 45 minutes)")}</span>
+          ) : null}
+        </span>
+      </div>
+
+      {incident ? (
+        <p className="flex min-w-0 items-center gap-2 text-xs">
+          <PriorityTag priority={incident.priority} />
+          <span className="shrink-0 font-secondary font-bold tabular-nums">
+            {incident.id}
           </span>
-        ) : (
-          <span className="text-xs text-ops-dim">—</span>
-        )}
-      </td>
-      <td className="hidden w-full py-2.5 pe-3 align-top text-xs text-ops-dim lg:table-cell">
-        {t(unit.area)}
-      </td>
-      <td className="py-2.5 pe-4 text-end align-top">
+          <span className="truncate text-ops-dim">{t(incident.kind)}</span>
+        </p>
+      ) : null}
+
+      <div className="flex items-center justify-between gap-3">
+        <span className="min-w-0 truncate text-xs text-ops-dim">
+          {t(unit.area)}
+        </span>
         {/*
-          A unit on a call is cleared from the call, not from here — clearing
+          A unit on a call is cleared from the call, not from here: clearing
           it here would leave the incident showing a unit that has gone.
         */}
         {incident ? (
           <OpsButton
+            tone="brand"
             onClick={() =>
-              updateIncident(incident.id, {
-                status:
-                  incident.status === "Dispatched" ? "On Scene" : "Closed",
-              })
+              withTransition(() =>
+                updateIncident(incident.id, {
+                  status:
+                    incident.status === "Dispatched" ? "On Scene" : "Closed",
+                }),
+              )
             }
-            className="min-w-24 max-w-30 justify-center !px-2.5 !py-1 text-center !text-xs sm:min-w-0 sm:max-w-none sm:whitespace-nowrap"
+            className="h-9 shrink-0 !px-3.5 !text-xs"
           >
             {incident.status === "Dispatched" ? t("Arrived") : t("Clear call")}
           </OpsButton>
         ) : (
           <OpsButton
-            tone={unit.status === "Available" ? "quiet" : "brand"}
+            tone={off ? "brand" : "ghost"}
             onClick={() =>
-              setUnitStatus(
-                unit.callsign,
-                unit.status === "Available" ? "Unavailable" : "Available",
+              withTransition(() =>
+                setUnitStatus(unit.callsign, off ? "Available" : "Unavailable"),
               )
             }
-            className="min-w-24 max-w-30 justify-center !px-2.5 !py-1 text-center !text-xs sm:min-w-0 sm:max-w-none sm:whitespace-nowrap"
+            className="h-9 shrink-0 !px-3.5 !text-xs"
           >
-            {unit.status === "Available"
-              ? t("Off the air")
-              : t("Back on the air")}
+            {off ? t("Back on the air") : t("Off the air")}
           </OpsButton>
         )}
-      </td>
-    </tr>
+      </div>
+    </li>
   );
 }

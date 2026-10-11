@@ -10,13 +10,16 @@ import {
   OPS_SELECT,
   OpsButton,
   OpsEmpty,
+  OpsFigures,
   OpsHead,
   OpsPanel,
   OpsSearch,
   OpsStatus,
   PRIORITY,
   PriorityTag,
+  TargetBar,
   duration,
+  isNearDue,
   isOverdue,
   useNow,
   useScoped,
@@ -123,6 +126,12 @@ export default function OpsIncidents() {
     );
   }, [incidents, query, status, priority, unassigned, t]);
 
+  const waiting = incidents.filter((i) => i.status === "New");
+  const late = waiting.filter((i) => isOverdue(i, now)).length;
+  const running = incidents.filter(
+    (i) => i.status === "Dispatched" || i.status === "On Scene",
+  ).length;
+
   // A call can leave this desk's view by being transferred; its panel goes too.
   const open = incidents.find((i) => i.id === selected) ?? null;
 
@@ -131,8 +140,26 @@ export default function OpsIncidents() {
       <OpsHead
         title={t("Calls")}
         action={
-          // Open, it closes the form: the quiet tone and a cross, so "Cancel"
-          // never wears the plus and the weight of the action it undoes.
+          <div className="flex flex-wrap items-end gap-x-8 gap-y-4">
+          <OpsFigures
+            figures={[
+              { label: t("Waiting"), value: waiting.length },
+              {
+                label: t("Late"),
+                value: late,
+                tone: late ? "var(--ops-p1)" : "var(--ops-dim)",
+              },
+              { label: t("Running"), value: running },
+              {
+                label: t("Closed"),
+                value: incidents.length - waiting.length - running,
+                tone: "var(--ops-dim)",
+              },
+            ]}
+          />
+          {/* Open, it closes the form: the quiet tone and a cross, so
+              "Cancel" never wears the plus and the weight of the action it
+              undoes. */}
           <OpsButton
             tone={taking ? "quiet" : "brand"}
             aria-expanded={taking}
@@ -145,6 +172,7 @@ export default function OpsIncidents() {
             )}
             {taking ? t("Cancel") : t("Take a call")}
           </OpsButton>
+          </div>
         }
       />
 
@@ -261,6 +289,7 @@ export default function OpsIncidents() {
               <tbody>
                 {visible.map((incident) => {
                   const late = isOverdue(incident, now);
+                  const near = isNearDue(incident, now);
                   const active = selected === incident.id;
                   return (
                     <tr
@@ -290,10 +319,20 @@ export default function OpsIncidents() {
                         </button>
                       </th>
                       <td className="py-3.5 pe-4 align-top font-medium">
+                        {/* The reference column folds away below 640px, and
+                            its button with it; this one keeps the row
+                            reachable from a keyboard on a narrow screen. */}
                         <span className="sm:hidden">
-                          <span className="text-xs font-normal tabular-nums text-ops-dim">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelected(incident.id);
+                            }}
+                            className="rounded-sm text-xs font-normal tabular-nums text-ops-dim"
+                          >
                             {incident.id}
-                          </span>{" "}
+                          </button>{" "}
                         </span>
                         {t(incident.kind)}
                         <span className="mt-0.5 block text-xs font-normal text-ops-dim">
@@ -322,7 +361,7 @@ export default function OpsIncidents() {
                         ) : (
                           <span
                             style={{ color: "var(--ops-p2)" }}
-                            className="font-medium"
+                            className="text-sm font-medium"
                           >
                             {t("No unit")}
                           </span>
@@ -330,7 +369,13 @@ export default function OpsIncidents() {
                       </td>
                       <td
                         className="py-3.5 pe-5 text-end align-top font-medium whitespace-nowrap tabular-nums"
-                        style={late ? { color: "var(--ops-p1)" } : undefined}
+                        style={
+                          late
+                            ? { color: "var(--ops-p1)" }
+                            : near
+                              ? { color: "var(--ops-p2)" }
+                              : undefined
+                        }
                       >
                         <Elapsed
                           from={incident.reported}
@@ -348,6 +393,13 @@ export default function OpsIncidents() {
                                   n: dispatchTarget[incident.priority],
                                 })}
                           </span>
+                        ) : null}
+                        {incident.status === "New" ? (
+                          <TargetBar
+                            incident={incident}
+                            now={now}
+                            className="ms-auto mt-1.5 w-16"
+                          />
                         ) : null}
                       </td>
                     </tr>
@@ -383,7 +435,10 @@ export default function OpsIncidents() {
               onClose={() => setSelected(null)}
             />
           ) : (
-            <OpsPanel title={t("Call detail")}>
+            /* Hidden below the two-column width: stacked under twelve
+               rows, an empty "pick a row" card is a dead end at the foot
+               of the page, and a tapped row opens its detail here anyway. */
+            <OpsPanel title={t("Call detail")} className="max-lg:hidden">
               <div className="flex flex-col items-center gap-3 px-2 py-8 text-center">
                 <span
                   aria-hidden
@@ -566,7 +621,7 @@ function Detail({
           id={`${id}-grade`}
           label={t("Grade")}
           value={incident.priority}
-          options={PRIORITIES.map((p) => [p, `${p} — ${t(PRIORITY[p].label)}`])}
+          options={PRIORITIES.map((p) => [p, `${p} ${t(PRIORITY[p].label)}`])}
           onChange={(p) =>
             updateIncident(incident.id, { priority: p as Priority })
           }
@@ -693,7 +748,7 @@ function Stamps({ incident }: { incident: Incident }) {
               </time>
             </span>
           ) : (
-            <span className="text-ops-dim">—</span>
+            <span className="sr-only">{t("None")}</span>
           )}
         </li>
       ))}
@@ -767,7 +822,7 @@ function TakeCall({
           >
             {PRIORITIES.map((p) => (
               <option key={p} value={p}>
-                {p} — {t(PRIORITY[p].label)} ·{" "}
+                {p} {t(PRIORITY[p].label)} ·{" "}
                 {t("dispatch within {n}m", { n: dispatchTarget[p] })}
               </option>
             ))}

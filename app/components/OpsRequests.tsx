@@ -5,9 +5,11 @@ import { useId, useMemo, useState } from "react";
 import {
   OpsButton,
   OpsEmpty,
+  OpsFigures,
   OpsHead,
   OpsPanel,
   OpsSearch,
+  useNow,
   useScoped,
 } from "./OpsPieces";
 import Link from "../i18n/Link";
@@ -28,6 +30,16 @@ const TONE: Record<RequestStatus, string> = {
   "Action Needed": "bg-ops-p2-wash text-ops-p2",
   Completed: "bg-ops-ok-wash text-ops-ok",
   Rejected: "bg-ops-p1-wash text-ops-p1",
+};
+
+/** Sentence case, like every other pill in the console and the timeline
+ *  steps under it; "In Review" sat right above "In review". */
+const LABEL: Record<RequestStatus, string> = {
+  Submitted: "Submitted",
+  "In Review": "In review",
+  "Action Needed": "Action needed",
+  Completed: "Completed",
+  Rejected: "Rejected",
 };
 
 /**
@@ -66,6 +78,10 @@ export default function OpsRequests() {
     );
   }, [requests, query, openOnly, t]);
 
+  const now = useNow();
+  const count = (s: RequestStatus) =>
+    requests.filter((r) => r.status === s).length;
+
   function ask(request: TrackedRequest) {
     const note = reason.trim();
     if (!note) return;
@@ -80,6 +96,24 @@ export default function OpsRequests() {
       <OpsHead
         title={t("Service requests")}
         lead={t("What you decide here shows on the applicant’s screen at once.")}
+        action={
+          <OpsFigures
+            figures={[
+              { label: t("Submitted"), value: count("Submitted") },
+              { label: t("In review"), value: count("In Review") },
+              {
+                label: t("Action needed"),
+                value: count("Action Needed"),
+                tone: count("Action Needed") ? "var(--ops-p2)" : "var(--ops-dim)",
+              },
+              {
+                label: t("Completed"),
+                value: count("Completed"),
+                tone: "var(--ops-ok)",
+              },
+            ]}
+          />
+        }
       />
 
       <div className="flex flex-wrap items-center gap-2">
@@ -145,8 +179,20 @@ export default function OpsRequests() {
                   </h2>
                   <span className={`npf-pill ${TONE[request.status]}`}>
                     <span aria-hidden className="npf-pill-dot" />
-                    {t(request.status)}
+                    {t(LABEL[request.status])}
                   </span>
+                  {/* How long the applicant has been waiting on this desk:
+                      the figure the request list is worked oldest-first by. */}
+                  {now && QUEUE.includes(request.status) ? (
+                    <span className="ms-auto text-xs font-medium text-npf-steel tabular-nums">
+                      {t("Open {n} days", {
+                        n: Math.floor(
+                          (now - new Date(request.submitted).getTime()) /
+                            86_400_000,
+                        ),
+                      })}
+                    </span>
+                  ) : null}
                 </div>
                 <p className="mt-1 text-xs text-ops-dim tabular-nums">
                   {t("{ref} · submitted {date} · {fee} · via {channel}", {
@@ -214,11 +260,13 @@ export default function OpsRequests() {
                         {format.dateTime(step.at)}
                       </span>
                       <span className="min-w-0">
-                        <span className="font-medium">{t(step.label)}</span>
+                        <span className="block font-medium">{t(step.label)}</span>
+                        {/* The note on its own line under the step, not
+                            hung off it by a dash: a long note then wraps
+                            under itself instead of under the step name. */}
                         {step.note ? (
-                          <span className="text-ops-dim">
-                            {" "}
-                            — {line(t, step.note, undefined, request.where)}
+                          <span className="mt-0.5 block text-ops-dim">
+                            {line(t, step.note, undefined, request.where)}
                           </span>
                         ) : null}
                       </span>

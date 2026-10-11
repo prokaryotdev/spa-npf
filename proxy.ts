@@ -27,7 +27,7 @@ function cspFor(nonce: string, secure: boolean) {
     // colour or an animation delay. Style attributes cannot run script, so
     // this stays narrower than putting 'unsafe-inline' on style-src itself.
     "style-src-attr 'unsafe-inline'",
-    // The police board map's street tiles, and nothing else from off-site.
+    // Images from this site only, nothing from off-site.
     "img-src 'self' blob: data:",
     "font-src 'self'",
     "object-src 'none'",

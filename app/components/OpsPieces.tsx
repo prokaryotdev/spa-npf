@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
+import { flushSync } from "react-dom";
 import { dispatchTarget } from "../content-ops";
 import { useT } from "../i18n/client";
 import { useHydrated, useStore, viewingOf } from "./store";
@@ -133,6 +134,61 @@ function waitingMinutes(incident: Incident, now: number) {
 export function isOverdue(incident: Incident, now: number) {
   if (incident.status !== "New" || !now) return false;
   return waitingMinutes(incident, now) > dispatchTarget[incident.priority];
+}
+
+/**
+ * A pending call into the last quarter of its target. Red at the deadline
+ * is too late to be a warning; amber here gives the desk the minute it
+ * needs to act before the call turns late.
+ */
+export function isNearDue(incident: Incident, now: number) {
+  if (incident.status !== "New" || !now || isOverdue(incident, now))
+    return false;
+  return (
+    waitingMinutes(incident, now) >= dispatchTarget[incident.priority] * 0.75
+  );
+}
+
+/** The ink a pending call's clock wears: red when late, amber near it. */
+export function targetTone(incident: Incident, now: number) {
+  return isOverdue(incident, now)
+    ? "var(--ops-p1)"
+    : isNearDue(incident, now)
+      ? "var(--ops-p2)"
+      : "var(--color-npf-blue-mid)";
+}
+
+/**
+ * How much of its grade's dispatch target a pending call has used. The
+ * clock beside it says how long; this says how close to late.
+ */
+export function TargetBar({
+  incident,
+  now,
+  className = "w-28",
+}: {
+  incident: Incident;
+  now: number;
+  className?: string;
+}) {
+  const target = dispatchTarget[incident.priority];
+  const used = now
+    ? Math.min(
+        100,
+        (now - new Date(incident.reported).getTime()) / (target * 600),
+      )
+    : 0;
+  return (
+    <span
+      aria-hidden
+      className={`block h-1 overflow-hidden rounded-full bg-ops-fill ${className}`}
+    >
+      <span
+        className="block h-full rounded-full transition-[width] duration-1000 ease-linear"
+        style={{ width: `${used}%`, background: targetTone(incident, now) }}
+      />
+    </span>
+  );
 }
 
 /* -------------------------------------------------------------------------
@@ -280,6 +336,38 @@ export function OpsHead({
       </div>
       {action}
     </header>
+  );
+}
+
+/**
+ * The figures a screen adds up to, set as one line beside its title rather
+ * than a row of cards. Each label sits under its number; `of` turns a count
+ * into "9/15". Colour comes from the caller and means something (red for
+ * late, green for free), so it is never decoration.
+ */
+export function OpsFigures({
+  figures,
+}: {
+  figures: { label: string; value: number; of?: number; tone?: string }[];
+}) {
+  return (
+    <dl className="flex flex-wrap items-end gap-x-7 gap-y-3">
+      {figures.map(({ label, value, of, tone }) => (
+        <div key={label} className="flex flex-col-reverse">
+          <dt className="text-xs font-medium text-npf-steel">{label}</dt>
+          <dd
+            key={value}
+            className="npf-ops-count font-secondary text-[1.75rem] leading-none font-bold tracking-[-0.02em] tabular-nums"
+            style={{ color: tone ?? "var(--color-npf-blue-deep)" }}
+          >
+            {value}
+            {of !== undefined ? (
+              <span className="text-base text-npf-steel">/{of}</span>
+            ) : null}
+          </dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 
@@ -486,12 +574,26 @@ const UNIT_TONE: Record<UnitStatus, string> = {
   Unavailable: "bg-ops-fill text-ops-dim",
 };
 
+/**
+ * A unit's state in the words the rest of the console already uses: the
+ * call a unit is assigned to reads "En route", so the unit does too, and
+ * "Off the air" is what the Units board's own buttons and legend say.
+ * "Assigned" and "Unavailable" were the store's words leaking onto the glass,
+ * and "On Scene" in title case sat one screen away from "On scene".
+ */
+const UNIT_LABEL: Record<UnitStatus, string> = {
+  Available: "Available",
+  Assigned: "En route",
+  "On Scene": "On scene",
+  Unavailable: "Off the air",
+};
+
 export function UnitStatusTag({ status }: { status: UnitStatus }) {
   const t = useT();
   return (
     <span className={`npf-pill ${UNIT_TONE[status]}`}>
       <span aria-hidden className="npf-pill-dot" />
-      {t(status)}
+      {t(UNIT_LABEL[status])}
     </span>
   );
 }
@@ -502,13 +604,17 @@ export function OpsButton({
   className = "",
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  tone?: "brand" | "quiet" | "danger";
+  /** `ghost` is for the routine control repeated down a list, so the row
+   *  that needs a decision is the one that carries a filled button. */
+  tone?: "brand" | "quiet" | "ghost" | "danger";
 }) {
   const tones = {
     brand:
       "bg-ops-brand text-white hover:bg-ops-brand-lift disabled:opacity-40",
     quiet:
       "bg-ops-fill text-ops-text hover:bg-ops-fill-hover disabled:opacity-40",
+    ghost:
+      "bg-white text-ops-dim ring-1 ring-ops-line ring-inset hover:bg-ops-hover hover:text-ops-text disabled:opacity-40",
     danger:
       "bg-npf-error-wash text-ops-p1 hover:bg-[#f7d3d3] disabled:opacity-40",
   };
@@ -525,4 +631,15 @@ export function OpsButton({
       className={`inline-flex h-10 items-center gap-1.5 rounded-full px-4 text-sm font-medium whitespace-nowrap transition-[background-color,border-color,box-shadow,scale] enabled:active:scale-[0.97] active:duration-(--dur-press) disabled:cursor-not-allowed ${tones[tone]} ${className}`}
     />
   );
+}
+
+/**
+ * Runs a board change through a view transition where the browser has one,
+ * so a call or a unit that changes lane travels there instead of blinking
+ * out of one list and into another.
+ */
+export function withTransition(change: () => void) {
+  if ("startViewTransition" in document)
+    document.startViewTransition(() => flushSync(change));
+  else change();
 }

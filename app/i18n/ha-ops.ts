@@ -131,7 +131,7 @@ export const haOps: Record<string, string> = {
   Callsign: "Lambar rediyo",
   Officer: "Jami'i",
   Status: "Matsayi",
-  "On call": "A shirye",
+  "On call": "Kan kira",
   Waiting: "Yana jira",
   Running: "Yana tafiya",
   Pending: "Yana jira",
@@ -172,6 +172,11 @@ export const haOps: Record<string, string> = {
   "Closed": "An rufe",
   "Available": "A shirye",
   "Unavailable": "Ba a samu ba",
+  // The console's sentence-case status words and the board's all-clear.
+  "En route": "Yana kan hanya",
+  "On scene": "A wurin",
+  "Rejected": "An ƙi",
+  "All within target": "Duk suna cikin lokaci",
   "Assigned": "An ba shi aiki",
   "Patrol": "Sintiri",
   "Marine": "Na Ruwa",
@@ -204,4 +209,15 @@ export const haOps: Record<string, string> = {
   "Minor collision cleared through the self-report service.": "An warware ƙaramin haɗari ta hanyar hidimar rahoton kai.",
   "Recruitment scam reported by three complainants in one week.": "Mutane uku sun ba da rahoton zamba ta ɗaukar aiki a mako ɗaya.",
   "Referred to the cybercrime investigation desk.": "An tura shi zuwa teburin binciken laifukan intanet.",
+
+  // --- command mosaic ------------------------------------------------------
+  "{n} late": "{n} sun makara",
+  "{n} running": "{n} ana kai",
+  Divisions: "Sassa",
+  "All divisions": "Dukkan sassa",
+  "Open {n} days": "A buɗe kwana {n}",
+  "{name}: {w} waiting, {l} late, {r} running, {f} of {u} units free":
+    "{name}: {w} suna jira, {l} sun makara, {r} ana kai, rundunoni {f} cikin {u} a shirye",
+  "{name}: {w} waiting, {l} late, {r} running":
+    "{name}: {w} suna jira, {l} sun makara, {r} ana kai",
 };

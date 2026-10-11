@@ -258,6 +258,11 @@ export const yoOps: Record<string, string> = {
   "Closed": "A ti pa á dé",
   "Available": "Wà lófo",
   "Unavailable": "Kò sí lárọ̀ọ́wọ́tó",
+  // The console's sentence-case status words and the board's all-clear.
+  "En route": "Ó ń bọ̀ lọ́nà",
+  "On scene": "Lójú ibi",
+  "Rejected": "A kọ̀ ọ́",
+  "All within target": "Gbogbo rẹ̀ wà láàrin àkókò",
   "Assigned": "A ti yàn án",
   "Patrol": "Ìṣọ́",
   "Marine": "Ojú Omi",
@@ -290,4 +295,15 @@ export const yoOps: Record<string, string> = {
   "Minor collision cleared through the self-report service.": "A yanjú jàǹbá kékeré náà nípasẹ̀ iṣẹ́ ìfiròyìn ara ẹni.",
   "Recruitment scam reported by three complainants in one week.": "Àwọn olùfisùn mẹ́ta fi ìròyìn jìbìtì ìgbaniṣiṣẹ́ ránṣẹ́ láàárín ọ̀sẹ̀ kan.",
   "Referred to the cybercrime investigation desk.": "A fi ránṣẹ́ sí tábìlì ìwádìí ìwà ọ̀daràn orí ayélujára.",
+
+  // --- command mosaic ------------------------------------------------------
+  "{n} late": "{n} ti pẹ́",
+  "{n} running": "{n} ń lọ lọ́wọ́",
+  Divisions: "Àwọn ẹ̀ka",
+  "All divisions": "Gbogbo ẹ̀ka",
+  "Open {n} days": "Ó ti wà ní ṣíṣí fún ọjọ́ {n}",
+  "{name}: {w} waiting, {l} late, {r} running, {f} of {u} units free":
+    "{name}: {w} ń dúró, {l} ti pẹ́, {r} ń lọ lọ́wọ́, ẹgbẹ́ {f} nínú {u} wà ní àrọ́wọ́tó",
+  "{name}: {w} waiting, {l} late, {r} running":
+    "{name}: {w} ń dúró, {l} ti pẹ́, {r} ń lọ lọ́wọ́",
 };

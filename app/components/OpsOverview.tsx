@@ -1,48 +1,60 @@
 "use client";
 
 import Link from "../i18n/Link";
-import { useId } from "react";
-import { flushSync } from "react-dom";
+import { useId, useState } from "react";
 import { dispatchTarget } from "../content-ops";
+import { zones } from "../content-footer";
 import {
   Elapsed,
   OpsEmpty,
+  OpsFigures,
   OpsHead,
   OpsPanel,
   OpsStatus,
   PriorityTag,
+  TargetBar,
+  targetTone,
   duration,
   isOverdue,
   useNow,
   useScoped,
+  withTransition,
 } from "./OpsPieces";
-import { updateIncident, type Incident, type Unit } from "./store";
-import { placeOf } from "../geo";
 import {
-  AlertIcon,
-  ArrowRight,
-  ClockIcon,
-  PhoneCallIcon,
-  RadioIcon,
-  UserCircle,
-} from "./icons";
+  setViewing,
+  updateIncident,
+  useStore,
+  type Incident,
+  type Unit,
+} from "./store";
+import { STATES, placeOf } from "../geo";
+import { ArrowRight, CloseIcon } from "./icons";
 import { useFormat, useT } from "../i18n/client";
 
 /**
- * The command board. It answers the four questions a duty supervisor asks on
- * walking into the room, in the order they ask them: what is waiting, what is
- * late, who is running, and who is free.
+ * The command board.
  *
- * Laid out like /services: the title, a mist strip of the four numbers, then
- * the queues in white cards. Pending calls lead, wide, because an unassigned
- * call is the only thing on this screen that is actively getting worse while
- * nobody looks at it; the unit roll-up rides beside them on a desk.
+ * It opens on the Force itself: every command as a tile, grouped by
+ * geopolitical zone, each carrying its own waiting, late and free-unit
+ * numbers. A national desk reads the whole country in one look, sees which
+ * tiles are red, and picks one; the queues under the mosaic narrow to that
+ * command. A command desk gets the same mosaic one level down, by division.
+ *
+ * Under it the work: pending calls with their dispatch control, the calls
+ * already running, and the units by section.
  */
 export default function OpsOverview() {
   const t = useT();
-  const { incidents, units } = useScoped();
+  const { incidents: inView, units, session, viewing } = useScoped();
   const now = useNow();
   const format = useFormat();
+  const fixed = session?.command;
+  // A command desk narrows by division; units carry no division, so the
+  // narrowing applies to calls only.
+  const [division, setDivision] = useState<string | null>(null);
+  const incidents = division
+    ? inView.filter((i) => i.where.division === division)
+    : inView;
 
   const pending = incidents
     .filter((i) => i.status === "New")
@@ -62,63 +74,37 @@ export default function OpsOverview() {
       <OpsHead
         title={t("Command board")}
         lead={now ? format.date(new Date(now).toISOString().slice(0, 10)) : undefined}
+        action={
+          <OpsFigures
+            figures={[
+              { label: t("Waiting"), value: pending.length },
+              {
+                label: t("Late"),
+                value: overdue.length,
+                tone: overdue.length ? "var(--ops-p1)" : "var(--ops-dim)",
+              },
+              { label: t("Running"), value: running.length },
+              {
+                label: t("Units free"),
+                value: free.length,
+                of: units.length,
+                tone: "var(--ops-ok)",
+              },
+            ]}
+          />
+        }
       />
 
-      {/*
-        The four headline tiles. Each number carries the breakdown a
-        supervisor asks for next (which grades are waiting, who is en route
-        and who is on scene, how the units split) so the tile answers the
-        follow-up without a click. Red only when something is late.
-      */}
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
-        <Kpi label={t("Waiting")} value={pending.length} Icon={PhoneCallIcon}>
-          <GradeMix calls={pending} />
-        </Kpi>
-        <Kpi
-          label={t("Late")}
-          value={overdue.length}
-          Icon={overdue.length ? AlertIcon : ClockIcon}
-          alert={overdue.length > 0}
-        >
-          <GradeMix calls={overdue} />
-        </Kpi>
-        <Kpi label={t("Running")} value={running.length} Icon={RadioIcon}>
-          {(["Dispatched", "On Scene"] as const).map((status) => {
-            const n = running.filter((i) => i.status === status).length;
-            return n ? (
-              <span key={status} className="inline-flex items-center gap-1.5">
-                <OpsStatus status={status} />
-                <span className="font-semibold text-npf-ink tabular-nums">
-                  {n}
-                </span>
-              </span>
-            ) : null;
-          })}
-        </Kpi>
-        <Kpi
-          label={t("Units free")}
-          value={
-            <>
-              {free.length}
-              <span className="text-[0.6em] font-semibold text-npf-steel">
-                /{units.length}
-              </span>
-            </>
-          }
-          Icon={UserCircle}
-        >
-          {/* One segment per unit, in the colours the Units panel names. */}
-          <span aria-hidden className="flex h-2 w-full gap-0.5">
-            {units.map((u) => (
-              <span
-                key={u.callsign}
-                className="flex-1 rounded-full transition-[background-color] duration-500 ease-(--ease-out)"
-                style={{ background: UNIT_FILL[u.status] }}
-              />
-            ))}
-          </span>
-        </Kpi>
-      </div>
+      {fixed ? (
+        <DivisionMosaic
+          incidents={inView}
+          now={now}
+          chosen={division}
+          onChoose={(d) => withTransition(() => setDivision(d))}
+        />
+      ) : (
+        <CommandMosaic now={now} chosen={viewing} />
+      )}
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_24rem] xl:items-start">
         <div className="@container min-w-0 space-y-4">
@@ -138,7 +124,7 @@ export default function OpsOverview() {
                     key={incident.id}
                     incident={incident}
                     units={units}
-                    late={isOverdue(incident, now)}
+                    now={now}
                   />
                 ))}
               </ul>
@@ -190,64 +176,289 @@ export default function OpsOverview() {
 
 /* ------------------------------------------------------------------------ */
 
+type Tally = {
+  waiting: number;
+  late: number;
+  running: number;
+  free?: number;
+  units?: number;
+};
+
+/** What a set of calls (and, for a command, its units) adds up to. */
+function tally(calls: Incident[], now: number, units?: Unit[]): Tally {
+  const pending = calls.filter((i) => i.status === "New");
+  return {
+    waiting: pending.length,
+    late: pending.filter((i) => isOverdue(i, now)).length,
+    running: calls.filter(
+      (i) => i.status === "Dispatched" || i.status === "On Scene",
+    ).length,
+    free: units?.filter((u) => u.status === "Available").length,
+    units: units?.length,
+  };
+}
+
 /**
- * A headline tile: the label, its icon, the number, and one line of
- * breakdown under it. Red only when it means act.
+ * The national mosaic: all 37 commands in their six zones. It reads the
+ * whole store, not the command in view, because it is the control that
+ * chooses the command in view; picking a tile is the same act as picking a
+ * command in the bar above, and picking it again hands back the whole Force.
  */
-function Kpi({
-  label,
-  value,
-  Icon,
-  alert = false,
-  children,
-}: {
-  label: string;
-  value: React.ReactNode;
-  Icon: (props: { className?: string }) => React.ReactNode;
-  alert?: boolean;
-  children?: React.ReactNode;
-}) {
+function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) {
+  const t = useT();
+  const { incidents, units } = useStore();
+  const choose = (name: string | undefined) =>
+    withTransition(() => setViewing(name));
+
   return (
-    <section
-      aria-label={label}
-      className={`npf-ops-tile flex min-w-0 flex-col p-4 sm:p-5 ${alert ? "bg-[linear-gradient(180deg,var(--color-npf-error-wash),#fff_70%)]" : ""}`}
+    <OpsPanel
+      title={t("Commands")}
+      action={
+        chosen ? (
+          <button
+            type="button"
+            onClick={() => choose(undefined)}
+            className="npf-small -my-2 inline-flex min-h-11 items-center gap-1.5 font-medium text-npf-blue underline-offset-4 hover:text-npf-blue-deep hover:underline"
+          >
+            <CloseIcon aria-hidden className="size-3.5" />
+            {t("All commands")}
+          </button>
+        ) : null
+      }
     >
-      <div className="flex items-start justify-between gap-3">
-        <h2 className="text-sm font-medium text-npf-steel">{label}</h2>
-        <span
-          aria-hidden
-          className={`grid size-9 shrink-0 place-items-center rounded-full sm:size-10 ${
-            alert ? "bg-npf-alert text-white" : "bg-npf-cloud text-npf-blue-ink"
-          }`}
-        >
-          <Icon className="size-4.5 sm:size-5" />
-        </span>
+      <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 2xl:grid-cols-6">
+        {zones.map((zone) => {
+          const tiles = STATES.filter((s) => s.zone === zone).map((s) => {
+            const sum = tally(
+              incidents.filter((i) => i.where.state === s.name),
+              now,
+              units.filter((u) => u.state === s.name),
+            );
+            const busy = !!(sum.waiting || sum.running) || chosen === s.name;
+            return { s, sum, busy };
+          });
+          /* On a phone the quiet commands, and a zone with none busy, step
+             off: thirty-seven tiles is a long scroll to reach the queue. */
+          return (
+            <section
+              key={zone}
+              aria-label={t(zone)}
+              className={`min-w-0 ${tiles.some((x) => x.busy) ? "" : "max-sm:hidden"}`}
+            >
+              <h3 className="mb-2 truncate text-xs font-semibold text-npf-steel">
+                {t(zone)}
+              </h3>
+              <ul className="grid gap-1.5">
+                {tiles.map(({ s, sum, busy }) => (
+                  <li key={s.name} className={busy ? "" : "max-sm:hidden"}>
+                    <Tile
+                      name={s.name}
+                      tally={sum}
+                      chosen={chosen === s.name}
+                      onChoose={() =>
+                        choose(chosen === s.name ? undefined : s.name)
+                      }
+                    />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          );
+        })}
       </div>
-      <p
-        key={String(typeof value === "object" ? "" : value)}
-        className="npf-ops-count -mt-1 font-secondary text-[2rem] leading-none font-bold tracking-[-0.02em] tabular-nums sm:text-[2.5rem]"
-        style={{ color: alert ? "var(--ops-p1)" : "var(--color-npf-blue-deep)" }}
-      >
-        {value}
-      </p>
-      <div className="mt-4 flex min-h-6 flex-wrap items-center gap-x-3 gap-y-1.5 text-xs">
-        {children}
-      </div>
-    </section>
+    </OpsPanel>
   );
 }
 
-/** How a set of calls splits by grade: one tag and a count per grade held. */
-function GradeMix({ calls }: { calls: Incident[] }) {
-  const grades = (["P1", "P2", "P3", "P4"] as const)
-    .map((p) => [p, calls.filter((c) => c.priority === p).length] as const)
-    .filter(([, n]) => n);
-  return grades.map(([p, n]) => (
-    <span key={p} className="inline-flex items-center gap-1.5">
-      <PriorityTag priority={p} withLabel={false} />
-      <span className="font-semibold text-npf-ink tabular-nums">{n}</span>
-    </span>
-  ));
+/**
+ * A command desk's mosaic: its divisions with a call open, busiest first.
+ * A command has dozens of divisions and most are quiet at any hour, so the
+ * quiet ones stay off the board rather than burying the three that matter.
+ */
+function DivisionMosaic({
+  incidents,
+  now,
+  chosen,
+  onChoose,
+}: {
+  incidents: Incident[];
+  now: number;
+  chosen: string | null;
+  onChoose: (division: string | null) => void;
+}) {
+  const t = useT();
+  const open = incidents.filter((i) => i.status !== "Closed");
+  const divisions = [...new Set(open.map((i) => i.where.division))]
+    .map((d) => ({
+      name: d,
+      tally: tally(
+        open.filter((i) => i.where.division === d),
+        now,
+      ),
+    }))
+    .sort(
+      (a, b) =>
+        b.tally.late - a.tally.late ||
+        b.tally.waiting - a.tally.waiting ||
+        b.tally.running - a.tally.running,
+    );
+
+  if (!divisions.length) return null;
+  return (
+    <OpsPanel
+      title={t("Divisions")}
+      action={
+        chosen ? (
+          <button
+            type="button"
+            onClick={() => onChoose(null)}
+            className="npf-small -my-2 inline-flex min-h-11 items-center gap-1.5 font-medium text-npf-blue underline-offset-4 hover:text-npf-blue-deep hover:underline"
+          >
+            <CloseIcon aria-hidden className="size-3.5" />
+            {t("All divisions")}
+          </button>
+        ) : null
+      }
+    >
+      <ul className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 xl:grid-cols-5">
+        {divisions.map(({ name, tally }) => (
+          <li key={name}>
+            <Tile
+              name={t(name)}
+              tally={tally}
+              chosen={chosen === name}
+              onChoose={() => onChoose(chosen === name ? null : name)}
+            />
+          </li>
+        ))}
+      </ul>
+    </OpsPanel>
+  );
+}
+
+/**
+ * One command or division. The waiting count is the figure, because a call
+ * nobody has taken is the thing on this board that gets worse by itself;
+ * late turns the whole tile red. A quiet tile drops back to the ground so
+ * the busy ones are what the eye lands on.
+ */
+function Tile({
+  name,
+  tally: { waiting, late, running, free, units },
+  chosen,
+  onChoose,
+}: {
+  name: string;
+  tally: Tally;
+  chosen: boolean;
+  onChoose: () => void;
+}) {
+  const t = useT();
+  const quiet = !waiting && !running;
+  const hasUnits = !!units && free !== undefined;
+  const label = hasUnits
+    ? t("{name}: {w} waiting, {l} late, {r} running, {f} of {u} units free", {
+        name,
+        w: waiting,
+        l: late,
+        r: running,
+        f: free,
+        u: units,
+      })
+    : t("{name}: {w} waiting, {l} late, {r} running", {
+        name,
+        w: waiting,
+        l: late,
+        r: running,
+      });
+
+  const surface = chosen
+    ? "bg-ops-brand text-white shadow-[0_8px_20px_-10px_var(--color-npf-blue-deep)]"
+    : late
+      ? "bg-ops-p1-wash text-npf-ink ring-1 ring-inset ring-[color-mix(in_srgb,var(--ops-p1)_30%,transparent)] hover:ring-[color-mix(in_srgb,var(--ops-p1)_55%,transparent)]"
+      : quiet
+        ? "text-npf-steel ring-1 ring-inset ring-npf-hairline hover:bg-white hover:text-npf-ink"
+        : "bg-white text-npf-ink ring-1 ring-inset ring-npf-line hover:ring-npf-blue-mid/50";
+  const figure = chosen
+    ? "#fff"
+    : late
+      ? "var(--ops-p1)"
+      : "var(--color-npf-blue-deep)";
+  const meta = chosen ? "text-white/80" : "text-npf-steel";
+
+  return (
+    <button
+      type="button"
+      aria-pressed={chosen}
+      aria-label={label}
+      onClick={onChoose}
+      /* A quiet tile is one line: its name and, if it has any, its free
+         units. Only a tile with work open grows to carry the figure, so
+         the busy commands stand taller than the rest of the zone. */
+      className={`flex w-full flex-col justify-between rounded-xl px-3 text-start transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) active:scale-[0.97] active:duration-(--dur-press) ${
+        quiet && !chosen ? "min-h-10 py-2" : "min-h-16 gap-1.5 py-2.5"
+      } ${surface}`}
+    >
+      <span className="flex w-full items-center justify-between gap-2">
+        <span
+          className={`min-w-0 truncate text-sm leading-tight ${quiet ? "" : "font-semibold"}`}
+        >
+          {name}
+        </span>
+        {quiet && hasUnits ? (
+          <span
+            aria-hidden
+            className={`text-2xs tabular-nums ${chosen ? "text-white/80" : "text-npf-steel"}`}
+          >
+            {free}/{units}
+          </span>
+        ) : null}
+        {waiting ? (
+          <span
+            key={waiting}
+            aria-hidden
+            className="npf-ops-count -mt-0.5 font-secondary text-xl leading-none font-bold tabular-nums"
+            style={{ color: figure }}
+          >
+            {waiting}
+          </span>
+        ) : null}
+      </span>
+      {quiet ? null : (
+      <span
+        aria-hidden
+        className={`flex w-full items-center gap-x-2 text-2xs leading-none whitespace-nowrap tabular-nums ${meta}`}
+      >
+        {late ? (
+          <span
+            className={`font-semibold ${chosen ? "text-white" : "text-ops-p1"}`}
+          >
+            {t("{n} late", { n: late })}
+          </span>
+        ) : waiting ? (
+          <span>{t("{n} waiting", { n: waiting })}</span>
+        ) : (
+          <span>{t("{n} running", { n: running })}</span>
+        )}
+        {hasUnits ? (
+          <span className="ms-auto flex items-center gap-1">
+            <span
+              className="size-1.5 rounded-full"
+              style={{
+                background: free
+                  ? chosen
+                    ? "#fff"
+                    : "var(--ops-fill-ok)"
+                  : "color-mix(in srgb, var(--ops-dim) 45%, transparent)",
+              }}
+            />
+            {free}/{units}
+          </span>
+        ) : null}
+      </span>
+      )}
+    </button>
+  );
 }
 
 /** The link out of a panel to the board that owns the same data in full. */
@@ -279,19 +490,21 @@ function More({ href, children }: { href: string; children: React.ReactNode }) {
 function PendingCall({
   incident,
   units,
-  late,
+  now,
 }: {
   incident: Incident;
   units: Unit[];
-  late: boolean;
+  now: number;
 }) {
   const t = useT();
   const id = useId();
+  const late = isOverdue(incident, now);
   // Its own command's units only, even on a national desk.
   const free = units.filter(
     (u) => u.status === "Available" && u.state === incident.where.state,
   );
   const target = dispatchTarget[incident.priority];
+  const tone = targetTone(incident, now);
 
   return (
     <li
@@ -308,7 +521,7 @@ function PendingCall({
         <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
           <PriorityTag priority={incident.priority} />
           <Link
-            href="/app/police/incidents"
+            href={`/app/police/incidents?call=${incident.id}`}
             className="rounded-chip font-secondary text-sm font-bold tabular-nums underline-offset-4 hover:underline"
           >
             {incident.id}
@@ -324,16 +537,19 @@ function PendingCall({
       </div>
 
       <div className="flex shrink-0 items-center justify-between gap-3 @md:flex-col @md:items-end @md:gap-2">
-        <span
-          className="font-secondary text-sm leading-none font-bold"
-          style={{ color: late ? "var(--ops-p1)" : "var(--ops-text)" }}
-        >
-          <Elapsed from={incident.reported} />
-          <span className="ms-1.5 font-primary text-2xs font-normal text-ops-dim">
-            {late
-              ? t("over {span}", { span: duration(target * 60_000) })
-              : t("of {n}m", { n: target })}
+        <span className="flex flex-col gap-1.5 @md:items-end">
+          <span
+            className="font-secondary text-sm leading-none font-bold"
+            style={{ color: tone }}
+          >
+            <Elapsed from={incident.reported} />
+            <span className="ms-1.5 font-primary text-2xs font-normal text-ops-dim">
+              {late
+                ? t("over {span}", { span: duration(target * 60_000) })
+                : t("of {n}m", { n: target })}
+            </span>
           </span>
+          <TargetBar incident={incident} now={now} />
         </span>
 
         <label htmlFor={id} className="sr-only">
@@ -355,9 +571,7 @@ function PendingCall({
             /* The call travels from the queue into Running, so the eye
                follows it to where it went instead of losing it in a blink
                out of one list and into the other. */
-            if ("startViewTransition" in document)
-              document.startViewTransition(() => flushSync(send));
-            else send();
+            withTransition(send);
           }}
           className="npf-ops-select h-10 max-w-56 rounded-full px-4 text-sm font-medium outline-none"
         >
@@ -390,9 +604,12 @@ function RunningCall({ incident }: { incident: Incident }) {
       style={{ viewTransitionName: `call-${incident.id}` }}
     >
       <PriorityTag priority={incident.priority} />
-      <span className="font-secondary text-sm font-bold tabular-nums">
+      <Link
+        href={`/app/police/incidents?call=${incident.id}`}
+        className="rounded-chip font-secondary text-sm font-bold tabular-nums underline-offset-4 hover:underline"
+      >
         {incident.id}
-      </span>
+      </Link>
       {/* On a phone the call keeps its words and the status drops to a
           second line, rather than "Theft…" squeezed beside it. */}
       <span className="min-w-0 flex-1 text-sm @max-md:min-w-[60%] @md:truncate">

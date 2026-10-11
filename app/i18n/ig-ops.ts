@@ -258,6 +258,11 @@ export const igOps: Record<string, string> = {
   "Closed": "Emechiri",
   "Available": "Nọ efu",
   "Unavailable": "Anọghị",
+  // The console's sentence-case status words and the board's all-clear.
+  "En route": "Nọ n'ụzọ",
+  "On scene": "N'ebe ahụ",
+  "Rejected": "A jụrụ ya",
+  "All within target": "Ha niile nọ n'ime oge",
   "Assigned": "E kenyere ya",
   "Patrol": "Nche",
   "Marine": "Mmiri",
@@ -290,4 +295,15 @@ export const igOps: Record<string, string> = {
   "Minor collision cleared through the self-report service.": "E doziri obere ihe mberede ahụ site n'ọrụ ịkọ akụkọ n'onwe.",
   "Recruitment scam reported by three complainants in one week.": "Ndị mkpesa atọ kọrọ akụkọ aghụghọ iwe mmadụ n'ọrụ n'otu izu.",
   "Referred to the cybercrime investigation desk.": "E zigara ya na tebụl nchọpụta mpụ ịntanetị.",
+
+  // --- command mosaic ------------------------------------------------------
+  "{n} late": "{n} egbuola oge",
+  "{n} running": "{n} na-aga n'ihu",
+  Divisions: "Ngalaba",
+  "All divisions": "Ngalaba niile",
+  "Open {n} days": "Emeghere ụbọchị {n}",
+  "{name}: {w} waiting, {l} late, {r} running, {f} of {u} units free":
+    "{name}: {w} na-eche, {l} egbuola oge, {r} na-aga n'ihu, otu {f} n'ime {u} dị njikere",
+  "{name}: {w} waiting, {l} late, {r} running":
+    "{name}: {w} na-eche, {l} egbuola oge, {r} na-aga n'ihu",
 };
