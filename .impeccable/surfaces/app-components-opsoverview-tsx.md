@@ -13,16 +13,18 @@ Constraints: light, Force blue, site type and radii (PRODUCT.md brand commitment
 
 ## Direction contract
 
-THESIS: The board is a situation mosaic of the Force itself: every command (or, on a command desk, every division) as a tile carrying its live waiting, late and free-unit numbers, grouped by geopolitical zone. It refuses the SaaS row of four KPI cards over two lists.
+THESIS: The board is a situation mosaic of the Force itself: every command (or, on a command desk, every division) as one row carrying its live waiting, late, running and free-unit numbers, grouped by geopolitical zone. It refuses the SaaS row of four KPI cards over two lists.
 
-OWN-WORLD: White tiles on the pale cloud ground, Force blue for the selected command, alert red only for late, amber for waiting, green for free units. Big tabular display numerals, sentence-case names, zone headings in the site display face. Hairline rims, 12–16px card radius, pills for small controls.
+OWN-WORLD: Rows inside one white panel on the pale cloud ground, Force blue for the selected command. The row's fill is its state: red wash when a call is late, amber wash while one waits, white with a hairline rim while units are out, no fill (steel text) when quiet. Sentence-case names, zone headings in the site display face, 8px row radius, pills for small controls.
 
-STORY: The officer sees in one look which commands have calls waiting and which are late, clicks one tile, and the queue under the mosaic narrows to that command, ready to dispatch in one step.
+ROWS (2026-10-11, replaced the taller busy tiles, which zig-zagged the columns): every row is 40px, so the six zones line up row for row. Figures sit in fixed slots at the row's end, in this order: waiting (solid amber pill, solid red once late), running (outline pill), units free as "free/all". An empty slot keeps its width so each slot reads as a column down the whole board. Waiting and running differ by shape (solid vs outline) as well as colour. A legend in the panel title (desk only) names the slots; each row's full summary is its accessible name and its hover title.
 
-FIRST VIEWPORT: Title row with a one-line live readout (waiting, late, running, units free) on the right. Under it the mosaic: six zone columns on a desk, tiles stacked; active tiles carry a big number, quiet tiles fade. Below the fold line, the selected command's Pending queue with dispatch selects, Running, and Units by division beside them.
+STORY: The officer sees in one look which commands have calls waiting and which are late, clicks one row, and the queue under the mosaic narrows to that command, ready to dispatch in one step.
+
+FIRST VIEWPORT: The navy band (title, scope line, waiting / late / running / units free). Under it the mosaic: six zone columns on a desk, three on a tablet; on a phone, quiet commands and empty zones step off. Below, the selected command's Pending queue with dispatch selects, Running, and Units by section beside them.
 
 FORM: Command mosaic, position 4 on my ordered list of 7 (re-roll 1), seed key 9f3d6063.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
-Signature interaction: choosing a tile fills it Force blue and the queue below cross-fades to that command through a view transition; choosing it again returns to the whole Force.
+Signature interaction: choosing a row fills it Force blue and the queue below cross-fades to that command through a view transition; choosing it again returns to the whole Force.

@@ -100,7 +100,7 @@ The console is an **operate** surface for a control-room officer working an eigh
 
 ## Layout
 
-- Desk: a fixed 272px white sidebar (crest, five destinations, duty officer), a 64px sticky bar (command in view, clock and relief, sample-data tag, language), and the work area on `npf-cloud`, max 1800px.
+- Desk: a fixed 272px white sidebar (crest, five destinations, duty officer), a 64px sticky bar (command in view, waiting-call alarm, clock and relief, language), and the work area on `npf-cloud`, max 1800px.
 - Below 1024px the sidebar becomes a row of five tabs under the bar; below 640px each tab is an icon over a short word, with its count on the icon. All five always fit in one row.
 - Every screen opens with the navy band (title, scope line, figures, the screen's main action), then one row of filters, then panels.
 - Lists that pin under the chrome offset by `--ops-top`, never a guessed number.
@@ -133,7 +133,6 @@ The console is an **operate** surface for a control-room officer working an eigh
 
 - Do lead with what is getting worse while nobody looks: the oldest unassigned call, the late clock.
 - Do give each screen one filled action; repeat routine controls as ghosts.
-- Do say "Sample data" while the boards are seeded; delete it with `app/backend.ts`.
 - Do translate every visible string into Hausa, Yoruba and Igbo (`npm test` fails otherwise).
 - Don't add a map, a dark theme, all-caps labels or square corners to the console.
 - Don't put status colour on text or use it for a chart series; text stays in ink.

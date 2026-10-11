@@ -219,7 +219,9 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
     <OpsPanel
       title={t("Commands")}
       action={
-        chosen ? (
+        <span className="flex items-center gap-5">
+          <Legend units={true} />
+          {chosen ? (
           <button
             type="button"
             onClick={() => choose(undefined)}
@@ -228,7 +230,8 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
             <CloseIcon aria-hidden className="size-3.5" />
             {t("All commands")}
           </button>
-        ) : null
+          ) : null}
+        </span>
       }
     >
       <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 xl:grid-cols-6">
@@ -253,7 +256,7 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
               <h3 className="mb-2.5 truncate border-b border-ops-line-soft pb-2 font-secondary text-sm font-bold text-npf-ink">
                 {t(zone)}
               </h3>
-              <ul className="grid gap-1">
+              <ul className="grid gap-0.5">
                 {tiles.map(({ s, sum, busy }) => (
                   <li key={s.name} className={busy ? "" : "max-sm:hidden"}>
                     <Tile
@@ -313,7 +316,9 @@ function DivisionMosaic({
     <OpsPanel
       title={t("Divisions")}
       action={
-        chosen ? (
+        <span className="flex items-center gap-5">
+          <Legend units={false} />
+          {chosen ? (
           <button
             type="button"
             onClick={() => onChoose(null)}
@@ -322,10 +327,11 @@ function DivisionMosaic({
             <CloseIcon aria-hidden className="size-3.5" />
             {t("All divisions")}
           </button>
-        ) : null
+          ) : null}
+        </span>
       }
     >
-      <ul className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 xl:grid-cols-5">
+      <ul className="grid grid-cols-2 gap-x-4 gap-y-0.5 sm:grid-cols-3 xl:grid-cols-5">
         {divisions.map(({ name, tally }) => (
           <li key={name}>
             <Tile
@@ -359,7 +365,6 @@ function Tile({
   onChoose: () => void;
 }) {
   const t = useT();
-  const quiet = !waiting && !running;
   const hasUnits = !!units && free !== undefined;
   const label = hasUnits
     ? t("{name}: {w} waiting, {l} late, {r} running, {f} of {u} units free", {
@@ -377,92 +382,112 @@ function Tile({
         r: running,
       });
 
+  /*
+   * Every command is one row of the same height, so the six zones line up
+   * row for row and the eye runs down a column, not round a staircase of
+   * cards. The fill says how bad it is: red when a call is late, amber while
+   * one waits, a white rim while units are out, nothing when quiet. The
+   * figures sit in fixed slots at the end (waiting, running, units free), so
+   * they read as columns across the whole board.
+   */
   const surface = chosen
-    ? "bg-ops-brand text-white shadow-[0_8px_20px_-10px_var(--color-npf-blue-deep)]"
+    ? "bg-ops-brand font-semibold text-white shadow-[0_6px_16px_-8px_var(--color-npf-blue-deep)]"
     : late
-      ? "bg-ops-p1-wash text-npf-ink ring-1 ring-inset ring-[color-mix(in_srgb,var(--ops-p1)_30%,transparent)] hover:ring-[color-mix(in_srgb,var(--ops-p1)_55%,transparent)]"
-      : quiet
-        ? "text-npf-steel hover:bg-npf-mist hover:text-npf-ink"
-        : "bg-white text-npf-ink ring-1 ring-inset ring-npf-line hover:ring-npf-blue-mid/50";
-  const figure = chosen
-    ? "#fff"
-    : late
-      ? "var(--ops-p1)"
-      : "var(--color-npf-blue-deep)";
-  const meta = chosen ? "text-white/80" : "text-npf-steel";
+      ? "bg-ops-p1-wash font-semibold text-npf-ink hover:ring-1 hover:ring-ops-p1/40 hover:ring-inset"
+      : waiting
+        ? "bg-ops-p2-wash font-semibold text-npf-ink hover:ring-1 hover:ring-ops-p2/40 hover:ring-inset"
+        : running
+          ? "bg-white font-medium text-npf-ink ring-1 ring-npf-line ring-inset hover:ring-npf-blue-mid/50"
+          : "text-npf-steel hover:bg-npf-mist hover:text-npf-ink";
 
   return (
     <button
       type="button"
       aria-pressed={chosen}
       aria-label={label}
+      title={label}
       onClick={onChoose}
-      /* A quiet tile is one line: its name and, if it has any, its free
-         units. Only a tile with work open grows to carry the figure, so
-         the busy commands stand taller than the rest of the zone. */
-      className={`flex w-full flex-col justify-between rounded-xl px-3 text-start transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) active:scale-[0.97] active:duration-(--dur-press) ${
-        quiet && !chosen ? "min-h-9 py-1.5" : "min-h-16 gap-1.5 py-2.5 shadow-[0_6px_16px_-12px_var(--color-npf-blue-deep)]"
-      } ${surface}`}
+      className={`flex h-10 w-full items-center gap-1.5 rounded-lg ps-3 pe-2 text-start text-sm transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) active:scale-[0.97] active:duration-(--dur-press) ${surface}`}
     >
-      <span className="flex w-full items-center justify-between gap-2">
-        <span
-          className={`min-w-0 truncate text-sm leading-tight ${quiet ? "" : "font-semibold"}`}
-        >
-          {name}
-        </span>
-        {quiet && hasUnits ? (
-          <span
-            aria-hidden
-            className={`text-2xs tabular-nums ${chosen ? "text-white/80" : "text-npf-steel"}`}
-          >
-            {free}/{units}
-          </span>
-        ) : null}
-        {waiting ? (
-          <span
-            key={waiting}
-            aria-hidden
-            className="npf-ops-count -mt-0.5 font-secondary text-xl leading-none font-bold tabular-nums"
-            style={{ color: figure }}
-          >
-            {waiting}
-          </span>
-        ) : null}
-      </span>
-      {quiet ? null : (
-      <span
-        aria-hidden
-        className={`flex w-full items-center gap-x-2 text-2xs leading-none whitespace-nowrap tabular-nums ${meta}`}
-      >
-        {late ? (
-          <span
-            className={`font-semibold ${chosen ? "text-white" : "text-ops-p1"}`}
-          >
-            {t("{n} late", { n: late })}
-          </span>
-        ) : waiting ? (
-          <span>{t("{n} waiting", { n: waiting })}</span>
-        ) : (
-          <span>{t("{n} running", { n: running })}</span>
-        )}
+      <span className="min-w-0 flex-1 truncate leading-tight">{name}</span>
+      <span aria-hidden className="flex shrink-0 items-center gap-0.5 tabular-nums">
+        <Count n={waiting} kind={late ? "late" : "waiting"} chosen={chosen} />
+        <Count n={running} kind="running" chosen={chosen} />
         {hasUnits ? (
-          <span className="ms-auto flex items-center gap-1">
-            <span
-              className="size-1.5 rounded-full"
-              style={{
-                background: free
-                  ? chosen
-                    ? "#fff"
-                    : "var(--ops-fill-ok)"
-                  : "color-mix(in srgb, var(--ops-dim) 45%, transparent)",
-              }}
-            />
+          <span
+            className={`w-8 text-end text-2xs font-medium ${
+              chosen ? "text-white/85" : free ? "text-npf-steel" : "text-npf-steel/60"
+            }`}
+          >
             {free}/{units}
           </span>
         ) : null}
       </span>
-      )}
     </button>
+  );
+}
+
+/**
+ * A figure in its fixed slot on a row. Waiting and late are solid, running is
+ * an outline, so the two read apart by shape as well as colour; an empty slot
+ * keeps its width so the column under it stays straight.
+ */
+function Count({
+  n,
+  kind,
+  chosen,
+}: {
+  n: number;
+  kind: "late" | "waiting" | "running";
+  chosen: boolean;
+}) {
+  const tone = chosen
+    ? kind === "running"
+      ? "text-white ring-1 ring-white/60 ring-inset"
+      : "bg-white text-npf-blue-deep"
+    : kind === "late"
+      ? "bg-ops-p1 text-white"
+      : kind === "waiting"
+        ? "bg-ops-p2 text-white"
+        : "text-npf-blue-ink ring-1 ring-npf-blue-mid/45 ring-inset";
+  return (
+    <span className="grid w-6 place-items-center">
+      {n ? (
+        <span
+          key={n}
+          className={`npf-ops-count grid h-5 min-w-5 place-items-center rounded-full px-1 text-2xs leading-none font-bold ${tone}`}
+        >
+          {n}
+        </span>
+      ) : null}
+    </span>
+  );
+}
+
+/** What the slots at the end of each row mean, said once over the board. */
+function Legend({ units }: { units: boolean }) {
+  const t = useT();
+  const key = (mark: string, label: string) => (
+    <span className="flex items-center gap-1.5">
+      <span aria-hidden className={`size-3 rounded-full ${mark}`} />
+      {label}
+    </span>
+  );
+  return (
+    <span
+      aria-hidden
+      className="flex items-center gap-4 text-xs text-npf-steel max-md:hidden"
+    >
+      {key("bg-ops-p1", t("Late"))}
+      {key("bg-ops-p2", t("Waiting"))}
+      {key("ring-1 ring-npf-blue-mid/45 ring-inset", t("Running"))}
+      {units ? (
+        <span className="flex items-center gap-1.5">
+          <span className="text-2xs font-medium tabular-nums">1/2</span>
+          {t("Units free")}
+        </span>
+      ) : null}
+    </span>
   );
 }
 

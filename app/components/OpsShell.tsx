@@ -151,7 +151,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
   // window still sees a call land.
   useEffect(() => {
     if (!loaded || !officer) return;
-    const base = document.title.replace(/^(d+) /, "");
+    const base = document.title.replace(/^\(\d+\) /, "");
     document.title = waiting ? `(${waiting}) ${base}` : base;
   }, [loaded, officer, waiting, path]);
 
@@ -247,32 +247,41 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
               viewing={viewing}
             />
 
-            <ShiftClock />
+            {/* The thing getting worse while nobody looks, on every screen
+                that does not already lead with it in its band. */}
+            {waiting > 0 &&
+              path !== "/app/police" &&
+              path !== "/app/police/incidents" && (
+                <Link
+                  href="/app/police/incidents"
+                  className="npf-pill shrink-0 bg-ops-p1-wash text-ops-p1 transition-[background-color,scale] duration-(--dur-hover) hover:bg-ops-p1-wash/70 active:scale-[0.97] max-lg:hidden"
+                >
+                  <span aria-hidden className="npf-pill-dot animate-pulse" />
+                  {t("{n} waiting", { n: waiting })}
+                </Link>
+              )}
 
-            {/* Every call, unit and officer on these boards is seeded from
-                app/content-ops.ts. Said once, on the bar, so nobody reads a
-                sample call as a real one. Delete with app/backend.ts once
-                store.ts talks to the API. */}
-            <span
-              title={t("Calls, units and officers here are sample data until the console is connected to the Force's systems.")}
-              className="npf-pill shrink-0 bg-ops-p2-wash text-ops-p2 max-sm:hidden"
-            >
-              <span aria-hidden className="npf-pill-dot" />
-              {t("Sample data")}
-            </span>
+            <div className="ms-auto flex shrink-0 items-center gap-3 sm:gap-4">
+              <ShiftClock />
 
-            <div className="flex shrink-0 items-center gap-2 max-sm:ms-auto">
+              {/* Status on one side of the rule, the officer's own controls
+                  on the other. */}
+              <span aria-hidden className="h-6 w-px bg-npf-hairline max-sm:hidden" />
+
               {/* An officer works a whole shift in here; the language control
                   has to be on this bar, not back on the public site. */}
-              <LanguageSwitch />
-              <button
-                type="button"
-                onClick={endShift}
-                className="npf-btn npf-btn-secondary npf-btn-sm max-sm:size-11 max-sm:p-0 lg:hidden"
-              >
-                <SignOutIcon aria-hidden className="size-4" />
-                <span className="max-sm:sr-only">{t("End shift")}</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <LanguageSwitch />
+                <button
+                  type="button"
+                  onClick={endShift}
+                  title={t("End shift")}
+                  className="npf-icon-btn lg:hidden"
+                >
+                  <SignOutIcon aria-hidden className="size-4.5" />
+                  <span className="sr-only">{t("End shift")}</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -460,7 +469,7 @@ function Tabs({
               {count?.n ? (
                 <span
                   title={count.note}
-                  className={`absolute -end-2.5 -top-1.5 grid h-4 min-w-4 place-items-center rounded-full px-1 text-[0.625rem] leading-none font-semibold tabular-nums ring-2 sm:hidden ${
+                  className={`absolute -end-2.5 -top-1.5 grid h-4 min-w-4 place-items-center rounded-full px-1 text-2xs leading-none font-semibold tabular-nums ring-2 sm:hidden ${
                     count.alert
                       ? "bg-npf-alert text-white ring-white"
                       : active
@@ -513,7 +522,7 @@ function ShiftClock() {
     /* Off on a phone: crest, command, language and the way out already fill
        390px, and with the clock as well the command picker was squeezed
        until its arrow sat on top of its own name. */
-    <p className="ms-auto flex shrink-0 items-baseline gap-2 px-1 max-sm:hidden">
+    <p className="flex shrink-0 items-baseline gap-2 max-sm:hidden">
       <span
         dir="ltr"
         className="flex items-baseline font-secondary text-base leading-none font-bold text-npf-ink tabular-nums"
@@ -558,13 +567,21 @@ function CommandPicker({
       <label htmlFor="ops-command" className="sr-only">
         {t("Command in view")}
       </label>
+      {/* The shield says this pill is the console's scope, the same mark a
+          command desk sees beside its fixed name. */}
       <span className="npf-select-wrap min-w-0">
+        <ShieldIcon
+          aria-hidden
+          className={`pointer-events-none absolute start-3.5 top-[calc(50%-0.5rem)] z-10 size-4 max-sm:hidden ${
+            viewing ? "text-white" : "text-npf-blue"
+          }`}
+        />
         <select
           id="ops-command"
           value={viewing ?? ""}
           onChange={(e) => setViewing(e.target.value || undefined)}
           data-active={viewing ? "" : undefined}
-          className="npf-select max-w-[min(18rem,52vw)] truncate"
+          className="npf-select max-w-[min(18rem,52vw)] truncate sm:ps-10"
         >
           <option value="">{t("All commands")}</option>
           {STATES.map((s) => (
