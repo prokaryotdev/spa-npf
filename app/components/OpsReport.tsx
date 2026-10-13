@@ -262,7 +262,12 @@ function Bars({
   const t = useT();
   const max = Math.max(1, ...rows.map((r) => r.n));
   if (!rows.length)
-    return <p className="text-sm text-ops-dim">{t("Nothing closed yet.")}</p>;
+    return (
+      <p className="flex h-11 items-center gap-2 rounded-(--ops-control-radius) border border-dashed border-npf-line px-3 text-[0.8125rem] text-ops-dim">
+        <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-npf-steel/50" />
+        {t("Nothing closed yet.")}
+      </p>
+    );
   return (
     <>
       <ul className="space-y-3">

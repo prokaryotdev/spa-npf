@@ -138,8 +138,11 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
     (r) => r.status !== "Completed" && r.status !== "Rejected",
   ).length;
   const counts: Record<string, Count> = {
+    /* Red means "waiting", so the red figure is the waiting count: a red 7
+       over three waiting calls read as seven urgent ones. With none
+       waiting, the badge goes back to the open count in grey. */
     "/app/police/incidents": {
-      n: open,
+      n: waiting || open,
       note: waiting
         ? t("{n} open, {w} waiting", { n: open, w: waiting })
         : t("{n} open", { n: open }),
@@ -376,7 +379,7 @@ function Sidebar({
                   aria-current={active ? "page" : undefined}
                   className={`group flex h-12 items-center gap-3 rounded-chip px-3 text-sm font-medium transition-[background-color,color,scale] duration-(--dur-hover) active:scale-[0.98] active:duration-(--dur-press) ${
                     active
-                      ? "bg-npf-mist text-npf-blue-deep"
+                      ? "bg-npf-mist font-semibold text-npf-blue-deep"
                       : "text-npf-body hover:bg-npf-paper hover:text-npf-ink"
                   }`}
                 >
@@ -398,42 +401,72 @@ function Sidebar({
         </ul>
       </nav>
 
-      <section className="shrink-0 border-t border-npf-hairline p-4">
+      <section className="shrink-0 border-t border-npf-hairline p-3">
         <h2 className="sr-only">{t("Duty officer")}</h2>
-        <div className="flex items-center gap-3">
+        {/* Who holds the desk: name over rank, two clean lines that end
+            in an ellipsis rather than wrap, with the way out beside them. */}
+        <div className="flex items-center gap-3 px-1">
           <span
             aria-hidden
-            className="relative grid size-10 shrink-0 place-items-center rounded-full bg-npf-blue font-secondary text-sm font-bold text-white"
+            className="relative grid size-9 shrink-0 place-items-center rounded-[10px] bg-npf-blue font-secondary text-[0.8125rem] font-bold text-white"
           >
             {initials(officer.name)}
-            <span className="absolute -end-0.5 -bottom-0.5 size-3 rounded-full border-2 border-white bg-npf-ok-fill" />
+            <span className="absolute -end-1 -bottom-1 size-3 rounded-full border-2 border-white bg-npf-ok-fill" />
           </span>
-          <span className="min-w-0 flex-1">
-            <span className="block truncate text-sm font-medium text-npf-ink">
+          <span className="min-w-0 flex-1 leading-tight">
+            <span
+              title={t(officer.name)}
+              className="block truncate text-sm font-semibold text-npf-ink"
+            >
               {t(officer.name)}
             </span>
-            {/* Rank over station, each on its own line: "Inspector · Force
-                Control Room" on one line ran out of rail and ended in an
-                ellipsis, cutting off where the officer sits. */}
-            <span className="block truncate text-xs text-npf-steel">
+            <span className="mt-0.5 block truncate text-xs text-npf-steel">
               {t(officer.rank ?? "")}
-            </span>
-            <span className="line-clamp-2 text-xs text-npf-steel">
-              {t(officer.station ?? "")}
             </span>
           </span>
           <button
             type="button"
             onClick={onEnd}
             title={t("End shift")}
-            className="npf-icon-btn shrink-0"
+            className="grid size-9 shrink-0 place-items-center rounded-(--ops-control-radius) text-npf-steel ring-1 ring-npf-line ring-inset transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) hover:bg-npf-error-wash hover:text-ops-p1 hover:ring-[color-mix(in_srgb,var(--ops-p1)_35%,transparent)] active:scale-[0.94]"
           >
-            <SignOutIcon aria-hidden className="size-4.5" />
+            <SignOutIcon aria-hidden className="size-4" />
             <span className="sr-only">{t("End shift")}</span>
           </button>
         </div>
+        {/* Where the desk is, in a well under the officer: the room on one
+            line, the headquarters and city on the next. Split at its first
+            comma, so it never breaks mid-name across three ragged lines. */}
+        {officer.station ? (
+          <Station station={t(officer.station)} />
+        ) : null}
       </section>
     </aside>
+  );
+}
+
+/** The desk's station as two ruled lines: the room, then where it is. */
+function Station({ station }: { station: string }) {
+  const cut = station.indexOf(",");
+  const room = cut > 0 ? station.slice(0, cut) : station;
+  const rest = cut > 0 ? station.slice(cut + 1).trim() : "";
+  return (
+    <p
+      title={station}
+      className="mt-3 flex items-center gap-2.5 rounded-(--ops-control-radius) bg-npf-cloud px-3 py-2 ring-1 ring-ops-line-soft ring-inset"
+    >
+      <ShieldIcon aria-hidden className="size-4 shrink-0 text-npf-blue" />
+      <span className="min-w-0 leading-tight">
+        <span className="block truncate text-xs font-medium text-npf-ink">
+          {room}
+        </span>
+        {rest ? (
+          <span className="mt-0.5 block truncate text-2xs text-npf-steel">
+            {rest}
+          </span>
+        ) : null}
+      </span>
+    </p>
   );
 }
 

@@ -220,7 +220,14 @@ export default function OpsUnits() {
                     ))}
                   </ul>
                 ) : (
-                  <p className="px-4 py-6 text-center text-xs text-npf-steel">
+                  /* An empty lane is a slot waiting for a card: ruled in
+                     dashes like the queue's "No unit free", so a lane with
+                     nobody in it still reads as a place on the board. */
+                  <p className="m-3 flex h-11 items-center gap-2 rounded-(--ops-control-radius) border border-dashed border-npf-line px-3 text-[0.8125rem] text-ops-dim">
+                    <span
+                      aria-hidden
+                      className="size-1.5 shrink-0 rounded-full bg-npf-steel/50"
+                    />
                     {t("None")}
                   </p>
                 )}
