@@ -15,7 +15,7 @@ import {
   useScoped,
 } from "./OpsPieces";
 import { commandLabel, divisionLabel } from "./Where";
-import type { Incident, Priority } from "./store";
+import { setViewing, type Incident, type Priority } from "./store";
 
 /**
  * The shift report: what the desk handed over. How many calls came in and
@@ -159,13 +159,31 @@ export default function OpsReport() {
       </div>
 
       {calls.length === 0 ? (
-        <OpsPanel>
+        <OpsPanel flush>
           <OpsEmpty
             tone="none"
             title={t("No calls in this period")}
             hint={t(
               "Pick a longer period, or choose all commands in the bar above.",
             )}
+            action={
+              range !== "24" || viewing ? (
+                <>
+                  {range !== "24" ? (
+                    <OpsButton onClick={() => setRange("24")}>
+                      {t("Last 24 hours")}
+                    </OpsButton>
+                  ) : null}
+                  {/* Only a national desk narrowed to one command can widen;
+                      a command desk is held to its own. */}
+                  {viewing ? (
+                    <OpsButton onClick={() => setViewing(undefined)}>
+                      {t("All commands")}
+                    </OpsButton>
+                  ) : null}
+                </>
+              ) : undefined
+            }
           />
         </OpsPanel>
       ) : (

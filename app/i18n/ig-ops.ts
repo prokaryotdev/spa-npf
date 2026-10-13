@@ -390,4 +390,5 @@ export const igOps: Record<string, string> = {
     "Zipu",
   "Find a command": "Chọta iwu",
   "No command matches": "Enweghị iwu dabara",
+  "Show settled requests": "Gosi arịrịọ ndị emechaala",
 };

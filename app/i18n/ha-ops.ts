@@ -301,4 +301,5 @@ export const haOps: Record<string, string> = {
   "Dispatch": "Tura",
   "Find a command": "Nemo runduna",
   "No command matches": "Babu rundunar da ta dace",
+  "Show settled requests": "Nuna buƙatun da aka gama",
 };

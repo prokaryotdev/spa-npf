@@ -145,13 +145,20 @@ export default function OpsRequests() {
       </div>
 
       {visible.length === 0 ? (
-        <OpsPanel>
-          {openOnly ? (
+        <OpsPanel flush>
+          {/* A search that found nothing is a miss even with "Open only"
+              on; only an empty queue with no search is good news. */}
+          {openOnly && !query.trim() ? (
             <OpsEmpty
               title={t("Queue clear")}
               hint={t(
                 "Nothing is waiting on a decision. Turn off “Open only” to read the ones already settled.",
               )}
+              action={
+                <OpsButton onClick={() => setOpenOnly(false)}>
+                  {t("Show settled requests")}
+                </OpsButton>
+              }
             />
           ) : (
             <OpsEmpty
@@ -160,6 +167,12 @@ export default function OpsRequests() {
               hint={t(
                 "Try the reference number, or the name of the service the applicant asked for.",
               )}
+              action={
+                <OpsButton onClick={() => setQuery("")}>
+                  <CloseIcon aria-hidden className="size-3.5" />
+                  {t("Clear search")}
+                </OpsButton>
+              }
             />
           )}
         </OpsPanel>

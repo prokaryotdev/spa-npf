@@ -262,40 +262,70 @@ export function OpsEmpty({
   title,
   hint,
   tone = "clear",
+  icon,
   action,
 }: {
   /** Already translated, like OpsHead's — so the coverage test can see it. */
-  title: string;
+  title?: string;
   hint?: string;
-  tone?: "clear" | "none";
+  /**
+   * `clear`: good news, a green tick that draws itself once. `none`: a
+   * search or filter that left nothing, which should come with an action
+   * back out. `idle`: nothing chosen or nothing on yet, neither good nor bad.
+   */
+  tone?: "clear" | "none" | "idle";
+  /** The idle mark, when the board has a glyph of its own for it. */
+  icon?: React.ReactNode;
+  /** Buttons that undo the dead end: clear the filters, widen the period. */
   action?: React.ReactNode;
 }) {
-  const ok = tone === "clear";
+  const mark = {
+    clear:
+      "bg-ops-ok-wash text-ops-ok ring-[color-mix(in_srgb,var(--ops-ok)_22%,transparent)]",
+    none: "bg-npf-cloud text-npf-blue-ink ring-ops-line",
+    idle: "bg-npf-mist text-ops-accent ring-[color-mix(in_srgb,var(--color-npf-blue-mid)_20%,transparent)]",
+  }[tone];
   return (
-    <div className="flex flex-col items-center gap-3 px-6 py-12 text-center">
+    /*
+     * Set on the panel's own reading line, not as a centred poster: the
+     * officer's eye is already at the left edge where the rows would be,
+     * and that is where the news that there are none should be.
+     */
+    <div
+      role="status"
+      className="flex items-start gap-4 px-5 py-6 sm:py-7"
+    >
       <span
         aria-hidden
-        className="grid size-12 place-items-center rounded-full"
-        style={{
-          background: ok
-            ? "color-mix(in srgb, var(--ops-fill-ok) 14%, transparent)"
-            : "var(--ops-fill)",
-          color: ok ? "var(--ops-fill-ok)" : "var(--color-npf-blue-ink)",
-        }}
+        className={`grid size-10 shrink-0 place-items-center rounded-[10px] ring-1 ring-inset ${mark}`}
       >
-        {ok ? (
-          <CheckIcon className="size-5.5" />
+        {tone === "clear" ? (
+          <CheckIcon className="npf-ops-draw size-5" />
+        ) : tone === "none" ? (
+          <FindGlyph className="size-6" />
         ) : (
-          <FindGlyph className="size-7" />
+          icon
         )}
       </span>
-      <p className="font-secondary text-base font-bold">{title}</p>
-      {hint ? (
-        <p className="max-w-[44ch] text-xs leading-relaxed text-ops-dim">
-          {hint}
-        </p>
-      ) : null}
-      {action}
+      <div className="min-w-0 flex-1 pt-px">
+        {title ? (
+          <p className="font-secondary text-[0.9375rem] leading-snug font-bold text-npf-ink">
+            {title}
+          </p>
+        ) : null}
+        {hint ? (
+          <p
+            className={`max-w-[58ch] text-[0.8125rem] leading-relaxed text-npf-body text-pretty ${
+              title ? "mt-1" : "pt-2"
+            }`}
+          >
+            {hint}
+          </p>
+        ) : null}
+        {action ? (
+          <div className="mt-4 flex flex-wrap items-center gap-2">{action}</div>
+        ) : null}
+      </div>
     </div>
   );
 }

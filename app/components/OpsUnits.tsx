@@ -25,6 +25,7 @@ import {
   type UnitStatus,
 } from "./store";
 import { useT } from "../i18n/client";
+import { CloseIcon } from "./icons";
 
 /**
  * The four lanes of the duty board, in the order a dispatcher reads them:
@@ -151,13 +152,24 @@ export default function OpsUnits() {
       </div>
 
       {visible.length === 0 ? (
-        <OpsPanel>
+        <OpsPanel flush>
           <OpsEmpty
             tone="none"
             title={t("No unit matches that filter")}
             hint={t(
               "Clear the search box or pick every section to see the whole shift again.",
             )}
+            action={
+              <OpsButton
+                onClick={() => {
+                  setQuery("");
+                  setSection("");
+                }}
+              >
+                <CloseIcon aria-hidden className="size-3.5" />
+                {t("Clear filters")}
+              </OpsButton>
+            }
           />
         </OpsPanel>
       ) : (

@@ -28,7 +28,7 @@ import {
   type Unit,
 } from "./store";
 import { STATES, placeOf } from "../geo";
-import { ArrowRight, CheckIcon, ChevronDown, CloseIcon } from "./icons";
+import { ArrowRight, CheckIcon, ChevronDown, CloseIcon, RadioIcon } from "./icons";
 import OpsPicker from "./OpsPicker";
 import { useFormat, useT } from "../i18n/client";
 
@@ -175,6 +175,8 @@ export default function OpsOverview() {
               </>
             ) : (
               <OpsEmpty
+                tone="idle"
+                icon={<RadioIcon className="size-5" />}
                 title={t("Nobody is committed")}
                 hint={t(
                   "No unit is on a call right now. Dispatch one from the pending queue above.",
@@ -1047,27 +1049,23 @@ function UnitBoard({ units }: { units: Unit[] }) {
         </div>
       ) : null}
 
-      <table className="w-full table-fixed text-sm">
+      <table className="w-full text-sm">
         <caption className="sr-only">
           {t("Units on duty by section, with how many are available")}
         </caption>
-        <colgroup>
-          <col />
-          <col className="w-14 sm:w-16" />
-          <col className="w-14 sm:w-16" />
-          <col className="w-14 sm:w-16" />
-          <col className="w-14 sm:w-18" />
-        </colgroup>
         <thead>
           <tr className="border-y border-ops-line bg-[color-mix(in_srgb,var(--color-npf-cloud)_70%,white)] text-xs font-semibold text-npf-steel">
-            <th scope="col" className="py-2 ps-5">
+            <th scope="col" className="w-full py-2 ps-5">
               {t("Section")}
             </th>
             {UNIT_KEY.map(({ status, label, fill }, i) => (
               <th
                 key={status}
+                /* One line from 640px up in every language. On a phone the
+                   Hausa and Yoruba heads are too long to sit on one line beside
+                   the section names, so there, and only there, they wrap. */
                 scope="col"
-                className={`py-2 align-bottom leading-tight ${
+                className={`px-2 py-2 align-bottom leading-tight whitespace-nowrap max-sm:[&:lang(ha)]:whitespace-normal max-sm:[&:lang(yo)]:whitespace-normal ${
                   i === UNIT_KEY.length - 1 ? "pe-5 text-end" : "text-center"
                 }`}
               >
@@ -1092,7 +1090,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
               >
                 <th
                   scope="row"
-                  className={`truncate py-2.5 ps-5 ${
+                  className={`w-full max-w-0 truncate py-2.5 ps-5 ${
                     open ? "font-medium text-npf-ink" : "font-normal text-npf-steel"
                   }`}
                 >
@@ -1104,7 +1102,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
                   return (
                     <td
                       key={status}
-                      className={`py-2 font-mono text-xs tabular-nums ${
+                      className={`px-2 py-2 font-mono text-xs tabular-nums ${
                         last ? "pe-5 text-end" : "text-center"
                       }`}
                     >

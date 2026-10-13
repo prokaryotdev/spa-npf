@@ -1170,6 +1170,25 @@ html.npf-large-text {
     translate: 0 -4px;
   }
 }
+/*
+ * A queue that has just emptied: its tick draws itself once, like a pen
+ * stroke, rather than appearing. It happens a few times a shift, so it can
+ * afford 450ms; reduced motion shows it already drawn.
+ */
+@keyframes npf-ops-draw {
+  from {
+    stroke-dashoffset: 30;
+  }
+}
+.npf-ops-draw path {
+  stroke-dasharray: 30;
+  animation: npf-ops-draw 450ms var(--ease-out) 60ms backwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .npf-ops-draw path {
+    animation: none;
+  }
+}
 /* Its trigger's chevron turns over while the menu is open, and a white
    trigger takes the focus-blue rim, so the open control is plain. */
 .npf-ops-chev {

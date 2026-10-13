@@ -431,6 +431,19 @@ export default function OpsIncidents() {
                 hint={t(
                   "Widen the grade or status filter, or clear the search box, to see the rest of the shift.",
                 )}
+                action={
+                  <OpsButton
+                    onClick={() => {
+                      setQuery("");
+                      setStatus("");
+                      setPriority("");
+                      setUnassigned(false);
+                    }}
+                  >
+                    <CloseIcon aria-hidden className="size-3.5" />
+                    {t("Clear filters")}
+                  </OpsButton>
+                }
               />
             ) : null}
           </OpsPanel>
@@ -454,18 +467,12 @@ export default function OpsIncidents() {
             /* Hidden below the two-column width: stacked under twelve
                rows, an empty "pick a row" card is a dead end at the foot
                of the page, and a tapped row opens its detail here anyway. */
-            <OpsPanel title={t("Call detail")} className="max-lg:hidden">
-              <div className="flex flex-col items-center gap-3 px-2 py-8 text-center">
-                <span
-                  aria-hidden
-                  className="grid size-12 place-items-center rounded-full bg-ops-fill text-ops-accent"
-                >
-                  <RadioIcon className="size-5" />
-                </span>
-                <p className="max-w-[34ch] text-xs leading-relaxed text-ops-dim">
-                  {t("Pick a row to dispatch it, move it on, or read the log.")}
-                </p>
-              </div>
+            <OpsPanel title={t("Call detail")} className="max-lg:hidden" flush>
+              <OpsEmpty
+                tone="idle"
+                icon={<RadioIcon className="size-5" />}
+                hint={t("Pick a row to dispatch it, move it on, or read the log.")}
+              />
             </OpsPanel>
           )}
         </div>
