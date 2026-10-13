@@ -296,4 +296,7 @@ export const haOps: Record<string, string> = {
   "Sample data": "Bayanan misali",
   "Calls, units and officers here are sample data until the console is connected to the Force's systems.":
     "Kira, rundunoni da jami'ai a nan bayanan misali ne har sai an haɗa allon da tsarin Rundunar.",
+  "Show all {n} commands": "Nuna dukkan rundunoni {n}",
+  "Busy commands only": "Rundunoni masu aiki kawai",
+  "Dispatch": "Tura",
 };

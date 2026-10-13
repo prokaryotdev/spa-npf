@@ -137,18 +137,24 @@ export default function OpsReport() {
       <div
         role="radiogroup"
         aria-label={t("Report period")}
-        className="flex flex-wrap gap-2 print:hidden"
+        /* A segmented control: one well, the chosen period lit inside it. */
+        className="inline-flex flex-wrap gap-1 self-start rounded-[0.625rem] bg-white p-1 shadow-[var(--ops-control-rim),var(--ops-control-lift)] print:hidden"
       >
         {RANGES.map((r) => (
-          <OpsButton
+          <button
             key={r.id}
+            type="button"
             role="radio"
             aria-checked={range === r.id}
-            tone={range === r.id ? "brand" : "quiet"}
             onClick={() => setRange(r.id)}
+            className={`inline-flex h-8 items-center rounded-md px-3 text-sm font-medium whitespace-nowrap transition-colors ${
+              range === r.id
+                ? "bg-ops-brand text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.14)]"
+                : "text-ops-dim hover:bg-ops-hover hover:text-ops-text"
+            }`}
           >
             {t(r.label)}
-          </OpsButton>
+          </button>
         ))}
       </div>
 
@@ -588,6 +594,7 @@ function ByPlace({
     (a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]),
   );
   const cell = "py-3 pe-5 text-end tabular-nums";
+  const num = `${cell} font-mono text-[0.8125rem]`;
   return (
     <table className="w-full text-start text-sm">
       <caption className="sr-only">
@@ -622,26 +629,26 @@ function ByPlace({
           const late = sent.length - hit;
           const mid = median(sent.map((i) => toDispatch(i)!));
           return (
-            <tr key={k} className="border-t border-ops-line-soft">
+            <tr key={k} className="border-t border-ops-line-soft transition-colors hover:bg-ops-hover">
               <th scope="row" className="py-3 pe-4 ps-5 text-start font-medium">
                 {division ? divisionLabel(t, k) : commandLabel(t, k)}
               </th>
-              <td className={cell}>{list.length}</td>
-              <td className={cell}>
+              <td className={num}>{list.length}</td>
+              <td className={num}>
                 {list.filter((i) => i.status !== "Closed").length}
               </td>
-              <td className={`${cell} max-sm:hidden`}>
+              <td className={`${num} max-sm:hidden`}>
                 {list.filter((i) => i.outcome === "Arrest made").length}
               </td>
-              <td className={cell}>
+              <td className={num}>
                 {sent.length ? `${hit}/${sent.length}` : "–"}
                 {late ? (
-                  <span className="ms-1.5 font-medium text-ops-p1">
+                  <span className="ms-1.5 font-primary text-xs font-medium text-ops-p1">
                     {t("{n} late", { n: late })}
                   </span>
                 ) : null}
               </td>
-              <td className={`${cell} max-sm:hidden`}>
+              <td className={`${num} max-sm:hidden`}>
                 {mid === null ? "–" : mins(t, mid)}
               </td>
             </tr>

@@ -34,14 +34,12 @@ import { useFormat, useT } from "../i18n/client";
 /**
  * The command board.
  *
- * It opens on the Force itself: every command as a tile, grouped by
- * geopolitical zone, each carrying its own waiting, late and free-unit
- * numbers. A national desk reads the whole country in one look, sees which
- * tiles are red, and picks one; the queues under the mosaic narrow to that
- * command. A command desk gets the same mosaic one level down, by division.
- *
- * Under it the work: pending calls with their dispatch control, the calls
- * already running, and the units by section.
+ * It opens on the work: pending calls with their dispatch control, then the
+ * calls already running. Beside them, the Force by zone: every busy command
+ * as a tile carrying its waiting and running numbers. A national desk sees
+ * which tiles are red and picks one; the queues narrow to that command. A
+ * command desk gets the same mosaic one level down, by division. Under the
+ * mosaic, the units by section.
  */
 export default function OpsOverview() {
   const t = useT();
@@ -100,18 +98,11 @@ export default function OpsOverview() {
         }
       />
 
-      {fixed ? (
-        <DivisionMosaic
-          incidents={inView}
-          now={now}
-          chosen={division}
-          onChoose={(d) => withTransition(() => setDivision(d))}
-        />
-      ) : (
-        <CommandMosaic now={now} chosen={viewing} />
-      )}
-
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_24rem] xl:items-start">
+      {/* The queue leads, straight under the band: a call nobody has taken
+          is the one thing on this board that gets worse by itself. Where it
+          is (the mosaic) and who can go (units) stand beside it on a desk
+          and follow it on a phone. */}
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_26rem] xl:items-start">
         <div className="@container min-w-0 space-y-4">
           <OpsPanel
             title={t("Pending")}
@@ -120,19 +111,34 @@ export default function OpsOverview() {
                 ? t("{n} waiting", { n: pending.length })
                 : undefined
             }
+            action={
+              overdue.length ? (
+                <span className="npf-pill bg-ops-p1-wash text-ops-p1">
+                  <span aria-hidden className="npf-pill-dot" />
+                  {t("{n} late", { n: overdue.length })}
+                </span>
+              ) : undefined
+            }
             flush
           >
             {pending.length ? (
-              <ul>
-                {pending.map((incident) => (
-                  <PendingCall
-                    key={incident.id}
-                    incident={incident}
-                    units={units}
-                    now={now}
-                  />
-                ))}
-              </ul>
+              <>
+                <QueueHead
+                  cols={PENDING_COLS}
+                  labels={["", t("Call"), t("Waiting"), t("Dispatch")]}
+                  end={[2]}
+                />
+                <ul>
+                  {pending.map((incident) => (
+                    <PendingCall
+                      key={incident.id}
+                      incident={incident}
+                      units={units}
+                      now={now}
+                    />
+                  ))}
+                </ul>
+              </>
             ) : (
               <OpsEmpty
                 title={t("Queue clear")}
@@ -154,11 +160,18 @@ export default function OpsOverview() {
             flush
           >
             {running.length ? (
-              <ul>
-                {running.map((incident) => (
-                  <RunningCall key={incident.id} incident={incident} />
-                ))}
-              </ul>
+              <>
+                <QueueHead
+                  cols={RUNNING_COLS}
+                  labels={["", t("Call"), t("Status"), t("Unit"), t("Elapsed")]}
+                  end={[4]}
+                />
+                <ul>
+                  {running.map((incident) => (
+                    <RunningCall key={incident.id} incident={incident} />
+                  ))}
+                </ul>
+              </>
             ) : (
               <OpsEmpty
                 title={t("Nobody is committed")}
@@ -170,8 +183,17 @@ export default function OpsOverview() {
           </OpsPanel>
         </div>
 
-        {/* Pinned beside the queues only where the screen is tall enough. */}
-        <div className="xl:[@media(min-height:46rem)]:sticky xl:[@media(min-height:46rem)]:top-[calc(var(--ops-top)+1.5rem)]">
+        <div className="min-w-0 space-y-4">
+          {fixed ? (
+            <DivisionMosaic
+              incidents={inView}
+              now={now}
+              chosen={division}
+              onChoose={(d) => withTransition(() => setDivision(d))}
+            />
+          ) : (
+            <CommandMosaic now={now} chosen={viewing} />
+          )}
           <UnitBoard units={units} />
         </div>
       </div>
@@ -212,6 +234,9 @@ function tally(calls: Incident[], now: number, units?: Unit[]): Tally {
 function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) {
   const t = useT();
   const { incidents, units } = useStore();
+  // Quiet commands step off until asked for: thirty quiet names around the
+  // seven that matter is the board hiding its own answer.
+  const [all, setAll] = useState(false);
   const choose = (name: string | undefined) =>
     withTransition(() => setViewing(name));
 
@@ -259,20 +284,18 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
             }),
             { waiting: 0, late: 0, running: 0 },
           );
-          /* On a phone the quiet commands, and a zone with none busy, step
-             off: thirty-seven chips is a long scroll to reach the queue. */
+          /* Every zone keeps its row, in the same order, so "queue clear"
+             is read in the same place it would be red. */
           return (
             <section
               key={zone}
               aria-label={t(zone)}
-              className={`grid grid-cols-[6.5rem_minmax(0,1fr)] items-start gap-x-4 px-5 py-2.5 sm:grid-cols-[9.5rem_minmax(0,1fr)] sm:gap-x-6 ${
-                tiles.some((x) => x.busy) ? "" : "max-sm:hidden"
-              }`}
+              className="grid grid-cols-[7.5rem_minmax(0,1fr)] items-start gap-x-4 px-5 py-2.5"
             >
               <ZoneHead name={t(zone)} sum={zoneSum} />
               <ul className="grid grid-cols-[repeat(auto-fill,minmax(7rem,1fr))] gap-1.5">
                 {tiles.map(({ s, sum, busy }) => (
-                  <li key={s.name} className={busy ? "" : "max-sm:hidden"}>
+                  <li key={s.name} className={busy || all ? "" : "hidden"}>
                     <Tile
                       name={s.name}
                       tally={sum}
@@ -287,6 +310,18 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
             </section>
           );
         })}
+      </div>
+      <div className="border-t border-ops-line-soft px-5 py-1">
+        <button
+          type="button"
+          aria-expanded={all}
+          onClick={() => setAll(!all)}
+          className="npf-small inline-flex min-h-11 items-center font-medium text-npf-blue underline-offset-4 hover:text-npf-blue-deep hover:underline"
+        >
+          {all
+            ? t("Busy commands only")
+            : t("Show all {n} commands", { n: STATES.length })}
+        </button>
       </div>
     </OpsPanel>
   );
@@ -504,7 +539,7 @@ function Count({
   return (
     <span
       key={n}
-      className={`npf-ops-count grid h-5 min-w-5 place-items-center rounded-full px-1 text-2xs leading-none font-bold ${tone}`}
+      className={`npf-ops-count grid h-5 min-w-5 place-items-center rounded-full px-1 font-mono text-2xs leading-none font-semibold ${tone}`}
     >
       {n}
     </span>
@@ -548,15 +583,88 @@ function More({ href, children }: { href: string; children: React.ReactNode }) {
   );
 }
 
+/*
+ * The two queues share one grid, so a call keeps its columns when it moves
+ * from Pending to Running: grade, the call itself, then the readings. From
+ * 48rem of panel the readings stand in fixed columns under a ruled head;
+ * narrower, they fold under the call.
+ */
+const PENDING_COLS = "@3xl:grid-cols-[2.5rem_minmax(0,1fr)_6.5rem_11rem]";
+const RUNNING_COLS =
+  "@3xl:grid-cols-[2.5rem_minmax(0,1fr)_7.25rem_9rem_4.5rem]";
+
+/** The ruled column heads over a queue, shown once the columns are. */
+function QueueHead({
+  cols,
+  labels,
+  end = [],
+}: {
+  cols: string;
+  labels: string[];
+  /** Columns whose content sits at the end edge, so the head does too. */
+  end?: number[];
+}) {
+  return (
+    <div
+      aria-hidden
+      className={`hidden gap-x-6 border-b border-ops-line bg-[color-mix(in_srgb,var(--color-npf-cloud)_70%,white)] px-5 py-2 text-xs font-semibold text-npf-steel @3xl:grid ${cols}`}
+    >
+      {labels.map((label, i) => (
+        <span
+          key={i}
+          className={end.includes(i) ? "text-end" : ""}
+        >
+          {label}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+/** What the call is and where: the same two lines on both queues. */
+function CallLines({
+  incident,
+  summary,
+}: {
+  incident: Incident;
+  summary?: boolean;
+}) {
+  const t = useT();
+  return (
+    <div className="min-w-0">
+      {/* The whole first line opens the call: the type is what the eye
+          lands on, so it is the target, not only the reference beside it. */}
+      <Link
+        href={`/app/police/incidents?call=${incident.id}`}
+        className="group/call flex w-fit flex-wrap items-baseline gap-x-2 gap-y-0.5 rounded-sm"
+      >
+        <span className="text-[0.9375rem] leading-snug font-semibold text-npf-ink underline-offset-4 transition-colors group-hover/call:text-npf-blue group-hover/call:underline">
+          {t(incident.kind)}
+        </span>
+        <span className="font-mono text-xs text-ops-dim tabular-nums">
+          {incident.id}
+        </span>
+      </Link>
+      <p className="mt-1 truncate text-[0.8125rem] text-npf-body">
+        {placeOf(t(incident.area), incident.where)}
+      </p>
+      {summary ? (
+        <p className="mt-2 line-clamp-2 max-w-[62ch] text-[0.8125rem] leading-relaxed text-ops-dim">
+          {t(incident.summary)}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
 /**
  * A call with nobody on it. The row carries its own dispatch control, because
  * the alternative — open the call, find the unit, come back — is three steps
  * for the single action this screen exists to make fast.
  *
- * The clock and the control share the trailing column, stacked. Across the
- * queue that makes one straight edge of elapsed times to scan down and one
- * column of dispatch controls to reach for, instead of a select box sitting
- * in the middle of every row outweighing the call it belongs to.
+ * Down the queue the clocks stand in one column and the dispatch controls in
+ * the next, so the eye runs down how long each has waited and the hand down
+ * one edge of controls.
  */
 function PendingCall({
   incident,
@@ -579,143 +687,128 @@ function PendingCall({
 
   return (
     <li
-      /* Stacked on a phone, side by side from 640px. Squeezing a 190px
-         dispatch control alongside the call on a 390px screen left the
-         summary about twenty characters wide — three ragged lines of what the
-         caller actually said. */
-      className={`npf-ops-row npf-ops-call flex flex-col gap-3 border-b border-ops-line-soft px-5 py-4 transition-colors last:border-0 hover:bg-ops-hover @md:flex-row @md:gap-4 ${
+      className={`npf-ops-row npf-ops-call grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-4 gap-y-4 border-b border-ops-line-soft px-5 py-5 @3xl:gap-x-6 transition-colors last:border-0 hover:bg-ops-hover ${PENDING_COLS} @3xl:items-start ${
         late ? "npf-ops-overdue" : ""
       }`}
       style={{ viewTransitionName: `call-${incident.id}` }}
     >
-      {/* Three lines in a fixed order on every row: what (grade, reference,
-          type), where, what the caller said. Letting the place run on after
-          the type put it on line one for a short place and line two for a
-          long one, so no two rows read the same. */}
-      <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-          <PriorityTag priority={incident.priority} />
-          <Link
-            href={`/app/police/incidents?call=${incident.id}`}
-            className="rounded-chip font-secondary text-sm font-bold tabular-nums underline-offset-4 hover:underline"
-          >
-            {incident.id}
-          </Link>
-          <span className="text-sm font-semibold text-npf-ink">
-            {t(incident.kind)}
-          </span>
-        </div>
-        <p className="mt-1 text-sm text-npf-body">
-          {placeOf(t(incident.area), incident.where)}
-        </p>
-        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-ops-dim">
-          {t(incident.summary)}
-        </p>
-      </div>
+      <span className="pt-0.5">
+        <PriorityTag priority={incident.priority} />
+      </span>
+      <CallLines incident={incident} summary />
 
-      {/* One fixed-width column: the clock, its bar and the control share
-          the same edges, so down the queue they read as three straight
-          lines instead of a bar shorter than the button under it. */}
-      <div className="flex shrink-0 items-center justify-between gap-3 @md:w-44 @md:flex-col @md:items-stretch @md:gap-2">
-        <span className="flex flex-col gap-1.5 @md:items-end">
-          <span
-            className="font-secondary text-sm leading-none font-bold"
-            style={{ color: tone }}
-          >
-            <Elapsed from={incident.reported} />
-            <span className="ms-1.5 font-primary text-2xs font-normal text-ops-dim">
+      {/* Below 36rem the clock and the control share one line under the
+          call, indented to the call's own edge. */}
+      <div className="col-start-2 flex items-center gap-5 @3xl:contents">
+        <span className="flex w-24 shrink-0 flex-col gap-1.5 @3xl:w-auto @3xl:items-end @3xl:pt-0.5">
+          <span className="flex flex-col gap-1 whitespace-nowrap @3xl:items-end">
+            <span style={{ color: tone }}>
+              <Elapsed
+                from={incident.reported}
+                className="text-base leading-none font-semibold tracking-[-0.02em]"
+              />
+            </span>
+            <span
+              className={`text-2xs leading-none ${late ? "font-semibold text-ops-p1" : "text-ops-dim"}`}
+            >
               {late
                 ? t("over {span}", { span: duration(target * 60_000) })
                 : t("of {n}m", { n: target })}
             </span>
           </span>
-          <TargetBar incident={incident} now={now} className="w-28 @md:w-full" />
+          <TargetBar incident={incident} now={now} className="w-full" />
         </span>
 
-        <label htmlFor={id} className="sr-only">
-          {t("Dispatch {ref} to a unit", { ref: incident.id })}
-        </label>
-        <select
-          id={id}
-          value=""
-          disabled={free.length === 0}
-          onChange={(e) => {
-            const unit = units.find((u) => u.callsign === e.target.value);
-            if (!unit) return;
-            const send = () =>
-              updateIncident(incident.id, {
-                unit: unit.callsign,
-                assignee: unit.officer,
-                status: "Dispatched",
-              });
-            /* The call travels from the queue into Running, so the eye
-               follows it to where it went instead of losing it in a blink
-               out of one list and into the other. */
-            withTransition(send);
-          }}
-          className="npf-ops-select h-10 max-w-56 rounded-full px-4 text-sm font-medium outline-none @md:max-w-none"
-        >
-          {/* The prompt, not a choice: it names the control and stays out
-              of the list. */}
-          <option value="" hidden>
-            {free.length
-              ? t("Dispatch · {n} free", { n: free.length })
-              : t("No unit free")}
-          </option>
-          {free.map((u) => (
-            <option key={u.callsign} value={u.callsign}>
-              {t(u.callsign)} · {t(u.area)}
-            </option>
-          ))}
-        </select>
+        <span className="block min-w-0 flex-1 @3xl:flex-none">
+          {free.length ? (
+            <>
+              <label htmlFor={id} className="sr-only">
+                {t("Dispatch {ref} to a unit", { ref: incident.id })}
+              </label>
+              <select
+                id={id}
+                value=""
+                onChange={(e) => {
+                  const unit = units.find((u) => u.callsign === e.target.value);
+                  if (!unit) return;
+                  /* The call travels from the queue into Running, so the eye
+                     follows it to where it went instead of losing it in a blink
+                     out of one list and into the other. */
+                  withTransition(() =>
+                    updateIncident(incident.id, {
+                      unit: unit.callsign,
+                      assignee: unit.officer,
+                      status: "Dispatched",
+                    }),
+                  );
+                }}
+                className="npf-ops-select h-9 w-full max-w-52 min-w-fit ps-3 text-[0.8125rem] font-medium whitespace-nowrap outline-none @3xl:max-w-none"
+              >
+                {/* The prompt, not a choice: it names the control and stays out
+                    of the list. */}
+                <option value="" hidden>
+                  {t("Dispatch · {n} free", { n: free.length })}
+                </option>
+                {free.map((u) => (
+                  <option key={u.callsign} value={u.callsign}>
+                    {t(u.callsign)} · {t(u.area)}
+                  </option>
+                ))}
+              </select>
+            </>
+          ) : (
+            /* Nothing to choose, so no control: an empty slot the size of
+               the select, ruled in dashes, saying so plainly. */
+            <span className="flex h-9 w-full max-w-52 min-w-fit items-center gap-2 rounded-(--ops-control-radius) border border-dashed border-npf-line px-3 text-[0.8125rem] whitespace-nowrap text-ops-dim @3xl:max-w-none">
+              <span
+                aria-hidden
+                className="size-1.5 shrink-0 rounded-full bg-npf-steel/50"
+              />
+              {t("No unit free")}
+            </span>
+          )}
+        </span>
       </div>
     </li>
   );
 }
 
-/** A call that already has a unit. Read-only here; worked on the Calls board. */
+/**
+ * A call that already has a unit. Read-only here; worked on the Calls board.
+ * Status, unit and clock stand in fixed columns, so down the list they read
+ * as three straight edges whatever the tag or the callsign says.
+ */
 function RunningCall({ incident }: { incident: Incident }) {
   const t = useT();
   return (
     <li
-      className="npf-ops-call flex flex-col gap-2 border-b border-ops-line-soft px-5 py-3 transition-colors last:border-0 hover:bg-ops-hover @md:flex-row @md:items-center @md:gap-4"
+      className={`npf-ops-call grid grid-cols-[2.5rem_minmax(0,1fr)] items-center gap-x-4 gap-y-3 border-b border-ops-line-soft px-5 py-4 @3xl:gap-x-6 transition-colors last:border-0 hover:bg-ops-hover ${RUNNING_COLS}`}
       /* The same name as its pending row, which is what lets a dispatch
          carry the row across the board. */
       style={{ viewTransitionName: `call-${incident.id}` }}
     >
-      {/* The same two lines as a pending call, what then where, so a call
-          reads the same before and after dispatch and a long place is
-          never cut off. */}
-      <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-          <PriorityTag priority={incident.priority} />
-          <Link
-            href={`/app/police/incidents?call=${incident.id}`}
-            className="rounded-chip font-secondary text-sm font-bold tabular-nums underline-offset-4 hover:underline"
-          >
-            {incident.id}
-          </Link>
-          <span className="text-sm font-semibold text-npf-ink">
-            {t(incident.kind)}
-          </span>
-        </div>
-        <p className="mt-1 text-sm text-npf-body">
-          {placeOf(t(incident.area), incident.where)}
-        </p>
-      </div>
-      {/* Status, unit and clock in fixed slots from a tablet up, so they
-          stand in three columns down the list whatever the pill or the
-          callsign says. */}
-      <div className="flex shrink-0 items-center gap-2.5">
-        <span className="flex @md:min-w-24">
+      <span className="self-start pt-0.5">
+        <PriorityTag priority={incident.priority} />
+      </span>
+      <CallLines incident={incident} />
+
+      <div className="col-start-2 flex items-center gap-3 @3xl:contents">
+        <span className="flex">
           <OpsStatus status={incident.status} />
         </span>
-        <span className="truncate text-xs text-ops-dim @md:w-24">
-          {t(incident.unit ?? "")}
+        <span className="min-w-0 leading-tight">
+          <span className="block truncate text-[0.8125rem] font-medium text-npf-ink">
+            {t(incident.unit ?? "")}
+          </span>
+          {incident.assignee ? (
+            <span className="hidden truncate text-xs text-ops-dim @3xl:block">
+              {t(incident.assignee)}
+            </span>
+          ) : null}
         </span>
         <Elapsed
           from={incident.onScene ?? incident.dispatched ?? incident.reported}
-          className="ms-auto text-xs font-semibold text-ops-text @md:min-w-12 @md:text-end"
+          className="ms-auto text-sm font-semibold text-npf-ink @3xl:text-end"
         />
       </div>
     </li>
@@ -811,7 +904,7 @@ function UnitBoard({ units }: { units: Unit[] }) {
                   </span>
                 </td>
                 {/* Ink, not status colour: the track already says it. */}
-                <td className="py-2.5 pe-5 text-end text-xs font-bold whitespace-nowrap text-npf-ink tabular-nums">
+                <td className="py-2.5 pe-5 text-end font-mono text-xs font-semibold whitespace-nowrap text-npf-ink tabular-nums">
                   {open.length}
                   <span className="font-normal text-ops-dim">
                     /{inDivision.length}

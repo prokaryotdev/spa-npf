@@ -382,4 +382,10 @@ export const yoOps: Record<string, string> = {
   "Sample data": "Àpẹẹrẹ dátà",
   "Calls, units and officers here are sample data until the console is connected to the Force's systems.":
     "Àwọn ìpè, ẹ̀ka àti òṣìṣẹ́ níbí jẹ́ àpẹẹrẹ dátà títí a ó fi so ojú-iṣẹ́ náà mọ́ ètò Ilé-iṣẹ́ Ọlọ́pàá.",
+  "Show all {n} commands":
+    "Fi gbogbo àwọn Ẹ̀ka {n} hàn",
+  "Busy commands only":
+    "Àwọn Ẹ̀ka tí ó ní iṣẹ́ nìkan",
+  "Dispatch":
+    "Fi ránṣẹ́",
 };

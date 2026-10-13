@@ -18,6 +18,10 @@
   --font-secondary:
     var(--font-secondary-face), "Segoe UI", "Noto Sans", Tahoma, system-ui,
     sans-serif;
+  /* The console's data face: references, clocks, callsigns and counts.
+     Loaded by the console layout only; elsewhere it is the system mono. */
+  --font-mono:
+    var(--font-mono-face), ui-monospace, "Cascadia Mono", Consolas, monospace;
 
   --color-npf-blue: #1b3f7a;
   --color-npf-blue-deep: #14315f;
@@ -1046,6 +1050,17 @@ html.npf-large-text {
    */
   --ops-top: 7.5rem;
 
+  /*
+   * The desk's shape: a working instrument, not a brochure. Tiles at 12px,
+   * controls at 8px, tags at 5px; pills are kept for counts and dots only.
+   * Controls are white wells on a hairline, one quiet lift under them.
+   */
+  --radius-card: 0.75rem;
+  --ops-control-radius: 0.5rem;
+  --ops-control-rim: inset 0 0 0 1px var(--color-npf-line);
+  --ops-control-rim-hover: inset 0 0 0 1px color-mix(in srgb, var(--color-npf-steel) 55%, var(--color-npf-line));
+  --ops-control-lift: 0 1px 2px color-mix(in srgb, var(--color-npf-blue-deep) 8%, transparent);
+
   color-scheme: light;
   background: var(--ops-bg);
   color: var(--ops-text);
@@ -1084,8 +1099,42 @@ html.npf-large-text {
   position: sticky;
   top: var(--ops-top);
   z-index: 1;
-  background: var(--ops-panel);
-  box-shadow: inset 0 -1px 0 var(--ops-line);
+  background: color-mix(in srgb, var(--color-npf-cloud) 70%, white);
+  box-shadow:
+    inset 0 -1px 0 var(--ops-line),
+    inset 0 1px 0 var(--ops-line-soft);
+}
+/* Column heads read as a ruled header strip, not as stray grey words. */
+.npf-ops-thead th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-npf-steel);
+  letter-spacing: 0.01em;
+  padding-block: 0.625rem;
+}
+/*
+ * Status tags on the desk: a squared tag with its dot, the hue's own rim.
+ * The site's round pill is right for a citizen's request page and wrong on
+ * a board where twenty of them stand in a column.
+ */
+.npf-ops .npf-pill {
+  border-radius: 5px;
+  padding: 0.1875rem 0.5rem 0.1875rem 0.4375rem;
+  font-weight: 500;
+}
+/* The site's pop-up pill (the command in view), squared to the desk's controls. */
+.npf-ops .npf-select {
+  height: 2.5rem;
+  border-radius: var(--ops-control-radius);
+  font-family: var(--font-primary);
+  font-weight: 600;
+}
+.npf-ops .npf-select:not([data-active]) {
+  background: #fff;
+  box-shadow: var(--ops-control-rim), var(--ops-control-lift);
+}
+.npf-ops .npf-select:not([data-active]):hover {
+  box-shadow: var(--ops-control-rim-hover), var(--ops-control-lift);
 }
 /*
  * A surface on the board: the panel, lifted by the one console shadow. Where
@@ -1151,18 +1200,20 @@ html.npf-large-text {
 .npf-ops-select {
   appearance: none;
   cursor: pointer;
-  background-color: var(--ops-fill);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235D6D84' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M19 12l-7 7-7-7'/%3E%3C/svg%3E");
+  border-radius: var(--ops-control-radius);
+  background-color: #fff;
+  box-shadow: var(--ops-control-rim), var(--ops-control-lift);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235D6D84' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.6rem center;
-  background-size: 0.8125rem;
-  padding-inline-end: 1.85rem;
+  background-size: 1rem;
+  padding-inline-end: 2rem;
   transition:
     background-color 150ms var(--ease-out),
     box-shadow 150ms var(--ease-out);
 }
 .npf-ops-select:hover:not(:disabled) {
-  background-color: var(--ops-fill-hover);
+  box-shadow: var(--ops-control-rim-hover), var(--ops-control-lift);
 }
 .npf-ops-select:dir(rtl) {
   background-position: left 0.6rem center;
@@ -1173,8 +1224,8 @@ html.npf-large-text {
   padding-inline-end: 0.75rem;
   /* A plain statement, not a greyed-out button: at half opacity "No unit
      free" read as broken rather than as the news it is. */
-  background-color: transparent;
-  box-shadow: inset 0 0 0 1px var(--color-npf-line);
+  background-color: var(--color-npf-cloud);
+  box-shadow: none;
   color: var(--ops-dim);
 }
 /*
@@ -1198,16 +1249,16 @@ html.npf-large-text {
   }
   .npf-ops-select::picker-icon {
     content: "";
-    width: 0.8125rem;
-    height: 0.8125rem;
+    width: 1rem;
+    height: 1rem;
     margin-inline-start: auto;
     background: var(--ops-dim);
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M19 12l-7 7-7-7'/%3E%3C/svg%3E")
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E")
       center / contain no-repeat;
     transition: rotate 200ms var(--ease-out);
   }
   .npf-ops-select:open {
-    background-color: var(--ops-fill-hover);
+    box-shadow: inset 0 0 0 1px var(--color-npf-blue-mid), 0 0 0 3px color-mix(in srgb, var(--color-npf-blue-mid) 18%, transparent);
   }
   .npf-ops-select:open::picker-icon {
     rotate: 180deg;
@@ -1220,9 +1271,9 @@ html.npf-large-text {
     margin-block: 6px;
     min-width: anchor-size(width);
     max-height: min(22rem, 60dvh);
-    padding: 5px;
+    padding: 4px;
     border: none;
-    border-radius: var(--radius-card);
+    border-radius: 0.625rem;
     background: #ffffff;
     color: var(--ops-text);
     box-shadow:
@@ -1253,7 +1304,7 @@ html.npf-large-text {
     gap: 0.5rem;
     min-height: 1.875rem;
     padding: 0.25rem 0.625rem 0.25rem 0.5rem;
-    border-radius: 6px;
+    border-radius: 5px;
     font-size: 0.8125rem;
     white-space: nowrap;
     cursor: default;

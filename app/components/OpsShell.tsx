@@ -314,7 +314,7 @@ function Badge({ count, active }: { count?: Count; active: boolean }) {
   return (
     <span
       title={count.note}
-      className={`ms-auto grid h-6 min-w-6 place-items-center rounded-full px-1.5 text-xs font-semibold tabular-nums ${tone}`}
+      className={`ms-auto grid h-5.5 min-w-6 place-items-center rounded-full px-1.5 font-mono text-xs font-medium tabular-nums ${tone}`}
     >
       <span aria-hidden>{count.n}</span>
       <span className="sr-only">{count.note}</span>
@@ -373,7 +373,7 @@ function Sidebar({
                   }`}
                 >
                   <span
-                    className={`grid size-8 shrink-0 place-items-center rounded-full transition-colors duration-(--dur-hover) ${
+                    className={`grid size-8 shrink-0 place-items-center rounded-lg transition-colors duration-(--dur-hover) ${
                       active
                         ? "bg-npf-blue text-white"
                         : "bg-npf-cloud text-npf-blue-ink group-hover:bg-npf-chip"
@@ -458,7 +458,7 @@ function Tabs({
             key={href}
             href={href}
             aria-current={active ? "page" : undefined}
-            className={`flex min-h-13 min-w-0 flex-col items-center justify-center gap-0.5 rounded-xl px-1 text-sm font-medium whitespace-nowrap ring-1 transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) ring-inset active:scale-[0.97] active:duration-(--dur-press) sm:min-h-11 sm:flex-auto sm:flex-row sm:gap-2 sm:rounded-full sm:px-2.5 ${
+            className={`flex min-h-13 min-w-0 flex-col items-center justify-center gap-0.5 rounded-xl px-1 text-sm font-medium whitespace-nowrap ring-1 transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) ring-inset active:scale-[0.97] active:duration-(--dur-press) sm:min-h-10 sm:flex-auto sm:flex-row sm:gap-2 sm:rounded-(--ops-control-radius) sm:px-2.5 ${
               active
                 ? "bg-npf-blue text-white ring-npf-blue"
                 : "bg-white text-npf-ink ring-npf-hairline hover:bg-npf-paper"
@@ -469,7 +469,7 @@ function Tabs({
               {count?.n ? (
                 <span
                   title={count.note}
-                  className={`absolute -end-2.5 -top-1.5 grid h-4 min-w-4 place-items-center rounded-full px-1 text-2xs leading-none font-semibold tabular-nums ring-2 sm:hidden ${
+                  className={`absolute -end-2.5 -top-1.5 grid h-4 min-w-4 place-items-center rounded-full px-1 font-mono text-2xs leading-none font-medium tabular-nums ring-2 sm:hidden ${
                     count.alert
                       ? "bg-npf-alert text-white ring-white"
                       : active
@@ -488,7 +488,7 @@ function Tabs({
             {count?.n ? (
               <span
                 aria-hidden
-                className={`hidden h-5 min-w-5 place-items-center rounded-full px-1 text-2xs font-semibold tabular-nums sm:grid ${
+                className={`hidden h-5 min-w-5 place-items-center rounded-full px-1 font-mono text-2xs font-medium tabular-nums sm:grid ${
                   count.alert
                     ? "bg-npf-alert text-white"
                     : active
@@ -525,10 +525,10 @@ function ShiftClock() {
     <p className="flex shrink-0 items-baseline gap-2 max-sm:hidden">
       <span
         dir="ltr"
-        className="flex items-baseline font-secondary text-base leading-none font-bold text-npf-ink tabular-nums"
+        className="flex items-baseline font-mono text-[0.9375rem] leading-none font-semibold text-npf-ink tabular-nums"
       >
         {time.slice(0, 2)}
-        <span className="npf-ops-tick px-px">:</span>
+        <span className="npf-ops-tick">:</span>
         {time.slice(3)}
       </span>
       <span className="npf-small hidden leading-none text-npf-steel sm:inline">
@@ -554,7 +554,7 @@ function CommandPicker({
   if (fixed)
     return (
       <p className="flex min-w-0 items-center gap-2.5">
-        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-npf-cloud text-npf-blue-ink">
+        <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-npf-cloud text-npf-blue-ink">
           <ShieldIcon aria-hidden className="size-4" />
         </span>
         <span className="npf-h5 truncate leading-none text-npf-ink">
@@ -657,7 +657,7 @@ function NewCalls({ viewing }: { viewing: string | null }) {
             <Link
               href={`/app/police/incidents?call=${call.id}`}
               onClick={() => dismiss(call.id)}
-              className="mt-2 inline-flex h-9 items-center rounded-full bg-ops-brand px-3.5 text-xs font-medium text-white hover:bg-ops-brand-lift"
+              className="mt-2 inline-flex h-9 items-center rounded-(--ops-control-radius) bg-ops-brand px-3.5 text-xs font-medium text-white hover:bg-ops-brand-lift"
             >
               {t("Open the call")}
             </Link>
@@ -666,7 +666,7 @@ function NewCalls({ viewing }: { viewing: string | null }) {
             type="button"
             onClick={() => dismiss(call.id)}
             aria-label={t("Dismiss")}
-            className="grid size-7 shrink-0 place-items-center rounded-full bg-ops-fill text-ops-dim hover:bg-ops-fill-hover hover:text-ops-text"
+            className="grid size-7 shrink-0 place-items-center rounded-md text-ops-dim hover:bg-ops-hover hover:text-ops-text"
           >
             <CloseIcon className="size-4" />
           </button>

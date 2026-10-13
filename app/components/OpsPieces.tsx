@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
 import { flushSync } from "react-dom";
 import { dispatchTarget } from "../content-ops";
@@ -114,12 +115,12 @@ export function Elapsed({
   const end = to ? new Date(to).getTime() : now;
   if (!mounted)
     return (
-      <span className={`tabular-nums ${className}`} aria-hidden>
+      <span className={`font-mono tabular-nums ${className}`} aria-hidden>
         --:--
       </span>
     );
   return (
-    <time className={`tabular-nums ${className}`} dateTime={from}>
+    <time className={`font-mono tabular-nums ${className}`} dateTime={from}>
       {duration(end - start)}
     </time>
   );
@@ -229,11 +230,11 @@ export function OpsPanel({
       className={`npf-ops-tile flex min-h-0 flex-col overflow-clip ${className}`}
     >
       {title ? (
-        <div className="flex min-h-14 shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-ops-line-soft px-5 py-2.5">
-          <h2 className="flex items-center gap-2.5 font-secondary text-base leading-tight font-bold text-npf-ink">
+        <div className="flex min-h-13 shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-ops-line-soft px-5 py-2">
+          <h2 className="flex items-center gap-2.5 font-secondary text-[0.9375rem] leading-tight font-bold text-npf-ink">
             {t(title)}
             {count !== undefined ? (
-              <span className="rounded-full bg-npf-cloud px-2 py-0.5 font-primary text-xs font-semibold text-npf-blue-ink tabular-nums">
+              <span className="rounded-[5px] bg-npf-cloud px-1.5 py-0.5 font-primary text-xs font-semibold text-npf-blue-ink tabular-nums ring-1 ring-ops-line-soft ring-inset">
                 {count}
               </span>
             ) : null}
@@ -323,10 +324,21 @@ export function OpsHead({
      * large title and the screen's figures. It is the one big voice on the
      * screen, and the board below steps down from it rather than competing.
      */
-    <header className="npf-ops-band relative isolate overflow-clip rounded-(--radius-card) px-6 py-7 text-white sm:px-8 sm:py-8">
-      <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
+    <header className="npf-ops-band relative isolate overflow-clip rounded-(--radius-card) px-6 py-6 text-white sm:px-7">
+      {/* The Force crest, struck faintly into the band: the one place the
+          desk wears the badge at size. */}
+      <Image
+        src="/brand/logo.png"
+        alt=""
+        width={1179}
+        height={1334}
+        sizes="256px"
+        aria-hidden
+        className="pointer-events-none absolute -end-6 -bottom-16 -z-10 h-auto w-64 opacity-[0.06] brightness-0 invert select-none max-sm:hidden"
+      />
+      <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-5">
         <div className="min-w-0">
-          <h1 className="font-secondary text-3xl leading-[1.05] font-bold tracking-[-0.025em] text-balance sm:text-[2.5rem]">
+          <h1 className="font-secondary text-[1.75rem] leading-[1.05] font-bold tracking-[-0.025em] text-balance sm:text-[2rem]">
             {title}
           </h1>
           {lead ? (
@@ -367,15 +379,15 @@ export function OpsFigures({
     >
       {figures.map(({ label, value, of, tone }) => (
         <div key={label} className="flex flex-col-reverse gap-1.5">
-          <dt className="text-xs leading-snug font-medium text-white/70">{label}</dt>
+          <dt className="text-xs leading-snug font-medium text-white/72">{label}</dt>
           <dd
             key={value}
-            className="npf-ops-count font-secondary text-[2rem] leading-none font-bold tracking-[-0.03em] tabular-nums sm:text-5xl"
+            className="npf-ops-count font-mono text-[1.75rem] leading-none font-medium tracking-[-0.04em] tabular-nums sm:text-[2.5rem]"
             style={{ color: tone }}
           >
             {value}
             {of !== undefined ? (
-              <span className="text-xl text-white/60">/{of}</span>
+              <span className="text-lg text-white/60">/{of}</span>
             ) : null}
           </dd>
         </div>
@@ -438,15 +450,15 @@ export function OpsSearch({
      * types into it.
      */
     <div
-      className={`group flex h-11 min-w-50 flex-1 items-center gap-2.5 rounded-full bg-white ps-4 pe-2 ring-inset transition-[box-shadow] duration-150 sm:max-w-90 ${
+      className={`group flex h-10 min-w-50 flex-1 items-center gap-2.5 rounded-(--ops-control-radius) bg-white ps-3 pe-2 shadow-[var(--ops-control-lift)] ring-inset transition-[box-shadow] duration-150 sm:max-w-90 ${
         dead
           ? "ring-2 ring-npf-alert/70"
-          : "ring-1 ring-npf-hairline hover:ring-npf-ink/20 focus-within:ring-2 focus-within:ring-npf-blue-mid"
+          : "ring-1 ring-npf-line hover:ring-npf-steel/55 focus-within:ring-2 focus-within:ring-npf-blue-mid"
       }`}
     >
       <SearchIcon
         aria-hidden
-        className={`size-4.5 shrink-0 transition-colors ${dead ? "text-ops-p1" : "text-npf-blue"}`}
+        className={`size-4 shrink-0 transition-colors ${dead ? "text-ops-p1" : "text-npf-steel"}`}
       />
       <label htmlFor={id} className="sr-only">
         {label}
@@ -492,7 +504,7 @@ export function OpsSearch({
       ) : (
         <kbd
           aria-hidden
-          className="hidden h-5 min-w-5 shrink-0 place-items-center rounded-[5px] bg-ops-fill px-1 font-primary text-2xs font-medium text-ops-dim sm:grid"
+          className="hidden h-5 min-w-5 shrink-0 place-items-center rounded-[4px] bg-white px-1 font-mono text-2xs font-medium text-ops-dim ring-1 ring-npf-line ring-inset sm:grid"
         >
           /
         </kbd>
@@ -503,7 +515,7 @@ export function OpsSearch({
 
 /** The shared look of a `select` sitting in a filter bar. */
 export const OPS_SELECT =
-  "npf-ops-select h-11 rounded-full px-4 text-sm font-medium outline-none";
+  "npf-ops-select h-10 ps-3 text-sm font-medium text-npf-ink outline-none";
 
 /* -------------------------------------------------------------------------
  * Grades and statuses
@@ -539,11 +551,18 @@ export function PriorityTag({
      */
     <span className="inline-flex shrink-0 items-center gap-2 text-xs whitespace-nowrap">
       <span
-        className="grid h-5 min-w-7 place-items-center rounded-[6px] px-1.5 text-2xs font-bold tabular-nums"
-        style={{
-          color: token,
-          background: `color-mix(in srgb, ${token} 17%, transparent)`,
-        }}
+        className="grid h-5 min-w-7 place-items-center rounded-[4px] px-1.5 font-mono text-2xs font-semibold tabular-nums"
+        /* P1 is the one grade set solid: an immediate call should be found
+           before it is read. The others are tinted in their own hue. */
+        style={
+          priority === "P1"
+            ? { color: "#fff", background: token }
+            : {
+                color: token,
+                background: `color-mix(in srgb, ${token} 12%, transparent)`,
+                boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${token} 28%, transparent)`,
+              }
+        }
       >
         {priority}
       </span>
@@ -623,13 +642,13 @@ export function OpsButton({
 }) {
   const tones = {
     brand:
-      "bg-ops-brand text-white hover:bg-ops-brand-lift disabled:opacity-40",
+      "bg-ops-brand text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.14),0_1px_2px_rgb(10_21_38/0.25)] hover:bg-ops-brand-lift disabled:bg-npf-cloud disabled:text-ops-dim disabled:shadow-[var(--ops-control-rim)]",
     quiet:
-      "bg-ops-fill text-ops-text hover:bg-ops-fill-hover disabled:opacity-40",
+      "bg-white text-ops-text shadow-[var(--ops-control-rim),var(--ops-control-lift)] hover:bg-ops-hover hover:shadow-[var(--ops-control-rim-hover),var(--ops-control-lift)] disabled:opacity-40",
     ghost:
-      "bg-white text-ops-dim ring-1 ring-ops-line ring-inset hover:bg-ops-hover hover:text-ops-text disabled:opacity-40",
+      "text-ops-dim ring-1 ring-ops-line-soft ring-inset hover:bg-ops-hover hover:text-ops-text hover:ring-ops-line disabled:opacity-40",
     danger:
-      "bg-npf-error-wash text-ops-p1 hover:bg-[#f7d3d3] disabled:opacity-40",
+      "bg-white text-ops-p1 ring-1 ring-[color-mix(in_srgb,var(--ops-p1)_35%,transparent)] ring-inset hover:bg-npf-error-wash disabled:opacity-40",
   };
   return (
     /*
@@ -641,7 +660,7 @@ export function OpsButton({
     <button
       type="button"
       {...props}
-      className={`inline-flex h-10 items-center gap-1.5 rounded-full px-4 text-sm font-medium whitespace-nowrap transition-[background-color,border-color,box-shadow,scale] enabled:active:scale-[0.97] active:duration-(--dur-press) disabled:cursor-not-allowed ${tones[tone]} ${className}`}
+      className={`inline-flex h-10 items-center justify-center gap-1.5 rounded-(--ops-control-radius) px-3.5 text-sm font-medium whitespace-nowrap transition-[background-color,border-color,box-shadow,scale] enabled:active:scale-[0.97] active:duration-(--dur-press) disabled:cursor-not-allowed ${tones[tone]} ${className}`}
     />
   );
 }

@@ -382,4 +382,10 @@ export const igOps: Record<string, string> = {
   "Sample data": "Data ihe atụ",
   "Calls, units and officers here are sample data until the console is connected to the Force's systems.":
     "Oku, otu na ndị ọrụ ebe a bụ data ihe atụ ruo mgbe e jikọrọ ihuenyo a na sistemụ Ndị Uwe Ojii.",
+  "Show all {n} commands":
+    "Gosi Ụlọ Ọrụ {n} niile",
+  "Busy commands only":
+    "Naanị Ụlọ Ọrụ nwere ọrụ",
+  "Dispatch":
+    "Zipu",
 };

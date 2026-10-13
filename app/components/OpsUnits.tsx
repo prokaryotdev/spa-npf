@@ -161,27 +161,40 @@ export default function OpsUnits() {
           />
         </OpsPanel>
       ) : (
-        /* All four lanes side by side from a desk width, like the wall
-           board: in two columns the long Available lane left a hole beside
-           En route and pushed On scene and Off the air below the fold. */
-        <div className="grid items-start gap-x-4 gap-y-6 md:grid-cols-2 xl:grid-cols-4">
+        /* All four lanes side by side on a wide desk, like the wall board.
+           Narrower, four lanes cut callsigns short, so Available takes the
+           left column and the three committed lanes stack beside it: no
+           hole beside En route, nothing pushed below the fold. The empty last
+           row soaks up the long lane's height, so the stack stays tight. */
+        <div className="grid items-start gap-4 md:grid-cols-2 md:grid-rows-[auto_auto_auto_1fr] 2xl:grid-cols-4 2xl:grid-rows-none">
           {LANES.map((lane) => {
+            /* A free lane reads by callsign, so a unit is where it is looked
+               for; a committed lane leads with the longest hold, the unit a
+               supervisor checks on first. */
             const inLane = visible.filter((u) => u.status === lane.status);
+            if (lane.status !== "Available")
+              inLane.sort((a, b) => a.since.localeCompare(b.since));
             return (
-              <section key={lane.status} aria-label={t(lane.label)}>
-                <h2 className="mb-2.5 flex items-center gap-2 px-1 font-secondary text-base font-bold text-npf-ink">
+              <section
+                key={lane.status}
+                aria-label={t(lane.label)}
+                className={`npf-ops-tile overflow-clip ${
+                  lane.status === "Available" ? "md:row-span-4 2xl:row-span-1" : ""
+                }`}
+              >
+                <h2 className="flex min-h-12 items-center gap-2.5 border-b border-ops-line-soft px-4 font-secondary text-base leading-tight font-bold text-npf-ink">
                   <span
                     aria-hidden
-                    className="size-2.5 rounded-full"
+                    className="size-2.5 shrink-0 rounded-full"
                     style={{ background: lane.ink }}
                   />
                   {t(lane.label)}
-                  <span className="ms-auto font-primary text-sm font-semibold text-npf-steel tabular-nums">
+                  <span className="ms-auto rounded-[5px] bg-npf-cloud px-1.5 py-0.5 font-primary text-xs font-semibold text-npf-blue-ink tabular-nums ring-1 ring-ops-line-soft ring-inset">
                     {inLane.length}
                   </span>
                 </h2>
                 {inLane.length ? (
-                  <ul className="grid gap-2">
+                  <ul className="divide-y divide-ops-line-soft">
                     {inLane.map((unit) => (
                       <UnitCard
                         key={unit.callsign}
@@ -195,7 +208,7 @@ export default function OpsUnits() {
                     ))}
                   </ul>
                 ) : (
-                  <p className="rounded-xl px-4 py-5 text-center text-xs text-npf-steel ring-1 ring-npf-hairline ring-inset">
+                  <p className="px-4 py-6 text-center text-xs text-npf-steel">
                     {t("None")}
                   </p>
                 )}
@@ -231,100 +244,105 @@ function UnitCard({
   const stale = held > STALE_MINUTES && unit.status !== "Available";
   const off = unit.status === "Unavailable";
 
+  // No section: the callsign already names it ("Highway 02"), and the
+  // section filter and search still find it.
+  const where = [
+    t(unit.area),
+    t(unit.officer),
+    ...(showState ? [unit.state] : []),
+  ].join(" · ");
+
   return (
+    /* A row in its lane rather than a card of its own: callsign and clock,
+       then where it is and who has it. A free unit stops there, with its one
+       control on the second line; a committed unit adds its call. */
     <li
-      className={`npf-ops-call flex flex-col gap-2.5 rounded-xl p-3.5 ${
-        off ? "ring-1 ring-npf-hairline ring-inset" : "bg-white ring-1 ring-npf-line ring-inset"
-      }`}
+      className="npf-ops-call grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 bg-white px-4 py-3"
       style={{ viewTransitionName: `unit-${unit.callsign.replace(/\W/g, "")}` }}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <p className="font-secondary text-base leading-tight font-bold text-npf-ink">
-            {t(unit.callsign)}
-          </p>
-          <p className="mt-0.5 truncate text-xs text-ops-dim">
-            {t(unit.officer)}
-            {" · "}
-            {t(unit.section)}
-            {showState ? ` · ${unit.state}` : ""}
-          </p>
-        </div>
-        {/* A free unit's clock is how long it has stood by, which nobody
-            acts on, so it steps back; a committed unit's clock is the one a
-            supervisor reads. */}
-        <span
-          className={`shrink-0 font-secondary text-sm ${
-            unit.status === "Available" ? "font-medium" : "font-bold"
-          }`}
-          style={{
-            color: stale
-              ? "var(--ops-p2)"
-              : unit.status === "Available"
-                ? "var(--ops-dim)"
-                : "var(--ops-text)",
-          }}
-        >
-          <Elapsed from={unit.since} />
-          {stale ? (
-            <span className="sr-only"> {t("(held over 45 minutes)")}</span>
-          ) : null}
-        </span>
-      </div>
+      <p className="truncate font-secondary text-base leading-tight font-bold text-npf-ink">
+        {t(unit.callsign)}
+      </p>
+      {/* A free unit's clock is how long it has stood by, which nobody
+          acts on, so it steps back; a committed unit's clock is the one a
+          supervisor reads. */}
+      <span
+        className={`justify-self-end font-secondary text-sm ${
+          unit.status === "Available" ? "font-medium" : "font-bold"
+        }`}
+        style={{
+          color: stale
+            ? "var(--ops-p2)"
+            : unit.status === "Available"
+              ? "var(--ops-dim)"
+              : "var(--ops-text)",
+        }}
+      >
+        <Elapsed from={unit.since} />
+        {stale ? (
+          <span className="sr-only"> {t("(held over 45 minutes)")}</span>
+        ) : null}
+      </span>
+
+      <p
+        title={where}
+        className={`truncate text-xs text-ops-dim ${incident ? "col-span-2" : ""}`}
+      >
+        {where}
+      </p>
 
       {incident ? (
-        <p className="flex min-w-0 items-center gap-2 text-xs">
-          <PriorityTag priority={incident.priority} />
-          <span className="shrink-0 font-secondary font-bold tabular-nums">
-            {incident.id}
-          </span>
-          <span className="truncate text-ops-dim">{t(incident.kind)}</span>
-        </p>
-      ) : null}
-
-      <div className="flex items-center justify-between gap-3">
-        <span className="min-w-0 truncate text-xs text-ops-dim">
-          {t(unit.area)}
-        </span>
-        {/*
-          A unit on a call is cleared from the call, not from here: clearing
-          it here would leave the incident showing a unit that has gone.
-        */}
-        {incident?.status === "Dispatched" ? (
-          <OpsButton
-            tone="brand"
-            onClick={() =>
-              withTransition(() =>
-                updateIncident(incident.id, { status: "On Scene" }),
-              )
-            }
-            className="h-9 shrink-0 !px-3.5 !text-xs"
-          >
-            {t("Arrived")}
-          </OpsButton>
-        ) : incident ? (
-          // Clearing asks how the call ended, and that question lives on the
-          // call, so this opens it rather than closing it blind.
-          <Link
-            href={`/app/police/incidents?call=${incident.id}`}
-            className="inline-flex h-9 shrink-0 items-center rounded-full bg-ops-brand px-3.5 text-xs font-medium text-white transition-colors hover:bg-ops-brand-lift"
-          >
-            {t("Clear call")}
-          </Link>
-        ) : (
-          <OpsButton
-            tone={off ? "brand" : "ghost"}
-            onClick={() =>
-              withTransition(() =>
-                setUnitStatus(unit.callsign, off ? "Available" : "Unavailable"),
-              )
-            }
-            className="h-9 shrink-0 !px-3.5 !text-xs"
-          >
-            {off ? t("Back on the air") : t("Off the air")}
-          </OpsButton>
-        )}
-      </div>
+        <>
+          <p className="mt-1.5 flex min-w-0 items-center gap-2 text-xs">
+            <PriorityTag priority={incident.priority} />
+            <span className="shrink-0 font-mono font-semibold tabular-nums">
+              {incident.id}
+            </span>
+            <span className="truncate text-ops-dim">{t(incident.kind)}</span>
+          </p>
+          {/*
+            A unit on a call is cleared from the call, not from here: clearing
+            it here would leave the incident showing a unit that has gone.
+          */}
+          {incident.status === "Dispatched" ? (
+            <OpsButton
+              tone="brand"
+              onClick={() =>
+                withTransition(() =>
+                  updateIncident(incident.id, { status: "On Scene" }),
+                )
+              }
+              className="mt-1.5 h-8 !px-3.5 !text-xs"
+            >
+              {t("Arrived")}
+            </OpsButton>
+          ) : (
+            // Clearing asks how the call ended, and that question lives on the
+            // call, so this opens it rather than closing it blind.
+            <Link
+              href={`/app/police/incidents?call=${incident.id}`}
+              className="mt-1.5 inline-flex h-8 items-center rounded-(--ops-control-radius) bg-ops-brand px-3 text-xs font-medium whitespace-nowrap text-white transition-colors hover:bg-ops-brand-lift"
+            >
+              {t("Clear call")}
+            </Link>
+          )}
+        </>
+      ) : (
+        /* Taking a unit off the air, or putting it back, is routine: a ghost,
+           so the filled buttons on the board are the calls waiting on a
+           decision. */
+        <OpsButton
+          tone="ghost"
+          onClick={() =>
+            withTransition(() =>
+              setUnitStatus(unit.callsign, off ? "Available" : "Unavailable"),
+            )
+          }
+          className="h-8 !px-3 !text-xs"
+        >
+          {off ? t("Back on the air") : t("Off the air")}
+        </OpsButton>
+      )}
     </li>
   );
 }

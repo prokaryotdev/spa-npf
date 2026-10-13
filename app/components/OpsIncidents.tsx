@@ -324,7 +324,7 @@ export default function OpsIncidents() {
                             e.stopPropagation();
                             setSelected(incident.id);
                           }}
-                          className="rounded-sm pt-0.5 text-xs text-ops-dim tabular-nums underline-offset-4 transition-colors hover:text-ops-text hover:underline"
+                          className="rounded-sm pt-0.5 font-mono text-xs text-ops-dim tabular-nums underline-offset-4 transition-colors hover:text-ops-text hover:underline"
                         >
                           {incident.id}
                         </button>
@@ -340,7 +340,7 @@ export default function OpsIncidents() {
                               e.stopPropagation();
                               setSelected(incident.id);
                             }}
-                            className="rounded-sm text-xs font-normal tabular-nums text-ops-dim"
+                            className="rounded-sm font-mono text-xs font-normal tabular-nums text-ops-dim"
                           >
                             {incident.id}
                           </button>{" "}
@@ -517,7 +517,7 @@ function Detail({
           type="button"
           onClick={onClose}
           aria-label={t("Close call detail")}
-          className="grid size-7 place-items-center rounded-full bg-ops-fill text-ops-dim transition-colors hover:bg-ops-fill-hover hover:text-ops-text"
+          className="grid size-8 place-items-center rounded-(--ops-control-radius) text-ops-dim ring-1 ring-ops-line-soft ring-inset transition-colors hover:bg-ops-hover hover:text-ops-text hover:ring-ops-line"
         >
           <CloseIcon className="size-4" />
         </button>
@@ -734,7 +734,7 @@ function Detail({
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder={t("Add to the log")}
-            className="min-w-0 flex-1 px-3 py-2 text-[0.8125rem] rounded-chip bg-white text-npf-ink ring-1 ring-npf-ink/15 ring-inset outline-none placeholder:text-npf-steel transition-[box-shadow] hover:ring-npf-ink/30 focus:ring-2 focus:ring-npf-blue-mid"
+            className="min-w-0 flex-1 px-3 py-2 text-[0.8125rem] rounded-(--ops-control-radius) bg-white text-npf-ink shadow-[var(--ops-control-lift)] ring-1 ring-npf-line ring-inset outline-none placeholder:text-npf-steel transition-[box-shadow] hover:ring-npf-steel/55 focus:ring-2 focus:ring-npf-blue-mid"
           />
           <OpsButton
             type="submit"
@@ -978,7 +978,7 @@ function TakeCall({
 }
 
 const INPUT =
-  "w-full px-3 py-2 text-sm rounded-chip bg-white text-npf-ink ring-1 ring-npf-ink/15 ring-inset outline-none placeholder:text-npf-steel transition-[box-shadow] hover:ring-npf-ink/30 focus:ring-2 focus:ring-npf-blue-mid";
+  "w-full px-3 py-2 text-sm rounded-(--ops-control-radius) bg-white text-npf-ink shadow-[var(--ops-control-lift)] ring-1 ring-npf-line ring-inset outline-none placeholder:text-npf-steel transition-[box-shadow] hover:ring-npf-steel/55 focus:ring-2 focus:ring-npf-blue-mid";
 const SELECT = `npf-ops-select ${INPUT}`;
 
 function Field({
@@ -1029,7 +1029,7 @@ function Assign({
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="npf-ops-select h-11 min-w-0 flex-1 rounded-full px-4 text-sm font-medium outline-none"
+        className="npf-ops-select h-10 min-w-0 flex-1 ps-3 text-sm font-medium outline-none"
       >
         {placeholder ? <option value="">{placeholder}</option> : null}
         {options.map(([v, text]) => (

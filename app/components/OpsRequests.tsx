@@ -332,7 +332,7 @@ export default function OpsRequests() {
                   {request.incident ? (
                     <Link
                       href={`/app/police/incidents?call=${request.incident}`}
-                      className="inline-flex min-h-10 items-center rounded-full bg-ops-fill px-4 text-sm font-medium text-ops-accent transition-colors hover:bg-ops-fill-hover"
+                      className="inline-flex min-h-10 items-center rounded-(--ops-control-radius) bg-white px-3.5 text-sm font-medium text-ops-accent shadow-[var(--ops-control-rim),var(--ops-control-lift)] transition-colors hover:bg-ops-hover"
                     >
                       {t("Open the call on the board")}
                     </Link>

@@ -94,6 +94,7 @@ The console is an **operate** surface for a control-room officer working an eigh
 
 - Display face (`--font-secondary`) for titles, panel headings, callsigns and big figures; body face (`--font-primary`) for everything else.
 - Every number on a board is `tabular-nums`, so clocks and counts do not jitter as they tick.
+- **Data face (console only):** IBM Plex Mono (`font-mono`, loaded in `app/app/police/layout.tsx`) for call references, clocks, big figures and numeric table cells. Never for words: counts like "3 waiting", callsigns and labels stay in the body face. (User asked for a "dashboard mono feel", 2026-10-12.)
 - 11px (`text-2xs`) is the floor. Nothing is set smaller.
 - Sentence case everywhere. No all-caps labels, no eyebrow kickers.
 - The font stack is load-bearing: Hausa hooked letters (ɓ ɗ ƙ ƴ) and Yoruba/Igbo diacritics fall back per character to Segoe UI / Noto Sans.
@@ -113,7 +114,7 @@ The console is an **operate** surface for a control-room officer working an eigh
 
 ## Shapes
 
-- Panels and the band: 16px (`rounded.card`). Chips and inputs in forms: 8px. Small controls, filters, buttons and status: pills.
+- Console (since 2026-10-12): panels and the band 12px (`--radius-card` overridden on `.npf-ops`); buttons, selects, search and inputs 8px (`--ops-control-radius`), white on a 1px `npf-line` rim with one soft lift; status and grade tags 4–5px; pills only for counts and dots. A period picker is a segmented control. The public site keeps its pills.
 - Chart bars have a 4px rounded data end and a square baseline; dots carry a 2px white ring.
 
 ## Components
@@ -122,7 +123,8 @@ The console is an **operate** surface for a control-room officer working an eigh
 - **OpsFigures** — up to four big numbers with a label under each; `of` renders "24/26". Colour only when it means something (red late, green free). On a phone, four counts share a row; a reading like "7 min" switches them to 2×2.
 - **OpsPanel** — white tile with an optional title bar (heading + count pill + action) over a hairline. `flush` lets a table run edge to edge.
 - **OpsButton** — `brand` (filled Force blue), `quiet` (chip fill), `ghost` (routine control repeated down a list), `danger`. Presses scale to 0.97.
-- **PriorityTag** — "P1"–"P4" in its own hue on a tinted chip; the word ("Immediate") is the accessible label. The grade is read aloud on radio, so the number leads.
+- **PriorityTag** — "P1"–"P4" in its own hue on a tinted chip; the word ("Immediate") is the accessible label. The grade is read aloud on radio, so the number leads. P1 alone is set solid (white on red); P2–P4 are tinted with a rim of their own hue.
+- **Queues (board Pending / Running)** — ruled column heads from a 48rem panel up (stacked below it) (grade · call · waiting · dispatch; grade · call · status · unit · elapsed), call type first with the ref in mono beside it. The dispatch select stays a plain white select with a flat list (user: keep it minimal, 2026-10-12). Rows breathe: 20px vertical padding on Pending, 16px on Running.
 - **OpsStatus / UnitStatusTag** — pill with a dot and the word: Pending, En route, On scene, Closed; Available, Off the air.
 - **Elapsed + TargetBar** — a live clock and a thin bar showing how much of the grade's dispatch target a waiting call has used: blue, amber in the last quarter, red when late.
 - **Close call** — always through an outcome (`callOutcomes`), so the shift report can say what the shift achieved.
