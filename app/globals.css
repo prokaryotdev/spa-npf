@@ -1137,6 +1137,59 @@ html.npf-large-text {
   box-shadow: var(--ops-control-rim-hover), var(--ops-control-lift);
 }
 /*
+ * The console's pop-up menu (OpsPicker): a white sheet on the raised shadow,
+ * placed by script under its trigger. It grows out of the trigger's corner
+ * in 160ms and leaves faster than it came.
+ */
+.npf-ops-pop {
+  position: fixed;
+  inset: auto;
+  box-shadow:
+    inset 0 0 0 1px var(--color-npf-hairline),
+    var(--shadow-raised);
+  opacity: 0;
+  scale: 0.97;
+  translate: 0 -4px;
+  transition:
+    opacity 110ms var(--ease-out),
+    scale 110ms var(--ease-out),
+    translate 110ms var(--ease-out),
+    display 110ms allow-discrete,
+    overlay 110ms allow-discrete;
+}
+.npf-ops-pop:popover-open {
+  opacity: 1;
+  scale: 1;
+  translate: 0 0;
+  transition-duration: 160ms;
+}
+@starting-style {
+  .npf-ops-pop:popover-open {
+    opacity: 0;
+    scale: 0.97;
+    translate: 0 -4px;
+  }
+}
+/* Its trigger's chevron turns over while the menu is open, and a white
+   trigger takes the focus-blue rim, so the open control is plain. */
+.npf-ops-chev {
+  transition: rotate 200ms var(--ease-out);
+}
+[aria-expanded="true"] > .npf-ops-chev {
+  rotate: 180deg;
+}
+.npf-ops [aria-haspopup="dialog"][aria-expanded="true"]:not([data-active]) {
+  box-shadow:
+    inset 0 0 0 1px var(--color-npf-blue-mid),
+    0 0 0 3px color-mix(in srgb, var(--color-npf-blue-mid) 18%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .npf-ops-pop {
+    scale: 1;
+    translate: 0 0;
+  }
+}
+/*
  * A surface on the board: the panel, lifted by the one console shadow. Where
  * the browser can draw continuous corners (corner-shape), the corner is the
  * Apple squircle rather than a circular arc; the radius grows to match, so it
@@ -1302,12 +1355,13 @@ html.npf-large-text {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    min-height: 1.875rem;
-    padding: 0.25rem 0.625rem 0.25rem 0.5rem;
-    border-radius: 5px;
+    min-height: 2.25rem;
+    padding: 0.25rem 0.75rem 0.25rem 0.625rem;
+    border-radius: 6px;
     font-size: 0.8125rem;
+    font-weight: 500;
     white-space: nowrap;
-    cursor: default;
+    cursor: pointer;
   }
   .npf-ops-select option[hidden] {
     display: none;

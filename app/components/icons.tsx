@@ -40,6 +40,13 @@ export const ArrowDown = ({ className }: IconProps) => (
   </svg>
 );
 
+/** A menu that opens or a fold that drops: the console's pop-up controls. */
+export const ChevronDown = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="m6.5 9.5 5.5 5.5 5.5-5.5" />
+  </svg>
+);
+
 /** Handset with signal arcs — a call being placed, not a phone number. */
 export const CallIcon = ({ className }: IconProps) => (
   <svg {...base} className={className}>

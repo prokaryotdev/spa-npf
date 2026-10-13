@@ -299,4 +299,6 @@ export const haOps: Record<string, string> = {
   "Show all {n} commands": "Nuna dukkan rundunoni {n}",
   "Busy commands only": "Rundunoni masu aiki kawai",
   "Dispatch": "Tura",
+  "Find a command": "Nemo runduna",
+  "No command matches": "Babu rundunar da ta dace",
 };

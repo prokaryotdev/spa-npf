@@ -388,4 +388,6 @@ export const igOps: Record<string, string> = {
     "Naanị Ụlọ Ọrụ nwere ọrụ",
   "Dispatch":
     "Zipu",
+  "Find a command": "Chọta iwu",
+  "No command matches": "Enweghị iwu dabara",
 };

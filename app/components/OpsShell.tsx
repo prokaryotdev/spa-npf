@@ -6,13 +6,21 @@ import { stripLocale } from "../i18n/path";
 import { useRouter } from "../i18n/Link";
 import { useEffect, useState } from "react";
 import LanguageSwitch from "./LanguageSwitch";
-import { KEY, setViewing, signOut, type Incident } from "./store";
+import { KEY, setViewing, signOut, useStore, type Incident } from "./store";
+import OpsPicker from "./OpsPicker";
 import { STATES } from "../geo";
+import { zones } from "../content-footer";
 import { commandLabel } from "./Where";
-import { PriorityTag, useMounted, useNow, useScoped } from "./OpsPieces";
+import {
+  PriorityTag,
+  isOverdue,
+  useMounted,
+  useNow,
+  useScoped,
+} from "./OpsPieces";
 import { useT } from "../i18n/client";
 import { PoliceWordmark } from "./Wordmark";
-import { ArrowDown, CloseIcon, ShieldIcon, SignOutIcon } from "./icons";
+import { ChevronDown, CloseIcon, ShieldIcon, SignOutIcon } from "./icons";
 import {
   BoardGlyph,
   CallsGlyph,
@@ -551,6 +559,8 @@ function CommandPicker({
   viewing: string | null;
 }) {
   const t = useT();
+  const { incidents } = useStore();
+  const now = useNow();
   if (fixed)
     return (
       <p className="flex min-w-0 items-center gap-2.5">
@@ -562,37 +572,69 @@ function CommandPicker({
         </span>
       </p>
     );
-  return (
-    <div className="flex min-w-0 items-center gap-2">
-      <label htmlFor="ops-command" className="sr-only">
-        {t("Command in view")}
-      </label>
-      {/* The shield says this pill is the console's scope, the same mark a
-          command desk sees beside its fixed name. */}
-      <span className="npf-select-wrap min-w-0">
-        <ShieldIcon
-          aria-hidden
-          className={`pointer-events-none absolute start-3.5 top-[calc(50%-0.5rem)] z-10 size-4 max-sm:hidden ${
-            viewing ? "text-white" : "text-npf-blue"
-          }`}
-        />
-        <select
-          id="ops-command"
-          value={viewing ?? ""}
-          onChange={(e) => setViewing(e.target.value || undefined)}
-          data-active={viewing ? "" : undefined}
-          className="npf-select max-w-[min(18rem,52vw)] truncate sm:ps-10"
-        >
-          <option value="">{t("All commands")}</option>
-          {STATES.map((s) => (
-            <option key={s.name} value={s.name}>
-              {commandLabel(t, s.name)}
-            </option>
-          ))}
-        </select>
-        <ArrowDown aria-hidden className="npf-select-arrow" />
+  /* Each command in the list carries its waiting count, red once one is
+     late, so the officer picks the command that needs them from the list
+     itself rather than from memory of the board. */
+  const waiting = (state: string) => {
+    const calls = incidents.filter(
+      (i) => i.status === "New" && i.where.state === state,
+    );
+    if (!calls.length) return undefined;
+    const late = calls.some((i) => isOverdue(i, now));
+    return (
+      <span
+        aria-label={t("{n} waiting", { n: calls.length })}
+        className={`grid h-5 min-w-5 shrink-0 place-items-center rounded-full px-1.5 font-mono text-2xs font-semibold text-white ${
+          late ? "bg-ops-p1" : "bg-ops-p2"
+        }`}
+      >
+        {calls.length}
       </span>
-    </div>
+    );
+  };
+
+  return (
+    <OpsPicker
+      label={t("Command in view")}
+      value={viewing ?? ""}
+      onPick={(v) => setViewing(v || undefined)}
+      search={t("Find a command")}
+      empty={t("No command matches")}
+      width="20rem"
+      groups={[
+        { items: [{ value: "", label: t("All commands") }] },
+        ...zones.map((zone) => ({
+          label: t(zone),
+          items: STATES.filter((s) => s.zone === zone).map((s) => ({
+            value: s.name,
+            label: commandLabel(t, s.name),
+            badge: waiting(s.name),
+          })),
+        })),
+      ]}
+      /* The shield says this pill is the console's scope, the same mark a
+         command desk sees beside its fixed name. */
+      active={!!viewing}
+      triggerClassName="npf-select flex max-w-[min(18rem,52vw)] min-w-0 items-center gap-2.5 ps-4 pe-3"
+      trigger={
+        <>
+          <span className="sr-only">{t("Command in view")}: </span>
+          <ShieldIcon
+            aria-hidden
+            className={`size-4 shrink-0 max-sm:hidden ${viewing ? "text-white" : "text-npf-blue"}`}
+          />
+          <span className="truncate">
+            {viewing ? commandLabel(t, viewing) : t("All commands")}
+          </span>
+          <ChevronDown
+            aria-hidden
+            className={`npf-ops-chev ms-auto size-4 shrink-0 ${
+              viewing ? "text-white" : "text-npf-steel"
+            }`}
+          />
+        </>
+      }
+    />
   );
 }
 

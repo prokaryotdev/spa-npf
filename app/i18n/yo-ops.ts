@@ -388,4 +388,6 @@ export const yoOps: Record<string, string> = {
     "Àwọn Ẹ̀ka tí ó ní iṣẹ́ nìkan",
   "Dispatch":
     "Fi ránṣẹ́",
+  "Find a command": "Wá àṣẹ kan",
+  "No command matches": "Kò sí àṣẹ tó bá a mu",
 };

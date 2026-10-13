@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "../i18n/Link";
-import { useId, useState } from "react";
+import { useState } from "react";
 import { dispatchTarget } from "../content-ops";
 import { zones } from "../content-footer";
 import {
@@ -28,7 +28,8 @@ import {
   type Unit,
 } from "./store";
 import { STATES, placeOf } from "../geo";
-import { ArrowRight, CloseIcon } from "./icons";
+import { ArrowRight, CheckIcon, ChevronDown, CloseIcon } from "./icons";
+import OpsPicker from "./OpsPicker";
 import { useFormat, useT } from "../i18n/client";
 
 /**
@@ -225,102 +226,96 @@ function tally(calls: Incident[], now: number, units?: Unit[]): Tally {
   };
 }
 
+const busy = (s: Tally) => !!(s.waiting || s.running);
+/** Worst first: late, then waiting, then running. */
+const worse = (a: Tally, b: Tally) =>
+  b.late - a.late || b.waiting - a.waiting || b.running - a.running;
+
+function sumOf(tallies: Tally[]): Tally {
+  return tallies.reduce<Tally>(
+    (a, s) => ({
+      waiting: a.waiting + s.waiting,
+      late: a.late + s.late,
+      running: a.running + s.running,
+      free: (a.free ?? 0) + (s.free ?? 0),
+      units: (a.units ?? 0) + (s.units ?? 0),
+    }),
+    { waiting: 0, late: 0, running: 0, free: 0, units: 0 },
+  );
+}
+
 /**
- * The national mosaic: all 37 commands in their six zones. It reads the
- * whole store, not the command in view, because it is the control that
- * chooses the command in view; picking a tile is the same act as picking a
- * command in the bar above, and picking it again hands back the whole Force.
+ * The national board: all 37 commands in their six zones, as a desk table.
+ * It reads the whole store, not the command in view, because it is the
+ * control that chooses the command in view; picking a row is the same act
+ * as picking a command in the bar above, and picking it again hands back
+ * the whole Force.
+ *
+ * Zones stand worst first, and inside a zone its busy commands do too, so
+ * the top of the table is where the work is. Quiet commands step off until
+ * asked for: thirty quiet names around the seven that matter is the board
+ * hiding its own answer.
  */
 function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) {
   const t = useT();
   const { incidents, units } = useStore();
-  // Quiet commands step off until asked for: thirty quiet names around the
-  // seven that matter is the board hiding its own answer.
   const [all, setAll] = useState(false);
   const choose = (name: string | undefined) =>
     withTransition(() => setViewing(name));
+
+  const groups = zones
+    .map((zone, order) => {
+      const rows = STATES.filter((s) => s.zone === zone).map((s) => ({
+        key: s.name,
+        name: s.name,
+        tally: tally(
+          incidents.filter((i) => i.where.state === s.name),
+          now,
+          units.filter((u) => u.state === s.name),
+        ),
+      }));
+      return {
+        key: zone,
+        name: t(zone),
+        order,
+        sum: sumOf(rows.map((r) => r.tally)),
+        rows: rows
+          .filter((r) => all || busy(r.tally) || r.key === chosen)
+          .sort((a, b) => worse(a.tally, b.tally) || a.name.localeCompare(b.name)),
+      };
+    })
+    .sort((a, b) => worse(a.sum, b.sum) || a.order - b.order);
 
   return (
     <OpsPanel
       title={t("Commands")}
       flush
       action={
-        <span className="flex items-center gap-5">
-          <Legend />
-          {chosen ? (
-          <button
-            type="button"
-            onClick={() => choose(undefined)}
-            className="npf-small -my-2 inline-flex min-h-11 items-center gap-1.5 font-medium text-npf-blue underline-offset-4 hover:text-npf-blue-deep hover:underline"
-          >
-            <CloseIcon aria-hidden className="size-3.5" />
+        chosen ? (
+          <ClearChoice onClick={() => choose(undefined)}>
             {t("All commands")}
-          </button>
-          ) : null}
-        </span>
+          </ClearChoice>
+        ) : undefined
       }
     >
-      {/* One strip per zone, ruled off from the next: the zone and what it
-          owes on the left, its commands on the right. Every strip is the
-          same width with the same auto-fill tracks, so the cells line up in
-          columns down the whole board. A quiet command is bare text; only a
-          busy one is a filled cell, so it is found before it is read. */}
-      <div className="divide-y divide-ops-line-soft">
-        {zones.map((zone) => {
-          const tiles = STATES.filter((s) => s.zone === zone).map((s) => {
-            const sum = tally(
-              incidents.filter((i) => i.where.state === s.name),
-              now,
-              units.filter((u) => u.state === s.name),
-            );
-            const busy = !!(sum.waiting || sum.running) || chosen === s.name;
-            return { s, sum, busy };
-          });
-          const zoneSum = tiles.reduce(
-            (a, { sum }) => ({
-              waiting: a.waiting + sum.waiting,
-              late: a.late + sum.late,
-              running: a.running + sum.running,
-            }),
-            { waiting: 0, late: 0, running: 0 },
-          );
-          /* Every zone keeps its row, in the same order, so "queue clear"
-             is read in the same place it would be red. */
-          return (
-            <section
-              key={zone}
-              aria-label={t(zone)}
-              className="grid grid-cols-[7.5rem_minmax(0,1fr)] items-start gap-x-4 px-5 py-2.5"
-            >
-              <ZoneHead name={t(zone)} sum={zoneSum} />
-              <ul className="grid grid-cols-[repeat(auto-fill,minmax(7rem,1fr))] gap-1.5">
-                {tiles.map(({ s, sum, busy }) => (
-                  <li key={s.name} className={busy || all ? "" : "hidden"}>
-                    <Tile
-                      name={s.name}
-                      tally={sum}
-                      chosen={chosen === s.name}
-                      onChoose={() =>
-                        choose(chosen === s.name ? undefined : s.name)
-                      }
-                    />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          );
-        })}
-      </div>
+      <SituationTable
+        head={t("Command")}
+        groups={groups}
+        chosen={chosen}
+        onChoose={(name) => choose(chosen === name ? undefined : name)}
+        withUnits
+      />
       <div className="border-t border-ops-line-soft px-5 py-1">
         <button
           type="button"
           aria-expanded={all}
           onClick={() => setAll(!all)}
-          className="npf-small inline-flex min-h-11 items-center font-medium text-npf-blue underline-offset-4 hover:text-npf-blue-deep hover:underline"
+          className="npf-small inline-flex min-h-11 items-center gap-1.5 font-medium text-npf-blue underline-offset-4 hover:text-npf-blue-deep hover:underline"
         >
           {all
             ? t("Busy commands only")
             : t("Show all {n} commands", { n: STATES.length })}
+          <ChevronDown aria-hidden className="npf-ops-chev size-4" />
         </button>
       </div>
     </OpsPanel>
@@ -328,9 +323,10 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
 }
 
 /**
- * A command desk's mosaic: its divisions with a call open, busiest first.
+ * A command desk's board: its divisions with a call open, busiest first.
  * A command has dozens of divisions and most are quiet at any hour, so the
  * quiet ones stay off the board rather than burying the three that matter.
+ * Units carry no division, so there is no units column here.
  */
 function DivisionMosaic({
   incidents,
@@ -345,177 +341,335 @@ function DivisionMosaic({
 }) {
   const t = useT();
   const open = incidents.filter((i) => i.status !== "Closed");
-  const divisions = [...new Set(open.map((i) => i.where.division))]
+  const rows = [...new Set(open.map((i) => i.where.division))]
     .map((d) => ({
-      name: d,
+      key: d,
+      name: t(d),
       tally: tally(
         open.filter((i) => i.where.division === d),
         now,
       ),
     }))
-    .sort(
-      (a, b) =>
-        b.tally.late - a.tally.late ||
-        b.tally.waiting - a.tally.waiting ||
-        b.tally.running - a.tally.running,
-    );
+    .sort((a, b) => worse(a.tally, b.tally) || a.name.localeCompare(b.name));
 
-  if (!divisions.length) return null;
+  if (!rows.length) return null;
   return (
     <OpsPanel
       title={t("Divisions")}
+      flush
       action={
-        <span className="flex items-center gap-5">
-          <Legend />
-          {chosen ? (
-          <button
-            type="button"
-            onClick={() => onChoose(null)}
-            className="npf-small -my-2 inline-flex min-h-11 items-center gap-1.5 font-medium text-npf-blue underline-offset-4 hover:text-npf-blue-deep hover:underline"
-          >
-            <CloseIcon aria-hidden className="size-3.5" />
+        chosen ? (
+          <ClearChoice onClick={() => onChoose(null)}>
             {t("All divisions")}
-          </button>
-          ) : null}
-        </span>
+          </ClearChoice>
+        ) : undefined
       }
     >
-      <ul className="flex flex-wrap gap-2">
-        {divisions.map(({ name, tally }) => (
-          <li key={name}>
-            <Tile
-              name={t(name)}
-              tally={tally}
-              chosen={chosen === name}
-              onChoose={() => onChoose(chosen === name ? null : name)}
-            />
-          </li>
-        ))}
-      </ul>
+      <SituationTable
+        head={t("Division")}
+        groups={[{ key: "all", rows }]}
+        chosen={chosen}
+        onChoose={(name) => onChoose(chosen === name ? null : name)}
+      />
     </OpsPanel>
   );
 }
 
+type SituationRow = { key: string; name: string; tally: Tally };
+type SituationGroup = {
+  key: string;
+  name?: string;
+  sum?: Tally;
+  rows: SituationRow[];
+};
+
 /**
- * One command or division. The waiting count is the figure, because a call
- * nobody has taken is the thing on this board that gets worse by itself;
- * late turns the whole tile red. A quiet tile drops back to the ground so
- * the busy ones are what the eye lands on.
+ * The situation as a desk table: one ruled head, then a band per zone with
+ * the zone's own totals in the same columns, then its commands. Every figure
+ * stands in a fixed column, so the eye runs straight down "waiting" without
+ * reading a single name. A zone with nothing on says so in a green tag
+ * where its figures would be.
  */
-function Tile({
-  name,
-  tally: { waiting, late, running, free, units },
+function SituationTable({
+  head,
+  groups,
   chosen,
   onChoose,
+  withUnits,
 }: {
-  name: string;
-  tally: Tally;
-  chosen: boolean;
-  onChoose: () => void;
+  head: string;
+  groups: SituationGroup[];
+  chosen: string | null;
+  onChoose: (key: string) => void;
+  withUnits?: boolean;
 }) {
   const t = useT();
-  const hasUnits = !!units && free !== undefined;
-  const label = hasUnits
-    ? t("{name}: {w} waiting, {l} late, {r} running, {f} of {u} units free", {
-        name,
-        w: waiting,
-        l: late,
-        r: running,
-        f: free,
-        u: units,
-      })
-    : t("{name}: {w} waiting, {l} late, {r} running", {
-        name,
-        w: waiting,
-        l: late,
-        r: running,
-      });
-
-  /*
-   * A cell, in alphabetical place so a command is always where the officer
-   * last saw it. The fill says how bad it is: red when a call is late, amber
-   * while one waits, a pale Force-blue wash while units are out. A quiet cell
-   * has no fill and no outline, only steel text: thirty outlined boxes made
-   * the quiet commands as loud as the busy ones. Units free stays in the
-   * spoken label and on the Units panel; on every cell it was noise.
-   */
-  const surface = chosen
-    ? "bg-ops-brand font-semibold text-white shadow-[0_6px_16px_-8px_var(--color-npf-blue-deep)]"
-    : late
-      ? "bg-ops-p1-wash font-semibold text-npf-ink hover:bg-[color-mix(in_srgb,var(--ops-p1)_14%,white)]"
-      : waiting
-        ? "bg-ops-p2-wash font-semibold text-npf-ink hover:bg-[color-mix(in_srgb,var(--ops-p2)_16%,white)]"
-        : running
-          ? "bg-npf-mist font-medium text-npf-ink hover:bg-npf-chip"
-          : "text-npf-steel hover:bg-npf-cloud hover:text-npf-ink";
-  const counted = !!(waiting || running);
-
   return (
-    <button
-      type="button"
-      aria-pressed={chosen}
-      aria-label={label}
-      title={label}
-      onClick={onChoose}
-      /* The counts sit at the cell's end, so down a column of cells they
-         form one edge to scan. A long name gives way before a count does;
-         the whole name is in the title and the spoken label. */
-      className={`inline-flex h-11 w-full min-w-0 items-center justify-between gap-2 rounded-lg ps-3 pe-2 text-sm whitespace-nowrap transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) active:scale-[0.97] active:duration-(--dur-press) sm:h-10 ${surface}`}
-    >
-      <span className="truncate">{name}</span>
-      {counted ? (
-        <span aria-hidden className="flex shrink-0 items-center gap-1 tabular-nums">
-          <Count n={waiting} kind={late ? "late" : "waiting"} chosen={chosen} />
-          <Count n={running} kind="running" chosen={chosen} />
-        </span>
-      ) : null}
-    </button>
+    <table className="w-full table-fixed text-sm">
+      <colgroup>
+        <col />
+        <col className="w-15 sm:w-17" />
+        <col className="w-15 sm:w-17" />
+        {withUnits ? <col className="w-20 sm:w-24" /> : null}
+      </colgroup>
+      <thead>
+        <tr className="border-b border-ops-line bg-[color-mix(in_srgb,var(--color-npf-cloud)_70%,white)] text-xs font-semibold text-npf-steel">
+          <th scope="col" className="py-2 ps-5">
+            {head}
+          </th>
+          <th scope="col" className="py-2 text-center">
+            {t("Waiting")}
+          </th>
+          <th scope="col" className="py-2 text-center">
+            {t("Running")}
+          </th>
+          {withUnits ? (
+            <th scope="col" className="py-2 pe-5 text-end">
+              {t("Units free")}
+            </th>
+          ) : null}
+        </tr>
+      </thead>
+      {groups.map((g) => (
+        <tbody key={g.key} className="border-b border-ops-line-soft last:border-0">
+          {g.name && g.sum ? (
+            <ZoneRow name={g.name} sum={g.sum} withUnits={withUnits} />
+          ) : null}
+          {g.rows.map((r) => (
+            <CommandRow
+              key={r.key}
+              row={r}
+              chosen={chosen === r.key}
+              onChoose={() => onChoose(r.key)}
+              withUnits={withUnits}
+              indent={!!g.name}
+            />
+          ))}
+        </tbody>
+      ))}
+    </table>
   );
 }
 
-/**
- * The calls a zone owes, said in words under its name: waiting first, the
- * late share of it next, then running. A quiet zone says its queue is clear
- * and steps back to steel.
- */
-function ZoneHead({
+/** A zone's band: its name, its late tag, and its totals in the columns. */
+function ZoneRow({
   name,
   sum,
+  withUnits,
 }: {
   name: string;
-  sum: { waiting: number; late: number; running: number };
+  sum: Tally;
+  withUnits?: boolean;
 }) {
   const t = useT();
-  const parts = [
-    sum.waiting ? t("{n} waiting", { n: sum.waiting }) : null,
-    sum.late ? t("{n} late", { n: sum.late }) : null,
-    sum.running ? t("{n} running", { n: sum.running }) : null,
-  ].filter(Boolean);
+  const quiet = !busy(sum);
   return (
-    /* Beside its commands on a phone too: stacked above them, a zone with
-       one busy command spent a whole extra line on its name. */
-    <div className="pt-1 sm:pt-0.5">
-      <h3
-        className={`font-secondary text-sm leading-tight font-bold ${
-          parts.length ? "text-npf-ink" : "text-npf-steel"
-        }`}
-      >
-        {name}
-      </h3>
-      <p
-        className={`mt-1 text-xs tabular-nums ${
-          sum.late ? "font-semibold text-npf-ink" : "text-npf-steel"
-        }`}
-      >
-        {parts.length ? parts.join(", ") : t("Queue clear")}
-      </p>
-    </div>
+    <tr className="bg-[color-mix(in_srgb,var(--color-npf-cloud)_55%,white)]">
+      <th scope="rowgroup" className="py-2 ps-5 text-start font-normal">
+        <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span
+            className={`font-secondary text-[0.8125rem] leading-tight font-bold ${
+              quiet ? "text-npf-steel" : "text-npf-ink"
+            }`}
+          >
+            {name}
+          </span>
+          {sum.late ? (
+            <span className="npf-pill bg-ops-p1-wash !py-0.5 text-ops-p1">
+              <span aria-hidden className="npf-pill-dot" />
+              {t("{n} late", { n: sum.late })}
+            </span>
+          ) : null}
+        </span>
+      </th>
+      {quiet ? (
+        <td colSpan={2} className="py-2 text-center">
+          <span className="npf-pill bg-ops-ok-wash !py-0.5 text-ops-ok">
+            <CheckIcon aria-hidden className="size-3" />
+            {t("Queue clear")}
+          </span>
+        </td>
+      ) : (
+        <>
+          <td className="py-2 text-center">
+            <Total n={sum.waiting} />
+          </td>
+          <td className="py-2 text-center">
+            <Total n={sum.running} />
+          </td>
+        </>
+      )}
+      {withUnits ? (
+        <td className="py-2 pe-5 text-end">
+          <Free free={sum.free ?? 0} of={sum.units ?? 0} />
+        </td>
+      ) : null}
+    </tr>
+  );
+}
+
+/** A zone total: plain ink figures, so the zone band never outshouts its rows. */
+function Total({ n }: { n: number }) {
+  return n ? (
+    <span className="font-mono text-[0.8125rem] font-semibold text-npf-ink tabular-nums">
+      {n}
+    </span>
+  ) : (
+    <Nil />
+  );
+}
+
+/** A column with nothing in it: a dash, read aloud as zero. */
+function Nil({ className = "text-npf-steel" }: { className?: string }) {
+  return (
+    <>
+      <span aria-hidden className={className}>
+        –
+      </span>
+      <span className="sr-only">0</span>
+    </>
   );
 }
 
 /**
- * A figure on a chip. Waiting and late are solid, running is an outline, so
- * the two read apart by shape as well as colour.
+ * One command or division. The whole row is the button (its name cell's
+ * button stretches over the row), so the officer clicks anywhere along it.
+ * The dot before the name is the row's state in one mark: red late, amber
+ * waiting, blue running; the figures in the columns carry the same news in
+ * numbers, so colour is never alone.
+ */
+function CommandRow({
+  row: { name, tally: s },
+  chosen,
+  onChoose,
+  withUnits,
+  indent,
+}: {
+  row: SituationRow;
+  chosen: boolean;
+  onChoose: () => void;
+  withUnits?: boolean;
+  indent?: boolean;
+}) {
+  const t = useT();
+  const label =
+    s.units !== undefined
+      ? t("{name}: {w} waiting, {l} late, {r} running, {f} of {u} units free", {
+          name,
+          w: s.waiting,
+          l: s.late,
+          r: s.running,
+          f: s.free ?? 0,
+          u: s.units,
+        })
+      : t("{name}: {w} waiting, {l} late, {r} running", {
+          name,
+          w: s.waiting,
+          l: s.late,
+          r: s.running,
+        });
+  const dot = chosen
+    ? "bg-white"
+    : s.late
+      ? "bg-ops-p1"
+      : s.waiting
+        ? "bg-ops-p2"
+        : s.running
+          ? "bg-npf-blue-mid"
+          : "ring-1 ring-npf-line ring-inset";
+
+  return (
+    <tr
+      className={`relative border-t border-ops-line-soft transition-colors duration-(--dur-hover) ${
+        chosen
+          ? "bg-ops-brand text-white"
+          : s.late
+            ? "bg-[color-mix(in_srgb,var(--ops-p1)_4%,white)] hover:bg-[color-mix(in_srgb,var(--ops-p1)_8%,white)]"
+            : "hover:bg-ops-hover"
+      }`}
+    >
+      <th scope="row" className={`p-0 text-start font-normal ${indent ? "ps-7" : "ps-5"}`}>
+        <button
+          type="button"
+          aria-pressed={chosen}
+          aria-label={label}
+          title={label}
+          onClick={onChoose}
+          className="flex h-10 w-full min-w-0 items-center gap-2.5 text-start after:absolute after:inset-0 focus-visible:outline-none! focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-npf-blue-mid"
+        >
+          <span aria-hidden className={`size-2 shrink-0 rounded-full ${dot}`} />
+          <span
+            className={`truncate ${
+              chosen
+                ? "font-semibold"
+                : busy(s)
+                  ? "font-medium text-npf-ink"
+                  : "text-npf-steel"
+            }`}
+          >
+            {name}
+          </span>
+        </button>
+      </th>
+      <td className="text-center">
+        <Count n={s.waiting} kind={s.late ? "late" : "waiting"} chosen={chosen} />
+      </td>
+      <td className="text-center">
+        <Count n={s.running} kind="running" chosen={chosen} />
+      </td>
+      {withUnits ? (
+        <td className="pe-5 text-end">
+          <Free free={s.free ?? 0} of={s.units ?? 0} chosen={chosen} />
+        </td>
+      ) : null}
+    </tr>
+  );
+}
+
+/**
+ * Units free as a figure and a short bar of the share. Nobody free while
+ * the command has units is the one reading that turns red, because it is
+ * the one that stops a dispatch.
+ */
+function Free({ free, of, chosen }: { free: number; of: number; chosen?: boolean }) {
+  if (!of) return <Nil className={chosen ? "text-white/70" : "text-npf-steel"} />;
+  if (!free)
+    return (
+      <span className="npf-pill bg-ops-p1-wash !py-0.5 font-mono text-ops-p1">
+        0/{of}
+      </span>
+    );
+  return (
+    <span className="inline-flex items-center justify-end gap-2">
+      <span
+        aria-hidden
+        className={`hidden h-1.5 w-7 overflow-hidden rounded-full sm:block ${
+          chosen ? "bg-white/25" : "bg-ops-line-soft"
+        }`}
+      >
+        <span
+          className="block h-full rounded-full transition-[width] duration-500 ease-(--ease-out)"
+          style={{
+            width: `${(free / of) * 100}%`,
+            background: chosen ? "#fff" : "var(--ops-fill-ok)",
+          }}
+        />
+      </span>
+      <span
+        className={`font-mono text-xs font-semibold tabular-nums ${chosen ? "text-white" : "text-npf-ink"}`}
+      >
+        {free}
+        <span className={`font-normal ${chosen ? "text-white/75" : "text-ops-dim"}`}>
+          /{of}
+        </span>
+      </span>
+    </span>
+  );
+}
+
+/**
+ * A figure in a column. Waiting and late are solid, running is an outline,
+ * so the two read apart by shape as well as colour; nothing is a dash.
  */
 function Count({
   n,
@@ -526,6 +680,7 @@ function Count({
   kind: "late" | "waiting" | "running";
   chosen: boolean;
 }) {
+  if (!n) return <Nil className={chosen ? "text-white/70" : "text-npf-steel"} />;
   const tone = chosen
     ? kind === "running"
       ? "text-white ring-1 ring-white/60 ring-inset"
@@ -535,35 +690,33 @@ function Count({
       : kind === "waiting"
         ? "bg-ops-p2 text-white"
         : "text-npf-blue-ink ring-1 ring-npf-blue-mid/45 ring-inset";
-  if (!n) return null;
   return (
     <span
       key={n}
-      className={`npf-ops-count grid h-5 min-w-5 place-items-center rounded-full px-1 font-mono text-2xs leading-none font-semibold ${tone}`}
+      className={`npf-ops-count inline-grid h-5 min-w-5 place-items-center rounded-full px-1.5 font-mono text-2xs leading-none font-semibold ${tone}`}
     >
       {n}
     </span>
   );
 }
 
-/** What the figures on a chip mean, said once over the board. */
-function Legend() {
-  const t = useT();
-  const key = (mark: string, label: string) => (
-    <span className="flex items-center gap-1.5">
-      <span aria-hidden className={`size-3 rounded-full ${mark}`} />
-      {label}
-    </span>
-  );
+/** Hands a narrowed board back to the whole Force (or command). */
+function ClearChoice({
+  onClick,
+  children,
+}: {
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
   return (
-    <span
-      aria-hidden
-      className="flex items-center gap-4 text-xs text-npf-steel max-md:hidden"
+    <button
+      type="button"
+      onClick={onClick}
+      className="npf-small -my-2 inline-flex min-h-11 items-center gap-1.5 font-medium text-npf-blue underline-offset-4 hover:text-npf-blue-deep hover:underline"
     >
-      {key("bg-ops-p1", t("Late"))}
-      {key("bg-ops-p2", t("Waiting"))}
-      {key("ring-1 ring-npf-blue-mid/45 ring-inset", t("Running"))}
-    </span>
+      <CloseIcon aria-hidden className="size-3.5" />
+      {children}
+    </button>
   );
 }
 
@@ -676,7 +829,6 @@ function PendingCall({
   now: number;
 }) {
   const t = useT();
-  const id = useId();
   const late = isOverdue(incident, now);
   // Its own command's units only, even on a national desk.
   const free = units.filter(
@@ -721,41 +873,47 @@ function PendingCall({
 
         <span className="block min-w-0 flex-1 @3xl:flex-none">
           {free.length ? (
-            <>
-              <label htmlFor={id} className="sr-only">
-                {t("Dispatch {ref} to a unit", { ref: incident.id })}
-              </label>
-              <select
-                id={id}
-                value=""
-                onChange={(e) => {
-                  const unit = units.find((u) => u.callsign === e.target.value);
-                  if (!unit) return;
-                  /* The call travels from the queue into Running, so the eye
-                     follows it to where it went instead of losing it in a blink
-                     out of one list and into the other. */
-                  withTransition(() =>
-                    updateIncident(incident.id, {
-                      unit: unit.callsign,
-                      assignee: unit.officer,
-                      status: "Dispatched",
-                    }),
-                  );
-                }}
-                className="npf-ops-select h-9 w-full max-w-52 min-w-fit ps-3 text-[0.8125rem] font-medium whitespace-nowrap outline-none @3xl:max-w-none"
-              >
-                {/* The prompt, not a choice: it names the control and stays out
-                    of the list. */}
-                <option value="" hidden>
+            /* Each free unit is a row with its callsign, then where it is and
+               who is on it, behind the green dot free units wear on the
+               Units panel. */
+            <OpsPicker
+              label={t("Dispatch {ref} to a unit", { ref: incident.id })}
+              width="17rem"
+              groups={[
+                {
+                  items: free.map((u) => ({
+                    value: u.callsign,
+                    label: t(u.callsign),
+                    hint: `${t(u.area)} · ${t(u.officer)}`,
+                    dot: "var(--ops-fill-ok)",
+                  })),
+                },
+              ]}
+              onPick={(callsign) => {
+                const unit = units.find((u) => u.callsign === callsign);
+                if (!unit) return;
+                /* The call travels from the queue into Running, so the eye
+                   follows it to where it went instead of losing it in a blink
+                   out of one list and into the other. */
+                withTransition(() =>
+                  updateIncident(incident.id, {
+                    unit: unit.callsign,
+                    assignee: unit.officer,
+                    status: "Dispatched",
+                  }),
+                );
+              }}
+              triggerClassName="flex h-9 w-full max-w-52 min-w-fit items-center gap-2 rounded-(--ops-control-radius) bg-white ps-3 pe-2.5 text-[0.8125rem] font-medium whitespace-nowrap text-npf-ink shadow-[var(--ops-control-rim),var(--ops-control-lift)] transition-[box-shadow,scale] duration-150 hover:shadow-[var(--ops-control-rim-hover),var(--ops-control-lift)] active:scale-[0.97] @3xl:max-w-none"
+              trigger={
+                <>
+                  <span className="sr-only">
+                    {t("Dispatch {ref} to a unit", { ref: incident.id })}:{" "}
+                  </span>
                   {t("Dispatch · {n} free", { n: free.length })}
-                </option>
-                {free.map((u) => (
-                  <option key={u.callsign} value={u.callsign}>
-                    {t(u.callsign)} · {t(u.area)}
-                  </option>
-                ))}
-              </select>
-            </>
+                  <ChevronDown aria-hidden className="npf-ops-chev ms-auto size-4 shrink-0 text-npf-steel" />
+                </>
+              }
+            />
           ) : (
             /* Nothing to choose, so no control: an empty slot the size of
                the select, ruled in dashes, saying so plainly. */
@@ -815,121 +973,168 @@ function RunningCall({ incident }: { incident: Incident }) {
   );
 }
 
-/** What a segment of the availability track means, by unit status. */
-const UNIT_FILL: Record<Unit["status"], string> = {
-  Available: "var(--ops-fill-ok)",
-  Assigned: "var(--ops-fill-warn)",
-  "On Scene": "var(--ops-fill-warn)",
-  // Off the air has to show as a segment, not as a gap in the track.
-  Unavailable: "color-mix(in srgb, var(--ops-dim) 45%, transparent)",
-};
-
-/** The order a section's track is drawn in: what can go first. */
-const UNIT_ORDER: Record<Unit["status"], number> = {
-  Available: 0,
-  Assigned: 1,
-  "On Scene": 1,
-  Unavailable: 2,
-};
-
-const UNIT_KEY = [
-  { label: "Free", fill: "var(--ops-fill-ok)" },
-  { label: "Committed", fill: "var(--ops-fill-warn)" },
+/**
+ * A unit's status as a block of colour: the ink its status pill wears
+ * everywhere else in the console (the Units lanes, the Running tags), so a
+ * segment here means what the same colour means there.
+ */
+const UNIT_KEY: { status: Unit["status"]; label: string; fill: string }[] = [
+  { status: "Available", label: "Free", fill: "var(--ops-fill-ok)" },
+  { status: "Assigned", label: "En route", fill: "var(--ops-route)" },
+  { status: "On Scene", label: "On scene", fill: "var(--ops-scene)" },
   {
+    status: "Unavailable",
     label: "Off the air",
-    fill: "color-mix(in srgb, var(--ops-dim) 45%, transparent)",
+    // Off the air has to show as a segment, not as a gap in the bar.
+    fill: "color-mix(in srgb, var(--ops-dim) 40%, transparent)",
   },
 ];
 
 /**
- * The unit status board, rolled up by division. A dispatcher does not ask
- * "how many units exist", they ask "is there a traffic car free", so the
- * available count is what the row leads with.
+ * The unit status board, rolled up by section.
+ *
+ * One bar across the top is the whole fleet, split by status, with each
+ * share named and counted under it: the shift's capacity in one look. Under
+ * it the sections as a desk table, a column per status headed by its own
+ * colour, so the legend is the header and every count stands in a straight
+ * line. A dispatcher does not ask "how many units exist", they ask "is there
+ * a traffic car free", so Free leads, and a section with nobody free turns
+ * that cell into a red tag.
  */
 function UnitBoard({ units }: { units: Unit[] }) {
   const t = useT();
-  const divisions = [...new Set(units.map((u) => u.section))];
-  const free = units.filter((u) => u.status === "Available");
+  const sections = [...new Set(units.map((u) => u.section))];
+  const count = (list: Unit[], status: Unit["status"]) =>
+    list.filter((u) => u.status === status).length;
+  const free = count(units, "Available");
 
   return (
     <OpsPanel
       title={t("Units")}
-      count={t("{n} free", { n: free.length })}
+      count={t("{n} free", { n: free })}
       action={<More href="/app/police/units">{t("Status board")}</More>}
       flush
     >
-      <table className="w-full text-sm">
+      {units.length ? (
+        <div className="px-5 pt-4 pb-3.5">
+          <span aria-hidden className="flex h-2.5 gap-[3px]">
+            {UNIT_KEY.map(({ status, fill }) => {
+              const n = count(units, status);
+              return n ? (
+                <span
+                  key={status}
+                  className="rounded-[3px] transition-[flex-grow] duration-500 ease-(--ease-out)"
+                  style={{ flexGrow: n, background: fill }}
+                />
+              ) : null;
+            })}
+          </span>
+          <ul className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-ops-dim">
+            {UNIT_KEY.map(({ status, label }) => {
+              const n = count(units, status);
+              return (
+                <li key={status} className="flex items-baseline gap-1.5">
+                  {t(label)}
+                  <span
+                    className={`font-mono tabular-nums ${n ? "font-semibold text-npf-ink" : ""}`}
+                  >
+                    {n}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : null}
+
+      <table className="w-full table-fixed text-sm">
         <caption className="sr-only">
           {t("Units on duty by section, with how many are available")}
         </caption>
+        <colgroup>
+          <col />
+          <col className="w-14 sm:w-16" />
+          <col className="w-14 sm:w-16" />
+          <col className="w-14 sm:w-16" />
+          <col className="w-14 sm:w-18" />
+        </colgroup>
+        <thead>
+          <tr className="border-y border-ops-line bg-[color-mix(in_srgb,var(--color-npf-cloud)_70%,white)] text-xs font-semibold text-npf-steel">
+            <th scope="col" className="py-2 ps-5">
+              {t("Section")}
+            </th>
+            {UNIT_KEY.map(({ status, label, fill }, i) => (
+              <th
+                key={status}
+                scope="col"
+                className={`py-2 align-bottom leading-tight ${
+                  i === UNIT_KEY.length - 1 ? "pe-5 text-end" : "text-center"
+                }`}
+              >
+                <span
+                  aria-hidden
+                  className="mx-auto mb-1 block h-1 w-4 rounded-full in-[.text-end]:ms-auto in-[.text-end]:me-0"
+                  style={{ background: fill }}
+                />
+                {t(label)}
+              </th>
+            ))}
+          </tr>
+        </thead>
         <tbody>
-          {divisions.map((division) => {
-            const inDivision = units.filter((u) => u.section === division);
-            const open = inDivision.filter((u) => u.status === "Available");
+          {sections.map((section) => {
+            const inSection = units.filter((u) => u.section === section);
+            const open = count(inSection, "Available");
             return (
               <tr
-                key={division}
-                className="border-b border-ops-line-soft last:border-0"
+                key={section}
+                className="border-b border-ops-line-soft transition-colors last:border-0 hover:bg-ops-hover"
               >
                 <th
                   scope="row"
-                  className="py-2.5 ps-5 font-normal whitespace-nowrap"
+                  className={`truncate py-2.5 ps-5 ${
+                    open ? "font-medium text-npf-ink" : "font-normal text-npf-steel"
+                  }`}
                 >
-                  {t(division)}
+                  {t(section)}
                 </th>
-                <td className="w-full px-3 py-2.5">
-                  {/* Availability as a filled track: the bar is the number,
-                      not a decoration beside it. One segment per unit, in the
-                      three colours the legend under the table names — free,
-                      committed, off the air — so the row is readable without
-                      counting and the colours mean the same thing they mean
-                      on the status pills. */}
-                  {/* Free first, then committed, then off the air, so the
-                      green run from the start is the answer. Each unit has
-                      at most 1.5rem, so a one-car section draws a short
-                      track instead of one as long as a fleet of seven. */}
-                  <span
-                    aria-hidden
-                    className="flex h-1.5 gap-0.5"
-                  >
-                    {[...inDivision]
-                      .sort((a, b) => UNIT_ORDER[a.status] - UNIT_ORDER[b.status])
-                      .map((u) => (
-                      <span
-                        key={u.callsign}
-                        className="max-w-6 flex-1 rounded-full transition-[background-color] duration-500 ease-(--ease-out)"
-                        style={{ background: UNIT_FILL[u.status] }}
-                      />
-                    ))}
-                  </span>
-                </td>
-                {/* Ink, not status colour: the track already says it. */}
-                <td className="py-2.5 pe-5 text-end font-mono text-xs font-semibold whitespace-nowrap text-npf-ink tabular-nums">
-                  {open.length}
-                  <span className="font-normal text-ops-dim">
-                    /{inDivision.length}
-                  </span>
-                </td>
+                {UNIT_KEY.map(({ status }, i) => {
+                  const n = count(inSection, status);
+                  const last = i === UNIT_KEY.length - 1;
+                  return (
+                    <td
+                      key={status}
+                      className={`py-2 font-mono text-xs tabular-nums ${
+                        last ? "pe-5 text-end" : "text-center"
+                      }`}
+                    >
+                      {status === "Available" && !n ? (
+                        /* Nobody free is the one reading that stops a
+                           dispatch, so it is the one that turns red. */
+                        <span className="npf-pill bg-ops-p1-wash !py-0.5 text-ops-p1">
+                          0<span className="sr-only"> {t("No unit free")}</span>
+                        </span>
+                      ) : n ? (
+                        <span
+                          className={
+                            status === "Available"
+                              ? "text-[0.8125rem] font-semibold text-npf-ink"
+                              : "text-npf-ink"
+                          }
+                        >
+                          {n}
+                        </span>
+                      ) : (
+                        <Nil />
+                      )}
+                    </td>
+                  );
+                })}
               </tr>
             );
           })}
         </tbody>
       </table>
-
-      {/* Three colours across twelve tracks earn one line naming them. */}
-      <ul className="flex flex-wrap gap-x-4 gap-y-1 border-t border-ops-line-soft px-5 py-3 text-xs text-ops-dim">
-        {UNIT_KEY.map(({ label, fill }) => (
-          <li key={label} className="flex items-center gap-1.5">
-            <span
-              aria-hidden
-              className="size-2 rounded-full"
-              style={{ background: fill }}
-            />
-            {t(label)}
-          </li>
-        ))}
-      </ul>
-
     </OpsPanel>
   );
 }
