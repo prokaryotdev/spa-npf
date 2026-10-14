@@ -20,27 +20,40 @@ import {
   OpsHead,
   OpsPanel,
   OpsSearch,
+  OpsLog,
   OpsStatus,
   PRIORITY,
+  historyAt,
+  kmLabel,
+  nearestFree,
   PriorityTag,
   TargetBar,
   duration,
   isNearDue,
   isOverdue,
+  useMinute,
   useNow,
   useScoped,
 } from "./OpsPieces";
 import { STATES, jurisdiction, placeOf, stateNamed } from "../geo";
 import { commandLabel, divisionLabel, line } from "./Where";
 import {
+  actor,
+  attachToCall,
   logIncident,
+  openCase,
   updateIncident,
+  type Media,
   type Incident,
   type IncidentStatus,
   type Priority,
   type Unit,
 } from "./store";
 import { CloseIcon, PlusIcon, RadioIcon } from "./icons";
+import Link from "../i18n/Link";
+import OpsMap from "./OpsMap";
+import { Gallery, MediaPicker } from "./media";
+import { callFlags, postSees } from "../content-records";
 
 const STATUSES: IncidentStatus[] = ["New", "Dispatched", "On Scene", "Closed"];
 const STATUS_LABEL: Record<IncidentStatus, string> = {
@@ -72,6 +85,7 @@ export default function OpsIncidents() {
   const id = useId();
   const { incidents, units, viewing } = useScoped();
   const now = useNow();
+  const minute = useMinute();
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
@@ -106,7 +120,12 @@ export default function OpsIncidents() {
    * an Hausa-speaking operator types the call type in Hausa.
    */
   const visible = useMemo(() => {
+    // The board is the last day's work and whatever is still open. A search
+    // reaches the whole month, so an old reference is still one query away.
+    const since = minute - 24 * 3_600_000;
     const shown = incidents.filter((i) => {
+      if (!query.trim() && i.status === "Closed" && minute && new Date(i.reported).getTime() < since)
+        return false;
       if (status && i.status !== status) return false;
       if (priority && i.priority !== priority) return false;
       if (unassigned && i.unit) return false;
@@ -135,7 +154,7 @@ export default function OpsIncidents() {
         t(STATUS_LABEL[i.status]),
       ].join(" "),
     );
-  }, [incidents, query, status, priority, unassigned, t]);
+  }, [incidents, query, status, priority, unassigned, t, minute]);
 
   const waiting = incidents.filter((i) => i.status === "New");
   const late = waiting.filter((i) => isOverdue(i, now)).length;
@@ -163,7 +182,10 @@ export default function OpsIncidents() {
               { label: t("Running"), value: running },
               {
                 label: t("Closed"),
-                value: incidents.length - waiting.length - running,
+                // Closed in the last day: the board's window, not the month.
+                value: incidents.filter(
+                  (i) => i.status === "Closed" && new Date(i.reported).getTime() >= minute - 24 * 3_600_000,
+                ).length,
                 tone: "var(--ops-dim)",
               },
             ]}
@@ -241,7 +263,9 @@ export default function OpsIncidents() {
         >
           {t("{shown} of {total} calls", {
             shown: visible.length,
-            total: incidents.length,
+            total: incidents.filter(
+              (i) => i.status !== "Closed" || new Date(i.reported).getTime() >= minute - 24 * 3_600_000,
+            ).length,
           })}
         </p>
       </div>
@@ -508,10 +532,31 @@ function Detail({
   const [closing, setClosing] = useState(false);
   // Only the call's own command's units: the list a national desk sees is
   // every unit in the country, and a Lagos car cannot attend in Kano.
-  const free = units.filter(
-    (u) =>
-      u.state === incident.where.state &&
-      (u.status === "Available" || u.callsign === incident.unit),
+  const { incidents: all, session } = useScoped();
+  const near = nearestFree(incident, units);
+  const current = units.find((u) => u.callsign === incident.unit);
+  const free = [
+    ...(current ? [{ unit: current, km: null as number | null }] : []),
+    ...near.filter((n) => n.unit.callsign !== incident.unit),
+  ];
+  const history = historyAt(incident, all);
+  // The same kind of call, in the same LGA, open within the hour: the second
+  // and third callers about one collision.
+  const dupes = all.filter(
+    (i) =>
+      i.id !== incident.id &&
+      i.status !== "Closed" &&
+      i.kind === incident.kind &&
+      i.where.lga === incident.where.lga &&
+      Math.abs(new Date(i.reported).getTime() - new Date(incident.reported).getTime()) < 3_600_000,
+  );
+  const [media, setMedia] = useState<Media[]>([]);
+  // Stable between the board's once-a-second renders, or the map redraws
+  // every marker each tick and a tooltip vanishes under the pointer.
+  const mapCalls = useMemo(() => [incident], [incident]);
+  const mapUnits = useMemo(
+    () => units.filter((u) => u.state === incident.where.state),
+    [units, incident.where.state],
   );
   const next = NEXT[incident.status];
   const { reporter } = incident;
@@ -551,7 +596,7 @@ function Detail({
         <dt className="text-ops-dim">{t("Command")}</dt>
         <dd className="font-medium">{commandLabel(t, incident.where.state)}</dd>
         <dt className="text-ops-dim">{t("Division")}</dt>
-        <dd>{divisionLabel(t, incident.where.lga)}</dd>
+        <dd>{divisionLabel(t, incident.where.lga, incident.where.division)}</dd>
         {incident.occurred ? (
           <>
             <dt className="text-ops-dim">{t("Happened")}</dt>
@@ -595,16 +640,22 @@ function Detail({
             </dd>
           </>
         ) : null}
+        {incident.lang ? (
+          <>
+            <dt className="text-ops-dim">{t("Language")}</dt>
+            <dd>{t(incident.lang)}</dd>
+          </>
+        ) : null}
+        {incident.onBehalf ? (
+          <>
+            <dt className="text-ops-dim">{t("Reported for")}</dt>
+            <dd>{t(incident.onBehalf)}</dd>
+          </>
+        ) : null}
         {incident.outcome ? (
           <>
             <dt className="text-ops-dim">{t("Outcome")}</dt>
             <dd className="font-medium">{t(incident.outcome)}</dd>
-          </>
-        ) : null}
-        {incident.evidence?.length ? (
-          <>
-            <dt className="text-ops-dim">{t("Evidence")}</dt>
-            <dd className="break-words">{incident.evidence.join(", ")}</dd>
           </>
         ) : null}
       </dl>
@@ -614,6 +665,63 @@ function Detail({
         them. The gaps are the point: "received 11:52, dispatched 11:56" is
         two facts, "4m to dispatch" is the one an inspector asks about.
       */}
+      <Flags incident={incident} />
+
+      {dupes.length && incident.status !== "Closed" ? (
+        <div className="mt-4 rounded-chip bg-ops-p2-wash p-3 text-xs ring-1 ring-[color-mix(in_srgb,var(--ops-p2)_25%,transparent)] ring-inset">
+          <p className="font-semibold text-ops-p2">
+            {t("Possibly the same incident as {refs}", { refs: dupes.map((d) => d.id).join(", ") })}
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {dupes.map((d) => (
+              <OpsButton
+                key={d.id}
+                className="!h-8 !px-3 !text-xs"
+                onClick={() =>
+                  updateIncident(incident.id, {
+                    status: "Closed",
+                    outcome: "Duplicate call",
+                    log: [
+                      ...incident.log,
+                      { at: new Date().toISOString(), by: actor(), text: "Linked as a duplicate of {ref}.", vars: { ref: d.id } },
+                    ],
+                  })
+                }
+              >
+                {t("Close as a duplicate of {ref}", { ref: d.id })}
+              </OpsButton>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {history.length ? (
+        <details className="mt-4 rounded-chip bg-npf-mist px-3 py-2 text-xs">
+          <summary className="cursor-pointer font-semibold">
+            {t(history.length === 1 ? "{n} earlier call at this place" : "{n} earlier calls at this place", { n: history.length })}
+          </summary>
+          <ul className="mt-2 space-y-1">
+            {history.slice(0, 5).map((h) => (
+              <li key={h.id} className="flex justify-between gap-3">
+                <span>{t(h.kind)}{h.outcome ? ` · ${t(h.outcome)}` : ""}</span>
+                <span className="font-mono text-ops-dim">{h.id}</span>
+              </li>
+            ))}
+          </ul>
+        </details>
+      ) : null}
+
+      <div className="mt-4 h-44 overflow-clip rounded-chip ring-1 ring-ops-line-soft ring-inset">
+        <OpsMap
+          compact
+          incidents={mapCalls}
+          units={mapUnits}
+          layers={MINI_LAYERS}
+          focus={incident.id}
+          label={t("Map of {ref}", { ref: incident.id })}
+        />
+      </div>
+
       <Stamps incident={incident} />
 
       <div className="mt-4 space-y-2.5 border-t border-ops-line-soft pt-4">
@@ -621,13 +729,14 @@ function Detail({
           id={`${id}-unit`}
           label={t("Unit")}
           value={incident.unit ?? ""}
-          options={free.map((u) => [
+          options={free.map(({ unit: u, km }) => [
             u.callsign,
-            `${t(u.callsign)} · ${t(u.officer)}`,
+            `${t(u.callsign)} · ${t(u.officer)}${km !== null ? ` · ${kmLabel(km)}` : ""}`,
           ])}
           placeholder={free.length ? t("Not dispatched") : t("No unit free")}
           onChange={(callsign) => {
             const unit = units.find((u) => u.callsign === callsign);
+            if (unit?.emergency) return;
             updateIncident(incident.id, {
               unit: callsign || null,
               assignee: unit?.officer ?? null,
@@ -676,6 +785,75 @@ function Detail({
         )
       ) : null}
 
+      {incident.status === "Dispatched" || incident.status === "On Scene" ? (
+        <Backup incident={incident} units={units} />
+      ) : null}
+
+      <div className="mt-4 border-t border-ops-line-soft pt-4">
+        <p className="mb-2 text-xs font-semibold text-ops-dim">
+          {t("Evidence")} {incident.media?.length ? `· ${incident.media.length}` : ""}
+        </p>
+        {incident.media?.length ? <Gallery media={incident.media} /> : null}
+        {incident.evidence?.length && !incident.media?.length ? (
+          <p className="text-xs break-words">{incident.evidence.join(", ")}</p>
+        ) : null}
+        <div className="mt-2">
+          <MediaPicker
+            id={`${id}-media`}
+            tone="ops"
+            label={t("Attach scene photos or files")}
+            media={media}
+            onChange={(m) => {
+              if (m.length) attachToCall(incident.id, m);
+              setMedia([]);
+            }}
+            by={actor()}
+          />
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-ops-line-soft pt-4">
+        {incident.caseId && !postSees(session?.post, "/app/police/cases") ? (
+          <span className="text-xs text-ops-dim">
+            {t("Case file {ref}", { ref: incident.caseId })}
+          </span>
+        ) : incident.caseId ? (
+          <>
+            <Link
+              href={`/app/police/cases?case=${encodeURIComponent(incident.caseId)}`}
+              className="inline-flex h-9 items-center rounded-(--ops-control-radius) bg-white px-3 text-xs font-medium text-ops-text shadow-[var(--ops-control-rim),var(--ops-control-lift)] hover:bg-ops-hover"
+            >
+              {t("Case file {ref}", { ref: incident.caseId })}
+            </Link>
+            {postSees(session?.post, "/app/police/custody") ? (
+              <Link
+                href={`/app/police/custody?book=${encodeURIComponent(incident.caseId)}`}
+                className="text-xs font-medium text-ops-accent hover:underline"
+              >
+                {t("Book a suspect in")}
+              </Link>
+            ) : null}
+          </>
+        ) : (
+          <OpsButton
+            className="!h-9 !text-xs"
+            onClick={() =>
+              openCase({
+                incident: incident.id,
+                offence: incident.kind,
+                summary: incident.summary,
+                where: incident.where,
+                people: incident.reporter
+                  ? [{ role: "Complainant", name: incident.reporter.name, detail: incident.reporter.safeToCall ? incident.reporter.phone : undefined }]
+                  : [],
+              })
+            }
+          >
+            {t("Open a case file")}
+          </OpsButton>
+        )}
+      </div>
+
       {closing ? (
         <CloseCall incident={incident} onDone={() => setClosing(false)} />
       ) : next ? (
@@ -702,24 +880,7 @@ function Detail({
 
       <div className="mt-5 border-t border-ops-line-soft pt-4">
         <p className="mb-3 text-xs font-semibold text-ops-dim">{t("Log")}</p>
-        <ol className="space-y-2 text-xs">
-          {incident.log
-            .slice()
-            .reverse()
-            .map((entry, i) => (
-              <li key={entry.at + i} className="flex gap-3">
-                <time
-                  dateTime={entry.at}
-                  className="w-10 shrink-0 text-ops-dim tabular-nums"
-                >
-                  {format.time(entry.at)}
-                </time>
-                <span className="min-w-0 leading-relaxed">
-                  {logLine(t, entry)}
-                </span>
-              </li>
-            ))}
-        </ol>
+        <OpsLog lines={incident.log} render={(entry) => logLine(t, entry)} time={format.time} />
 
         <form
           onSubmit={(e) => {
@@ -727,7 +888,7 @@ function Detail({
             const text = note.trim();
             if (!text) return;
             updateIncident(incident.id, {
-              log: [...incident.log, { at: new Date().toISOString(), text }],
+              log: [...incident.log, { at: new Date().toISOString(), text, by: actor() }],
             });
             setNote("");
           }}
@@ -984,6 +1145,8 @@ function TakeCall({
   );
 }
 
+const MINI_LAYERS = { calls: true, units: true, history: false };
+
 const INPUT =
   "w-full px-3 py-2 text-sm rounded-(--ops-control-radius) bg-white text-npf-ink shadow-[var(--ops-control-lift)] ring-1 ring-npf-line ring-inset outline-none placeholder:text-npf-steel transition-[box-shadow] hover:ring-npf-steel/55 focus:ring-2 focus:ring-npf-blue-mid";
 const SELECT = `npf-ops-select ${INPUT}`;
@@ -1197,5 +1360,95 @@ function Transfer({
         <OpsButton onClick={onDone}>{t("Cancel")}</OpsButton>
       </div>
     </form>
+  );
+}
+
+/**
+ * The risks on a call, as tags anyone can add: the officer driving there
+ * reads "Weapon reported" before arriving. Removing one takes a click too,
+ * and both are written to the log.
+ */
+function Flags({ incident }: { incident: Incident }) {
+  const t = useT();
+  const on = new Set(incident.flags ?? []);
+  return (
+    <fieldset className="mt-4 border-t border-ops-line-soft pt-3">
+      <legend className="sr-only">{t("Risks")}</legend>
+      <p className="mb-2 text-xs font-semibold text-ops-dim">{t("Risks")}</p>
+      <div className="flex flex-wrap gap-1.5">
+        {callFlags.map((f) => {
+          const set = on.has(f);
+          return (
+            <button
+              key={f}
+              type="button"
+              aria-pressed={set}
+              disabled={incident.status === "Closed"}
+              onClick={() =>
+                updateIncident(incident.id, {
+                  flags: set ? [...on].filter((x) => x !== f) : [...on, f],
+                })
+              }
+              className={`rounded-[5px] px-2 py-1 text-2xs font-semibold ring-1 ring-inset transition-colors disabled:cursor-default ${
+                set
+                  ? "bg-ops-p1-wash text-ops-p1 ring-[color-mix(in_srgb,var(--ops-p1)_30%,transparent)]"
+                  : "text-ops-dim ring-ops-line-soft hover:bg-ops-hover hover:text-ops-text disabled:hidden"
+              }`}
+            >
+              {t(f)}
+            </button>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+}
+
+/** A second (and third) unit on a call, nearest first, and back off it. */
+function Backup({ incident, units }: { incident: Incident; units: Unit[] }) {
+  const t = useT();
+  const id = useId();
+  const backup = incident.backup ?? [];
+  const near = nearestFree(incident, units);
+  return (
+    <div className="mt-4 border-t border-ops-line-soft pt-4">
+      <p className="mb-2 text-xs font-semibold text-ops-dim">{t("Backup")}</p>
+      {backup.length ? (
+        <ul className="mb-2 space-y-1.5">
+          {backup.map((b) => (
+            <li key={b} className="flex items-center justify-between gap-3 text-sm">
+              <span className="font-medium">{t(b)}</span>
+              <button
+                type="button"
+                onClick={() => updateIncident(incident.id, { backup: backup.filter((x) => x !== b) })}
+                className="text-xs font-medium text-ops-accent hover:underline"
+              >
+                {t("Release")}
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {near.length ? (
+        <>
+          <label htmlFor={`${id}-b`} className="sr-only">{t("Send backup")}</label>
+          <select
+            id={`${id}-b`}
+            value=""
+            onChange={(e) => e.target.value && updateIncident(incident.id, { backup: [...backup, e.target.value] })}
+            className="npf-ops-select h-9 w-full ps-3 text-xs font-medium"
+          >
+            <option value="">{t("Send backup…")}</option>
+            {near.map(({ unit, km }) => (
+              <option key={unit.callsign} value={unit.callsign}>
+                {t(unit.callsign)} · {t(unit.section)}{km !== null ? ` · ${kmLabel(km)}` : ""}
+              </option>
+            ))}
+          </select>
+        </>
+      ) : (
+        <p className="text-xs text-ops-dim">{t("No other unit free in this command.")}</p>
+      )}
+    </div>
   );
 }

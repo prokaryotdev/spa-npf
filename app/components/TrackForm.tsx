@@ -3,19 +3,19 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 import { useFormat, useT } from "../i18n/client";
-import { findReference, useStore, type Incident, type TrackedRequest } from "./store";
-import { SearchIcon } from "./icons";
+import {
+  addToReport,
+  findReference,
+  useStore,
+  type Incident,
+  type Media,
+  type TrackedRequest,
+} from "./store";
+import { CheckIcon, SearchIcon } from "./icons";
+import { MediaPicker } from "./media";
 import { StatusPill } from "./ui";
 import { RouteCard, line } from "./Where";
 import { FieldNote } from "./Where";
-
-/** What a reporter sees of a call: no unit names, no officers, no log. */
-const PUBLIC_STEP: Record<Incident["status"], string> = {
-  New: "Received by the command",
-  Dispatched: "Officers assigned",
-  "On Scene": "Officers attending",
-  Closed: "Case closed",
-};
 
 /**
  * The public tracker: a reference in, where it is and what has happened to
@@ -97,9 +97,12 @@ export default function TrackForm() {
             )}
           </p>
         ) : null}
-        {found?.request ? <RequestResult request={found.request} /> : null}
-        {found && !found.request && found.incident ? (
+        {/* A crime report shows as a report even when the reporter's account
+            holds a request under the same number: the report says more. */}
+        {found?.incident ? (
           <ReportResult incident={found.incident} format={format} />
+        ) : found?.request ? (
+          <RequestResult request={found.request} />
         ) : null}
       </div>
     </div>
@@ -127,7 +130,7 @@ function RequestResult({ request }: { request: TrackedRequest }) {
                 </time>
                 <span className="npf-small text-npf-ink">
                   <span className="font-medium">{t(s.label)}</span>
-                  {s.note ? <> — {line(t, s.note, undefined, request.where)}</> : null}
+                  {s.note ? <> — {line(t, s.note, s.vars, request.where)}</> : null}
                 </span>
               </li>
             ))}
@@ -138,6 +141,12 @@ function RequestResult({ request }: { request: TrackedRequest }) {
   );
 }
 
+/**
+ * A crime report, as its reporter is entitled to see it: where it has got
+ * to, the crime reference once there is a case, what the investigator has
+ * chosen to tell them, and a way to add what they remember later. Never the
+ * unit, the officers' names, the suspects or the desk's log.
+ */
 function ReportResult({
   incident,
   format,
@@ -146,7 +155,31 @@ function ReportResult({
   format: ReturnType<typeof useFormat>;
 }) {
   const t = useT();
-  const done = incident.status === "Closed";
+  const { cases } = useStore();
+  const file = cases.find((c) => c.id === incident.caseId);
+
+  // The public steps, in order, each with the time it was reached.
+  const steps: { label: string; at: string | null }[] = [
+    { label: "Received by the command", at: incident.reported },
+    { label: "Officers assigned", at: incident.dispatched },
+    { label: "Officers attending", at: incident.onScene },
+    ...(file
+      ? [
+          { label: "Under investigation", at: file.opened },
+          {
+            label: "Charged to court",
+            at: file.stage === "Charged to court" || (file.stage === "Closed" && file.result === "Convicted")
+              ? file.log.find((l) => l.vars?.stage === "Charged to court")?.at ?? file.updated
+              : null,
+          },
+          { label: "Case closed", at: file.stage === "Closed" ? file.updated : null },
+        ]
+      : [{ label: "Case closed", at: incident.closed }]),
+  ];
+  const reached = steps.filter((x) => x.at);
+  const now = reached.at(-1)?.label ?? steps[0].label;
+  const done = now === "Case closed";
+
   return (
     <div className="space-y-4">
       <section className="npf-panel">
@@ -154,27 +187,137 @@ function ReportResult({
           <h2>{t(incident.kind)}</h2>
           <span className={`npf-pill ${done ? "bg-npf-ok-soft text-npf-ok" : "bg-npf-review-wash text-npf-review"}`}>
             <span aria-hidden className="npf-pill-dot" />
-            {t(PUBLIC_STEP[incident.status])}
+            {t(now)}
           </span>
         </div>
-        <dl className="npf-small grid gap-x-6 gap-y-2 p-5 sm:grid-cols-[10rem_minmax(0,1fr)]">
-          <dt className="text-npf-steel">{t("Reported")}</dt>
-          <dd className="text-npf-ink tabular-nums">{format.dateTime(incident.reported)}</dd>
-          {incident.dispatched ? (
-            <>
-              <dt className="text-npf-steel">{t("Officers assigned")}</dt>
-              <dd className="text-npf-ink tabular-nums">{format.dateTime(incident.dispatched)}</dd>
-            </>
-          ) : null}
-          {incident.closed ? (
-            <>
-              <dt className="text-npf-steel">{t("Case closed")}</dt>
-              <dd className="text-npf-ink tabular-nums">{format.dateTime(incident.closed)}</dd>
-            </>
-          ) : null}
-        </dl>
+        <ol className="grid gap-0 p-5">
+          {steps.map((step, n) => {
+            const hit = !!step.at;
+            const last = n === steps.length - 1;
+            return (
+              <li key={step.label} className="relative flex gap-4 pb-4 last:pb-0">
+                {!last ? (
+                  <span aria-hidden className={`absolute start-[0.6875rem] top-6 bottom-0 w-px ${hit && steps[n + 1].at ? "bg-npf-blue" : "bg-npf-line"}`} />
+                ) : null}
+                <span
+                  aria-hidden
+                  className={`relative grid size-6 shrink-0 place-items-center rounded-full ${hit ? "bg-npf-blue text-white" : "bg-white ring-2 ring-npf-line ring-inset"}`}
+                >
+                  {hit ? <CheckIcon className="size-3.5" /> : null}
+                </span>
+                <span className="npf-small min-w-0 pt-0.5">
+                  <span className={hit ? "font-medium text-npf-ink" : "text-npf-steel"}>{t(step.label)}</span>
+                  {step.at ? (
+                    <time dateTime={step.at} className="block text-npf-steel tabular-nums">
+                      {format.dateTime(step.at)}
+                    </time>
+                  ) : null}
+                  <span className="sr-only">{hit ? t("Done") : t("Not yet")}</span>
+                </span>
+              </li>
+            );
+          })}
+        </ol>
+        {file ? (
+          <p className="npf-small border-t border-npf-hairline bg-npf-paper px-5 py-4 text-npf-body">
+            {t("Crime reference")}{" "}
+            <span className="font-mono font-semibold text-npf-ink">{file.id}</span>.{" "}
+            {t("Quote it to your insurer or your bank if they ask for a police report.")}
+          </p>
+        ) : null}
       </section>
+
+      {file?.updates.length ? (
+        <section className="npf-panel">
+          <div className="npf-panel-head">
+            <h2>{t("Updates from the investigator")}</h2>
+          </div>
+          <ol className="npf-rows">
+            {file.updates
+              .slice()
+              .reverse()
+              .map((u) => (
+                <li key={u.at} className="px-5 py-3.5">
+                  <time dateTime={u.at} className="npf-small block text-npf-steel tabular-nums">
+                    {format.dateTime(u.at)}
+                  </time>
+                  <p className="npf-small mt-1 text-npf-ink">{t(u.text)}</p>
+                </li>
+              ))}
+          </ol>
+        </section>
+      ) : null}
+
+      {!done ? <AddInformation key={incident.id} reference={incident.id} /> : null}
       <RouteCard filed where={incident.where} />
     </div>
+  );
+}
+
+/**
+ * Something remembered later, a photo found on a phone: added to the same
+ * report, so it reaches the officers on the call and the investigator.
+ */
+function AddInformation({ reference }: { reference: string }) {
+  const t = useT();
+  const id = useId();
+  const [open, setOpen] = useState(false);
+  const [text, setText] = useState("");
+  const [media, setMedia] = useState<Media[]>([]);
+  const [sent, setSent] = useState(false);
+  if (sent)
+    return (
+      <p role="status" className="npf-small flex items-center gap-3 rounded-card bg-npf-ok-soft p-5 text-npf-ok">
+        <CheckIcon aria-hidden className="size-5 shrink-0" />
+        {t("Added to {ref}. The officers handling it can see it now.", { ref: reference })}
+      </p>
+    );
+  return (
+    <section className="npf-panel">
+      <div className="npf-panel-head">
+        <h2>{t("Add information to this report")}</h2>
+        {!open ? (
+          <button type="button" onClick={() => setOpen(true)} className="npf-btn npf-btn-secondary npf-btn-sm">
+            {t("Add")}
+          </button>
+        ) : null}
+      </div>
+      {open ? (
+        <form
+          noValidate
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (!text.trim() && !media.length) return;
+            if (addToReport(reference, text.trim(), media)) setSent(true);
+          }}
+          className="grid gap-5 p-5 md:p-6"
+        >
+          <div>
+            <label htmlFor={`${id}-text`} className="npf-field-label">
+              {t("What you want to add")}
+            </label>
+            <textarea
+              id={`${id}-text`}
+              rows={4}
+              maxLength={2000}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              className="npf-field"
+            />
+            <p className="npf-hint">{t("Something you remembered, a name, a plate number, where they went.")}</p>
+          </div>
+          <MediaPicker id={`${id}-media`} optional label={t("Photos, video or documents")} media={media} onChange={setMedia} by="Reporter" />
+          <div>
+            <button type="submit" disabled={!text.trim() && !media.length} className="npf-btn npf-btn-primary disabled:opacity-50">
+              {t("Add to the report")}
+            </button>
+          </div>
+        </form>
+      ) : (
+        <p className="npf-small px-5 py-4 text-npf-body">
+          {t("Remembered something, or found a photo? Add it here and it goes to the officers handling it.")}
+        </p>
+      )}
+    </section>
   );
 }

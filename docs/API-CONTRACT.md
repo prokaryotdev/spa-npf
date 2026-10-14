@@ -151,3 +151,102 @@ Rules the server enforces (today `updateIncident` does them in the browser):
 - Reference formats: calls `NPF-4418`, requests `NPF-2026-1234`. The tracker
   accepts both.
 - Phone numbers are validated as Nigerian mobiles (`PHONE` in `Wizard.tsx`).
+
+## 8. Posts, case files, custody, alerts (added 14 October 2026)
+
+### Posts and scope
+
+`Session.post` is one of `control`, `dpo`, `investigator`, `custody`,
+`commander`, `hq` (`POSTS` in `app/content-records.ts`). It decides which
+boards the console offers. Scope comes with it:
+
+| Post | Sees |
+|---|---|
+| `hq` | every command (`?command=` narrows) |
+| `control`, `investigator`, `custody`, `commander` | `Session.command` |
+| `dpo` | `Session.command` **and** `Session.division` (an LGA) |
+
+The server takes post, command and division from the officer's **posting
+record**, never from the client, and filters every console endpoint by them.
+`Session.serviceNo` is stamped on every change (`LogLine.by`): the audit trail.
+
+| Store function | Endpoint |
+|---|---|
+| (lock screen) | `POST /auth/unlock` `{ pin }` after 10 idle minutes |
+
+### Calls: extras
+
+| Store function | Endpoint |
+|---|---|
+| `updateIncident(id, { backup })` | `PATCH /console/incidents/{id}` — backup units follow the call's status |
+| `updateIncident(id, { flags })` | same; flags from `callFlags` |
+| `attachToCall(id, media)` | `POST /console/incidents/{id}/media` (multipart) |
+| `raiseEmergency(callsign)` | **from the radio/AVL system**, not the browser: creates a P1 "Officer needs assistance" call at the unit's last position |
+| `clearEmergency(callsign)` | `POST /console/units/{callsign}/emergency/clear` (supervisor) |
+| (unit positions) | `GET /console/units` carries `geo` from AVL; `GET /console/stream` pushes moves |
+
+`Jurisdiction.geo` (`{ lat, lng }`) is the reporter's pin or the desk's. A
+record without one is drawn at the command headquarters and marked approximate.
+
+### Evidence
+
+```ts
+type Media = { id, name, type, size, thumb?, sha256, at, by };
+```
+
+The browser fingerprints every file (SHA-256) before upload. The server must
+recompute the hash on receipt and refuse a mismatch, store the original in
+write-once storage, and keep the chain of custody (`CaseFile.exhibits[].trail`).
+
+### Case files
+
+| Store function | Endpoint |
+|---|---|
+| `openCase(input)` | `POST /console/cases` → `CR/{STATE}/{YEAR}/{NNNN}` (server issues it) |
+| `updateCase(id, patch, line)` | `PATCH /console/cases/{id}` |
+| `addExhibit`, `moveExhibit` | `POST /console/cases/{id}/exhibits`, `POST .../exhibits/{ex}/movements` |
+| `updateComplainant(id, text)` | `POST /console/cases/{id}/updates` → shown on `GET /track/{ref}` and in the account |
+
+The public tracker returns case **stage**, crime reference and the
+complainant updates only. Never people, statements, exhibits or the diary.
+
+### Custody (register of arrests, ACJA 2015 s.15)
+
+| Store function | Endpoint |
+|---|---|
+| `bookIn(input)` | `POST /console/custody` |
+| `updateDetainee(id, patch, line)` | `PATCH /console/custody/{id}` |
+| `welfareCheck(id, note)` | `POST /console/custody/{id}/visits` |
+
+Server rules: the limit is 24 h with a court within 40 km, otherwise 48 h
+(Constitution s.35(5)); alert the DPO and the command's legal officer when a
+detainee passes it. The quarterly return of arrests to the Attorney-General
+is generated from this register.
+
+### Alerts and public tips
+
+| Store function | Endpoint |
+|---|---|
+| `issueAlert(input)` | `POST /console/alerts` (scope: a command or `null` for all) |
+| `updateAlert(id, patch)` | `PATCH /console/alerts/{id}` |
+| (public) | `GET /appeals` — only `active && public` alerts, without `by`/`incident` |
+| `sendTip(id, text, contact?)` | `POST /appeals/{id}/tips` — rate-limited, CAPTCHA |
+| (records check) | `GET /console/check?q=` — searches alerts, custody, cases, calls; **logged** with the officer's service number |
+
+### Reporter additions and document verification
+
+| Store function | Endpoint |
+|---|---|
+| `addToReport(ref, text, media)` | `POST /track/{ref}/additions` — require the phone or email the report was made with |
+| `findDocument(no)` | `GET /verify/{docNo}` → `{ service, issued, command }` or 404. Never the holder's details. |
+| `assignRequest(id, officer)` | `POST /console/requests/{id}/assign` |
+
+`docNo` (`NPF/{YEAR}/{NNNNNN}`) is issued by the server when a request is
+completed, printed on the document, and should also be a QR code.
+
+### Bot protection on public forms
+
+`POST /reports`, `POST /appeals/{id}/tips` and `POST /track/{ref}/additions`
+carry a `website` field that people never see (`Honeypot.tsx`). The server
+drops any submission where it is filled, answering as if it succeeded, then
+applies CAPTCHA and per-IP and per-phone rate limits.

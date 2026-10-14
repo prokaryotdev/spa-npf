@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-import { STATES, nearestState, stateNamed, type Jurisdiction } from "../geo";
+import { STATES, divisionNamed, nearestState, stateNamed, type Jurisdiction } from "../geo";
 import { useT } from "../i18n/client";
 import type { T } from "../i18n/translate";
 import { AlertIcon, ArrowDown, PinIcon, ShieldIcon } from "./icons";
@@ -10,9 +10,12 @@ import { AlertIcon, ArrowDown, PinIcon, ShieldIcon } from "./icons";
 export const commandLabel = (t: T, state: string) =>
   state === "FCT" ? t("FCT Command") : t("{state} State Command", { state });
 
-/** "Ikeja Division", in the reader's language. */
-export const divisionLabel = (t: T, lga: string) =>
-  t("{lga} Division", { lga });
+/**
+ * "Ikeja Division", in the reader's language; or the division's own name
+ * ("Wuse II Division") when the record carries one the Force gave it.
+ */
+export const divisionLabel = (t: T, lga: string, division?: string) =>
+  division && division !== `${lga} Division` ? division : t("{lga} Division", { lga });
 
 /**
  * Fills a routing line ("Sent to {command}, {division}.") from the state and
@@ -23,7 +26,7 @@ export function routeLabels(t: T, vars?: Record<string, string>) {
   return {
     ...vars,
     command: commandLabel(t, vars.state),
-    division: divisionLabel(t, vars.lga ?? ""),
+    division: divisionLabel(t, vars.lga ?? "", vars.division),
   };
 }
 
@@ -43,7 +46,13 @@ export function line(
   return t(text, filled);
 }
 
-export type WhereValue = { state: string; lga: string; address: string };
+export type WhereValue = {
+  state: string;
+  lga: string;
+  address: string;
+  /** The device's position, kept only where the form asks for a pin. */
+  geo?: { lat: number; lng: number };
+};
 export type WhereErrors = Partial<Record<keyof WhereValue, string>>;
 
 /** A native select drawn as a field, with the icon set's own arrow. */
@@ -140,6 +149,7 @@ export function WherePicker({
   addressLabel,
   addressHint,
   withAddress = true,
+  pin = false,
 }: {
   value: WhereValue;
   onChange: (next: WhereValue) => void;
@@ -148,6 +158,11 @@ export function WherePicker({
   addressLabel?: string;
   addressHint?: string;
   withAddress?: boolean;
+  /**
+   * Keep the position "Use my location" found, so the report carries the
+   * spot itself and not only the state. A residence form leaves it off.
+   */
+  pin?: boolean;
 }) {
   const t = useT();
   const id = useId();
@@ -166,6 +181,14 @@ export function WherePicker({
           ...value,
           state: near.name,
           lga: near.name === value.state ? value.lga : "",
+          ...(pin
+            ? {
+                geo: {
+                  lat: Math.round(pos.coords.latitude * 1e5) / 1e5,
+                  lng: Math.round(pos.coords.longitude * 1e5) / 1e5,
+                },
+              }
+            : {}),
         });
         setLocating("done");
       },
@@ -181,7 +204,8 @@ export function WherePicker({
           id={`${id}-state`}
           label={stateLabel ?? t("State")}
           value={value.state}
-          onChange={(s) => onChange({ ...value, state: s, lga: "" })}
+          // A different state means the pin was somewhere else: drop it.
+          onChange={(s) => onChange({ ...value, state: s, lga: "", geo: undefined })}
           error={errors.state}
         >
           <option value="">{t("Choose a state")}</option>
@@ -201,7 +225,9 @@ export function WherePicker({
           {locating === "busy" ? t("Finding you…") : t("Use my location")}
         </button>
         <p aria-live="polite" className="npf-hint mt-0">
-          {locating === "done"
+          {locating === "done" && pin && value.geo
+            ? t("We picked the state nearest to you, and the report will carry your exact spot for the officers. Check the state is right.")
+            : locating === "done"
             ? t("We picked the state nearest to you. Check it is right.")
             : locating === "failed"
               ? t("We could not get your location. Choose the state instead.")
@@ -269,7 +295,7 @@ export function RouteCard({
   className = "",
   filed = false,
 }: {
-  where: Pick<Jurisdiction, "state" | "lga">;
+  where: Pick<Jurisdiction, "state" | "lga"> & { division?: string };
   className?: string;
   /** Already sent: "Handled by", not "This goes to". */
   filed?: boolean;
@@ -292,9 +318,14 @@ export function RouteCard({
         </p>
         <p className="npf-small mt-0.5 text-npf-ink">
           {where.lga
-            ? divisionLabel(t, where.lga)
+            ? divisionLabel(t, where.lga, where.division)
             : t("The division is set by the area you choose.")}
         </p>
+        {where.division && divisionNamed(where.division) ? (
+          <p className="npf-small mt-0.5 text-npf-body">
+            {divisionNamed(where.division)!.address}
+          </p>
+        ) : null}
       </div>
     </div>
   );

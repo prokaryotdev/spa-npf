@@ -13,9 +13,13 @@ export async function signIn(page: Page) {
   await expect(page).toHaveURL(/\/en\/app\/portal$/);
 }
 
-/** Signs in as the demo officer, through the console button on the same form. */
+/**
+ * Signs in as the demo officer, through the console button on the same form.
+ * Force Headquarters: the one post that sees every board.
+ */
 export async function signInAsOfficer(page: Page) {
   await page.goto("/en/app/signin");
+  await page.getByText("Force Headquarters", { exact: true }).click();
   await page.getByRole("button", { name: "Open the operations console" }).click();
   await expect(page).toHaveURL(/\/en\/app\/police$/);
 }
@@ -25,6 +29,10 @@ export const POLICE_PAGES = [
   ["the command board", "/app/police"],
   ["calls", "/app/police/incidents"],
   ["units", "/app/police/units"],
+  ["the map", "/app/police/map"],
+  ["case files", "/app/police/cases"],
+  ["custody", "/app/police/custody"],
+  ["alerts", "/app/police/alerts"],
   ["requests", "/app/police/requests"],
   ["the shift report", "/app/police/report"],
 ] as const;

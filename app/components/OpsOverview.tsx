@@ -1,5 +1,8 @@
 "use client";
 
+import { postOf, zonalCommand } from "../content-records";
+import { custodyLimit } from "./store";
+
 import Link from "../i18n/Link";
 import { useState } from "react";
 import { dispatchTarget } from "../content-ops";
@@ -44,7 +47,7 @@ import { useFormat, useT } from "../i18n/client";
  */
 export default function OpsOverview() {
   const t = useT();
-  const { incidents: inView, units, session, viewing } = useScoped();
+  const { incidents: inView, units, session, viewing, zone } = useScoped();
   const now = useNow();
   const format = useFormat();
   const fixed = session?.command;
@@ -74,7 +77,7 @@ export default function OpsOverview() {
         title={t("Command board")}
         lead={[
           now ? format.date(new Date(now).toISOString().slice(0, 10)) : null,
-          viewing ?? session?.command ?? t("All commands"),
+          viewing ?? session?.command ?? (zone ? t(zone.name) : t("All commands")),
         ]
           .filter(Boolean)
           .join(" · ")}
@@ -98,6 +101,8 @@ export default function OpsOverview() {
           />
         }
       />
+
+      <Attention />
 
       {/* The queue leads, straight under the band: a call nobody has taken
           is the one thing on this board that gets worse by itself. Where it
@@ -260,14 +265,19 @@ function sumOf(tallies: Tally[]): Tally {
  */
 function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) {
   const t = useT();
-  const { incidents, units } = useStore();
+  const { incidents, units, session } = useStore();
   const [all, setAll] = useState(false);
+  // A zonal desk sees its own State Commands, not the country's.
+  const zone = zonalCommand(session?.zone);
   const choose = (name: string | undefined) =>
     withTransition(() => setViewing(name));
 
+  const inZone = zone?.states;
   const groups = zones
     .map((zone, order) => {
-      const rows = STATES.filter((s) => s.zone === zone).map((s) => ({
+      const rows = STATES.filter(
+        (s) => s.zone === zone && (!inZone || inZone.includes(s.name)),
+      ).map((s) => ({
         key: s.name,
         name: s.name,
         tally: tally(
@@ -286,6 +296,7 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
           .sort((a, b) => worse(a.tally, b.tally) || a.name.localeCompare(b.name)),
       };
     })
+    .filter((g) => g.sum.units || g.rows.length || !inZone)
     .sort((a, b) => worse(a.sum, b.sum) || a.order - b.order);
 
   return (
@@ -316,7 +327,7 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
         >
           {all
             ? t("Busy commands only")
-            : t("Show all {n} commands", { n: STATES.length })}
+            : t("Show all {n} commands", { n: inZone?.length ?? STATES.length })}
           <ChevronDown aria-hidden className="npf-ops-chev size-4" />
         </button>
       </div>
@@ -1134,5 +1145,52 @@ function UnitBoard({ units }: { units: Unit[] }) {
         </tbody>
       </table>
     </OpsPanel>
+  );
+}
+
+/**
+ * What else in the command is getting worse while the desk looks at calls:
+ * someone held past the constitutional limit, a case nobody is
+ * investigating, tips from the public nobody has read. A line of links, and
+ * nothing at all when there is nothing.
+ */
+function Attention() {
+  const t = useT();
+  const now = useNow();
+  const { custody, cases, alerts, session } = useScoped();
+  const tabs = postOf(session?.post).tabs;
+  const over = custody.filter(
+    (d) =>
+      d.status === "In custody" &&
+      now - new Date(d.arrested).getTime() > custodyLimit(d) * 3_600_000,
+  ).length;
+  const noIpo = cases.filter((c) => c.stage !== "Closed" && !c.ipo).length;
+  const tips = alerts.reduce((n, a) => n + a.tips.filter((x) => !x.read).length, 0);
+  const items = [
+    over && tabs.includes("/app/police/custody")
+      ? { href: "/app/police/custody", text: t("{n} held past the legal limit", { n: over }), red: true }
+      : null,
+    noIpo && tabs.includes("/app/police/cases")
+      ? { href: "/app/police/cases", text: t(noIpo === 1 ? "{n} case with no investigator" : "{n} cases with no investigator", { n: noIpo }), red: false }
+      : null,
+    tips && tabs.includes("/app/police/alerts")
+      ? { href: "/app/police/alerts", text: t(tips === 1 ? "{n} new tip from the public" : "{n} new tips from the public", { n: tips }), red: false }
+      : null,
+  ].filter(Boolean) as { href: string; text: string; red: boolean }[];
+  if (!now || !items.length) return null;
+  return (
+    <nav aria-label={t("Also needs attention")} className="flex flex-wrap items-center gap-2">
+      <span className="text-xs font-semibold text-ops-dim">{t("Also needs attention")}</span>
+      {items.map((i) => (
+        <Link
+          key={i.href}
+          href={i.href}
+          className={`npf-pill transition-colors ${i.red ? "bg-ops-p1-wash text-ops-p1 hover:bg-ops-p1-wash/70" : "bg-ops-p2-wash text-ops-p2 hover:bg-ops-p2-wash/70"}`}
+        >
+          <span aria-hidden className="npf-pill-dot" />
+          {i.text}
+        </Link>
+      ))}
+    </nav>
   );
 }

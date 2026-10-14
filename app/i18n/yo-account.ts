@@ -531,14 +531,10 @@ export const yoAccount: Record<string, string> = {
     "Tọpasẹ̀ nọ́ńbà ìtọ́kasí",
   "A NIN is eleven digits, like 12345678901.":
     "NIN jẹ́ nọ́ńbà mọ́kànlá, bíi 12345678901.",
-  "Desk":
-    "Tábìlì iṣẹ́",
   "Enter your NIN.":
     "Tẹ NIN rẹ.",
   "Enter your password.":
     "Tẹ ọ̀rọ̀ aṣínà rẹ.",
-  "Force Headquarters · all commands":
-    "Olú-iléeṣẹ́ Ọlọ́pàá · gbogbo ẹ̀ka",
   "Passwords are at least 8 characters.":
     "Ọ̀rọ̀ aṣínà kò gbọdọ̀ kéré sí lẹ́tà 8.",
   "Case closed":
@@ -559,8 +555,6 @@ export const yoAccount: Record<string, string> = {
     "Kò sí ohun tó bá {ref} mu. Ṣàyẹ̀wò nọ́ńbà náà, tàbí kàn sí ẹ̀ka tí o ròyìn fún.",
   "Reference number":
     "Nọ́ńbà ìtọ́kasí",
-  "Reported":
-    "A ròyìn",
   "{lga} Division":
     "Ẹ̀ka {lga}",
   "Choose the state first.":

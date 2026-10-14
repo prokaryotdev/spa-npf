@@ -21,7 +21,9 @@ A national police front end built around real Force structure: Force HQ → 37 S
 
 ## Operating Context
 
-- Console has four queues (Command board, Calls, Units, Requests) and a printable Shift report counted from the same calls.
+- Console boards: Command board, Calls, Units, Map, Case files, Custody, Alerts, Requests and a printable Shift report. Which ones an officer sees depends on their post (control room, DPO, investigator, custody officer, Commissioner, Force HQ; `POSTS` in `app/content-records.ts`). A DPO desk sees one division only.
+- Custody runs the constitutional 24/48-hour clock (s.35); evidence is fingerprinted (SHA-256); every log line names the officer and service number.
+- Public side also has Appeals (`/app/appeals`, tips from the public) and Verify a Police Document (`/app/verify`).
 - A call closes with an outcome (`callOutcomes` in `app/content-ops.ts`); a call that lands from another tab raises an alert and a tone for P1/P2.
 - Call grades P1–P4 with dispatch targets (`app/content-ops.ts`); three eight-hour reliefs (A from 06:00 WAT); West Africa Time throughout.
 - Officers dispatch from the queue, transfer calls between commands, and decide service requests.
@@ -37,7 +39,7 @@ A national police front end built around real Force structure: Force HQ → 37 S
 ## Brand Commitments
 
 - Nigeria Police Force crest and wordmark (`app/components/Wordmark.tsx`), Force blue.
-- Console is **light** and reads as one site with the public pages (user decision 2026-10-10). No map. No all-caps labels or square corners unless the user asks.
+- Console is **light** and reads as one site with the public pages (user decision 2026-10-10). The map came back on 2026-10-14 at the user's request, as its own board (light Esri tiles), not as the board background. No all-caps labels unless the user asks.
 - Footer credit: "Designed and built by Cloudbrella" → https://www.cloudbrella.ng/.
 
 ## Evidence on Hand

@@ -15,12 +15,16 @@ import {
 import Link from "../i18n/Link";
 import { commandLabel, divisionLabel, line } from "./Where";
 import {
+  actor,
   advanceRequest,
+  assignRequest,
+  attachToRequest,
   type RequestStatus,
   type TrackedRequest,
 } from "./store";
 import { CheckIcon, CloseIcon } from "./icons";
 import { useFormat, useT } from "../i18n/client";
+import { MediaPicker } from "./media";
 
 const QUEUE: RequestStatus[] = ["Submitted", "In Review", "Action Needed"];
 
@@ -222,7 +226,7 @@ export default function OpsRequests() {
                     </span>
                     <span className="text-ops-dim">
                       {" · "}
-                      {divisionLabel(t, request.where.lga)}
+                      {divisionLabel(t, request.where.lga, request.where.division)}
                     </span>
                   </p>
                 ) : viewing ? null : (
@@ -248,6 +252,46 @@ export default function OpsRequests() {
                     ) : null}
                   </dl>
                 ) : null}
+                {/* Who has it: a request nobody owns is one nobody chases. */}
+                <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+                  {request.assignee ? (
+                    <span>
+                      <span className="text-ops-dim">{t("Handled by")}</span>{" "}
+                      <span className="font-medium">{t(request.assignee)}</span>
+                    </span>
+                  ) : QUEUE.includes(request.status) ? (
+                    <>
+                      <span className="font-medium text-ops-p2">{t("Nobody has picked it up")}</span>
+                      <button
+                        type="button"
+                        onClick={() => assignRequest(request.id, actor())}
+                        className="font-medium text-ops-accent hover:underline"
+                      >
+                        {t("Take it")}
+                      </button>
+                    </>
+                  ) : null}
+                  {request.docNo ? (
+                    <span>
+                      <span className="text-ops-dim">{t("Document number")}</span>{" "}
+                      <span className="font-mono font-medium">{request.docNo}</span>
+                    </span>
+                  ) : null}
+                </p>
+                {/* A scanned form or the signed certificate, added to the file
+                    and to the applicant's timeline. */}
+                <div className="mt-3">
+                  <MediaPicker
+                    id={`${id}-${request.id}-doc`}
+                    tone="ops"
+                    optional
+                    max={3}
+                    label={t("Add a document to the file")}
+                    media={[]}
+                    onChange={(m) => attachToRequest(request.id, m.map((f) => f.name))}
+                    by={actor()}
+                  />
+                </div>
               </div>
 
               {/* The same dotted rail the applicant reads their request on,
@@ -279,7 +323,7 @@ export default function OpsRequests() {
                             under itself instead of under the step name. */}
                         {step.note ? (
                           <span className="mt-0.5 block text-ops-dim">
-                            {line(t, step.note, undefined, request.where)}
+                            {line(t, step.note, step.vars, request.where)}
                           </span>
                         ) : null}
                       </span>

@@ -4,16 +4,17 @@ import Link from "../i18n/Link";
 import { usePathname } from "next/navigation";
 import { stripLocale } from "../i18n/path";
 import { useRouter } from "../i18n/Link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import LanguageSwitch from "./LanguageSwitch";
 import { KEY, setViewing, signOut, useStore, type Incident } from "./store";
 import OpsPicker from "./OpsPicker";
 import { STATES } from "../geo";
 import { zones } from "../content-footer";
-import { commandLabel } from "./Where";
+import { commandLabel, divisionLabel } from "./Where";
 import {
   PriorityTag,
   isOverdue,
+  useMinute,
   useMounted,
   useNow,
   useScoped,
@@ -22,45 +23,52 @@ import { useT } from "../i18n/client";
 import { PoliceWordmark } from "./Wordmark";
 import { ChevronDown, CloseIcon, ShieldIcon, SignOutIcon } from "./icons";
 import {
+  AlertGlyph,
   BoardGlyph,
   CallsGlyph,
+  CaseGlyph,
+  CustodyGlyph,
+  MapGlyph,
   ReportGlyph,
   RequestsGlyph,
   UnitsGlyph,
 } from "./ops-glyphs";
+import { postOf, zonalCommand, type ZonalCommand } from "../content-records";
+import { clearEmergency, custodyLimit, type Post, type Unit } from "./store";
+import { LockScreen, lockNow } from "./OpsLock";
 
-const TABS = [
-  {
-    href: "/app/police",
-    label: "Command board",
-    short: "Board",
-    Icon: BoardGlyph,
-  },
-  {
-    href: "/app/police/incidents",
-    label: "Calls",
-    short: "Calls",
-    Icon: CallsGlyph,
-  },
-  {
-    href: "/app/police/units",
-    label: "Units",
-    short: "Units",
-    Icon: UnitsGlyph,
-  },
-  {
-    href: "/app/police/requests",
-    label: "Requests",
-    short: "Requests",
-    Icon: RequestsGlyph,
-  },
-  {
-    href: "/app/police/report",
-    label: "Shift report",
-    short: "Report",
-    Icon: ReportGlyph,
-  },
+/** A padlock, in the icon set's 1.75 line. */
+const LockGlyph = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" aria-hidden className="size-4">
+    <rect x="5" y="10.5" width="14" height="9.5" rx="2" />
+    <path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" />
+  </svg>
+);
+
+/**
+ * Every board the console has, in three groups: the live work of the shift,
+ * the investigation that follows it, and the desk's paperwork. A post sees
+ * only the boards in its `tabs` (content-records.ts POSTS).
+ */
+const ALL_TABS = [
+  { href: "/app/police", label: "Command board", short: "Board", Icon: BoardGlyph, group: "Operations" },
+  { href: "/app/police/incidents", label: "Calls", short: "Calls", Icon: CallsGlyph, group: "Operations" },
+  { href: "/app/police/units", label: "Units", short: "Units", Icon: UnitsGlyph, group: "Operations" },
+  { href: "/app/police/map", label: "Map", short: "Map", Icon: MapGlyph, group: "Operations" },
+  { href: "/app/police/cases", label: "Case files", short: "Cases", Icon: CaseGlyph, group: "Investigation" },
+  { href: "/app/police/custody", label: "Custody", short: "Custody", Icon: CustodyGlyph, group: "Investigation" },
+  { href: "/app/police/alerts", label: "Alerts", short: "Alerts", Icon: AlertGlyph, group: "Investigation" },
+  { href: "/app/police/requests", label: "Requests", short: "Requests", Icon: RequestsGlyph, group: "Desk" },
+  { href: "/app/police/report", label: "Shift report", short: "Report", Icon: ReportGlyph, group: "Desk" },
 ];
+
+type Tab = (typeof ALL_TABS)[number];
+
+/** The boards a session's post works, in the order the console lists them. */
+const tabsFor = (post?: Post) => {
+  const allowed = postOf(post).tabs;
+  return ALL_TABS.filter((tab) => allowed.includes(tab.href));
+};
 
 /** Control rooms run three eight-hour reliefs; A starts at 06:00 WAT. */
 function shiftOf(d: Date) {
@@ -117,7 +125,12 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
    * once React takes over.
    */
   const path = stripLocale(usePathname()).rest;
-  const { session, incidents, requests, units, loaded, viewing } = useScoped();
+  const { session, incidents, requests, units, cases, custody, alerts, loaded, viewing } =
+    useScoped();
+  const now = useMinute();
+  const post = session?.post;
+  const tabs = useMemo(() => tabsFor(post), [post]);
+  const allowed = tabs.some((tab) => isHere(tab.href, path));
 
   const officer = session?.role === "officer";
 
@@ -125,7 +138,16 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
     if (!loaded) return;
     if (!session)
       router.replace(`/app/signin?next=${encodeURIComponent(path)}`);
-  }, [loaded, session, router, path]);
+    // A board outside the officer's post sends them to the first one theirs
+    // has: an investigator opening the console lands on case files.
+    else if (
+      session.role === "officer" &&
+      !allowed &&
+      path === "/app/police" &&
+      tabs[0]
+    )
+      router.replace(tabs[0].href);
+  }, [loaded, session, router, path, allowed, tabs]);
 
   /*
    * Each badge says what its number counts, and colours it only when the
@@ -137,6 +159,19 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
   const pending = requests.filter(
     (r) => r.status !== "Completed" && r.status !== "Rejected",
   ).length;
+  const openCases = cases.filter((c) => c.stage !== "Closed").length;
+  const noIpo = cases.filter((c) => c.stage !== "Closed" && !c.ipo).length;
+  const held = custody.filter((d) => d.status === "In custody");
+  const overHeld = held.filter(
+    (d) => now && now - new Date(d.arrested).getTime() > custodyLimit(d) * 3_600_000,
+  ).length;
+  const live = alerts.filter((a) => a.active).length;
+  const newTips = alerts.reduce(
+    (n, a) => n + a.tips.filter((tip) => !tip.read).length,
+    0,
+  );
+  // Every unit whose officer has pressed the emergency button, in this view.
+  const distress = units.filter((u) => u.emergency);
   const counts: Record<string, Count> = {
     /* Red means "waiting", so the red figure is the waiting count: a red 7
        over three waiting calls read as seven urgent ones. With none
@@ -155,6 +190,29 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
     "/app/police/requests": {
       n: pending,
       note: t("{n} pending", { n: pending }),
+    },
+    /* A case nobody is investigating is the case board's waiting call. */
+    "/app/police/cases": {
+      n: noIpo || openCases,
+      note: noIpo
+        ? t("{n} open, {w} with no officer", { n: openCases, w: noIpo })
+        : t("{n} open", { n: openCases }),
+      alert: noIpo > 0,
+    },
+    /* Red once anyone is held past the constitutional limit. */
+    "/app/police/custody": {
+      n: overHeld || held.length,
+      note: overHeld
+        ? t("{n} held, {w} past the legal limit", { n: held.length, w: overHeld })
+        : t("{n} held", { n: held.length }),
+      alert: overHeld > 0,
+    },
+    "/app/police/alerts": {
+      n: newTips || live,
+      note: newTips
+        ? t("{n} active, {w} new tips", { n: live, w: newTips })
+        : t("{n} active", { n: live }),
+      alert: newTips > 0,
     },
   };
 
@@ -218,12 +276,14 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
       */}
       <Sidebar
         path={path}
+        tabs={tabs}
         counts={counts}
         officer={session}
         onEnd={endShift}
       />
+      <LockScreen officer={session} />
 
-      <div className="flex min-h-[100dvh] flex-col lg:ps-68 print:ps-0">
+      <div className="npf-ops-frame flex min-h-[100dvh] flex-col lg:ps-68 print:ps-0">
         <header className="sticky top-0 z-40 print:hidden border-b border-npf-hairline bg-white/90 backdrop-blur-xl">
           <div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
             {/* The crest lives in the sidebar on a desk; on a phone it
@@ -244,6 +304,8 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
             </Link>
             <CommandPicker
               fixed={session.command}
+              division={session.division}
+              zone={zonalCommand(session.zone)}
               viewing={viewing}
             />
 
@@ -285,7 +347,14 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
             </div>
           </div>
 
-          <Tabs path={path} counts={counts} />
+          <Tabs path={path} tabs={tabs} counts={counts} />
+          {distress.map((u) => (
+            <Distress
+              key={u.callsign}
+              unit={u}
+              canOpen={tabs.some((tab) => tab.href === "/app/police/incidents")}
+            />
+          ))}
         </header>
 
         <main
@@ -293,7 +362,11 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
           tabIndex={-1}
           className="npf-page-in mx-auto w-full max-w-450 min-w-0 flex-1 px-4 pt-6 pb-12 outline-none sm:px-6 lg:px-8 lg:pt-8"
         >
-          {children}
+          {allowed ? (
+            children
+          ) : path === "/app/police" ? null : (
+            <NotYourPost tabs={tabs} />
+          )}
         </main>
         <NewCalls viewing={viewing} />
       </div>
@@ -329,19 +402,21 @@ function Badge({ count, active }: { count?: Count; active: boolean }) {
  */
 function Sidebar({
   path,
+  tabs,
   counts,
   officer,
   onEnd,
 }: {
   path: string;
+  tabs: Tab[];
   counts: Record<string, Count>;
   /** Absent while the session loads: the foot shows its shape instead. */
-  officer?: { name: string; rank?: string; station?: string };
+  officer?: { name: string; rank?: string; station?: string; post?: Post };
   onEnd?: () => void;
 }) {
   const t = useT();
   return (
-    <aside className="fixed inset-y-0 start-0 z-50 hidden w-68 flex-col border-e border-npf-hairline bg-white lg:flex print:hidden">
+    <aside className="npf-ops-frame fixed inset-y-0 start-0 z-50 hidden w-68 flex-col border-e border-npf-hairline bg-white lg:flex print:hidden">
       <Link
         href="/app/police"
         className="flex h-16 shrink-0 items-center border-b border-npf-hairline px-6 text-npf-blue-deep"
@@ -359,8 +434,17 @@ function Sidebar({
         aria-label={t("Console")}
         className="min-h-0 flex-1 overflow-y-auto px-3 py-5"
       >
+        {/* Grouped once the post has more than one kind of board: the live
+            work, the investigation behind it, the desk's paperwork. */}
+        {[...new Set(tabs.map((tab) => tab.group))].map((group, g, groups) => (
+        <div key={group} className={g ? "mt-5" : ""}>
+        {groups.length > 1 ? (
+          <p className="mb-1.5 px-3 text-2xs font-semibold text-npf-steel">
+            {t(group)}
+          </p>
+        ) : null}
         <ul className="space-y-1">
-          {TABS.map(({ href, label, Icon }) => {
+          {tabs.filter((tab) => tab.group === group).map(({ href, label, Icon }) => {
             const active = isHere(href, path);
             return (
               <li key={href}>
@@ -389,6 +473,8 @@ function Sidebar({
             );
           })}
         </ul>
+        </div>
+        ))}
       </nav>
 
       {officer ? (
@@ -412,9 +498,18 @@ function Sidebar({
               {t(officer.name)}
             </span>
             <span className="mt-0.5 block truncate text-xs text-npf-steel">
-              {t(officer.rank ?? "")}
+              {officer.post ? t(postOf(officer.post).label) : t(officer.rank ?? "")}
             </span>
           </span>
+          <button
+            type="button"
+            onClick={lockNow}
+            title={t("Lock the console")}
+            className="grid size-9 shrink-0 place-items-center rounded-(--ops-control-radius) text-npf-steel ring-1 ring-npf-line ring-inset transition-[background-color,color,scale] duration-(--dur-hover) hover:bg-npf-paper hover:text-npf-ink active:scale-[0.94]"
+          >
+            <LockGlyph />
+            <span className="sr-only">{t("Lock the console")}</span>
+          </button>
           <button
             type="button"
             onClick={onEnd}
@@ -473,7 +568,7 @@ function ConsoleLoading({ path }: { path: string }) {
   const t = useT();
   return (
     <div className="npf-ops min-h-[100dvh]" aria-busy="true">
-      <Sidebar path={path} counts={{}} />
+      <Sidebar path={path} tabs={ALL_TABS.slice(0, 5)} counts={{}} />
       <div className="flex min-h-[100dvh] flex-col lg:ps-68 print:ps-0">
         <header className="sticky top-0 z-40 border-b border-npf-hairline bg-white/90 backdrop-blur-xl">
           <div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
@@ -486,7 +581,7 @@ function ConsoleLoading({ path }: { path: string }) {
               <Skel className="h-10 w-24 rounded-(--ops-control-radius)" />
             </span>
           </div>
-          <Tabs path={path} counts={{}} />
+          <Tabs path={path} tabs={ALL_TABS.slice(0, 5)} counts={{}} />
         </header>
 
         <main className="mx-auto w-full max-w-450 min-w-0 flex-1 px-4 pt-6 pb-12 sm:px-6 lg:px-8 lg:pt-8">
@@ -575,9 +670,11 @@ function Station({ station }: { station: string }) {
  */
 function Tabs({
   path,
+  tabs,
   counts,
 }: {
   path: string;
+  tabs: Tab[];
   counts: Record<string, Count>;
 }) {
   const t = useT();
@@ -587,9 +684,9 @@ function Tabs({
        fits five, and the count rides on the icon. */
     <nav
       aria-label={t("Console")}
-      className="mx-auto grid max-w-450 grid-cols-5 gap-1.5 px-4 pb-3 sm:flex sm:gap-2 sm:px-6 lg:hidden"
+      className="mx-auto grid max-w-450 grid-cols-5 gap-1.5 px-4 pb-3 sm:flex sm:flex-wrap sm:gap-2 sm:px-6 lg:hidden"
     >
-      {TABS.map(({ href, short, Icon }) => {
+      {tabs.map(({ href, short, Icon }) => {
         const active = isHere(href, path);
         const count = counts[href];
         return (
@@ -684,9 +781,15 @@ function ShiftClock() {
  */
 function CommandPicker({
   fixed,
+  division,
+  zone,
   viewing,
 }: {
   fixed?: string;
+  /** A divisional desk's LGA: the bar names the division, not the state. */
+  division?: string;
+  /** A zonal desk picks among its own states only. */
+  zone?: ZonalCommand | null;
   viewing: string | null;
 }) {
   const t = useT();
@@ -699,7 +802,7 @@ function CommandPicker({
           <ShieldIcon aria-hidden className="size-4" />
         </span>
         <span className="npf-h5 truncate leading-none text-npf-ink">
-          {commandLabel(t, fixed)}
+          {division ? divisionLabel(t, division) : commandLabel(t, fixed)}
         </span>
       </p>
     );
@@ -732,7 +835,17 @@ function CommandPicker({
       search={t("Find a command")}
       empty={t("No command matches")}
       width="20rem"
-      groups={[
+      groups={zone ? [
+        { items: [{ value: "", label: t(zone.name) }] },
+        {
+          label: t(zone.name),
+          items: zone.states.map((name) => ({
+            value: name,
+            label: commandLabel(t, name),
+            badge: waiting(name),
+          })),
+        },
+      ] : [
         { items: [{ value: "", label: t("All commands") }] },
         ...zones.map((zone) => ({
           label: t(zone),
@@ -755,7 +868,7 @@ function CommandPicker({
             className={`size-4 shrink-0 max-sm:hidden ${viewing ? "text-white" : "text-npf-blue"}`}
           />
           <span className="truncate">
-            {viewing ? commandLabel(t, viewing) : t("All commands")}
+            {viewing ? commandLabel(t, viewing) : zone ? t(zone.name) : t("All commands")}
           </span>
           <ChevronDown
             aria-hidden
@@ -865,4 +978,72 @@ function chime() {
     });
     setTimeout(() => ctx.close(), 600);
   } catch {}
+}
+
+/**
+ * An officer has pressed the emergency button. Red across the top of every
+ * screen in the command until a supervisor stands it down: the one alarm the
+ * console never lets scroll out of sight.
+ */
+function Distress({ unit, canOpen }: { unit: Unit; canOpen: boolean }) {
+  const t = useT();
+  return (
+    <div
+      role="alert"
+      className="flex flex-wrap items-center gap-x-4 gap-y-2 bg-ops-p1 px-4 py-2.5 text-white sm:px-6 lg:px-8"
+    >
+      <span aria-hidden className="size-2.5 shrink-0 animate-pulse rounded-full bg-white" />
+      <p className="min-w-0 flex-1 text-sm font-semibold">
+        {t("Emergency: {unit} ({officer}) needs assistance near {area}.", {
+          unit: unit.callsign,
+          officer: t(unit.officer),
+          area: t(unit.area),
+        })}
+      </p>
+      {canOpen ? (
+        <Link
+          href={`/app/police/incidents?call=${unit.emergency}`}
+          className="inline-flex h-8 items-center rounded-(--ops-control-radius) bg-white px-3 text-xs font-semibold text-ops-p1 hover:bg-white/90"
+        >
+          {t("Open the call")}
+        </Link>
+      ) : null}
+      <button
+        type="button"
+        onClick={() => clearEmergency(unit.callsign)}
+        className="inline-flex h-8 items-center rounded-(--ops-control-radius) px-3 text-xs font-semibold text-white ring-1 ring-white/60 ring-inset transition-colors hover:bg-white/10"
+      >
+        {t("Officer safe: stand down")}
+      </button>
+    </div>
+  );
+}
+
+/**
+ * A link from somewhere else landed on a board the officer's post does not
+ * work. Said plainly, with the boards they do have, rather than bouncing
+ * them somewhere without a word.
+ */
+function NotYourPost({ tabs }: { tabs: Tab[] }) {
+  const t = useT();
+  return (
+    <div className="npf-ops-tile mx-auto max-w-xl p-6">
+      <h1 className="font-secondary text-lg font-bold text-npf-ink">
+        {t("This board is not part of your post")}
+      </h1>
+      <p className="mt-1 text-sm text-npf-body">{t("Your post works these boards instead.")}</p>
+      <ul className="mt-4 flex flex-wrap gap-2">
+        {tabs.map(({ href, label }) => (
+          <li key={href}>
+            <Link
+              href={href}
+              className="inline-flex h-9 items-center rounded-(--ops-control-radius) bg-white px-3 text-sm font-medium text-ops-text shadow-[var(--ops-control-rim),var(--ops-control-lift)] hover:bg-ops-hover"
+            >
+              {t(label)}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }

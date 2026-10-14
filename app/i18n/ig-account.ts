@@ -531,14 +531,10 @@ export const igAccount: Record<string, string> = {
     "Soro nọmba ntụaka",
   "A NIN is eleven digits, like 12345678901.":
     "NIN bụ nọmba iri na otu, dị ka 12345678901.",
-  "Desk":
-    "Tebụl ọrụ",
   "Enter your NIN.":
     "Tinye NIN gị.",
   "Enter your password.":
     "Tinye okwuntughe gị.",
-  "Force Headquarters · all commands":
-    "Isi Ụlọ Ọrụ Ndị Uwe Ojii · ụlọ ọrụ niile",
   "Passwords are at least 8 characters.":
     "Okwuntughe nwere opekata mpe mkpụrụedemede 8.",
   "Case closed":
@@ -559,8 +555,6 @@ export const igAccount: Record<string, string> = {
     "Ọ dịghị ihe dabara na {ref}. Lelee nọmba ahụ, ma ọ bụ kpọtụrụ ụlọ ọrụ ị kọọrọ.",
   "Reference number":
     "Nọmba ntụaka",
-  "Reported":
-    "A kọrọ",
   "{lga} Division":
     "Mpaghara {lga}",
   "Choose the state first.":

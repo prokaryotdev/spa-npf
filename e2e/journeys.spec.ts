@@ -50,7 +50,10 @@ async function openDesk(page: Page, command: string) {
   // Sign out first: a signed-in visitor is sent straight on from sign-in.
   await page.evaluate(() => sessionStorage.removeItem("dp:session"));
   await page.goto("/en/app/signin");
-  await page.locator("#desk").selectOption(command);
+  // A command desk is the control room post; Force Headquarters is a post
+  // of its own, with no command to pick.
+  if (command) await page.locator("#desk").selectOption(command);
+  else await page.getByText("Force Headquarters", { exact: true }).click();
   await page.getByRole("button", { name: "Open the operations console" }).click();
   await expect(page).toHaveURL(/\/en\/app\/police$/);
 }
@@ -62,7 +65,8 @@ test("a report reaches only its own command, and the tracker follows it", async 
   expect(ref).toMatch(/^NPF-\d+$/);
 
   await page.goto(`/en/app/track?ref=${ref}`);
-  await expect(page.getByText("Received by the command")).toBeVisible();
+  // The status pill and the first step both say it.
+  await expect(page.getByText("Received by the command").first()).toBeVisible();
 
   // The Kano desk has it, and can only send Kano units.
   await openDesk(page, "Kano");

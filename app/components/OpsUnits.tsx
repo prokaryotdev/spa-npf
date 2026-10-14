@@ -1,5 +1,7 @@
 "use client";
 
+import { reliefNow } from "../content-ops";
+
 import Link from "../i18n/Link";
 import { filterBy } from "../search-text";
 import { useId, useMemo, useState } from "react";
@@ -18,13 +20,17 @@ import {
   withTransition,
 } from "./OpsPieces";
 import {
+  handOver,
+  raiseEmergency,
+  reportPosition,
+  type Relief,
   setUnitStatus,
   updateIncident,
   type Incident,
   type Unit,
   type UnitStatus,
 } from "./store";
-import { useT } from "../i18n/client";
+import { useFormat, useT } from "../i18n/client";
 import { CloseIcon } from "./icons";
 
 /**
@@ -113,6 +119,8 @@ export default function OpsUnits() {
           />
         }
       />
+
+      <Roster units={units} now={now} />
 
       <div className="flex flex-wrap items-center gap-2">
         <OpsSearch
@@ -362,6 +370,155 @@ function UnitCard({
           {off ? t("Back on the air") : t("Off the air")}
         </OpsButton>
       )}
+
+      <SharePosition unit={unit} />
+
+      {/* The radio's emergency button, pressed from here in this build. A
+          raised one turns the row red and stays until a supervisor stands it
+          down from the banner. */}
+      {unit.emergency ? (
+        <p className="col-span-2 mt-1 flex items-center gap-2 rounded-md bg-ops-p1 px-2.5 py-1.5 text-xs font-semibold text-white">
+          <span aria-hidden className="size-2 animate-pulse rounded-full bg-white" />
+          {t("Emergency raised · {ref}", { ref: unit.emergency })}
+        </p>
+      ) : !off ? (
+        <button
+          type="button"
+          onClick={() => raiseEmergency(unit.callsign)}
+          title={t("What the officer's radio sends when its emergency button is pressed")}
+          className="col-span-2 justify-self-start text-2xs font-medium text-ops-p1 underline-offset-2 hover:underline"
+        >
+          {t("Press emergency button")}
+        </button>
+      ) : null}
     </li>
+  );
+}
+
+const RELIEFS: Relief[] = ["A", "B", "C"];
+const RELIEF_START: Record<Relief, string> = { A: "06:00", B: "14:00", C: "22:00" };
+
+/**
+ * The duty roster at the head of the board: who crews each unit on each of
+ * the three reliefs, which relief is on, and the handover at shift change.
+ * A unit still on a call keeps its crew until the call clears ("held over"),
+ * as UK and Nigerian control rooms both run it.
+ *
+ * Folded by default: the lanes below are the live board, the roster is what
+ * the supervisor opens at 06:00, 14:00 and 22:00.
+ */
+function Roster({ units, now }: { units: Unit[]; now: number }) {
+  const t = useT();
+  const on = now ? reliefNow(now) : null;
+  const behind = units.filter((u) => on && u.relief && u.relief !== on && !u.heldOver);
+  const held = units.filter((u) => u.heldOver);
+  if (!units.some((u) => u.crew)) return null;
+  return (
+    <details className="npf-ops-tile group">
+      <summary className="flex min-h-13 cursor-pointer flex-wrap items-center gap-x-3 gap-y-1 px-5 py-2">
+        <span className="font-secondary text-[0.9375rem] font-bold text-npf-ink">{t("Duty roster")}</span>
+        {on ? (
+          <span className="rounded-[5px] bg-npf-cloud px-1.5 py-0.5 text-xs font-semibold text-npf-blue-ink">
+            {t("Relief {r} on duty since {time} WAT", { r: on, time: RELIEF_START[on] })}
+          </span>
+        ) : null}
+        {behind.length ? (
+          <span className="npf-pill bg-ops-p2-wash text-ops-p2">
+            <span aria-hidden className="npf-pill-dot" />
+            {t("{n} units still on the last relief", { n: behind.length })}
+          </span>
+        ) : null}
+        {held.length ? (
+          <span className="text-xs text-ops-dim">{t("{n} held over on calls", { n: held.length })}</span>
+        ) : null}
+      </summary>
+      <div className="border-t border-ops-line-soft">
+        {on && behind.length ? (
+          <div className="flex flex-wrap items-center gap-3 px-5 py-3">
+            <OpsButton
+              tone="brand"
+              onClick={() => withTransition(() => handOver(units.map((u) => u.callsign), on))}
+            >
+              {t("Hand over to relief {r}", { r: on })}
+            </OpsButton>
+            <p className="text-xs text-ops-dim">
+              {t("Free units change crew now; units on a call change when they clear it.")}
+            </p>
+          </div>
+        ) : null}
+        <table className="w-full text-start text-sm">
+          <caption className="sr-only">{t("Duty roster: the officer on each unit for each relief")}</caption>
+          <thead className="npf-ops-thead text-xs text-ops-dim">
+            <tr>
+              <th scope="col" className="py-2.5 ps-5 pe-4 font-medium">{t("Unit")}</th>
+              {RELIEFS.map((r) => (
+                <th key={r} scope="col" className={`py-2.5 pe-4 font-medium ${r === on ? "text-npf-blue-ink" : ""}`}>
+                  {t("Relief {r}", { r })} <span className="font-mono font-normal">{RELIEF_START[r]}</span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {units.map((u) => (
+              <tr key={u.callsign} className="border-b border-ops-line-soft last:border-0">
+                <th scope="row" className="py-2 ps-5 pe-4 text-start font-medium">
+                  {t(u.callsign)}
+                  {u.heldOver ? (
+                    <span className="ms-2 text-2xs font-normal text-ops-p2">{t("Held over")}</span>
+                  ) : null}
+                </th>
+                {RELIEFS.map((r) => (
+                  <td
+                    key={r}
+                    className={`py-2 pe-4 text-xs ${u.relief === r ? "font-semibold text-npf-ink" : "text-ops-dim"}`}
+                  >
+                    {u.crew ? t(u.crew[r]) : "–"}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </details>
+  );
+}
+
+/**
+ * The unit's position from the officer's own phone, for the map and the
+ * nearest-unit ranking, until the radios' location feed is connected.
+ * Shown only where the browser can give a position.
+ */
+function SharePosition({ unit }: { unit: Unit }) {
+  const t = useT();
+  const format = useFormat();
+  const [state, setState] = useState<"idle" | "busy" | "failed">("idle");
+  return (
+    <p className="col-span-2 flex flex-wrap items-center gap-x-3 text-2xs text-ops-dim">
+      {unit.fixAt ? <span>{t("Position sent {time}", { time: format.time(unit.fixAt) })}</span> : null}
+      <button
+        type="button"
+        disabled={state === "busy"}
+        onClick={() => {
+          if (!("geolocation" in navigator)) return setState("failed");
+          setState("busy");
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              reportPosition(unit.callsign, {
+                lat: Math.round(pos.coords.latitude * 1e5) / 1e5,
+                lng: Math.round(pos.coords.longitude * 1e5) / 1e5,
+              });
+              setState("idle");
+            },
+            () => setState("failed"),
+            { timeout: 10_000, enableHighAccuracy: true },
+          );
+        }}
+        className="font-medium text-ops-accent underline-offset-2 hover:underline disabled:opacity-50"
+      >
+        {state === "busy" ? t("Finding position…") : t("Send position from this device")}
+      </button>
+      {state === "failed" ? <span className="text-ops-p2">{t("No position from this device.")}</span> : null}
+    </p>
   );
 }

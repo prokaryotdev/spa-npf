@@ -228,18 +228,8 @@ export const yoOps: Record<string, string> = {
     "Ìpín",
   "{shown} of {total} units":
     "{shown} nínú ẹ̀ka {total}",
-  "Units on duty, with status, elapsed time in that status, and the call they are assigned to":
-    "Àwọn ẹ̀ka lẹ́nu iṣẹ́, pẹ̀lú ipò, àkókò nínú ipò náà, àti ìpè tí a yàn fún wọn",
-  "Callsign":
-    "Orúkọ ẹ̀ka",
   "Officer":
     "Ọlọ́pàá",
-  "On call":
-    "Lórí ìpè",
-  "Location":
-    "Ibi",
-  "Move to":
-    "Gbé lọ sí",
   "No unit matches that filter":
     "Kò sí ẹ̀ka tó bá àlẹ̀mọ́ yẹn mu",
   "(held over 45 minutes)":
@@ -261,13 +251,10 @@ export const yoOps: Record<string, string> = {
   // The console's sentence-case status words and the board's all-clear.
   "En route": "Ó ń bọ̀ lọ́nà",
   "On scene": "Lójú ibi",
-  "Rejected": "A kọ̀ ọ́",
-  "All within target": "Gbogbo rẹ̀ wà láàrin àkókò",
   "Assigned": "A ti yàn án",
   "Patrol": "Ìṣọ́",
   "Marine": "Ojú Omi",
   "Free": "Wà lófo",
-  "Committed": "Lẹ́nu iṣẹ́",
   "Ibadan, refuelling": "Ibadan, ń gba epo",
   "Abuja, standby": "Àbújá, ní ìmúrasílẹ̀",
   "Jos, training": "Jos, ìdánilẹ́kọ̀ọ́",
@@ -298,7 +285,6 @@ export const yoOps: Record<string, string> = {
 
   // --- command mosaic ------------------------------------------------------
   "{n} late": "{n} ti pẹ́",
-  "{n} running": "{n} ń lọ lọ́wọ́",
   Divisions: "Àwọn ẹ̀ka",
   "All divisions": "Gbogbo ẹ̀ka",
   "Open {n} days": "Ó ti wà ní ṣíṣí fún ọjọ́ {n}",
@@ -379,9 +365,6 @@ export const yoOps: Record<string, string> = {
   "New call {ref}": "Ìpè tuntun {ref}",
   "Open the call": "Ṣí ìpè náà",
   "Dismiss": "Pa á rẹ́",
-  "Sample data": "Àpẹẹrẹ dátà",
-  "Calls, units and officers here are sample data until the console is connected to the Force's systems.":
-    "Àwọn ìpè, ẹ̀ka àti òṣìṣẹ́ níbí jẹ́ àpẹẹrẹ dátà títí a ó fi so ojú-iṣẹ́ náà mọ́ ètò Ilé-iṣẹ́ Ọlọ́pàá.",
   "Show all {n} commands":
     "Fi gbogbo àwọn Ẹ̀ka {n} hàn",
   "Busy commands only":

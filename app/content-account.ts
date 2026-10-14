@@ -68,6 +68,8 @@ export const seedRequests: TrackedRequest[] = [
     slug: "report-lost-item",
     service: "Report Lost Item",
     status: "Completed",
+    docNo: "NPF/2026/318540",
+    docIssued: "2026-08-24T12:00:00.000Z",
     submitted: "2026-08-19T16:45:00.000Z",
     updated: "2026-08-24T12:00:00.000Z",
     fee: "Free of Charge",
@@ -92,6 +94,8 @@ export const seedRequests: TrackedRequest[] = [
     slug: "police-clearance-certificate",
     service: "Police Clearance Certificate",
     status: "Completed",
+    docNo: "NPF/2026/274116",
+    docIssued: "2026-07-30T07:12:00.000Z",
     submitted: "2026-07-30T07:10:00.000Z",
     updated: "2026-07-30T07:12:00.000Z",
     fee: "On your POSSAP invoice",
@@ -177,4 +181,28 @@ export const seedDocuments = [
     expires: null,
     request: "NPF-2026-3866",
   },
+];
+
+/**
+ * What the store writes into a citizen's notices and request timelines, as
+ * English patterns translated on the way out. Listed here so the coverage
+ * test asks every language for them; nothing reads this list itself.
+ */
+export const accountLines = [
+  "Open the request to see what changed.",
+  "Crime reference {case}.",
+  "Passed to investigators",
+  "Officers assigned",
+  "Case closed",
+  "Reopened",
+  "Transferred",
+  "Charged to court",
+  "Investigation closed",
+  "Investigation reopened",
+  "Update from the investigator",
+  "You added information",
+  "Documents added",
+  "Assigned to an officer",
+  "Sent with the reply",
+  "Added by the officer",
 ];

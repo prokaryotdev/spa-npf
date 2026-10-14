@@ -478,14 +478,10 @@ export const haAccount: Record<string, string> = {
     "Bi diddigin lambar shaida",
   "A NIN is eleven digits, like 12345678901.":
     "NIN lambobi goma sha ɗaya ne, kamar 12345678901.",
-  "Desk":
-    "Tebur",
   "Enter your NIN.":
     "Shigar da NIN ɗinka.",
   "Enter your password.":
     "Shigar da kalmar sirrinka.",
-  "Force Headquarters · all commands":
-    "Hedkwatar Rundunar · duk rundunoni",
   "Passwords are at least 8 characters.":
     "Kalmomin sirri haruffa 8 ne aƙalla.",
   "Case closed":
@@ -506,8 +502,6 @@ export const haAccount: Record<string, string> = {
     "Babu abin da ya dace da {ref}. Duba lambar, ko tuntuɓi rundunar da ka kai wa rahoto.",
   "Reference number":
     "Lambar shaida",
-  "Reported":
-    "An kai rahoto",
   "{lga} Division":
     "Sashen {lga}",
   "Choose the state first.":

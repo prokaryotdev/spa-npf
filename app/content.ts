@@ -353,6 +353,8 @@ export const footerColumns = [
       { label: "All Services", href: "/app/services" },
       { label: "Report a Crime", href: "/app/report" },
       { label: "Track a Reference", href: "/app/track" },
+      { label: "Appeals", href: "/app/appeals" },
+      { label: "Verify a Police Document", href: "/app/verify" },
       { label: "Information", href: "/app/home/information" },
       { label: "My Account", href: "/app/portal" },
     ],

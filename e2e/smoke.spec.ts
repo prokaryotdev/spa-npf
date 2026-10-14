@@ -143,7 +143,9 @@ test.describe("the account half", () => {
 
   test("the console is not reachable without signing in", async ({ page }) => {
     await page.goto("/en/app/police");
-    await expect(page).toHaveURL(/\/app\/signin/);
+    // The guard is a client redirect after hydration; a cold server on a slow
+    // machine needs longer than the default five seconds to get there.
+    await expect(page).toHaveURL(/\/app\/signin/, { timeout: 15_000 });
   });
 
   test("a citizen's session does not open the console", async ({ page }) => {

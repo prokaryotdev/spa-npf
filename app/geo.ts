@@ -26,7 +26,23 @@ export type Jurisdiction = {
   division: string;
   /** Street, landmark or village: what an officer drives to. */
   address?: string;
+  /**
+   * The pin, when there is one: a reporter's "use my location", or a seed
+   * call's approximate spot. Absent means only the LGA is known, and the map
+   * falls back to the command's headquarters and says it is approximate.
+   */
+  geo?: Geo;
 };
+
+export type Geo = { lat: number; lng: number };
+
+/** Straight-line kilometres between two points: enough to rank units. */
+export function distanceKm(a: Geo, b: Geo) {
+  const r = Math.PI / 180;
+  const x = (b.lng - a.lng) * r * Math.cos(((a.lat + b.lat) / 2) * r);
+  const y = (b.lat - a.lat) * r;
+  return Math.sqrt(x * x + y * y) * 6371;
+}
 
 export type NgState = {
   name: string;
@@ -294,29 +310,97 @@ export const STATES: NgState[] = Object.keys(LGAS).map((name) => {
 export const stateNamed = (name: string) =>
   STATES.find((s) => s.name === name) ?? null;
 
-/** "Lagos State Command", "FCT Command". English; display sites call t(). */
-export const commandOf = (state: string) =>
-  state === "FCT" ? "FCT Command" : `${state} State Command`;
-
 /**
  * The division that answers for an LGA. Named by the LGA until the API hands
  * back the Force's directory; the shape does not change when it does.
  */
-export const divisionFor = (state: string, lga: string) =>
-  lga ? `${lga} Division` : "";
+export function divisionFor(state: string, lga: string, geo?: Geo) {
+  if (!lga) return "";
+  // Where the Force's own divisions are known, a pin picks the nearest one
+  // in the LGA. Without a pin, or outside those, the LGA names it.
+  const known = DIVISIONS.filter((d) => d.state === state && d.lga === lga);
+  if (geo && known.length) {
+    let best = known[0];
+    for (const d of known)
+      if (distanceKm(geo, d.geo) < distanceKm(geo, best.geo)) best = d;
+    return best.name;
+  }
+  return `${lga} Division`;
+}
+
+/** A real division's counter, when the division is one the Force named. */
+export const divisionNamed = (name: string) =>
+  DIVISIONS.find((d) => d.name === name) ?? null;
+
+export type Division = {
+  name: string;
+  state: string;
+  lga: string;
+  address: string;
+  geo: Geo;
+};
+
+/**
+ * The divisions this build knows by name, with their counters: the FCT
+ * Command's Divisional Headquarters, from the site's FCT edition (before
+ * 10 October 2026 it served the FCT alone, and its customer-centers page
+ * listed these as real). Positions are to the district, not the door.
+ * Every other command's divisions come from the Force's directory through
+ * GET /geo/division (docs/API-CONTRACT.md); until then they go by the LGA.
+ */
+export const DIVISIONS: Division[] = (
+  [
+    ["Garki Division", "Abuja Municipal", "Area 3, Garki", 9.0333, 7.4833],
+    ["Wuse Division", "Abuja Municipal", "Zone 3, Wuse", 9.0667, 7.4667],
+    ["Wuse II Division", "Abuja Municipal", "Nouakchott Street, Wuse II", 9.0765, 7.474],
+    ["Maitama Division", "Abuja Municipal", "Lungi Street, Maitama", 9.085, 7.49],
+    ["Asokoro Division", "Abuja Municipal", "Yakubu Gowon Crescent, Asokoro", 9.04, 7.52],
+    ["Utako Division", "Abuja Municipal", "Ekukinam Street, Utako", 9.07, 7.438],
+    ["Jabi Division", "Abuja Municipal", "Jabi District, off Bala Sokoto Way", 9.064, 7.427],
+    ["Life Camp Division", "Abuja Municipal", "Life Camp, Gwarinpa", 9.093, 7.423],
+    ["Gwarinpa Division", "Abuja Municipal", "3rd Avenue, Gwarinpa Estate", 9.108, 7.405],
+    ["Karmo Division", "Abuja Municipal", "Karmo Village, off Kubwa Expressway", 9.098, 7.445],
+    ["Dei-Dei Division", "Abuja Municipal", "Dei-Dei Building Materials Market", 9.12, 7.33],
+    ["Lugbe Division", "Abuja Municipal", "FHA Estate, Lugbe", 8.988, 7.372],
+    ["Apo Division", "Abuja Municipal", "Apo Legislative Quarters, Apo", 8.995, 7.46],
+    ["Durumi Division", "Abuja Municipal", "Durumi District, off Ahmadu Bello Way", 9.011, 7.472],
+    ["Nyanya Division", "Abuja Municipal", "Nyanya–Karu Road, Nyanya", 9.006, 7.572],
+    ["Airport Division", "Abuja Municipal", "Nnamdi Azikiwe International Airport", 9.0068, 7.2632],
+    ["Zuba Division", "Gwagwalada", "Zuba Market Road, Zuba", 9.112, 7.226],
+    ["Dutse-Alhaji Division", "Bwari", "Dutse-Alhaji, off Bwari Road", 9.133, 7.355],
+  ] as const
+).map(([name, lga, address, lat, lng]) => ({
+  name,
+  state: "FCT",
+  lga,
+  address,
+  geo: { lat, lng },
+}));
 
 /** A complete jurisdiction from the two choices a person actually makes. */
 export function jurisdiction(
   state: string,
   lga: string,
   address?: string,
+  geo?: Geo,
 ): Jurisdiction {
-  return { state, lga, division: divisionFor(state, lga), address };
+  return {
+    state,
+    lga,
+    division: divisionFor(state, lga, geo),
+    address,
+    ...(geo ? { geo } : {}),
+  };
 }
 
-/** One line for a board or a receipt: "Ikeja, Lagos". */
-export const placeLine = (j: Pick<Jurisdiction, "state" | "lga">) =>
-  j.state === "FCT" ? `${j.lga}, FCT` : `${j.lga}, ${j.state}`;
+/** Where to draw a record: its own pin, or its command's headquarters. */
+export function pinOf(where: Pick<Jurisdiction, "state" | "geo">): Geo & {
+  exact: boolean;
+} {
+  if (where.geo) return { ...where.geo, exact: true };
+  const s = stateNamed(where.state);
+  return { lat: s?.lat ?? 9.06, lng: s?.lng ?? 7.49, exact: false };
+}
 
 /**
  * A street line with the LGA and state added only where it does not

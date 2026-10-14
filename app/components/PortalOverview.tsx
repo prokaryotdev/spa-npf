@@ -14,6 +14,7 @@ import {
   ServicesIcon,
 } from "./icons";
 import { useFormat, useT } from "../i18n/client";
+import { line } from "./Where";
 
 /** Just enough of a service to draw a shortcut tile. */
 export type Shortcut = { slug: string; name: string; icon: string | null };
@@ -238,14 +239,14 @@ export default function PortalOverview({
                     <span
                       className={`npf-body text-npf-ink ${notice.read ? "" : "font-semibold"}`}
                     >
-                      {t(notice.title)}
+                      {line(t, notice.title, notice.vars)}
                     </span>
                     <span className="npf-small shrink-0 text-npf-steel tabular-nums">
                       {format.date(notice.at)}
                     </span>
                   </p>
                   <p className="npf-small mt-1 text-npf-body">
-                    {t(notice.body)}
+                    {line(t, notice.body, notice.vars)}
                   </p>
                 </div>
               </li>

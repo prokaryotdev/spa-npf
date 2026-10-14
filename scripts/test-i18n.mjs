@@ -20,6 +20,7 @@ import { haPages } from "../app/i18n/ha-pages.ts";
 import { haLegal } from "../app/i18n/ha-legal.ts";
 import { haAccount } from "../app/i18n/ha-account.ts";
 import { haOps } from "../app/i18n/ha-ops.ts";
+import { haRecords } from "../app/i18n/ha-records.ts";
 import { yoChrome } from "../app/i18n/yo-chrome.ts";
 import { yoHome } from "../app/i18n/yo-home.ts";
 import { yoServices } from "../app/i18n/yo-services.ts";
@@ -27,6 +28,7 @@ import { yoPages } from "../app/i18n/yo-pages.ts";
 import { yoLegal } from "../app/i18n/yo-legal.ts";
 import { yoAccount } from "../app/i18n/yo-account.ts";
 import { yoOps } from "../app/i18n/yo-ops.ts";
+import { yoRecords } from "../app/i18n/yo-records.ts";
 import { igChrome } from "../app/i18n/ig-chrome.ts";
 import { igHome } from "../app/i18n/ig-home.ts";
 import { igServices } from "../app/i18n/ig-services.ts";
@@ -34,21 +36,22 @@ import { igPages } from "../app/i18n/ig-pages.ts";
 import { igLegal } from "../app/i18n/ig-legal.ts";
 import { igAccount } from "../app/i18n/ig-account.ts";
 import { igOps } from "../app/i18n/ig-ops.ts";
+import { igRecords } from "../app/i18n/ig-records.ts";
 
 const wanted = await collectWanted();
 
 const LANGS = {
   Hausa: {
     dictionary: ha.dictionary,
-    parts: { haChrome, haHome, haServices, haPages, haLegal, haAccount, haOps },
+    parts: { haChrome, haHome, haServices, haPages, haLegal, haAccount, haOps, haRecords },
   },
   Yoruba: {
     dictionary: yo.dictionary,
-    parts: { yoChrome, yoHome, yoServices, yoPages, yoLegal, yoAccount, yoOps },
+    parts: { yoChrome, yoHome, yoServices, yoPages, yoLegal, yoAccount, yoOps, yoRecords },
   },
   Igbo: {
     dictionary: ig.dictionary,
-    parts: { igChrome, igHome, igServices, igPages, igLegal, igAccount, igOps },
+    parts: { igChrome, igHome, igServices, igPages, igLegal, igAccount, igOps, igRecords },
   },
 };
 

@@ -85,14 +85,12 @@ export const haOps: Record<string, string> = {
   "Not dispatched": "Ba a tura ba",
   "Clear call": "Rufe kira",
   "Reopen call": "Sake buɗe kira",
-  "Move to": "Matsa zuwa",
   Log: "Bayani",
   "Add to the log": "Ƙara a bayanin",
   "Add a line to the log for {ref}": "Ƙara layi a bayanin {ref}",
   Add: "Ƙara",
   Ref: "Lamba",
   Grade: "Mataki",
-  Location: "Wuri",
   Elapsed: "Lokacin da ya wuce",
   "of {n}m": "daga mintuna {n}",
   /*
@@ -128,10 +126,8 @@ export const haOps: Record<string, string> = {
   Units: "Rundunoni",
   Unit: "Runduna",
   Division: "Sashe",
-  Callsign: "Lambar rediyo",
   Officer: "Jami'i",
   Status: "Matsayi",
-  "On call": "Kan kira",
   Waiting: "Yana jira",
   Running: "Yana tafiya",
   Pending: "Yana jira",
@@ -139,8 +135,6 @@ export const haOps: Record<string, string> = {
   "Callsign, officer or area": "Lambar rediyo, jami'i ko yanki",
   "No unit matches that filter": "Babu rundunar da ta dace da wannan taceƙa",
   "{shown} of {total} units": "{shown} daga rundunoni {total}",
-  "Units on duty, with status, elapsed time in that status, and the call they are assigned to":
-    "Rundunonin da ke kan aiki, tare da matsayi, lokacin da aka ɗauka a wannan matsayi, da kiran da aka ba su",
 
   // --- service requests ----------------------------------------------------
   "Service requests": "Buƙatun hidima",
@@ -175,13 +169,10 @@ export const haOps: Record<string, string> = {
   // The console's sentence-case status words and the board's all-clear.
   "En route": "Yana kan hanya",
   "On scene": "A wurin",
-  "Rejected": "An ƙi",
-  "All within target": "Duk suna cikin lokaci",
   "Assigned": "An ba shi aiki",
   "Patrol": "Sintiri",
   "Marine": "Na Ruwa",
   "Free": "A shirye",
-  "Committed": "Kan aiki",
   "Ibadan, refuelling": "Ibadan, cika mai",
   "Abuja, standby": "Abuja, a shirye",
   "Jos, training": "Jos, horo",
@@ -212,7 +203,6 @@ export const haOps: Record<string, string> = {
 
   // --- command mosaic ------------------------------------------------------
   "{n} late": "{n} sun makara",
-  "{n} running": "{n} ana kai",
   Divisions: "Sassa",
   "All divisions": "Dukkan sassa",
   "Open {n} days": "A buɗe kwana {n}",
@@ -293,9 +283,6 @@ export const haOps: Record<string, string> = {
   "New call {ref}": "Sabon kira {ref}",
   "Open the call": "Buɗe kiran",
   "Dismiss": "Yi watsi",
-  "Sample data": "Bayanan misali",
-  "Calls, units and officers here are sample data until the console is connected to the Force's systems.":
-    "Kira, rundunoni da jami'ai a nan bayanan misali ne har sai an haɗa allon da tsarin Rundunar.",
   "Show all {n} commands": "Nuna dukkan rundunoni {n}",
   "Busy commands only": "Rundunoni masu aiki kawai",
   "Dispatch": "Tura",

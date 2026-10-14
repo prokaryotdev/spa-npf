@@ -27,8 +27,9 @@ function cspFor(nonce: string, secure: boolean) {
     // colour or an animation delay. Style attributes cannot run script, so
     // this stays narrower than putting 'unsafe-inline' on style-src itself.
     "style-src-attr 'unsafe-inline'",
-    // Images from this site only, nothing from off-site.
-    "img-src 'self' blob: data:",
+    // Images from this site, plus the console map's tiles. Nothing else
+    // off-site: a self-hosted tile server would let this go back to 'self'.
+    "img-src 'self' blob: data: https://server.arcgisonline.com",
     "font-src 'self'",
     "object-src 'none'",
     "base-uri 'self'",

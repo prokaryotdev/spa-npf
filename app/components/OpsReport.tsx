@@ -36,7 +36,18 @@ const RANGES = [
   { id: "shift", label: "This shift" },
   { id: "12", label: "Last 12 hours" },
   { id: "24", label: "Last 24 hours" },
+  // A commander's view, the CompStat question: is it getting better or
+  // worse than the week or month before?
+  { id: "168", label: "Last 7 days" },
+  { id: "720", label: "Last 30 days" },
 ] as const;
+
+const DAY = 24 * 3_600_000;
+const dayLabel = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "short",
+  timeZone: "Africa/Lagos",
+});
 type Range = (typeof RANGES)[number]["id"];
 
 const watParts = new Intl.DateTimeFormat("en-GB", {
@@ -81,7 +92,7 @@ const onTarget = (i: Incident) => {
 
 export default function OpsReport() {
   const t = useT();
-  const { incidents: all, viewing, session } = useScoped();
+  const { incidents: all, viewing, session, zone } = useScoped();
   const now = useNow();
   const [range, setRange] = useState<Range>("12");
 
@@ -96,14 +107,24 @@ export default function OpsReport() {
   const closed = calls.filter((i) => i.status === "Closed");
   const mid = median(dispatched.map((i) => toDispatch(i)!));
   const scope = viewing ?? session?.command ?? null;
+  // The same length of time just before, for the comparison figure. The
+  // shift has no fixed length, so it is compared with the relief before.
+  const span = now - from;
+  const before = all.filter((i) => {
+    const at = new Date(i.reported).getTime();
+    return at >= from - span && at < from;
+  }).length;
+  const change =
+    before && now ? Math.round(((calls.length - before) / before) * 100) : null;
+  const long = range === "168" || range === "720";
 
   return (
     <div className="space-y-6">
       <OpsHead
-        title={t("Shift report")}
+        title={long ? t("Crime and response report") : t("Shift report")}
         lead={[
           t(RANGES.find((r) => r.id === range)!.label),
-          scope ? commandLabel(t, scope) : t("All commands"),
+          scope ? commandLabel(t, scope) : zone ? t(zone.name) : t("All commands"),
         ].join(" · ")}
         action={
           <div className="flex flex-wrap items-end gap-x-8 gap-y-4">
@@ -120,6 +141,15 @@ export default function OpsReport() {
                   value: mid === null ? "–" : mins(t, mid),
                 },
                 { label: t("Closed"), value: closed.length },
+                ...(change !== null
+                  ? [
+                      {
+                        label: t("On the period before"),
+                        value: `${change > 0 ? "+" : change < 0 ? "−" : ""}${Math.abs(change)}%`,
+                        // More calls is not good or bad in itself; it stays white.
+                      },
+                    ]
+                  : []),
               ]}
             />
             <OpsButton
@@ -189,8 +219,8 @@ export default function OpsReport() {
       ) : (
         <>
           <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_24rem]">
-            <OpsPanel title={t("Calls by hour")} count={calls.length}>
-              <ByHour calls={calls} from={from} now={now} />
+            <OpsPanel title={long ? t("Calls by day") : t("Calls by hour")} count={calls.length}>
+              <ByHour calls={calls} from={from} now={now} size={long ? DAY : HOUR} />
             </OpsPanel>
             <OpsPanel
               title={t("How calls ended")}
@@ -356,17 +386,23 @@ function ByHour({
   calls,
   from,
   now,
+  size = HOUR,
 }: {
   calls: Incident[];
   from: number;
   now: number;
+  /** One bar per hour, or per day for the week and month views. */
+  size?: number;
 }) {
   const t = useT();
-  const first = Math.floor(from / HOUR) * HOUR;
+  const daily = size !== HOUR;
+  // West Africa Time is UTC+1 all year: a WAT day starts at 23:00 UTC.
+  const shift = daily ? 3_600_000 : 0;
+  const first = Math.floor((from + shift) / size) * size - shift;
   const hours: { at: number; n: number }[] = [];
-  for (let at = first; at <= now; at += HOUR) hours.push({ at, n: 0 });
+  for (let at = first; at <= now; at += size) hours.push({ at, n: 0 });
   for (const i of calls) {
-    const k = Math.floor((new Date(i.reported).getTime() - first) / HOUR);
+    const k = Math.floor((new Date(i.reported).getTime() - first) / size);
     if (hours[k]) hours[k].n++;
   }
   const peak = Math.max(1, ...hours.map((h) => h.n));
@@ -374,8 +410,9 @@ function ByHour({
   const step = Math.max(1, Math.ceil(peak / 4));
   const top = Math.ceil(peak / step) * step;
   const ticks = Array.from({ length: top / step + 1 }, (_, i) => i * step);
-  const label = (at: number) => `${watHour.format(new Date(at))}:00`;
-  const every = hours.length > 12 ? 3 : hours.length > 6 ? 2 : 1;
+  const label = (at: number) =>
+    daily ? dayLabel.format(new Date(at)) : `${watHour.format(new Date(at))}:00`;
+  const every = hours.length > 20 ? 5 : hours.length > 12 ? 3 : hours.length > 6 ? 2 : 1;
   const peakAt = hours.findIndex((h) => h.n === peak);
 
   return (
@@ -433,7 +470,7 @@ function ByHour({
                   />
                   <Tip
                     value={t(h.n === 1 ? "{n} call" : "{n} calls", { n: h.n })}
-                    label={`${label(h.at)}–${label(h.at + HOUR)}`}
+                    label={daily ? label(h.at) : `${label(h.at)}–${label(h.at + HOUR)}`}
                   />
                 </div>
               ))}
@@ -445,18 +482,24 @@ function ByHour({
           >
             {hours.map((h, i) => (
               <span key={h.at} className="flex-1 text-center">
-                {i % every === 0 ? watHour.format(new Date(h.at)) : ""}
+                {i % every === 0
+                  ? daily
+                    ? dayLabel.format(new Date(h.at)).split(" ")[0]
+                    : watHour.format(new Date(h.at))
+                  : ""}
               </span>
             ))}
           </div>
         </div>
       </div>
-      <p className="mt-1 text-end text-2xs text-ops-dim">{t("Hour, WAT")}</p>
+      <p className="mt-1 text-end text-2xs text-ops-dim">
+        {daily ? t("Day, WAT") : t("Hour, WAT")}
+      </p>
       <TableView
-        caption={t("Calls by hour")}
-        head={[t("Hour, WAT"), t("Calls")]}
+        caption={daily ? t("Calls by day") : t("Calls by hour")}
+        head={[daily ? t("Day, WAT") : t("Hour, WAT"), t("Calls")]}
         rows={hours.map((h) => [
-          `${label(h.at)}–${label(h.at + HOUR)}`,
+          daily ? label(h.at) : `${label(h.at)}–${label(h.at + HOUR)}`,
           h.n,
         ])}
       />

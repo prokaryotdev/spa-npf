@@ -228,18 +228,8 @@ export const igOps: Record<string, string> = {
     "Ngalaba",
   "{shown} of {total} units":
     "{shown} n'ime otu {total}",
-  "Units on duty, with status, elapsed time in that status, and the call they are assigned to":
-    "Otu nọ n'ọrụ, ya na ọnọdụ, oge ha nọrọ n'ọnọdụ ahụ, na oku e kenyere ha",
-  "Callsign":
-    "Aha otu",
   "Officer":
     "Onye uwe ojii",
-  "On call":
-    "N'oku",
-  "Location":
-    "Ebe",
-  "Move to":
-    "Bufee na",
   "No unit matches that filter":
     "Ọ dịghị otu dabara nzacha ahụ",
   "(held over 45 minutes)":
@@ -261,13 +251,10 @@ export const igOps: Record<string, string> = {
   // The console's sentence-case status words and the board's all-clear.
   "En route": "Nọ n'ụzọ",
   "On scene": "N'ebe ahụ",
-  "Rejected": "A jụrụ ya",
-  "All within target": "Ha niile nọ n'ime oge",
   "Assigned": "E kenyere ya",
   "Patrol": "Nche",
   "Marine": "Mmiri",
   "Free": "Nọ efu",
-  "Committed": "Nọ n'ọrụ",
   "Ibadan, refuelling": "Ibadan, na-etinye mmanụ",
   "Abuja, standby": "Abuja, na-eche njikere",
   "Jos, training": "Jos, ọzụzụ",
@@ -298,7 +285,6 @@ export const igOps: Record<string, string> = {
 
   // --- command mosaic ------------------------------------------------------
   "{n} late": "{n} egbuola oge",
-  "{n} running": "{n} na-aga n'ihu",
   Divisions: "Ngalaba",
   "All divisions": "Ngalaba niile",
   "Open {n} days": "Emeghere ụbọchị {n}",
@@ -379,9 +365,6 @@ export const igOps: Record<string, string> = {
   "New call {ref}": "Oku ọhụrụ {ref}",
   "Open the call": "Meghee oku ahụ",
   "Dismiss": "Wepụ",
-  "Sample data": "Data ihe atụ",
-  "Calls, units and officers here are sample data until the console is connected to the Force's systems.":
-    "Oku, otu na ndị ọrụ ebe a bụ data ihe atụ ruo mgbe e jikọrọ ihuenyo a na sistemụ Ndị Uwe Ojii.",
   "Show all {n} commands":
     "Gosi Ụlọ Ọrụ {n} niile",
   "Busy commands only":

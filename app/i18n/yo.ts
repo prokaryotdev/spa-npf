@@ -5,6 +5,7 @@ import { yoPages } from "./yo-pages";
 import { yoLegal } from "./yo-legal";
 import { yoAccount } from "./yo-account";
 import { yoOps } from "./yo-ops";
+import { yoRecords } from "./yo-records";
 
 /** Yoruba, split the same way as the Hausa dictionary (see ha.ts). */
 export const dictionary: Record<string, string> = {
@@ -15,4 +16,5 @@ export const dictionary: Record<string, string> = {
   ...yoLegal,
   ...yoAccount,
   ...yoOps,
+  ...yoRecords,
 };

@@ -5,6 +5,7 @@ import { haServices } from "./ha-services";
 import { haPages } from "./ha-pages";
 import { haAccount } from "./ha-account";
 import { haOps } from "./ha-ops";
+import { haRecords } from "./ha-records";
 
 /**
  * Split by the part of the site the strings belong to, purely so each file
@@ -20,4 +21,5 @@ export const dictionary: Record<string, string> = {
   ...haLegal,
   ...haAccount,
   ...haOps,
+  ...haRecords,
 };

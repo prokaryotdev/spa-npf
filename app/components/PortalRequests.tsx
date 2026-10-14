@@ -5,7 +5,9 @@ import Link from "../i18n/Link";
 import { useId, useMemo, useState } from "react";
 import {
   advanceRequest,
+  attachToRequest,
   useStore,
+  type Media,
   type RequestStatus,
   type TrackedRequest,
 } from "./store";
@@ -19,6 +21,7 @@ import {
   SearchIcon,
 } from "./icons";
 import { useFormat, useT } from "../i18n/client";
+import { MediaPicker } from "./media";
 import { commandLabel, divisionLabel, line } from "./Where";
 
 /** What needs the applicant first, then what is moving, then what is done. */
@@ -184,7 +187,7 @@ export default function PortalRequests() {
                       {request.where ? (
                         <span className="npf-small mt-0.5 block text-npf-body">
                           {commandLabel(t, request.where.state)} ·{" "}
-                          {divisionLabel(t, request.where.lga)}
+                          {divisionLabel(t, request.where.lga, request.where.division)}
                         </span>
                       ) : null}
                     </span>
@@ -255,7 +258,7 @@ export default function PortalRequests() {
                             {/* The open ask already sits above, in amber. */}
                             {step.note && step.note !== request.note ? (
                               <p className="npf-small mt-1 text-npf-body">
-                                {line(t, step.note, undefined, request.where)}
+                                {line(t, step.note, step.vars, request.where)}
                               </p>
                             ) : null}
                           </li>
@@ -281,6 +284,22 @@ export default function PortalRequests() {
                           </>
                         ) : null}
                       </dl>
+                    ) : null}
+
+                    {/* What it issued carries a number anyone can check, so
+                        an employer or an insurer does not have to ring a
+                        station to trust the paper. */}
+                    {request.docNo ? (
+                      <p className="npf-small mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-card bg-npf-ok-soft p-4 text-npf-ink">
+                        <span className="text-npf-steel">{t("Document number")}</span>
+                        <span className="font-mono font-semibold">{request.docNo}</span>
+                        <Link
+                          href="/app/verify"
+                          className="font-medium text-npf-blue underline underline-offset-4"
+                        >
+                          {t("Anyone can check it here")}
+                        </Link>
+                      </p>
                     ) : null}
 
                     <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-npf-hairline pt-5">
@@ -386,6 +405,7 @@ function Reply({ request }: { request: TrackedRequest }) {
   const t = useT();
   const id = useId();
   const [text, setText] = useState("");
+  const [files, setFiles] = useState<Media[]>([]);
 
   return (
     <form
@@ -394,8 +414,11 @@ function Reply({ request }: { request: TrackedRequest }) {
         e.preventDefault();
         const reply = text.trim();
         if (!reply) return;
+        // The files go on first, so the officer opening the reply sees them.
+        attachToRequest(request.id, files.map((f) => f.name));
         advanceRequest(request.id, "In Review", reply, "Reply sent");
         setText("");
+        setFiles([]);
       }}
     >
       <label
@@ -412,6 +435,16 @@ function Reply({ request }: { request: TrackedRequest }) {
         placeholder={t("Tell us what you have done, or what you are sending.")}
         className="npf-field min-h-28"
       />
+      <div className="mt-4">
+        <MediaPicker
+          id={`${id}-files`}
+          optional
+          label={t("Documents asked for")}
+          media={files}
+          onChange={setFiles}
+          by={request.id}
+        />
+      </div>
       <button
         type="submit"
         disabled={!text.trim()}

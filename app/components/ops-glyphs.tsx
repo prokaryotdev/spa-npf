@@ -49,3 +49,34 @@ export const ReportGlyph = ({ className }: GlyphProps) => (
     <path d="M13.5 27.5v-5M20 27.5v-13M26.5 27.5v-9" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
   </svg>
 );
+
+/* Drawn for the console in the same two-tone hand: a blue body under a
+   2px line in currentColor, on the services set's 44px grid. */
+
+export const MapGlyph = ({ className }: GlyphProps) => (
+  <svg viewBox="0 0 44 44" fill="none" aria-hidden className={className}>
+    <path d="M6 10.5 16 6.5l12 4 10-4v27l-10 4-12-4-10 4Z" fill="var(--ops-glyph)" />
+    <path d="M6 10.5 16 6.5l12 4 10-4v27l-10 4-12-4-10 4ZM16 6.5v27M28 10.5v27" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+  </svg>
+);
+
+export const CaseGlyph = ({ className }: GlyphProps) => (
+  <svg viewBox="0 0 44 44" fill="none" aria-hidden className={className}>
+    <path d="M5 12a3 3 0 0 1 3-3h9l4 4h15a3 3 0 0 1 3 3v17a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3Z" fill="var(--ops-glyph)" />
+    <path d="M5 12a3 3 0 0 1 3-3h9l4 4h15a3 3 0 0 1 3 3v17a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3ZM5 18h34M14 25h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export const CustodyGlyph = ({ className }: GlyphProps) => (
+  <svg viewBox="0 0 44 44" fill="none" aria-hidden className={className}>
+    <rect x="8" y="6" width="28" height="32" rx="3" fill="var(--ops-glyph)" />
+    <path d="M11 6h22a3 3 0 0 1 3 3v26a3 3 0 0 1-3 3H11a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3ZM15 6v32M22 6v32M29 6v32M8 21h28" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+  </svg>
+);
+
+export const AlertGlyph = ({ className }: GlyphProps) => (
+  <svg viewBox="0 0 44 44" fill="none" aria-hidden className={className}>
+    <path d="M12 33V23a10 10 0 0 1 20 0v10Z" fill="var(--ops-glyph)" />
+    <path d="M12 33V23a10 10 0 0 1 20 0v10M8 33h28v5H8ZM22 4v4M8 9.5l3 3M36 9.5l-3 3M22 19a4 4 0 0 0-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);

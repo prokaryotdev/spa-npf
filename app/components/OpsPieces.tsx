@@ -4,11 +4,13 @@ import Image from "next/image";
 import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
 import { flushSync } from "react-dom";
 import { dispatchTarget } from "../content-ops";
+import { zonalCommand } from "../content-records";
 import { useT } from "../i18n/client";
-import { useHydrated, useStore, viewingOf } from "./store";
+import { divisionOf, useHydrated, useStore, viewingOf } from "./store";
 import { CheckIcon, CloseIcon, SearchIcon } from "./icons";
 import { FindGlyph } from "./ops-glyphs";
-import type { Incident, Priority, UnitStatus } from "./store";
+import type { Incident, Priority, Unit, UnitStatus } from "./store";
+import { distanceKm, pinOf } from "../geo";
 
 /* -------------------------------------------------------------------------
  * The command in view
@@ -23,16 +25,45 @@ import type { Incident, Priority, UnitStatus } from "./store";
 export function useScoped() {
   const store = useStore();
   const viewing = viewingOf(store.session);
+  const division = divisionOf(store.session);
+  const zone = zonalCommand(store.session?.zone);
   return useMemo(() => {
-    if (!viewing) return { ...store, viewing };
+    // A zonal desk looking at its whole zone: every state in it, no other.
+    if (!viewing && zone) {
+      const inZone = (state?: string) => !!state && zone.states.includes(state);
+      return {
+        ...store,
+        viewing,
+        division,
+        zone,
+        incidents: store.incidents.filter((i) => inZone(i.where.state)),
+        units: store.units.filter((u) => inZone(u.state)),
+        requests: store.requests.filter((r) => inZone(r.where?.state)),
+        cases: store.cases.filter((c) => inZone(c.where.state)),
+        custody: store.custody.filter((d) => inZone(d.where.state)),
+        alerts: store.alerts.filter((a) => !a.scope || inZone(a.scope)),
+      };
+    }
+    if (!viewing) return { ...store, viewing, division, zone };
+    // A divisional desk is narrowed once more, to its own LGA. Its units are
+    // the ones based there; alerts still come from the whole command.
+    const here = (w?: { state: string; lga: string }) =>
+      !!w && w.state === viewing && (!division || w.lga === division);
     return {
       ...store,
       viewing,
-      incidents: store.incidents.filter((i) => i.where.state === viewing),
-      units: store.units.filter((u) => u.state === viewing),
-      requests: store.requests.filter((r) => r.where?.state === viewing),
+      division,
+      zone,
+      incidents: store.incidents.filter((i) => here(i.where)),
+      units: store.units.filter(
+        (u) => u.state === viewing && (!division || u.base === division),
+      ),
+      requests: store.requests.filter((r) => here(r.where)),
+      cases: store.cases.filter((c) => here(c.where)),
+      custody: store.custody.filter((d) => here(d.where)),
+      alerts: store.alerts.filter((a) => !a.scope || a.scope === viewing),
     };
-  }, [store, viewing]);
+  }, [store, viewing, division, zone]);
 }
 
 /* -------------------------------------------------------------------------
@@ -72,6 +103,19 @@ export function useNow() {
   return useSyncExternalStore(
     subscribeTick,
     () => stamp,
+    () => 0,
+  );
+}
+
+/**
+ * The shared clock to the minute. Same tick, but React only re-renders when
+ * the minute turns: for a frame that counts things by the hour (the custody
+ * badge) and must not redraw itself, and restart its effects, every second.
+ */
+export function useMinute() {
+  return useSyncExternalStore(
+    subscribeTick,
+    () => Math.floor(stamp / 60_000) * 60_000,
     () => 0,
   );
 }
@@ -704,4 +748,146 @@ export function withTransition(change: () => void) {
   if ("startViewTransition" in document)
     document.startViewTransition(() => flushSync(change));
   else change();
+}
+
+/* -------------------------------------------------------------------------
+ * Who is closest
+ * ---------------------------------------------------------------------- */
+
+/**
+ * The free units that can attend a call, nearest first, with the distance.
+ * Only the call's own command's units: a Lagos car cannot attend in Kano. A
+ * unit with no position sorts last rather than being hidden.
+ *
+ * Straight-line kilometres, not drive time. A live CAD would rank by road
+ * time from the units' GPS; this is the same ordering with less data.
+ */
+export function nearestFree(incident: Incident, units: Unit[]) {
+  const at = pinOf(incident.where);
+  return units
+    .filter(
+      (u) =>
+        u.state === incident.where.state &&
+        u.status === "Available" &&
+        !u.emergency,
+    )
+    .map((u) => ({ unit: u, km: u.geo ? distanceKm(at, u.geo) : null }))
+    .sort((a, b) => (a.km ?? 1e9) - (b.km ?? 1e9));
+}
+
+/** "1.2 km", "14 km": rounded the way a dispatcher says it. */
+export const kmLabel = (km: number | null) =>
+  km === null ? "" : km < 10 ? `${km.toFixed(1)} km` : `${Math.round(km)} km`;
+
+/**
+ * Earlier calls at the same place: the premise history a dispatcher reads
+ * before sending anyone. Same LGA and within 300 m when both have a pin, or
+ * the same street line when they do not.
+ */
+export function historyAt(incident: Incident, all: Incident[]) {
+  const here = incident.where.geo;
+  return all.filter((i) => {
+    if (i.id === incident.id || i.where.lga !== incident.where.lga) return false;
+    if (here && i.where.geo) return distanceKm(here, i.where.geo) < 0.3;
+    return i.area.trim().toLowerCase() === incident.area.trim().toLowerCase();
+  });
+}
+
+/* -------------------------------------------------------------------------
+ * Forms on the boards
+ * ---------------------------------------------------------------------- */
+
+/** A text box or text area in a console form. */
+export const OPS_INPUT =
+  "w-full px-3 py-2 text-sm rounded-(--ops-control-radius) bg-white text-npf-ink shadow-[var(--ops-control-lift)] ring-1 ring-npf-line ring-inset outline-none placeholder:text-npf-steel transition-[box-shadow] hover:ring-npf-steel/55 focus:ring-2 focus:ring-npf-blue-mid";
+
+/** A select in a console form, the same box as the text fields. */
+export const OPS_FORM_SELECT = `npf-ops-select ${OPS_INPUT}`;
+
+/** A labelled field in a console form. */
+export function OpsField({
+  id,
+  label,
+  children,
+  className = "",
+}: {
+  id: string;
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={className}>
+      <label htmlFor={id} className="mb-1.5 block text-xs font-semibold text-ops-dim">
+        {label}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+/**
+ * A titled section inside a record's panel: People, Statements, Exhibits.
+ * A hairline above, the title and its count, the rows, and the way to add.
+ */
+export function OpsSection({
+  title,
+  count,
+  action,
+  children,
+}: {
+  title: string;
+  count?: number;
+  action?: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="mt-5 border-t border-ops-line-soft pt-4">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h3 className="flex items-center gap-2 text-xs font-semibold text-ops-dim">
+          {title}
+          {count ? (
+            <span className="rounded-[4px] bg-npf-cloud px-1.5 font-mono text-2xs text-npf-blue-ink tabular-nums">
+              {count}
+            </span>
+          ) : null}
+        </h3>
+        {action}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+/** A log of who did what, newest first, as every record in the console keeps it. */
+export function OpsLog({
+  lines,
+  render,
+  time,
+}: {
+  lines: { at: string; text: string; vars?: Record<string, string>; by?: string }[];
+  render: (line: { text: string; vars?: Record<string, string> }) => React.ReactNode;
+  time: (at: string) => string;
+}) {
+  const t = useT();
+  return (
+    <ol className="space-y-2.5 text-xs">
+      {lines
+        .slice()
+        .reverse()
+        .map((entry, i) => (
+          <li key={entry.at + i} className="flex gap-3">
+            <time dateTime={entry.at} className="w-10 shrink-0 font-mono text-ops-dim tabular-nums">
+              {time(entry.at)}
+            </time>
+            <span className="min-w-0 leading-relaxed">
+              {render(entry)}
+              {entry.by ? (
+                <span className="mt-0.5 block text-2xs text-ops-dim">{t(entry.by)}</span>
+              ) : null}
+            </span>
+          </li>
+        ))}
+    </ol>
+  );
 }

@@ -241,13 +241,6 @@ export const InboxIcon = ({ className }: IconProps) => (
   </svg>
 );
 
-export const ChatIcon = ({ className }: IconProps) => (
-  <svg {...base} className={className}>
-    <path d="M20 11.6a7.6 7.6 0 0 1-11.2 6.7L4 19.6l1.3-4.4A7.6 7.6 0 1 1 20 11.6Z" />
-    <path d="M8.6 11.6h.01M12.4 11.6h.01M16.2 11.6h.01" />
-  </svg>
-);
-
 export const BellIcon = ({ className }: IconProps) => (
   <svg {...base} className={className}>
     <path d="M18 8.8a6 6 0 1 0-12 0c0 5.2-2 6.7-2 6.7h16s-2-1.5-2-6.7" />
@@ -348,14 +341,6 @@ export const EnterKeyIcon = ({ className }: IconProps) => (
   <svg {...base} className={className}>
     <path d="M20 5.6v6a2 2 0 0 1-2 2H4.6" />
     <path d="m8.4 9.8-3.8 3.8 3.8 3.8" />
-  </svg>
-);
-
-export const LayersIcon = ({ className }: IconProps) => (
-  <svg {...base} className={className}>
-    <path d="m12 3.2 8.6 4.4-8.6 4.4-8.6-4.4Z" />
-    <path d="m3.4 12.4 8.6 4.4 8.6-4.4" />
-    <path d="m3.4 16.8 8.6 4.4 8.6-4.4" />
   </svg>
 );
 

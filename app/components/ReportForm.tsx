@@ -11,8 +11,13 @@ import {
   reportWhen,
 } from "../content-report";
 import { jurisdiction, stateNamed } from "../geo";
-import { useFormat, useT } from "../i18n/client";
-import { fileReport, useStore, type Incident } from "./store";
+import { useFormat, useLang, useT } from "../i18n/client";
+import { LANG_LABEL } from "../i18n/config";
+import { fileReport, useStore, type Incident, type Media } from "./store";
+import { MediaPicker } from "./media";
+import { Honeypot } from "./Honeypot";
+
+
 import {
   AlertIcon,
   ArrowRight,
@@ -24,7 +29,6 @@ import {
   ChoiceCard,
   Chips,
   Declare,
-  FilePicker,
   PHONE,
   Review,
   StepList,
@@ -54,7 +58,12 @@ type Draft = {
   summary: string;
   injuries: string;
   suspects: string;
-  evidence: string[];
+  evidence: Media[];
+  /** The device's position, when the reporter used their location. */
+  geo?: { lat: number; lng: number };
+  /** Who the report is for: themselves, someone else, an organisation. */
+  behalf: "" | "myself" | "someone" | "organisation";
+  behalfName: string;
   identity: "" | "named" | "anonymous";
   name: string;
   phone: string;
@@ -74,6 +83,8 @@ const EMPTY: Draft = {
   injuries: "",
   suspects: "",
   evidence: [],
+  behalf: "myself",
+  behalfName: "",
   identity: "",
   name: "",
   phone: "",
@@ -102,6 +113,7 @@ export default function ReportForm() {
   const t = useT();
   const format = useFormat();
   const id = useId();
+  const lang = useLang();
   const params = useSearchParams();
   const { session, loaded } = useStore();
   const [step, setStep] = useState(0);
@@ -109,6 +121,7 @@ export default function ReportForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [filed, setFiled] = useState<Incident | null>(null);
   const [restored, setRestored] = useState(false);
+  const [trap, setTrap] = useState("");
 
   // Bring back a draft, and take ?kind= from the service page that sent us.
   useEffect(() => {
@@ -196,11 +209,13 @@ export default function ReportForm() {
   }
 
   function submit() {
+    // A bot filled the trap: show the receipt screen's absence, send nothing.
+    if (trap) return;
     const anonymous = !signedIn && d.identity === "anonymous";
     const created = fileReport({
       kind: d.kind,
       priority: grade,
-      where: jurisdiction(d.state, d.lga, d.address.trim()),
+      where: jurisdiction(d.state, d.lga, d.address.trim(), d.geo),
       summary:
         d.summary.trim() +
         (d.suspects.trim() ? `\n\n${t("Suspects or vehicles:")} ${d.suspects.trim()}` : ""),
@@ -218,7 +233,15 @@ export default function ReportForm() {
             safeToCall: d.safeToCall,
           },
       injuries: d.injuries,
-      evidence: d.evidence,
+      media: d.evidence,
+      // The language the report was made in, so the right officer calls back.
+      lang: LANG_LABEL[lang],
+      onBehalf:
+        d.behalf === "someone"
+          ? d.behalfName.trim() || "Someone else"
+          : d.behalf === "organisation"
+            ? d.behalfName.trim() || "An organisation"
+            : undefined,
     });
     try {
       sessionStorage.removeItem(DRAFT_KEY);
@@ -245,6 +268,7 @@ export default function ReportForm() {
     <div className="grid items-start gap-x-12 gap-y-6 lg:grid-cols-[15rem_minmax(0,1fr)_20rem]">
       <aside className="lg:sticky lg:top-32">
         <StepList steps={STEPS} current={step} onPick={setStep} />
+        <Honeypot value={trap} onChange={setTrap} />
       </aside>
 
       <div className="min-w-0 space-y-4">
@@ -378,7 +402,8 @@ export default function ReportForm() {
             onNext={next}
           >
             <WherePicker
-              value={{ state: d.state, lga: d.lga, address: d.address }}
+              pin
+              value={{ state: d.state, lga: d.lga, address: d.address, geo: d.geo }}
               onChange={(w) => {
                 setD((prev) => ({ ...prev, ...w }));
                 setErrors((e) => ({ ...e, state: undefined, lga: undefined, address: undefined }));
@@ -386,7 +411,7 @@ export default function ReportForm() {
               errors={errors as WhereErrors}
               stateLabel={t("State it happened in")}
             />
-            <RouteCard where={{ state: d.state, lga: d.lga }} />
+            <RouteCard where={jurisdiction(d.state, d.lga, undefined, d.geo)} />
           </StepPanel>
         ) : null}
 
@@ -430,12 +455,13 @@ export default function ReportForm() {
                 "What they looked like, what they wore, names if known, plate numbers, which way they went.",
               )}
             />
-            <FilePicker
+            <MediaPicker
               id={`${id}-evidence`}
               optional
               label={t("Photos, video or documents")}
-              files={d.evidence}
-              onChange={(f) => set("evidence", f)}
+              media={d.evidence}
+              onChange={(m) => set("evidence", m)}
+              by="Reporter"
             />
           </StepPanel>
         ) : null}
@@ -454,6 +480,28 @@ export default function ReportForm() {
             onBack={back}
             onNext={next}
           >
+            <Chips
+              legend={t("Who are you reporting for?")}
+              name={`${id}-behalf`}
+              value={d.behalf}
+              onChange={(v) => set("behalf", v as Draft["behalf"])}
+              options={[
+                { value: "myself", label: t("Myself") },
+                { value: "someone", label: t("Someone else") },
+                { value: "organisation", label: t("A business or organisation") },
+              ]}
+            />
+            {d.behalf === "someone" || d.behalf === "organisation" ? (
+              <TextField
+                id={`${id}-behalf-name`}
+                optional
+                label={d.behalf === "someone" ? t("Their name and how you know them") : t("Name of the business or organisation")}
+                value={d.behalfName}
+                onChange={(v) => set("behalfName", v)}
+                maxLength={200}
+                hint={d.behalf === "someone" ? t("For example: my son, Tunde, aged 12.") : undefined}
+              />
+            ) : null}
             {signedIn ? (
               <>
                 <dl className="npf-small grid gap-x-6 gap-y-2 rounded-card bg-npf-paper p-4 sm:grid-cols-[10rem_minmax(0,1fr)]">
@@ -595,7 +643,7 @@ export default function ReportForm() {
                     [t("What happened"), d.summary],
                     [t("Is anyone hurt?"), t(d.injuries)],
                     [t("Suspects or vehicles"), d.suspects],
-                    [t("Attached"), d.evidence.join("\n")],
+                    [t("Attached"), d.evidence.map((m) => m.name).join("\n")],
                   ],
                 },
                 {
@@ -706,7 +754,7 @@ function Filed({ incident, signedIn }: { incident: Incident; signedIn: boolean }
       command: commandLabel(t, incident.where.state),
     }),
     t("It is passed to the {division} to act on.", {
-      division: divisionLabel(t, incident.where.lga),
+      division: divisionLabel(t, incident.where.lga, incident.where.division),
     }),
     incident.reporter
       ? t("An officer contacts you if they need more, and you can follow every step.")
