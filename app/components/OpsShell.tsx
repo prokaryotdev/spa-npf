@@ -171,18 +171,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
     router.push("/app/home");
   };
 
-  if (!loaded || !session)
-    return (
-      <div className="npf-ops grid min-h-[100dvh] place-items-center">
-        <p className="npf-small flex items-center gap-3 text-ops-dim">
-          <ShieldIcon
-            aria-hidden
-            className="size-5 animate-pulse text-npf-blue"
-          />
-          {t("Checking credentials…")}
-        </p>
-      </div>
-    );
+  if (!loaded || !session) return <ConsoleLoading path={path} />;
 
   if (!officer)
     return (
@@ -346,8 +335,9 @@ function Sidebar({
 }: {
   path: string;
   counts: Record<string, Count>;
-  officer: { name: string; rank?: string; station?: string };
-  onEnd: () => void;
+  /** Absent while the session loads: the foot shows its shape instead. */
+  officer?: { name: string; rank?: string; station?: string };
+  onEnd?: () => void;
 }) {
   const t = useT();
   return (
@@ -401,6 +391,7 @@ function Sidebar({
         </ul>
       </nav>
 
+      {officer ? (
       <section className="shrink-0 border-t border-npf-hairline p-3">
         <h2 className="sr-only">{t("Duty officer")}</h2>
         {/* Who holds the desk: name over rank, two clean lines that end
@@ -441,7 +432,114 @@ function Sidebar({
           <Station station={t(officer.station)} />
         ) : null}
       </section>
+      ) : (
+        <OfficerLoading />
+      )}
     </aside>
+  );
+}
+
+/** A placeholder bar where live text will land. */
+function Skel({ className = "" }: { className?: string }) {
+  return <span aria-hidden className={`npf-ops-skel block rounded-md ${className}`} />;
+}
+
+/** The duty officer's foot while the session loads: the same shapes, empty. */
+function OfficerLoading() {
+  return (
+    <div aria-hidden className="shrink-0 border-t border-npf-hairline p-3">
+      <div className="flex items-center gap-3 px-1">
+        <Skel className="size-9 shrink-0 rounded-[10px]" />
+        <span className="flex-1 space-y-1.5">
+          <Skel className="h-3.5 w-28" />
+          <Skel className="h-3 w-16" />
+        </span>
+        <Skel className="size-9 shrink-0 rounded-(--ops-control-radius)" />
+      </div>
+      <Skel className="mt-3 h-12 w-full rounded-(--ops-control-radius)" />
+    </div>
+  );
+}
+
+/**
+ * What the console shows while it reads the session: the console itself,
+ * not a spinner on a blank page. The crest, the five destinations, the bar
+ * and the navy band stand where they will stay; only what is live (the
+ * officer, the figures, the rows) waits as soft shapes. When the session
+ * lands, the real content takes those places and nothing on the page moves.
+ * The band says in words what is happening, so the wait has a reason.
+ */
+function ConsoleLoading({ path }: { path: string }) {
+  const t = useT();
+  return (
+    <div className="npf-ops min-h-[100dvh]" aria-busy="true">
+      <Sidebar path={path} counts={{}} />
+      <div className="flex min-h-[100dvh] flex-col lg:ps-68 print:ps-0">
+        <header className="sticky top-0 z-40 border-b border-npf-hairline bg-white/90 backdrop-blur-xl">
+          <div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
+            <span className="block h-9 shrink-0 text-npf-blue-deep lg:hidden max-sm:[&_svg]:hidden">
+              <PoliceWordmark className="h-full w-auto" />
+            </span>
+            <Skel className="h-10 w-44 rounded-(--ops-control-radius)" />
+            <span className="ms-auto flex items-center gap-4">
+              <Skel className="h-4 w-28 max-sm:hidden" />
+              <Skel className="h-10 w-24 rounded-(--ops-control-radius)" />
+            </span>
+          </div>
+          <Tabs path={path} counts={{}} />
+        </header>
+
+        <main className="mx-auto w-full max-w-450 min-w-0 flex-1 px-4 pt-6 pb-12 sm:px-6 lg:px-8 lg:pt-8">
+          <div className="npf-ops-band relative isolate overflow-clip rounded-(--radius-card) px-6 py-6 text-white sm:px-7">
+            <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-5">
+              <div>
+                <p
+                  role="status"
+                  className="flex items-center gap-3 font-secondary text-xl leading-[1.05] font-bold tracking-[-0.025em] whitespace-nowrap sm:text-[2rem]"
+                >
+                  <ShieldIcon aria-hidden className="npf-ops-breathe size-6 shrink-0 text-white/80 sm:size-7" />
+                  {t("Checking credentials…")}
+                </p>
+                <span aria-hidden className="npf-ops-skel npf-ops-skel-dark mt-3 block h-3.5 w-48 rounded-md" />
+              </div>
+              <span aria-hidden className="flex gap-8">
+                {[0, 1, 2, 3].map((i) => (
+                  <span key={i} className="flex flex-col items-center gap-2">
+                    <span className="npf-ops-skel npf-ops-skel-dark block h-9 w-10 rounded-md" />
+                    <span className="npf-ops-skel npf-ops-skel-dark block h-2.5 w-14 rounded" />
+                  </span>
+                ))}
+              </span>
+            </div>
+          </div>
+
+          {/* The queue and its side column, as the board lays them out. */}
+          <div aria-hidden className="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_26rem]">
+            {[3, 5].map((rows, col) => (
+              <div key={col} className="npf-ops-tile overflow-clip">
+                <div className="flex h-13 items-center gap-3 border-b border-ops-line-soft px-5">
+                  <Skel className="h-4 w-24" />
+                  <Skel className="h-4 w-14" />
+                </div>
+                {Array.from({ length: rows }, (_, i) => (
+                  <div
+                    key={i}
+                    className={`flex items-center gap-4 border-b border-ops-line-soft px-5 last:border-0 ${col ? "h-11" : "h-24"}`}
+                  >
+                    <Skel className={col ? "size-2 rounded-full" : "h-5 w-7 rounded-[5px]"} />
+                    <span className="flex-1 space-y-2">
+                      <Skel className={col ? "h-3 w-24" : "h-3.5 w-48"} />
+                      {col ? null : <Skel className="h-3 w-32" />}
+                    </span>
+                    <Skel className={col ? "h-3 w-10" : "h-9 w-40 rounded-(--ops-control-radius) max-sm:hidden"} />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </main>
+      </div>
+    </div>
   );
 }
 

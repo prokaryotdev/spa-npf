@@ -1171,6 +1171,55 @@ html.npf-large-text {
   }
 }
 /*
+ * The console loading: placeholder shapes in the chip tone with one soft
+ * band of light passing across them, slow enough to read as "on its way"
+ * rather than as flicker. On the navy band the shapes are white at low
+ * alpha. The shield in the band breathes. Reduced motion holds them still.
+ */
+@keyframes npf-ops-skel {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
+.npf-ops-skel {
+  background: linear-gradient(
+      100deg,
+      transparent 30%,
+      rgb(255 255 255 / 0.65) 50%,
+      transparent 70%
+    )
+    var(--color-npf-chip);
+  background-size: 200% 100%;
+  animation: npf-ops-skel 1.6s var(--ease-in-out) infinite;
+}
+.npf-ops-skel-dark {
+  background-color: rgb(255 255 255 / 0.12);
+  background-image: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgb(255 255 255 / 0.12) 50%,
+    transparent 70%
+  );
+}
+@keyframes npf-ops-breathe {
+  50% {
+    opacity: 0.45;
+    scale: 0.92;
+  }
+}
+.npf-ops-breathe {
+  animation: npf-ops-breathe 1.8s var(--ease-in-out) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .npf-ops-skel,
+  .npf-ops-breathe {
+    animation: none;
+  }
+}
+/*
  * A queue that has just emptied: its tick draws itself once, like a pen
  * stroke, rather than appearing. It happens a few times a shift, so it can
  * afford 450ms; reduced motion shows it already drawn.
