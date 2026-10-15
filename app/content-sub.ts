@@ -12,7 +12,6 @@
 export const lawsLegislation = {
   title: "Laws & Legislation",
   description: "The statutes the Nigeria Police Force works under",
-  updatedAt: "2026-01-05",
   rows: [
     {
       legislationName: "Police Act, 2020",
@@ -160,7 +159,6 @@ export const penaltyPoints = {
   title: "Traffic Offences and Penalties",
   description:
     "Learn how penalty points and fines impact your traffic record",
-  updatedAt: "2026-01-04",
   rows: [
     // --- conduct that puts other road users at risk ------------------------
     {
@@ -429,7 +427,6 @@ export const speedLimits = {
   title: "Road Speed Limits",
   description:
     "Speed limits on Nigerian roads, set by the National Road Traffic Regulations and posted on the road itself. The limit depends on the kind of road and on where it runs.",
-  updatedAt: "2026-01-04",
   rows: [
     { roadName: "Lagos–Ibadan Expressway", speed: "100", radarControl: "110" },
     { roadName: "Abuja–Kaduna Expressway", speed: "100", radarControl: "110" },

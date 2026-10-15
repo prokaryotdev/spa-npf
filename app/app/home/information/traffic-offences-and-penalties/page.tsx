@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import DataTable from "../../../../components/DataTable";
-import { PageShell } from "../../../../components/PageShell";
+import { Facts, PageShell } from "../../../../components/PageShell";
+import { InfoMore, trafficFacts } from "../../../../components/Information";
 import { penaltyPoints as dataSource } from "../../../../content-sub";
-import { getT, getLocalized } from "../../../../i18n/server";
+import { getLocalized, getT } from "../../../../i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
@@ -17,16 +18,18 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function BlackPointsPage() {
   const data = await getLocalized(dataSource);
   const t = await getT();
+  const facts = await trafficFacts();
   return (
     <PageShell
+      compact
       title={data.title}
       intro={t("Learn how penalty points and fines impact your traffic record.")}
       trail={[{ label: "Information", href: "/app/home/information" }]}
+      lead={<Facts facts={facts} />}
     >
       <section className="bg-white pb-(--npf-section-y)">
         <div className="npf-container">
           <DataTable
-            updated={t("Page last updated: {date}", { date: t(data.updatedAt) })}
             caption="Traffic offences, fines and penalty points"
             rows={data.rows}
             filterKey="category"
@@ -42,7 +45,8 @@ export default async function BlackPointsPage() {
                 key: "penaltyPoints",
                 label: "Penalty points",
                 numeric: true,
-                width: "120px",
+                scale: 10,
+                width: "150px",
               },
               {
                 key: "confiscationPeriod",
@@ -51,6 +55,7 @@ export default async function BlackPointsPage() {
               },
             ]}
           />
+          <InfoMore current="/app/home/information/traffic-offences-and-penalties" />
         </div>
       </section>
     </PageShell>

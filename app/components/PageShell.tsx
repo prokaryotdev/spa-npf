@@ -1,11 +1,9 @@
-import Image from "next/image";
 import Link from "../i18n/Link";
 import Footer from "./Footer";
 import Header from "./Header";
 import RevealObserver from "./RevealObserver";
 import {
   ArrowRight,
-  ArrowUpRight,
   CheckIcon,
   ArrowDown,
   InboxIcon,
@@ -111,84 +109,6 @@ export async function PageShell({
       <RevealObserver />
       <Footer />
     </>
-  );
-}
-
-/**
- * The tile Information is built from: photo, title, a line of explanation,
- * and at its foot how much is behind it. The whole card is the link, so the
- * target is the card, not a small pill at its foot. The lead card stands
- * tall beside the others, its photo taking the height they share, and on
- * wide screens lays photo and words side by side.
- */
-export async function LinkCard({
-  card,
-  lead = false,
-}: {
-  card: {
-    title: string;
-    body: string;
-    count: string;
-    total: number;
-    image: string;
-    href: string;
-  };
-  lead?: boolean;
-}) {
-  const t = await getT();
-  const external = card.href.startsWith("http");
-  return (
-    <Link
-      href={card.href}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noopener noreferrer" : undefined}
-      className={`npf-link-card group flex h-full overflow-hidden ${lead ? "flex-col" : "flex-col sm:flex-row lg:flex-col xl:flex-row"}`}
-    >
-      <div
-        className={`relative shrink-0 overflow-hidden bg-npf-cloud ${
-          lead
-            ? "aspect-[16/10] lg:aspect-auto lg:min-h-80 lg:flex-1"
-            : "aspect-[16/10] sm:aspect-auto sm:w-2/5 lg:aspect-[16/7] lg:w-auto xl:aspect-auto xl:w-2/5"
-        }`}
-      >
-        <Image
-          src={card.image}
-          alt=""
-          fill
-          sizes={
-            lead
-              ? "(max-width: 1024px) 92vw, 56vw"
-              : "(max-width: 640px) 92vw, (max-width: 1024px) 37vw, (max-width: 1280px) 40vw, 17vw"
-          }
-          // The cards are the first thing under the heading.
-          loading="eager"
-          className="object-cover transition-transform duration-(--dur-media) ease-(--ease-out) group-hover:scale-[1.04] motion-reduce:group-hover:scale-100"
-        />
-      </div>
-      <div className="flex flex-1 flex-col p-6 lg:p-7">
-        <h2
-          className={`${lead ? "npf-h3" : "npf-h4"} text-npf-blue-deep transition-colors group-hover:text-npf-blue`}
-        >
-          {t(card.title)}
-        </h2>
-        <p className="npf-body mt-2 mb-6 max-w-[52ch] text-npf-body">
-          {t(card.body)}
-        </p>
-        <span className="npf-small mt-auto flex items-center justify-between gap-3 border-t border-npf-hairline pt-4 font-medium text-npf-blue">
-          <span className="tabular-nums">
-            {t(card.count, { count: card.total })}
-          </span>
-          {external ? (
-            <ArrowUpRight className="npf-go" />
-          ) : (
-            <ArrowRight className="npf-go" />
-          )}
-          {external ? (
-            <span className="sr-only"> {t("(opens in a new window)")}</span>
-          ) : null}
-        </span>
-      </div>
-    </Link>
   );
 }
 

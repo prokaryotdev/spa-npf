@@ -14,7 +14,6 @@ export const haPages: Record<string, string> = {
   Information: "Bayani",
   "Information | Nigeria Police Force":
     "Bayani | Rundunar 'Yan Sandan Najeriya",
-  "Page last updated: {date}": "An sabunta shafin karshe: {date}",
   "{count} offences": "Laifuka {count}",
   "{count} roads": "Hanyoyi {count}",
   "{count} statutes": "Dokoki {count}",
@@ -145,8 +144,6 @@ export const haPages: Record<string, string> = {
     "Iyakokin gudu da matakan aiwatarwa a kan hanyoyin Najeriya.",
   "Speed limits on Nigerian roads, set by the National Road Traffic Regulations and posted on the road itself. The limit depends on the kind of road and on where it runs.":
     "Iyakokin gudu a kan hanyoyin Najeriya, waɗanda Ƙa'idojin Zirga-zirga na Ƙasa suka tsara kuma aka sanya su a kan hanyar kanta. Iyakar ta dogara ne da irin hanyar da kuma inda take wucewa.",
-  "Limit km/h": "Iyaka km/h",
-  "Enforced at km/h": "Ana aiwatarwa a km/h",
   // --- page redesign ---------------------------------------------------------
   "Call {n}": "Kira {n}",
   "Other ways to reach us": "Wasu hanyoyin tuntuɓar mu",
@@ -160,4 +157,11 @@ export const haPages: Record<string, string> = {
   "Call 112": "Kira 112",
   "Or go straight to": "Ko ka je kai tsaye zuwa",
   "Questions about this page?": "Kana da tambaya game da wannan shafin?",
+  // --- information, 2026-10-15 ---------------------------------------------
+  "Also in Information": "Har ila yau a Bayani",
+  "Most penalty points": "Mafi yawan makin hukunci",
+  "Vehicle held for up to": "Ana riƙe mota har zuwa",
+  "Most recent": "Mafi kwanan nan",
+  "1 road": "Hanya 1",
+  "Enforced at {speed} km/h": "Ana aiwatarwa daga {speed} km/h",
 };

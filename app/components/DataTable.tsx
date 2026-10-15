@@ -2,13 +2,11 @@
 
 import { Fragment, useMemo, useRef, useState, type ReactNode } from "react";
 import {
-  ArrowDown,
-  ClockIcon,
   CloseIcon,
-  FileIcon,
+  DownloadIcon,
   SearchIcon,
 } from "./icons";
-import { useT } from "../i18n/client";
+import { useFormat, useT } from "../i18n/client";
 import { escape, fold, near, split } from "../search-text";
 
 export type Column<T> = {
@@ -19,7 +17,11 @@ export type Column<T> = {
   /** Render the cell as a link to the value at this key. */
   linkKey?: keyof T & string;
   linkLabel?: string;
+  /** An ISO date, shown the way the reader's language writes dates. */
+  date?: boolean;
   width?: string;
+  /** Out of how many: drawn as a short bar of that many steps beside the figure. */
+  scale?: number;
 };
 
 // "50,000" and "50 000" are one number, the way the rows store it.
@@ -75,7 +77,7 @@ export function highlight(
 }
 
 /**
- * The searchable, sortable table the Information pages are built on. Every
+ * The searchable table the Information pages are built on. Every
  * row is shown — none of these tables is long enough to be worth paging, and
  * a reader scanning for their offence should never have to guess which page
  * it is on. Everything runs on the rows already in the page.
@@ -86,11 +88,10 @@ export default function DataTable<T extends Record<string, unknown>>({
   filterKey,
   caption,
   minWidth = "640px",
-  updated,
 }: {
   rows: readonly T[];
   columns: Column<T>[];
-  /** Column to offer as a category filter, when the data has one. */
+  /** Column the rows are grouped by: a heading where each group starts. */
   filterKey?: keyof T & string;
   caption: string;
   /**
@@ -98,24 +99,11 @@ export default function DataTable<T extends Record<string, unknown>>({
    * sit well under this and stay fully readable on a phone.
    */
   minWidth?: string;
-  /** When the figures were last checked, shown under the table. */
-  updated?: string;
 }) {
   const t = useT();
+  const fmt = useFormat();
   const [query, setQuery] = useState("");
-  const [sort, setSort] = useState<{ key: string; dir: 1 | -1 } | null>(null);
-  const [group, setGroup] = useState("All");
   const input = useRef<HTMLInputElement>(null);
-
-  const groups = useMemo(() => {
-    if (!filterKey) return [];
-    return [
-      "All",
-      ...[...new Set(rows.map((r) => String(r[filterKey] ?? "")))]
-        .filter(Boolean)
-        .sort(),
-    ];
-  }, [rows, filterKey]);
 
   // Each row folded once: its first column (the name a reader searches for)
   // and everything, in both languages so an Hausa reader can search the
@@ -168,39 +156,18 @@ export default function DataTable<T extends Record<string, unknown>>({
       return total;
     };
 
-    let out = index
-      .filter((r) => {
-        if (
-          filterKey &&
-          group !== "All" &&
-          String(r.row[filterKey]) !== group
-        )
-          return false;
-        return terms.every((w, i) => matches(r, w, i));
-      })
+    return index
+      .filter((r) => terms.every((w, i) => matches(r, w, i)))
       .map((r) => ({ row: r.row, score: terms.length ? rank(r) : 0 }))
       // Stable, so equal matches keep the order the table was written in.
       .sort((a, b) => b.score - a.score)
       .map((r) => r.row);
-    if (sort) {
-      const col = columns.find((c) => c.key === sort.key);
-      out = [...out].sort((a, b) => {
-        const av = a[sort.key];
-        const bv = b[sort.key];
-        if (col?.numeric) {
-          return (Number(av) - Number(bv)) * sort.dir;
-        }
-        return String(av ?? "").localeCompare(String(bv ?? "")) * sort.dir;
-      });
-    }
-    return out;
-  }, [index, columns, terms, sort, group, filterKey]);
+  }, [index, terms]);
 
   // Left as written, the rows run in their categories, so each category
-  // gets a heading where it starts. A search, a sort or one chosen category
-  // breaks that order or makes the heading say what is already chosen.
+  // gets a heading where it starts. A search ranks by match, which breaks that order.
   const groupAt = (i: number) =>
-    filterKey && group === "All" && !terms.length && !sort
+    filterKey && !terms.length
       ? String(visible[i][filterKey] ?? "") !==
         String(visible[i - 1]?.[filterKey] ?? "")
         ? t(String(visible[i][filterKey]))
@@ -212,12 +179,11 @@ export default function DataTable<T extends Record<string, unknown>>({
       type="button"
       onClick={() => {
         setQuery("");
-        setGroup("All");
         input.current?.focus();
       }}
       className="npf-small mt-3 font-semibold text-npf-blue underline underline-offset-4 hover:text-npf-blue-deep"
     >
-      {t("Clear filters")}
+      {t("Clear search")}
     </button>
   );
 
@@ -226,8 +192,34 @@ export default function DataTable<T extends Record<string, unknown>>({
   const show = (col: Column<T>, raw: unknown) => {
     const value = String(raw ?? "");
     if (!value) return null;
+    if (col.date) return fmt.date(value);
+    // 10 of 10 points should look heavier than 2 before it is read.
+    if (col.scale && /^\d+$/.test(value))
+      return (
+        <span className="inline-flex items-center gap-2.5">
+          <span aria-hidden className="flex gap-px">
+            {Array.from({ length: col.scale }, (_, i) => (
+              <span
+                key={i}
+                className={`h-3 w-[3px] rounded-[1px] ${
+                  i < Number(value) ? "bg-npf-blue-mid" : "bg-npf-line"
+                }`}
+              />
+            ))}
+          </span>
+          {highlight(value, terms)}
+        </span>
+      );
     if (col.numeric && /^\d{4,}$/.test(value))
       return highlight(Number(value).toLocaleString("en-NG"), terms);
+    // "Decided by court" in the fine column is an answer, not a figure: set
+    // quieter than the sums round it, so the numbers still scan as a column.
+    if (col.numeric && !/^\d/.test(value))
+      return (
+        <span className="text-sm font-normal text-npf-steel">
+          {highlight(t(value), terms)}
+        </span>
+      );
     return highlight(t(value), terms);
   };
 
@@ -268,28 +260,6 @@ export default function DataTable<T extends Record<string, unknown>>({
             </button>
           ) : null}
         </div>
-
-        {groups.length > 1 ? (
-          <span className="npf-select-wrap">
-            <label htmlFor="tableGroup" className="sr-only">
-              {t("Filter by category")}
-            </label>
-            <select
-              id="tableGroup"
-              value={group}
-              data-active={group !== "All" ? "" : undefined}
-              onChange={(e) => setGroup(e.target.value)}
-              className="npf-select h-12"
-            >
-              {groups.map((g) => (
-                <option key={g} value={g}>
-                  {g === "All" ? t("All categories") : t(g)}
-                </option>
-              ))}
-            </select>
-            <ArrowDown aria-hidden className="npf-select-arrow" />
-          </span>
-        ) : null}
 
         <p className="npf-body text-npf-steel" aria-live="polite">
           <span className="font-semibold text-npf-blue-deep tabular-nums">
@@ -368,75 +338,30 @@ export default function DataTable<T extends Record<string, unknown>>({
         ) : null}
       </ol>
 
-      <div className="overflow-x-auto rounded-card border border-npf-hairline bg-white max-md:hidden">
+      {/* Clipped, not scrolled: overflow-clip makes no scroll box, so the head
+          can still pin under the site header thirty rows down, and the
+          rounded corners stay clean. The table fits from md up. */}
+      <div className="overflow-clip rounded-card border border-npf-hairline bg-white max-md:hidden">
         <table style={{ minWidth }} className="w-full border-collapse">
           <caption className="sr-only">{t(caption)}</caption>
           <thead>
-            <tr className="border-b border-npf-hairline bg-npf-mist">
+            <tr>
               <th
                 scope="col"
-                className="npf-small w-14 py-3.5 ps-5 pe-2 text-start font-semibold text-npf-steel"
+                className="npf-small sticky top-[73px] z-10 bg-npf-mist shadow-[inset_0_-1px_0_var(--color-npf-hairline)] w-14 py-3.5 ps-5 pe-2 text-start font-semibold text-npf-steel"
               >
                 #
               </th>
-              {columns.map((col) => {
-                const active = sort?.key === col.key;
-                return (
-                  <th
-                    key={col.key}
-                    scope="col"
-                    aria-sort={
-                      active
-                        ? sort.dir === 1
-                          ? "ascending"
-                          : "descending"
-                        : "none"
-                    }
-                    style={col.width ? { width: col.width } : undefined}
-                    className={`npf-small px-4 py-2 font-semibold text-npf-blue-deep last:pe-5 ${col.numeric ? "text-end" : "text-start"}`}
-                  >
-                    <button
-                      type="button"
-                      // Up, down, then off — back to best match first.
-                      onClick={() =>
-                        setSort(
-                          !active
-                            ? { key: col.key, dir: 1 }
-                            : sort.dir === 1
-                              ? { key: col.key, dir: -1 }
-                              : null,
-                        )
-                      }
-                      // The sorted column reads as a raised chip on the mist
-                      // header, so which column is in charge is plain at a
-                      // glance, not only from a small arrow.
-                      className={`group -mx-2.5 inline-flex h-9 items-center gap-1.5 rounded-full px-2.5 whitespace-nowrap transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) ease-(--ease-out) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue-mid active:scale-[0.97] ${
-                        active
-                          ? "bg-white text-npf-blue shadow-[0_1px_2px_rgb(26_35_56/0.08),0_0_0_1px_var(--color-npf-hairline)]"
-                          : "hover:bg-white/70 hover:text-npf-blue"
-                      } ${col.numeric ? "flex-row-reverse" : ""}`}
-                    >
-                      {t(col.label)}
-                      <span
-                        aria-hidden
-                        className={`grid size-5 shrink-0 place-items-center rounded-full transition-colors duration-(--dur-hover) ${
-                          active ? "bg-npf-mist" : ""
-                        }`}
-                      >
-                        <ArrowDown
-                          className={`size-3.5 transition-[rotate,opacity] duration-200 ease-(--ease-out) ${
-                            active
-                              ? sort.dir === -1
-                                ? "rotate-180"
-                                : ""
-                              : "opacity-30 group-hover:opacity-70 group-focus-visible:opacity-70"
-                          }`}
-                        />
-                      </span>
-                    </button>
-                  </th>
-                );
-              })}
+              {columns.map((col) => (
+                <th
+                  key={col.key}
+                  scope="col"
+                  style={col.width ? { width: col.width } : undefined}
+                  className={`npf-small sticky top-[73px] z-10 bg-npf-mist px-4 py-3.5 font-semibold whitespace-nowrap text-npf-blue-deep shadow-[inset_0_-1px_0_var(--color-npf-hairline)] last:pe-5 ${col.numeric ? "text-end" : "text-start"}`}
+                >
+                  {t(col.label)}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody className="divide-y divide-npf-hairline">
@@ -482,7 +407,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                           rel="noopener noreferrer"
                           className="inline-flex items-start gap-2 font-medium text-npf-blue outline-none transition-colors group-hover/row:text-npf-blue-deep after:absolute after:inset-0 after:content-[''] focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-npf-blue-mid"
                         >
-                          <FileIcon
+                          <DownloadIcon
                             aria-hidden
                             className="mt-0.5 size-4.5 shrink-0 text-npf-steel transition-colors group-hover/row:text-npf-blue"
                           />
@@ -518,17 +443,6 @@ export default function DataTable<T extends Record<string, unknown>>({
             ) : null}
           </tbody>
         </table>
-      </div>
-
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-        {updated ? (
-          <p className="npf-small inline-flex items-center gap-2 text-npf-steel">
-            <ClockIcon aria-hidden className="size-4" />
-            {updated}
-          </p>
-        ) : (
-          <span />
-        )}
       </div>
     </div>
   );

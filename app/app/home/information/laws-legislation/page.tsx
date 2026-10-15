@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import DataTable from "../../../../components/DataTable";
 import { PageShell } from "../../../../components/PageShell";
+import { InfoMore } from "../../../../components/Information";
 import { lawsLegislation as dataSource } from "../../../../content-sub";
-import { getLocalized } from "../../../../i18n/server";
-import { getT } from "../../../../i18n/server";
+import { getLocalized, getT } from "../../../../i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
@@ -14,10 +14,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function LawsPage() {
-  const t = await getT();
   const data = await getLocalized(dataSource);
   return (
     <PageShell
+      compact
       title={data.title}
       intro={data.description}
       trail={[{ label: "Information", href: "/app/home/information" }]}
@@ -25,12 +25,11 @@ export default async function LawsPage() {
       <section className="bg-white pb-(--npf-section-y)">
         <div className="npf-container">
           <DataTable
-            updated={t("Page last updated: {date}", { date: t(data.updatedAt) })}
             caption="Laws and legislation"
             rows={data.rows}
             columns={[
               { key: "legislationName", label: "Legislation", linkKey: "file" },
-              { key: "issueDate", label: "Issue date", width: "150px" },
+              { key: "issueDate", label: "Issue date", width: "150px", date: true },
               {
                 key: "size",
                 label: "File size",
@@ -39,6 +38,7 @@ export default async function LawsPage() {
               },
             ]}
           />
+          <InfoMore current="/app/home/information/laws-legislation" />
         </div>
       </section>
     </PageShell>

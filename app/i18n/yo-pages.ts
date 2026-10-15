@@ -118,8 +118,6 @@ export const yoPages: Record<string, string> = {
     "Ó ṣí",
   "Laws & Legislation | Nigeria Police Force":
     "Òfin àti Ìlànà | Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà",
-  "Page last updated: {date}":
-    "A ṣe àtúnṣe ojú-ewé kẹ́yìn: {date}",
   "Laws and legislation":
     "Òfin àti ìlànà",
   "Legislation":
@@ -136,10 +134,6 @@ export const yoPages: Record<string, string> = {
     "Àwọn òfin tí Ilé-iṣẹ́ Ọlọ́pàá ń ṣiṣẹ́ lábẹ́ wọn, iye tí ẹ̀ṣẹ̀ ìrìnnà kọ̀ọ̀kan ń náni, àti òpin ìyára lórí àwọn ọ̀nà Nàìjíríà.",
   "Road Speed Limits | Nigeria Police Force":
     "Òpin Ìyára Lójú Ọ̀nà | Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà",
-  "Limit km/h":
-    "Òpin km/h",
-  "Enforced at km/h":
-    "A ń fipá mú un ní km/h",
   "Traffic Offences and Penalties | Nigeria Police Force":
     "Ẹ̀ṣẹ̀ Ìrìnnà àti Ìjìyà | Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà",
   "Fines, penalty points and vehicle confiscation periods for traffic violations in Nigeria.":
@@ -184,4 +178,11 @@ export const yoPages: Record<string, string> = {
     "Pe 112",
   "Or go straight to":
     "Tàbí lọ tààrà sí",
+  // --- information, 2026-10-15 ---------------------------------------------
+  "Also in Information": "Bákan náà nínú Ìwífún",
+  "Most penalty points": "Àmì ìjìyà tó pọ̀ jù",
+  "Vehicle held for up to": "A lè gba ọkọ̀ mú fún tó",
+  "Most recent": "Èyí tó ṣẹ̀ṣẹ̀ jáde",
+  "1 road": "Ọ̀nà 1",
+  "Enforced at {speed} km/h": "A ń fipá mú un láti {speed} km/h",
 };

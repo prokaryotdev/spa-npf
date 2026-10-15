@@ -118,8 +118,6 @@ export const igPages: Record<string, string> = {
     "Mepere emepe",
   "Laws & Legislation | Nigeria Police Force":
     "Iwu na Ụkpụrụ | Ndị Uwe Ojii Naịjirịa",
-  "Page last updated: {date}":
-    "Emelitere ibe a ikpeazụ: {date}",
   "Laws and legislation":
     "Iwu na ụkpụrụ",
   "Legislation":
@@ -136,10 +134,6 @@ export const igPages: Record<string, string> = {
     "Iwu ndị Ndị Uwe Ojii na-arụ ọrụ n'okpuru ha, ego mmebi iwu okporo ụzọ ọ bụla na-efu, na oke ọsọ n'okporo ụzọ Naịjirịa.",
   "Road Speed Limits | Nigeria Police Force":
     "Oke Ọsọ n'Okporo Ụzọ | Ndị Uwe Ojii Naịjirịa",
-  "Limit km/h":
-    "Oke km/h",
-  "Enforced at km/h":
-    "A na-amanye ya na km/h",
   "Traffic Offences and Penalties | Nigeria Police Force":
     "Mmebi Iwu Okporo Ụzọ na Ntaramahụhụ | Ndị Uwe Ojii Naịjirịa",
   "Fines, penalty points and vehicle confiscation periods for traffic violations in Nigeria.":
@@ -184,4 +178,11 @@ export const igPages: Record<string, string> = {
     "Kpọọ 112",
   "Or go straight to":
     "Ma ọ bụ gaa ozugbo na",
+  // --- information, 2026-10-15 ---------------------------------------------
+  "Also in Information": "Ọzọ na Ozi",
+  "Most penalty points": "Akara ntaramahụhụ kachasị",
+  "Vehicle held for up to": "A na-ejide ụgbọ ruo",
+  "Most recent": "Nke kachasị ọhụrụ",
+  "1 road": "Okporo ụzọ 1",
+  "Enforced at {speed} km/h": "A na-amanye ya site na {speed} km/h",
 };
