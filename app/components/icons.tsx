@@ -351,3 +351,18 @@ export const GlobeIcon = ({ className }: IconProps) => (
     <path d="M12 3.5c2.2 2.3 3.3 5.1 3.3 8.5S14.2 18.2 12 20.5c-2.2-2.3-3.3-5.1-3.3-8.5S9.8 5.8 12 3.5Z" />
   </svg>
 );
+
+export const HomeIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M4 10.6 12 4l8 6.6" />
+    <path d="M6 9v10.2h12V9" />
+    <path d="M10 19.2v-5.4h4v5.4" />
+  </svg>
+);
+
+export const MoreIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M8 12h.01M12 12h.01M16 12h.01" strokeWidth={2.6} />
+  </svg>
+);

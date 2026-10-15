@@ -717,4 +717,16 @@ export const yoAccount: Record<string, string> = {
     "Àlàyé ara ẹni àti ibùgbé rẹ gbọdọ̀ péye; àìbáramu pẹ̀lú NIN, BVN tàbí ìwé ìrìnnà rẹ máa ń fa ìdádúró ìwé-ẹ̀rí náà.",
   "Handled by":
     "Ẹni tó ń bójú tó o",
+  "Copy":
+    "Ṣe ẹ̀dà",
+  "Copied":
+    "A ti ṣe ẹ̀dà",
+  "Against a person":
+    "Sí ènìyàn",
+  "Home, shop or vehicle":
+    "Ilé, ṣọ́ọ̀bù tàbí ọkọ̀",
+  "Money and online":
+    "Owó àti orí ayélujára",
+  "Other crimes":
+    "Àwọn ẹ̀ṣẹ̀ mìíràn",
 };

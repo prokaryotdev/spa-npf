@@ -664,4 +664,16 @@ export const haAccount: Record<string, string> = {
     "Dole ne bayananka na kanka da na wurin zama su zama daidai; rashin daidaito da NIN, BVN ko fasfo ɗinka yana jinkirta takardar shaidar.",
   "Handled by":
     "Ana kula da shi a",
+  "Copy":
+    "Kwafi",
+  "Copied":
+    "An kwafa",
+  "Against a person":
+    "A kan mutum",
+  "Home, shop or vehicle":
+    "Gida, shago ko abin hawa",
+  "Money and online":
+    "Kuɗi da intanet",
+  "Other crimes":
+    "Sauran laifuka",
 };

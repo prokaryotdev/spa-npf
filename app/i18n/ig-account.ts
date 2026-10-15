@@ -717,4 +717,16 @@ export const igAccount: Record<string, string> = {
     "Nkọwa onwe gị na ebe obibi gị ga-abụrịrị nke ziri ezi; enweghị nkwekọ na NIN, BVN ma ọ bụ paspọtụ gị na-egbu asambodo ahụ oge.",
   "Handled by":
     "Onye na-elekọta ya",
+  "Copy":
+    "Detuo",
+  "Copied":
+    "Edetuola",
+  "Against a person":
+    "Megide mmadụ",
+  "Home, shop or vehicle":
+    "Ụlọ, ụlọ ahịa ma ọ bụ ụgbọala",
+  "Money and online":
+    "Ego na ịntanetị",
+  "Other crimes":
+    "Mpụ ndị ọzọ",
 };

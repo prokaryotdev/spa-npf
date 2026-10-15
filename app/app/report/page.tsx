@@ -22,6 +22,7 @@ export default async function ReportPage() {
   const t = await getT();
   return (
     <PageShell
+      compact
       title={t("Report a Crime")}
       intro={t(
         "Report a crime to the State Command where it happened. Free, open all day, and you can report anonymously.",

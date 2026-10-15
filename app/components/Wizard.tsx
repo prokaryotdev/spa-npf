@@ -44,36 +44,71 @@ export function StepList({
         </div>
       </div>
 
-      <nav aria-label={t("Steps")} className="hidden lg:block">
-        <ol className="space-y-1">
+      <nav
+        aria-label={t("Steps")}
+        className="hidden rounded-card bg-white p-2 ring-1 ring-npf-hairline ring-inset lg:block"
+      >
+        <div className="px-3 pt-3 pb-4">
+          <p className="npf-small font-medium text-npf-ink tabular-nums">
+            {t("Step {n} of {total}", { n: current + 1, total: steps.length })}
+          </p>
+          <div aria-hidden className="mt-2.5 flex gap-1">
+            {steps.map((label, i) => (
+              <span
+                key={label}
+                className={`h-1 flex-1 rounded-full transition-colors duration-(--dur-media) ease-(--ease-out) ${
+                  i < current
+                    ? "bg-npf-ok"
+                    : i === current
+                      ? "bg-npf-blue"
+                      : "bg-npf-cloud"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+        <ol className="space-y-1 border-t border-npf-hairline pt-2">
           {steps.map((label, i) => {
             const done = i < current;
             const here = i === current;
             return (
-              <li key={label}>
+              <li key={label} className="relative">
+                {/* The thread from this step to the next: green once passed. */}
+                {i < steps.length - 1 ? (
+                  <span
+                    aria-hidden
+                    className={`absolute start-[25px] top-[38px] h-6 w-0.5 rounded-full transition-colors duration-(--dur-media) ${
+                      done ? "bg-npf-ok/45" : "bg-npf-hairline"
+                    }`}
+                  />
+                ) : null}
                 <button
                   type="button"
                   disabled={!done}
                   onClick={() => onPick(i)}
                   aria-current={here ? "step" : undefined}
-                  className={`flex min-h-12 w-full items-center gap-3 rounded-chip px-3 text-start text-sm transition-colors duration-(--dur-hover) ${
+                  className={`relative flex min-h-12 w-full items-center gap-3 rounded-chip px-3 text-start text-sm transition-colors duration-(--dur-hover) ${
                     here
-                      ? "bg-npf-mist font-medium text-npf-blue-deep"
+                      ? "bg-npf-mist font-semibold text-npf-blue-deep"
                       : done
                         ? "text-npf-ink hover:bg-npf-paper"
                         : "cursor-default text-npf-steel"
                   }`}
                 >
                   <span
-                    className={`grid size-7 shrink-0 place-items-center rounded-full text-xs font-semibold tabular-nums ${
+                    className={`grid size-7 shrink-0 place-items-center rounded-full text-xs font-semibold tabular-nums transition-colors duration-(--dur-hover) ${
                       here
-                        ? "bg-npf-blue text-white"
+                        ? "bg-npf-blue text-white shadow-[0_0_0_4px_var(--color-npf-chip)]"
                         : done
                           ? "bg-npf-ok-soft text-npf-ok"
-                          : "bg-npf-cloud text-npf-steel"
+                          : "bg-white text-npf-steel ring-1 ring-npf-hairline ring-inset"
                     }`}
                   >
-                    {done ? <CheckIcon aria-hidden className="size-3.5" /> : i + 1}
+                    {done ? (
+                      <CheckIcon aria-hidden className="size-3.5" />
+                    ) : (
+                      i + 1
+                    )}
                   </span>
                   {t(label)}
                   {done ? <span className="sr-only">{t("(done)")}</span> : null}
@@ -139,23 +174,23 @@ export function StepPanel({
         e.preventDefault();
         onNext?.();
       }}
-      className="npf-panel scroll-mt-28 md:scroll-mt-36"
+      className="npf-panel scroll-mt-28 animate-[npf-page-in_var(--dur-reveal)_var(--ease-out)] md:scroll-mt-36"
     >
-      <div className="npf-panel-head">
+      <div className="px-5 pt-6 md:px-8 md:pt-8">
         <h2
           ref={heading}
           tabIndex={-1}
-          className="scroll-mt-32 outline-none"
+          className="npf-h4 scroll-mt-32 text-npf-blue-deep outline-none"
         >
           {title}
         </h2>
+        {intro ? (
+          <p className="npf-body mt-2 max-w-[62ch] text-npf-body">{intro}</p>
+        ) : null}
       </div>
-      <div className="space-y-6 p-5 md:p-7">
-        {intro ? <p className="npf-body max-w-[62ch] text-npf-body">{intro}</p> : null}
-        {children}
-      </div>
+      <div className="space-y-7 px-5 pt-6 pb-7 md:px-8 md:pb-8">{children}</div>
       {onNext || onBack ? (
-        <div className="flex flex-wrap-reverse items-center justify-between gap-3 border-t border-npf-hairline bg-npf-paper px-5 py-4 md:px-7">
+        <div className="flex flex-wrap-reverse items-center justify-between gap-3 border-t border-npf-hairline bg-npf-paper px-5 py-4 md:px-8">
           {onBack ? (
             <button
               type="button"
@@ -195,6 +230,7 @@ export function ChoiceCard({
   title,
   hint,
   tone = "brand",
+  Icon,
 }: {
   name: string;
   value: string;
@@ -203,18 +239,20 @@ export function ChoiceCard({
   title: string;
   hint?: string;
   tone?: "brand" | "alert";
+  /** A glyph for the few big either/or questions; long lists stay plain. */
+  Icon?: (p: { className?: string }) => React.ReactNode;
 }) {
   const ring =
     tone === "alert"
       ? checked
         ? "bg-npf-error-wash ring-2 ring-npf-alert"
-        : "ring-1 ring-npf-hairline hover:bg-npf-paper"
+        : "ring-1 ring-npf-hairline hover:bg-npf-paper hover:ring-npf-alert/40"
       : checked
         ? "bg-npf-mist ring-2 ring-npf-blue"
-        : "ring-1 ring-npf-hairline hover:bg-npf-paper";
+        : "ring-1 ring-npf-hairline hover:bg-npf-paper hover:ring-npf-blue-mid/45";
   return (
     <label
-      className={`relative flex cursor-pointer items-start gap-3 rounded-card p-4 ring-inset transition-[background-color,box-shadow] duration-(--dur-hover) has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-npf-blue-mid ${ring}`}
+      className={`relative flex cursor-pointer items-start rounded-card ${Icon ? "gap-4 p-4 md:p-5" : "gap-3 px-4 py-3.5 sm:p-4"} ring-inset transition-[background-color,box-shadow,scale] duration-(--dur-hover) ease-(--ease-out) active:scale-[0.99] active:duration-(--dur-press) has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-npf-blue-mid ${ring}`}
     >
       <input
         type="radio"
@@ -224,15 +262,31 @@ export function ChoiceCard({
         onChange={() => onChange(value)}
         className="sr-only"
       />
-      <Dot checked={checked} tone={tone} />
-      <span className="min-w-0">
-        <span className="block font-secondary text-[0.9375rem] leading-snug font-bold text-npf-ink">
-          {title}
+      {Icon ? (
+        <span
+          aria-hidden
+          className={`grid size-11 shrink-0 place-items-center rounded-chip transition-colors duration-(--dur-hover) ${
+            tone === "alert"
+              ? checked
+                ? "bg-npf-alert text-white"
+                : "bg-npf-error-wash text-npf-alert-deep"
+              : checked
+                ? "bg-npf-blue text-white"
+                : "bg-npf-cloud text-npf-blue-ink"
+          }`}
+        >
+          <Icon className="size-5.5" />
         </span>
+      ) : (
+        <Dot checked={checked} tone={tone} />
+      )}
+      <span className={`min-w-0 flex-1 ${Icon ? "pt-0.5" : ""}`}>
+        <span className="npf-h5 block leading-snug text-npf-ink">{title}</span>
         {hint ? (
           <span className="npf-small mt-0.5 block text-npf-body">{hint}</span>
         ) : null}
       </span>
+      {Icon ? <Dot checked={checked} tone={tone} /> : null}
     </label>
   );
 }
@@ -282,10 +336,10 @@ export function Chips({
           return (
             <label
               key={o.value}
-              className={`inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm font-medium ring-inset transition-[background-color,color,box-shadow] duration-(--dur-hover) has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-npf-blue-mid ${
+              className={`inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm font-medium ring-inset transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) ease-(--ease-out) active:scale-[0.97] active:duration-(--dur-press) has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-npf-blue-mid ${
                 on
                   ? "bg-npf-blue text-white ring-1 ring-npf-blue"
-                  : "bg-white text-npf-ink ring-1 ring-npf-hairline hover:bg-npf-paper"
+                  : "bg-white text-npf-ink ring-1 ring-npf-hairline hover:bg-npf-paper hover:ring-npf-blue-mid/45"
               }`}
             >
               <input
@@ -413,7 +467,10 @@ export function FilePicker({
         <ul className="mb-3 divide-y divide-npf-hairline overflow-hidden rounded-chip border border-npf-hairline">
           {files.map((f) => (
             <li key={f} className="flex items-center gap-3 px-3 py-2.5 text-sm">
-              <FileIcon aria-hidden className="size-4.5 shrink-0 text-npf-blue" />
+              <FileIcon
+                aria-hidden
+                className="size-4.5 shrink-0 text-npf-blue"
+              />
               <span className="min-w-0 flex-1 truncate text-npf-ink">{f}</span>
               <button
                 type="button"
@@ -421,7 +478,9 @@ export function FilePicker({
                 className="grid size-9 shrink-0 place-items-center rounded-full text-npf-steel transition-colors hover:bg-npf-cloud hover:text-npf-ink"
               >
                 <CloseIcon aria-hidden className="size-4" />
-                <span className="sr-only">{t("Remove {file}", { file: f })}</span>
+                <span className="sr-only">
+                  {t("Remove {file}", { file: f })}
+                </span>
               </button>
             </li>
           ))}
@@ -494,9 +553,7 @@ export function Review({
       {sections.map((s) => (
         <section key={s.title} className="px-5 py-4">
           <div className="flex items-center justify-between gap-3">
-            <h3 className="font-secondary text-[0.9375rem] font-bold text-npf-blue-deep">
-              {s.title}
-            </h3>
+            <h3 className="npf-h5 text-npf-blue-deep">{s.title}</h3>
             <button
               type="button"
               onClick={() => onEdit(s.step)}
@@ -539,7 +596,9 @@ export function Declare({
     <div>
       <label
         className={`flex cursor-pointer items-start gap-3 rounded-card p-4 ring-inset has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-npf-blue-mid ${
-          error ? "ring-2 ring-npf-error" : "bg-npf-paper ring-1 ring-npf-hairline"
+          error
+            ? "ring-2 ring-npf-error"
+            : "bg-npf-paper ring-1 ring-npf-hairline"
         }`}
       >
         <input

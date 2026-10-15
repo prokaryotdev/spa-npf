@@ -21,6 +21,7 @@ export async function PageShell({
   solidHeader = true,
   titleSize = "display",
   lead,
+  compact = false,
 }: {
   title: string;
   intro?: string;
@@ -32,6 +33,8 @@ export async function PageShell({
   titleSize?: "display" | "article";
   /** Under the intro, in the heading's column (the catalogue's search). */
   lead?: React.ReactNode;
+  /** A task page (the report form): a shorter head, so the work starts sooner. */
+  compact?: boolean;
 }) {
   const t = await getT();
   const crumb = "transition-colors hover:text-npf-blue";
@@ -44,7 +47,11 @@ export async function PageShell({
         tabIndex={-1}
         className="border-b border-npf-hairline outline-none"
       >
-        <div className="relative overflow-hidden bg-white pt-40 pb-16 md:pt-48">
+        <div
+          className={`relative overflow-hidden bg-white ${
+            compact ? "pt-36 pb-10 md:pt-40 md:pb-12" : "pt-40 pb-16 md:pt-48"
+          }`}
+        >
           <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 [mask-image:linear-gradient(to_bottom,#000_65%,transparent_90%)] md:size-250 md:opacity-60" />
 
           <div className="npf-container npf-page-in relative">
@@ -83,7 +90,9 @@ export async function PageShell({
               className={`font-secondary leading-display font-bold text-npf-blue-deep ${
                 titleSize === "article"
                   ? "max-w-[22ch] text-3xl lg:text-5xl"
-                  : "text-4xl lg:text-7xl"
+                  : compact
+                    ? "text-4xl lg:text-6xl"
+                    : "text-4xl lg:text-7xl"
               }`}
             >
               {t(title)}
@@ -203,7 +212,10 @@ export function Facts({
       className={`mt-8 grid max-w-full gap-px overflow-hidden rounded-card border border-npf-line bg-npf-line md:mt-10 md:grid-flow-col ${className}`}
     >
       {facts.map((fact) => (
-        <div key={fact.label} className="min-w-0 bg-npf-mist px-6 py-4 md:px-12 md:py-6">
+        <div
+          key={fact.label}
+          className="min-w-0 bg-npf-mist px-6 py-4 md:px-12 md:py-6"
+        >
           <dt className="npf-small font-medium text-npf-steel">{fact.label}</dt>
           <dd className="npf-h5 mt-1 text-npf-blue-deep tabular-nums">
             {fact.value}
@@ -262,9 +274,7 @@ export async function HelpCard({
     >
       <div className="px-5 pt-5 pb-4">
         <h2 className="npf-h5 text-npf-blue-deep">{title}</h2>
-        {intro ? (
-          <p className="npf-small mt-1 text-npf-body">{intro}</p>
-        ) : null}
+        {intro ? <p className="npf-small mt-1 text-npf-body">{intro}</p> : null}
       </div>
       {rows.length ? (
         <ul className="divide-y divide-npf-hairline border-t border-npf-hairline">

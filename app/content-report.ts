@@ -67,7 +67,8 @@ export const reportKinds: ReportKind[] = [
     kind: "Vehicle theft",
     hint: "A car, motorcycle or tricycle was stolen",
     priority: "P2",
-    advice: "Have the plate number, chassis number and the vehicle papers ready.",
+    advice:
+      "Have the plate number, chassis number and the vehicle papers ready.",
   },
   {
     kind: "Theft",
@@ -112,6 +113,35 @@ export const reportKinds: ReportKind[] = [
     kind: "Something else",
     hint: "A crime that is not on this list",
     priority: "P4",
+  },
+];
+
+/**
+ * The same list, sorted the way a reporter thinks of it, so sixteen choices
+ * read as four short ones. Every kind sits in exactly one group; a kind left
+ * out of every group still shows, under the last one.
+ */
+export const reportGroups: { label: string; kinds: string[] }[] = [
+  {
+    label: "Against a person",
+    kinds: [
+      "Armed robbery",
+      "Kidnapping",
+      "Sexual assault",
+      "Assault",
+      "Domestic violence",
+      "Threats or intimidation",
+      "Missing person",
+    ],
+  },
+  {
+    label: "Home, shop or vehicle",
+    kinds: ["Burglary", "Vehicle theft", "Theft", "Vandalism"],
+  },
+  { label: "Money and online", kinds: ["Fraud report", "Cybercrime report"] },
+  {
+    label: "Other crimes",
+    kinds: ["Suspicious activity", "Drug offence", "Something else"],
   },
 ];
 
