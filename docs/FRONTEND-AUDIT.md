@@ -95,11 +95,11 @@ Then on the police side:
 32. ✅ Requests showed no command/division or what the applicant sent → shown.
 33. ✅ "Division" meant Patrol/Traffic → renamed "Section"; Division now means the police division.
 34. ✅ Sample data contradicted itself (a Lagos-posted unit closing a Zaria call) → fixed.
-35. 🟡 Area Command level between State and Division is not shown.
+35. 🟣 Area Command level between State and Division: the Force's list of Area Commands is needed (FCT's are known from the old FCT edition).
 36. ✅ All 17 zonal commands modelled, with a Zonal command (AIG) post scoped to its states.
 37. ✅ Case files: officer (IPO), stage, people, statements, exhibits with chain of custody, updates to the complainant.
 38. ✅ Posts with their own scope (control room, DPO, investigator, custody, Commissioner, Force HQ); the board shows what else needs attention.
-39. 🟡 No per-command reports and statistics page.
+39. ✅ Per-command and per-division statistics: the report's by-command and by-division tables over 12 hours to 30 days.
 40. ✅ Requests are taken by a named officer.
 41. ✅ Officers attach photos and files to a call (fingerprinted) and documents to a request.
 42. 🔵 Audit trail with the officer's service number on every change.
@@ -118,15 +118,15 @@ Then on the police side:
 53. ✅ "Application Status" needed sign-in → public tracker.
 54. ✅ Contact phone and email are confirmed per application.
 55. 🔵 Payment step after acceptance (invoice, gateway, receipt).
-56. 🟡 Appointment booking for biometrics at the chosen command.
+56. ✅ Biometrics appointment booking for the Police Clearance Certificate, at the command handling it; the officer sees it on the request. 🔵 Free slots per command come from the server.
 57. ✅ A reply to "Action needed" can carry the documents asked for.
-58. 🟡 Profile has no state/LGA of residence to prefill the form.
+58. ✅ The profile keeps a home state, LGA and address, and applications are filled in from it.
 59. 🔵 Certificates as signed PDFs with a verification code.
 
 ### Accounts and identity
 60. ✅ Sign-in error messages were English on every language → translated.
 61. 🔵 NINAuth is simulated; any 11-digit NIN signs in.
-62. 🟡 No "create account" or "forgot password" screens.
+62. ✅ Create an account and Forgot password screens, both confirmed by a code to the phone. 🔵 The code is sent and checked by the server.
 63. 🔵 Officer sign-in needs service number + password + one-time code.
 64. ✅ Six officer posts. 🟡 Lawyer/company citizen accounts still missing.
 
@@ -144,7 +144,7 @@ Then on the police side:
 75. 🟣 "Rate this service" links to servicerating.gov.ng: confirm it exists.
 76. 🟣 Homepage community stories (museum, West African Police Summit): confirm.
 77. 🟣 Yoruba and Igbo were written without a native speaker; get them reviewed. Legal pages first.
-78. 🟡 Privacy policy should say what happens to report data and evidence (Nigeria Data Protection Act 2023).
+78. 🟣 Privacy policy should say what happens to report data and evidence (Nigeria Data Protection Act 2023): legal wording from the Force's data protection officer, not from this build.
 
 ### Architecture and quality
 79. ✅ One shared shape for "where" on every report, call, unit and request (`app/geo.ts`).
@@ -153,10 +153,10 @@ Then on the police side:
 82. ✅ Forms: labels, error messages under fields, focus moves to the first error and to each new step.
 83. ✅ Files are fingerprinted (SHA-256) with a preview. 🔵 Still needs the upload endpoint with virus scan.
 84. 🔵 Reference numbers are random in the browser; the server must issue them.
-85. 🟡 End-to-end tests for the report, apply, transfer and track journeys.
-86. 🟡 Accessibility scan (axe) over the new pages in all four languages.
-87. 🟡 Weak-network handling beyond the tab draft (retry on send, offline notice).
-88. 🟡 Print styles for the receipt page.
+85. ✅ End-to-end tests for the report, apply, transfer and track journeys (e2e/journeys.spec.ts).
+86. ✅ Accessibility scan (axe) over every page shape in all four languages, the new pages included.
+87. ✅ An offline notice on every page, saying what was typed is kept. 🔵 A send queue that retries on reconnect needs the server.
+88. ✅ Print styles: the site header, footer, breadcrumb and buttons drop away, and panels keep their rims on paper.
 
 ## For the presentation
 
@@ -224,3 +224,5 @@ store tests cover them:
 120. ✅ A full browser store drops photo previews and keeps the records, and says so in the console, instead of losing every later change.
 121. ✅ Daily report bars start at midnight WAT, as labelled.
 122. ✅ One list of language names (`LANG_LABEL`).
+123. ✅ Activity board (`/app/police/activity`): every change on calls, case files, custody and alerts with the officer and service number, by officer and period, for supervisors and the Complaint Response Unit. 🔵 The server keeps the unalterable copy.
+124. ✅ A case file prints in full for the prosecutor or the court, without the board around it.

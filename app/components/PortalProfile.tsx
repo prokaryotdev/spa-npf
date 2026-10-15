@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn, useStore, type Session } from "./store";
 import { AlertIcon, CheckCircle, InboxIcon, ShieldIcon } from "./icons";
 import { useT } from "../i18n/client";
+import { WherePicker, type WhereValue } from "./Where";
 
 type Errors = { email?: string; phone?: string };
 
@@ -16,6 +17,12 @@ export default function PortalProfile() {
   const { session } = useStore();
   const [errors, setErrors] = useState<Errors>({});
   const [saved, setSaved] = useState(false);
+  const [home, setHome] = useState<WhereValue>({ state: "", lga: "", address: "" });
+  const [seen, setSeen] = useState(false);
+  if (session && !seen) {
+    setSeen(true);
+    if (session.home) setHome(session.home);
+  }
 
   if (!session) return null;
 
@@ -26,18 +33,25 @@ export default function PortalProfile() {
     const phone = String(data.get("phone") ?? "").trim();
 
     const next: Errors = {};
-    if (!email) next.email = "Enter an email address.";
+    // Through t() here, not only at display, so the coverage test sees them:
+    // two of the three had no Hausa, Yoruba or Igbo before.
+    if (!email) next.email = t("Enter an email address.");
     else if (!EMAIL.test(email))
-      next.email = "That does not look like an email address.";
-    if (!phone) next.phone = "Enter a mobile number.";
+      next.email = t("That does not look like an email address.");
+    if (!phone) next.phone = t("Enter a mobile number.");
     else if (!PHONE.test(phone))
-      next.phone = "Use a Nigerian mobile number, like 0803 123 4567.";
+      next.phone = t("Use a Nigerian mobile number, like 0803 123 4567.");
 
     setErrors(next);
     setSaved(false);
     if (Object.keys(next).length) return;
 
-    signIn({ ...(session as Session), email, phone });
+    signIn({
+      ...(session as Session),
+      email,
+      phone,
+      ...(home.state && home.lga ? { home } : {}),
+    });
     setSaved(true);
   }
 
@@ -92,6 +106,20 @@ export default function PortalProfile() {
             error={errors.phone}
           />
         </div>
+        {session.role === "citizen" ? (
+          <div className="border-t border-npf-hairline p-5">
+            <p className="npf-field-label">{t("Where you live")}</p>
+            <p className="npf-small -mt-1 mb-4 text-npf-body">
+              {t("Fills in your applications, which go to the command and division where you live. You can change it on any one application.")}
+            </p>
+            <WherePicker
+              value={home}
+              onChange={setHome}
+              stateLabel={t("State you live in")}
+              addressLabel={t("Your address")}
+            />
+          </div>
+        ) : null}
         <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-npf-hairline px-5 py-4">
           <button type="submit" className="npf-btn npf-btn-primary npf-btn-sm">
             {t("Save changes")}

@@ -46,7 +46,7 @@ export default function Footer({ showApps = true }: { showApps?: boolean }) {
   const [subscribed, setSubscribed] = useState(false);
 
   return (
-    <footer id="staticFooter" className="w-full bg-white text-npf-body">
+    <footer id="staticFooter" className="w-full bg-white text-npf-body print:hidden">
       {/* Emergency */}
       <section
         aria-labelledby="footer-emergency"

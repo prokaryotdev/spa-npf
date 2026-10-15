@@ -188,6 +188,14 @@ export default function SignInForm() {
             <button type="submit" className="npf-btn npf-btn-secondary mt-1 w-full">
               {t("Sign in")}
             </button>
+            <p className="npf-small flex flex-wrap justify-between gap-x-4 gap-y-1">
+              <Link href="/app/register" className="font-medium text-npf-blue underline underline-offset-2">
+                {t("Create an account")}
+              </Link>
+              <Link href="/app/reset" className="font-medium text-npf-blue underline underline-offset-2">
+                {t("Forgot your password?")}
+              </Link>
+            </p>
           </div>
           <p className="npf-small border-t border-npf-hairline bg-npf-paper px-6 py-4 text-npf-body md:px-8">
             {t(

@@ -134,7 +134,7 @@ export default function OpsCases() {
         />
       ) : null}
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2 print:hidden">
         <OpsSearch
           id={`${id}-q`}
           label={t("Filter cases")}
@@ -158,8 +158,8 @@ export default function OpsCases() {
         </p>
       </div>
 
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_400px] 2xl:grid-cols-[minmax(0,1fr)_460px]">
-        <div className="min-w-0">
+      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_400px] 2xl:grid-cols-[minmax(0,1fr)_460px] print:block">
+        <div className="min-w-0 print:hidden">
           <OpsPanel flush>
             <table className="w-full text-start text-sm">
               <caption className="sr-only">{t("Case files, with offence, place, stage and officer")}</caption>
@@ -343,9 +343,16 @@ function CaseDetail({ file, onClose }: { file: CaseFile; onClose: () => void }) 
     <OpsPanel
       title={file.id}
       action={
+        <span className="flex gap-2 print:hidden">
+        {/* The case file on paper, for the prosecutor or the court: the
+            board around it drops away and the diary prints in full. */}
+        <button type="button" onClick={() => window.print()} className="inline-flex h-8 items-center rounded-(--ops-control-radius) px-3 text-xs font-medium text-ops-text ring-1 ring-ops-line-soft ring-inset hover:bg-ops-hover">
+          {t("Print case file")}
+        </button>
         <button type="button" onClick={onClose} aria-label={t("Close case file")} className="grid size-8 place-items-center rounded-(--ops-control-radius) text-ops-dim ring-1 ring-ops-line-soft ring-inset hover:bg-ops-hover hover:text-ops-text">
           <CloseIcon className="size-4" />
         </button>
+        </span>
       }
     >
       <div className="flex flex-wrap items-center gap-2">

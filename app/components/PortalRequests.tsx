@@ -6,6 +6,7 @@ import { useId, useMemo, useState } from "react";
 import {
   advanceRequest,
   attachToRequest,
+  bookAppointment,
   useStore,
   type Media,
   type RequestStatus,
@@ -217,6 +218,10 @@ export default function PortalRequests() {
                     id={`${id}-${request.id}`}
                     className="px-5 pb-6 sm:px-6"
                   >
+                    {BIOMETRIC.has(request.slug) &&
+                    (request.status === "Submitted" || request.status === "In Review") ? (
+                      <Appointment request={request} />
+                    ) : null}
                     {request.status === "Action Needed" ? (
                       <div className="mb-6 border-b border-npf-hairline pb-6">
                         {request.note ? (
@@ -453,6 +458,101 @@ function Reply({ request }: { request: TrackedRequest }) {
         {t("Send reply")}
         <ArrowRight aria-hidden className="size-4 rtl:-scale-x-100" />
       </button>
+    </form>
+  );
+}
+
+/**
+ * Services that need the applicant at a command in person, for fingerprints
+ * and a photograph. Police Clearance Certificate: POSSAP sends applicants to
+ * a command for biometric capture (source in content-services.ts).
+ */
+const BIOMETRIC = new Set(["police-clearance-certificate"]);
+
+/** Week days only, and the hours a command's front desk keeps for it. */
+const SLOTS = ["09:00", "10:00", "11:00", "12:00", "14:00", "15:00"];
+
+function nextWorkingDays(n: number) {
+  const days: Date[] = [];
+  const d = new Date();
+  while (days.length < n) {
+    d.setDate(d.getDate() + 1);
+    if (d.getDay() !== 0 && d.getDay() !== 6) days.push(new Date(d));
+  }
+  return days;
+}
+
+/**
+ * The applicant picks a day and an hour at the command handling the request.
+ * ponytail: every slot is offered; the server knows each command's capacity
+ * and returns only the free ones (GET /requests/{id}/slots).
+ */
+function Appointment({ request }: { request: TrackedRequest }) {
+  const t = useT();
+  const format = useFormat();
+  const id = useId();
+  const days = nextWorkingDays(10);
+  const [day, setDay] = useState("");
+  const [slot, setSlot] = useState("");
+  const [editing, setEditing] = useState(!request.appointment);
+  const place = request.where ? commandLabel(t, request.where.state) : t("the command");
+  if (!editing && request.appointment)
+    return (
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-card bg-npf-ok-soft p-4">
+        <p className="npf-small text-npf-ink">
+          <span className="font-semibold">{t("Biometrics appointment")}</span>{" "}
+          {t("{time} at {place}", { time: format.dateTime(request.appointment), place })}
+          <span className="block text-npf-body">
+            {t("Bring your NIN slip and a valid ID. It takes about 30 minutes.")}
+          </span>
+        </p>
+        <button type="button" onClick={() => setEditing(true)} className="npf-btn npf-btn-secondary npf-btn-sm">
+          {t("Change")}
+        </button>
+      </div>
+    );
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!day || !slot) return;
+        const [h, m] = slot.split(":").map(Number);
+        const at = new Date(day);
+        at.setHours(h, m, 0, 0);
+        bookAppointment(request.id, at.toISOString());
+        setEditing(false);
+      }}
+      className="mb-6 rounded-card bg-npf-paper p-4"
+    >
+      <p className="npf-small font-semibold text-npf-ink">{t("Book your biometrics appointment")}</p>
+      <p className="npf-small mt-1 text-npf-body">
+        {t("Your fingerprints and photograph are taken in person at {place}.", { place })}
+      </p>
+      <div className="mt-4 flex flex-wrap items-end gap-3">
+        <div>
+          <label htmlFor={`${id}-day`} className="npf-field-label">{t("Day")}</label>
+          <select id={`${id}-day`} value={day} onChange={(e) => setDay(e.target.value)} className="npf-field">
+            <option value="">{t("Choose a day")}</option>
+            {days.map((d) => (
+              <option key={d.toISOString()} value={d.toISOString()}>
+                {format.date(d.toISOString())}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor={`${id}-slot`} className="npf-field-label">{t("Time")}</label>
+          <select id={`${id}-slot`} value={slot} onChange={(e) => setSlot(e.target.value)} className="npf-field">
+            <option value="">{t("Choose a time")}</option>
+            {SLOTS.map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        </div>
+        <button type="submit" disabled={!day || !slot} className="npf-btn npf-btn-primary npf-btn-sm disabled:opacity-50">
+          {t("Book")}
+        </button>
+      </div>
     </form>
   );
 }

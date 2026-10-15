@@ -250,3 +250,12 @@ completed, printed on the document, and should also be a QR code.
 carry a `website` field that people never see (`Honeypot.tsx`). The server
 drops any submission where it is filled, answering as if it succeeded, then
 applies CAPTCHA and per-IP and per-phone rate limits.
+
+### Accounts and appointments (added 14 October 2026)
+
+| Screen | Endpoint |
+|---|---|
+| Create an account (`/app/register`) | `POST /auth/register` `{ name, nin, phone, email?, password }` → SMS code; `POST /auth/register/verify` `{ code }` → `Session`. The NIN is checked against NIMC. |
+| Forgot password (`/app/reset`) | `POST /auth/reset` `{ nin \| phone \| email }` → same answer whether or not an account matches; `POST /auth/reset/confirm` `{ code, password }` |
+| Profile home address | `PATCH /me` `{ home: { state, lga, address } }` |
+| Biometrics appointment | `GET /requests/{id}/slots` (free slots at the command), `POST /requests/{id}/appointment` `{ at }` |

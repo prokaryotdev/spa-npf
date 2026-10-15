@@ -1,3 +1,4 @@
+import OfflineNotice from "./components/OfflineNotice";
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -84,7 +85,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           {t("Skip to main content")}
         </a>
         <OrganisationLd lang={lang} />
-        <LocaleProvider lang={lang}>{children}</LocaleProvider>
+        <LocaleProvider lang={lang}>
+          {children}
+          <OfflineNotice />
+        </LocaleProvider>
       </body>
     </html>
   );

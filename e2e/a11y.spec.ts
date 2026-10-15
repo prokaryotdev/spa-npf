@@ -29,6 +29,8 @@ const PAGES = [
   ["a report under investigation", "/app/track?ref=NPF-4401"],
   ["public appeals", "/app/appeals"],
   ["verifying a document", "/app/verify"],
+  ["creating an account", "/app/register"],
+  ["resetting a password", "/app/reset"],
   ["a data table", "/app/home/information/traffic-offences-and-penalties"],
   ["a legal document", "/app/home/privacy-policy"],
   ["search results", "/app/search?q=certificate"],

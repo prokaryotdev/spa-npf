@@ -54,6 +54,7 @@ const ALL = [
   "/app/police/requests",
   "/app/police/alerts",
   "/app/police/report",
+  "/app/police/activity",
 ];
 
 /**
@@ -586,4 +587,5 @@ export const consoleLines = [
   "Call closed.",
   "This board is not part of your post",
   "Your post works these boards instead.",
+  "Alert issued: {title}",
 ];

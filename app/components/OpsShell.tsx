@@ -29,6 +29,7 @@ import {
   CaseGlyph,
   CustodyGlyph,
   MapGlyph,
+  FindGlyph,
   ReportGlyph,
   RequestsGlyph,
   UnitsGlyph,
@@ -60,6 +61,7 @@ const ALL_TABS = [
   { href: "/app/police/alerts", label: "Alerts", short: "Alerts", Icon: AlertGlyph, group: "Investigation" },
   { href: "/app/police/requests", label: "Requests", short: "Requests", Icon: RequestsGlyph, group: "Desk" },
   { href: "/app/police/report", label: "Shift report", short: "Report", Icon: ReportGlyph, group: "Desk" },
+  { href: "/app/police/activity", label: "Activity", short: "Activity", Icon: FindGlyph, group: "Desk" },
 ];
 
 type Tab = (typeof ALL_TABS)[number];

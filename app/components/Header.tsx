@@ -130,7 +130,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         className="pointer-events-none absolute top-0 left-0 h-20 w-px"
       />
       <header
-        className={`fixed top-0 left-0 z-50 w-full border-b transition-[background-color,border-color] duration-(--dur-media) ${
+        className={`fixed top-0 left-0 z-50 w-full border-b print:hidden transition-[background-color,border-color] duration-(--dur-media) ${
           scrolled
             ? "border-npf-hairline bg-white/90 backdrop-blur-xl"
             : "border-white/25 bg-gradient-to-b from-npf-night/60 to-transparent"

@@ -35,6 +35,7 @@ export const POLICE_PAGES = [
   ["alerts", "/app/police/alerts"],
   ["requests", "/app/police/requests"],
   ["the shift report", "/app/police/report"],
+  ["activity", "/app/police/activity"],
 ] as const;
 
 /** Every portal page, for the specs that walk them all. */

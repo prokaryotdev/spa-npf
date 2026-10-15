@@ -205,4 +205,6 @@ export const accountLines = [
   "Assigned to an officer",
   "Sent with the reply",
   "Added by the officer",
+  "Appointment booked",
+  "Appointment moved",
 ];

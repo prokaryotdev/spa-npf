@@ -48,7 +48,7 @@ export async function PageShell({
           <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 [mask-image:linear-gradient(to_bottom,#000_65%,transparent_90%)] md:size-250 md:opacity-60" />
 
           <div className="npf-container npf-page-in relative">
-            <nav aria-label={t("Breadcrumb")} className="mb-6">
+            <nav aria-label={t("Breadcrumb")} className="mb-6 print:hidden">
               <ol className="flex flex-wrap items-center gap-1 text-sm text-npf-body">
                 <li className="flex items-center gap-1">
                   <Link href="/" className={crumb}>

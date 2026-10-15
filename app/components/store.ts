@@ -45,6 +45,8 @@ export type Session = {
   division?: string;
   /** A zonal desk's zonal command id: it sees that zone's states only. */
   zone?: string;
+  /** Where a citizen lives, kept on the profile to fill in applications. */
+  home?: { state: string; lga: string; address: string };
 };
 
 export type Post =
@@ -242,6 +244,8 @@ export type TrackedRequest = {
   docNo?: string;
   /** When the document was issued: not `updated`, which later edits move. */
   docIssued?: string;
+  /** A booked visit to the command, for fingerprints and a photograph. */
+  appointment?: string;
 };
 
 export type Fine = {
@@ -1677,6 +1681,30 @@ export function reportPosition(callsign: string, geo: Geo) {
     ...state,
     units: state.units.map((u) =>
       u.callsign === callsign ? { ...u, geo, fixAt: at } : u,
+    ),
+  });
+}
+
+/**
+ * Booking (or moving) the visit where a command takes the applicant's
+ * fingerprints and photograph. The command sees it on the request.
+ */
+export function bookAppointment(id: string, at: string) {
+  const now_ = now();
+  write({
+    ...state,
+    requests: state.requests.map((r) =>
+      r.id === id
+        ? {
+            ...r,
+            appointment: at,
+            updated: now_,
+            timeline: [
+              ...r.timeline,
+              { at: now_, label: r.appointment ? "Appointment moved" : "Appointment booked" },
+            ],
+          }
+        : r,
     ),
   });
 }

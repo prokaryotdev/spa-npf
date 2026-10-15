@@ -65,6 +65,13 @@ export default function ApplyForm({ service }: { service: Service }) {
   const plan = useMemo(() => documentPlan(service), [service]);
 
   const [where, setWhere] = useState({ state: "", lga: "", address: "" });
+  // The home address on the profile fills the form in, once, when the
+  // session arrives; the applicant can still change it for this request.
+  const [prefilled, setPrefilled] = useState(false);
+  if (loaded && !prefilled) {
+    setPrefilled(true);
+    if (session?.home && !where.state) setWhere(session.home);
+  }
   const [purpose, setPurpose] = useState("");
   const [extra, setExtra] = useState("");
   const [phone, setPhone] = useState("");

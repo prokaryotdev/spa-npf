@@ -2028,3 +2028,20 @@ html.npf-large-text {
 .npf-map-tip.leaflet-tooltip-top::before {
   border-top-color: var(--color-npf-night);
 }
+
+/* A public page on paper (a report receipt, a tracker result): the fixed
+   header is gone, so the page needs no room left for it, and panels keep
+   their rims rather than relying on tints a printer drops. */
+@media print {
+  body {
+    background: #fff;
+  }
+  main {
+    padding-top: 0 !important;
+  }
+  .npf-panel {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid var(--color-npf-line);
+  }
+}

@@ -794,7 +794,7 @@ function Filed({ incident, signedIn }: { incident: Incident; signedIn: boolean }
         </ol>
       </section>
 
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-3 print:hidden">
         <Link
           href={signedIn ? "/app/portal/requests" : `/app/track?ref=${incident.id}`}
           className="npf-btn npf-btn-primary hover:bg-npf-blue-mid"

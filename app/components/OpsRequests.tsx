@@ -271,6 +271,12 @@ export default function OpsRequests() {
                       </button>
                     </>
                   ) : null}
+                  {request.appointment ? (
+                    <span>
+                      <span className="text-ops-dim">{t("Biometrics appointment")}</span>{" "}
+                      <span className="font-medium tabular-nums">{format.dateTime(request.appointment)}</span>
+                    </span>
+                  ) : null}
                   {request.docNo ? (
                     <span>
                       <span className="text-ops-dim">{t("Document number")}</span>{" "}
