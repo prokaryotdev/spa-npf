@@ -814,13 +814,28 @@ export default function ReportForm() {
  */
 function FreePromise() {
   const t = useT();
+  // The first sentence is the promise, the rest is what it rules out; every
+  // language keeps them as two sentences, so the split needs no new strings.
+  const [lead, ...rest] = t(
+    "Reporting is free. No officer may ask you for money to take a report, to investigate it, or for bail.",
+  ).split(/(?<=\.)\s+/);
   return (
-    <p className="npf-small flex gap-3 px-1 pt-2 text-npf-body">
-      <ShieldIcon aria-hidden className="mt-0.5 size-4.5 shrink-0 text-npf-blue" />
-      <span>
-        {t(
-          "Reporting is free. No officer may ask you for money to take a report, to investigate it, or for bail.",
-        )}
+    <p className="flex items-center gap-4 rounded-card bg-npf-mist px-4 py-4 ring-1 ring-npf-line/70 ring-inset md:px-5">
+      <span
+        aria-hidden
+        className="grid size-10 shrink-0 place-items-center rounded-full bg-white text-npf-blue shadow-[0_1px_2px_color-mix(in_srgb,var(--color-npf-night)_10%,transparent)] ring-1 ring-npf-line ring-inset"
+      >
+        <ShieldIcon className="size-5" />
+      </span>
+      <span className="min-w-0">
+        <strong className="block font-secondary text-base leading-snug font-bold text-npf-blue-deep">
+          {lead}
+        </strong>
+        {rest.length ? (
+          <span className="npf-small mt-0.5 block text-npf-body">
+            {rest.join(" ")}
+          </span>
+        ) : null}
       </span>
     </p>
   );
