@@ -50,9 +50,15 @@ async function openDesk(page: Page, command: string) {
   // Sign out first: a signed-in visitor is sent straight on from sign-in.
   await page.evaluate(() => sessionStorage.removeItem("dp:session"));
   await page.goto("/en/app/signin");
+  // Wait for the form to come alive: a choice made on the server-rendered
+  // page is reset to the default desk when React takes over.
+  await page.waitForLoadState("networkidle");
   // A command desk is the control room post; Force Headquarters is a post
   // of its own, with no command to pick.
-  if (command) await page.locator("#desk").selectOption(command);
+  if (command) {
+    await page.locator("#desk").selectOption(command);
+    await expect(page.locator("#desk")).toHaveValue(command);
+  }
   else await page.getByText("Force Headquarters", { exact: true }).click();
   await page.getByRole("button", { name: "Open the operations console" }).click();
   await expect(page).toHaveURL(/\/en\/app\/police$/);
