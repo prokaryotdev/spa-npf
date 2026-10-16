@@ -24,7 +24,7 @@ globalThis.window = {
   removeEventListener: () => {},
 };
 
-const { KEY, signIn, submitRequest, advanceRequest, signOut, subscribe, updateIncident, findReference } =
+const { KEY, signIn, submitRequest, advanceRequest, signOut, subscribe, updateIncident, findReference, cleanDocNo } =
   await import("../app/components/store.ts");
 
 // subscribe() is what hydrates the module from storage; nothing reads until
@@ -280,3 +280,9 @@ console.log("divisions: a pin finds the nearest real division — ok");
   assert.equal(cleanRef("npf"), "");
   console.log("references: typed and pasted shapes clean up — ok");
 }
+
+// A document number checks however it was typed.
+for (const typed of ['NPF/2026/274116', 'npf 2026 274116', '2026-274116', 'NPF/2O26/274116'])
+  assert.equal(cleanDocNo(typed), 'NPF/2026/274116', typed);
+assert.equal(cleanDocNo('NPF/2026/2741'), '');
+console.log('store: a document number however typed — ok');

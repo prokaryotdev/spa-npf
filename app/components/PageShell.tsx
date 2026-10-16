@@ -4,11 +4,13 @@ import Header from "./Header";
 import RevealObserver from "./RevealObserver";
 import {
   ArrowRight,
-  CheckIcon,
   ArrowDown,
   InboxIcon,
 } from "./icons";
 import { getT } from "../i18n/server";
+import { Tick } from "./ui";
+
+export { Tick };
 
 /** Breadcrumb + heading, the frame every inner page opens with. */
 export async function PageShell({
@@ -143,22 +145,6 @@ export function Facts({
         </div>
       ))}
     </dl>
-  );
-}
-
-/**
- * The tick a checklist row leads with, on every page that has one: small
- * and solid, so a list of twelve things reads as twelve things, not twelve
- * headings.
- */
-export function Tick() {
-  return (
-    <span
-      aria-hidden
-      className="mt-[0.15em] grid size-5.5 shrink-0 place-items-center rounded-full bg-npf-blue text-white"
-    >
-      <CheckIcon className="size-3 [stroke-width:2.5]" />
-    </span>
   );
 }
 

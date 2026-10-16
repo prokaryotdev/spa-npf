@@ -299,7 +299,7 @@ export default function PortalRequests() {
                         <span className="text-npf-steel">{t("Document number")}</span>
                         <span className="font-mono font-semibold">{request.docNo}</span>
                         <Link
-                          href="/app/verify"
+                          href={`/app/verify?no=${encodeURIComponent(request.docNo)}`}
                           className="font-medium text-npf-blue underline underline-offset-4"
                         >
                           {t("Anyone can check it here")}

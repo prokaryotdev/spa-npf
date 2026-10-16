@@ -153,3 +153,20 @@ export function CopyRef({ value, className = "" }: { value: string; className?: 
     </button>
   );
 }
+
+/**
+ * The tick a checklist row leads with, on every page that has one: small
+ * and solid, so a list of twelve things reads as twelve things, not twelve
+ * headings.
+ */
+export function Tick() {
+  return (
+    <span
+      aria-hidden
+      className="mt-[0.15em] grid size-5.5 shrink-0 place-items-center rounded-full bg-npf-blue text-white"
+    >
+      <CheckIcon className="size-3 [stroke-width:2.5]" />
+    </span>
+  );
+}
+

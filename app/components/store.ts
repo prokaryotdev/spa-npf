@@ -746,6 +746,21 @@ export function findReference(ref: string) {
  * embassy, a bank. Says whether the Force issued it, for what and when, and
  * nothing about the holder beyond that.
  */
+/**
+ * A document number however it was typed ("npf 2026 482913", "2026-482913",
+ * "NPF/2O26/482913") in the shape the paper prints, or "" if it has not
+ * got the four-digit year and six-digit serial.
+ */
+export function cleanDocNo(raw: string) {
+  const d = raw
+    .normalize("NFKC")
+    .toUpperCase()
+    .replace(/O/g, "0")
+    .replace(/[IL]/g, "1")
+    .replace(/\D/g, "");
+  return d.length === 10 ? `NPF/${d.slice(0, 4)}/${d.slice(4)}` : "";
+}
+
 export function findDocument(no: string) {
   const want = no.trim().toUpperCase().replace(/\s+/g, "");
   // A request moved off Completed (refused on appeal, reopened) has its
