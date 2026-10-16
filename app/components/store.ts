@@ -393,7 +393,7 @@ type State = {
 // Exported so scripts/test-store.mjs reads the blob under whatever the
 // current key is: a copy of the string in the test turns the next bump into
 // a failing test rather than a passing one.
-export const KEY = "dp:state:v10";
+export const KEY = "dp:state:v11";
 /**
  * The work lives in localStorage; who is signed in lives in sessionStorage.
  *

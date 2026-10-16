@@ -17,6 +17,7 @@ export default async function AppealsPage() {
   const t = await getT();
   return (
     <PageShell
+      compact
       title={t("Appeals")}
       intro={t(
         "Missing people, wanted people and stolen vehicles the Force is asking about. Send what you know, anonymously if you prefer.",

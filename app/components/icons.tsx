@@ -366,3 +366,23 @@ export const MoreIcon = ({ className }: IconProps) => (
     <path d="M8 12h.01M12 12h.01M16 12h.01" strokeWidth={2.6} />
   </svg>
 );
+
+/** Head and shoulders: an appeal for a person with no photo published. */
+export const PersonIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <circle cx="12" cy="8" r="3.75" />
+    <path d="M4.5 20.25a7.5 7.5 0 0 1 15 0" />
+  </svg>
+);
+
+/** A saloon from the side: an appeal for a vehicle with no photo. */
+export const CarIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M3 15.5V13a1.5 1.5 0 0 1 1.1-1.45L6.5 11l2-3.4A1.5 1.5 0 0 1 9.8 7h4.9a1.5 1.5 0 0 1 1.2.6L18.5 11l1.7.4A1.5 1.5 0 0 1 21.25 13v2.5a1 1 0 0 1-1 1H19" />
+    <path d="M5 16.5H4a1 1 0 0 1-1-1" />
+    <path d="M9.25 16.5h5.5" />
+    <path d="M6.5 11h12" />
+    <circle cx="7.1" cy="16.5" r="1.9" />
+    <circle cx="16.9" cy="16.5" r="1.9" />
+  </svg>
+);
