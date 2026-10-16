@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useT } from "../i18n/client";
+import { CheckIcon, FileIcon } from "./icons";
 import type { IncidentStatus, RequestStatus } from "./store";
 
 /**
@@ -119,5 +121,35 @@ export function Empty({
       <p className="npf-small mt-2 max-w-[46ch] text-npf-body">{t(body)}</p>
       {action ? <div className="mt-6">{action}</div> : null}
     </div>
+  );
+}
+
+/** One press puts the reference on the clipboard, for a message or a note. */
+export function CopyRef({ value, className = "" }: { value: string; className?: string }) {
+  const t = useT();
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    if (!done) return;
+    const id = setTimeout(() => setDone(false), 2400);
+    return () => clearTimeout(id);
+  }, [done]);
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        navigator.clipboard?.writeText(value).then(
+          () => setDone(true),
+          () => {},
+        )
+      }
+      className={`npf-btn npf-btn-ghost npf-btn-sm shrink-0 text-npf-blue print:hidden ${className}`}
+    >
+      {done ? (
+        <CheckIcon aria-hidden className="size-4" />
+      ) : (
+        <FileIcon aria-hidden className="size-4" />
+      )}
+      <span aria-live="polite">{done ? t("Copied") : t("Copy")}</span>
+    </button>
   );
 }

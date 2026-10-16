@@ -729,4 +729,33 @@ export const yoAccount: Record<string, string> = {
     "Owó àti orí ayélujára",
   "Other crimes":
     "Àwọn ẹ̀ṣẹ̀ mìíràn",
+  // The tracker (2026-10-16). Yoruba and Igbo need native review.
+  "A crime report":
+    "Ìròyìn ìwà ọ̀daràn",
+  "On the receipt when you report it. Signed in, it is also kept in your account.":
+    "Lórí ìwé-ẹ̀rí tí o gbà nígbà tí o ròyìn rẹ̀. Bí o bá wọlé, a tún pa á mọ́ sínú àkáǹtì rẹ.",
+  "A service application":
+    "Ìbéèrè iṣẹ́",
+  "On the screen when you apply, in your email, and in your account.":
+    "Lójú ìbòjú nígbà tí o béèrè, nínú ímeèlì rẹ, àti nínú àkáǹtì rẹ.",
+  "Where to find your reference":
+    "Ibi tí o ti lè rí nọ́ńbà ìtọ́kasí rẹ",
+  "Lost it? Sign in to see everything you have sent.":
+    "Ṣé o ti sọ ọ́ nù? Wọlé láti rí gbogbo ohun tí o ti fi ránṣẹ́.",
+  "since {time}":
+    "láti {time}",
+  "(current)":
+    "(lọ́wọ́lọ́wọ́)",
+  "History":
+    "Ìtàn",
+  "The stages you will see":
+    "Àwọn ìpele tí o máa rí",
+  "This page updates as soon as the command moves it on.":
+    "Ojú-ìwé yìí máa ń yí padà ní kété tí àṣẹ bá gbé e síwájú.",
+  "Stage {n} of {total}":
+    "Ìpele {n} nínú {total}",
+  "All stages":
+    "Gbogbo ìpele",
+  "Next: {step}":
+    "Èyí tó kàn: {step}",
 };

@@ -24,7 +24,7 @@ globalThis.window = {
   removeEventListener: () => {},
 };
 
-const { KEY, signIn, submitRequest, advanceRequest, signOut, subscribe, updateIncident } =
+const { KEY, signIn, submitRequest, advanceRequest, signOut, subscribe, updateIncident, findReference } =
   await import("../app/components/store.ts");
 
 // subscribe() is what hydrates the module from storage; nothing reads until
@@ -56,6 +56,10 @@ const filed = submitRequest({
 });
 assert.equal(shared().requests[0].id, filed.id, "a request is shared work");
 assert.equal(shared().requests[0].status, "Submitted");
+assert.match(filed.id, /^NPF-\d{4}-\d{4}$/, "an application's reference is NPF-year-number");
+assert.equal(findReference(filed.id.toLowerCase()).request?.id, filed.id, "the tracker finds it");
+const many = Array.from({ length: 300 }, () => submitRequest({ slug: "x", service: "x", fee: "x" }).id);
+assert.equal(new Set(many).size, many.length, "no two applications share a reference");
 
 // --- the officer tab decides it, and this tab keeps its own session ------
 // Another tab writes the shared blob, then the browser raises `storage` here.

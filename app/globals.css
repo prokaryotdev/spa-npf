@@ -1614,6 +1614,17 @@ html.npf-large-text {
  * rather than left at the browser's.
  */
 @layer components {
+  /*
+   * A reference number (NPF-4418, CR/LAG/2026/0412). The display face draws
+   * its figures shorter than its capitals, so "NPF" towered over the digits.
+   * The text face draws both at cap height; tabular so references line up.
+   */
+  .npf-ref {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    font-variant-numeric: tabular-nums;
+  }
   .npf-panel {
     overflow: hidden;
     border-radius: var(--radius-card);

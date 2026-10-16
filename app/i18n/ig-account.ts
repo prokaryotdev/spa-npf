@@ -729,4 +729,33 @@ export const igAccount: Record<string, string> = {
     "Ego na ịntanetị",
   "Other crimes":
     "Mpụ ndị ọzọ",
+  // The tracker (2026-10-16). Yoruba and Igbo need native review.
+  "A crime report":
+    "Akụkọ mpụ",
+  "On the receipt when you report it. Signed in, it is also kept in your account.":
+    "Na rịsịtị ị natara mgbe ị kọrọ ya. Ọ bụrụ na ị banyere, a na-edobekwa ya n'akaụntụ gị.",
+  "A service application":
+    "Arịrịọ ọrụ",
+  "On the screen when you apply, in your email, and in your account.":
+    "Na ihuenyo mgbe ị rịọrọ, na email gị, na n'akaụntụ gị.",
+  "Where to find your reference":
+    "Ebe ị ga-ahụ nọmba ntụaka gị",
+  "Lost it? Sign in to see everything you have sent.":
+    "Ọ furu efu? Banye ka ị hụ ihe niile ị zitere.",
+  "since {time}":
+    "kemgbe {time}",
+  "(current)":
+    "(ugbu a)",
+  "History":
+    "Akụkọ ihe mere",
+  "The stages you will see":
+    "Usoro ị ga-ahụ",
+  "This page updates as soon as the command moves it on.":
+    "Peeji a na-emelite ozugbo ndị ọchịchị kwagara ya n'ihu.",
+  "Stage {n} of {total}":
+    "Usoro {n} n'ime {total}",
+  "All stages":
+    "Usoro niile",
+  "Next: {step}":
+    "Ọzọ: {step}",
 };

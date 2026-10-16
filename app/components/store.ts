@@ -545,8 +545,14 @@ const now = () => new Date().toISOString();
 /** NPF-2026-0417 — the reference number people are asked to quote. */
 function reference(prefix: string) {
   const year = new Date().getFullYear();
-  const n = Math.floor(1000 + Math.random() * 9000);
-  return `${prefix}-${year}-${n}`;
+  const taken = new Set([...state.requests, ...state.incidents].map((x) => x.id));
+  // Four random digits repeat sooner than people expect (one in a hundred by
+  // the 140th application); a repeat would show someone else's request on
+  // the public tracker. ponytail: 9,000 a year per prefix; a server issues these.
+  let id: string;
+  do id = `${prefix}-${year}-${Math.floor(1000 + Math.random() * 9000)}`;
+  while (taken.has(id));
+  return id;
 }
 
 /**

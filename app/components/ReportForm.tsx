@@ -23,7 +23,6 @@ import {
   CashIcon,
   CheckIcon,
   ClockIcon,
-  FileIcon,
   HomeIcon,
   MoreIcon,
   PhoneCallIcon,
@@ -43,6 +42,7 @@ import {
   cleanPhone,
   focusFirstError,
 } from "./Wizard";
+import { CopyRef } from "./ui";
 import {
   RouteCard,
   WherePicker,
@@ -939,7 +939,7 @@ function Filed({
           {t("Your reference number")}
         </p>
         <div className="mt-3 inline-flex max-w-full items-center gap-2 rounded-chip border border-dashed border-npf-line bg-npf-cloud py-2 ps-5 pe-2 print:pe-5">
-          <p className="font-secondary text-3xl font-bold tracking-tight text-npf-ink tabular-nums select-all md:text-4xl">
+          <p className="npf-ref text-3xl text-npf-ink select-all md:text-4xl">
             {incident.id}
           </p>
           <CopyRef value={incident.id} />
@@ -1041,35 +1041,5 @@ function Filed({
         </span>
       </p>
     </div>
-  );
-}
-
-/** One press puts the reference on the clipboard, for a message or a note. */
-function CopyRef({ value }: { value: string }) {
-  const t = useT();
-  const [done, setDone] = useState(false);
-  useEffect(() => {
-    if (!done) return;
-    const id = setTimeout(() => setDone(false), 2400);
-    return () => clearTimeout(id);
-  }, [done]);
-  return (
-    <button
-      type="button"
-      onClick={() =>
-        navigator.clipboard?.writeText(value).then(
-          () => setDone(true),
-          () => {},
-        )
-      }
-      className="npf-btn npf-btn-ghost npf-btn-sm shrink-0 text-npf-blue print:hidden"
-    >
-      {done ? (
-        <CheckIcon aria-hidden className="size-4 text-npf-ok" />
-      ) : (
-        <FileIcon aria-hidden className="size-4" />
-      )}
-      <span aria-live="polite">{done ? t("Copied") : t("Copy")}</span>
-    </button>
   );
 }

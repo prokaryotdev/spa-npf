@@ -676,4 +676,33 @@ export const haAccount: Record<string, string> = {
     "Kuɗi da intanet",
   "Other crimes":
     "Sauran laifuka",
+  // The tracker (2026-10-16). Yoruba and Igbo need native review.
+  "A crime report":
+    "Rahoton laifi",
+  "On the receipt when you report it. Signed in, it is also kept in your account.":
+    "A kan rasidin da ka samu lokacin da ka kai rahoto. Idan ka shiga, ana ajiye shi a asusunka ma.",
+  "A service application":
+    "Neman sabis",
+  "On the screen when you apply, in your email, and in your account.":
+    "A kan allo lokacin da ka nema, a imel ɗinka, da kuma a asusunka.",
+  "Where to find your reference":
+    "Inda za ka sami lambar shaidarka",
+  "Lost it? Sign in to see everything you have sent.":
+    "Ka rasa shi? Shiga don ganin duk abin da ka aika.",
+  "since {time}":
+    "tun {time}",
+  "(current)":
+    "(yanzu)",
+  "History":
+    "Tarihi",
+  "The stages you will see":
+    "Matakan da za ka gani",
+  "This page updates as soon as the command moves it on.":
+    "Wannan shafin yana sabuntawa da zarar rundunar ta ci gaba da shi.",
+  "Stage {n} of {total}":
+    "Mataki {n} cikin {total}",
+  "All stages":
+    "Duk matakai",
+  "Next: {step}":
+    "Na gaba: {step}",
 };

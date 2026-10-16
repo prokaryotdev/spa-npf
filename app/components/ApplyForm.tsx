@@ -409,7 +409,7 @@ function Filed({ request, service }: { request: TrackedRequest; service: Service
         <CheckCircle aria-hidden className="mx-auto size-12 text-npf-blue" />
         <h2 className="npf-h3 mt-4 text-npf-blue-deep">{t("Application sent")}</h2>
         <p className="npf-body mt-2 text-npf-body">{t("Your reference number")}</p>
-        <p className="mt-1 font-secondary text-3xl font-bold tracking-tight text-npf-ink tabular-nums select-all">
+        <p className="npf-ref mt-1 text-3xl text-npf-ink select-all">
           {request.id}
         </p>
         <p className="npf-small mt-2 text-npf-body">
