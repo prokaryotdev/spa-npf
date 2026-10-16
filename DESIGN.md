@@ -102,7 +102,7 @@ The console is an **operate** surface for a control-room officer working an eigh
 ## Layout
 
 - Desk: a fixed 272px white sidebar (crest, five destinations, duty officer), a 64px sticky bar (command in view, waiting-call alarm, clock and relief, language), and the work area on `npf-cloud`, max 1800px.
-- Below 1024px the sidebar becomes a row of five tabs under the bar; below 640px each tab is an icon over a short word, with its count on the icon. All five always fit in one row.
+- Below 1024px the sidebar becomes a wrapping row of tabs under the bar. Below 640px the tabs leave the sticky bar for a dock fixed to the foot of the screen (icon over a short word, count on the icon); past five boards the dock scrolls sideways with the sixth peeking, and the current board is kept in view. The sticky bar is then one row (`--ops-top` 4rem).
 - Every screen opens with the navy band (title, scope line, figures, the screen's main action), then one row of filters, then panels.
 - Lists that pin under the chrome offset by `--ops-top`, never a guessed number.
 
@@ -110,7 +110,7 @@ The console is an **operate** surface for a control-room officer working an eigh
 
 - Panels sit on the ground with a 1px navy hairline (`--ops-shadow`), no drop shadow.
 - Things that float over the work (the new-call alert, menus) add `--shadow-raised`: offset, soft, navy-tinted.
-- The band carries the one deep shadow on the screen.
+- The band is flat Force navy (`npf-blue-deep`) with no shadow, gradient or struck crest (2026-10-16: it read as the homepage hero on every board).
 
 ## Shapes
 
@@ -119,12 +119,19 @@ The console is an **operate** surface for a control-room officer working an eigh
 
 ## Components
 
-- **OpsHead** — the navy band: title, one-line scope (period, command), `OpsFigures`, and the main action as a white pill.
+- **OpsHead** — the navy band, kept short (16px padding, 26px title, 30px figures) so the work starts high on a laptop: title, one-line scope (period, command), `OpsFigures`, and the main action as a white pill.
+- **Sidebar** — 40px rows; the foot holds the officer and the lock and end-shift buttons only (the station well was removed 2026-10-16); the icon sits bare in steel and only the current board gets its Force-blue tile, so all of an HQ desk's boards fit without scrolling.
+- **Elapsed** — a live mm:ss clock under an hour; past it, a span in words ("1 h 26 min", "1 d 6 h"), never "30:00:03".
+- **Calls list** — open calls first, then a cloud-washed ruled head "Closed, last 24 hours" with its count over the day's closed calls. With nothing chosen, the detail panel offers "Open the oldest waiting call".
+- **Requests (2026-10-16)** — the same list + record layout as Calls and Case files: a table (service and ref · status · command · handled by · days waiting) and, beside it, the chosen request as a labelled record (status, service, a dt/dd grid, Details, History, a folded "Attach a document", then Approve · Start review · Ask for more, Reject at the far end). "To decide / All requests" is a segmented control with counts. The old card grid was called "very very poor and not professional" by the user.
+- **Dropdowns and folds** — every menu (OpsPicker triggers, native selects, the language switch) ends in a down arrow, never a chevron; it turns up while open. Every `<summary>` in the console gets the same arrow from one CSS rule. The open select lights its chosen row in mist.
+- **Records** — a record's facts sit in a label/value grid, never in a dotted run-on line (detainee: offence, age, sex now rows). No decorative icon repeated down a list (the alert bell tile was dropped).
+- **Unit row** — the radio's demo controls (send position, emergency button) fold under a quiet "Radio" disclosure; a raised emergency still shows on the row.
 - **OpsFigures** — up to four big numbers with a label under each; `of` renders "24/26". Colour only when it means something (red late, green free). On a phone, four counts share a row; a reading like "7 min" switches them to 2×2.
 - **OpsPanel** — white tile with an optional title bar (heading + count pill + action) over a hairline. `flush` lets a table run edge to edge.
 - **OpsButton** — `brand` (filled Force blue), `quiet` (chip fill), `ghost` (routine control repeated down a list), `danger`. Presses scale to 0.97.
 - **PriorityTag** — "P1"–"P4" in its own hue on a tinted chip; the word ("Immediate") is the accessible label. The grade is read aloud on radio, so the number leads. P1 alone is set solid (white on red); P2–P4 are tinted with a rim of their own hue.
-- **Queues (board Pending / Running)** — ruled column heads from a 48rem panel up (stacked below it) (grade · call · waiting · dispatch; grade · call · status · unit · elapsed), call type first with the ref in mono beside it. Dispatch is an OpsPicker of the call's own command's free units (was a plain select, 2026-10-12; user asked for a better dropdown, 2026-10-13). Rows breathe: 20px vertical padding on Pending, 16px on Running.
+- **Queues (board Pending / Running)** — ruled column heads from a 42rem panel up (the right column is 24rem so a 1440px desk gets them) (stacked below it) (grade · call · waiting · dispatch; grade · call · status · unit · elapsed), call type first with the ref in mono beside it. Dispatch is an OpsPicker of the call's own command's free units (was a plain select, 2026-10-12; user asked for a better dropdown, 2026-10-13). Rows breathe: 20px vertical padding on Pending, 16px on Running.
 - **OpsStatus / UnitStatusTag** — pill with a dot and the word: Pending, En route, On scene, Closed; Available, Off the air.
 - **Commands table (board, 2026-10-13, replaced the mosaic of chips; user picked "desk table")** — one ruled head (Command · Waiting · Running · Units free), then a band per zone on a cloud wash carrying the zone's totals in the same columns and a red "n late" tag beside its name; its busy commands under it, indented, worst first; zones worst first too. A quiet zone is its band alone with a green "✓ Queue clear" tag across the two count columns. Rows: a state dot (red late, amber waiting, blue running), the name, waiting as a solid pill (red once late), running as an outline pill, units free as "n/m" with a short green share bar; nobody free is a red "0/m" tag; nothing is a steel dash read as 0. The whole row is the button (aria-pressed); a late row carries a 4% red wash; the chosen row is Force blue. A command desk gets the same table by division, without the units column.
 - **Units table (board, 2026-10-13)** — one fleet bar split by status (free green, en route indigo, on scene teal, off the air grey; never orange) with each share counted under it, then a table: Section · Free · En route · On scene · Off the air, each head topped by its colour, so the head is the legend. Free leads; nobody free is a red "0" tag.

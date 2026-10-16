@@ -119,14 +119,13 @@ export default function OpsAlerts() {
                       aria-pressed={selected === a.id}
                       className={`flex w-full items-start gap-4 px-5 py-3.5 text-start transition-colors ${selected === a.id ? "bg-npf-mist" : "hover:bg-ops-hover"} ${a.active ? "" : "opacity-60"}`}
                     >
+                      {/* A photo earns the space; the same bell tile on every
+                          row said nothing, so a row without one starts with
+                          its words. */}
                       {a.photo?.thumb ? (
                         // eslint-disable-next-line @next/next/no-img-element -- a data URL made in the browser
                         <img src={a.photo.thumb} alt="" className="size-12 shrink-0 rounded-md object-cover" />
-                      ) : (
-                        <span aria-hidden className="grid size-12 shrink-0 place-items-center rounded-md bg-npf-cloud text-npf-blue-ink">
-                          <AlertGlyph className="size-7" />
-                        </span>
-                      )}
+                      ) : null}
                       <span className="min-w-0 flex-1">
                         <span className="flex flex-wrap items-center gap-2">
                           <KindTag kind={a.kind} />

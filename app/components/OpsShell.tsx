@@ -21,7 +21,7 @@ import {
 } from "./OpsPieces";
 import { useT } from "../i18n/client";
 import { PoliceWordmark } from "./Wordmark";
-import { ChevronDown, CloseIcon, ShieldIcon, SignOutIcon } from "./icons";
+import { ArrowDown, CloseIcon, ShieldIcon, SignOutIcon } from "./icons";
 import {
   AlertGlyph,
   BoardGlyph,
@@ -358,11 +358,12 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
             />
           ))}
         </header>
+        <Tabs path={path} tabs={tabs} counts={counts} dock />
 
         <main
           id="main-content"
           tabIndex={-1}
-          className="npf-page-in mx-auto w-full max-w-450 min-w-0 flex-1 px-4 pt-6 pb-12 outline-none sm:px-6 lg:px-8 lg:pt-8"
+          className="npf-page-in mx-auto w-full max-w-450 min-w-0 flex-1 px-4 pt-6 pb-28 outline-none sm:px-6 sm:pb-12 lg:px-8 lg:pt-8"
         >
           {allowed ? (
             children
@@ -434,18 +435,18 @@ function Sidebar({
 
       <nav
         aria-label={t("Console")}
-        className="min-h-0 flex-1 overflow-y-auto px-3 py-5"
+        className="min-h-0 flex-1 overflow-y-auto px-3 py-4"
       >
         {/* Grouped once the post has more than one kind of board: the live
             work, the investigation behind it, the desk's paperwork. */}
         {[...new Set(tabs.map((tab) => tab.group))].map((group, g, groups) => (
-        <div key={group} className={g ? "mt-5" : ""}>
+        <div key={group} className={g ? "mt-4" : ""}>
         {groups.length > 1 ? (
           <p className="mb-1.5 px-3 text-2xs font-semibold text-npf-steel">
             {t(group)}
           </p>
         ) : null}
-        <ul className="space-y-1">
+        <ul className="space-y-0.5">
           {tabs.filter((tab) => tab.group === group).map(({ href, label, Icon }) => {
             const active = isHere(href, path);
             return (
@@ -453,20 +454,20 @@ function Sidebar({
                 <Link
                   href={href}
                   aria-current={active ? "page" : undefined}
-                  className={`group flex h-12 items-center gap-3 rounded-chip px-3 text-sm font-medium transition-[background-color,color,scale] duration-(--dur-hover) active:scale-[0.98] active:duration-(--dur-press) ${
+                  className={`group flex h-10 items-center gap-3 rounded-chip px-3 text-sm font-medium transition-[background-color,color,scale] duration-(--dur-hover) active:scale-[0.98] active:duration-(--dur-press) ${
                     active
                       ? "bg-npf-mist font-semibold text-npf-blue-deep"
                       : "text-npf-body hover:bg-npf-paper hover:text-npf-ink"
                   }`}
                 >
                   <span
-                    className={`grid size-8 shrink-0 place-items-center rounded-lg transition-colors duration-(--dur-hover) ${
+                    className={`grid size-7 shrink-0 place-items-center rounded-lg transition-colors duration-(--dur-hover) ${
                       active
                         ? "bg-npf-blue text-white"
-                        : "bg-npf-cloud text-npf-blue-ink group-hover:bg-npf-chip"
+                        : "text-npf-steel group-hover:text-npf-blue-ink"
                     }`}
                   >
-                    <Icon className="size-5" />
+                    <Icon className="size-4.5" />
                   </span>
                   <span className="truncate">{t(label)}</span>
                   <Badge count={counts[href]} active={active} />
@@ -522,12 +523,6 @@ function Sidebar({
             <span className="sr-only">{t("End shift")}</span>
           </button>
         </div>
-        {/* Where the desk is, in a well under the officer: the room on one
-            line, the headquarters and city on the next. Split at its first
-            comma, so it never breaks mid-name across three ragged lines. */}
-        {officer.station ? (
-          <Station station={t(officer.station)} />
-        ) : null}
       </section>
       ) : (
         <OfficerLoading />
@@ -553,7 +548,6 @@ function OfficerLoading() {
         </span>
         <Skel className="size-9 shrink-0 rounded-(--ops-control-radius)" />
       </div>
-      <Skel className="mt-3 h-12 w-full rounded-(--ops-control-radius)" />
     </div>
   );
 }
@@ -585,24 +579,25 @@ function ConsoleLoading({ path }: { path: string }) {
           </div>
           <Tabs path={path} tabs={ALL_TABS.slice(0, 5)} counts={{}} />
         </header>
+        <Tabs path={path} tabs={ALL_TABS.slice(0, 5)} counts={{}} dock />
 
         <main className="mx-auto w-full max-w-450 min-w-0 flex-1 px-4 pt-6 pb-12 sm:px-6 lg:px-8 lg:pt-8">
-          <div className="npf-ops-band relative isolate overflow-clip rounded-(--radius-card) px-6 py-6 text-white sm:px-7">
-            <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-5">
+          <div className="npf-ops-band relative isolate overflow-clip rounded-(--radius-card) px-5 py-4 text-white sm:px-6">
+            <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-4">
               <div>
                 <p
                   role="status"
-                  className="flex items-center gap-3 font-secondary text-xl leading-[1.05] font-bold tracking-[-0.025em] whitespace-nowrap sm:text-[2rem]"
+                  className="flex items-center gap-3 font-secondary text-xl leading-[1.1] font-bold tracking-[-0.02em] whitespace-nowrap sm:text-[1.625rem]"
                 >
-                  <ShieldIcon aria-hidden className="npf-ops-breathe size-6 shrink-0 text-white/80 sm:size-7" />
+                  <ShieldIcon aria-hidden className="npf-ops-breathe size-5 shrink-0 text-white/80 sm:size-6" />
                   {t("Checking credentials…")}
                 </p>
-                <span aria-hidden className="npf-ops-skel npf-ops-skel-dark mt-3 block h-3.5 w-48 rounded-md" />
+                <span aria-hidden className="npf-ops-skel npf-ops-skel-dark mt-2 block h-3.5 w-48 rounded-md" />
               </div>
               <span aria-hidden className="flex gap-8">
                 {[0, 1, 2, 3].map((i) => (
                   <span key={i} className="flex flex-col items-center gap-2">
-                    <span className="npf-ops-skel npf-ops-skel-dark block h-9 w-10 rounded-md" />
+                    <span className="npf-ops-skel npf-ops-skel-dark block h-7 w-10 rounded-md" />
                     <span className="npf-ops-skel npf-ops-skel-dark block h-2.5 w-14 rounded" />
                   </span>
                 ))}
@@ -611,7 +606,7 @@ function ConsoleLoading({ path }: { path: string }) {
           </div>
 
           {/* The queue and its side column, as the board lays them out. */}
-          <div aria-hidden className="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_26rem]">
+          <div aria-hidden className="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_24rem]">
             {[3, 5].map((rows, col) => (
               <div key={col} className="npf-ops-tile overflow-clip">
                 <div className="flex h-13 items-center gap-3 border-b border-ops-line-soft px-5">
@@ -640,31 +635,6 @@ function ConsoleLoading({ path }: { path: string }) {
   );
 }
 
-/** The desk's station as two ruled lines: the room, then where it is. */
-function Station({ station }: { station: string }) {
-  const cut = station.indexOf(",");
-  const room = cut > 0 ? station.slice(0, cut) : station;
-  const rest = cut > 0 ? station.slice(cut + 1).trim() : "";
-  return (
-    <p
-      title={station}
-      className="mt-3 flex items-center gap-2.5 rounded-(--ops-control-radius) bg-npf-cloud px-3 py-2 ring-1 ring-ops-line-soft ring-inset"
-    >
-      <ShieldIcon aria-hidden className="size-4 shrink-0 text-npf-blue" />
-      <span className="min-w-0 leading-tight">
-        <span className="block truncate text-xs font-medium text-npf-ink">
-          {room}
-        </span>
-        {rest ? (
-          <span className="mt-0.5 block truncate text-2xs text-npf-steel">
-            {rest}
-          </span>
-        ) : null}
-      </span>
-    </p>
-  );
-}
-
 /**
  * The same four destinations below 1024px, as the /services chips: all four
  * in one row, never a strip to swipe, so nobody has to scroll a menu to find
@@ -674,19 +644,27 @@ function Tabs({
   path,
   tabs,
   counts,
+  dock = false,
 }: {
   path: string;
   tabs: Tab[];
   counts: Record<string, Count>;
+  /** The phone's version: one row fixed to the foot of the screen. */
+  dock?: boolean;
 }) {
   const t = useT();
   return (
-    /* Five destinations in one row, never a strip to swipe: below 640px
-       each is an icon over a short word, the way a phone's own tab bar
-       fits five, and the count rides on the icon. */
+    /* On a tablet, a wrapping row under the bar. On a phone, a dock at the
+       foot of the screen where the thumb is, as a phone's own tab bar: it
+       used to sit in the sticky bar as two rows of five, holding a quarter
+       of the screen for good. Past five boards the dock scrolls sideways. */
     <nav
       aria-label={t("Console")}
-      className="mx-auto grid max-w-450 grid-cols-5 gap-1.5 px-4 pb-3 sm:flex sm:flex-wrap sm:gap-2 sm:px-6 lg:hidden"
+      className={
+        dock
+          ? "fixed inset-x-0 bottom-0 z-40 grid auto-cols-[minmax(4.25rem,1fr)] grid-flow-col gap-1 overflow-x-auto overscroll-x-contain border-t border-npf-hairline bg-white/95 px-2 pt-1.5 pb-[max(0.375rem,env(safe-area-inset-bottom))] backdrop-blur-xl sm:hidden print:hidden"
+          : "mx-auto flex max-w-450 flex-wrap gap-2 px-6 pb-3 max-sm:hidden lg:hidden"
+      }
     >
       {tabs.map(({ href, short, Icon }) => {
         const active = isHere(href, path);
@@ -696,10 +674,12 @@ function Tabs({
             key={href}
             href={href}
             aria-current={active ? "page" : undefined}
+            // The dock scrolls past five boards: keep the current one in it.
+            ref={dock && active ? (el) => el?.scrollIntoView({ inline: "center", block: "nearest" }) : undefined}
             className={`flex min-h-13 min-w-0 flex-col items-center justify-center gap-0.5 rounded-xl px-1 text-sm font-medium whitespace-nowrap ring-1 transition-[background-color,color,box-shadow,scale] duration-(--dur-hover) ring-inset active:scale-[0.97] active:duration-(--dur-press) sm:min-h-10 sm:flex-auto sm:flex-row sm:gap-2 sm:rounded-(--ops-control-radius) sm:px-2.5 ${
               active
                 ? "bg-npf-blue text-white ring-npf-blue"
-                : "bg-white text-npf-ink ring-npf-hairline hover:bg-npf-paper"
+                : "bg-white text-npf-ink ring-transparent hover:bg-npf-paper sm:ring-npf-hairline"
             }`}
           >
             <span className="relative">
@@ -872,7 +852,7 @@ function CommandPicker({
           <span className="truncate">
             {viewing ? commandLabel(t, viewing) : zone ? t(zone.name) : t("All commands")}
           </span>
-          <ChevronDown
+          <ArrowDown
             aria-hidden
             className={`npf-ops-chev ms-auto size-4 shrink-0 ${
               viewing ? "text-white" : "text-npf-steel"
@@ -926,7 +906,7 @@ function NewCalls({ viewing }: { viewing: string | null }) {
   return (
     <div
       aria-live="assertive"
-      className="fixed end-4 bottom-4 z-50 grid w-[min(24rem,calc(100vw-2rem))] gap-2 print:hidden"
+      className="fixed end-4 bottom-4 z-50 max-sm:bottom-22 grid w-[min(24rem,calc(100vw-2rem))] gap-2 print:hidden"
     >
       {calls.map((call) => (
         <div

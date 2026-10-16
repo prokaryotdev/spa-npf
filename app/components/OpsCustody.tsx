@@ -374,9 +374,7 @@ function DetaineeDetail({ d, onClose }: { d: Detainee; onClose: () => void }) {
         </button>
       }
     >
-      <p className="text-xs text-ops-dim">
-        <span className="font-mono">{d.id}</span> · {t(d.offence)} · {d.age ? t("{n} years", { n: d.age }) : null} {t(d.sex)}
-      </p>
+      <p className="font-mono text-xs text-ops-dim tabular-nums">{d.id}</p>
 
       {/* The clock, as large as the board's own figures: it is the reason
           this screen exists. */}
@@ -387,7 +385,7 @@ function DetaineeDetail({ d, onClose }: { d: Detainee; onClose: () => void }) {
           <span className="font-mono text-[1.75rem] leading-none font-medium tracking-[-0.03em] tabular-nums" style={{ color: c.over ? "var(--ops-p1)" : c.near ? "var(--ops-p2)" : undefined }}>
             {now ? duration(c.used) : "--:--"}
           </span>
-          <span className="text-xs text-ops-dim">{t("of {n} hours", { n: custodyLimit(d) })}</span>
+          <span className="text-xs text-npf-body">{t("of {n} hours", { n: custodyLimit(d) })}</span>
         </p>
         <p className="mt-2 text-xs">
           {held
@@ -396,13 +394,21 @@ function DetaineeDetail({ d, onClose }: { d: Detainee; onClose: () => void }) {
               : t("Charge or release by {time}.", { time: format.dateTime(new Date(c.due).toISOString()) })
             : t("{status} at {time}.", { status: t(d.status), time: format.dateTime(d.released ?? d.booked) })}
         </p>
-        <label className="mt-2 flex items-center gap-2 text-2xs text-ops-dim">
+        <label className="mt-2 flex items-center gap-2 text-xs text-npf-body">
           <input type="checkbox" checked={d.courtNear} disabled={!held} onChange={(e) => updateDetainee(d.id, { courtNear: e.target.checked })} />
           {t("A court sits within 40 km")}
         </label>
       </div>
 
       <dl className="mt-4 grid grid-cols-[6.5rem_minmax(0,1fr)] gap-x-3 gap-y-1.5 text-xs">
+        {/* Each fact beside its label; they used to run together in one
+            dotted line under the name. */}
+        <dt className="text-ops-dim">{t("Offence")}</dt>
+        <dd className="font-medium">{t(d.offence)}</dd>
+        <dt className="text-ops-dim">{t("Age")}</dt>
+        <dd>{d.age ? t("{n} years", { n: d.age }) : "—"}</dd>
+        <dt className="text-ops-dim">{t("Sex")}</dt>
+        <dd>{t(d.sex)}</dd>
         <dt className="text-ops-dim">{t("Arrested")}</dt>
         <dd className="tabular-nums">{format.dateTime(d.arrested)}</dd>
         <dt className="text-ops-dim">{t("Booked in by")}</dt>

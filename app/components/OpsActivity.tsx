@@ -111,7 +111,7 @@ export default function OpsActivity() {
               <tr className="whitespace-nowrap">
                 <th scope="col" className="py-3 ps-5 pe-4 font-medium">{t("Time")}</th>
                 <th scope="col" className="hidden py-3 pe-4 font-medium md:table-cell">{t("Officer")}</th>
-                <th scope="col" className="py-3 pe-4 font-medium">{t("Record")}</th>
+                <th scope="col" className="hidden py-3 pe-4 font-medium sm:table-cell">{t("Record")}</th>
                 <th scope="col" className="w-full py-3 pe-5 font-medium">{t("What happened")}</th>
               </tr>
             </thead>
@@ -122,12 +122,17 @@ export default function OpsActivity() {
                     {format.dateTime(e.at)}
                   </td>
                   <td className="hidden py-3 pe-4 text-xs whitespace-nowrap md:table-cell">{t(e.by)}</td>
-                  <td className="py-3 pe-4 whitespace-nowrap">
+                  <td className="hidden py-3 pe-4 whitespace-nowrap sm:table-cell">
                     <Link href={e.href} className="font-mono text-xs font-medium text-ops-accent hover:underline">
                       {e.ref}
                     </Link>
                   </td>
                   <td className="py-3 pe-5 text-xs leading-relaxed">
+                    {/* On a phone the record rides in this cell, so what
+                        happened gets the width instead of a third column. */}
+                    <Link href={e.href} className="mb-0.5 block w-fit font-mono font-medium text-ops-accent hover:underline sm:hidden">
+                      {e.ref}
+                    </Link>
                     {line(t, e.text, e.vars)}
                     <span className="mt-0.5 block text-2xs text-ops-dim md:hidden">{t(e.by)}</span>
                   </td>

@@ -1067,10 +1067,11 @@ html.npf-large-text {
   background: var(--ops-bg);
   color: var(--ops-text);
 }
-/* Below 640px the tab row is icon-over-word, 0.5rem taller. */
+/* Below 640px the boards move to a dock at the foot of the screen, so the
+   sticky bar is one row tall, as on a desk. */
 @media (max-width: 639px) {
   .npf-ops {
-    --ops-top: 8rem;
+    --ops-top: 4rem;
   }
 }
 /* From here the five destinations fold into the command bar and the frame is
@@ -1271,15 +1272,12 @@ html.npf-large-text {
   border-radius: var(--radius-card);
 }
 /*
- * The command board's title band: the homepage hero's night-to-Force-blue,
- * with a low wash of sky light from the top corner so it reads as lit, not
- * as a flat swatch.
+ * Each board's title band: flat Force navy, an instrument readout rather
+ * than the homepage hero. (It was the hero's gradient, sky glow, struck
+ * crest and drop shadow; on a desk it read as a banner on every screen.)
  */
 .npf-ops-band {
-  background:
-    radial-gradient(60rem 22rem at 100% 0%, color-mix(in srgb, var(--color-npf-sky) 22%, transparent), transparent 70%),
-    linear-gradient(135deg, var(--color-npf-night) 0%, var(--color-npf-blue-deep) 55%, var(--color-npf-blue) 100%);
-  box-shadow: 0 18px 40px -28px var(--color-npf-night);
+  background: var(--color-npf-blue-deep);
   /* The figure tones callers pass, lifted to read on navy. */
   --ops-p1: var(--color-npf-alert-soft);
   --ops-p2: var(--color-npf-gold-soft);
@@ -1326,7 +1324,7 @@ html.npf-large-text {
   border-radius: var(--ops-control-radius);
   background-color: #fff;
   box-shadow: var(--ops-control-rim), var(--ops-control-lift);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235D6D84' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235D6D84' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14'/%3E%3Cpath d='m6.5 13 5.5 5.5 5.5-5.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.6rem center;
   background-size: 1rem;
@@ -1376,7 +1374,7 @@ html.npf-large-text {
     height: 1rem;
     margin-inline-start: auto;
     background: var(--ops-dim);
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E")
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14'/%3E%3Cpath d='m6.5 13 5.5 5.5 5.5-5.5'/%3E%3C/svg%3E")
       center / contain no-repeat;
     transition: rotate 200ms var(--ease-out);
   }
@@ -1446,6 +1444,13 @@ html.npf-large-text {
     width: 0.875rem;
     color: currentColor;
   }
+  /* The chosen row stays lit when the menu opens, as in the console's own
+     pop-up menus, so the current value is found without reading. */
+  .npf-ops-select option:checked {
+    background: var(--color-npf-mist);
+    color: var(--color-npf-blue-deep);
+    font-weight: 600;
+  }
   .npf-ops-select option:not(:checked)::checkmark {
     visibility: hidden;
   }
@@ -1457,6 +1462,39 @@ html.npf-large-text {
 @media (prefers-reduced-motion: reduce) {
   .npf-ops-select::picker(select),
   .npf-ops-select::picker-icon {
+    transition: none;
+  }
+}
+/* Every fold in the console opens on the same arrow as its menus, turned
+   up while open, in place of the browser's triangle (or, on a flex
+   summary, no marker at all, so the duty roster never looked openable). */
+.npf-ops summary {
+  list-style: none;
+  cursor: pointer;
+}
+.npf-ops summary::-webkit-details-marker {
+  display: none;
+}
+.npf-ops summary::after {
+  content: "";
+  display: inline-block;
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-inline-start: 0.375rem;
+  vertical-align: -0.125rem;
+  background: currentColor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14'/%3E%3Cpath d='m6.5 13 5.5 5.5 5.5-5.5'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: rotate 200ms var(--ease-out);
+}
+.npf-ops summary.flex::after {
+  margin-inline-start: auto;
+}
+.npf-ops details[open] > summary::after {
+  rotate: 180deg;
+}
+@media (prefers-reduced-motion: reduce) {
+  .npf-ops summary::after {
     transition: none;
   }
 }
@@ -1829,6 +1867,11 @@ html.npf-large-text {
 }
 .npf-page-in > * {
   animation: npf-page-in var(--dur-reveal) var(--ease-out);
+}
+/* The desk switches boards all shift: a quick settle, not a reveal. */
+.npf-ops {
+  --dur-reveal: 200ms;
+  --reveal-y: 4px;
 }
 
 /* The language menu drops from its button: quick, from the corner it hangs

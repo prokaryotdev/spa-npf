@@ -1,7 +1,7 @@
 "use client";
 
 import { filterBy } from "../search-text";
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   callOutcomes,
@@ -157,6 +157,10 @@ export default function OpsIncidents() {
   }, [incidents, query, status, priority, unassigned, t, minute]);
 
   const waiting = incidents.filter((i) => i.status === "New");
+  const oldest = waiting.reduce<Incident | null>(
+    (a, i) => (!a || i.reported < a.reported ? i : a),
+    null,
+  );
   const late = waiting.filter((i) => isOverdue(i, now)).length;
   const running = incidents.filter(
     (i) => i.status === "Dispatched" || i.status === "On Scene",
@@ -322,11 +326,31 @@ export default function OpsIncidents() {
                 </tr>
               </thead>
               <tbody>
-                {visible.map((incident) => {
+                {visible.map((incident, n) => {
                   const late = isOverdue(incident, now);
                   const near = isNearDue(incident, now);
                   const active = selected === incident.id;
+                  // The live calls and the day's closed ones are two lists;
+                  // a ruled head where the closed ones start says so.
+                  const firstClosed =
+                    incident.status === "Closed" &&
+                    (n === 0 || visible[n - 1].status !== "Closed");
                   return (
+                    <Fragment key={incident.id}>
+                    {firstClosed ? (
+                      <tr className="border-b border-ops-line-soft bg-npf-cloud">
+                        <th
+                          scope="colgroup"
+                          colSpan={6}
+                          className="py-2 ps-5 pe-5 text-start text-xs font-semibold text-ops-dim"
+                        >
+                          {t("Closed, last 24 hours")}
+                          <span className="ms-2 font-mono font-medium tabular-nums">
+                            {visible.length - n}
+                          </span>
+                        </th>
+                      </tr>
+                    ) : null}
                     <tr
                       key={incident.id}
                       onClick={() => setSelected(incident.id)}
@@ -443,6 +467,7 @@ export default function OpsIncidents() {
                         ) : null}
                       </td>
                     </tr>
+                    </Fragment>
                   );
                 })}
               </tbody>
@@ -496,6 +521,15 @@ export default function OpsIncidents() {
                 tone="idle"
                 icon={<RadioIcon className="size-5" />}
                 hint={t("Pick a row to dispatch it, move it on, or read the log.")}
+                action={
+                  // One step to the call that is getting worse: the oldest
+                  // one still waiting for a unit.
+                  oldest ? (
+                    <OpsButton tone="brand" onClick={() => setSelected(oldest.id)}>
+                      {t("Open the oldest waiting call")}
+                    </OpsButton>
+                  ) : undefined
+                }
               />
             </OpsPanel>
           )}
@@ -797,19 +831,26 @@ function Detail({
         {incident.evidence?.length && !incident.media?.length ? (
           <p className="text-xs break-words">{incident.evidence.join(", ")}</p>
         ) : null}
-        <div className="mt-2">
-          <MediaPicker
-            id={`${id}-media`}
-            tone="ops"
-            label={t("Attach scene photos or files")}
-            media={media}
-            onChange={(m) => {
-              if (m.length) attachToCall(incident.id, m);
-              setMedia([]);
-            }}
-            by={actor()}
-          />
-        </div>
+        {/* The upload folds behind its own line: open, it is a drop zone
+            and a file list, too much to stand in every call's panel. */}
+        <details className="mt-2 text-xs">
+          <summary className="w-fit rounded font-medium text-ops-accent hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue-mid">
+            {t("Attach scene photos or files")}
+          </summary>
+          <div className="mt-3">
+            <MediaPicker
+              id={`${id}-media`}
+              tone="ops"
+              label={t("Attach scene photos or files")}
+              media={media}
+              onChange={(m) => {
+                if (m.length) attachToCall(incident.id, m);
+                setMedia([]);
+              }}
+              by={actor()}
+            />
+          </div>
+        </details>
       </div>
 
       <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-ops-line-soft pt-4">
@@ -1001,7 +1042,10 @@ function Stamps({ incident }: { incident: Incident }) {
               </time>
             </span>
           ) : (
-            <span className="sr-only">{t("None")}</span>
+            <span className="text-ops-dim">
+              <span aria-hidden>—</span>
+              <span className="sr-only">{t("None")}</span>
+            </span>
           )}
         </li>
       ))}

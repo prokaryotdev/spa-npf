@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
 import { flushSync } from "react-dom";
 import { dispatchTarget } from "../content-ops";
@@ -153,10 +152,23 @@ export function Elapsed({
   to?: string | null;
   className?: string;
 }) {
+  const t = useT();
   const now = useNow();
   const mounted = useMounted();
   const start = new Date(from).getTime();
   const end = to ? new Date(to).getTime() : now;
+  // Past an hour the seconds are noise and "30:00:03" reads as a time of
+  // day; say the span in words instead.
+  const mins = Math.floor(Math.max(0, end - start) / 60_000);
+  const span =
+    mins >= 1440
+      ? t("{d} d {h} h", { d: Math.floor(mins / 1440), h: Math.floor((mins % 1440) / 60) })
+      : mins >= 60
+        ? t("{h} h {m} min", { h: Math.floor(mins / 60), m: mins % 60 })
+        : to
+          ? // A finished span does not tick; "16:00" would read as a time.
+            t("{n} min", { n: mins })
+          : duration(end - start);
   if (!mounted)
     return (
       <span className={`font-mono tabular-nums ${className}`} aria-hidden>
@@ -165,7 +177,7 @@ export function Elapsed({
     );
   return (
     <time className={`font-mono tabular-nums ${className}`} dateTime={from}>
-      {duration(end - start)}
+      {span}
     </time>
   );
 }
@@ -394,29 +406,17 @@ export function OpsHead({
 }) {
   return (
     /*
-     * The console's one dark moment: the homepage hero's navy, carrying a
-     * large title and the screen's figures. It is the one big voice on the
-     * screen, and the board below steps down from it rather than competing.
+     * The console's one dark moment: Force navy carrying the title and the
+     * screen's figures, kept short so the work starts high on a laptop.
      */
-    <header className="npf-ops-band relative isolate overflow-clip rounded-(--radius-card) px-6 py-6 text-white sm:px-7">
-      {/* The Force crest, struck faintly into the band: the one place the
-          desk wears the badge at size. */}
-      <Image
-        src="/brand/logo.png"
-        alt=""
-        width={1179}
-        height={1334}
-        sizes="256px"
-        aria-hidden
-        className="pointer-events-none absolute -end-6 -bottom-16 -z-10 h-auto w-64 opacity-[0.06] brightness-0 invert select-none max-sm:hidden"
-      />
-      <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-5">
+    <header className="npf-ops-band relative isolate overflow-clip rounded-(--radius-card) px-5 py-4 text-white sm:px-6">
+      <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-4">
         <div className="min-w-0">
-          <h1 className="font-secondary text-[1.75rem] leading-[1.05] font-bold tracking-[-0.025em] text-balance sm:text-[2rem]">
+          <h1 className="font-secondary text-2xl leading-[1.1] font-bold tracking-[-0.02em] text-balance sm:text-[1.625rem]">
             {title}
           </h1>
           {lead ? (
-            <p className="npf-small mt-2 max-w-[68ch] text-white/75">
+            <p className="npf-small mt-1 max-w-[68ch] text-white/75">
               {lead}
             </p>
           ) : null}
@@ -445,23 +445,23 @@ export function OpsFigures({
        A reading wider than a count ("7 min") gets a 2×2 grid instead, or the
        four run into each other at 390px. */
     <dl
-      className={`grid w-full items-start gap-x-4 sm:flex sm:items-end sm:w-auto sm:flex-wrap sm:gap-x-10 sm:gap-y-4 ${
+      className={`grid w-full items-start gap-x-4 sm:flex sm:items-end sm:w-auto sm:flex-wrap sm:gap-x-8 sm:gap-y-4 ${
         figures.some((f) => typeof f.value === "string")
           ? "grid-cols-2 gap-y-5"
           : "grid-flow-col auto-cols-fr"
       }`}
     >
       {figures.map(({ label, value, of, tone }) => (
-        <div key={label} className="flex flex-col-reverse gap-1.5">
+        <div key={label} className="flex flex-col-reverse gap-1">
           <dt className="text-xs leading-snug font-medium text-white/72">{label}</dt>
           <dd
             key={value}
-            className="npf-ops-count font-mono text-[1.75rem] leading-none font-medium tracking-[-0.04em] tabular-nums sm:text-[2.5rem]"
+            className="npf-ops-count font-mono text-[1.625rem] leading-none font-medium tracking-[-0.03em] tabular-nums sm:text-[1.875rem]"
             style={{ color: tone }}
           >
             {value}
             {of !== undefined ? (
-              <span className="text-lg text-white/60">/{of}</span>
+              <span className="text-base text-white/60">/{of}</span>
             ) : null}
           </dd>
         </div>

@@ -371,26 +371,35 @@ function UnitCard({
         </OpsButton>
       )}
 
-      <SharePosition unit={unit} />
-
       {/* The radio's emergency button, pressed from here in this build. A
           raised one turns the row red and stays until a supervisor stands it
-          down from the banner. */}
+          down from the banner. The radio's own controls fold away: they stood
+          as two links (one red) on every row and read as alarms. */}
       {unit.emergency ? (
         <p className="col-span-2 mt-1 flex items-center gap-2 rounded-md bg-ops-p1 px-2.5 py-1.5 text-xs font-semibold text-white">
           <span aria-hidden className="size-2 animate-pulse rounded-full bg-white" />
           {t("Emergency raised · {ref}", { ref: unit.emergency })}
         </p>
-      ) : !off ? (
-        <button
-          type="button"
-          onClick={() => raiseEmergency(unit.callsign)}
-          title={t("What the officer's radio sends when its emergency button is pressed")}
-          className="col-span-2 justify-self-start text-2xs font-medium text-ops-p1 underline-offset-2 hover:underline"
-        >
-          {t("Press emergency button")}
-        </button>
-      ) : null}
+      ) : (
+        <details className="group/radio col-span-2 text-2xs">
+          <summary className="flex w-fit cursor-pointer list-none items-center gap-1 rounded font-medium text-ops-dim transition-colors hover:text-ops-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-blue-mid [&::-webkit-details-marker]:hidden">
+            {t("Radio")}
+          </summary>
+          <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1">
+            <SharePosition unit={unit} />
+            {!off ? (
+              <button
+                type="button"
+                onClick={() => raiseEmergency(unit.callsign)}
+                title={t("What the officer's radio sends when its emergency button is pressed")}
+                className="font-medium text-ops-p1 underline-offset-2 hover:underline"
+              >
+                {t("Press emergency button")}
+              </button>
+            ) : null}
+          </div>
+        </details>
+      )}
     </li>
   );
 }
@@ -494,7 +503,7 @@ function SharePosition({ unit }: { unit: Unit }) {
   const format = useFormat();
   const [state, setState] = useState<"idle" | "busy" | "failed">("idle");
   return (
-    <p className="col-span-2 flex flex-wrap items-center gap-x-3 text-2xs text-ops-dim">
+    <p className="flex flex-wrap items-center gap-x-3 text-ops-dim">
       {unit.fixAt ? <span>{t("Position sent {time}", { time: format.time(unit.fixAt) })}</span> : null}
       <button
         type="button"

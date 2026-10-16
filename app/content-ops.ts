@@ -41,6 +41,37 @@ const SEEDS: Seed[] = [
     source: "112 call",
     notes: [[4, "Caller still on the line. Ambulance notified."]],
   },
+  // Two more on the Lagos desk, the one the demo opens on, so its board has
+  // a unit en route and one on scene rather than a single call and nothing
+  // running. Words reused from the calls below, so nothing new to translate.
+  {
+    id: "NPF-4419",
+    where: at_("Lagos", "Kosofe"),
+    kind: "Assault",
+    priority: "P2",
+    area: "Ketu, Kosofe",
+    at: [14, 11, null, null],
+    status: "Dispatched",
+    assignee: "Cpl. D. Okonkwo",
+    unit: "Patrol 14",
+    summary: "Report of a man being beaten at a bus stop.",
+    source: "112 call",
+    notes: [],
+  },
+  {
+    id: "NPF-4418",
+    where: at_("Lagos", "Lagos Island"),
+    kind: "Drug offence",
+    priority: "P3",
+    area: "Idumota, Lagos Island",
+    at: [38, 30, 19, null],
+    status: "On Scene",
+    assignee: "Insp. A. Bakare",
+    unit: "Tactical 05",
+    summary: "Drugs reported being sold from a kiosk.",
+    source: "Nigeria Police Force App",
+    notes: [],
+  },
   {
     id: "NPF-4416",
     where: at_("Ogun", "Ikenne"),
@@ -229,6 +260,7 @@ const SEEDS: Seed[] = [
  * positions. A live call carries the reporter's pin or the desk's.
  */
 const SPOTS: Record<string, [number, number]> = {
+  "NPF-4419": [6.5958, 3.3889], "NPF-4418": [6.4593, 3.3889],
   "NPF-4417": [6.6018, 3.3515], "NPF-4416": [6.93, 3.63],
   "NPF-4415": [9.064, 7.468], "NPF-4414": [12.0136, 8.5302],
   "NPF-4413": [4.8167, 7.0333], "NPF-4412": [6.4447, 7.5138],
@@ -405,8 +437,8 @@ const UNITS: UnitSeed[] = [
 
 // A second car in the busiest divisions, so backup has somewhere to come from.
 UNITS.push(
-  { callsign: "Patrol 14", state: "Lagos", section: "Patrol", officer: "Cpl. D. Okonkwo", status: "Available", sinceMins: 64, incident: null, area: "Allen Avenue, Ikeja", base: "Ikeja", geo: { lat: 6.6, lng: 3.355 } },
-  { callsign: "Tactical 05", state: "Lagos", section: "Mobile Police", officer: "Insp. A. Bakare", status: "Available", sinceMins: 95, incident: null, area: "Alausa, Ikeja", base: "Ikeja", geo: { lat: 6.615, lng: 3.358 } },
+  { callsign: "Patrol 14", state: "Lagos", section: "Patrol", officer: "Cpl. D. Okonkwo", status: "Assigned", sinceMins: 11, incident: "NPF-4419", area: "Allen Avenue, Ikeja", base: "Ikeja", geo: { lat: 6.6, lng: 3.355 } },
+  { callsign: "Tactical 05", state: "Lagos", section: "Mobile Police", officer: "Insp. A. Bakare", status: "On Scene", sinceMins: 19, incident: "NPF-4418", area: "Alausa, Ikeja", base: "Ikeja", geo: { lat: 6.615, lng: 3.358 } },
   { callsign: "Patrol 33", state: "Kano", section: "Patrol", officer: "Cpl. Y. Sani", status: "Available", sinceMins: 21, incident: null, area: "Kofar Mata, Kano", base: "Kano Municipal", geo: { lat: 11.99, lng: 8.52 } },
   { callsign: "Patrol 08", state: "FCT", section: "Patrol", officer: "Sgt. E. Udoh", status: "Available", sinceMins: 37, incident: null, area: "Kubwa, Bwari", base: "Bwari", geo: { lat: 9.15, lng: 7.33 } },
 );

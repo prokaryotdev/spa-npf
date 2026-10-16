@@ -31,7 +31,7 @@ import {
   type Unit,
 } from "./store";
 import { STATES, placeOf } from "../geo";
-import { ArrowRight, CheckIcon, ChevronDown, CloseIcon, RadioIcon } from "./icons";
+import { ArrowRight, CheckIcon, ArrowDown, CloseIcon, RadioIcon } from "./icons";
 import OpsPicker from "./OpsPicker";
 import { useFormat, useT } from "../i18n/client";
 
@@ -108,7 +108,7 @@ export default function OpsOverview() {
           is the one thing on this board that gets worse by itself. Where it
           is (the mosaic) and who can go (units) stand beside it on a desk
           and follow it on a phone. */}
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_26rem] xl:items-start">
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_24rem] xl:items-start">
         <div className="@container min-w-0 space-y-4">
           <OpsPanel
             title={t("Pending")}
@@ -328,7 +328,7 @@ function CommandMosaic({ now, chosen }: { now: number; chosen: string | null }) 
           {all
             ? t("Busy commands only")
             : t("Show all {n} commands", { n: inZone?.length ?? STATES.length })}
-          <ChevronDown aria-hidden className="npf-ops-chev size-4" />
+          <ArrowDown aria-hidden className="npf-ops-chev size-4" />
         </button>
       </div>
     </OpsPanel>
@@ -752,12 +752,12 @@ function More({ href, children }: { href: string; children: React.ReactNode }) {
 /*
  * The two queues share one grid, so a call keeps its columns when it moves
  * from Pending to Running: grade, the call itself, then the readings. From
- * 48rem of panel the readings stand in fixed columns under a ruled head;
+ * 42rem of panel the readings stand in fixed columns under a ruled head;
  * narrower, they fold under the call.
  */
-const PENDING_COLS = "@3xl:grid-cols-[2.5rem_minmax(0,1fr)_6.5rem_11rem]";
+const PENDING_COLS = "@2xl:grid-cols-[2.5rem_minmax(0,1fr)_6.5rem_11rem]";
 const RUNNING_COLS =
-  "@3xl:grid-cols-[2.5rem_minmax(0,1fr)_7.25rem_9rem_4.5rem]";
+  "@2xl:grid-cols-[2.5rem_minmax(0,1fr)_7.25rem_9rem_4.5rem]";
 
 /** The ruled column heads over a queue, shown once the columns are. */
 function QueueHead({
@@ -773,7 +773,7 @@ function QueueHead({
   return (
     <div
       aria-hidden
-      className={`hidden gap-x-6 border-b border-ops-line bg-[color-mix(in_srgb,var(--color-npf-cloud)_70%,white)] px-5 py-2 text-xs font-semibold text-npf-steel @3xl:grid ${cols}`}
+      className={`hidden gap-x-6 border-b border-ops-line bg-[color-mix(in_srgb,var(--color-npf-cloud)_70%,white)] px-5 py-2 text-xs font-semibold text-npf-steel @2xl:grid ${cols}`}
     >
       {labels.map((label, i) => (
         <span
@@ -852,7 +852,7 @@ function PendingCall({
 
   return (
     <li
-      className={`npf-ops-row npf-ops-call grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-4 gap-y-4 border-b border-ops-line-soft px-5 py-5 @3xl:gap-x-6 transition-colors last:border-0 hover:bg-ops-hover ${PENDING_COLS} @3xl:items-start ${
+      className={`npf-ops-row npf-ops-call grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-4 gap-y-4 border-b border-ops-line-soft px-5 py-5 @2xl:gap-x-6 transition-colors last:border-0 hover:bg-ops-hover ${PENDING_COLS} @2xl:items-start ${
         late ? "npf-ops-overdue" : ""
       }`}
       style={{ viewTransitionName: `call-${incident.id}` }}
@@ -862,11 +862,11 @@ function PendingCall({
       </span>
       <CallLines incident={incident} summary />
 
-      {/* Below 36rem the clock and the control share one line under the
+      {/* Below 42rem the clock and the control share one line under the
           call, indented to the call's own edge. */}
-      <div className="col-start-2 flex items-center gap-5 @3xl:contents">
-        <span className="flex w-24 shrink-0 flex-col gap-1.5 @3xl:w-auto @3xl:items-end @3xl:pt-0.5">
-          <span className="flex flex-col gap-1 whitespace-nowrap @3xl:items-end">
+      <div className="col-start-2 flex items-center gap-5 @2xl:contents">
+        <span className="flex w-24 shrink-0 flex-col gap-1.5 @2xl:w-auto @2xl:items-end @2xl:pt-0.5">
+          <span className="flex flex-col gap-1 whitespace-nowrap @2xl:items-end">
             <span style={{ color: tone }}>
               <Elapsed
                 from={incident.reported}
@@ -884,7 +884,7 @@ function PendingCall({
           <TargetBar incident={incident} now={now} className="w-full" />
         </span>
 
-        <span className="block min-w-0 flex-1 @3xl:flex-none">
+        <span className="block min-w-0 flex-1 @2xl:flex-none">
           {free.length ? (
             /* Each free unit is a row with its callsign, then where it is and
                who is on it, behind the green dot free units wear on the
@@ -916,21 +916,21 @@ function PendingCall({
                   }),
                 );
               }}
-              triggerClassName="flex h-9 w-full max-w-52 min-w-fit items-center gap-2 rounded-(--ops-control-radius) bg-white ps-3 pe-2.5 text-[0.8125rem] font-medium whitespace-nowrap text-npf-ink shadow-[var(--ops-control-rim),var(--ops-control-lift)] transition-[box-shadow,scale] duration-150 hover:shadow-[var(--ops-control-rim-hover),var(--ops-control-lift)] active:scale-[0.97] @3xl:max-w-none"
+              triggerClassName="flex h-9 w-full max-w-52 min-w-fit items-center gap-2 rounded-(--ops-control-radius) bg-white ps-3 pe-2.5 text-[0.8125rem] font-medium whitespace-nowrap text-npf-ink shadow-[var(--ops-control-rim),var(--ops-control-lift)] transition-[box-shadow,scale] duration-150 hover:shadow-[var(--ops-control-rim-hover),var(--ops-control-lift)] active:scale-[0.97] @2xl:max-w-none"
               trigger={
                 <>
                   <span className="sr-only">
                     {t("Dispatch {ref} to a unit", { ref: incident.id })}:{" "}
                   </span>
                   {t("Dispatch · {n} free", { n: free.length })}
-                  <ChevronDown aria-hidden className="npf-ops-chev ms-auto size-4 shrink-0 text-npf-steel" />
+                  <ArrowDown aria-hidden className="npf-ops-chev ms-auto size-4 shrink-0 text-npf-steel" />
                 </>
               }
             />
           ) : (
             /* Nothing to choose, so no control: an empty slot the size of
                the select, ruled in dashes, saying so plainly. */
-            <span className="flex h-9 w-full max-w-52 min-w-fit items-center gap-2 rounded-(--ops-control-radius) border border-dashed border-npf-line px-3 text-[0.8125rem] whitespace-nowrap text-ops-dim @3xl:max-w-none">
+            <span className="flex h-9 w-full max-w-52 min-w-fit items-center gap-2 rounded-(--ops-control-radius) border border-dashed border-npf-line px-3 text-[0.8125rem] whitespace-nowrap text-ops-dim @2xl:max-w-none">
               <span
                 aria-hidden
                 className="size-1.5 shrink-0 rounded-full bg-npf-steel/50"
@@ -953,7 +953,7 @@ function RunningCall({ incident }: { incident: Incident }) {
   const t = useT();
   return (
     <li
-      className={`npf-ops-call grid grid-cols-[2.5rem_minmax(0,1fr)] items-center gap-x-4 gap-y-3 border-b border-ops-line-soft px-5 py-4 @3xl:gap-x-6 transition-colors last:border-0 hover:bg-ops-hover ${RUNNING_COLS}`}
+      className={`npf-ops-call grid grid-cols-[2.5rem_minmax(0,1fr)] items-center gap-x-4 gap-y-3 border-b border-ops-line-soft px-5 py-4 @2xl:gap-x-6 transition-colors last:border-0 hover:bg-ops-hover ${RUNNING_COLS}`}
       /* The same name as its pending row, which is what lets a dispatch
          carry the row across the board. */
       style={{ viewTransitionName: `call-${incident.id}` }}
@@ -963,7 +963,7 @@ function RunningCall({ incident }: { incident: Incident }) {
       </span>
       <CallLines incident={incident} />
 
-      <div className="col-start-2 flex items-center gap-3 @3xl:contents">
+      <div className="col-start-2 flex items-center gap-3 @2xl:contents">
         <span className="flex">
           <OpsStatus status={incident.status} />
         </span>
@@ -972,14 +972,14 @@ function RunningCall({ incident }: { incident: Incident }) {
             {t(incident.unit ?? "")}
           </span>
           {incident.assignee ? (
-            <span className="hidden truncate text-xs text-ops-dim @3xl:block">
+            <span className="hidden truncate text-xs text-ops-dim @2xl:block">
               {t(incident.assignee)}
             </span>
           ) : null}
         </span>
         <Elapsed
           from={incident.onScene ?? incident.dispatched ?? incident.reported}
-          className="ms-auto text-sm font-semibold text-npf-ink @3xl:text-end"
+          className="ms-auto text-sm font-semibold text-npf-ink @2xl:text-end"
         />
       </div>
     </li>

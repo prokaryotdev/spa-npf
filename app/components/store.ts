@@ -393,7 +393,7 @@ type State = {
 // Exported so scripts/test-store.mjs reads the blob under whatever the
 // current key is: a copy of the string in the test turns the next bump into
 // a failing test rather than a passing one.
-export const KEY = "dp:state:v9";
+export const KEY = "dp:state:v10";
 /**
  * The work lives in localStorage; who is signed in lives in sessionStorage.
  *
@@ -406,6 +406,8 @@ export const KEY = "dp:state:v9";
  * the demo needs.
  */
 const SESSION_KEY = "dp:session";
+/** How long an untouched demo keeps its work before it reseeds. */
+const STALE_MS = 3 * 60 * 60_000;
 
 /** Everything the tabs share. The session is deliberately not in here. */
 type Shared = Omit<State, "session">;
@@ -431,7 +433,11 @@ function readShared(): Shared {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return freshShared();
-    const saved = JSON.parse(raw);
+    const { savedAt, ...saved } = JSON.parse(raw);
+    // A demo left alone ages: calls taken "four minutes ago" become two days
+    // late, and the board reads as broken. Untouched for STALE_MS, start
+    // the shift again. ponytail: drops the old work; the real API has no seeds.
+    if (typeof savedAt !== "number" || Date.now() - savedAt > STALE_MS) return freshShared();
     // Seeded collections are merged in, not trusted from storage wholesale: a
     // build that adds a new seed row should show it to someone who signed in
     // last week, and a half-written value should not blank the screen.
@@ -455,7 +461,8 @@ function readSession(): Session | null {
 const read = (): State => ({ ...readShared(), session: readSession() });
 
 function write(next: State) {
-  const { session, ...shared } = next;
+  const { session, ...rest } = next;
+  const shared = { ...rest, savedAt: Date.now() };
   state = next;
   try {
     try {
