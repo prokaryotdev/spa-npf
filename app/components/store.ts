@@ -695,9 +695,33 @@ export function fileReport(input: {
   return incident;
 }
 
+/**
+ * A reference the way it was typed or pasted, in the one shape the receipts
+ * print. "npf 4418", "NPF4418", "#4418", "NPF–2026 1234" and "Ref: NPF-4418."
+ * are all a person reading a receipt aloud; an O or an I among the digits is
+ * a zero or a one misread off the paper.
+ */
+export function cleanRef(raw: string) {
+  const s = raw
+    .normalize("NFKC")
+    .toUpperCase()
+    .replace(/^\s*(REF(ERENCE)?\s*(NO|NUMBER)?\.?\s*[:#]?|#)\s*/, "")
+    .replace(/[\s_.‐-―−#:/]+/g, "-");
+  const body = s.replace(/^-*(NPF-*)?/, "").replace(/-+$/, "");
+  const parts = body
+    .split("-")
+    .filter(Boolean)
+    .map((p) =>
+      /\d/.test(p) && /^[\dOIL]+$/.test(p)
+        ? p.replace(/O/g, "0").replace(/[IL]/g, "1")
+        : p,
+    );
+  return parts.length ? `NPF-${parts.join("-")}` : "";
+}
+
 /** Look a reference up from the public tracker: a request, or a report. */
 export function findReference(ref: string) {
-  const id = ref.trim().toUpperCase();
+  const id = cleanRef(ref);
   return {
     request: state.requests.find((r) => r.id.toUpperCase() === id) ?? null,
     incident: state.incidents.find((i) => i.id.toUpperCase() === id) ?? null,

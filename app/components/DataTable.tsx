@@ -1,13 +1,13 @@
 "use client";
 
-import { Fragment, useMemo, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   CloseIcon,
   DownloadIcon,
   SearchIcon,
 } from "./icons";
 import { useFormat, useT } from "../i18n/client";
-import { escape, fold, near, split } from "../search-text";
+import { escape, fold, folded, matcher } from "../search-text";
 
 export type Column<T> = {
   key: keyof T & string;
@@ -23,10 +23,6 @@ export type Column<T> = {
   /** Out of how many: drawn as a short bar of that many steps beside the figure. */
   scale?: number;
 };
-
-// "50,000" and "50 000" are one number, the way the rows store it.
-const words = (query: string) =>
-  split(fold(query.replace(/(\d)[,\s](?=\d{3}\b)/g, "$1")));
 
 /**
  * Marks every place a search word lands in a cell. The cell is folded a
@@ -105,69 +101,78 @@ export default function DataTable<T extends Record<string, unknown>>({
   const [query, setQuery] = useState("");
   const input = useRef<HTMLInputElement>(null);
 
+  // Arrived from the site search with ?q=: the table opens already narrowed
+  // to the rows that search found here.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("q");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (q) setQuery(q);
+  }, []);
+
   // Each row folded once: its first column (the name a reader searches for)
-  // and everything, in both languages so an Hausa reader can search the
-  // table they see and an English one can too. The category is searched even
-  // though it has no column, so "parking" finds every parking offence.
+  // and everything, in English and the reader's language, so either can be
+  // searched. The category is searched even though it has no column, so
+  // "parking" finds every parking offence.
   const index = useMemo(() => {
     const both = (raw: unknown) => {
       const value = String(raw ?? "");
       return `${value} ${t(value)}`;
     };
-    return rows.map((row) => {
-      const head = fold(both(row[columns[0].key]));
-      const all = fold(
+    return rows.map((row) => ({
+      row,
+      head: fold(both(row[columns[0].key])),
+      text: folded(
         [...columns.map((c) => c.key), ...(filterKey ? [filterKey] : [])]
           .map((k) => both(row[k]))
           .join(" "),
-      );
-      return { row, head, all, words: split(all) };
-    });
+      ),
+    }));
   }, [rows, columns, filterKey, t]);
 
-  const terms = useMemo(() => words(query), [query]);
-
-  const visible = useMemo(() => {
-    // Every word has to be in the row. A word the table has nowhere is taken
-    // as a slip and matched one letter off the start of a word, the same
-    // rule as the site search, so "overspeding" still finds speeding.
-    const typo = terms.map((w) => !index.some((r) => r.all.includes(w)));
-    const matches = (r: (typeof index)[number], w: string, i: number) =>
-      r.all.includes(w) ||
-      (typo[i] &&
-        w.length >= 4 &&
-        r.words.some(
-          (x) =>
-            near(x.slice(0, w.length), w) ||
-            near(x.slice(0, w.length + 1), w),
-        ));
+  // The same matcher as the site search: any word order, slips and endings
+  // forgiven, "quoted runs" and -minus words understood.
+  const { visible, terms, searching } = useMemo(() => {
+    const m = matcher(
+      index.map((r) => r.text),
+      query,
+    );
+    if (m.empty) return { visible: rows, terms: [], searching: false };
     // Rank by where the words land: the name starting with the whole query,
     // then each word starting the name, a word in it, anywhere in it, or only
     // in the other columns.
-    const rank = (r: (typeof index)[number]) => {
-      let total = r.head.startsWith(terms.join(" ")) ? 100 : 0;
-      for (const w of terms) {
+    const rank = (r: (typeof index)[number], forms: string[]) => {
+      let total = r.head.startsWith(forms.join(" ")) ? 100 : 0;
+      for (const p of m.phrases) if (r.head.includes(p)) total += 60;
+      for (const w of forms) {
         if (r.head.startsWith(w)) total += 50;
-        else if (new RegExp(`\\b${escape(w)}`).test(r.head)) total += 30;
+        else if (new RegExp(`\b${escape(w)}`).test(r.head)) total += 30;
         else if (r.head.includes(w)) total += 12;
-        else if (new RegExp(`\\b${escape(w)}`).test(r.all)) total += 6;
+        else if (new RegExp(`\b${escape(w)}`).test(r.text.all)) total += 6;
         else total += 3;
       }
       return total;
     };
-
-    return index
-      .filter((r) => terms.every((w, i) => matches(r, w, i)))
-      .map((r) => ({ row: r.row, score: terms.length ? rank(r) : 0 }))
+    const lit = new Set<string>(m.phrases);
+    const hits: { row: T; score: number }[] = [];
+    for (const r of index) {
+      const forms = m.match(r.text);
+      if (!forms) continue;
+      forms.forEach((f) => lit.add(f));
+      hits.push({ row: r.row, score: rank(r, forms) });
+    }
+    return {
       // Stable, so equal matches keep the order the table was written in.
-      .sort((a, b) => b.score - a.score)
-      .map((r) => r.row);
-  }, [index, terms]);
+      visible: hits.sort((a, b) => b.score - a.score).map((h) => h.row),
+      // What lights up is what was found: "speding" marks "speed".
+      terms: [...lit],
+      searching: true,
+    };
+  }, [index, query, rows]);
 
   // Left as written, the rows run in their categories, so each category
   // gets a heading where it starts. A search ranks by match, which breaks that order.
   const groupAt = (i: number) =>
-    filterKey && !terms.length
+    filterKey && !searching
       ? String(visible[i][filterKey] ?? "") !==
         String(visible[i - 1]?.[filterKey] ?? "")
         ? t(String(visible[i][filterKey]))

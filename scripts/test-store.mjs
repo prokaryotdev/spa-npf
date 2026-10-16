@@ -265,3 +265,14 @@ assert.equal(geo.divisionFor("FCT", "Abuja Municipal", { lat: 9.077, lng: 7.475 
 assert.equal(geo.divisionFor("FCT", "Abuja Municipal"), "Abuja Municipal Division", "no pin, no guess");
 assert.equal(geo.divisionFor("Lagos", "Ikeja", { lat: 6.6, lng: 3.35 }), "Ikeja Division");
 console.log("divisions: a pin finds the nearest real division — ok");
+
+// A reference as people type or paste it off a receipt.
+{
+  const { cleanRef } = await import("../app/components/store.ts");
+  for (const raw of ["npf 4418", "NPF4418", "#4418", "4418", "Ref: NPF-4418.", "npf_4418", "NPF–44I8", " npf-O418 "])
+    assert.match(cleanRef(raw), /^NPF-[01]?4[14]18$|^NPF-0418$/, raw);
+  assert.equal(cleanRef("npf 2026 1234"), "NPF-2026-1234");
+  assert.equal(cleanRef("NPF—2026–1234"), "NPF-2026-1234");
+  assert.equal(cleanRef("npf"), "");
+  console.log("references: typed and pasted shapes clean up — ok");
+}

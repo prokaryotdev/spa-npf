@@ -55,6 +55,29 @@ assert.ok(titles("buƙatu").length > 0, "the folded query still matches");
 // The common name finds the official one.
 assert.equal(top("character certificate"), "Police Clearance Certificate");
 
+// --- smarter matching ------------------------------------------------------
+// A question is not six required words.
+assert.equal(top("how do i get a police clearance"), "Police Clearance Certificate");
+// Plurals, endings and two slips in a long word.
+assert.equal(top("clearence certificat"), "Police Clearance Certificate");
+assert.ok(titles("accidents").some((t) => /Accident/.test(t)));
+// What people call it finds the service.
+assert.equal(top("gun"), "Firearm Licence");
+assert.equal(top("bribe"), "Complaint Against a Police Officer");
+// Short words only start a word: "cid" is not inside "incident".
+assert.equal(top("cid"), "CID Clearance Certificate");
+assert.ok(search("id").every((h) => /Lost/.test(h.title)));
+// Table rows find their Information page, which opens filtered.
+assert.match(search("seat belt")[0].href, /traffic-offences-and-penalties\?q=seat%20belt$/);
+assert.match(top("police act"), /Laws/);
+// "&" and "and" are one word.
+assert.deepEqual(titles("lost & found"), titles("lost and found"));
+// No hit has every word: offer what has most of them, not nothing.
+assert.ok(search("stolen phone").length > 0);
+// Yoruba and Igbo, typed without their marks.
+assert.equal(top("Iwe-eri Imototo Olopaa"), "Police Clearance Certificate");
+assert.equal(top("Asambodo Nkwenye Ndi Uwe Ojii"), "Police Clearance Certificate");
+
 // --- board filter --------------------------------------------------------
 // The request, incident and unit boards: any word order, hooks folded, a
 // slip forgiven.
@@ -73,6 +96,16 @@ assert.deepEqual(pick("certificate -npf"), []);
 assert.deepEqual(pick('"patrol unit"'), [board[1]]);
 assert.deepEqual(pick('"unit patrol"'), []);
 assert.deepEqual(pick('"character cert'), [board[0]]);
+
+// Everyday words for what the rows call something else.
+{
+  const { penaltyPoints } = await import("../app/content-sub.ts");
+  const rows = (q) =>
+    filterBy(penaltyPoints.rows, q, (r) => Object.values(r).join(" ")).map((r) => r.description);
+  assert.match(rows("seatbelt")[0], /seat belt/);
+  assert.match(rows("drunk")[0], /alcohol/);
+  assert.match(rows("overspeding")[0], /speed limit/);
+}
 
 // --- catalogue -----------------------------------------------------------
 const slugs = new Set(services.map((s) => s.slug));
