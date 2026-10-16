@@ -758,4 +758,6 @@ export const igAccount: Record<string, string> = {
     "Usoro niile",
   "Next: {step}":
     "Ọzọ: {step}",
+  "Show": "Gosi",
+  "Hide": "Zoo",
 };

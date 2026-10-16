@@ -49,7 +49,7 @@ async function reportTheft(page: Page) {
 async function openDesk(page: Page, command: string) {
   // Sign out first: a signed-in visitor is sent straight on from sign-in.
   await page.evaluate(() => sessionStorage.removeItem("dp:session"));
-  await page.goto("/en/app/signin");
+  await page.goto("/en/app/police-signin");
   // Wait for the form to come alive: a choice made on the server-rendered
   // page is reset to the default desk when React takes over.
   await page.waitForLoadState("networkidle");

@@ -35,6 +35,7 @@ const PAGES = [
   ["a legal document", "/app/home/privacy-policy"],
   ["search results", "/app/search?q=certificate"],
   ["sign in", "/app/signin"],
+  ["officer sign in", "/app/police-signin"],
   ["contact", "/app/home/contactUs"],
   ["the site map", "/app/home/sitemap"],
 ] as const;

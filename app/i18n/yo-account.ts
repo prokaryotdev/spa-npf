@@ -758,4 +758,6 @@ export const yoAccount: Record<string, string> = {
     "Gbogbo ìpele",
   "Next: {step}":
     "Èyí tó kàn: {step}",
+  "Show": "Fihàn",
+  "Hide": "Fi pamọ́",
 };

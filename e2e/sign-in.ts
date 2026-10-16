@@ -18,7 +18,7 @@ export async function signIn(page: Page) {
  * Force Headquarters: the one post that sees every board.
  */
 export async function signInAsOfficer(page: Page) {
-  await page.goto("/en/app/signin");
+  await page.goto("/en/app/police-signin");
   await page.getByText("Force Headquarters", { exact: true }).click();
   await page.getByRole("button", { name: "Open the operations console" }).click();
   await expect(page).toHaveURL(/\/en\/app\/police$/);

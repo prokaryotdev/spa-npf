@@ -23,6 +23,7 @@ const PAGES = [
   ["tracking a reference", "/app/track"],
   ["a data table", "/app/home/information/road-speed-limits"],
   ["sign in", "/app/signin"],
+  ["officer sign in", "/app/police-signin"],
   ...PORTAL_PAGES,
   ...POLICE_PAGES,
 ] as const;

@@ -139,7 +139,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!loaded) return;
     if (!session)
-      router.replace(`/app/signin?next=${encodeURIComponent(path)}`);
+      router.replace(`/app/police-signin?next=${encodeURIComponent(path)}`);
     // A board outside the officer's post sends them to the first one theirs
     // has: an investigator opening the console lands on case files.
     else if (
@@ -257,7 +257,7 @@ export default function OpsShell({ children }: { children: React.ReactNode }) {
               type="button"
               onClick={() => {
                 signOut();
-                router.push("/app/signin?next=/app/police");
+                router.push("/app/police-signin");
               }}
               className="npf-btn npf-btn-secondary"
             >

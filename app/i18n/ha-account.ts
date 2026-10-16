@@ -705,4 +705,6 @@ export const haAccount: Record<string, string> = {
     "Duk matakai",
   "Next: {step}":
     "Na gaba: {step}",
+  "Show": "Nuna",
+  "Hide": "Ɓoye",
 };
