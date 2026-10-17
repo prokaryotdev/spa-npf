@@ -222,4 +222,30 @@ export const yoPages: Record<string, string> = {
     "Sọ òtítọ́ nìkan fún wa",
   "We reply by email.":
     "A ó fèsì sí ọ nípasẹ̀ ímeèlì.",
+  // --- rate this service, 2026-10-17 --------------------------------------
+  "Rate this service | Nigeria Police Force": "Ṣe àyẹ̀wò iṣẹ́ yìí | Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà",
+  "Tell us how a police service worked for you. It takes a minute and no account is needed.":
+    "Sọ fún wa bí iṣẹ́ ọlọ́pàá kan ṣe rí fún ọ. Ìṣẹ́jú kan péré ni, kò sì nílò àkọọ́lẹ̀.",
+  "This website": "Ojú-òpó wẹ́ẹ̀bù yìí",
+  "Other services": "Àwọn iṣẹ́ mìíràn",
+  "Need an answer, not a rating?": "Ṣé ìdáhùn lo nílò, kì í ṣe àyẹ̀wò?",
+  "Thank you for rating {service}": "A dúpẹ́ pé o ṣe àyẹ̀wò {service}",
+  "You gave it {score} out of 5. Ratings show the Force which services need work.":
+    "O fún un ní {score} nínú 5. Àwọn àyẹ̀wò ń fi àwọn iṣẹ́ tí ó nílò àtúnṣe han Ilé-iṣẹ́ Ọlọ́pàá.",
+  "Rate another service": "Ṣe àyẹ̀wò iṣẹ́ mìíràn",
+  "Which service did you use?": "Iṣẹ́ wo lo lò?",
+  "How was it?": "Báwo ló ṣe rí?",
+  "Very poor": "Kò dára rárá",
+  "Poor": "Kò dára",
+  "Okay": "Ó dára díẹ̀",
+  "Good": "Ó dára",
+  "Very good": "Ó dára gan-an",
+  "Pick the service you used.": "Yan iṣẹ́ tí o lò.",
+  "Pick a score from 1 to 5.": "Yan máàkì láti 1 sí 5.",
+  "Tell us more (optional)": "Sọ fún wa sí i (kò pọn dandan)",
+  "What went well, or what should change. Leave out names and reference numbers.":
+    "Ohun tí ó lọ dáadáa, tàbí ohun tí ó yẹ kí ó yípadà. Má ṣe kọ orúkọ tàbí nọ́mbà ìtọ́kasí.",
+  "Your rating is anonymous.": "A kò ní mọ ẹni tí ó ṣe àyẹ̀wò yìí.",
+  "Send rating": "Fi àyẹ̀wò ránṣẹ́",
+  "Tell us how it went": "Sọ fún wa bí ó ṣe lọ",
 };

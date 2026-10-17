@@ -222,4 +222,30 @@ export const igPages: Record<string, string> = {
     "Gwa anyị naanị eziokwu",
   "We reply by email.":
     "Anyị na-aza site na email.",
+  // --- rate this service, 2026-10-17 --------------------------------------
+  "Rate this service | Nigeria Police Force": "Nye ọrụ a akara | Ndị Uwe Ojii Naịjirịa",
+  "Tell us how a police service worked for you. It takes a minute and no account is needed.":
+    "Gwa anyị ka ọrụ ndị uwe ojii si rụọ gị. Ọ na-ewe naanị otu nkeji, ọ dịghịkwa mkpa akaụntụ.",
+  "This website": "Weebụsaịtị a",
+  "Other services": "Ọrụ ndị ọzọ",
+  "Need an answer, not a rating?": "Ị chọrọ azịza, ọ bụghị akara?",
+  "Thank you for rating {service}": "Daalụ maka inye {service} akara",
+  "You gave it {score} out of 5. Ratings show the Force which services need work.":
+    "I nyere ya {score} n’ime 5. Akara na-egosi Ndị Uwe Ojii ọrụ ndị chọrọ mmezi.",
+  "Rate another service": "Nye ọrụ ọzọ akara",
+  "Which service did you use?": "Kedu ọrụ i jiri?",
+  "How was it?": "Kedu ka ọ dị?",
+  "Very poor": "Ọ dịghị mma ma ọlị",
+  "Poor": "Ọ dịghị mma",
+  "Okay": "Ọ dị ntakịrị mma",
+  "Good": "Ọ dị mma",
+  "Very good": "Ọ dị mma nke ukwuu",
+  "Pick the service you used.": "Họrọ ọrụ i jiri.",
+  "Pick a score from 1 to 5.": "Họrọ akara site na 1 ruo 5.",
+  "Tell us more (optional)": "Gwakwuo anyị (ọ bụghị iwu)",
+  "What went well, or what should change. Leave out names and reference numbers.":
+    "Ihe gara nke ọma, ma ọ bụ ihe kwesịrị ịgbanwe. Edela aha ma ọ bụ nọmba ntụaka.",
+  "Your rating is anonymous.": "Onweghị onye ga-ama na ọ bụ gị nyere akara a.",
+  "Send rating": "Ziga akara",
+  "Tell us how it went": "Gwa anyị ka o si gaa",
 };

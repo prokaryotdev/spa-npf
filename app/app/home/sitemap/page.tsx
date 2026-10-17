@@ -110,6 +110,7 @@ export default async function SitemapPage() {
           { label: t("Home"), href: "/app/home" },
           { label: t("Search"), href: "/app/search" },
           { label: t("Contact us"), href: "/app/home/contactUs" },
+          { label: t("Rate this service"), href: "/app/home/rate-service" },
         ],
       },
       {

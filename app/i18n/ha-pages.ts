@@ -201,4 +201,30 @@ export const haPages: Record<string, string> = {
     "Faɗa mana gaskiya kawai",
   "We reply by email.":
     "Muna amsawa ta imel.",
+  // --- rate this service, 2026-10-17 --------------------------------------
+  "Rate this service | Nigeria Police Force": "Ba wannan aikin maki | Rundunar ʼYan Sandan Najeriya",
+  "Tell us how a police service worked for you. It takes a minute and no account is needed.":
+    "Faɗa mana yadda wani sabis na ʼyan sanda ya yi maka aiki. Minti ɗaya ne kawai kuma ba a buƙatar asusu.",
+  "This website": "Wannan shafin yanar gizo",
+  "Other services": "Sauran ayyuka",
+  "Need an answer, not a rating?": "Kana buƙatar amsa, ba maki ba?",
+  "Thank you for rating {service}": "Mun gode da ka ba {service} maki",
+  "You gave it {score} out of 5. Ratings show the Force which services need work.":
+    "Ka ba shi {score} cikin 5. Maki na nuna wa Rundunar ayyukan da ke buƙatar gyara.",
+  "Rate another service": "Ba wani aikin maki",
+  "Which service did you use?": "Wane sabis ka yi amfani da shi?",
+  "How was it?": "Yaya ya kasance?",
+  "Very poor": "Mara kyau sosai",
+  "Poor": "Mara kyau",
+  "Okay": "Daidai",
+  "Good": "Mai kyau",
+  "Very good": "Mai kyau sosai",
+  "Pick the service you used.": "Zaɓi sabis ɗin da ka yi amfani da shi.",
+  "Pick a score from 1 to 5.": "Zaɓi maki daga 1 zuwa 5.",
+  "Tell us more (optional)": "Ƙara mana bayani (ba dole ba)",
+  "What went well, or what should change. Leave out names and reference numbers.":
+    "Abin da ya yi kyau, ko abin da ya kamata a canza. Kada ka saka sunaye ko lambobin bincike.",
+  "Your rating is anonymous.": "Ba a san wanda ya ba da maki ba.",
+  "Send rating": "Aika maki",
+  "Tell us how it went": "Faɗa mana yadda ya kasance",
 };

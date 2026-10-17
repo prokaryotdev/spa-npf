@@ -24,6 +24,7 @@ import {
   SearchIcon,
   TapPayIcon,
   ServicesIcon,
+  StarIcon,
   UserCircle,
 } from "../../../components/icons";
 import { services as servicesSource } from "../../../content-services";
@@ -277,17 +278,29 @@ export default async function ServicePage({
                   ) : null}
                 </div>
 
-                {service.contacts.length ? (
-                  <HelpCard
-                    className="order-last"
-                    title={t("Need help?")}
-                    intro={t("Call or email us about this service.")}
-                    rows={source.contacts.flatMap((name) => {
+                {/* Every service can be rated, so the card always shows;
+                    the rating row comes last, after the ways to get help. */}
+                <HelpCard
+                  className="order-last"
+                  title={t("Need help?")}
+                  intro={
+                    service.contacts.length
+                      ? t("Call or email us about this service.")
+                      : undefined
+                  }
+                  rows={[
+                    ...source.contacts.flatMap((name) => {
                       const c = contactFor(name, t);
                       return c ? [c] : [];
-                    })}
-                  />
-                ) : null}
+                    }),
+                    {
+                      Icon: StarIcon,
+                      label: t("Rate this service"),
+                      note: t("Tell us how it went"),
+                      href: `/app/home/rate-service?service=${source.slug}`,
+                    },
+                  ]}
+                />
               </div>
             </aside>
 

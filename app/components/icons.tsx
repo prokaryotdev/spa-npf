@@ -171,6 +171,12 @@ export const HeartIcon = ({ className }: IconProps) => (
   </svg>
 );
 
+export const StarIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="m12 3.8 2.5 5.1 5.6.8-4 4 .9 5.6-5-2.7-5 2.7.9-5.6-4-4 5.6-.8Z" />
+  </svg>
+);
+
 export const AlertIcon = ({ className }: IconProps) => (
   <svg {...base} className={className}>
     <path d="M10.6 4.3 2.9 17.5a1.6 1.6 0 0 0 1.4 2.4h15.4a1.6 1.6 0 0 0 1.4-2.4L13.4 4.3a1.6 1.6 0 0 0-2.8 0Z" />

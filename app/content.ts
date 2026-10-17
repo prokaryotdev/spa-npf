@@ -365,11 +365,7 @@ export const footerColumns = [
       { label: "Contact us", href: "/app/home/contactUs" },
       { label: "Customer Centers", href: "/app/home/customer-centers" },
       { label: "Site Map", href: "/app/home/sitemap" },
-      {
-        label: "Rate this service",
-        href: "https://www.servicerating.gov.ng/",
-        external: true,
-      },
+      { label: "Rate this service", href: "/app/home/rate-service" },
     ],
   },
   {
