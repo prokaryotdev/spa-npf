@@ -32,6 +32,16 @@ export const haPages: Record<string, string> = {
   Search: "Nema",
   Legal: "Shari'a",
   Documents: "Takardu",
+  "Around the site": "Kewayen shafin",
+  "Find a page": "Nemo shafi",
+  "Pages found: {n}": "Shafukan da aka samu: {n}",
+  "No page is called “{q}”": "Babu shafi mai suna “{q}”",
+  "The site search also looks inside services, news and events.":
+    "Binciken shafin yana dubawa cikin ayyuka, labarai da abubuwan da ke faruwa ma.",
+  "Search the whole site": "Bincika duk shafin",
+  "Start here": "Fara daga nan",
+  "Open the catalogue": "Buɗe jerin ayyuka",
+  "Jump to a letter": "Tsallaka zuwa harafi",
 
   // --- laws ----------------------------------------------------------------
   "Laws & Legislation": "Dokoki da Ƙa'idoji",

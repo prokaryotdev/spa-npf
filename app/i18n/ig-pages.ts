@@ -154,6 +154,16 @@ export const igPages: Record<string, string> = {
     "Ibe ọ bụla dị na weebụsaịtị Ndị Uwe Ojii Naịjirịa, n'otu ndepụta.",
   "Main navigation":
     "Nduzi isi",
+  "Around the site": "Gburugburu saịtị",
+  "Find a page": "Chọta ibe",
+  "Pages found: {n}": "Ibe ndị a chọtara: {n}",
+  "No page is called “{q}”": "Enweghị ibe a na-akpọ “{q}”",
+  "The site search also looks inside services, news and events.":
+    "Nchọta saịtị ahụ na-elekwa n'ime ọrụ, akụkọ na mmemme.",
+  "Search the whole site": "Chọọ saịtị niile",
+  "Start here": "Malite ebe a",
+  "Open the catalogue": "Mepee ndepụta ọrụ",
+  "Jump to a letter": "Wụga na mkpụrụedemede",
   "Account":
     "Akaụntụ",
   "Sign In":

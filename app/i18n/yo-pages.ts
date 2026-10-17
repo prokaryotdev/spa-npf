@@ -154,6 +154,16 @@ export const yoPages: Record<string, string> = {
     "Gbogbo ojú-ewé lórí ojú-òpó Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà, nínú àkójọ kan.",
   "Main navigation":
     "Ìtọ́sọ́nà àkọ́kọ́",
+  "Around the site": "Káàkiri ojú-òpó",
+  "Find a page": "Wá ojú-ewé kan",
+  "Pages found: {n}": "Ojú-ewé tí a rí: {n}",
+  "No page is called “{q}”": "Kò sí ojú-ewé tí ó ń jẹ́ “{q}”",
+  "The site search also looks inside services, news and events.":
+    "Ìwádìí ojú-òpó náà tún ń wo inú àwọn iṣẹ́, ìròyìn àti ìṣẹ̀lẹ̀.",
+  "Search the whole site": "Wá gbogbo ojú-òpó",
+  "Start here": "Bẹ̀rẹ̀ níbí",
+  "Open the catalogue": "Ṣí àkójọ iṣẹ́",
+  "Jump to a letter": "Fò sí lẹ́tà kan",
   "Account":
     "Àkáǹtì",
   "Sign In":
