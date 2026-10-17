@@ -256,4 +256,15 @@ export const igPages: Record<string, string> = {
   "Every page on the site, in one list.": "Ibe ọ bụla na saịtị, n'otu ndepụta.",
   "Services, news and every page": "Ọrụ, akụkọ na ibe ọ bụla",
   "Phone lines, email and feedback.": "Ahịrị ekwentị, ozi-e na nzaghachi.",
+  // Search page (native review needed for yo/ig)
+  "Nothing matched": "Ọ dịghị ihe dabara",
+  "Check the spelling or use fewer words. Or start from the most used services below.": "Lelee nsụpe ma ọ bụ jiri mkpụrụokwu ole na ole. Ma ọ bụ malite n'ọrụ ndị a na-ejikarị n'okpuru.",
+  "Most used services": "Ọrụ a na-ejikarị",
+  "Search tips": "Ndụmọdụ nchọ",
+  "Quotes find the words side by side.": "Akara nhota na-achọta mkpụrụokwu ndị ahụ n'akụkụ ibe ha.",
+  "A minus leaves a word out.": "Akara mwepụ na-ahapụ otu mkpụrụokwu.",
+  "Search in English, Hausa, Yoruba or Igbo.": "Chọọ n'asụsụ Bekee, Hausa, Yoruba ma ọ bụ Igbo.",
+  "Every service, by package.": "Ọrụ ọ bụla, site n'ngwugwu.",
+  "Show {count} more": "Gosi {count} ọzọ",
+  "Show fewer": "Gosi ole na ole",
 };

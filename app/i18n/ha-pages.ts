@@ -236,4 +236,15 @@ export const haPages: Record<string, string> = {
   "Every page on the site, in one list.": "Kowane shafi a shafin, a jeri ɗaya.",
   "Services, news and every page": "Ayyuka, labarai da kowane shafi",
   "Phone lines, email and feedback.": "Layukan waya, imel da ra'ayoyi.",
+  // Search page (native review needed for yo/ig)
+  "Nothing matched": "Babu abin da ya dace da",
+  "Check the spelling or use fewer words. Or start from the most used services below.": "Duba rubutun ko ka yi amfani da ƙananan kalmomi. Ko ka fara daga ayyukan da aka fi amfani da su a ƙasa.",
+  "Most used services": "Ayyukan da aka fi amfani da su",
+  "Search tips": "Shawarwarin bincike",
+  "Quotes find the words side by side.": "Alamar zance tana nemo kalmomin a jere.",
+  "A minus leaves a word out.": "Alamar cire tana barin kalma a waje.",
+  "Search in English, Hausa, Yoruba or Igbo.": "Yi bincike da Turanci, Hausa, Yarbanci ko Igbo.",
+  "Every service, by package.": "Kowane aiki, bisa rukuni.",
+  "Show {count} more": "Nuna ƙarin {count}",
+  "Show fewer": "Nuna kaɗan",
 };

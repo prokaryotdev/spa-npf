@@ -9,6 +9,7 @@ import {
 } from "./content";
 import { services } from "./content-services";
 import { lawsLegislation, penaltyPoints, speedLimits } from "./content-sub";
+import { information, startHere } from "./content-pages";
 
 export type SearchHit = {
   title: string;
@@ -95,13 +96,19 @@ const TABLES: Record<string, string> = {
     "speed limit kmh " + rowText(speedLimits.rows),
 };
 
+/** A page's own intro, where the site already has one, as its summary line. */
+const NOTES: Record<string, string> = Object.fromEntries([
+  ...startHere.map((l) => [l.href, l.note]),
+  ...information.cards.map((c) => [c.href, c.body]),
+]);
+
 /**
  * The site is small and entirely static, so search is a scan over a list
  * built from the same content the pages render. No index, no dependency.
  */
 const page = (label: string, href: string, section = "Pages"): SearchHit => ({
   title: label,
-  body: "",
+  body: NOTES[href] ?? "",
   href,
   section,
   ...(TABLES[href] ? { tags: TABLES[href], deep: true } : {}),

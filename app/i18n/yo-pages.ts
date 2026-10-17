@@ -256,4 +256,15 @@ export const yoPages: Record<string, string> = {
   "Every page on the site, in one list.": "Gbogbo ojú-ìwé lórí ìkànnì, nínú àkójọ kan.",
   "Services, news and every page": "Àwọn iṣẹ́, ìròyìn àti gbogbo ojú-ìwé",
   "Phone lines, email and feedback.": "Àwọn nọ́mbà fóònù, ímeèlì àti èsì.",
+  // Search page (native review needed for yo/ig)
+  "Nothing matched": "Kò sí ohun tó bá",
+  "Check the spelling or use fewer words. Or start from the most used services below.": "Ṣàyẹ̀wò bí o ṣe kọ ọ́ tàbí lo ọ̀rọ̀ díẹ̀. Tàbí bẹ̀rẹ̀ láti àwọn iṣẹ́ tí a ń lò jùlọ nísàlẹ̀.",
+  "Most used services": "Àwọn iṣẹ́ tí a ń lò jùlọ",
+  "Search tips": "Ìmọ̀ràn fún ìṣàwárí",
+  "Quotes find the words side by side.": "Àmì ìfàyọ ń wá àwọn ọ̀rọ̀ náà lẹ́gbẹ̀ẹ́ ara wọn.",
+  "A minus leaves a word out.": "Àmì àyọkúrò ń fi ọ̀rọ̀ kan sílẹ̀.",
+  "Search in English, Hausa, Yoruba or Igbo.": "Ṣàwárí ní Gẹ̀ẹ́sì, Hausa, Yorùbá tàbí Igbo.",
+  "Every service, by package.": "Gbogbo iṣẹ́, ní ìsọ̀rí-ìsọ̀rí.",
+  "Show {count} more": "Fi {count} sí i hàn",
+  "Show fewer": "Fi díẹ̀ hàn",
 };
