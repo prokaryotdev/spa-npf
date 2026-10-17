@@ -37,6 +37,7 @@ const PAGES = [
   ["sign in", "/app/signin"],
   ["officer sign in", "/app/police-signin"],
   ["contact", "/app/home/contactUs"],
+  ["customer centers", "/app/home/customer-centers"],
   ["the site map", "/app/home/sitemap"],
 ] as const;
 

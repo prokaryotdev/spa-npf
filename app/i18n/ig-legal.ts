@@ -268,4 +268,26 @@ export const igLegal: Record<string, string> = {
     "Usoro na Ọnọdụ | Ndị Uwe Ojii Naịjirịa",
   "The terms that govern your use of the Nigeria Police Force website and its electronic services.":
     "Usoro na-achị ojiji gị nke weebụsaịtị Ndị Uwe Ojii Naịjirịa na ọrụ eletrọnịkị ya.",
+  "Your state, city or LGA":
+    "Steeti gị, obodo ma ọ bụ LGA",
+  "Find your Command by state, city or LGA":
+    "Chọta Command gị site na steeti, obodo ma ọ bụ LGA",
+  "Every Command is open 24 hours.":
+    "Command ọ bụla na-emeghe awa 24.",
+  "No Command matches “{q}”.":
+    "Ọ dịghị Command dabara na “{q}”.",
+  "Check the spelling, or type the state's name.":
+    "Lelee mkpụrụedemede, ma ọ bụ dee aha steeti ahụ.",
+  "Headquarters in {city}":
+    "Isi ụlọ ọrụ dị na {city}",
+  "{count} LGAs":
+    "LGA {count}",
+  "Covers {lga}":
+    "Na-ekpuchi {lga}",
+  "Map of the State Commands":
+    "Map nke State Commands",
+  "The {count} LGAs it covers":
+    "LGA {count} ọ na-ekpuchi",
+  "Or start from your zone":
+    "Ma ọ bụ malite site na mpaghara gị",
 };

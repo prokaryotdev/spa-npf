@@ -2083,6 +2083,36 @@ html.npf-large-text {
 .npf-map-tip.leaflet-tooltip-top::before {
   border-top-color: var(--color-npf-night);
 }
+/* A Command on Customer Centers: a Force-blue dot, lit as a bigger dot
+   with a halo when it is the one the card shows. */
+.npf-map-cmd {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--color-npf-blue);
+  box-shadow: 0 0 0 3px #fff, 0 2px 6px rgb(10 21 38 / 0.35);
+  cursor: pointer;
+  transition: scale var(--dur-hover) var(--ease-out);
+}
+.leaflet-marker-icon:hover .npf-map-cmd,
+.leaflet-marker-icon:focus-visible .npf-map-cmd {
+  scale: 1.25;
+}
+@media (max-width: 40rem) {
+  .npf-map-cmd {
+    scale: 0.7;
+    box-shadow: 0 0 0 2px #fff, 0 1px 4px rgb(10 21 38 / 0.35);
+  }
+}
+.npf-map-cmd.is-dim {
+  opacity: 0.35;
+}
+.npf-map-cmd.is-lit {
+  scale: 1.45;
+  background: var(--color-npf-blue-deep);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 9px rgb(44 95 168 / 0.25), 0 4px 10px rgb(10 21 38 / 0.4);
+}
 
 /* A public page on paper (a report receipt, a tracker result): the fixed
    header is gone, so the page needs no room left for it, and panels keep

@@ -235,4 +235,26 @@ export const haLegal: Record<string, string> = {
   "Commands": "Rundunoni",
   "Zones": "Shiyyoyi",
   "{state} State Command": "Rundunar 'Yan Sandan Jihar {state}",
+  "Your state, city or LGA":
+    "Jiharka, birni ko ƙaramar hukuma",
+  "Find your Command by state, city or LGA":
+    "Nemo Rundunarka ta jiha, birni ko ƙaramar hukuma",
+  "Every Command is open 24 hours.":
+    "Kowace Runduna a buɗe take awa 24.",
+  "No Command matches “{q}”.":
+    "Babu Rundunar da ta dace da “{q}”.",
+  "Check the spelling, or type the state's name.":
+    "Duba rubutun, ko ka rubuta sunan jihar.",
+  "Headquarters in {city}":
+    "Hedkwata a {city}",
+  "{count} LGAs":
+    "Ƙananan hukumomi {count}",
+  "Covers {lga}":
+    "Ta haɗa da {lga}",
+  "Map of the State Commands":
+    "Taswirar Rundunonin Jihohi",
+  "The {count} LGAs it covers":
+    "Ƙananan hukumomi {count} da take kula da su",
+  "Or start from your zone":
+    "Ko ka fara daga shiyyarka",
 };

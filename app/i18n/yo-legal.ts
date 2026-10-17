@@ -268,4 +268,26 @@ export const yoLegal: Record<string, string> = {
     "Òfin àti Àdéhùn | Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà",
   "The terms that govern your use of the Nigeria Police Force website and its electronic services.":
     "Àwọn òfin tí ó ń darí lílo ojú-òpó Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà àti àwọn iṣẹ́ orí ayélujára rẹ̀.",
+  "Your state, city or LGA":
+    "Ìpínlẹ̀ rẹ, ìlú tàbí ìjọba ìbílẹ̀",
+  "Find your Command by state, city or LGA":
+    "Wá Ẹ̀ka rẹ nípa ìpínlẹ̀, ìlú tàbí ìjọba ìbílẹ̀",
+  "Every Command is open 24 hours.":
+    "Gbogbo Ẹ̀ka ló ṣí fún wákàtí 24.",
+  "No Command matches “{q}”.":
+    "Kò sí Ẹ̀ka tó bá “{q}” mu.",
+  "Check the spelling, or type the state's name.":
+    "Ṣàyẹ̀wò bí o ṣe kọ ọ́, tàbí kọ orúkọ ìpínlẹ̀ náà.",
+  "Headquarters in {city}":
+    "Olú-iléeṣẹ́ ní {city}",
+  "{count} LGAs":
+    "Ìjọba ìbílẹ̀ {count}",
+  "Covers {lga}":
+    "Ó bo {lga}",
+  "Map of the State Commands":
+    "Máàpù Àwọn Ẹ̀ka Ọlọ́pàá Ìpínlẹ̀",
+  "The {count} LGAs it covers":
+    "Ìjọba ìbílẹ̀ {count} tí ó bò",
+  "Or start from your zone":
+    "Tàbí bẹ̀rẹ̀ láti agbègbè rẹ",
 };
