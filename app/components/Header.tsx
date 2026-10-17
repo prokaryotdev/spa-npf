@@ -29,9 +29,10 @@ import { useDialog } from "./useDialog";
  * nothing has to float over the content to keep 112 close. It is the alarm
  * red, the one place the header breaks from navy, with white type that holds
  * on the dark hero and the white scrolled bar alike. It is the same pill as
- * Sign In beside it, one line, so the two read as a pair and only the colour
- * says which one matters. From lg a quiet "Emergency" says what the number is
- * for; below that the handset and the number carry it alone. The number comes
+ * Sign In beside it, one line and one height, so the two read as a pair and
+ * only the colour says which one matters. A quiet "Emergency" says what the
+ * number is for wherever the row has room for it (lg, then 2xl on the desk
+ * row); elsewhere the handset and the number carry it alone. The number comes
  * from content.ts, like the footer's copy of it.
  */
 function CallButton({ onDark }: { onDark: boolean }) {
@@ -40,7 +41,7 @@ function CallButton({ onDark }: { onDark: boolean }) {
   return (
     <a
       href={`tel:${emergency.number}`}
-      className={`group inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-npf-alert ps-3.5 pe-4 text-white shadow-card transition-[background-color,scale] hover:bg-npf-alert-deep active:scale-[0.97] active:duration-(--dur-press) ${
+      className={`group inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-npf-alert ps-3.5 pe-4 text-white transition-[background-color,scale] hover:bg-npf-alert-deep active:scale-[0.97] active:duration-(--dur-press) ${
         onDark ? "focus-visible:outline-white" : "focus-visible:outline-npf-alert"
       }`}
     >
@@ -51,7 +52,7 @@ function CallButton({ onDark }: { onDark: boolean }) {
       */}
       <CallIcon className="size-4.5 shrink-0 translate-y-[1.5px] transition-[rotate] group-hover:-rotate-12" />
       <span className="flex -translate-y-px items-baseline gap-1.5 leading-none">
-        <span className="hidden font-medium text-white/85 lg:inline">
+        <span className="hidden font-medium text-white/85 lg:inline xl:hidden 2xl:inline">
           {t("Emergency")}
         </span>
         <span className="sr-only">{t("Call")} </span>
@@ -144,58 +145,56 @@ export default function Header({ solid = false }: { solid?: boolean }) {
       <header
         className={`fixed top-0 left-0 z-50 w-full border-b print:hidden transition-[background-color,border-color] duration-(--dur-media) ${
           scrolled
-            ? "border-npf-hairline bg-white/90 backdrop-blur-xl"
-            : "border-white/25 bg-gradient-to-b from-npf-night/60 to-transparent"
+            ? "border-npf-hairline bg-white/95 backdrop-blur-xl"
+            : "border-white/20 bg-gradient-to-b bg-origin-border from-npf-night/70 via-npf-night/30 to-transparent"
         }`}
       >
         <div className="npf-container">
-          {/* Phone and tablet */}
-          <div className="flex items-center justify-between gap-3 pt-5 pb-2 xl:hidden">
+          {/*
+            Phone and tablet. The menu sits by the edge the drawer slides in
+            from, the mark beside it, and the two tools a phone reaches for
+            (112, search) at the other end.
+          */}
+          <div className={`flex h-16 items-center gap-1 sm:h-18 xl:hidden ${ink}`}>
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
               aria-label={t("Open menu")}
               aria-expanded={menuOpen}
-              className={`grid size-11 place-items-center rounded-full transition-colors ${
-                scrolled ? "bg-npf-ink/[0.06] text-npf-ink" : "bg-white/15 text-white"
-              }`}
+              className={`-ms-2.5 ${round}`}
             >
               <MenuIcon className="size-5" />
             </button>
             <Link
               href="/app/home"
               aria-label={t("Nigeria Police Force home")}
-              className={`h-9 transition-colors duration-(--dur-media) ${
+              className={`me-auto h-10 shrink-0 transition-colors duration-(--dur-media) sm:h-11 ${
                 scrolled ? "text-npf-blue-deep" : "text-white"
               }`}
             >
               <PoliceWordmark className="h-full w-auto" />
             </Link>
-            <div className="flex items-center gap-2">
-              <CallButton onDark={!scrolled} />
-              <button
-                type="button"
-                onClick={() => setSearchOpen(true)}
-                aria-label={t("Search")}
-                aria-expanded={searchOpen}
-                className={`grid size-11 place-items-center rounded-full transition-colors ${
-                  scrolled ? "bg-npf-ink/[0.06] text-npf-ink" : "bg-white/15 text-white"
-                }`}
-              >
-                <SearchIcon className="size-5" />
-              </button>
-            </div>
+            <CallButton onDark={!scrolled} />
+            <button
+              type="button"
+              onClick={() => setSearchOpen(true)}
+              aria-label={t("Search")}
+              aria-expanded={searchOpen}
+              className={`-me-2.5 ${round}`}
+            >
+              <SearchIcon className="size-5" />
+            </button>
           </div>
 
           {/* Desktop */}
           <nav
             aria-label={t("Main")}
-            className={`hidden h-18 items-center gap-8 xl:flex ${ink}`}
+            className={`hidden h-18 items-center gap-5 xl:flex 2xl:gap-8 ${ink}`}
           >
             <Link
               href="/app/home"
               aria-label={t("Nigeria Police Force home")}
-              className={`h-10 shrink-0 transition-colors duration-(--dur-media) ${
+              className={`h-11 shrink-0 transition-colors 2xl:h-12 duration-(--dur-media) ${
                 scrolled ? "text-npf-blue-deep" : "text-white"
               }`}
             >
@@ -211,9 +210,9 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                       href={item.href}
                       aria-current={here ? "page" : undefined}
                       aria-haspopup={item.children ? "true" : undefined}
-                      className={`relative inline-flex items-center gap-1 px-3 py-6 font-medium whitespace-nowrap transition-opacity 2xl:px-4 ${
+                      className={`relative inline-flex items-center gap-1 px-2.5 py-6 font-medium whitespace-nowrap transition-opacity 2xl:px-4 ${
                         scrolled ? "before:bg-npf-gold" : "before:bg-npf-gold-soft"
-                      } before:absolute before:inset-x-3 before:bottom-4 before:h-0.5 before:origin-left before:rounded-full before:transition-[scale] 2xl:before:inset-x-4 rtl:before:origin-right ${
+                      } before:absolute before:inset-x-2.5 before:bottom-4 before:h-0.5 before:origin-left before:rounded-full before:transition-[scale] 2xl:before:inset-x-4 rtl:before:origin-right ${
                         here
                           ? "before:scale-x-100"
                           : "opacity-85 before:scale-x-0 group-hover:opacity-100 group-hover:before:scale-x-100"
@@ -263,10 +262,10 @@ export default function Header({ solid = false }: { solid?: boolean }) {
               <li className="flex">
                 <LanguageSwitch className={`h-11 ${ghost}`} />
               </li>
-              <li className="ms-1 flex">
-                <AccountLink />
-              </li>
               <li className="ms-2 flex">
+                <AccountLink onDark={!scrolled} />
+              </li>
+              <li className="ms-2.5 flex">
                 <CallButton onDark={!scrolled} />
               </li>
             </ul>
@@ -316,7 +315,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         className="npf-drawer m-0 h-[100dvh] max-h-none w-[min(420px,88vw)] max-w-none overflow-y-auto bg-white p-6 shadow-raised"
       >
         <div className="mb-8 flex items-center justify-between">
-          <span className="h-9 text-npf-blue-deep">
+          <span className="h-11 text-npf-blue-deep">
             <PoliceWordmark className="h-full w-auto" />
           </span>
           <button

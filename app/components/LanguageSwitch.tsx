@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { LANGS, LANG_LABEL } from "../i18n/config";
 import { useLang, useT } from "../i18n/client";
 import { localePath } from "../i18n/path";
-import { CheckIcon, GlobeIcon } from "./icons";
+import { ArrowDown, CheckIcon, GlobeIcon } from "./icons";
 
 /**
  * Every language names itself in its own words, so a reader of any of them
@@ -92,9 +92,10 @@ export default function LanguageSwitch({
       >
         <GlobeIcon className="size-4 shrink-0 opacity-80" />
         <span>{LANG_LABEL[lang]}</span>
+        <ArrowDown className="-ms-0.5 size-4 shrink-0 opacity-70 transition-[rotate] group-open:rotate-180" />
       </summary>
       <ul
-        className="npf-lang-menu absolute end-0 top-[calc(100%+0.5rem)] z-50 min-w-44 rounded-[14px] bg-white p-1.5 text-npf-ink shadow-[0_12px_32px_rgb(20_49_95/0.16),0_0_0_1px_rgb(20_49_95/0.08)]"
+        className="npf-lang-menu absolute end-0 top-[calc(100%+0.5rem)] z-50 min-w-48 rounded-card bg-white p-2 text-npf-ink shadow-raised ring-1 ring-npf-hairline"
       >
         {options.map(({ code, href, current }) => (
           <li key={code}>
@@ -103,9 +104,9 @@ export default function LanguageSwitch({
               lang={code}
               hrefLang={code}
               aria-current={current ? "true" : undefined}
-              className={`flex items-center justify-between gap-6 rounded-[9px] px-3 py-2 text-sm transition-colors ${
-                current ? "font-semibold" : ""
-              } hover:bg-npf-cloud`}
+              className={`flex items-center justify-between gap-6 rounded-chip px-4 py-2.5 text-sm transition-colors hover:bg-npf-blue/[0.06] hover:text-npf-blue-deep ${
+                current ? "font-semibold text-npf-blue-deep" : ""
+              }`}
             >
               {LANG_LABEL[code]}
               {current ? (

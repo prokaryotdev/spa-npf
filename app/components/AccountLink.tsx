@@ -13,27 +13,30 @@ import { useT } from "../i18n/client";
 export default function AccountLink({
   onNavigate,
   block = false,
+  onDark = false,
 }: {
   onNavigate?: () => void;
   /** The drawer wants a full-width button, the nav bar a pill. */
   block?: boolean;
+  /** Over the hero photo Force blue sinks into the dark; white holds. */
+  onDark?: boolean;
 }) {
   const t = useT();
   const { session, loaded } = useStore();
 
-  const shape = block
-    ? "w-full justify-center px-5 py-3"
-    : "px-5 py-2.5 text-sm";
+  const className = `${
+    block ? "w-full justify-center px-5 py-3" : "h-11 ps-4 pe-5 text-sm"
+  } inline-flex shrink-0 items-center gap-2 rounded-full font-medium whitespace-nowrap transition-[background-color,color,scale] active:scale-[0.97] active:duration-(--dur-press) ${
+    onDark
+      ? "bg-white text-npf-blue-deep hover:bg-npf-mist focus-visible:outline-white"
+      : "bg-npf-blue text-white hover:bg-npf-blue-deep"
+  }`;
 
   if (!loaded || !session)
     return (
-      <Link
-        href="/app/signin"
-        onClick={onNavigate}
-        className={`inline-flex items-center gap-2 rounded-full bg-npf-blue font-medium whitespace-nowrap text-white transition-colors hover:bg-npf-blue-mid ${shape}`}
-      >
+      <Link href="/app/signin" onClick={onNavigate} className={className}>
+        <UserCircle className="size-4.5 shrink-0" />
         {t("Sign In")}
-        <UserCircle className="size-4.5" />
       </Link>
     );
 
@@ -45,9 +48,9 @@ export default function AccountLink({
     <Link
       href={session.role === "officer" ? "/app/police" : "/app/portal"}
       onClick={onNavigate}
-      className={`inline-flex items-center gap-2 rounded-full bg-npf-blue font-medium whitespace-nowrap text-white transition-colors hover:bg-npf-blue-mid ${shape}`}
+      className={className}
     >
-      <UserCircle className="size-4.5" />
+      <UserCircle className="size-4.5 shrink-0" />
       {session.role === "officer" ? t("Console") : first}
     </Link>
   );
