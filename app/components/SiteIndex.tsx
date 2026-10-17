@@ -42,6 +42,68 @@ export type SiteIndexData = {
 const fold = (s: string) =>
   s.normalize("NFD").replace(/\p{M}/gu, "").toLocaleLowerCase();
 
+/** The "Start here" tasks, shared by the sitemap and the 404. */
+export function StartRows({
+  start,
+  wide = true,
+}: {
+  start: SiteIndexData["start"];
+  /** False in a narrower column, where three across would crowd. */
+  wide?: boolean;
+}) {
+  const n = start.length;
+  const three = wide && !(n % 2 === 0 && n % 3);
+  return (
+    // Each cell's 1px shadow fills the 1px gap as the rule, so the rows
+    // stay ruled at any column count, and a search that leaves a short row
+    // leaves white, not a grey block.
+    <ul
+      className={`mt-5 grid gap-px overflow-hidden rounded-card border border-npf-hairline bg-white ${
+        n === 1
+          ? "md:max-w-[calc(50%-var(--npf-gap)/2)]"
+          : three
+            ? "md:grid-cols-2 xl:grid-cols-3"
+            : "md:grid-cols-2"
+      }`}
+    >
+      {start.map((l, i) => {
+        const Icon = ICONS[l.icon];
+        // A short last row stretches its last cell, so a search never
+        // leaves an empty block inside the box.
+        const last = i === n - 1;
+        const span =
+          !last || n < 3
+            ? ""
+            : `${n % 2 ? "md:col-span-2" : ""} ${three ? (n % 3 === 2 ? "xl:col-span-2" : "xl:col-span-1") : ""}`;
+        return (
+          <li
+            key={l.href}
+            className={`shadow-[0_0_0_1px_var(--color-npf-hairline)] ${span}`}
+          >
+            <Link
+              href={l.href}
+              className="npf-row-link group flex h-full items-start gap-4 px-5 py-5 focus-visible:-outline-offset-2 active:bg-npf-cloud"
+            >
+              <span className="npf-disc">
+                <Icon className="size-5" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="npf-h5 block text-npf-ink transition-colors group-hover:text-npf-blue">
+                  {l.label}
+                </span>
+                <span className="npf-small mt-1 line-clamp-3 text-npf-body">
+                  {l.note}
+                </span>
+              </span>
+              <ArrowRight className="npf-go mt-1" />
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 /**
  * The sitemap's body. Every label arrives already translated, so the filter
  * matches what the reader sees. While nothing is typed it reads as a
@@ -164,53 +226,7 @@ export default function SiteIndex({ data }: { data: SiteIndexData }) {
             <h2 id={`${id}-start`} className="npf-h4 text-npf-blue-deep">
               {t("Start here")}
             </h2>
-            {/* Each cell's 1px shadow fills the 1px gap as the rule, so the
-                rows stay ruled at any column count, and a search that
-                leaves a short row leaves white, not a grey block. */}
-            <ul
-              className={`mt-5 grid gap-px overflow-hidden rounded-card border border-npf-hairline bg-white ${
-                start.length === 1
-                  ? "md:max-w-[calc(50%-var(--npf-gap)/2)]"
-                  : start.length % 2 === 0 && start.length % 3
-                    ? "md:grid-cols-2"
-                    : "md:grid-cols-2 xl:grid-cols-3"
-              }`}
-            >
-              {start.map((l, i) => {
-                const Icon = ICONS[l.icon];
-                // A short last row stretches its last cell, so a search
-                // never leaves an empty block inside the box.
-                const last = i === start.length - 1;
-                const n = start.length;
-                const span = !last || n < 3
-                  ? ""
-                  : `${n % 2 ? "md:col-span-2" : ""} ${n % 3 === 2 ? "xl:col-span-2" : "xl:col-span-1"}`;
-                return (
-                  <li
-                    key={l.href}
-                    className={`shadow-[0_0_0_1px_var(--color-npf-hairline)] ${span}`}
-                  >
-                    <Link
-                      href={l.href}
-                      className="npf-row-link group flex h-full items-start gap-4 px-5 py-5 focus-visible:-outline-offset-2 active:bg-npf-cloud"
-                    >
-                      <span className="npf-disc">
-                        <Icon className="size-5" />
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="npf-h5 block text-npf-ink transition-colors group-hover:text-npf-blue">
-                          {l.label}
-                        </span>
-                        <span className="npf-small mt-1 line-clamp-3 text-npf-body">
-                          {l.note}
-                        </span>
-                      </span>
-                      <ArrowRight className="npf-go mt-1" />
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+            <StartRows start={start} />
           </section>
         ) : null}
 

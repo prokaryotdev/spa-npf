@@ -186,8 +186,6 @@ export const igPages: Record<string, string> = {
     "N'oge mberede, kpọọ 112.",
   "Call 112":
     "Kpọọ 112",
-  "Or go straight to":
-    "Ma ọ bụ gaa ozugbo na",
   // --- information, 2026-10-15 ---------------------------------------------
   "Also in Information": "Ọzọ na Ozi",
   "Most penalty points": "Akara ntaramahụhụ kachasị",
@@ -248,4 +246,14 @@ export const igPages: Record<string, string> = {
   "Your rating is anonymous.": "Onweghị onye ga-ama na ọ bụ gị nyere akara a.",
   "Send rating": "Ziga akara",
   "Tell us how it went": "Gwa anyị ka o si gaa",
+  // 404 (native review needed for yo/ig)
+  "You asked for": "Ị rịọrọ",
+  "Nothing on the site is close to that address": "Ọ dịghị ibe ọ bụla na saịtị dị nso na adreesị ahụ",
+  "Search above, or start from one of the pages below.": "Chọọ n'elu, ma ọ bụ malite n'otu n'ime ibe ndị dị n'okpuru.",
+  "Did you mean": "Ị pụtara",
+  "Still can't find it?": "Ị ka ahụbeghị ya?",
+  "Every page is in the sitemap, or ask us.": "Ibe ọ bụla dị na maapụ saịtị, ma ọ bụ jụọ anyị.",
+  "Every page on the site, in one list.": "Ibe ọ bụla na saịtị, n'otu ndepụta.",
+  "Services, news and every page": "Ọrụ, akụkọ na ibe ọ bụla",
+  "Phone lines, email and feedback.": "Ahịrị ekwentị, ozi-e na nzaghachi.",
 };

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageShell } from "../../../components/PageShell";
 import SiteIndex, { type SiteIndexData } from "../../../components/SiteIndex";
 import { footerColumns, legalLinks, navigation } from "../../../content";
+import { startHere } from "../../../content-pages";
 import {
   serviceCategoryNames,
   services,
@@ -21,59 +22,13 @@ export default async function SitemapPage() {
   const lang = await getLang();
   const info = navigation.find((n) => n.href === "/app/home/information")!;
 
-  // Each page appears once. The notes are the pages' own intros, so they
-  // say what the page says about itself.
+  // Each page appears once.
   const data: SiteIndexData = {
-    start: [
-      {
-        icon: "report",
-        label: t("Report a Crime"),
-        href: "/app/report",
-        note: t(
-          "Report a crime to the State Command where it happened. Free, open all day, and you can report anonymously.",
-        ),
-      },
-      {
-        icon: "track",
-        label: t("Track a Reference"),
-        href: "/app/track",
-        note: t(
-          "Follow a crime report or an application with its reference number. No account needed.",
-        ),
-      },
-      {
-        icon: "services",
-        label: t("Services"),
-        href: "/app/services",
-        note: t(
-          "Every Nigeria Police Force service, with its fee, turnaround and who it is for.",
-        ),
-      },
-      {
-        icon: "verify",
-        label: t("Verify a Police Document"),
-        href: "/app/verify",
-        note: t(
-          "Check that a police clearance certificate, report or permit you were given was issued by the Nigeria Police Force.",
-        ),
-      },
-      {
-        icon: "appeals",
-        label: t("Appeals"),
-        href: "/app/appeals",
-        note: t(
-          "Missing people, wanted people and stolen vehicles the Force is asking about. Send what you know, anonymously if you prefer.",
-        ),
-      },
-      {
-        icon: "centers",
-        label: t("Customer Centers"),
-        href: "/app/home/customer-centers",
-        note: t(
-          "Force Headquarters and the Police Command of every state and the FCT, with where to find each one.",
-        ),
-      },
-    ],
+    start: startHere.map((l) => ({
+      ...l,
+      label: t(l.label),
+      note: t(l.note),
+    })),
     groups: [
       {
         heading: t("Information"),

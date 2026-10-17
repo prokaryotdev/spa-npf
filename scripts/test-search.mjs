@@ -6,7 +6,7 @@
  */
 import assert from "node:assert/strict";
 import { filterBy } from "../app/search-text.ts";
-import { search, suggest, popularServices } from "../app/search-index.ts";
+import { search, suggest, popularServices, nearest } from "../app/search-index.ts";
 import { services } from "../app/content-services.ts";
 import { seedRequests, seedDocuments } from "../app/content-account.ts";
 
@@ -158,6 +158,17 @@ for (const request of seedRequests)
 const ids = new Set(seedRequests.map((r) => r.id));
 for (const doc of seedDocuments)
   assert.ok(ids.has(doc.request), `seed document request: ${doc.request}`);
+
+// --- 404 guesses ---------------------------------------------------------
+const guess = (path) => nearest(path).map((h) => h.href);
+// A slug that names a page wins, whatever its case or dashes.
+assert.equal(guess("/app/contactus")[0], "/app/home/contactUs");
+assert.equal(guess("/app/police-clearence")[0], "/app/services/police-clearance-certificate");
+// A dead slug under a section still offers the section.
+assert.deepEqual(guess("/app/services/no-such-service"), ["/app/services"]);
+// Nothing close is nothing, not a scatter of half matches.
+assert.deepEqual(guess("/app/this-page-is-gone"), []);
+assert.deepEqual(guess("/x/%E0%A4%A"), []);
 
 console.log("search, catalogue and seeds ok");
 

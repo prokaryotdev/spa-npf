@@ -165,7 +165,6 @@ export const haPages: Record<string, string> = {
   "Clear search": "Share bincike",
   "In an emergency, call 112.": "Idan akwai gaggawa, kira 112.",
   "Call 112": "Kira 112",
-  "Or go straight to": "Ko ka je kai tsaye zuwa",
   "Questions about this page?": "Kana da tambaya game da wannan shafin?",
   // --- information, 2026-10-15 ---------------------------------------------
   "Also in Information": "Har ila yau a Bayani",
@@ -227,4 +226,14 @@ export const haPages: Record<string, string> = {
   "Your rating is anonymous.": "Ba a san wanda ya ba da maki ba.",
   "Send rating": "Aika maki",
   "Tell us how it went": "Faɗa mana yadda ya kasance",
+  // 404 (native review needed for yo/ig)
+  "You asked for": "Ka nemi",
+  "Nothing on the site is close to that address": "Babu shafin da ya yi kusa da wannan adireshin",
+  "Search above, or start from one of the pages below.": "Yi bincike a sama, ko ka fara daga ɗaya daga cikin shafukan da ke ƙasa.",
+  "Did you mean": "Shin kana nufin",
+  "Still can't find it?": "Har yanzu ba ka samu ba?",
+  "Every page is in the sitemap, or ask us.": "Kowane shafi yana cikin taswirar shafin, ko ka tambaye mu.",
+  "Every page on the site, in one list.": "Kowane shafi a shafin, a jeri ɗaya.",
+  "Services, news and every page": "Ayyuka, labarai da kowane shafi",
+  "Phone lines, email and feedback.": "Layukan waya, imel da ra'ayoyi.",
 };

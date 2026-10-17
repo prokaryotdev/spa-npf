@@ -208,7 +208,7 @@ const inTitle = (entry: Indexed, forms: string[]) =>
  * Every plain word in the query has to appear somewhere in the entry; see
  * matcher() for quotes, minus words, question words and slips.
  */
-export function search(query: string): SearchHit[] {
+export function search(query: string, loose = true): SearchHit[] {
   const m = matcher(
     indexed.map((e) => e.text),
     query,
@@ -229,7 +229,7 @@ export function search(query: string): SearchHit[] {
         : entry.hit;
     ranked.push({ hit, rank: score(entry, forms, m.phrases) });
   }
-  if (!ranked.length && m.words.length > 1) return closest(m.words);
+  if (loose && !ranked.length && m.words.length > 1) return closest(m.words);
   // Stable, so equal matches keep the order the site lists them in.
   return ranked.sort((a, b) => b.rank - a.rank).map((r) => r.hit);
 }
@@ -253,6 +253,35 @@ function closest(words: string[]): SearchHit[] {
     .filter((c) => c.n >= need)
     .sort((a, b) => b.n - a.n)
     .map((c) => c.hit);
+}
+
+/**
+ * The pages a mistyped or outdated address was most likely after, for the
+ * 404. A last segment that names a page wins outright ("/app/contactus" is
+ * Contact Us, "/app/firearm-licence" is the service); then the segment's
+ * words go through the search, slips forgiven; then the page one level up.
+ */
+export function nearest(path: string, limit = 3): SearchHit[] {
+  const parts = path.split("/").filter(Boolean);
+  let last = parts.at(-1) ?? "";
+  try {
+    last = decodeURIComponent(last);
+  } catch {}
+  const key = (s: string) => fold(s).replace(/[^\p{L}\p{N}]/gu, "");
+  const pages = searchIndex.filter((hit) => !hit.external);
+  const exact = key(last)
+    ? pages.filter((hit) => key(hit.href.split("/").at(-1)!) === key(last))
+    : [];
+  // Strict: on a 404 a guess that misses a word is noise, not help.
+  const words = last === "app" ? "" : last.replace(/[-_.+]/g, " ").trim();
+  // "/app/services/old-slug" still lands near Services.
+  const up = `/${parts.slice(0, -1).join("/")}`;
+  const parent = pages.filter((hit) => up !== "/" && hit.href === up);
+  const seen = new Set<string>();
+  return [...exact, ...(words ? search(words, false) : []), ...parent]
+    .map((hit) => ({ ...hit, href: hit.href.replace(/\?.*$/, "") }))
+    .filter((hit) => hit.href !== path && !seen.has(hit.href) && seen.add(hit.href))
+    .slice(0, limit);
 }
 
 /** The five the CMS flags as most used — the empty-state suggestions. */

@@ -186,8 +186,6 @@ export const yoPages: Record<string, string> = {
     "Nígbà pàjáwìrì, pe 112.",
   "Call 112":
     "Pe 112",
-  "Or go straight to":
-    "Tàbí lọ tààrà sí",
   // --- information, 2026-10-15 ---------------------------------------------
   "Also in Information": "Bákan náà nínú Ìwífún",
   "Most penalty points": "Àmì ìjìyà tó pọ̀ jù",
@@ -248,4 +246,14 @@ export const yoPages: Record<string, string> = {
   "Your rating is anonymous.": "A kò ní mọ ẹni tí ó ṣe àyẹ̀wò yìí.",
   "Send rating": "Fi àyẹ̀wò ránṣẹ́",
   "Tell us how it went": "Sọ fún wa bí ó ṣe lọ",
+  // 404 (native review needed for yo/ig)
+  "You asked for": "O béèrè fún",
+  "Nothing on the site is close to that address": "Kò sí ojú-ìwé kankan lórí ìkànnì tó súnmọ́ àdírẹ́sì yẹn",
+  "Search above, or start from one of the pages below.": "Ṣàwárí lókè, tàbí bẹ̀rẹ̀ láti ọ̀kan nínú àwọn ojú-ìwé ìsàlẹ̀ yìí.",
+  "Did you mean": "Ṣé ohun tí o ní lọ́kàn ni",
+  "Still can't find it?": "Ṣé o ò tíì rí i?",
+  "Every page is in the sitemap, or ask us.": "Gbogbo ojú-ìwé wà nínú máàpù ìkànnì, tàbí kí o béèrè lọ́wọ́ wa.",
+  "Every page on the site, in one list.": "Gbogbo ojú-ìwé lórí ìkànnì, nínú àkójọ kan.",
+  "Services, news and every page": "Àwọn iṣẹ́, ìròyìn àti gbogbo ojú-ìwé",
+  "Phone lines, email and feedback.": "Àwọn nọ́mbà fóònù, ímeèlì àti èsì.",
 };
