@@ -290,4 +290,5 @@ export const igLegal: Record<string, string> = {
     "LGA {count} ọ na-ekpuchi",
   "Or start from your zone":
     "Ma ọ bụ malite site na mpaghara gị",
+  "Legal documents": "Akwụkwọ iwu",
 };

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { LegalSections, PageShell } from "../../../components/PageShell";
+import { LegalSections } from "../../../components/Legal";
+import { PageShell } from "../../../components/PageShell";
 import { termsConditions as termsConditionsSource } from "../../../content-footer";
 import { getT, getLocalized } from "../../../i18n/server";
 
@@ -23,7 +24,10 @@ export default async function TermsConditionsPage() {
         "The terms that govern your use of the Nigeria Police Force website and its electronic services.",
       )}
     >
-      <LegalSections sections={termsConditions.sections} />
+      <LegalSections
+        current="/app/home/terms-conditions"
+        sections={termsConditions.sections}
+      />
     </PageShell>
   );
 }

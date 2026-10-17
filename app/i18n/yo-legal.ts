@@ -290,4 +290,5 @@ export const yoLegal: Record<string, string> = {
     "Ìjọba ìbílẹ̀ {count} tí ó bò",
   "Or start from your zone":
     "Tàbí bẹ̀rẹ̀ láti agbègbè rẹ",
+  "Legal documents": "Àwọn ìwé òfin",
 };

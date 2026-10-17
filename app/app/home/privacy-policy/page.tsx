@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { LegalSections, PageShell } from "../../../components/PageShell";
+import { LegalSections } from "../../../components/Legal";
+import { PageShell } from "../../../components/PageShell";
 import { privacyPolicy as privacyPolicySource } from "../../../content-footer";
 import { getT, getLocalized } from "../../../i18n/server";
 
@@ -23,7 +24,10 @@ export default async function PrivacyPolicyPage() {
         "How Nigeria Police Force collects, uses, stores and protects the data you share on this website.",
       )}
     >
-      <LegalSections sections={privacyPolicy.sections} />
+      <LegalSections
+        current="/app/home/privacy-policy"
+        sections={privacyPolicy.sections}
+      />
     </PageShell>
   );
 }

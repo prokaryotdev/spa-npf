@@ -33,6 +33,7 @@ const PAGES = [
   ["resetting a password", "/app/reset"],
   ["a data table", "/app/home/information/traffic-offences-and-penalties"],
   ["a legal document", "/app/home/privacy-policy"],
+  ["the service agreement", "/app/home/customer-service-agreement"],
   ["search results", "/app/search?q=certificate"],
   ["sign in", "/app/signin"],
   ["officer sign in", "/app/police-signin"],

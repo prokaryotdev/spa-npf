@@ -257,4 +257,5 @@ export const haLegal: Record<string, string> = {
     "Ƙananan hukumomi {count} da take kula da su",
   "Or start from your zone":
     "Ko ka fara daga shiyyarka",
+  "Legal documents": "Takardun doka",
 };

@@ -142,10 +142,6 @@ export const privacyPolicy = {
           type: "paragraph",
         },
         {
-          text: "We use this information to provide the requested location-based Service, not to identify you but to:",
-          type: "paragraph",
-        },
-        {
           type: "list",
           intro:
             "We use this information to provide the requested location-based Service, not to identify you but to:",

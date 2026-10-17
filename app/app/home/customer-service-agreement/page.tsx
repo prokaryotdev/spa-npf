@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { LegalSections, PageShell } from "../../../components/PageShell";
+import { LegalSections } from "../../../components/Legal";
+import { PageShell } from "../../../components/PageShell";
 import { customerServiceAgreement as customerServiceAgreementSource } from "../../../content-footer";
 import { getT, getLocalized } from "../../../i18n/server";
 
@@ -25,7 +26,10 @@ export default async function CustomerServiceAgreementPage() {
         "What you can expect from Nigeria Police Force at every counter, and what we ask of you in return.",
       )}
     >
-      <LegalSections sections={customerServiceAgreement.sections} />
+      <LegalSections
+        current="/app/home/customer-service-agreement"
+        sections={customerServiceAgreement.sections}
+      />
     </PageShell>
   );
 }
