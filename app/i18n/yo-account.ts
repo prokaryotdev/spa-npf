@@ -208,12 +208,12 @@ export const yoAccount: Record<string, string> = {
     "Ọ̀rọ̀ aṣínà",
   "Sign in":
     "Wọlé",
-  "No account yet? Every Nigeria Police Force service is listed on the":
-    "Kò tíì ní àkáǹtì? Gbogbo iṣẹ́ Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà wà lórí",
-  "services page":
-    "ojú-ewé iṣẹ́",
-  ", and most can be started with NINAuth alone.":
-    ", a sì lè bẹ̀rẹ̀ èyí tó pọ̀ jù pẹ̀lú NINAuth nìkan.",
+  "No account yet?":
+    "Kò tíì ní àkáǹtì?",
+  "No account needed":
+    "Kò nílò àkáǹtì",
+  "These work without signing in.":
+    "Àwọn wọ̀nyí ń ṣiṣẹ́ láìjẹ́ pé o wọlé.",
   "Nigeria Police Force personnel":
     "Òṣìṣẹ́ Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà",
   "Officers reach the operations console with their force credentials.":

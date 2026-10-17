@@ -138,16 +138,11 @@ export default function SignInForm() {
         <p className="npf-small mt-3 text-center text-npf-steel">
           {t("Opens the sample account for {name}.", { name: t(CITIZEN.name) })}
         </p>
+      </div>
 
-        <div className="my-8 flex items-center gap-4">
-          <span className="h-px flex-1 bg-npf-hairline" />
-          <h2 className="npf-small text-center font-medium text-npf-body">
-            {t("Or use your Nigeria Police Force account")}
-          </h2>
-          <span className="h-px flex-1 bg-npf-hairline" />
-        </div>
-
-        <form noValidate onSubmit={onSubmit} className="flex flex-col gap-5">
+      <div className="border-t border-npf-hairline p-6 md:p-10">
+        <h2 className="npf-h5 text-npf-ink">{t("Or use your Nigeria Police Force account")}</h2>
+        <form noValidate onSubmit={onSubmit} className="mt-6 flex flex-col gap-5">
           <Field
             id="nin"
             label={t("NIN")}
@@ -180,17 +175,17 @@ export default function SignInForm() {
           />
           <button type="submit" className="npf-btn npf-btn-secondary mt-1 w-full">
             {t("Sign in")}
+            <span className="npf-btn-disc">
+              <ArrowRight aria-hidden className="npf-arrow size-4 rtl:-scale-x-100" />
+            </span>
           </button>
         </form>
       </div>
-      <p className="npf-small border-t border-npf-hairline bg-npf-paper px-6 py-5 text-npf-body md:px-10">
-        {t("No account yet? Every Nigeria Police Force service is listed on the")}{" "}
-        <Link href="/app/services" className={LINK}>
-          {t("services page")}
-        </Link>
-        {t(", and most can be started with NINAuth alone.")}{" "}
-        <Link href="/app/register" className={`whitespace-nowrap ${LINK}`}>
+      <p className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-t border-npf-hairline bg-npf-paper px-6 py-5 md:px-10">
+        <span className="npf-body text-npf-body">{t("No account yet?")}</span>
+        <Link href="/app/register" className={`npf-body inline-flex items-center gap-2 ${LINK}`}>
           {t("Create an account")}
+          <ArrowRight aria-hidden className="size-4 rtl:-scale-x-100" />
         </Link>
       </p>
     </section>

@@ -208,12 +208,12 @@ export const igAccount: Record<string, string> = {
     "Okwuntughe",
   "Sign in":
     "Banye",
-  "No account yet? Every Nigeria Police Force service is listed on the":
-    "Enwebeghị akaụntụ? Ọrụ ọ bụla nke Ndị Uwe Ojii Naịjirịa dị na",
-  "services page":
-    "ibe ọrụ",
-  ", and most can be started with NINAuth alone.":
-    ", a pụkwara ịmalite ọtụtụ n'ime ha naanị site na NINAuth.",
+  "No account yet?":
+    "Enwebeghị akaụntụ?",
+  "No account needed":
+    "Achọghị akaụntụ",
+  "These work without signing in.":
+    "Ndị a na-arụ ọrụ n'abanyeghị.",
   "Nigeria Police Force personnel":
     "Ndị ọrụ Ndị Uwe Ojii Naịjirịa",
   "Officers reach the operations console with their force credentials.":

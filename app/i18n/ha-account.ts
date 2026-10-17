@@ -18,11 +18,12 @@ export const haAccount: Record<string, string> = {
     "Ka shiga da NINAuth ko asusunka na Rundunar 'Yan Sandan Najeriya domin bin diddigin buƙatunka da amfani da ayyuka na musamman.",
   "Sign in to track your requests, settle fines and reach personalised services.":
     "Ka shiga domin bin diddigin buƙatunka, biyan tarar ka da samun ayyuka na musamman.",
-  "No account yet? Every Nigeria Police Force service is listed on the":
-    "Ba ka da asusu tukuna? An jera kowane aikin Rundunar 'Yan Sandan Najeriya a kan",
-  "services page": "shafin ayyuka",
-  ", and most can be started with NINAuth alone.":
-    ", kuma ana iya fara yawancinsu da NINAuth kaɗai.",
+  "No account yet?":
+    "Ba ka da asusu tukuna?",
+  "No account needed":
+    "Ba a buƙatar asusu",
+  "These work without signing in.":
+    "Waɗannan suna aiki ba tare da ka shiga ba.",
   "Opens the sample account for {name}.":
     "Yana buɗe asusun samfurin na {name}.",
   "Officers reach the operations console with their force credentials.":

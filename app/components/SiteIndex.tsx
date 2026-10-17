@@ -46,10 +46,13 @@ const fold = (s: string) =>
 export function StartRows({
   start,
   wide = true,
+  rail = false,
 }: {
   start: SiteIndexData["start"];
   /** False in a narrower column, where three across would crowd. */
   wide?: boolean;
+  /** In a side column from lg up, where even two across would crowd. */
+  rail?: boolean;
 }) {
   const n = start.length;
   const three = wide && !(n % 2 === 0 && n % 3);
@@ -64,7 +67,7 @@ export function StartRows({
           : three
             ? "md:grid-cols-2 xl:grid-cols-3"
             : "md:grid-cols-2"
-      }`}
+      } ${rail ? "lg:grid-cols-1" : ""}`}
     >
       {start.map((l, i) => {
         const Icon = ICONS[l.icon];
@@ -74,7 +77,7 @@ export function StartRows({
         const span =
           !last || n < 3
             ? ""
-            : `${n % 2 ? "md:col-span-2" : ""} ${three ? (n % 3 === 2 ? "xl:col-span-2" : "xl:col-span-1") : ""}`;
+            : `${n % 2 ? "md:col-span-2" : ""} ${three ? (n % 3 === 2 ? "xl:col-span-2" : "xl:col-span-1") : ""} ${rail ? "lg:col-span-1" : ""}`;
         return (
           <li
             key={l.href}
@@ -91,7 +94,7 @@ export function StartRows({
                 <span className="npf-h5 block text-npf-ink transition-colors group-hover:text-npf-blue">
                   {l.label}
                 </span>
-                <span className="npf-small mt-1 line-clamp-3 text-npf-body">
+                <span className={`npf-small mt-1 text-npf-body ${rail ? "block" : "line-clamp-3"}`}>
                   {l.note}
                 </span>
               </span>
