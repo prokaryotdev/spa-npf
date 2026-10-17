@@ -48,7 +48,10 @@ export const haServices: Record<string, string> = {
     "Babu aikin da ya dace da waɗannan taceƙa. Ka gwada share ɗaya daga cikinsu, ko",
   "Nothing matched. Try a shorter term, or browse the":
     "Babu abin da ya dace. Ka gwada kalma gajera, ko ka duba",
-  ". Try a shorter word, or": ". Ka gwada kalma gajera, ko",
+  "Try a shorter word, or": "Ka gwada kalma gajera, ko",
+  "to move": "don motsawa",
+  "to open": "don buɗewa",
+  "to close": "don rufewa",
   "Related services": "Ayyuka masu alaƙa",
   "Need help?": "Kana buƙatar taimako?",
   "Call or email us about this service.":

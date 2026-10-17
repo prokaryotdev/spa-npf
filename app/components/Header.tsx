@@ -118,6 +118,24 @@ export default function Header({ solid = false }: { solid?: boolean }) {
   const closeSearch = useCallback(() => setSearchOpen(false), []);
   const searchDialog = useDialog(searchOpen, closeSearch);
 
+  // Ctrl/⌘ K anywhere, or "/" when not already typing, opens the search.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const el = e.target as HTMLElement;
+      const typing =
+        el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName);
+      if (
+        (e.key === "k" && (e.ctrlKey || e.metaKey)) ||
+        (e.key === "/" && !typing && !e.ctrlKey && !e.metaKey && !e.altKey)
+      ) {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
   const ink = scrolled ? "text-npf-ink" : "text-white";
   const ghost = scrolled ? "hover:bg-npf-ink/[0.06]" : "hover:bg-white/10";
   const round = `grid size-11 place-items-center rounded-full transition-[background-color,scale] active:scale-[0.97] active:duration-(--dur-press) ${ghost}`;
@@ -286,26 +304,20 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         onClick={(e) => {
           if (e.target === searchDialog.current) setSearchOpen(false);
         }}
-        className="npf-search-sheet m-0 mt-0 w-full max-w-none bg-transparent p-4 pt-24 md:pt-28"
+        className="npf-search-sheet m-0 mt-0 w-full max-w-none bg-transparent p-3 md:p-4 md:pt-24"
       >
-        <div className="mx-auto w-full max-w-170">
+        {/* The card is never taller than the screen; its list scrolls. */}
+        <div className="mx-auto flex max-h-[calc(100dvh-1.5rem)] w-full max-w-170 flex-col md:max-h-[calc(100dvh-8rem)]">
           {/* Mounted only while open so autoFocus fires on every opening. */}
           {searchOpen ? (
             <ServiceSearch
-              variant="hero"
+              variant="sheet"
               autoFocus
               placeholder={t("Search for a service, news or page")}
               onNavigate={closeSearch}
+              onClose={closeSearch}
             />
           ) : null}
-          <button
-            type="button"
-            onClick={() => setSearchOpen(false)}
-            className="mx-auto mt-4 flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm text-white backdrop-blur-sm transition-colors hover:bg-white/25"
-          >
-            <CloseIcon className="size-4" />
-            {t("Close")}
-          </button>
         </div>
       </dialog>
 

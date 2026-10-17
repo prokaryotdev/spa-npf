@@ -696,8 +696,14 @@ export const yoServices: Record<string, string> = {
     "Wá iṣẹ́ kan",
   "Suggestions":
     "Àbá",
-  ". Try a shorter word, or":
-    ". Gbìyànjú ọ̀rọ̀ tó kúrú, tàbí",
+  "Try a shorter word, or":
+    "Gbìyànjú ọ̀rọ̀ tó kúrú, tàbí",
+  "to move":
+    "láti gbéra",
+  "to open":
+    "láti ṣí i",
+  "to close":
+    "láti pa á dé",
   "browse all services":
     "wo gbogbo iṣẹ́",
   "Recent":

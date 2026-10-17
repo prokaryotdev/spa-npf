@@ -696,8 +696,14 @@ export const igServices: Record<string, string> = {
     "Chọọ otu ọrụ",
   "Suggestions":
     "Aro",
-  ". Try a shorter word, or":
-    ". Nwaa okwu dị mkpụmkpụ, ma ọ bụ",
+  "Try a shorter word, or":
+    "Nwaa okwu dị mkpụmkpụ, ma ọ bụ",
+  "to move":
+    "iji gaa",
+  "to open":
+    "iji mepee",
+  "to close":
+    "iji mechie",
   "browse all services":
     "gagharịa ọrụ niile",
   "Recent":

@@ -47,11 +47,16 @@ export async function PageShell({
         className="border-b border-npf-hairline outline-none"
       >
         <div
-          className={`relative overflow-hidden bg-white ${
+          className={`relative bg-white ${
             compact ? "pt-36 pb-10 md:pt-40 md:pb-12" : "pt-40 pb-16 md:pt-48"
           }`}
         >
-          <div className="pointer-events-none absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 [mask-image:linear-gradient(to_bottom,#000_65%,transparent_90%)] md:size-250 md:opacity-60" />
+          {/* The glow is clipped in its own box, not the head's, so a `lead`
+              with a drop-down (the search box's suggestions) can hang out of
+              the head over the page below. */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div className="absolute top-0 end-0 h-80 w-56 translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#3c78bd66_7%,#22599e33_40%,#22599e00_70%)] opacity-70 [mask-image:linear-gradient(to_bottom,#000_65%,transparent_90%)] md:size-250 md:opacity-60" />
+          </div>
 
           <div className="npf-container npf-page-in relative">
             <nav aria-label={t("Breadcrumb")} className="mb-6 print:hidden">
