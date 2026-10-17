@@ -760,4 +760,16 @@ export const yoAccount: Record<string, string> = {
     "Èyí tó kàn: {step}",
   "Show": "Fihàn",
   "Hide": "Fi pamọ́",
+  // --- portal overview (2026-10-17; needs native review) ---
+  "Hello, {name}": "Ẹ n lẹ, {name}",
+  "Waiting on you": "Ó ń dúró dè ọ́",
+  "Open request": "Ṣí ìbéèrè",
+  "One unpaid fine": "Owó ìtanràn kan tí a kò tíì san",
+  "{n} unpaid fines": "Owó ìtanràn {n} tí a kò tíì san",
+  "{amount} payable today. Pay now and save {saved}.": "{amount} ni a ó san lónìí. San báyìí kí o sì fi {saved} pamọ́.",
+  "{amount} payable today.": "{amount} ni a ó san lónìí.",
+  "Pay fines": "San owó ìtanràn",
+  "Nothing is waiting on you": "Kò sí ohun tó ń dúró dè ọ́",
+  "A request that needs a document from you, or a fine to pay, shows up here first.": "Ìbéèrè tó nílò ìwé láti ọ̀dọ̀ rẹ, tàbí owó ìtanràn láti san, yóò kọ́kọ́ hàn níbí.",
+  "Unread": "A kò tíì kà á",
 };

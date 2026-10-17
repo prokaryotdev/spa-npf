@@ -21,7 +21,7 @@ const withinDiscount = (issued: string) =>
   (Date.now() - new Date(issued).getTime()) / 86_400_000 < DISCOUNT_DAYS;
 
 /** What a fine actually costs today. */
-const payable = (fine: { amount: number; issued: string }) =>
+export const payable = (fine: { amount: number; issued: string }) =>
   withinDiscount(fine.issued)
     ? Math.round(fine.amount * (1 - DISCOUNT))
     : fine.amount;

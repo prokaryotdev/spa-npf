@@ -760,4 +760,16 @@ export const igAccount: Record<string, string> = {
     "Ọzọ: {step}",
   "Show": "Gosi",
   "Hide": "Zoo",
+  // --- portal overview (2026-10-17; needs native review) ---
+  "Hello, {name}": "Ndewo, {name}",
+  "Waiting on you": "Na-eche gị",
+  "Open request": "Mepee arịrịọ",
+  "One unpaid fine": "Otu ụgwọ ntaramahụhụ a na-akwụbeghị",
+  "{n} unpaid fines": "Ụgwọ ntaramahụhụ {n} a na-akwụbeghị",
+  "{amount} payable today. Pay now and save {saved}.": "{amount} ka a ga-akwụ taa. Kwụọ ugbu a ma chekwaa {saved}.",
+  "{amount} payable today.": "{amount} ka a ga-akwụ taa.",
+  "Pay fines": "Kwụọ ụgwọ ntaramahụhụ",
+  "Nothing is waiting on you": "Ọ dịghị ihe na-eche gị",
+  "A request that needs a document from you, or a fine to pay, shows up here first.": "Arịrịọ chọrọ akwụkwọ n'aka gị, ma ọ bụ ụgwọ ntaramahụhụ ị ga-akwụ, ga-ebu ụzọ pụta ebe a.",
+  "Unread": "A gụbeghị ya",
 };

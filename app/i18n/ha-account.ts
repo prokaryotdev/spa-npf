@@ -708,4 +708,16 @@ export const haAccount: Record<string, string> = {
     "Na gaba: {step}",
   "Show": "Nuna",
   "Hide": "Ɓoye",
+  // --- portal overview (2026-10-17) ---
+  "Hello, {name}": "Sannu, {name}",
+  "Waiting on you": "Yana jiran ka",
+  "Open request": "Buɗe buƙata",
+  "One unpaid fine": "Tara ɗaya da ba a biya ba",
+  "{n} unpaid fines": "Tara {n} da ba a biya ba",
+  "{amount} payable today. Pay now and save {saved}.": "{amount} za a biya yau. Ka biya yanzu ka tara {saved}.",
+  "{amount} payable today.": "{amount} za a biya yau.",
+  "Pay fines": "Biya tara",
+  "Nothing is waiting on you": "Babu abin da ke jiran ka",
+  "A request that needs a document from you, or a fine to pay, shows up here first.": "Buƙatar da ke son takarda daga gare ka, ko tarar da za a biya, za ta fara bayyana a nan.",
+  "Unread": "Ba a karanta ba",
 };
