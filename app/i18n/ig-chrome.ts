@@ -50,8 +50,6 @@ export const igChrome: Record<string, string> = {
     "Ibe mbụ Ndị Uwe Ojii Naịjirịa",
   "Main":
     "Isi",
-  "Larger text":
-    "Mkpụrụ okwu buru ibu",
   "Search Nigeria Police Force":
     "Chọọ na Ndị Uwe Ojii Naịjirịa",
   "Close":

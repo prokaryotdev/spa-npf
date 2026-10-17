@@ -392,3 +392,13 @@ export const CarIcon = ({ className }: IconProps) => (
     <circle cx="16.9" cy="16.5" r="1.9" />
   </svg>
 );
+
+export const WifiOffIcon = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M2.5 8.6a14 14 0 0 1 4-2.6M10 5.1a14 14 0 0 1 11.5 3.5" />
+    <path d="M5.6 12a9.5 9.5 0 0 1 4.2-2.4M14.6 9.8a9.5 9.5 0 0 1 3.8 2.2" />
+    <path d="M8.9 15.3a5 5 0 0 1 6.2 0" />
+    <path d="M12 19h.01" />
+    <path d="m3 3 18 18" />
+  </svg>
+);

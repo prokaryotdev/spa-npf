@@ -13,7 +13,6 @@ import AccountLink from "./AccountLink";
 import LanguageSwitch from "./LanguageSwitch";
 import ServiceSearch from "./ServiceSearch";
 import {
-  AccessibilityIcon,
   ArrowRight,
   CallIcon,
   ArrowDown,
@@ -95,12 +94,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
   const [atTop, setAtTop] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [bigText, setBigText] = useState(false);
   const scrolled = solid || !atTop;
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("npf-large-text", bigText);
-  }, [bigText]);
 
   // The marker covers the first 80px of the page; once it has scrolled out,
   // the header turns solid. One observer instead of a handler per scroll.
@@ -264,20 +258,6 @@ export default function Header({ solid = false }: { solid?: boolean }) {
                   className={round}
                 >
                   <SearchIcon className="size-5" />
-                </button>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={() => setBigText((v) => !v)}
-                  aria-pressed={bigText}
-                  aria-label={t("Larger text")}
-                  title={t("Larger text")}
-                  className={`${round} ${
-                    bigText ? "bg-npf-blue text-white hover:bg-npf-blue" : ""
-                  }`}
-                >
-                  <AccessibilityIcon className="size-5" />
                 </button>
               </li>
               <li className="flex">

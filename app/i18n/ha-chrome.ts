@@ -25,7 +25,6 @@ export const haChrome: Record<string, string> = {
   "On this page": "A wannan shafi",
   Call: "Kira",
   "Rate this service": "Ba wannan aikin maki",
-  "Larger text": "Rubutu mafi girma",
   "Nigeria Police Force home": "Gidan Rundunar 'Yan Sandan Najeriya",
   "Emergency Numbers": "Lambobin Gaggawa",
   "Search Nigeria Police Force": "Nemi a Rundunar 'Yan Sandan Najeriya",

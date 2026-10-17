@@ -278,14 +278,6 @@ dialog::backdrop {
 }
 /* A <dialog> with margin:0 already anchors to the inline-start edge, so in
    Hausa the drawer lives on the right; only the entrance needs the mirror. */
-/*
- * Toggled by the header's accessibility button; every size in the app is in
- * rem, so bumping the root scales the whole page. Kept at 112% because the
- * desktop nav bar runs out of room above that.
- */
-html.npf-large-text {
-  font-size: 112%;
-}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -2155,5 +2147,40 @@ html.npf-large-text {
 @media (prefers-reduced-motion: no-preference) {
   .npf-seal {
     animation: npf-seal 320ms 120ms var(--ease-out) backwards;
+  }
+}
+
+/* The offline toast rises from the edge it sits on, and stands down while
+   the error page is already saying the same thing in full. */
+@keyframes npf-toast-in {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+.npf-toast-in {
+  animation: npf-toast-in 320ms var(--ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .npf-toast-in {
+    animation: none;
+  }
+}
+body:has([data-offline-page]) .npf-offline-toast {
+  display: none;
+}
+
+/* "Waiting for the signal": a slow breath, so it reads as still trying. */
+@keyframes npf-wait {
+  50% {
+    opacity: 0.35;
+  }
+}
+.npf-wait-dot {
+  animation: npf-wait 1.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .npf-wait-dot {
+    animation: none;
   }
 }

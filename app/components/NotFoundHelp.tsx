@@ -20,11 +20,11 @@ function useMissed() {
 }
 
 /** Shows the visitor the address that missed, so a typo is plain to see. */
-export function MissedAddress() {
+export function MissedAddress({ label = "You asked for" }: { label?: string }) {
   const t = useT();
   return (
     <p className="npf-small mt-6 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-npf-steel">
-      {t("You asked for")}
+      {t(label)}
       <code className="max-w-full truncate rounded-chip bg-npf-cloud px-2.5 py-1 text-npf-ink ring-1 ring-npf-hairline ring-inset">
         {useMissed()}
       </code>

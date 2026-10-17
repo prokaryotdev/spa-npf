@@ -50,8 +50,6 @@ export const yoChrome: Record<string, string> = {
     "Ojú-ewé àkọ́kọ́ Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà",
   "Main":
     "Àkọ́kọ́",
-  "Larger text":
-    "Ọ̀rọ̀ tó tóbi jù",
   "Search Nigeria Police Force":
     "Wá nínú Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà",
   "Close":
