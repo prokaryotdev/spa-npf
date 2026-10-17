@@ -195,7 +195,7 @@ export default function ServiceCatalogue({
                 {t("Most used")}
               </h2>
               {/* Short on a phone: five full cards would fill the screen. */}
-              <ul className="mt-5 grid gap-4 max-sm:[&_[data-desc]]:hidden md:grid-cols-2 lg:grid-cols-6">
+              <ul className="mt-5 grid grid-cols-1 gap-4 max-sm:[&_[data-desc]]:hidden md:grid-cols-2 lg:grid-cols-6">
                 {featured.map((service, i) => (
                   <li
                     key={service.slug}
@@ -218,7 +218,7 @@ export default function ServiceCatalogue({
                   {t("All services")}
                 </h2>
               ) : null}
-              <ul className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <ul className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {rest.map((service) => (
                   <li key={service.slug}>
                     <ServiceCard service={service} />
@@ -311,20 +311,24 @@ function ServiceCard({ service }: { service: ServiceRow }) {
       ) : null}
 
       <span className="mt-auto pt-5">
-        <span className="npf-small flex items-center gap-x-5 border-t border-npf-hairline pt-4">
-          {/* Either can be blank where nothing official gives one. */}
-          {service.feeSummary ? (
-            <span className="inline-flex items-center gap-1.5 font-medium text-npf-ink tabular-nums">
-              <CardIcon className="size-4 shrink-0 text-npf-steel" />
-              {t(service.feeSummary)}
-            </span>
-          ) : null}
-          {service.turnaround ? (
-            <span className="inline-flex items-center gap-1.5 text-npf-steel">
-              <ClockIcon className="size-4 shrink-0" />
-              {t(service.turnaround)}
-            </span>
-          ) : null}
+        <span className="npf-small flex items-center gap-x-4 border-t border-npf-hairline pt-4">
+          {/* Either can be blank where nothing official gives one. A wrapping
+              row moves a whole item down before it breaks one ("On your /
+              POSSAP invoice"), so each reads on one line, and nothing is cut. */}
+          <span className="flex min-w-0 flex-1 flex-wrap items-center gap-x-4 gap-y-1.5">
+            {service.feeSummary ? (
+              <span className="inline-flex items-center gap-1.5 font-medium text-npf-ink tabular-nums">
+                <CardIcon className="size-4 shrink-0 text-npf-steel" />
+                {t(service.feeSummary)}
+              </span>
+            ) : null}
+            {service.turnaround ? (
+              <span className="inline-flex items-center gap-1.5 text-npf-steel">
+                <ClockIcon className="size-4 shrink-0" />
+                {t(service.turnaround)}
+              </span>
+            ) : null}
+          </span>
           <ArrowRight className="ms-auto size-4.5 shrink-0 text-npf-blue transition-transform group-hover:translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:-translate-x-[3px]" />
         </span>
       </span>

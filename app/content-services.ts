@@ -2254,7 +2254,10 @@ export const services: Service[] = [
     name: "Volunteer Platform",
     action: "Apply",
     category: null,
-    icon: "/icons/services/volunteer-platform.svg",
+    // The CMS asset (public/icons/services/volunteer-platform.svg) is clipped
+    // to a 5px strip and draws a squiggle; the generic glyph stands in until
+    // the CMS sends a working one.
+    icon: null,
     description:
       "This service enables members of the community, whether Nigeria Police Force employees or the public, to volunteer with Nigeria Police Force by registering for available opportunities on the Nigeria Police Force Volunteer Platform.",
     audiences: ["Residents", "Students", "Police officers"],

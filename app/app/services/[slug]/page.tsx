@@ -146,7 +146,19 @@ export default async function ServicePage({
   ].map((place) => {
     const Icon = place.en === "Other" ? ClockIcon : channelIcon(place.en);
     return { ...place, Icon, station: Icon === PinIcon };
-  });
+  })
+    // The CMS can name stations twice ("Divisional Police Stations", "Police
+    // Stations"); both lead to the same finder, so one row says it, keeping
+    // whichever gives the hours.
+    .reduce<{ name: string; en: string; hours: string | null; Icon: typeof ClockIcon; station: boolean }[]>(
+      (all, place) => {
+        const first = place.station && all.find((p) => p.station);
+        if (!first) all.push(place);
+        else first.hours ??= place.hours;
+        return all;
+      },
+      [],
+    );
 
   // The CMS numbers a rule's own list by hand ("1. Availability of …") as
   // terms of their own; numbering those again printed "3  1. …". They fold
@@ -213,7 +225,14 @@ export default async function ServicePage({
           // The three answers a visitor came for, before any reading. A
           // group has none of its own: "Free, Instant" there would be wrong
           // for the certificates under it that cost ₦48,000 and take days.
-          hub ? undefined : <Facts facts={facts} />
+          // On a phone the fee and the time share a row; the audience,
+          // which can run long, takes the row under them.
+          hub ? undefined : (
+            <Facts
+              facts={facts}
+              className="max-md:grid-cols-2 max-md:[&>div]:px-5 max-md:[&>div:nth-child(3)]:col-span-2"
+            />
+          )
         }
       >
         <section className="bg-white pb-(--npf-section-y)">
@@ -304,49 +323,14 @@ export default async function ServicePage({
               </div>
             </aside>
 
-            <div className="min-w-0 lg:col-start-1 lg:row-start-1 lg:max-w-[46rem] [&>section+section]:mt-12 [&>section+section]:border-t [&>section+section]:border-npf-hairline [&>section+section]:pt-12">
+            <div className="min-w-0 lg:col-start-1 lg:row-start-1 lg:max-w-[46rem] [&>section+section]:mt-14">
               {hub ? (
                 <Section id="choose" title={t("Choose a service")}>
                   {/* The group's children are what the visitor came to pick
                       from, so they are the page, one per row. */}
                   <ul className="divide-y divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline">
                     {related.map((item) => (
-                      <li key={item.slug}>
-                        <Link
-                          href={`/app/services/${item.slug}`}
-                          className="npf-row-link group flex items-center gap-4 px-5 py-5"
-                        >
-                          <span className={tile}>
-                            {item.icon ? (
-                              <Image
-                                src={item.icon}
-                                alt=""
-                                width={22}
-                                height={22}
-                                className="size-5.5"
-                              />
-                            ) : (
-                              <ServicesIcon className="size-5.5" />
-                            )}
-                          </span>
-                          <span className="min-w-0 flex-1">
-                            <span className="npf-body block font-semibold text-npf-ink transition-colors group-hover:text-npf-blue">
-                              {item.name}
-                            </span>
-                            {item.description ? (
-                              <span className="npf-small mt-1 line-clamp-2 max-w-[60ch] text-npf-body">
-                                {item.description}
-                              </span>
-                            ) : null}
-                            <span className="npf-small mt-1 block text-npf-steel tabular-nums">
-                              {item.feeSummary} · {item.turnaround}
-                            </span>
-                          </span>
-                          <span aria-hidden className={go}>
-                            <ArrowRight className="npf-go size-4 text-current" />
-                          </span>
-                        </Link>
-                      </li>
+                      <ServiceRow key={item.slug} item={item} described />
                     ))}
                   </ul>
                 </Section>
@@ -413,12 +397,15 @@ export default async function ServicePage({
                     {service.fees.map((fee) => (
                       <div
                         key={fee.label}
-                        className="flex items-baseline justify-between gap-6 px-5 py-4 not-first:border-t not-first:border-npf-hairline"
+                        className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 px-5 py-4 not-first:border-t not-first:border-npf-hairline"
                       >
                         <dt className="npf-body text-npf-body first-letter:uppercase">
                           {fee.label}
                         </dt>
-                        <dd className="npf-body shrink-0 font-semibold text-npf-ink tabular-nums">
+                        {/* A worded price ("Shown on your POSSAP invoice")
+                            drops under its label on a phone rather than
+                            squeezing the label to a word a line. */}
+                        <dd className="npf-body ms-auto text-end font-semibold text-npf-ink tabular-nums">
                           {fee.value}
                         </dd>
                       </div>
@@ -591,44 +578,18 @@ export default async function ServicePage({
               ) : null}
 
               {related.length && !hub ? (
-                <section aria-labelledby="related">
-                  <h2 id="related" className="npf-h3 text-npf-blue-deep">
-                    {popular ? t("Popular services") : t("Related services")}
-                  </h2>
-                  <ul className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <Section
+                  id="related"
+                  title={popular ? t("Popular services") : t("Related services")}
+                >
+                  {/* One per row like every other list here, so the end of
+                      the page reads as more of the same, not a new grid. */}
+                  <ul className="divide-y divide-npf-hairline overflow-hidden rounded-card border border-npf-hairline">
                     {related.map((item) => (
-                      <li key={item.slug}>
-                        <Link
-                          href={`/app/services/${item.slug}`}
-                          className="group flex h-full items-center gap-4 rounded-card p-4 ring-1 ring-npf-hairline transition-[box-shadow,translate,scale] duration-(--dur-hover) ease-(--ease-out) ring-inset hover:-translate-y-0.5 hover:shadow-card hover:ring-transparent active:scale-[0.99] active:duration-(--dur-press) motion-reduce:hover:translate-y-0"
-                        >
-                          <span className="grid size-10 shrink-0 place-items-center rounded-chip bg-npf-cloud transition-colors group-hover:bg-npf-chip">
-                            {item.icon ? (
-                              <Image
-                                src={item.icon}
-                                alt=""
-                                width={22}
-                                height={22}
-                                className="size-5.5"
-                              />
-                            ) : (
-                              <ServicesIcon className="size-5 text-npf-blue-ink" />
-                            )}
-                          </span>
-                          <span className="min-w-0 flex-1">
-                            <span className="npf-small block font-medium text-npf-ink transition-colors group-hover:text-npf-blue">
-                              {item.name}
-                            </span>
-                            <span className="npf-small block text-npf-steel tabular-nums">
-                              {item.feeSummary} · {item.turnaround}
-                            </span>
-                          </span>
-                          <ArrowRight className="size-4.5 shrink-0 text-npf-blue transition-transform group-hover:translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:-translate-x-[3px]" />
-                        </Link>
-                      </li>
+                      <ServiceRow key={item.slug} item={item} />
                     ))}
                   </ul>
-                </section>
+                </Section>
               ) : null}
             </div>
           </div>
@@ -658,11 +619,60 @@ function Section({
 }) {
   return (
     <section id={id} aria-labelledby={`${id}-h`} className="scroll-mt-28">
-      <h2 id={`${id}-h`} className="npf-h3 mb-6 text-npf-blue-deep">
+      <h2 id={`${id}-h`} className="npf-h4 mb-5 text-npf-blue-deep">
         {title}
       </h2>
       {children}
     </section>
+  );
+}
+
+/** A service to go on to: its icon, name, price and time, and an arrow. */
+function ServiceRow({
+  item,
+  described = false,
+}: {
+  item: (typeof servicesSource)[number];
+  /** A group's children are the page, so they carry their line too. */
+  described?: boolean;
+}) {
+  return (
+    <li>
+      <Link
+        href={`/app/services/${item.slug}`}
+        className={`npf-row-link group flex items-center gap-4 px-5 ${described ? "py-5" : "py-4"}`}
+      >
+        <span className={tile}>
+          {item.icon ? (
+            <Image
+              src={item.icon}
+              alt=""
+              width={22}
+              height={22}
+              className="size-5.5"
+            />
+          ) : (
+            <ServicesIcon className="size-5.5" />
+          )}
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="npf-body block font-semibold text-npf-ink transition-colors group-hover:text-npf-blue">
+            {item.name}
+          </span>
+          {described && item.description ? (
+            <span className="npf-small mt-1 line-clamp-2 max-w-[60ch] text-npf-body">
+              {item.description}
+            </span>
+          ) : null}
+          <span className="npf-small mt-1 block text-npf-steel tabular-nums">
+            {item.feeSummary} · {item.turnaround}
+          </span>
+        </span>
+        <span aria-hidden className={go}>
+          <ArrowRight className="npf-go size-4 text-current" />
+        </span>
+      </Link>
+    </li>
   );
 }
 
