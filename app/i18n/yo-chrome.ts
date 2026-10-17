@@ -42,8 +42,7 @@ export const yoChrome: Record<string, string> = {
     "Forúkọ sílẹ̀",
   "© {year} Nigeria Police Force. All Rights Reserved":
     "© {year} Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà. Gbogbo Ẹ̀tọ́ wà ní Ìpamọ́",
-  "Designed and built by":
-    "Àgbékalẹ̀ àti ìkọ́lé láti ọwọ́",
+  "Built by": "Ìkọ́lé láti ọwọ́",
   "Open menu":
     "Ṣí àkójọ",
   "Nigeria Police Force home":

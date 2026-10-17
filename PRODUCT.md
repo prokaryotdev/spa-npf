@@ -40,7 +40,7 @@ A national police front end built around real Force structure: Force HQ → 37 S
 
 - Nigeria Police Force crest and wordmark (`app/components/Wordmark.tsx`), Force blue.
 - Console is **light** and reads as one site with the public pages (user decision 2026-10-10). The map came back on 2026-10-14 at the user's request, as its own board (light Esri tiles), not as the board background. No all-caps labels unless the user asks.
-- Footer credit: "Designed and built by Cloudbrella" → https://www.cloudbrella.ng/.
+- Footer credit: "Built by Cloudbrella" (was "Designed and built by" until 2026-10-17) → https://www.cloudbrella.ng/.
 
 ## Evidence on Hand
 

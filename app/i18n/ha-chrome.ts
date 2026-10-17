@@ -75,7 +75,7 @@ export const haChrome: Record<string, string> = {
   "The site failed to load. Trying again often clears it.":
     "Shafin bai buɗe ba. Sau da yawa sake gwadawa yakan warware shi.",
   "Try again": "Sake gwadawa",
-  "Designed and built by": "An tsara kuma an gina ta hannun",
+  "Built by": "An gina ta hannun",
   "Language": "Harshe",
   "Language: {name}": "Harshe: {name}",
 };

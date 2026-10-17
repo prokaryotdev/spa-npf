@@ -52,23 +52,31 @@ export default function Footer({
 
   return (
     <footer id="staticFooter" className="w-full bg-white text-npf-body print:hidden">
-      {/* Emergency */}
+      {/* Emergency. Nearly every page ends on white, so the numbers get
+          their own full-width band on the homepage community chapter's sand,
+          ruled in gold top and bottom: the page plainly ends here, and the
+          white cards and the red 112 card stand off the warm ground. */}
       {showEmergency ? (
       <section
         aria-labelledby="footer-emergency"
-        className="npf-container pt-(--npf-section-y) pb-(--npf-head-gap)"
+        className="border-y border-npf-gold/20 bg-npf-sand py-16 lg:py-20"
       >
-        <h2 id="footer-emergency" className="npf-h3 mb-8 text-npf-ink">
-          {t("Emergency Numbers")}
-        </h2>
-        <EmergencyLines />
+        <div className="npf-container">
+          <h2 id="footer-emergency" className="npf-h3 mb-8 text-npf-ink">
+            {t("Emergency Numbers")}
+          </h2>
+          <EmergencyLines />
+        </div>
       </section>
       ) : null}
 
-      {/* Link columns */}
+      {/* Link columns. Under the band the change of ground is the break;
+          without it, a hairline. */}
       <nav
         aria-label={t("Site Map")}
-        className="npf-container grid border-t border-npf-hairline py-6 md:grid-cols-3 md:gap-x-10 md:gap-y-12 md:py-16 xl:grid-cols-[1.35fr_1fr_0.85fr_1.15fr_1.15fr]"
+        className={`npf-container grid py-6 md:grid-cols-3 md:gap-x-10 md:gap-y-12 md:py-16 xl:grid-cols-[1.35fr_1fr_0.85fr_1.15fr_1.15fr] ${
+          showEmergency ? "" : "border-t border-npf-hairline"
+        }`}
       >
         {footerColumns.map((col) => {
           const isOpen = open === col.heading;
@@ -102,17 +110,24 @@ export default function Footer({
               >
                 {col.links.map((link) => {
                   const external = "external" in link && link.external;
+                  // Inline, not flex, with the last word and the arrow in one
+                  // nowrap span: a label that wraps keeps its arrow after the
+                  // last word instead of out at the column's edge.
+                  const cut = external ? link.label.lastIndexOf(" ") + 1 : 0;
                   return (
                     <li key={link.label}>
                       <Link
                         href={link.href}
                         target={external ? "_blank" : undefined}
                         rel={external ? "noopener noreferrer" : undefined}
-                        className="group inline-flex items-center gap-1.5 decoration-npf-gold underline-offset-4 transition-colors hover:text-npf-blue hover:underline"
+                        className="group decoration-npf-gold underline-offset-4 transition-colors hover:text-npf-blue hover:underline"
                       >
-                        {link.label}
+                        {external ? link.label.slice(0, cut) : link.label}
                         {external ? (
-                          <ArrowUpRight className="size-4 shrink-0 transition-[translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100" />
+                          <span className="whitespace-nowrap">
+                            {link.label.slice(cut)}
+                            <ArrowUpRight className="ms-1.5 inline size-4 align-[-0.15em] transition-[translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100" />
+                          </span>
                         ) : null}
                       </Link>
                     </li>
@@ -192,10 +207,13 @@ export default function Footer({
         </div>
       </div>
 
-      {/* Sign-off: the crest with its builder's credit, where to follow us */}
-      <div className="npf-container flex flex-col gap-8 pt-14 pb-10 md:flex-row md:items-center md:justify-between">
-        {/* The builder's credit sits beside the crest, split off by a
-            hairline, so it reads as a signature rather than small print. */}
+      {/* Sign-off: the crest with its builder's credit, and where to follow
+          us. Wraps rather than squeezes: when a long translation leaves no
+          room, the socials drop under the crest. */}
+      <div className="npf-container flex flex-wrap items-center justify-between gap-x-12 gap-y-8 pt-14 pb-10">
+        {/* The credit sits beside the crest, split off by a short hairline,
+            and is built the same way at a smaller size: the builder's mark,
+            then two lines. Smaller, so the Force's crest still leads. */}
         <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
           <span
             role="img"
@@ -204,23 +222,32 @@ export default function Footer({
           >
             <PoliceWordmark className="h-14 w-auto md:h-16" />
           </span>
-          <span aria-hidden className="h-12 w-px bg-npf-hairline" />
+          {/* On a phone the credit wraps under the crest, so the rule goes. */}
+          <span aria-hidden className="hidden h-10 w-px bg-npf-hairline sm:block" />
           <a
             href="https://www.cloudbrella.ng/"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex flex-col gap-0.5"
+            className="group flex shrink-0 items-center gap-3"
           >
-            <span className="npf-small text-npf-muted">
-              {t("Designed and built by")}
-            </span>
-            <span className="npf-h5 inline-flex items-center gap-1 text-npf-ink decoration-npf-gold underline-offset-4 transition-colors group-hover:text-npf-blue group-hover:underline">
-              Cloudbrella
-              <ArrowUpRight className="size-4 shrink-0 transition-[translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100" />
+            <Image
+              src="/brand/cloudbrella-mark.png"
+              alt=""
+              width={173}
+              height={160}
+              className="h-10 w-auto"
+            />
+            <span className="flex flex-col">
+              <span className="npf-small text-npf-muted">{t("Built by")}</span>
+              <span className="inline-flex items-center gap-1 font-secondary text-base leading-tight font-bold text-npf-blue-deep decoration-npf-gold underline-offset-4 transition-colors group-hover:text-npf-blue group-hover:underline">
+                Cloudbrella
+                <ArrowUpRight className="size-3.5 shrink-0 transition-[translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100" />
+              </span>
             </span>
             <span className="sr-only"> {t("(opens in a new window)")}</span>
           </a>
         </div>
+        {/* Where to follow us, on its own at the far edge. */}
         <div className="flex gap-2">
           {socials.map((name) => (
             // ponytail: home until the real profiles are known.
@@ -236,16 +263,15 @@ export default function Footer({
         </div>
       </div>
 
-      {/* Legal */}
-      <div className="npf-small npf-container flex flex-col gap-6 border-t border-npf-hairline pt-8 pb-12 text-npf-muted lg:flex-row lg:items-start lg:justify-between lg:gap-12">
-        <p className="font-medium text-npf-ink">
-          {t("© {year} Nigeria Police Force. All Rights Reserved", {
-            year: process.env.NEXT_PUBLIC_BUILD_YEAR ?? "",
-          })}
-        </p>
-        {/* Legal links, with the store badges under them, close the right
-            edge; the crest and its credit hold the left one above. */}
-        <div className="flex shrink-0 flex-col gap-5 lg:items-end">
+      {/* Legal: the copyright over its links on one edge, the store badges
+          closing the page on the other. */}
+      <div className="npf-small npf-container flex flex-wrap items-center justify-between gap-x-12 gap-y-6 border-t border-npf-hairline pt-8 pb-12 text-npf-muted">
+        <div className="flex flex-col gap-3">
+          <p className="font-medium text-npf-ink">
+            {t("© {year} Nigeria Police Force. All Rights Reserved", {
+              year: process.env.NEXT_PUBLIC_BUILD_YEAR ?? "",
+            })}
+          </p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             {legalLinks.map((link) => (
               <li key={link.label}>
@@ -258,26 +284,26 @@ export default function Footer({
               </li>
             ))}
           </ul>
-          {showApps ? (
-            <div className="flex flex-wrap gap-2.5">
-              {storeBadges.map((badge) => (
-                // ponytail: home until the store listings exist.
-                <Link
-                  key={badge.label}
-                  href="/"
-                  className="rounded-chip transition-[translate] hover:-translate-y-0.5"
-                >
-                  <Image
-                    src={badge.src}
-                    alt={badge.label}
-                    width={badge.width}
-                    height={40}
-                  />
-                </Link>
-              ))}
-            </div>
-          ) : null}
         </div>
+        {showApps ? (
+          <div className="flex flex-wrap gap-2.5">
+            {storeBadges.map((badge) => (
+              // ponytail: home until the store listings exist.
+              <Link
+                key={badge.label}
+                href="/"
+                className="rounded-chip transition-[translate] hover:-translate-y-0.5"
+              >
+                <Image
+                  src={badge.src}
+                  alt={badge.label}
+                  width={badge.width}
+                  height={40}
+                />
+              </Link>
+            ))}
+          </div>
+        ) : null}
       </div>
     </footer>
   );

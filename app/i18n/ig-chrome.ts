@@ -42,8 +42,7 @@ export const igChrome: Record<string, string> = {
     "Debanye aha",
   "© {year} Nigeria Police Force. All Rights Reserved":
     "© {year} Ndị Uwe Ojii Naịjirịa. Echekwara Ikike Niile",
-  "Designed and built by":
-    "Onye haziri ma wuo ya:",
+  "Built by": "Onye wuru ya:",
   "Open menu":
     "Mepee menu",
   "Nigeria Police Force home":
