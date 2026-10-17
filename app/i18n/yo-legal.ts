@@ -20,7 +20,7 @@ export const yoLegal: Record<string, string> = {
     "Iṣẹ́ pàtàkì fún àwọn adití, àwọn tí kò gbọ́ràn dáadáa, tàbí àwọn tó ní ìṣòro ọ̀rọ̀ sísọ.",
   "Connect with Nigeria Police Force through the Sign Language Service for accessible communication assistance.":
     "Kàn sí Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà nípasẹ̀ Iṣẹ́ Èdè Àwọn Adití fún ìrànlọ́wọ́ ìbánisọ̀rọ̀ tí ó rọrùn.",
-  "Feedback And Complaints":
+  "Feedback and complaints":
     "Èsì Àti Ẹ̀sùn",
   "We value every opinion, suggestion, and concern shared by our community — each helps us serve you better.":
     "A mọyì gbogbo èrò, àbá àti àníyàn tí agbègbè wa ń pín: ọ̀kọ̀ọ̀kan ń ràn wá lọ́wọ́ láti sìn ọ́ dáadáa.",
@@ -36,8 +36,8 @@ export const yoLegal: Record<string, string> = {
     "Fi ìmoore rẹ hàn sí Ọlọ́pàá kan tàbí ọmọ ẹgbẹ́ kan tí ó mú àyípadà rere wá. Ọ̀rọ̀ rẹ ń fún wa ní agbára láti ṣe dáadáa sí i.",
   "Complaint":
     "Ẹ̀sùn",
-  "Our IT support team is ready to help you resolve issues quickly and ensure your digital experience with Nigeria Police Force runs smoothly.":
-    "Ẹgbẹ́ ìrànlọ́wọ́ IT wa ti ṣetán láti ràn ọ́ lọ́wọ́ yanjú ìṣòro kíákíá, kí ìrírí orí ayélujára rẹ pẹ̀lú Ilé-iṣẹ́ Ọlọ́pàá Nàìjíríà lè rọrùn.",
+  "Tell us what went wrong with a police service or with this website.":
+    "Sọ fún wa ohun tí kò lọ dáadáa pẹ̀lú iṣẹ́ ọlọ́pàá kan tàbí pẹ̀lú ojú-òpó wẹ́ẹ̀bù yìí.",
   "Contact":
     "Ìkànsí",
   "Customer Service Agreement":

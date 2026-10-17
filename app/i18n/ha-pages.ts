@@ -164,4 +164,31 @@ export const haPages: Record<string, string> = {
   "Most recent": "Mafi kwanan nan",
   "1 road": "Hanya 1",
   "Enforced at {speed} km/h": "Ana aiwatarwa daga {speed} km/h",
+  // --- contact us, 2026-10-16 ----------------------------------------------
+  "Find the right desk":
+    "Nemo teburin da ya dace",
+  "Most questions have a faster answer than a message. Pick what you need.":
+    "Yawancin tambayoyi suna da amsa mafi sauri fiye da saƙo. Zaɓi abin da kake buƙata.",
+  "I want to":
+    "Ina so in",
+  "Go to":
+    "Je zuwa",
+  "Tell us about this website or a service":
+    "Faɗa mana game da wannan shafin ko wani sabis",
+  "Write to us below":
+    "Rubuta mana a ƙasa",
+  "Write or visit":
+    "Rubuta ko ka ziyarta",
+  "{n} commands across Nigeria":
+    "Rundunoni {n} a faɗin Najeriya",
+  "Can't make a call? Write to us instead.":
+    "Ba za ka iya kira ba? Ka rubuto mana maimakon haka.",
+  "About how a police officer behaved?":
+    "Game da halin wani ɗan sanda?",
+  "The Complaint Response Unit takes those.":
+    "Sashen Amsa Ƙorafe-ƙorafe ne ke karɓar waɗannan.",
+  "Only tell us what is true":
+    "Faɗa mana gaskiya kawai",
+  "We reply by email.":
+    "Muna amsawa ta imel.",
 };

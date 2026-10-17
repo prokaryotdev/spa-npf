@@ -185,4 +185,31 @@ export const yoPages: Record<string, string> = {
   "Most recent": "Èyí tó ṣẹ̀ṣẹ̀ jáde",
   "1 road": "Ọ̀nà 1",
   "Enforced at {speed} km/h": "A ń fipá mú un láti {speed} km/h",
+  // --- contact us, 2026-10-16 ----------------------------------------------
+  "Find the right desk":
+    "Wá tábìlì tó tọ́",
+  "Most questions have a faster answer than a message. Pick what you need.":
+    "Ọ̀pọ̀ ìbéèrè ní ìdáhùn tó yára ju ìfiránṣẹ́ lọ. Yan ohun tí o nílò.",
+  "I want to":
+    "Mo fẹ́",
+  "Go to":
+    "Lọ sí",
+  "Tell us about this website or a service":
+    "Sọ fún wa nípa ojú opó wẹ́ẹ̀bù yìí tàbí iṣẹ́ kan",
+  "Write to us below":
+    "Kọ̀wé sí wa nísàlẹ̀",
+  "Write or visit":
+    "Kọ̀wé tàbí ṣèbẹ̀wò",
+  "{n} commands across Nigeria":
+    "Àṣẹ {n} káàkiri Nàìjíríà",
+  "Can't make a call? Write to us instead.":
+    "Ṣé o kò lè pè? Kọ̀wé sí wa dípò bẹ́ẹ̀.",
+  "About how a police officer behaved?":
+    "Nípa ìwà ọlọ́pàá kan?",
+  "The Complaint Response Unit takes those.":
+    "Ẹ̀ka Ìdáhùn sí Ẹ̀sùn ló ń gbà wọ́n.",
+  "Only tell us what is true":
+    "Sọ òtítọ́ nìkan fún wa",
+  "We reply by email.":
+    "A ó fèsì sí ọ nípasẹ̀ ímeèlì.",
 };

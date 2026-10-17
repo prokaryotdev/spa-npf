@@ -185,4 +185,31 @@ export const igPages: Record<string, string> = {
   "Most recent": "Nke kachasị ọhụrụ",
   "1 road": "Okporo ụzọ 1",
   "Enforced at {speed} km/h": "A na-amanye ya site na {speed} km/h",
+  // --- contact us, 2026-10-16 ----------------------------------------------
+  "Find the right desk":
+    "Chọta tebụl kwesịrị ekwesị",
+  "Most questions have a faster answer than a message. Pick what you need.":
+    "Ọtụtụ ajụjụ nwere azịza dị ngwa karịa ozi. Họrọ ihe ị chọrọ.",
+  "I want to":
+    "Achọrọ m",
+  "Go to":
+    "Gaa na",
+  "Tell us about this website or a service":
+    "Gwa anyị maka webụsaịtị a ma ọ bụ ọrụ",
+  "Write to us below":
+    "Dee anyị n'okpuru",
+  "Write or visit":
+    "Dee ma ọ bụ bịa leta",
+  "{n} commands across Nigeria":
+    "Ngalaba iwu {n} na Naịjirịa niile",
+  "Can't make a call? Write to us instead.":
+    "Ị nweghị ike ịkpọ oku? Dee anyị ozi kama.",
+  "About how a police officer behaved?":
+    "Maka otu onye uwe ojii si kpaa agwa?",
+  "The Complaint Response Unit takes those.":
+    "Ngalaba Nzaghachi Mkpesa na-anabata ha.",
+  "Only tell us what is true":
+    "Gwa anyị naanị eziokwu",
+  "We reply by email.":
+    "Anyị na-aza site na email.",
 };

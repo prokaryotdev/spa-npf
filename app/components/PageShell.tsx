@@ -22,6 +22,7 @@ export async function PageShell({
   titleSize = "display",
   lead,
   compact = false,
+  showEmergency = true,
 }: {
   title: string;
   intro?: string;
@@ -35,6 +36,8 @@ export async function PageShell({
   lead?: React.ReactNode;
   /** A task page (the report form): a shorter head, so the work starts sooner. */
   compact?: boolean;
+  /** False where the page itself lists the emergency lines (Contact Us). */
+  showEmergency?: boolean;
 }) {
   const t = await getT();
   const crumb = "transition-colors hover:text-npf-blue";
@@ -109,7 +112,7 @@ export async function PageShell({
         {children}
       </main>
       <RevealObserver />
-      <Footer />
+      <Footer showEmergency={showEmergency} />
     </>
   );
 }

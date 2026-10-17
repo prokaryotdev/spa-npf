@@ -392,7 +392,7 @@ export const contactUs = {
     },
   },
   feedback: {
-    title: "Feedback And Complaints",
+    title: "Feedback and complaints",
     subTitle:
       "We value every opinion, suggestion, and concern shared by our community — each helps us serve you better.",
     description:
@@ -411,7 +411,7 @@ export const contactUs = {
       {
         title: "Complaint",
         description:
-          "Our IT support team is ready to help you resolve issues quickly and ensure your digital experience with Nigeria Police Force runs smoothly.",
+          "Tell us what went wrong with a police service or with this website.",
       },
     ],
   },

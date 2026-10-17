@@ -20,7 +20,7 @@ export const igLegal: Record<string, string> = {
     "Ọrụ pụrụ iche maka ndị ogbi, ndị na-anụghị ihe nke ọma, ma ọ bụ ndị nwere nsogbu ikwu okwu.",
   "Connect with Nigeria Police Force through the Sign Language Service for accessible communication assistance.":
     "Kpọtụrụ Ndị Uwe Ojii Naịjirịa site na Ọrụ Asụsụ Ogbi maka enyemaka nkwurịta okwu dị mfe.",
-  "Feedback And Complaints":
+  "Feedback and complaints":
     "Nzaghachi Na Mkpesa",
   "We value every opinion, suggestion, and concern shared by our community — each helps us serve you better.":
     "Anyị ji echiche, aro na nchegbu ọ bụla obodo anyị na-eke kpọrọ ihe: nke ọ bụla na-enyere anyị aka ijere gị ozi nke ọma.",
@@ -36,8 +36,8 @@ export const igLegal: Record<string, string> = {
     "Kelee onye uwe ojii ma ọ bụ onye otu mere ezigbo mgbanwe. Okwu gị na-akpali anyị ime nke ka mma.",
   "Complaint":
     "Mkpesa",
-  "Our IT support team is ready to help you resolve issues quickly and ensure your digital experience with Nigeria Police Force runs smoothly.":
-    "Otu nkwado IT anyị dị njikere inyere gị aka dozie nsogbu ngwa ngwa ma hụ na ahụmịhe dijitalụ gị na Ndị Uwe Ojii Naịjirịa na-aga nke ọma.",
+  "Tell us what went wrong with a police service or with this website.":
+    "Gwa anyị ihe na-agaghị nke ọma n'otu ọrụ ndị uwe ojii ma ọ bụ na weebụsaịtị a.",
   "Contact":
     "Kpọtụrụ",
   "Customer Service Agreement":

@@ -72,7 +72,7 @@ export const haLegal: Record<string, string> = {
     "Hidima ta musamman ga mutanen da ba sa ji, masu nauyin ji, ko masu wahalar magana.",
   "Connect with Nigeria Police Force through the Sign Language Service for accessible communication assistance.":
     "Ka haɗu da Rundunar 'Yan Sandan Najeriya ta Hidimar Harshen Kurame domin samun taimakon sadarwa mai sauƙi.",
-  "Feedback And Complaints": "Ra'ayoyi da Ƙorafe-ƙorafe",
+  "Feedback and complaints": "Ra'ayoyi da Ƙorafe-ƙorafe",
   "We value every opinion, suggestion, and concern shared by our community — each helps us serve you better.":
     "Muna daraja kowane ra'ayi, shawara da damuwa da al'ummarmu ke bayarwa — kowanne yana taimaka mana mu yi maka hidima mafi kyau.",
   "Please note: under section 140 of the Penal Code Act, Cap. P3 LFN 2004, knowingly submitting a false complaint is an offence.":
@@ -84,8 +84,8 @@ export const haLegal: Record<string, string> = {
   "Share your appreciation for a Nigeria Police Force Officer or team member who made a positive difference. Your words motivate us to do even better.":
     "Ka bayyana godiyarka ga jami'in Rundunar 'Yan Sandan Najeriya ko memba na tawaga da ya kawo sauyi mai kyau. Kalmominka suna ƙarfafa mu mu ƙara yin kyau.",
   Complaint: "Ƙorafi",
-  "Our IT support team is ready to help you resolve issues quickly and ensure your digital experience with Nigeria Police Force runs smoothly.":
-    "Tawagar tallafin fasaharmu a shirye take ta taimaka maka ka warware matsaloli cikin sauri kuma ta tabbatar da cewa amfaninka na dijital da Rundunar 'Yan Sandan Najeriya yana tafiya lami lafiya.",
+  "Tell us what went wrong with a police service or with this website.":
+    "Faɗa mana abin da bai tafi daidai ba a wani aikin 'yan sanda ko a wannan shafin yanar gizo.",
   "If you have any questions or suggestions regarding our privacy policy, please contact us at ":
     "Idan kana da wata tambaya ko shawara game da manufar sirrinmu, don Allah ka tuntuɓe mu a ",
 

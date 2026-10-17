@@ -8,18 +8,20 @@ import {
   HeartIcon,
   IdeaIcon,
 } from "./icons";
+import Link from "../i18n/Link";
+import { ChoiceCard } from "./Wizard";
 import { useT } from "../i18n/client";
 
 type Kind = { title: string; description: string };
 type Errors = { name?: string; email?: string; message?: string };
 
-/** The CMS icon paths are dead, so map the kind to one of our own icons. */
-const ICONS: Record<string, (p: { className?: string }) => React.ReactElement> =
-  {
-    Suggestion: IdeaIcon,
-    Remark: HeartIcon,
-    Complaint: AlertIcon,
-  };
+/**
+ * The CMS icon paths are dead, so each kind gets one of ours, by position in
+ * content-footer's list (titles arrive translated, so they can't be keys):
+ * suggestion, remark, complaint.
+ */
+const ICONS = [IdeaIcon, HeartIcon, AlertIcon];
+const COMPLAINT = 2;
 
 /**
  * The three feedback kinds are one submission with a type on it, so they are a
@@ -37,7 +39,9 @@ export default function FeedbackForm({
 }) {
   const t = useT();
   const id = useId();
-  const [kind, setKind] = useState(kinds[0]?.title ?? "");
+  const [pick, setPick] = useState(0);
+  const chosen = kinds[pick];
+  const kind = chosen?.title ?? "";
   const [errors, setErrors] = useState<Errors>({});
   const [sent, setSent] = useState(false);
 
@@ -97,70 +101,49 @@ export default function FeedbackForm({
     <form
       noValidate
       onSubmit={onSubmit}
-      className="mt-6 overflow-hidden rounded-card border border-npf-hairline bg-white"
+      className="npf-panel mt-6"
     >
-      <fieldset className="border-0 p-5 md:p-6">
-        <legend className="npf-h5 float-left mb-4 w-full text-npf-ink">
+      {/* Drawn with the report form's own choice cards, so a citizen who has
+          reported a crime already knows how this one works. One per row, each
+          saying what it is for, so no translated title is squeezed. */}
+      <fieldset className="border-0 px-5 pt-6 md:px-8 md:pt-8">
+        <legend className="npf-h5 float-left w-full text-npf-ink">
           {t("What would you like to share?")}
         </legend>
-        <div className="clear-left grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {kinds.map((k) => {
-            const active = kind === k.title;
-            const Icon = ICONS[k.title];
-            return (
-              <label
-                key={k.title}
-                className={`relative flex cursor-pointer flex-col rounded-card p-4 ring-inset transition-[background-color,box-shadow] duration-(--dur-hover) has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-npf-blue-mid ${
-                  active
-                    ? "bg-npf-mist ring-2 ring-npf-blue"
-                    : "ring-1 ring-npf-hairline hover:bg-npf-paper"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="kind"
-                  value={k.title}
-                  checked={active}
-                  onChange={() => setKind(k.title)}
-                  className="sr-only"
-                />
-                <span className="flex items-center justify-between gap-3">
-                  <span
-                    className={`grid size-10 place-items-center rounded-full transition-colors ${
-                      active
-                        ? "bg-npf-blue text-white"
-                        : "bg-npf-cloud text-npf-blue-ink"
-                    }`}
-                  >
-                    {Icon ? <Icon className="size-5" /> : null}
-                  </span>
-                  {/* The radio, drawn: a ring that fills when chosen. */}
-                  <span
-                    aria-hidden
-                    className={`grid size-5 place-items-center rounded-full transition-colors ${
-                      active
-                        ? "bg-npf-blue"
-                        : "ring-1 ring-[color-mix(in_srgb,var(--color-npf-ink)_25%,transparent)] ring-inset"
-                    }`}
-                  >
-                    <span
-                      className={`size-2 rounded-full bg-white transition-transform duration-(--dur-hover) ${active ? "scale-100" : "scale-0"}`}
-                    />
-                  </span>
-                </span>
-                <span className="npf-h5 mt-3 text-npf-blue-deep">
-                  {k.title}
-                </span>
-                <span className="npf-small mt-1 text-npf-body">
-                  {k.description}
-                </span>
-              </label>
-            );
-          })}
+        <div className="clear-left grid gap-3 pt-4">
+          {kinds.map((k, i) => (
+            <ChoiceCard
+              key={k.title}
+              name="kind"
+              value={k.title}
+              checked={pick === i}
+              onChange={() => setPick(i)}
+              title={k.title}
+              hint={k.description}
+              Icon={ICONS[i]}
+            />
+          ))}
         </div>
+        {pick === COMPLAINT ? (
+          <p
+            aria-live="polite"
+            className="npf-small mt-4 flex items-start gap-2.5 rounded-chip bg-npf-mist px-4 py-3 text-npf-body"
+          >
+            <AlertIcon aria-hidden className="mt-0.5 size-4 shrink-0 text-npf-blue-ink" />
+            <span>
+              {t("About how a police officer behaved?")}{" "}
+              <Link
+                href="/app/services/leaders-at-your-service"
+                className="font-medium text-npf-blue underline underline-offset-2 hover:text-npf-blue-deep"
+              >
+                {t("The Complaint Response Unit takes those.")}
+              </Link>
+            </span>
+          </p>
+        ) : null}
       </fieldset>
 
-      <div className="grid grid-cols-1 gap-5 border-t border-npf-hairline p-5 md:grid-cols-2 md:p-6">
+      <div className="mt-7 grid grid-cols-1 gap-5 border-t border-npf-hairline px-5 pt-6 pb-7 md:grid-cols-2 md:px-8 md:pb-8 xl:grid-cols-3">
         <Field
           id={`${id}-name`}
           name="name"
@@ -182,10 +165,10 @@ export default function FeedbackForm({
           type="tel"
           label={t("Phone number (optional)")}
           autoComplete="tel"
-          className="md:col-span-2"
+          className="md:col-span-2 xl:col-span-1"
         />
 
-        <div className="md:col-span-2">
+        <div className="md:col-span-2 xl:col-span-3">
           <label htmlFor={`${id}-message`} className="npf-field-label">
             {t("Your {kind}", { kind: t(kind).toLowerCase() })}
           </label>
@@ -207,20 +190,33 @@ export default function FeedbackForm({
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-npf-hairline bg-npf-paper p-5 md:px-6">
-        <p className="npf-small flex min-w-0 flex-1 basis-80 items-start gap-2.5 text-npf-body">
-          <AlertIcon
-            aria-hidden
-            className="mt-0.5 size-4 shrink-0 text-npf-warn"
-          />
-          {notice}
-        </p>
-        <button type="submit" className="npf-btn npf-btn-primary">
-          {t("Send")}
-          <span className="npf-btn-disc">
-            <ArrowRight className="npf-arrow size-4 rtl:-scale-x-100" />
+      {/* The law comes before the button, read as a warning in its own
+          right: a plain headline anyone can take in, the citation under it. */}
+      <div className="border-t border-npf-hairline px-5 pt-6 pb-7 md:px-8 md:pb-8">
+        <div
+          role="note"
+          className="flex items-start gap-4 rounded-card bg-npf-gold-wash px-4 py-4 ring-1 ring-npf-gold-soft/70 ring-inset md:px-5"
+        >
+          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white text-npf-warn ring-1 ring-npf-gold-soft ring-inset">
+            <AlertIcon aria-hidden className="size-5" />
           </span>
-        </button>
+          <p className="min-w-0">
+            <strong className="npf-h5 block text-npf-ink">
+              {t("Only tell us what is true")}
+            </strong>
+            <span className="npf-small mt-1 block text-npf-body">{notice}</span>
+          </p>
+        </div>
+
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+          <p className="npf-small text-npf-steel">{t("We reply by email.")}</p>
+          <button type="submit" className="npf-btn npf-btn-primary hover:bg-npf-blue-mid max-sm:w-full">
+            {t("Send")}
+            <span className="npf-btn-disc">
+              <ArrowRight className="npf-arrow size-4 rtl:-scale-x-100" />
+            </span>
+          </button>
+        </div>
       </div>
     </form>
   );
